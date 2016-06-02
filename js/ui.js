@@ -497,8 +497,8 @@ UI = {
         { type: 'header', template: 'my data space' },
         { cols: [ {},
           { rows: [{},
-            UI.getLoginButtonView('Connect with Google', 'login_panel__google_button', 'google-plus', 800, 'https://accounts.google.com/o/oauth2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.me%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.profile.emails.read&response_type=code&client_id=821397494321-s85oh989s0ip2msnock29bq1gpprk07f.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fauth%3FauthProvider%3Dgoogle'),
-            UI.getLoginButtonView('Connect with Facebook', 'login_panel__facebook_button', 'facebook', 400, 'https://www.facebook.com/dialog/oauth?client_id=827438877364954&scope=email&redirect_uri=http://localhost:8080/auth?authProvider=facebook&display=popup'),
+            UI.getLoginButtonView('Connect with Google', 'login_panel__google_button', 'google-plus', 800, 'https://accounts.google.com/o/oauth2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.me%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.profile.emails.read&response_type=code&client_id=821397494321-s85oh989s0ip2msnock29bq1gpprk07f.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Fapi-mydatasp.rhcloud.com%2Fauth%3FauthProvider%3Dgoogle'),
+            UI.getLoginButtonView('Connect with Facebook', 'login_panel__facebook_button', 'facebook', 400, 'https://www.facebook.com/dialog/oauth?client_id=827438877364954&scope=email&redirect_uri=http://api-mydatasp.rhcloud.com/auth?authProvider=facebook&display=popup'),
             {}, {}
           ]}, {}
         ]}
