@@ -6,7 +6,7 @@ MyDataSpace = {
   lastRequestId: 10000,
 
   connect: function(done) {
-    MyDataSpace.socket = io.connect('http://localhost:8080');
+    MyDataSpace.socket = io.connect('http://api-mydatasp.rhcloud.com');
     MyDataSpace.on('connect', function () {
       MyDataSpace.connected = true;
       done();
