@@ -1,0 +1,48 @@
+.webix_header > div {
+  background: black !important;
+  color: #868181 !important;
+}
+
+.profile {
+  padding-bottom: 20px;
+}
+
+.profile__img_wrap {
+  text-align: center;
+}
+
+.profile__img {
+  width: 200px;
+  height: 200px;
+  margin-top: -5px;
+  margin-left: -5px;
+}
+
+.profile__name {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.login_panel__facebook_button button,
+.login_panel__facebook_button button:hover,
+.login_panel__facebook_button button:active,
+.login_panel__facebook_button button:focus {
+  padding-left: 10px;
+  background: #3b5998;
+  border: 1px solid #3b5998 !important;
+}
+
+.login_panel__google_button button,
+.login_panel__google_button button:hover,
+.login_panel__google_button button:active,
+.login_panel__google_button button:focus {
+  padding-left: 10px;
+  background: #dc4e41;
+  border: 1px solid #dc4e41 !important;
+}
+
+.login_panel__google_button .webix_icon,
+.login_panel__facebook_button .webix_icon {
+  width: 30px;
+}
