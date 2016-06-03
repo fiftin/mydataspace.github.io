@@ -488,7 +488,7 @@ UI = {
                         $$('add_entity_window').show();
                       }
                     },
-                    { view: 'search', id: 'entity_list__search', align: 'center', placeholder: 'Search...', id: 'search' },
+                    { view: 'search', id: 'entity_list__search', align: 'center', placeholder: 'Search...' },
                   ]
                 },
                 { view: 'list',
