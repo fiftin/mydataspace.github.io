@@ -16,12 +16,12 @@ UIControls = {
   getEntityTypeSelectTemplate: function() {
     return {
       view: 'select',
-      label: 'Type',
+      label: 'Access',
       name: 'type',
       options: [
         { id: 'private', value: 'Private' },
-        { id: 'public', value: 'Public' },
-        { id: 'unqiue', value: 'Unique' },
+        { id: 'public', value: 'Create Children' },
+        { id: 'unqiue', value: 'Create One Child' },
       ]
     };
   },
