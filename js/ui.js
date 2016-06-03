@@ -98,7 +98,7 @@ UI = {
     }
   },
 
-  entityList_refresh: function() {
+  entityList_refreshData: function() {
     var data = UIHelper.dataFromId($$('entity_tree').getSelectedId());
     var seatch = $$('entity_list__search').getValue();
     if (common.isPresent(seatch)) {
@@ -469,7 +469,7 @@ UI = {
                         'entities.getChildren', UIHelper.dataFromId(id));
                     },
                     onSelectChange:function () {
-                      UI.entityList_refresh();
+                      UI.entityList_refreshData();
                     }
                   }
                 },
@@ -488,7 +488,19 @@ UI = {
                         $$('add_entity_window').show();
                       }
                     },
-                    { view: 'search', id: 'entity_list__search', align: 'center', placeholder: 'Search...' },
+                    { view: 'search',
+                      id: 'entity_list__search',
+                      align: 'center',
+                      placeholder: 'Search...',
+                      on: {
+                        onKeyPress: function(code, e) {
+                          if (code === 13 && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+                            UI.entityList_refreshData();
+                            return false;
+                          }
+                        }
+                      }
+                    },
                   ]
                 },
                 { view: 'list',
