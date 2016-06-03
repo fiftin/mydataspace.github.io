@@ -2,7 +2,7 @@
 ---
 {% if jekyll.environment == "local" %}
   {% assign apiurl = "http://localhost:8080" %}
-  {% assign apiwcurl = "http://localhost:8080" %}
+  {% assign apiwsurl = "http://localhost:8080" %}
 {% else %}
   {% assign apiurl = site.apiurl %}
   {% assign apiwsurl = site.apiwsurl %}

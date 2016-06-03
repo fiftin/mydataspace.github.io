@@ -220,6 +220,7 @@ UI = {
           name: UIHelper.nameFromData(data),
           type: data.type,
           description: data.description,
+          childPrototype: data.childPrototype
         }
         UI.entityForm_clear();
         $$('entity_form').setValues(formData);
