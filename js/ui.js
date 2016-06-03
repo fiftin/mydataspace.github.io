@@ -596,6 +596,9 @@ UI = {
                   { view: 'text', label: 'Name', name: 'name' },
                   UIControls.getEntityTypeSelectTemplate(),
                   { view: 'text', label: 'Decription', name: 'description' },
+                  { template: 'Child Prototype', type: 'section' },
+                  { view: 'text', label: 'Root', name: 'childPrototype.root' },
+                  { view: 'text', label: 'Path', name: 'childPrototype.path' },
                   { template: 'Fields', type: 'section', id: 'entity_form__splitter' },
                   { view: 'label', label: 'No field exists', id: 'entity_form__no_fields', align: 'center', }
                 ],

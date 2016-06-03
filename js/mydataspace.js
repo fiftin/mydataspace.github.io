@@ -2,8 +2,10 @@
 ---
 {% if jekyll.environment == "local" %}
   {% assign apiurl = "http://localhost:8080" %}
+  {% assign apiwcurl = "http://localhost:8080" %}
 {% else %}
   {% assign apiurl = site.apiurl %}
+  {% assign apiwcurl = site.apiurl %}
 {% endif %}
 
 MyDataSpace = {
@@ -43,7 +45,7 @@ MyDataSpace = {
       return;
     }
     MyDataSpace.options = common.extend({
-      host: '{{apiurl}}',
+      host: '{{ apiwcurl }}',
       connected: function() {
         console.log('Maybe you forgot to specify connected-event handler');
       }
