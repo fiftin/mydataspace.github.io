@@ -220,7 +220,7 @@ UI = {
           name: UIHelper.nameFromData(data),
           type: data.type,
           description: data.description,
-          childPrototype: data.childPrototype
+          childPrototype: UIHelper.idFromData(data.childPrototype)
         }
         UI.entityForm_clear();
         $$('entity_form').setValues(formData);
@@ -538,11 +538,14 @@ UI = {
                       common.extendOf(dirtyData, UIHelper.dataFromId($$('entity_list').getSelectedId()));
                       dirtyData.fields = UIHelper.getFieldsForSave(dirtyData.fields, Object.keys(existingData.fields || {}), oldData.fields);
                       $$('entity_form').disable();
+                      if (typeof dirtyData.childPrototype !== 'undefined') {
+                        dirtyData.childPrototype = UIHelper.dataFromId(dirtyData.childPrototype);
+                      }
                       MyDataSpace.request('entities.change', dirtyData, function(res) {
                         $$('entity_form').enable();
                         UI.entityForm_setClean();
                       }, function(err) {
-                        alert('err');
+                        webix.message({ type: 'error', text: err.message || err.name });
                         $$('entity_form').enable();
                       });
                     }
@@ -553,7 +556,9 @@ UI = {
                     label: 'Refresh',
                     width: 100,
                     click: function() {
-                      MyDataSpace.emit('entities.getWithMeta', UIHelper.dataFromId($$('entity_list').getSelectedId()));
+                      MyDataSpace.emit(
+                        'entities.getWithMeta',
+                        UIHelper.dataFromId($$('entity_list').getSelectedId()));
                     }
                   },
                   { view: 'button',
@@ -597,10 +602,8 @@ UI = {
                   { view: 'text', label: 'Name', name: 'name' },
                   UIControls.getEntityTypeSelectTemplate(),
                   { view: 'text', label: 'Decription', name: 'description' },
-                  { template: 'Child Prototype', type: 'section' },
-                  { view: 'text', label: 'Root', name: 'childPrototype.root' },
-                  { view: 'text', label: 'Path', name: 'childPrototype.path' },
-                  { template: 'Fields', type: 'section', id: 'entity_form__splitter' },
+                  { view: 'text', label: 'Child Proto', name: 'childPrototype' },
+                  { template: 'Fields', type: 'section' },
                   { view: 'label', label: 'No field exists', id: 'entity_form__no_fields', align: 'center', }
                 ],
                 on: {
