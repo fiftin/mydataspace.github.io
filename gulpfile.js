@@ -29,15 +29,15 @@ gulp.task('vendor:fa:fonts', function () {
 
 gulp.task('vendor:fa', ['vendor:fa:fonts', 'vendor:fa:css']);
 
+gulp.task('vendor:webix:fonts', function () {
+  return gulp.src('bower_components/webix/codebase/fonts/PTS-*.woff').pipe(gulp.dest('vendor/webix/fonts'));
+});
 
-
-gulp.task('vendor:webix', function () {
+gulp.task('vendor:webix:code', function () {
   return gulp.src('bower_components/webix/codebase/*.*').pipe(gulp.dest('vendor/webix'));
 });
 
-
-gulp.task('vendor:fa', ['vendor:fa:fonts', 'vendor:fa:css']);
-
+gulp.task('vendor:webix', ['vendor:webix:fonts', 'vendor:webix:code']);
 
 
 gulp.task('vendor:jquery', function () {

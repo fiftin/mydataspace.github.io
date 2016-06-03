@@ -22,7 +22,7 @@ UI = {
    */
   entityForm_clear: function() {
     var rows = $$('entity_form').getChildViews();
-    for (var i = rows.length - 1; i >= 5; i--) {
+    for (var i = rows.length - 1; i >= UIHelper.NUMBER_OF_FIXED_INPUTS_IN_FIELDS_FORM; i--) {
       var row = rows[i];
       if (typeof row !== 'undefined') {
         $$('entity_form').removeView(row.config.id);
@@ -93,7 +93,7 @@ UI = {
     $$('entity_form')._values = values;
     UI.entityForm_setDirty();
     var rows = $$('entity_form').getChildViews();
-    if (rows.length === 5) {
+    if (rows.length === UIHelper.NUMBER_OF_FIXED_INPUTS_IN_FIELDS_FORM) {
       $$('entity_form__no_fields').show();
     }
   },

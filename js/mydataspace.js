@@ -5,7 +5,7 @@
   {% assign apiwcurl = "http://localhost:8080" %}
 {% else %}
   {% assign apiurl = site.apiurl %}
-  {% assign apiwcurl = site.apiurl %}
+  {% assign apiwsurl = site.apiwsurl %}
 {% endif %}
 
 MyDataSpace = {
@@ -45,7 +45,7 @@ MyDataSpace = {
       return;
     }
     MyDataSpace.options = common.extend({
-      host: '{{ apiwcurl }}',
+      host: '{{ apiwsurl }}',
       connected: function() {
         console.log('Maybe you forgot to specify connected-event handler');
       }
