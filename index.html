@@ -2,8 +2,12 @@
 layout: webix
 ---
 <script type="text/javascript" charset="utf-8">
-  MyDataSpace.connect(function() {
-    UI.init();
-    UI.refresh();
+  UI.render();
+  MyDataSpace.init({
+    connected: function() {
+      UI.initConnection();
+      UI.refresh();
+    }
   });
+  MyDataSpace.connect();
 </script>

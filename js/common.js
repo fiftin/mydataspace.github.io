@@ -26,6 +26,9 @@ common = {
   },
 
   extendOf: function(dest, source) {
+    if (common.isBlank(source)) {
+      return dest;
+    }
     if (common.isPrimative(dest) || common.isPrimative(source)) {
       throw new Error('Cant extend primative type');
     }

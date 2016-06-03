@@ -1,65 +1,4 @@
 UI = {
-  getFieldTypeSelectTemplate: function() {
-    var options = [];
-    for (var id in UIHelper.FIELD_TYPES) {
-      options.push({ id: id, value: UIHelper.FIELD_TYPES[id].title });
-    }
-    return {
-      view: 'select',
-      required: true,
-      name: 'type',
-      label: 'Type',
-      options: options
-    };
-  },
-
-  getEntityTypeSelectTemplate: function() {
-    return {
-      view: 'select',
-      label: 'Type',
-      name: 'type',
-      options: [
-        { id: 'private', value: 'Private' },
-        { id: 'public', value: 'Public' },
-        { id: 'unqiue', value: 'Unique' },
-      ]
-    };
-  },
-
-  getOnForFormWindow: function(id) {
-    var formId = id + '_form';
-    var windowId = id + '_window';
-    return {
-      onHide: function() {
-        $$(formId).clearValidation();
-        $$(formId).setValues($$(formId).getCleanValues());
-      },
-      onShow: function() {
-        $$(formId).focus();
-        $$(formId).setDirty(false);
-        $$(windowId + '__cancel_button').define('hotkey', 'escape');
-      }
-    };
-  },
-
-  getSubmitCancelForFormWindow: function(id) {
-    var formId = id + '_form';
-    var windowId = id + '_window';
-    return { cols: [
-        { view: 'button',
-          value: 'Create',
-          type: 'form',
-          click: function() { $$(formId).callEvent('onSubmit') }
-        },
-        { view: 'button',
-          id: windowId + '__cancel_button',
-          value: 'Cancel',
-          type: 'danger', click: function() { $$(windowId).hide() }
-        },
-      ]
-    }
-  },
-
   entityForm_updateToolbar: function() {
     if (!$$('entity_form').isDirty()) {
       $$('entity_form__save_button').disable();
@@ -159,19 +98,6 @@ UI = {
     }
   },
 
-  /**
-   * Reload data from the server.
-   */
-  refresh: function() {
-    MyDataSpace.emit('entities.getMyRoots', {});
-    MyDataSpace.emit('users.getMyProfile', {});
-  },
-
-  clear: function() {
-    $$('entity_list').clearAll();
-    $$('entity_tree').clearAll();
-  },
-
   entityList_refresh: function() {
     MyDataSpace.emit(
       'entities.getChildren',
@@ -204,46 +130,32 @@ UI = {
     }
   },
 
-  getLoginButtonView: function(caption, css, icon, height, url) {
-    return {
-      view: 'button',
-      label: caption,
-      type: 'iconButton',
-      icon: icon,
-      width: 250,
-      height: 50,
-      css: css,
-      click: function() {
-        if (MyDataSpace.isLoggedIn()) {
-          throw new Error('Already logged in');
-        }
-        var authWindow = window.open(url, '', 'width=640, height=' + height);
-        authWindow.focus();
-        var authCheckInterval = setInterval(function() {
-          authWindow.postMessage({ message: 'requestAuthResult' }, '*');
-        }, 1000);
-      }
-    };
+  /**
+   * Reload data from the server.
+   */
+  refresh: function() {
+    MyDataSpace.emit('entities.getMyRoots', {});
+    MyDataSpace.emit('users.getMyProfile', {});
+  },
+
+  clear: function() {
+    $$('entity_list').clearAll();
+    $$('entity_tree').clearAll();
   },
 
   initConnection: function() {
-
-    if (common.isPresent(localStorage.getItem('authToken'))) {
-      MyDataSpace.emit('authenticate', { token: localStorage.getItem('authToken') });
-    }
-
-    MyDataSpace.on('authenticated', function() {
+    MyDataSpace.on('login', function() {
       $$('menu__item_list').select($$('menu__item_list').getFirstId());
       $$('login_panel').hide();
       $$('data_panel').show();
       UI.refresh();
     });
 
-    MyDataSpace.on('disconnect', function() {
-      // $$('menu').hide();
-      // $$('login_panel').show();
-      // $$('data_panel').hide();
-      // UI.clear();
+    MyDataSpace.on('logout', function() {
+      $$('menu').hide();
+      $$('login_panel').show();
+      $$('data_panel').hide();
+      UI.clear();
     });
 
     // Initialize event listeners
@@ -314,22 +226,15 @@ UI = {
     });
   },
 
-  initialized: false,
-
-  init: function() {
-    if (UI.initialized) {
+  /**
+   * Initialize UI only once!
+   */
+  rendered: false,
+  render: function() {
+    if (UI.rendered) {
       return;
     }
-    UI.initialized = true;
-    UI.initConnection();
-    window.addEventListener('message', function(e) {
-      if (e.data.message === 'authResult') {
-        localStorage.setItem('authToken', e.data.result);
-        MyDataSpace.emit('authenticate', { token: e.data.result });
-        e.source.close();
-      }
-    });
-
+    UI.rendered = true;
     // 'Add new root' window
     webix.ui({
         view: 'window',
@@ -338,7 +243,7 @@ UI = {
         position: 'center',
         modal: true,
         head: 'New Root',
-        on: UI.getOnForFormWindow('add_root'),
+        on: UIControls.getOnForFormWindow('add_root'),
         body: {
           view: 'form',
           id: 'add_root_form',
@@ -357,8 +262,8 @@ UI = {
           },
           elements: [
             { view: 'text', label: 'Name', required: true, name: 'root' },
-            UI.getEntityTypeSelectTemplate(),
-            UI.getSubmitCancelForFormWindow('add_root')
+            UIControls.getEntityTypeSelectTemplate(),
+            UIControls.getSubmitCancelForFormWindow('add_root')
           ]
         }
     });
@@ -371,7 +276,7 @@ UI = {
         position: 'center',
         modal: true,
         head: 'New Entity',
-        on: UI.getOnForFormWindow('add_entity'),
+        on: UIControls.getOnForFormWindow('add_entity'),
         body: {
           view: 'form',
           id: 'add_entity_form',
@@ -391,8 +296,8 @@ UI = {
           },
           elements: [
             { view: 'text', required: true, label: 'Name', name: 'name' },
-            UI.getEntityTypeSelectTemplate(),
-            UI.getSubmitCancelForFormWindow('add_entity')
+            UIControls.getEntityTypeSelectTemplate(),
+            UIControls.getSubmitCancelForFormWindow('add_entity')
           ]
         }
     });
@@ -405,7 +310,7 @@ UI = {
       position: 'center',
       modal: true,
       head: 'New Field',
-      on: UI.getOnForFormWindow('add_field'),
+      on: UIControls.getOnForFormWindow('add_field'),
       body: {
         view: 'form',
         id: 'add_field_form',
@@ -421,9 +326,9 @@ UI = {
         },
         elements: [
           { view: 'text', required: true, label: 'Name', name: 'name' },
-          UI.getFieldTypeSelectTemplate(),
+          UIControls.getFieldTypeSelectTemplate(),
           { view: 'text', label: 'Value', name: 'value' },
-          UI.getSubmitCancelForFormWindow('add_field')
+          UIControls.getSubmitCancelForFormWindow('add_field')
         ],
         rules: {
           name: function(value) { return typeof $$('entity_form__' + value) === 'undefined' },
@@ -480,8 +385,7 @@ UI = {
                     // UI.refresh();
                     break;
                   case 'logout':
-                    localStorage.removeItem('authToken');
-                    MyDataSpace.reconnect(UI.initConnection);
+                    MyDataSpace.logout();
                     break;
                   default:
                     throw new Error('Elligal menu item id');
@@ -493,19 +397,20 @@ UI = {
       }
     });
 
+    var authProviders =
+      Object.keys(MyDataSpace.authProviders)
+            .map(providerName => UIControls.getLoginButtonView(providerName));
+    authProviders.unshift({});
+    authProviders.push({});
+    authProviders.push({});
     webix.ui({
       id: 'login_panel',
       rows: [
         { type: 'header', template: 'my data space' },
-        { cols: [ {},
-          { rows: [{},
-            UI.getLoginButtonView('Connect with Google', 'login_panel__google_button', 'google-plus', 800, 'https://accounts.google.com/o/oauth2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.me%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.profile.emails.read&response_type=code&client_id=821397494321-s85oh989s0ip2msnock29bq1gpprk07f.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Fapi-mydatasp.rhcloud.com%2Fauth%3FauthProvider%3Dgoogle'),
-            UI.getLoginButtonView('Connect with Facebook', 'login_panel__facebook_button', 'facebook', 400, 'https://www.facebook.com/dialog/oauth?client_id=827438877364954&scope=email&redirect_uri=http://api-mydatasp.rhcloud.com/auth?authProvider=facebook&display=popup'),
-            {}, {}
-          ]}, {}
-        ]}
+        { cols: [ {}, { rows: authProviders}, {} ]}
       ]
     });
+
     // Init Webix UI
     webix.ui({
       id: 'data_panel',
@@ -674,7 +579,7 @@ UI = {
                 scroll: true,
                 elements: [
                   { view: 'text', label: 'Name', name: 'name' },
-                  UI.getEntityTypeSelectTemplate(),
+                  UIControls.getEntityTypeSelectTemplate(),
                   { view: 'text', label: 'Decription', name: 'description' },
                   { template: 'Fields', type: 'section', id: 'entity_form__splitter' },
                   { view: 'label', label: 'No field exists', id: 'entity_form__no_fields', align: 'center', }
