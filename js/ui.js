@@ -204,6 +204,28 @@ UI = {
     }
   },
 
+  getLoginButtonView: function(caption, css, icon, height, url) {
+    return {
+      view: 'button',
+      label: caption,
+      type: 'iconButton',
+      icon: icon,
+      width: 250,
+      height: 50,
+      css: css,
+      click: function() {
+        if (MyDataSpace.isLoggedIn()) {
+          throw new Error('Already logged in');
+        }
+        var authWindow = window.open(url, '', 'width=640, height=' + height);
+        authWindow.focus();
+        var authCheckInterval = setInterval(function() {
+          authWindow.postMessage({ message: 'requestAuthResult' }, '*');
+        }, 1000);
+      }
+    };
+  },
+
   initConnection: function() {
 
     if (common.isPresent(localStorage.getItem('authToken'))) {
@@ -211,8 +233,6 @@ UI = {
     }
 
     MyDataSpace.on('authenticated', function() {
-      // $$('login_button').hide();
-      // $$('menu_button').show();
       $$('menu__item_list').select($$('menu__item_list').getFirstId());
       $$('login_panel').hide();
       $$('data_panel').show();
@@ -220,12 +240,10 @@ UI = {
     });
 
     MyDataSpace.on('disconnect', function() {
-      // $$('login_button').show();
-      // $$('menu_button').hide();
-      $$('menu').hide();
-      $$('login_panel').show();
-      $$('data_panel').hide();
-      UI.clear();
+      // $$('menu').hide();
+      // $$('login_panel').show();
+      // $$('data_panel').hide();
+      // UI.clear();
     });
 
     // Initialize event listeners
@@ -296,29 +314,13 @@ UI = {
     });
   },
 
-  getLoginButtonView: function(caption, css, icon, height, url) {
-    return {
-      view: 'button',
-      label: caption,
-      type: 'iconButton',
-      icon: icon,
-      width: 250,
-      height: 50,
-      css: css,
-      click: function() {
-        if (MyDataSpace.isLoggedIn()) {
-          throw new Error('Already logged in');
-        }
-        var authWindow = window.open(url, '', 'width=640, height=' + height);
-        authWindow.focus();
-        var authCheckInterval = setInterval(function() {
-          authWindow.postMessage({ message: 'requestAuthResult' }, '*');
-        }, 1000);
-      }
-    };
-  },
+  initialized: false,
 
   init: function() {
+    if (UI.initialized) {
+      return;
+    }
+    UI.initialized = true;
     UI.initConnection();
     window.addEventListener('message', function(e) {
       if (e.data.message === 'authResult') {

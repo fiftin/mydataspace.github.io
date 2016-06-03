@@ -6,7 +6,14 @@ MyDataSpace = {
   lastRequestId: 10000,
 
   connect: function(done) {
-    MyDataSpace.socket = io.connect('http://api-mydatasp.rhcloud.com');
+    MyDataSpace.socket = io('http://api-mydatasp.rhcloud.com:8000', {
+      // secure: true,
+      'force new connection' : true,
+      'reconnectionAttempts': 'Infinity', //avoid having user reconnect manually in order to prevent dead clients after a server restart
+      'timeout' : 10000, //before connect_error and connect_timeout are emitted.
+      'transports' : ['websocket']
+    });
+
     MyDataSpace.on('connect', function () {
       MyDataSpace.connected = true;
       done();
