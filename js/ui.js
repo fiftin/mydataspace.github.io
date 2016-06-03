@@ -656,10 +656,12 @@ UI = {
                         text: 'You really want delete this entity?',
                         ok: 'Yes',
                         cancel: 'No',
-                        callback: function() {
-                          MyDataSpace.request(
-                            'entities.delete',
-                            UIHelper.dataFromId($$('entity_list').getSelectedId()));
+                        callback: function(result) {
+                          if (result) {
+                            MyDataSpace.request(
+                              'entities.delete',
+                              UIHelper.dataFromId($$('entity_list').getSelectedId()));
+                          }
                         }
                       });
                     }
