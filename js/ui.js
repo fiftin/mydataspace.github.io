@@ -99,9 +99,12 @@ UI = {
   },
 
   entityList_refresh: function() {
-    MyDataSpace.emit(
-      'entities.getChildren',
-      UIHelper.dataFromId($$('entity_tree').getSelectedId()));
+    var data = UIHelper.dataFromId($$('entity_tree').getSelectedId());
+    var seatch = $$('entity_list__search').getValue();
+    if (common.isPresent(seatch)) {
+      data['search'] = seatch;
+    }
+    MyDataSpace.emit('entities.getChildren', data);
   },
 
   entityList_fill: function(entityId, children) {
@@ -485,7 +488,7 @@ UI = {
                         $$('add_entity_window').show();
                       }
                     },
-                    { view: 'search', align: 'center', placeholder: 'Search...', id: 'search' },
+                    { view: 'search', id: 'entity_list__search', align: 'center', placeholder: 'Search...', id: 'search' },
                   ]
                 },
                 { view: 'list',
