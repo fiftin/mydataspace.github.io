@@ -1,3 +1,11 @@
+---
+---
+{% if jekyll.environment == "local" %}
+  {% assign apiurl = "http://localhost:8080" %}
+{% else %}
+  {% assign apiurl = site.apiurl %}
+{% endif %}
+
 MyDataSpace = {
   initialized: false,
   connected: false,
@@ -14,19 +22,19 @@ MyDataSpace = {
     facebook: {
       title: 'Connect to Facebook',
       icon: 'facebook',
-      url: 'https://www.facebook.com/dialog/oauth?client_id=827438877364954&scope=email&redirect_uri=http://api-mydatasp.rhcloud.com/auth?authProvider=facebook&display=popup',
+      url: 'https://www.facebook.com/dialog/oauth?client_id=827438877364954&scope=email&redirect_uri={{ apiurl }}/auth?authProvider=facebook&display=popup',
       loginWindow: {
         height: 400
       }
     },
-    // google: {
-    //   title: 'Connect to Google',
-    //   icon: 'google-plus',
-    //   url: 'https://accounts.google.com/o/oauth2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.me%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.profile.emails.read&response_type=code&client_id=821397494321-s85oh989s0ip2msnock29bq1gpprk07f.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Fapi-mydatasp.rhcloud.com%2Fauth%3FauthProvider%3Dgoogle',
-    //   loginWindow: {
-    //     height: 800
-    //   }
-    // },
+    google: {
+      title: 'Connect to Google',
+      icon: 'google-plus',
+      url: 'https://accounts.google.com/o/oauth2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.me%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.profile.emails.read&response_type=code&client_id=821397494321-s85oh989s0ip2msnock29bq1gpprk07f.apps.googleusercontent.com&redirect_uri={{ apiurl | cgi_escape }}%2Fauth%3FauthProvider%3Dgoogle',
+      loginWindow: {
+        height: 800
+      }
+    },
   },
 
   init: function(options) {
@@ -35,7 +43,7 @@ MyDataSpace = {
       return;
     }
     MyDataSpace.options = common.extend({
-      host: 'http://api-mydatasp.rhcloud.com:8000',
+      host: '{{apiurl}}',
       connected: function() {
         console.log('Maybe you forgot to specify connected-event handler');
       }

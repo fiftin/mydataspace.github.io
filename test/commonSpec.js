@@ -14,6 +14,7 @@ describe('common', function() {
     }, {
       fields: {
         info: {
+          age: 34,
           country: 'Russia',
           contacts: {
             address: 'Lenin st.'
@@ -22,6 +23,7 @@ describe('common', function() {
       }
     });
 
+    expect(data.fields.info.age).to.equal(34);
     expect(data.fields.info.country).to.equal('Russia');
     expect(data.fields.info.contacts.phone).to.equal('12435');
     expect(data.fields.info.contacts.address).to.equal('Lenin st.');

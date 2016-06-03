@@ -37,10 +37,8 @@ common = {
       if (typeof source[i] === 'undefined') {
         continue;
       }
-      if (common.isPrimative(dest[i])) {
-        dest[i] = common.copy(dest[i]);
-      } else if (common.isPrimative(source[i])) {
-        dest[i] = source[i];
+      if (common.isPrimative(dest[i]) || common.isPrimative(source[i])) {
+        dest[i] = common.copy(source[i]);
       } else { // mergin
         common.extendOf(dest[i], source[i]);
       }
