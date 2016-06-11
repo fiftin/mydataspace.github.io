@@ -8,6 +8,18 @@ UIHelper = {
         return value.toString().length < UIHelper.MAX_STRING_FIELD_LENGTH;
       }
     },
+    j: {
+      title: 'Script',
+      isValidValue: function(value) {
+        return value.toString().length < UIHelper.MAX_STRING_FIELD_LENGTH;
+      }
+    },
+    u: {
+      title: 'Script URL',
+      isValidValue: function(value) {
+        return value.toString().length < UIHelper.MAX_STRING_FIELD_LENGTH;
+      }
+    },
     r: {
       title: 'Real',
       isValidValue: function(value) {
