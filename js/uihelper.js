@@ -19,18 +19,18 @@ UIHelper = {
       isValidValue: function(value) {
         return common.isInt(value) || (typeof value === 'string' && /^\d+$/.test(value));
       }
-    }
-  },
-  j: {
-    title: 'Script',
-    isValidValue: function(value) {
-      return value.toString().length < UIHelper.MAX_STRING_FIELD_LENGTH;
-    }
-  },
-  u: {
-    title: 'Script URL',
-    isValidValue: function(value) {
-      return value.toString().length < UIHelper.MAX_STRING_FIELD_LENGTH;
+    },
+    j: {
+      title: 'Script',
+      isValidValue: function(value) {
+        return value.toString().length < UIHelper.MAX_STRING_FIELD_LENGTH;
+      }
+    },
+    u: {
+      title: 'Script URL',
+      isValidValue: function(value) {
+        return value.toString().length < UIHelper.MAX_STRING_FIELD_LENGTH;
+      }
     }
   },
   getFieldTypesAsArrayOfIdValue: function() {
