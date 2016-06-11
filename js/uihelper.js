@@ -8,18 +8,6 @@ UIHelper = {
         return value.toString().length < UIHelper.MAX_STRING_FIELD_LENGTH;
       }
     },
-    j: {
-      title: 'Script',
-      isValidValue: function(value) {
-        return value.toString().length < UIHelper.MAX_STRING_FIELD_LENGTH;
-      }
-    },
-    u: {
-      title: 'Script URL',
-      isValidValue: function(value) {
-        return value.toString().length < UIHelper.MAX_STRING_FIELD_LENGTH;
-      }
-    },
     r: {
       title: 'Real',
       isValidValue: function(value) {
@@ -32,6 +20,28 @@ UIHelper = {
         return common.isInt(value) || (typeof value === 'string' && /^\d+$/.test(value));
       }
     }
+  },
+  j: {
+    title: 'Script',
+    isValidValue: function(value) {
+      return value.toString().length < UIHelper.MAX_STRING_FIELD_LENGTH;
+    }
+  },
+  u: {
+    title: 'Script URL',
+    isValidValue: function(value) {
+      return value.toString().length < UIHelper.MAX_STRING_FIELD_LENGTH;
+    }
+  },
+  getFieldTypesAsArrayOfIdValue: function() {
+    var ret = [];
+    for (var key in UIHelper.FIELD_TYPES) {
+      ret.push({
+        id: key,
+        value: UIHelper.FIELD_TYPES[key].title
+      });
+    }
+    return ret;
   },
 
   getFieldsForSave: function(dirtyFields, currentFieldNames, oldFields) {

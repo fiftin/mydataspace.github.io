@@ -63,11 +63,7 @@ UI = {
         },
         { view: 'select',
           width: 80,
-          options: [
-            { id: 's', value: 'String' },
-            { id: 'i', value: 'Integer' },
-            { id: 'r', value: 'Real' },
-          ],
+          options: UIHelper.getFieldTypesAsArrayOfIdValue(),
           value: data.type,
           name: 'fields.' + data.name + '.type'
         },
