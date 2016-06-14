@@ -380,6 +380,12 @@ UI = {
                   iframe.contentWindow.console = {
                     log: function(message) {
                       alert(message);
+                    },
+                    scriptComplete: function() {
+                      $$('run_script_window__iframe_stop').disable();
+                      $$('run_script_window__iframe_run').enable();
+                      $$('run_script_window__iframe').getIframe().src = '';
+                      $$('run_script_window__iframe').load('/run_script.html');
                     }
                   };
                   var fields = $$('entity_form').getValues().fields;
