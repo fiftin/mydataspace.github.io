@@ -130,6 +130,33 @@ UI = {
     }
   },
 
+  runScriptWindow_run: function() {
+    $$('run_script_window__iframe_stop').enable();
+    $$('run_script_window__iframe_run').disable();
+    var iframe = $$('run_script_window__iframe').getIframe();
+    iframe.contentDocument.getElementById('run_script__state').classList.add('fa-spin');
+    iframe.contentDocument.getElementById('run_script__state_wrap').classList.add('run_script__state_wrap--run');
+    iframe.contentDocument.getElementById('run_script__console').classList.add('run_script__console--run');
+    iframe.contentWindow.console = {
+      log: function(message) {
+        var div = iframe.contentDocument.createElement('div');
+        div.classList.add('run_script__console_record');
+        div.innerText = message;
+        iframe.contentDocument.getElementById('run_script__console').appendChild(div);
+      },
+      scriptComplete: function() {
+        UI.runScriptWindow_stop();
+      }
+    };
+  },
+
+  runScriptWindow_stop: function() {
+    $$('run_script_window__iframe_stop').disable();
+    $$('run_script_window__iframe_run').enable();
+    $$('run_script_window__iframe').getIframe().src = '';
+    $$('run_script_window__iframe').load('/run_script.html');
+  },
+
   /**
    * Reload data from the server.
    */
@@ -353,12 +380,10 @@ UI = {
       head: 'Run Script',
       on: {
         onHide: function() {
-          $$('run_script_window__iframe').getIframe().src = '';
+          UI.runScriptWindow_stop();
         },
         onShow: function() {
           $$('run_script_window__iframe').load('/run_script.html');
-          $$('run_script_window__iframe_stop').disable();
-          $$('run_script_window__iframe_run').enable();
         },
       },
       body:{
@@ -373,21 +398,7 @@ UI = {
                 width: 100,
                 id: 'run_script_window__iframe_run',
                 click: function() {
-                  $$('run_script_window__iframe_stop').enable();
-                  $$('run_script_window__iframe_run').disable();
-                  var iframe = $$('run_script_window__iframe').getIframe();
-                  iframe.contentDocument.getElementById('run_script__state').classList.add('fa-spin');
-                  iframe.contentWindow.console = {
-                    log: function(message) {
-                      alert(message);
-                    },
-                    scriptComplete: function() {
-                      $$('run_script_window__iframe_stop').disable();
-                      $$('run_script_window__iframe_run').enable();
-                      $$('run_script_window__iframe').getIframe().src = '';
-                      $$('run_script_window__iframe').load('/run_script.html');
-                    }
-                  };
+                  UI.runScriptWindow_run();
                   var fields = $$('entity_form').getValues().fields;
                   if (typeof fields === 'undefined') {
                     fields = {};
@@ -412,6 +423,7 @@ UI = {
                     if (field.type !== 'j' && field.type !== 'u') {
                       continue;
                     }
+                    var iframe = $$('run_script_window__iframe').getIframe();
                     var script = iframe.contentDocument.createElement('script');
                     if (field.type === 'j') {
                       script.innerHTML = field.value;
@@ -430,10 +442,7 @@ UI = {
                 disabled: true,
                 id: 'run_script_window__iframe_stop',
                 click: function() {
-                  $$('run_script_window__iframe_stop').disable();
-                  $$('run_script_window__iframe_run').enable();
-                  $$('run_script_window__iframe').getIframe().src = '';
-                  $$('run_script_window__iframe').load('/run_script.html');
+                  UI.runScriptWindow_stop();
                 }
               },
               {},
