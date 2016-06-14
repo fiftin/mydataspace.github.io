@@ -8,7 +8,7 @@
   {% assign apiwsurl = site.apiwsurl %}
 {% endif %}
 
-MyDataSpace = {
+Mydataspace = {
   initialized: false,
   connected: false,
   loggedIn: false,
@@ -40,29 +40,29 @@ MyDataSpace = {
   },
 
   init: function(options) {
-    if (MyDataSpace.initialized) {
-      console.warn('An attempt to re-initialize the MyDataSpace');
+    if (Mydataspace.initialized) {
+      console.warn('An attempt to re-initialize the Mydataspace');
       return;
     }
-    MyDataSpace.options = common.extend({
+    Mydataspace.options = common.extend({
       host: '{{ apiwsurl }}',
       connected: function() {
         console.log('Maybe you forgot to specify connected-event handler');
       }
     }, options);
-    MyDataSpace.on('connected', options.connected);
+    Mydataspace.on('connected', options.connected);
     window.addEventListener('message', function(e) {
       if (e.data.message === 'authResult') {
         localStorage.setItem('authToken', e.data.result);
-        MyDataSpace.emit('authenticate', { token: e.data.result });
+        Mydataspace.emit('authenticate', { token: e.data.result });
         e.source.close();
       }
     });
-    MyDataSpace.initialized = true;
+    Mydataspace.initialized = true;
   },
 
   connect: function(done) {
-    MyDataSpace.socket = io(MyDataSpace.options.host, {
+    Mydataspace.socket = io(Mydataspace.options.host, {
       // secure: true,
       'force new connection' : true,
       'reconnectionAttempts': 'Infinity', //avoid having user reconnect manually in order to prevent dead clients after a server restart
@@ -70,34 +70,34 @@ MyDataSpace = {
       'transports' : ['websocket']
     });
 
-    MyDataSpace.on('connect', function () {
-      MyDataSpace.connected = true;
+    Mydataspace.on('connect', function () {
+      Mydataspace.connected = true;
       if (common.isPresent(localStorage.getItem('authToken'))) {
-        MyDataSpace.emit('authenticate', { token: localStorage.getItem('authToken') });
+        Mydataspace.emit('authenticate', { token: localStorage.getItem('authToken') });
       }
-      MyDataSpace.callListeners('connected');
+      Mydataspace.callListeners('connected');
     });
 
-    MyDataSpace.on('authenticated', function() {
-      MyDataSpace.loggedIn = true;
-      MyDataSpace.callListeners('login');
+    Mydataspace.on('authenticated', function() {
+      Mydataspace.loggedIn = true;
+      Mydataspace.callListeners('login');
     });
 
-    MyDataSpace.on('disconnect', function() {
-      MyDataSpace.connected = false;
-      MyDataSpace.loggedIn = false;
-      MyDataSpace.subscriptions = [];
-      MyDataSpace.lastRequestId = 10000;
-      MyDataSpace.requests = {};
+    Mydataspace.on('disconnect', function() {
+      Mydataspace.connected = false;
+      Mydataspace.loggedIn = false;
+      Mydataspace.subscriptions = [];
+      Mydataspace.lastRequestId = 10000;
+      Mydataspace.requests = {};
     });
 
-    MyDataSpace.on('entities.err', function(data) {
-      MyDataSpace.handleResponse(data, 'fail');
+    Mydataspace.on('entities.err', function(data) {
+      Mydataspace.handleResponse(data, 'fail');
     });
   },
 
   callListeners: function(eventName, args) {
-    var listeners = MyDataSpace.listeners[eventName];
+    var listeners = Mydataspace.listeners[eventName];
     if (typeof listeners === 'undefined') {
       throw new Error('Listener not exists');
     }
@@ -111,12 +111,12 @@ MyDataSpace = {
    * You need re-initialize listeners after that!
    */
   disconnect: function() {
-    MyDataSpace.socket.disconnect();
-    MyDataSpace.socket = null;
+    Mydataspace.socket.disconnect();
+    Mydataspace.socket = null;
   },
 
   login: function(providerName) {
-    var authProvider = MyDataSpace.authProviders[providerName];
+    var authProvider = Mydataspace.authProviders[providerName];
     var authWindow = window.open(authProvider.url, '', 'width=640, height=' + authProvider.loginWindow.height);
     authWindow.focus();
     var authCheckInterval = setInterval(function() {
@@ -126,35 +126,35 @@ MyDataSpace = {
 
   logout: function() {
     localStorage.removeItem('authToken');
-    MyDataSpace.disconnect();
-    MyDataSpace.connect();
-    MyDataSpace.callListeners('logout');
+    Mydataspace.disconnect();
+    Mydataspace.connect();
+    Mydataspace.callListeners('logout');
   },
 
   isLoggedIn: function() {
-    return MyDataSpace.loggedIn;
+    return Mydataspace.loggedIn;
   },
 
   isConnected: function() {
-    return MyDataSpace.connected;
+    return Mydataspace.connected;
   },
 
   emit: function(eventName, data) {
-    if (typeof MyDataSpace.socket === 'undefined') {
+    if (typeof Mydataspace.socket === 'undefined') {
       throw new Error('You must connect to server before emit data');
     }
-    MyDataSpace.socket.emit(eventName, data);
+    Mydataspace.socket.emit(eventName, data);
   },
 
   on: function(eventName, callback) {
-    if (typeof MyDataSpace.listeners[eventName] !== 'undefined') {
-      MyDataSpace.listeners[eventName].push(callback);
+    if (typeof Mydataspace.listeners[eventName] !== 'undefined') {
+      Mydataspace.listeners[eventName].push(callback);
       return;
     }
-    if (typeof MyDataSpace.socket === 'undefined') {
+    if (typeof Mydataspace.socket === 'undefined') {
       throw new Error('You must connect to server before subscribe to events');
     }
-    MyDataSpace.socket.on(eventName, callback);
+    Mydataspace.socket.on(eventName, callback);
   },
 
   request: function(eventName, data, successCallback, failCallback) {
@@ -163,34 +163,34 @@ MyDataSpace = {
       fail: failCallback || function() {}
     };
     // Store request information to array
-    MyDataSpace.lastRequestId++;
-    data.requestId = MyDataSpace.lastRequestId;
-    MyDataSpace.requests[data.requestId] = {
+    Mydataspace.lastRequestId++;
+    data.requestId = Mydataspace.lastRequestId;
+    Mydataspace.requests[data.requestId] = {
       options: options
     }
 
     // Init response handler
     var responseEventName = eventName + '.res';
-    if (MyDataSpace.subscriptions.indexOf(responseEventName) === -1) {
-      MyDataSpace.subscriptions.push(responseEventName);
-      MyDataSpace.on(responseEventName, function(data) {
-        MyDataSpace.handleResponse(data, 'success');
+    if (Mydataspace.subscriptions.indexOf(responseEventName) === -1) {
+      Mydataspace.subscriptions.push(responseEventName);
+      Mydataspace.on(responseEventName, function(data) {
+        Mydataspace.handleResponse(data, 'success');
       });
     }
 
     // Send request
-    MyDataSpace.emit(eventName, data);
+    Mydataspace.emit(eventName, data);
   },
 
   handleResponse: function(data, callbackName) {
     if (typeof data.requestId === 'undefined') {
       return;
     }
-    var req = MyDataSpace.requests[data.requestId];
+    var req = Mydataspace.requests[data.requestId];
     if (typeof req === 'undefined') {
       return;
     }
-    delete MyDataSpace.requests[data.requestId];
+    delete Mydataspace.requests[data.requestId];
     if (typeof req.options !== 'undefined' && callbackName in req.options) {
       var callback = req.options[callbackName];
       callback(data);

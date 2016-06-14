@@ -62,7 +62,7 @@ UIControls = {
   },
 
   getLoginButtonView: function(providerName) {
-    var authProvider = MyDataSpace.authProviders[providerName];
+    var authProvider = Mydataspace.authProviders[providerName];
     return {
       view: 'button',
       label: authProvider.title,
@@ -72,10 +72,10 @@ UIControls = {
       height: 50,
       css: 'login_panel__' + providerName + '_button',
       click: function() {
-        if (MyDataSpace.isLoggedIn()) {
+        if (Mydataspace.isLoggedIn()) {
           throw new Error('Already logged in');
         }
-        MyDataSpace.login(providerName);
+        Mydataspace.login(providerName);
       }
     };
   },

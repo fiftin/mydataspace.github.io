@@ -101,7 +101,7 @@ UI = {
     if (common.isPresent(seatch)) {
       data['search'] = seatch;
     }
-    MyDataSpace.emit('entities.getChildren', data);
+    Mydataspace.emit('entities.getChildren', data);
   },
 
   entityList_fill: function(entityId, children) {
@@ -134,8 +134,8 @@ UI = {
    * Reload data from the server.
    */
   refresh: function() {
-    MyDataSpace.emit('entities.getMyRoots', {});
-    MyDataSpace.emit('users.getMyProfile', {});
+    Mydataspace.emit('entities.getMyRoots', {});
+    Mydataspace.emit('users.getMyProfile', {});
   },
 
   clear: function() {
@@ -144,14 +144,14 @@ UI = {
   },
 
   initConnection: function() {
-    MyDataSpace.on('login', function() {
+    Mydataspace.on('login', function() {
       $$('menu__item_list').select($$('menu__item_list').getFirstId());
       $$('login_panel').hide();
       $$('data_panel').show();
       UI.refresh();
     });
 
-    MyDataSpace.on('logout', function() {
+    Mydataspace.on('logout', function() {
       $$('menu').hide();
       $$('login_panel').show();
       $$('data_panel').hide();
@@ -159,7 +159,7 @@ UI = {
     });
 
     // Initialize event listeners
-    MyDataSpace.on('entities.create.res', function(data) {
+    Mydataspace.on('entities.create.res', function(data) {
       $$('add_root_window').hide();
       $$('add_entity_window').hide();
       var parentId = UIHelper.parentId(UIHelper.idFromData(data));
@@ -182,27 +182,27 @@ UI = {
       }
     });
 
-    MyDataSpace.on('entities.getMyRoots.res', function(data) {
+    Mydataspace.on('entities.getMyRoots.res', function(data) {
       $$('entity_tree').clearAll();
       // convert received data to treeview format and load its to entity_tree.
       var formattedData = data.map(UIHelper.entityFromData);
       $$('entity_tree').parse(formattedData);
     });
 
-    MyDataSpace.on('users.getMyProfile.res', function(data) {
+    Mydataspace.on('users.getMyProfile.res', function(data) {
       if (common.isBlank(data['avatar'])) {
         data['avatar'] = '/images/no-avatar.png';
       }
       $$('profile').setValues(data);
     });
 
-    MyDataSpace.on('entities.delete.res', function(data) {
+    Mydataspace.on('entities.delete.res', function(data) {
       var entityId = UIHelper.idFromData(data);
       $$('entity_list').remove(entityId);
       $$('entity_tree').remove(entityId);
     });
 
-    MyDataSpace.on('entities.getChildren.res', function(data) {
+    Mydataspace.on('entities.getChildren.res', function(data) {
       var entityId = UIHelper.idFromData(data);
       var children = data.children.map(UIHelper.entityFromData);
       UI.entityTree_setChildren(entityId, children);
@@ -211,7 +211,7 @@ UI = {
       }
     });
 
-    MyDataSpace.on('entities.getWithMeta.res', function(data) {
+    Mydataspace.on('entities.getWithMeta.res', function(data) {
       if (UIHelper.idFromData(data) === $$('entity_list').getSelectedId()) {
         var formData = {
           name: UIHelper.nameFromData(data),
@@ -258,7 +258,7 @@ UI = {
               var data = $$('add_root_form').getValues();
               data.path = '';
               data.fields = [];
-              MyDataSpace.emit('entities.create', data);
+              Mydataspace.emit('entities.create', data);
             }
           },
           elements: [
@@ -292,7 +292,7 @@ UI = {
               var data = UIHelper.dataFromId(newEntityId);
               data.fields = [];
               data.type = formData.type;
-              MyDataSpace.emit('entities.create', data);
+              Mydataspace.emit('entities.create', data);
             }
           },
           elements: [
@@ -491,7 +491,7 @@ UI = {
                     // UI.refresh();
                     break;
                   case 'logout':
-                    MyDataSpace.logout();
+                    Mydataspace.logout();
                     break;
                   default:
                     throw new Error('Elligal menu item id');
@@ -504,7 +504,7 @@ UI = {
     });
 
     var authProviders =
-      Object.keys(MyDataSpace.authProviders)
+      Object.keys(Mydataspace.authProviders)
             .map(providerName => UIControls.getLoginButtonView(providerName));
     authProviders.unshift({});
     authProviders.push({});
@@ -568,7 +568,7 @@ UI = {
                   select: true,
                   on: {
                     onBeforeOpen: function(id) {
-                      MyDataSpace.request(
+                      Mydataspace.request(
                         'entities.getChildren', UIHelper.dataFromId(id));
                     },
                     onSelectChange:function () {
@@ -612,7 +612,7 @@ UI = {
                   template: '<div>#value#</div>',
                   on: {
                     onSelectChange:function () {
-                      MyDataSpace.emit('entities.getWithMeta', UIHelper.dataFromId($$('entity_list').getSelectedId()));
+                      Mydataspace.emit('entities.getWithMeta', UIHelper.dataFromId($$('entity_list').getSelectedId()));
                     }
                   }
                 },
@@ -643,7 +643,7 @@ UI = {
                       if (typeof dirtyData.childPrototype !== 'undefined') {
                         dirtyData.childPrototype = UIHelper.dataFromId(dirtyData.childPrototype);
                       }
-                      MyDataSpace.request('entities.change', dirtyData, function(res) {
+                      Mydataspace.request('entities.change', dirtyData, function(res) {
                         $$('entity_form').enable();
                         UI.entityForm_setClean();
                       }, function(err) {
@@ -658,7 +658,7 @@ UI = {
                     label: 'Refresh',
                     width: 100,
                     click: function() {
-                      MyDataSpace.emit(
+                      Mydataspace.emit(
                         'entities.getWithMeta',
                         UIHelper.dataFromId($$('entity_list').getSelectedId()));
                     }
@@ -695,7 +695,7 @@ UI = {
                         cancel: 'No',
                         callback: function(result) {
                           if (result) {
-                            MyDataSpace.request(
+                            Mydataspace.request(
                               'entities.delete',
                               UIHelper.dataFromId($$('entity_list').getSelectedId()));
                           }
