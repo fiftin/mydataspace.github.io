@@ -342,6 +342,86 @@ UI = {
       }
     });
 
+    // Run Script Window
+    webix.ui({
+      view: 'window',
+      id: 'run_script_window',
+      width: 500,
+      height: 400,
+      position: 'center',
+      modal: true,
+      head: 'Run Script',
+      on: {
+        onHide: function() {
+          $$('run_script_window__iframe').getIframe().src = '';
+        },
+        onShow: function() {
+          $$('run_script_window__iframe').load('/run_script.html');
+        },
+      },
+      body:{
+        rows: [
+          { view: 'iframe', id: 'run_script_window__iframe' },
+          { view: 'toolbar',
+            elements: [
+              { view: 'button',
+                type: 'icon',
+                icon: 'play',
+                label: 'Run Script',
+                width: 100,
+                click: function() {
+                  var iframe = $$('run_script_window__iframe').getIframe();
+                  var fields = $$('entity_form').getValues().fields;
+                  if (typeof fields === 'undefined') {
+                    fields = {};
+                  }
+                  var values = Object.keys(fields).map(key => fields[key]);
+                  values.sort((a, b) => {
+                    if (a.type === 'j' && b.type === 'u') {
+                      return 1;
+                    } else if (a.type === 'u' && b.type === 'j') {
+                      return -1;
+                    } else if (a.type === 'j' && b.type === 'j') {
+                      if (a.name.toUpperCase() === '__MAIN__') {
+                        return 1;
+                      } else if (b.name.toUpperCase() === '__MAIN__') {
+                        return -1;
+                      }
+                      return 0;
+                    }
+                    return 0;
+                  });
+                  for (let field of values) {
+                    if (field.type !== 'j' && field.type !== 'u') {
+                      continue;
+                    }
+                    var script = iframe.contentDocument.createElement('script');
+                    if (field.type === 'j') {
+                      script.innerHTML = field.value;
+                    } else {
+                      script.src = field.value;
+                    }
+                    iframe.contentDocument.body.appendChild(script);
+                  }
+                }
+              },
+              {},
+              { view: 'button',
+                type: 'icon',
+                icon: 'remove',
+                label: 'Close',
+                width: 100,
+                click: function() {
+                  $$('run_script_window').hide();
+                }
+              },
+            ]
+          },
+        ]
+      },
+    });
+
+
     // Left side menu
 		webix.ui({
 			view: 'sidemenu',
@@ -565,6 +645,15 @@ UI = {
                     width: 120,
                     click: function() {
                       $$('add_field_window').show();
+                    }
+                  },
+                  { view: 'button',
+                    type: 'icon',
+                    icon: 'play',
+                    label: 'Run Script',
+                    width: 120,
+                    click: function() {
+                      $$('run_script_window').show();
                     }
                   },
                   {},
