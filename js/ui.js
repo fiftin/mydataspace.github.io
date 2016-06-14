@@ -357,6 +357,8 @@ UI = {
         },
         onShow: function() {
           $$('run_script_window__iframe').load('/run_script.html');
+          $$('run_script_window__iframe_stop').disable();
+          $$('run_script_window__iframe_run').enable();
         },
       },
       body:{
@@ -369,8 +371,17 @@ UI = {
                 icon: 'play',
                 label: 'Run Script',
                 width: 100,
+                id: 'run_script_window__iframe_run',
                 click: function() {
+                  $$('run_script_window__iframe_stop').enable();
+                  $$('run_script_window__iframe_run').disable();
                   var iframe = $$('run_script_window__iframe').getIframe();
+                  iframe.contentDocument.getElementById('run_script__state').classList.add('fa-spin');
+                  iframe.contentWindow.console = {
+                    log: function(message) {
+                      alert(message);
+                    }
+                  };
                   var fields = $$('entity_form').getValues().fields;
                   if (typeof fields === 'undefined') {
                     fields = {};
@@ -403,6 +414,20 @@ UI = {
                     }
                     iframe.contentDocument.body.appendChild(script);
                   }
+                }
+              },
+              { view: 'button',
+                type: 'icon',
+                icon: 'stop',
+                label: 'Stop Script',
+                width: 100,
+                disabled: true,
+                id: 'run_script_window__iframe_stop',
+                click: function() {
+                  $$('run_script_window__iframe_stop').disable();
+                  $$('run_script_window__iframe_run').enable();
+                  $$('run_script_window__iframe').getIframe().src = '';
+                  $$('run_script_window__iframe').load('/run_script.html');
                 }
               },
               {},
