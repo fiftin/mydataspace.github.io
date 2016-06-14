@@ -504,7 +504,7 @@ UI = {
     });
 
     var authProviders =
-      Object.keys(Mydataspace.authProviders)
+      Object.keys(Mydataspace.getAuthProviders())
             .map(providerName => UIControls.getLoginButtonView(providerName));
     authProviders.unshift({});
     authProviders.push({});

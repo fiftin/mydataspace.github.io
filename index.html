@@ -1,13 +1,22 @@
 ---
 layout: webix
 ---
+{% if jekyll.environment == "local" %}
+  {% assign api_url = "http://localhost:8080" %}
+  {% assign api_websocket_url = "http://localhost:8080" %}
+{% else %}
+  {% assign api_url = site.api_url %}
+  {% assign api_websocket_url = site.api_websocket_url %}
+{% endif %}
 <script type="text/javascript" charset="utf-8">
-  UI.render();
   Mydataspace.init({
+    apiURL: '{{ api_url }}',
+    websocketURL: '{{ api_websocket_url }}',
     connected: function() {
       UI.initConnection();
       UI.refresh();
     }
   });
+  UI.render();
   Mydataspace.connect();
 </script>

@@ -62,7 +62,7 @@ UIControls = {
   },
 
   getLoginButtonView: function(providerName) {
-    var authProvider = Mydataspace.authProviders[providerName];
+    var authProvider = Mydataspace.getAuthProvider(providerName);
     return {
       view: 'button',
       label: authProvider.title,

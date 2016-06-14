@@ -1,13 +1,3 @@
----
----
-{% if jekyll.environment == "local" %}
-  {% assign apiurl = "http://localhost:8080" %}
-  {% assign apiwsurl = "http://localhost:8080" %}
-{% else %}
-  {% assign apiurl = site.apiurl %}
-  {% assign apiwsurl = site.apiwsurl %}
-{% endif %}
-
 Mydataspace = {
   initialized: false,
   connected: false,
@@ -20,11 +10,12 @@ Mydataspace = {
     logout: [],
     connected: []
   },
+
   authProviders: {
     facebook: {
       title: 'Connect to Facebook',
       icon: 'facebook',
-      url: 'https://www.facebook.com/dialog/oauth?client_id=827438877364954&scope=email&redirect_uri={{ apiurl }}/auth?authProvider=facebook&display=popup',
+      url: 'https://www.facebook.com/dialog/oauth?client_id=827438877364954&scope=email&redirect_uri={{api_url}}/auth?authProvider=facebook&display=popup',
       loginWindow: {
         height: 400
       }
@@ -32,11 +23,29 @@ Mydataspace = {
     google: {
       title: 'Connect to Google',
       icon: 'google-plus',
-      url: 'https://accounts.google.com/o/oauth2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.me%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.profile.emails.read&response_type=code&client_id=821397494321-s85oh989s0ip2msnock29bq1gpprk07f.apps.googleusercontent.com&redirect_uri={{ apiurl | cgi_escape }}%2Fauth%3FauthProvider%3Dgoogle',
+      url: 'https://accounts.google.com/o/oauth2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.me%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.profile.emails.read&response_type=code&client_id=821397494321-s85oh989s0ip2msnock29bq1gpprk07f.apps.googleusercontent.com&redirect_uri={{api_url}}%2Fauth%3FauthProvider%3Dgoogle',
       loginWindow: {
         height: 800
       }
     },
+  },
+
+  getAuthProviders: function() {
+    var ret = common.copy(Mydataspace.authProviders);
+    for (var providerName in ret) {
+      ret[providerName].url = ret[providerName].url.replace('{{api_url}}', encodeURIComponent(Mydataspace.options.apiURL));
+    }
+    return ret;
+  },
+
+  getAuthProvider: function(providerName) {
+    var prov = Mydataspace.authProviders[providerName];
+    if (typeof prov === 'undefined') {
+      return null;
+    }
+    var ret = common.copy(prov);
+    ret.url = ret.url.replace('{{api_url}}', encodeURIComponent(Mydataspace.options.apiURL));
+    return ret;
   },
 
   init: function(options) {
@@ -45,7 +54,6 @@ Mydataspace = {
       return;
     }
     Mydataspace.options = common.extend({
-      host: '{{ apiwsurl }}',
       connected: function() {
         console.log('Maybe you forgot to specify connected-event handler');
       }
@@ -62,7 +70,7 @@ Mydataspace = {
   },
 
   connect: function(done) {
-    Mydataspace.socket = io(Mydataspace.options.host, {
+    Mydataspace.socket = io(Mydataspace.options.websocketURL, {
       // secure: true,
       'force new connection' : true,
       'reconnectionAttempts': 'Infinity', //avoid having user reconnect manually in order to prevent dead clients after a server restart
@@ -116,7 +124,7 @@ Mydataspace = {
   },
 
   login: function(providerName) {
-    var authProvider = Mydataspace.authProviders[providerName];
+    var authProvider = Mydataspace.getAuthProvider(providerName);
     var authWindow = window.open(authProvider.url, '', 'width=640, height=' + authProvider.loginWindow.height);
     authWindow.focus();
     var authCheckInterval = setInterval(function() {
