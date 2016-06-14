@@ -1,4 +1,5 @@
 UIHelper = {
+  LABEL_WIDTH: 100,
   NUMBER_OF_FIXED_INPUTS_IN_FIELDS_FORM: 6,
   MAX_STRING_FIELD_LENGTH: 1000,
   FIELD_TYPES: {
@@ -27,7 +28,7 @@ UIHelper = {
       }
     },
     u: {
-      title: 'Script URL',
+      title: 'Scr. URL',
       isValidValue: function(value) {
         return value.toString().length < UIHelper.MAX_STRING_FIELD_LENGTH;
       }

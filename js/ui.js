@@ -60,6 +60,7 @@ UI = {
           label: data.name,
           name: 'fields.' + data.name + '.value',
           value: data.value,
+          labelWidth: UIHelper.LABEL_WIDTH
         },
         { view: 'select',
           width: 80,
@@ -261,7 +262,7 @@ UI = {
             }
           },
           elements: [
-            { view: 'text', label: 'Name', required: true, name: 'root' },
+            { view: 'text', label: 'Name', required: true, name: 'root', labelWidth: UIHelper.LABEL_WIDTH },
             UIControls.getEntityTypeSelectTemplate(),
             UIControls.getSubmitCancelForFormWindow('add_root')
           ]
@@ -295,7 +296,7 @@ UI = {
             }
           },
           elements: [
-            { view: 'text', required: true, label: 'Name', name: 'name' },
+            { view: 'text', required: true, label: 'Name', name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
             UIControls.getEntityTypeSelectTemplate(),
             UIControls.getSubmitCancelForFormWindow('add_entity')
           ]
@@ -595,10 +596,10 @@ UI = {
                 complexData: true,
                 scroll: true,
                 elements: [
-                  { view: 'text', label: 'Name', name: 'name' },
+                  { view: 'text', label: 'Name', name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
                   UIControls.getEntityTypeSelectTemplate(),
-                  { view: 'text', label: 'Decription', name: 'description' },
-                  { view: 'text', label: 'Child Proto', name: 'childPrototype' },
+                  { view: 'text', label: 'Decription', name: 'description', labelWidth: UIHelper.LABEL_WIDTH },
+                  { view: 'text', label: 'Child Proto', name: 'childPrototype', labelWidth: UIHelper.LABEL_WIDTH },
                   { template: 'Fields', type: 'section' },
                   { view: 'label', label: 'No field exists', id: 'entity_form__no_fields', align: 'center', }
                 ],

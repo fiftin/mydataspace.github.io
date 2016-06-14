@@ -16,13 +16,14 @@ UIControls = {
   getEntityTypeSelectTemplate: function() {
     return {
       view: 'select',
-      label: 'Access',
+      label: 'Others Can',
       name: 'type',
       options: [
-        { id: 'private', value: 'Private' },
+        { id: 'private', value: 'Only Read' },
         { id: 'public', value: 'Create Children' },
         { id: 'unqiue', value: 'Create One Child' },
-      ]
+      ],
+      labelWidth: UIHelper.LABEL_WIDTH
     };
   },
 
