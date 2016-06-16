@@ -35,7 +35,7 @@ describe('formatters', function() {
   });
 
   describe('EntitySimplifier', function() {
-    it('should returns short form of children', function() {
+    it('should returns short form of entity in depth', function() {
       var data = {
         children: [
           {
@@ -80,6 +80,36 @@ describe('formatters', function() {
 
       expect(data.children.addresses.children.addr1.fields.title).to.eq('Address 1');
       expect(data.children.addresses.children.addr1.fields.zip).to.eq(455000);
+    });
+
+    it('should returns short form of datas', function() {
+      var data = {
+        datas: [
+          {
+            children: [
+              {
+                path: 'users/denis-gukov/addresses',
+                text: 'Addresses',
+                fields: [
+                  { name: 'title', value: 'Addresses' }
+                ],
+              },
+              { path: 'users/denis-gukov/info', text: 'Info' },
+            ],
+            fields: [
+              { name: 'address', value: 'Lenin st. 101', type: 's' },
+              { name: 'zip', value: 455000, type: 'i' },
+            ]
+          }
+        ]
+      };
+
+      var formatter = new EntitySimplifier();
+      formatter.format(data);
+
+      expect(data.datas[0].fields.address).to.eq('Lenin st. 101');
+      expect(data.datas[0].fields.zip).to.eq(455000);
+
     });
   });
 

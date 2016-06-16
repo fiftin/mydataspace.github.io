@@ -28,7 +28,10 @@ EntityChildrenSimplifier.prototype.format = function(data) {
 }
 
 EntitySimplifier.prototype.format = function(data) {
-  this.formatEntity(data);
+  var datas = data.datas == null ? [data] : data.datas;
+  for (let datum of datas) {
+    this.formatEntity(datum);
+  }
 }
 
 EntitySimplifier.prototype.formatEntity = function(entity) {
