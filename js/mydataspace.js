@@ -160,13 +160,13 @@ Mydataspace = {
 
   on: function(eventName, callback) {
     if (typeof Mydataspace.listeners[eventName] !== 'undefined') {
-      Mydataspace.listeners[eventName].push(Mydataspace.formatAndCall.bind(Mydataspace, eventName, data));
+      Mydataspace.listeners[eventName].push(Mydataspace.formatAndCall.bind(Mydataspace, eventName, callback));
       return;
     }
     if (typeof Mydataspace.socket === 'undefined') {
       throw new Error('You must connect to server before subscribe to events');
     }
-    Mydataspace.socket.on(eventName, Mydataspace.formatAndCall.bind(Mydataspace, eventName, data));
+    Mydataspace.socket.on(eventName, Mydataspace.formatAndCall.bind(Mydataspace, eventName, callback));
   },
 
   request: function(eventName, data, successCallback, failCallback) {
