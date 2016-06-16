@@ -204,12 +204,14 @@ Mydataspace = {
   },
 
   formatAndCall: function(eventName, callback, data) {
-    var formatter = Mydataspace.formatters[eventName];
+    var formatterArr = Mydataspace.formatters[eventName];
     if (data != null && data.datas != null) {
       data = datas;
     }
-    if (formatter != null) {
-      formatter.format(data);
+    if (formatterArr != null) {
+      for (let formatter of formatterArr) {
+        formatter.format(data);
+      }
     }
     callback(data);
   },
