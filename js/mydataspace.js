@@ -204,7 +204,7 @@ Mydataspace = {
   },
 
   formatAndCall: function(eventName, callback, data) {
-    var formatter = Mydataspace.formatters(eventName);
+    var formatter = Mydataspace.formatters[eventName];
     if (formatter != null) {
       formatter.format(data);
     }
