@@ -8,13 +8,13 @@ module.exports = function(config) {
     basePath: '',
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['bower', 'mocha', 'chai'],
+    frameworks: ['mocha', 'chai'],
     bowerPackages: [],
 
     // list of files / patterns to load in the browser
     files: [
-      'js/*.js',
-      'test/**/*.js'
+      'test/**/*Spec.js',
+      'js/**/*.js'
     ],
 
 
@@ -49,7 +49,7 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
 
 
     // start these browsers

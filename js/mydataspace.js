@@ -5,6 +5,7 @@ Mydataspace = {
   requests: {},
   subscriptions: [],
   lastRequestId: 10000,
+  formatters: {},
   listeners: {
     login: [],
     logout: [],
@@ -159,13 +160,13 @@ Mydataspace = {
 
   on: function(eventName, callback) {
     if (typeof Mydataspace.listeners[eventName] !== 'undefined') {
-      Mydataspace.listeners[eventName].push(callback);
+      Mydataspace.listeners[eventName].push(Mydataspace.formatAndCall.bind(Mydataspace, eventName, data));
       return;
     }
     if (typeof Mydataspace.socket === 'undefined') {
       throw new Error('You must connect to server before subscribe to events');
     }
-    Mydataspace.socket.on(eventName, callback);
+    Mydataspace.socket.on(eventName, Mydataspace.formatAndCall.bind(Mydataspace, eventName, data));
   },
 
   request: function(eventName, data, successCallback, failCallback) {
@@ -185,7 +186,8 @@ Mydataspace = {
     Mydataspace.lastRequestId++;
     data.requestId = Mydataspace.lastRequestId;
     Mydataspace.requests[data.requestId] = {
-      options: options
+      options: options,
+      eventName: eventName
     }
 
     // Init response handler
@@ -201,6 +203,14 @@ Mydataspace = {
     Mydataspace.emit(eventName, data);
   },
 
+  formatAndCall: function(eventName, callback, data) {
+    var formatter = Mydataspace.formatters(eventName);
+    if (formatter != null) {
+      formatter.format(data);
+    }
+    callback(data);
+  },
+
   handleResponse: function(data, callbackName) {
     if (typeof data.requestId === 'undefined') {
       return;
@@ -212,8 +222,15 @@ Mydataspace = {
     delete Mydataspace.requests[data.requestId];
     if (typeof req.options !== 'undefined' && callbackName in req.options) {
       var callback = req.options[callbackName];
-      callback(data);
+      Mydataspace.formatAndCall(req.eventName, callback, data);
     }
+  },
+
+  registerFormatter: function(eventName, formatter) {
+    if (!(eventName in Mydataspace.formatters)) {
+      Mydataspace.formatters[eventName] = [];
+    }
+    Mydataspace.formatters[eventName].push(formatter);
   }
 
 };
