@@ -182,16 +182,16 @@ Mydataspace = {
         return;
       }
     }
+    var responseEventName = eventName + '.res';
     // Store request information to array
     Mydataspace.lastRequestId++;
     data.requestId = Mydataspace.lastRequestId;
     Mydataspace.requests[data.requestId] = {
       options: options,
-      eventName: eventName
+      eventName: responseEventName
     }
 
     // Init response handler
-    var responseEventName = eventName + '.res';
     if (Mydataspace.subscriptions.indexOf(responseEventName) === -1) {
       Mydataspace.subscriptions.push(responseEventName);
       Mydataspace.on(responseEventName, function(data) {
@@ -205,7 +205,7 @@ Mydataspace = {
 
   formatAndCall: function(eventName, callback, data) {
     var formatter = Mydataspace.formatters[eventName];
-    if (data.datas != null) {
+    if (data != null && data.datas != null) {
       data = datas;
     }
     if (formatter != null) {
