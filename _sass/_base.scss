@@ -50,3 +50,19 @@ body {
   font-family: "Courier New";
   font-size: 12px;
 }
+
+.run_script__control_panel {
+  text-align: center;
+}
+
+.run_script__button {
+  border: 0;
+  background: none;
+  cursor: pointer;
+  &:hover {
+    color: gray;
+  }
+  &:active {
+    color: blue;
+  }
+}

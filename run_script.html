@@ -1,5 +1,6 @@
 ---
 layout: default
+title: Run Script
 ---
 <div id="run_script" class="run_script">
   <div id="run_script__state_wrap" class="run_script__state_wrap">
@@ -9,4 +10,20 @@ layout: default
     </div>
   </div>
   <div id="run_script__console" class="run_script__console"></div>
+  <div class="run_script__control_panel">
+    <button type="button" id="run_script__run_button" class="run_script__button">
+      <i class="fa fa-3x fa-play" aria-hidden="true"></i>
+    </button>
+    <button type="button" id="run_script__refresh_button" class="run_script__button">
+      <i class="fa fa-3x fa-refresh" aria-hidden="true"></i>
+    </button>
+  </div>
+  <script type="text/javascript">
+    document.getElementById('run_script__run_button').addEventListener(function() {
+
+    });
+    document.getElementById('run_script__refresh_button').addEventListener(function() {
+
+    });
+  </script>
 </div>

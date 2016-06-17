@@ -130,32 +130,32 @@ UI = {
     }
   },
 
-  runScriptWindow_run: function() {
-    $$('run_script_window__iframe_stop').enable();
-    $$('run_script_window__iframe_run').disable();
-    var iframe = $$('run_script_window__iframe').getIframe();
-    iframe.contentDocument.getElementById('run_script__state').classList.add('fa-spin');
-    iframe.contentDocument.getElementById('run_script__state_wrap').classList.add('run_script__state_wrap--run');
-    iframe.contentDocument.getElementById('run_script__console').classList.add('run_script__console--run');
-    iframe.contentWindow.console = {
-      log: function(message) {
-        var div = iframe.contentDocument.createElement('div');
-        div.classList.add('run_script__console_record');
-        div.innerText = message;
-        iframe.contentDocument.getElementById('run_script__console').appendChild(div);
-      },
-      scriptComplete: function() {
-        UI.runScriptWindow_stop();
-      }
-    };
-  },
-
-  runScriptWindow_stop: function() {
-    $$('run_script_window__iframe_stop').disable();
-    $$('run_script_window__iframe_run').enable();
-    $$('run_script_window__iframe').getIframe().src = '';
-    $$('run_script_window__iframe').load('/run_script.html');
-  },
+  // runScriptWindow_run: function() {
+  //   $$('run_script_window__iframe_stop').enable();
+  //   $$('run_script_window__iframe_run').disable();
+  //   var iframe = $$('run_script_window__iframe').getIframe();
+  //   iframe.contentDocument.getElementById('run_script__state').classList.add('fa-spin');
+  //   iframe.contentDocument.getElementById('run_script__state_wrap').classList.add('run_script__state_wrap--run');
+  //   iframe.contentDocument.getElementById('run_script__console').classList.add('run_script__console--run');
+  //   iframe.contentWindow.console = {
+  //     log: function(message) {
+  //       var div = iframe.contentDocument.createElement('div');
+  //       div.classList.add('run_script__console_record');
+  //       div.innerText = message;
+  //       iframe.contentDocument.getElementById('run_script__console').appendChild(div);
+  //     },
+  //     scriptComplete: function() {
+  //       UI.runScriptWindow_stop();
+  //     }
+  //   };
+  // },
+  //
+  // runScriptWindow_stop: function() {
+  //   $$('run_script_window__iframe_stop').disable();
+  //   $$('run_script_window__iframe_run').enable();
+  //   $$('run_script_window__iframe').getIframe().src = '';
+  //   $$('run_script_window__iframe').load('/run_script.html');
+  // },
 
   /**
    * Reload data from the server.
@@ -368,99 +368,104 @@ UI = {
         }
       }
     });
-
-    // Run Script Window
-    webix.ui({
-      view: 'window',
-      id: 'run_script_window',
-      width: 500,
-      height: 400,
-      position: 'center',
-      modal: true,
-      head: 'Run Script',
-      on: {
-        onHide: function() {
-          UI.runScriptWindow_stop();
-        },
-        onShow: function() {
-          $$('run_script_window__iframe').load('/run_script.html');
-        },
-      },
-      body:{
-        rows: [
-          { view: 'iframe', id: 'run_script_window__iframe' },
-          { view: 'toolbar',
-            elements: [
-              { view: 'button',
-                type: 'icon',
-                icon: 'play',
-                label: 'Run Script',
-                width: 100,
-                id: 'run_script_window__iframe_run',
-                click: function() {
-                  UI.runScriptWindow_run();
-                  var fields = $$('entity_form').getValues().fields;
-                  if (typeof fields === 'undefined') {
-                    fields = {};
-                  }
-                  var values = Object.keys(fields).map(key => fields[key]);
-                  values.sort((a, b) => {
-                    if (a.type === 'j' && b.type === 'u') {
-                      return 1;
-                    } else if (a.type === 'u' && b.type === 'j') {
-                      return -1;
-                    } else if (a.type === 'j' && b.type === 'j') {
-                      if (a.name.toUpperCase() === '__MAIN__') {
-                        return 1;
-                      } else if (b.name.toUpperCase() === '__MAIN__') {
-                        return -1;
-                      }
-                      return 0;
-                    }
-                    return 0;
-                  });
-                  for (let field of values) {
-                    if (field.type !== 'j' && field.type !== 'u') {
-                      continue;
-                    }
-                    var iframe = $$('run_script_window__iframe').getIframe();
-                    var script = iframe.contentDocument.createElement('script');
-                    if (field.type === 'j') {
-                      script.innerHTML = field.value;
-                    } else {
-                      script.src = field.value;
-                    }
-                    iframe.contentDocument.body.appendChild(script);
-                  }
-                }
-              },
-              { view: 'button',
-                type: 'icon',
-                icon: 'stop',
-                label: 'Stop Script',
-                width: 100,
-                disabled: true,
-                id: 'run_script_window__iframe_stop',
-                click: function() {
-                  UI.runScriptWindow_stop();
-                }
-              },
-              {},
-              { view: 'button',
-                type: 'icon',
-                icon: 'remove',
-                label: 'Close',
-                width: 100,
-                click: function() {
-                  $$('run_script_window').hide();
-                }
-              },
-            ]
-          },
-        ]
-      },
-    });
-
+    //
+    // // Run Script Window
+    // webix.ui({
+    //   view: 'window',
+    //   id: 'run_script_window',
+    //   width: 500,
+    //   height: 400,
+    //   position: 'center',
+    //   modal: true,
+    //   head: 'Run Script',
+    //   on: {
+    //     onHide: function() {
+    //       UI.runScriptWindow_stop();
+    //     },
+    //     onShow: function() {
+    //       $$('run_script_window__iframe').load('/run_script.html');
+    //     },
+    //   },
+    //   body:{
+    //     rows: [
+    //       { view: 'iframe', id: 'run_script_window__iframe' },
+    //       { view: 'toolbar',
+    //         elements: [
+    //           { view: 'button',
+    //             type: 'icon',
+    //             icon: 'play',
+    //             label: 'Run Script',
+    //             width: 100,
+    //             id: 'run_script_window__iframe_run',
+    //             click: function() {
+    //               // UI.runScriptWindow_run();
+    //
+    //               var fields = $$('entity_form').getValues().fields;
+    //               if (typeof fields === 'undefined') {
+    //                 fields = {};
+    //               }
+    //               var values = Object.keys(fields).map(key => fields[key]);
+    //               values.sort((a, b) => {
+    //                 if (a.type === 'j' && b.type === 'u') {
+    //                   return 1;
+    //                 } else if (a.type === 'u' && b.type === 'j') {
+    //                   return -1;
+    //                 } else if (a.type === 'j' && b.type === 'j') {
+    //                   if (a.name.toUpperCase() === '__MAIN__') {
+    //                     return 1;
+    //                   } else if (b.name.toUpperCase() === '__MAIN__') {
+    //                     return -1;
+    //                   }
+    //                   return 0;
+    //                 }
+    //                 return 0;
+    //               });
+    //
+    //               UIHelper.popupCenter('/run_script.html', 'Run Script', 500, 400);
+    //               // for (let field of values) {
+    //               //   if (field.type !== 'j' && field.type !== 'u') {
+    //               //     continue;
+    //               //   }
+    //               //   var iframe = $$('run_script_window__iframe').getIframe();
+    //               //   var script = iframe.contentDocument.createElement('script');
+    //               //   if (field.type === 'j') {
+    //               //     script.innerHTML = field.value;
+    //               //   } else {
+    //               //     script.src = field.value;
+    //               //   }
+    //               //   iframe.contentDocument.body.appendChild(script);
+    //               // }
+    //
+    //
+    //             }
+    //           },
+    //           { view: 'button',
+    //             type: 'icon',
+    //             icon: 'stop',
+    //             label: 'Stop Script',
+    //             width: 100,
+    //             disabled: true,
+    //             id: 'run_script_window__iframe_stop',
+    //             click: function() {
+    //               UI.runScriptWindow_stop();
+    //             }
+    //           },
+    //           {},
+    //           { view: 'button',
+    //             type: 'icon',
+    //             icon: 'remove',
+    //             label: 'Close',
+    //             width: 100,
+    //             click: function() {
+    //               $$('run_script_window').hide();
+    //             }
+    //           },
+    //         ]
+    //       },
+    //     ]
+    //   },
+    // });
+    //
 
     // Left side menu
 		webix.ui({
@@ -693,7 +698,7 @@ UI = {
                     label: 'Run Script',
                     width: 120,
                     click: function() {
-                      $$('run_script_window').show();
+                      UIHelper.popupCenter('/run_script.html', 'Run Script', 500, 400);
                     }
                   },
                   {},
