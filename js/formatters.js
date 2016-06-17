@@ -18,7 +18,7 @@ EntityFieldsSimplifier.prototype.format = function(data) {
 
 EntityChildrenSimplifier.prototype.format = function(data) {
   var res = {};
-  if (common.isPresent(data.children)) {
+  if (Array.isArray(data.children)) {
     for (var child of data.children) {
       var childName = common.getChildName(child.path)
       res[childName] = child;
@@ -42,7 +42,7 @@ EntitySimplifier.prototype.format = function(data) {
 }
 
 EntitySimplifier.prototype.formatEntity = function(entity) {
-  if (common.isPresent(entity.children)) {
+  if (Array.isArray(data.children)) {
     for (var child of entity.children) {
       this.formatEntity(child);
     }

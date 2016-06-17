@@ -1,3 +1,5 @@
+$control-panel-height: 70px;
+
 body {
   margin: 0;
 }
@@ -6,13 +8,43 @@ body {
     margin-bottom: $spacing-unit / 2;
 }
 
-.run_script {
+.run_script__wrap {
   width: 100%;
-  height: 305px;
+  position: absolute;
+  bottom: $control-panel-height;
+  top: 0;
+}
+
+.run_script__control_panel {
+  text-align: center;
+  height: $control-panel-height;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: #3498db;
+}
+
+.run_script {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .run_script__state {
-  color: gray;
+  color: #268fd5;
+}
+
+.run_script__state--run {
+}
+
+.run_script__state--success {
+  color: #27ae60;
+}
+
+.run_script__state--fail {
+  color: #ce5545;
 }
 
 .run_script__state_container {
@@ -34,12 +66,13 @@ body {
 }
 
 .run_script__console {
+  font-family: "Courier New";
+  font-size: 16px;
   height: 0;
-  overflow: auto;
-  transition: 0.3s;
-  border: 1px solid #ddd;
-  border-top-color: gray;
-  background: #ddd;
+  overflow-y: scroll;
+  transition: height 0.3s;
+  background: black;
+  color: black;
 }
 
 .run_script__console--run {
@@ -47,22 +80,43 @@ body {
 }
 
 .run_script__console_record {
-  font-family: "Courier New";
-  font-size: 12px;
+  padding: 5px;
 }
 
-.run_script__control_panel {
-  text-align: center;
+.run_script__console_record--log {
+  color: #aaa;
+  transition: color 0.5s;
 }
+
+.run_script__console_record--info {
+  color: #27ae60;
+  transition: color 0.5s;
+}
+
+.run_script__console_record--warn {
+  color: yellow;
+  transition: color 0.5s;
+}
+
+.run_script__console_record--error {
+  color: #ce5545;
+  transition: color 0.5s;
+}
+
 
 .run_script__button {
+  padding: 10px 15px;
+  margin-top: 5px;
   border: 0;
   background: none;
   cursor: pointer;
+  transition: background-color 0.2s;
+  border-radius: 6px;
+  color: white;
   &:hover {
-    color: gray;
+    background: #268fd5;
   }
   &:active {
-    color: blue;
+    background: #268fd5;
   }
 }

@@ -1,29 +1,113 @@
 ---
-layout: default
+layout: run_script
 title: Run Script
 ---
 <div id="run_script" class="run_script">
-  <div id="run_script__state_wrap" class="run_script__state_wrap">
-    <div class="run_script__state_container">
-      <i id="run_script__state" class="run_script__state fa fa-cog fa-4x"></i>
-      <span class="sr-only">Loading...</span>
+
+  <div class="run_script__wrap">
+    <div id="run_script__state_wrap" class="run_script__state_wrap">
+      <div class="run_script__state_container">
+        <i id="run_script__state" class="run_script__state fa fa-cog fa-5x"></i>
+      </div>
     </div>
+    <div id="run_script__console" class="run_script__console"></div>
   </div>
-  <div id="run_script__console" class="run_script__console"></div>
+
   <div class="run_script__control_panel">
     <button type="button" id="run_script__run_button" class="run_script__button">
-      <i class="fa fa-3x fa-play" aria-hidden="true"></i>
+      <i id="run_script__run_button_icon" class="fa fa-3x fa-play" aria-hidden="true"></i>
     </button>
-    <button type="button" id="run_script__refresh_button" class="run_script__button">
-      <i class="fa fa-3x fa-refresh" aria-hidden="true"></i>
-    </button>
+    <script type="text/javascript">
+
+      function addScript(options) {
+        var script = options.scripts[options.lastScriptIndex];
+
+        var scriptTag = document.createElement('script');
+        if (script.type === 'j') {
+          scriptTag.innerHTML = script.value;
+          // MDSConsole.info('Script executed: ' + script.name);
+          // addScript(options);
+          // return;
+        } else {
+          scriptTag.src = script.value;
+        }
+
+        scriptTag.setAttribute('data-script-name', script.name);
+        scriptTag.addEventListener('error', function() {
+          // Stop loading
+          lastScriptIndex = 10000000;
+          MDSConsole.fail();
+          MDSConsole.error('Remote script failed: ' + this.getAttribute('data-script-name') + '. Running aborted');
+        });
+
+        scriptTag.addEventListener('load', function() {
+          MDSConsole.info('Remote script loaded: ' + this.getAttribute('data-script-name'));
+          if (options.lastScriptIndex > options.scripts.length - 1) {
+            return;
+          }
+          addScript(options);
+        });
+
+        options.lastScriptIndex++;
+        document.body.appendChild(scriptTag);
+      }
+
+      window.addEventListener('message', function(e) {
+        if (e.data.message === 'scripts') {
+          var options = {
+            scripts: e.data.scripts,
+            lastScriptIndex: 0
+          }
+          addScript(options);
+        }
+      });
+
+      document.getElementById('run_script__run_button').addEventListener('click', function() {
+        if (document.getElementById('run_script__run_button_icon').classList.contains('fa-refresh')) {
+          window.location.href = window.location.href;
+          return;
+        }
+        document.getElementById('run_script__state_wrap').classList.add('run_script__state_wrap--run');
+        document.getElementById('run_script__console').classList.add('run_script__console--run');
+        document.getElementById('run_script__run_button_icon').classList.remove('fa-play');
+        document.getElementById('run_script__run_button_icon').classList.add('fa-refresh');
+        document.getElementById('run_script__state').classList.add('fa-spin');
+        document.getElementById('run_script__state').classList.add('run_script__state--run');
+        window.opener.postMessage({ message: 'getScripts' }, '*');
+      });
+
+      var MDSConsole = {
+        post: function(type, message) {
+          var logRecord = document.createElement('div');
+          logRecord.classList.add('run_script__console_record');
+          logRecord.innerText = message;
+          var console = document.getElementById('run_script__console');
+          console.appendChild(logRecord);
+          console.scrollTop = console.scrollHeight - console.clientHeight;
+          logRecord.classList.add('run_script__console_record--' + type);
+        },
+        log: function(message) { MDSConsole.post('log', message) },
+        info: function(message) { MDSConsole.post('info', message) },
+        error: function(message) { MDSConsole.post('error', message) },
+        warn: function(message) { MDSConsole.post('warn', message) },
+
+        success: function() {
+          document.getElementById('run_script__state').classList.remove('fa-spin');
+          document.getElementById('run_script__state').classList.remove('fa-cog');
+          document.getElementById('run_script__state').classList.remove('run_script__state--run');
+          document.getElementById('run_script__state').classList.add('fa-check');
+          document.getElementById('run_script__state').classList.add('run_script__state--success');
+        },
+        fail: function() {
+          document.getElementById('run_script__state').classList.remove('fa-spin');
+          document.getElementById('run_script__state').classList.remove('fa-cog');
+          document.getElementById('run_script__state').classList.remove('run_script__state--run');
+          document.getElementById('run_script__state').classList.add('fa-times');
+          document.getElementById('run_script__state').classList.add('run_script__state--fail');
+        }
+      }
+
+    </script>
   </div>
-  <script type="text/javascript">
-    document.getElementById('run_script__run_button').addEventListener(function() {
 
-    });
-    document.getElementById('run_script__refresh_button').addEventListener(function() {
-
-    });
-  </script>
 </div>

@@ -263,6 +263,35 @@ UI = {
       return;
     }
     UI.rendered = true;
+
+
+    window.addEventListener('message', function(e) {
+      if (e.data.message === 'getScripts') {
+        var fields = $$('entity_form').getValues().fields;
+        if (typeof fields === 'undefined') {
+          fields = {};
+        }
+        var values = Object.keys(fields).map(key => fields[key]).filter(value => value.type === 'j' || value.type === 'u');
+        values.sort((a, b) => {
+          if (a.type === 'j' && b.type === 'u') {
+            return 1;
+          } else if (a.type === 'u' && b.type === 'j') {
+            return -1;
+          } else if (a.type === 'j' && b.type === 'j') {
+            if (a.name.toUpperCase() === '__MAIN__') {
+              return 1;
+            } else if (b.name.toUpperCase() === '__MAIN__') {
+              return -1;
+            }
+            return 0;
+          }
+          return 0;
+        });
+        e.source.postMessage({ message: 'scripts', scripts: values }, '*');
+      }
+    });
+
+
     // 'Add new root' window
     webix.ui({
         view: 'window',
@@ -698,7 +727,7 @@ UI = {
                     label: 'Run Script',
                     width: 120,
                     click: function() {
-                      UIHelper.popupCenter('/run_script.html', 'Run Script', 500, 400);
+                      var runScriptWindow = UIHelper.popupCenter('/run_script.html', 'Run Script', 600, 400);
                     }
                   },
                   {},
