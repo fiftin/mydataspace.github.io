@@ -8,7 +8,10 @@ function EntityChildrenSimplifier() {}
 
 EntityFieldsSimplifier.prototype.format = function(data) {
   var res = {};
-  if (common.isPresent(data.fields)) {
+  if (data != null && data.fields != null) {
+    if (!Array.isArray(data.fields)) {
+      throw new Error('fields field must be array');
+    }
     for (var field of data.fields) {
       res[field.name] = field.value;
     }
@@ -18,7 +21,10 @@ EntityFieldsSimplifier.prototype.format = function(data) {
 
 EntityChildrenSimplifier.prototype.format = function(data) {
   var res = {};
-  if (Array.isArray(data.children)) {
+  if (data != null && data.children != null) {
+    if (!Array.isArray(data.children)) {
+      throw new Error('children field must be array');
+    }
     for (var child of data.children) {
       var childName = common.getChildName(child.path)
       res[childName] = child;
@@ -42,7 +48,10 @@ EntitySimplifier.prototype.format = function(data) {
 }
 
 EntitySimplifier.prototype.formatEntity = function(entity) {
-  if (Array.isArray(data.children)) {
+  if (entity != null && entity.children != null) {
+    if (!Array.isArray(entity.children)) {
+      throw new Error('children field must be array');
+    }
     for (var child of entity.children) {
       this.formatEntity(child);
     }

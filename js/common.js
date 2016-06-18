@@ -66,18 +66,24 @@ common = {
     'number',
     'string',
     'boolean',
-    'undefined'
+    'undefined',
+    'function',
   ],
 
   isPrimative: function(value) {
     return value === null || common.primativeTypes.indexOf(typeof value) > -1;
   },
 
-  mapToArray: function(map) {
+  mapToArray: function(map, keyName) {
+    if (typeof keyName === 'undefined') {
+      keyName = 'name';
+    }
     var ret = [];
     for (var key in map) {
       ret.push(map[key]);
-      ret[ret.length - 1].name = key;
+      if (keyName) {
+        ret[ret.length - 1][keyName] = key;
+      }
     }
     return ret;
   },
@@ -121,6 +127,14 @@ common = {
       throw new Error('Path has no child');
     }
     return path.substr(i + 1);
+  },
+
+  getParentPath: function(path) {
+    var i = path.lastIndexOf('/');
+    if (i === -1) {
+      return '';
+    }
+    return path.slice(0, i);
   },
 
   getURLParamByName: function(name, url) {

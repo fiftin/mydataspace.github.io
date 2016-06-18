@@ -24,6 +24,7 @@ title: Run Script
 
         var scriptTag = document.createElement('script');
         if (script.type === 'j') {
+          MDSConsole.info('Start script: ' + script.name);
           scriptTag.innerHTML = script.value;
           // MDSConsole.info('Script executed: ' + script.name);
           // addScript(options);
@@ -41,7 +42,7 @@ title: Run Script
         });
 
         scriptTag.addEventListener('load', function() {
-          MDSConsole.info('Remote script loaded: ' + this.getAttribute('data-script-name'));
+          MDSConsole.info('Script finished: ' + this.getAttribute('data-script-name'));
           if (options.lastScriptIndex > options.scripts.length - 1) {
             return;
           }

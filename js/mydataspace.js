@@ -194,7 +194,7 @@ Mydataspace = {
     // Init response handler
     if (Mydataspace.subscriptions.indexOf(responseEventName) === -1) {
       Mydataspace.subscriptions.push(responseEventName);
-      Mydataspace.on(responseEventName, function(data) {
+      Mydataspace.socket.on(responseEventName, function(data) {
         Mydataspace.handleResponse(data, 'success');
       });
     }
@@ -206,7 +206,7 @@ Mydataspace = {
   formatAndCall: function(eventName, callback, data) {
     var formatterArr = Mydataspace.formatters[eventName];
     if (data != null && data.datas != null) {
-      data = datas;
+      data = data.datas;
     }
     if (formatterArr != null) {
       for (let formatter of formatterArr) {
