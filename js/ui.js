@@ -130,33 +130,6 @@ UI = {
     }
   },
 
-  // runScriptWindow_run: function() {
-  //   $$('run_script_window__iframe_stop').enable();
-  //   $$('run_script_window__iframe_run').disable();
-  //   var iframe = $$('run_script_window__iframe').getIframe();
-  //   iframe.contentDocument.getElementById('run_script__state').classList.add('fa-spin');
-  //   iframe.contentDocument.getElementById('run_script__state_wrap').classList.add('run_script__state_wrap--run');
-  //   iframe.contentDocument.getElementById('run_script__console').classList.add('run_script__console--run');
-  //   iframe.contentWindow.console = {
-  //     log: function(message) {
-  //       var div = iframe.contentDocument.createElement('div');
-  //       div.classList.add('run_script__console_record');
-  //       div.innerText = message;
-  //       iframe.contentDocument.getElementById('run_script__console').appendChild(div);
-  //     },
-  //     scriptComplete: function() {
-  //       UI.runScriptWindow_stop();
-  //     }
-  //   };
-  // },
-  //
-  // runScriptWindow_stop: function() {
-  //   $$('run_script_window__iframe_stop').disable();
-  //   $$('run_script_window__iframe_run').enable();
-  //   $$('run_script_window__iframe').getIframe().src = '';
-  //   $$('run_script_window__iframe').load('/run_script.html');
-  // },
-
   /**
    * Reload data from the server.
    */
