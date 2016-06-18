@@ -1,3 +1,5 @@
+'use strict';
+
 function EntitySimplifier() {
   this.fieldsSimplifier = new EntityFieldsSimplifier();
   this.childrenSimplifier = new EntityChildrenSimplifier();

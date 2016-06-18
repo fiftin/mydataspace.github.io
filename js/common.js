@@ -1,3 +1,5 @@
+'use strict';
+
 common = {
   isNumber: function(n) {
       return Number(n) === n;

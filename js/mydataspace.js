@@ -1,3 +1,5 @@
+'use strict';
+
 Mydataspace = {
   initialized: false,
   connected: false,
