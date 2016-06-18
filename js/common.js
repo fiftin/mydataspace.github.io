@@ -1,6 +1,6 @@
 'use strict';
 
-common = {
+var common = {
   isNumber: function(n) {
       return Number(n) === n;
   },

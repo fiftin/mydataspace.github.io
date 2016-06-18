@@ -1,6 +1,6 @@
 'use strict';
 
-Mydataspace = {
+var Mydataspace = {
   initialized: false,
   connected: false,
   loggedIn: false,
