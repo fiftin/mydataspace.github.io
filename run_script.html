@@ -24,7 +24,7 @@ title: Run Script
 
         var scriptTag = document.createElement('script');
         if (script.type === 'j') {
-          MDSConsole.info('Start script: ' + script.name);
+          MDSConsole.system('Start script: ' + script.name);
           scriptTag.innerHTML = script.value;
           // MDSConsole.info('Script executed: ' + script.name);
           // addScript(options);
@@ -42,7 +42,7 @@ title: Run Script
         });
 
         scriptTag.addEventListener('load', function() {
-          MDSConsole.info('Script finished: ' + this.getAttribute('data-script-name'));
+          MDSConsole.system('Script finished: ' + this.getAttribute('data-script-name'));
           if (options.lastScriptIndex > options.scripts.length - 1) {
             return;
           }
@@ -91,20 +91,29 @@ title: Run Script
         info: function(message) { MDSConsole.post('info', message) },
         error: function(message) { MDSConsole.post('error', message) },
         warn: function(message) { MDSConsole.post('warn', message) },
+        system: function(message) { MDSConsole.post('system', message) },
 
-        success: function() {
+        success: function(message) {
           document.getElementById('run_script__state').classList.remove('fa-spin');
           document.getElementById('run_script__state').classList.remove('fa-cog');
           document.getElementById('run_script__state').classList.remove('run_script__state--run');
           document.getElementById('run_script__state').classList.add('fa-check');
           document.getElementById('run_script__state').classList.add('run_script__state--success');
+          if (message == null) {
+            message = 'The script completed successfully';
+          }
+          MDSConsole.system('success', message);
         },
-        fail: function() {
+        fail: function(message) {
+          if (message == null) {
+            message = 'The script failed';
+          }
           document.getElementById('run_script__state').classList.remove('fa-spin');
           document.getElementById('run_script__state').classList.remove('fa-cog');
           document.getElementById('run_script__state').classList.remove('run_script__state--run');
           document.getElementById('run_script__state').classList.add('fa-times');
           document.getElementById('run_script__state').classList.add('run_script__state--fail');
+          MDSConsole.error('success', message);
         }
       }
 
