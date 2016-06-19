@@ -88,8 +88,13 @@ body {
   transition: color 0.5s;
 }
 
+.run_script__console_record--error {
+  color: #ce5545;
+  transition: color 0.5s;
+}
+
 .run_script__console_record--info {
-  color: #27ae60;
+  color: #3498db;
   transition: color 0.5s;
 }
 
@@ -98,8 +103,8 @@ body {
   transition: color 0.5s;
 }
 
-.run_script__console_record--error {
-  color: #ce5545;
+.run_script__console_record--system {
+  color: #27ae60;
   transition: color 0.5s;
 }
 
