@@ -102,7 +102,7 @@ title: Run Script
           if (message == null) {
             message = 'The script completed successfully';
           }
-          MDSConsole.system('success', message);
+          MDSConsole.system(message);
         },
         fail: function(message) {
           if (message == null) {
@@ -113,7 +113,7 @@ title: Run Script
           document.getElementById('run_script__state').classList.remove('run_script__state--run');
           document.getElementById('run_script__state').classList.add('fa-times');
           document.getElementById('run_script__state').classList.add('run_script__state--fail');
-          MDSConsole.error('success', message);
+          MDSConsole.error(message);
         }
       }
 
