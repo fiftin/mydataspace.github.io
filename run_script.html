@@ -55,8 +55,14 @@ title: Run Script
 
       window.addEventListener('message', function(e) {
         if (e.data.message === 'scripts') {
+          var scripts = e.data.scripts;
+          scripts.unshift({
+            name: 'socketio'.
+            type: 'u',
+            value: 'https://cdn.socket.io/socket.io-1.4.5.js'
+          });
           var options = {
-            scripts: e.data.scripts,
+            scripts: scripts,
             lastScriptIndex: 0
           }
           addScript(options);
