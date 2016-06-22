@@ -29,28 +29,36 @@ var common = {
 
   extendOf: function(dest, source) {
     if (common.isBlank(source)) {
-      return dest;
+      return;
     }
+
     if (common.isPrimative(dest) || common.isPrimative(source)) {
       throw new Error('Cant extend primative type');
     }
-    var ret = Array.isArray(dest) ? [] : {};
-    for (var i in dest) {
-      if (typeof source[i] === 'undefined') {
-        continue;
+
+    if (Array.isArray(dest) && Array.isArray(source)) {
+      for (let item of source) {
+        dest.push(common.copy(item));
       }
-      if (common.isPrimative(dest[i]) || common.isPrimative(source[i])) {
-        dest[i] = common.copy(source[i]);
-      } else { // mergin
-        common.extendOf(dest[i], source[i]);
+      
+    } else { // object
+      for (let i in dest) {
+        if (typeof source[i] === 'undefined') {
+          continue;
+        }
+        if (common.isPrimative(dest[i]) || common.isPrimative(source[i])) {
+          dest[i] = common.copy(source[i]);
+        } else { // mergin
+          common.extendOf(dest[i], source[i]);
+        }
+      }
+
+      for (let i in source) {
+        if (typeof dest[i] === 'undefined') {
+          dest[i] = common.copy(source[i]);
+        }
       }
     }
-    for (var i in source) {
-      if (typeof dest[i] === 'undefined') {
-        dest[i] = common.copy(source[i]);
-      }
-    }
-    return ret;
   },
 
   copy: function(data) {

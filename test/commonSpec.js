@@ -4,7 +4,7 @@ describe('common', function() {
     var data = common.extend({
       fields: {
         info: {
-          age: 12,
+          ages: [13, 16],
           contacts: {
             phone: '12435',
             mobile: null
@@ -14,7 +14,7 @@ describe('common', function() {
     }, {
       fields: {
         info: {
-          age: 34,
+          ages:[34, 54],
           country: 'Russia',
           contacts: {
             address: 'Lenin st.'
@@ -23,7 +23,7 @@ describe('common', function() {
       }
     });
 
-    expect(data.fields.info.age).to.equal(34);
+    expect(data.fields.info.ages.join(' ')).to.equal([13, 16, 34, 54].join(' '));
     expect(data.fields.info.country).to.equal('Russia');
     expect(data.fields.info.contacts.phone).to.equal('12435');
     expect(data.fields.info.contacts.address).to.equal('Lenin st.');
