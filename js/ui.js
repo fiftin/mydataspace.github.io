@@ -29,6 +29,7 @@ UI = {
       }
     }
     $$('entity_form__no_fields').show();
+    $$('entity_form__run_script_button').hide();
   },
 
   entityForm_addFields: function(fields, setDirty) {
@@ -48,6 +49,9 @@ UI = {
     if (setDirty) {
       var values = webix.copy($$('entity_form')._values);
     }
+    if ((data.type === 'j' || data.type === 'u') && !$$('entity_form__run_script_button').isVisible()) {
+      $$('entity_form__run_script_button').show();
+    }
     $$('entity_form').addView({
       id: 'entity_form__' + data.name,
       cols: [
@@ -59,6 +63,7 @@ UI = {
         { view: 'text',
           label: data.name,
           name: 'fields.' + data.name + '.value',
+          id: 'entity_form__' + data.name + '_value',
           value: data.value,
           labelWidth: UIHelper.LABEL_WIDTH
         },
@@ -66,6 +71,7 @@ UI = {
           width: 80,
           options: UIHelper.getFieldTypesAsArrayOfIdValue(),
           value: data.type,
+          id: 'entity_form__' + data.name + '_type',
           name: 'fields.' + data.name + '.type'
         },
         { view: 'button',
@@ -92,6 +98,19 @@ UI = {
     var rows = $$('entity_form').getChildViews();
     if (rows.length === UIHelper.NUMBER_OF_FIXED_INPUTS_IN_FIELDS_FORM) {
       $$('entity_form__no_fields').show();
+    }
+
+    let hasScripts = false;
+    let fields = $$('entity_form').getValues().fields;
+    for (let fieldName in fields) {
+      let field = fields[fieldName];
+      if (fields.type === 'j' || fields.type === 'u') {
+        hasScripts = true;
+        break;
+      }
+    }
+    if (!hasScripts) {
+      $$('entity_form__run_script_button').hide();
     }
   },
 
@@ -601,6 +620,8 @@ UI = {
                     icon: 'play',
                     label: 'Run Script',
                     width: 120,
+                    id: 'entity_form__run_script_button',
+                    hidden: true,
                     click: function() {
                       var runScriptWindow = UIHelper.popupCenter('/run_script.html', 'Run Script', 600, 400);
                     }

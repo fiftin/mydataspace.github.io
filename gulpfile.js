@@ -48,6 +48,10 @@ gulp.task('vendor:sio', function () {
   return gulp.src('bower_components/socket.io-client/socket.io.js').pipe(gulp.dest('vendor'));
 });
 
+gulp.task('vendor:ace', function () {
+  return gulp.src('bower_components/ace-builds/src-noconflict/ace.js').pipe(gulp.dest('vendor'));
+});
+
 gulp.task('vendor:clean', function() {
   return del(['vendor/**/*']);
 });
@@ -80,7 +84,8 @@ gulp.task('default', function() {
       'vendor:jquery',
       'vendor:fa',
       'vendor:sio',
-      'vendor:webix'
+      'vendor:webix',
+      'vendor:ace'
     ],
     'jekyll:clean',
     'jekyll:build');
@@ -94,7 +99,8 @@ gulp.task('serve', function() {
       'vendor:jquery',
       'vendor:fa',
       'vendor:sio',
-      'vendor:webix'
+      'vendor:webix',
+      'vendor:ace'
     ],
     'jekyll:clean',
     'jekyll:serve');

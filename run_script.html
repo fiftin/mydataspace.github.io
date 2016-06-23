@@ -56,11 +56,30 @@ title: Run Script
       window.addEventListener('message', function(e) {
         if (e.data.message === 'scripts') {
           var scripts = e.data.scripts;
+
+          // MDSConsole.fields = e.data.scripts;
+
           scripts.unshift({
             name: 'socketio',
             type: 'u',
             value: 'https://cdn.socket.io/socket.io-1.4.5.js'
           });
+          // scripts.unshift({
+          //   name: 'socketio',
+          //   type: 'u',
+          //   value: 'http://my-data.space/js/common.js'
+          // });
+          // scripts.unshift({
+          //   name: 'socketio',
+          //   type: 'u',
+          //   value: 'http://my-data.space/js/formatters.js'
+          // });
+          // scripts.unshift({
+          //   name: 'socketio',
+          //   type: 'u',
+          //   value: 'http://my-data.space/js/mydataspace.js'
+          // });
+
           var options = {
             scripts: scripts,
             lastScriptIndex: 0
