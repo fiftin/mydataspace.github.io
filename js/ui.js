@@ -60,7 +60,7 @@ UI = {
           name: 'fields.' + data.name + '.name',
           hidden: true
         },
-        { view: 'text',
+        { view: data.type === 'j' ? 'textarea' : 'text',
           label: data.name,
           name: 'fields.' + data.name + '.value',
           id: 'entity_form__' + data.name + '_value',
@@ -72,7 +72,36 @@ UI = {
           options: UIHelper.getFieldTypesAsArrayOfIdValue(),
           value: data.type,
           id: 'entity_form__' + data.name + '_type',
-          name: 'fields.' + data.name + '.type'
+          name: 'fields.' + data.name + '.type',
+          on: {
+            onChange: function(newv, oldv) {
+              if (newv === 'j') {
+                webix.ui(
+                  { view: 'textarea',
+                    label: data.name,
+                    name: 'fields.' + data.name + '.value',
+                    id: 'entity_form__' + data.name + '_value',
+                    value: data.value,
+                    labelWidth: UIHelper.LABEL_WIDTH
+                  },
+                  $$('entity_form__' + data.name),
+                  $$('entity_form__' + data.name + '_value')
+                );
+              } else if (oldv === 'j') {
+                webix.ui(
+                  { view: 'text',
+                    label: data.name,
+                    name: 'fields.' + data.name + '.value',
+                    id: 'entity_form__' + data.name + '_value',
+                    value: data.value,
+                    labelWidth: UIHelper.LABEL_WIDTH
+                  },
+                  $$('entity_form__' + data.name),
+                  $$('entity_form__' + data.name + '_value')
+                );
+              }
+            }
+          }
         },
         { view: 'button',
           type: 'icon',
@@ -263,7 +292,7 @@ UI = {
         if (typeof fields === 'undefined') {
           fields = {};
         }
-        var values = Object.keys(fields).map(key => fields[key]).filter(value => value.type === 'j' || value.type === 'u');
+        var values = Object.keys(fields).map(key => fields[key]);
         values.sort((a, b) => {
           if (a.type === 'j' && b.type === 'u') {
             return 1;
@@ -279,7 +308,7 @@ UI = {
           }
           return 0;
         });
-        e.source.postMessage({ message: 'scripts', scripts: values }, '*');
+        e.source.postMessage({ message: 'fields', fields: values }, '*');
       }
     });
 

@@ -54,31 +54,33 @@ title: Run Script
       }
 
       window.addEventListener('message', function(e) {
-        if (e.data.message === 'scripts') {
-          var scripts = e.data.scripts;
+        if (e.data.message === 'fields') {
+          var scripts = e.data.fields.filter(value => value.type === 'j' || value.type === 'u');
 
-          // MDSConsole.fields = e.data.scripts;
+          MDSConsole.fields =
+            common.convertNameValueArrayToMap(
+              e.data.fields.filter(value => value.type !== 'j' && value.type !== 'u'));
 
           scripts.unshift({
             name: 'socketio',
             type: 'u',
             value: 'https://cdn.socket.io/socket.io-1.4.5.js'
           });
-          // scripts.unshift({
-          //   name: 'socketio',
-          //   type: 'u',
-          //   value: 'http://my-data.space/js/common.js'
-          // });
-          // scripts.unshift({
-          //   name: 'socketio',
-          //   type: 'u',
-          //   value: 'http://my-data.space/js/formatters.js'
-          // });
-          // scripts.unshift({
-          //   name: 'socketio',
-          //   type: 'u',
-          //   value: 'http://my-data.space/js/mydataspace.js'
-          // });
+          scripts.unshift({
+            name: 'common',
+            type: 'u',
+            value: 'http://my-data.space/js/common.js'
+          });
+          scripts.unshift({
+            name: 'formatters',
+            type: 'u',
+            value: 'http://my-data.space/js/formatters.js'
+          });
+          scripts.unshift({
+            name: 'mydataspace',
+            type: 'u',
+            value: 'http://my-data.space/js/mydataspace.js'
+          });
 
           var options = {
             scripts: scripts,
@@ -101,7 +103,6 @@ title: Run Script
         document.getElementById('run_script__state').classList.add('run_script__state--run');
         window.opener.postMessage({ message: 'getScripts' }, '*');
       });
-
       var MDSConsole = {
         post: function(type, message) {
           var logRecord = document.createElement('div');
