@@ -65,36 +65,43 @@ UI = {
           name: 'fields.' + data.name + '.value',
           id: 'entity_form__' + data.name + '_value',
           value: data.value,
-          labelWidth: UIHelper.LABEL_WIDTH
+          labelWidth: UIHelper.LABEL_WIDTH,
+          height: 32,
+          css: 'entity_form__text_label',
+          on: {
+            onFocus: function() {
+              if (data.type === 'j') {
+                UI.editScriptFieldId = 'entity_form__' + data.name + '_value';
+                $$('edit_script_window').show();
+              }
+            }
+          }
         },
         { view: 'select',
-          width: 80,
+          width: 70,
           options: UIHelper.getFieldTypesAsArrayOfIdValue(),
           value: data.type,
           id: 'entity_form__' + data.name + '_type',
           name: 'fields.' + data.name + '.type',
           on: {
             onChange: function(newv, oldv) {
-              if (newv === 'j') {
+              if (newv === 'j' || oldv === 'j') {
                 webix.ui(
-                  { view: 'textarea',
+                  { view: newv === 'j' ? 'textarea' : 'text',
                     label: data.name,
                     name: 'fields.' + data.name + '.value',
                     id: 'entity_form__' + data.name + '_value',
                     value: data.value,
-                    labelWidth: UIHelper.LABEL_WIDTH
-                  },
-                  $$('entity_form__' + data.name),
-                  $$('entity_form__' + data.name + '_value')
-                );
-              } else if (oldv === 'j') {
-                webix.ui(
-                  { view: 'text',
-                    label: data.name,
-                    name: 'fields.' + data.name + '.value',
-                    id: 'entity_form__' + data.name + '_value',
-                    value: data.value,
-                    labelWidth: UIHelper.LABEL_WIDTH
+                    labelWidth: UIHelper.LABEL_WIDTH,
+                    height: 32,
+                    css: 'entity_form__text_label',
+                    on: {
+                      onFocus: function() {
+                        if (newv === 'j') {
+                          $$('edit_script_window').show();
+                        }
+                      }
+                    }
                   },
                   $$('entity_form__' + data.name),
                   $$('entity_form__' + data.name + '_value')
@@ -106,7 +113,7 @@ UI = {
         { view: 'button',
           type: 'icon',
           icon: 'remove',
-          width: 30,
+          width: 25,
           click: function() {
             UI.entityForm_deleteField(data.name);
           }
@@ -312,6 +319,53 @@ UI = {
       }
     });
 
+    webix.ui({
+      view: 'window',
+      id: 'edit_script_window',
+      modal: true,
+      width: 900,
+      position: 'center',
+      head: false,
+      on: {
+        onShow: function() {
+          $$('edit_script_editor').setValue($$(UI.editScriptFieldId).getValue());
+        }
+      },
+      body: {
+        rows: [
+          { view: 'toolbar',
+            elements: [
+              {},
+              { view: 'button',
+                type: 'icon',
+                icon: 'check',
+                label: 'OK',
+                width: 100,
+                click: function() {
+                  $$(UI.editScriptFieldId).setValue($$('edit_script_editor').getValue());
+                  $$('edit_script_window').hide();
+                }
+              },
+              { view: 'button',
+                type: 'icon',
+                icon: 'times',
+                label: 'Cancel',
+                width: 100,
+                click: function() {
+                  $$('edit_script_window').hide();
+                }
+              },
+            ]
+          },
+          { view: 'ace-editor',
+            id: 'edit_script_editor',
+            theme: 'monokai',
+            mode: 'javascript',
+            height: 500,
+          },
+        ]
+      },
+    });
 
     // 'Add new root' window
     webix.ui({

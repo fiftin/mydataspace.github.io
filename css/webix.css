@@ -1,7 +1,19 @@
+/*
+ * Fix bug with horizon
+ */
+.webix_tree > .webix_scroll_cont {
+  width: auto !important;
+}
+
+/**
+ * Site header style
+ */
 .webix_header > div {
   background: black !important;
   color: #868181 !important;
 }
+
+
 
 .profile {
   padding-bottom: 20px;
@@ -45,4 +57,13 @@
 .login_panel__google_button .webix_icon,
 .login_panel__facebook_button .webix_icon {
   width: 30px;
+}
+
+.entity_form__text_label .webix_inp_label {
+  padding-top: 0 !important;
+  line-height: 32px;
+}
+
+.entity_form__text_label .webix_inp_textarea {
+  font-size: 14px;
 }

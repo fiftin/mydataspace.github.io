@@ -1,5 +1,5 @@
 UIHelper = {
-  LABEL_WIDTH: 150,
+  LABEL_WIDTH: 120,
   NUMBER_OF_FIXED_INPUTS_IN_FIELDS_FORM: 6,
   MAX_STRING_FIELD_LENGTH: 1000,
   FIELD_TYPES: {
@@ -16,19 +16,19 @@ UIHelper = {
       }
     },
     i: {
-      title: 'Integer',
+      title: 'Int',
       isValidValue: function(value) {
         return common.isInt(value) || (typeof value === 'string' && /^\d+$/.test(value));
       }
     },
     j: {
-      title: 'Script',
+      title: 'JS',
       isValidValue: function(value) {
         return value.toString().length < UIHelper.MAX_STRING_FIELD_LENGTH;
       }
     },
     u: {
-      title: 'Scr. URL',
+      title: 'JS URL',
       isValidValue: function(value) {
         return value.toString().length < UIHelper.MAX_STRING_FIELD_LENGTH;
       }
