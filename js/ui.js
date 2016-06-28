@@ -17,6 +17,30 @@ UI = {
     UI.entityForm_updateToolbar();
   },
 
+  entityForm_save: function() {
+    var dirtyData = webix.CodeParser.expandNames($$('entity_form').getDirtyValues());
+    var existingData =
+      webix.CodeParser.expandNames(
+        Object.keys($$('entity_form').elements).reduce((ret, current) => {
+          ret[current] = '';
+          return ret;
+        }, {}));
+    var oldData = webix.CodeParser.expandNames($$('entity_form')._values);
+    common.extendOf(dirtyData, UIHelper.dataFromId($$('entity_list').getSelectedId()));
+    dirtyData.fields = UIHelper.getFieldsForSave(dirtyData.fields, Object.keys(existingData.fields || {}), oldData.fields);
+    $$('entity_form').disable();
+    if (typeof dirtyData.childPrototype !== 'undefined') {
+      dirtyData.childPrototype = UIHelper.dataFromId(dirtyData.childPrototype);
+    }
+    Mydataspace.request('entities.change', dirtyData, function(res) {
+      $$('entity_form').enable();
+      UI.entityForm_setClean();
+    }, function(err) {
+      webix.message({ type: 'error', text: err.message || err.name });
+      $$('entity_form').enable();
+    });
+  },
+
   /**
    * Removes all fields from the form.
    */
@@ -323,7 +347,7 @@ UI = {
       view: 'window',
       id: 'edit_script_window',
       modal: true,
-      width: 900,
+      width: 1000,
       position: 'center',
       head: false,
       on: {
@@ -335,6 +359,25 @@ UI = {
         rows: [
           { view: 'toolbar',
             elements: [
+              { view: 'button',
+                type: 'icon',
+                icon: 'play',
+                label: 'Run Script',
+                width: 120,
+                click: function() {
+                  var runScriptWindow = UIHelper.popupCenter('/run_script.html', 'Run Script', 600, 400);
+                }
+              },
+              { view: 'button',
+                type: 'icon',
+                icon: 'save',
+                label: 'Save Entity',
+                width: 120,
+                click: function() {
+                  $$(UI.editScriptFieldId).setValue($$('edit_script_editor').getValue());
+                  UI.entityForm_save();
+                }
+              },
               {},
               { view: 'button',
                 type: 'icon',
@@ -361,7 +404,13 @@ UI = {
             id: 'edit_script_editor',
             theme: 'monokai',
             mode: 'javascript',
-            height: 500,
+            height: 600,
+            on: {
+              onReady: function(editor) {
+                editor.getSession().setUseSoftTabs(true);
+                editor.getSession().setUseWrapMode(true);
+              }
+            }
           },
         ]
       },
@@ -655,27 +704,7 @@ UI = {
                     id: 'entity_form__save_button',
                     width: 90,
                     click: function() {
-                      var dirtyData = webix.CodeParser.expandNames($$('entity_form').getDirtyValues());
-                      var existingData =
-                        webix.CodeParser.expandNames(
-                          Object.keys($$('entity_form').elements).reduce((ret, current) => {
-                            ret[current] = '';
-                            return ret;
-                          }, {}));
-                      var oldData = webix.CodeParser.expandNames($$('entity_form')._values);
-                      common.extendOf(dirtyData, UIHelper.dataFromId($$('entity_list').getSelectedId()));
-                      dirtyData.fields = UIHelper.getFieldsForSave(dirtyData.fields, Object.keys(existingData.fields || {}), oldData.fields);
-                      $$('entity_form').disable();
-                      if (typeof dirtyData.childPrototype !== 'undefined') {
-                        dirtyData.childPrototype = UIHelper.dataFromId(dirtyData.childPrototype);
-                      }
-                      Mydataspace.request('entities.change', dirtyData, function(res) {
-                        $$('entity_form').enable();
-                        UI.entityForm_setClean();
-                      }, function(err) {
-                        webix.message({ type: 'error', text: err.message || err.name });
-                        $$('entity_form').enable();
-                      });
+                      UI.entityForm_save();
                     }
                   },
                   { view: 'button',
