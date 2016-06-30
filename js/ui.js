@@ -96,6 +96,7 @@ UI = {
             onFocus: function() {
               if (data.type === 'j') {
                 UI.editScriptFieldId = 'entity_form__' + data.name + '_value';
+                $$('edit_script_window__title').setValues({ title: data.name });
                 $$('edit_script_window').show();
               }
             }
@@ -110,6 +111,7 @@ UI = {
           on: {
             onChange: function(newv, oldv) {
               if (newv === 'j' || oldv === 'j') {
+                var oldValues = webix.copy($$('entity_form')._values);
                 webix.ui(
                   { view: newv === 'j' ? 'textarea' : 'text',
                     label: data.name,
@@ -122,6 +124,7 @@ UI = {
                     on: {
                       onFocus: function() {
                         if (newv === 'j') {
+                          UI.editScriptFieldId = 'entity_form__' + data.name + '_value';
                           $$('edit_script_window').show();
                         }
                       }
@@ -130,6 +133,7 @@ UI = {
                   $$('entity_form__' + data.name),
                   $$('entity_form__' + data.name + '_value')
                 );
+                $$('entity_form')._values = oldValues;
               }
             }
           }
@@ -352,7 +356,8 @@ UI = {
       head: false,
       on: {
         onShow: function() {
-          $$('edit_script_editor').setValue($$(UI.editScriptFieldId).getValue());
+          $$('edit_script_window__editor').setValue($$(UI.editScriptFieldId).getValue());
+          $$('edit_script_window__cancel_button').define('hotkey', 'escape');
         }
       },
       body: {
@@ -365,43 +370,53 @@ UI = {
                 label: 'Run Script',
                 width: 120,
                 click: function() {
+                  $$(UI.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
                   var runScriptWindow = UIHelper.popupCenter('/run_script.html', 'Run Script', 600, 400);
                 }
               },
-              { view: 'button',
-                type: 'icon',
-                icon: 'save',
-                label: 'Save Entity',
-                width: 120,
-                click: function() {
-                  $$(UI.editScriptFieldId).setValue($$('edit_script_editor').getValue());
-                  UI.entityForm_save();
-                }
+              // { view: 'button',
+              //   type: 'icon',
+              //   icon: 'save',
+              //   label: 'Save Entity',
+              //   width: 120,
+              //   click: function() {
+              //     $$(UI.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
+              //     UI.entityForm_save();
+              //   }
+              // },
+              {},
+              { view: 'template',
+                templete: 'Title: #title#',
+                css: 'edit_script_window__title',
+                id: 'edit_script_window__title',
+                data: { title: 'No title' }
               },
               {},
-              { view: 'button',
-                type: 'icon',
-                icon: 'check',
-                label: 'OK',
-                width: 100,
-                click: function() {
-                  $$(UI.editScriptFieldId).setValue($$('edit_script_editor').getValue());
-                  $$('edit_script_window').hide();
-                }
-              },
+              // { view: 'button',
+              //   type: 'icon',
+              //   icon: 'check',
+              //   label: 'OK',
+              //   width: 100,
+              //   click: function() {
+              //     $$(UI.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
+              //     $$('edit_script_window').hide();
+              //   }
+              // },
               { view: 'button',
                 type: 'icon',
                 icon: 'times',
-                label: 'Cancel',
+                label: 'Close',
+                id: 'edit_script_window__cancel_button',
                 width: 100,
                 click: function() {
+                  $$(UI.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
                   $$('edit_script_window').hide();
                 }
               },
             ]
           },
           { view: 'ace-editor',
-            id: 'edit_script_editor',
+            id: 'edit_script_window__editor',
             theme: 'monokai',
             mode: 'javascript',
             height: 600,
