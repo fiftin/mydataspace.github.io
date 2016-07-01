@@ -67,9 +67,3 @@
 .entity_form__text_label .webix_inp_textarea {
   font-size: 16px;
 }
-
-.edit_script_window__title {
-  background: transparent;
-  color: white;
-  border: transparent;
-}

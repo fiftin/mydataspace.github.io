@@ -73,6 +73,7 @@ body {
   transition: height 0.3s;
   background: black;
   color: black;
+  white-space: pre;
 }
 
 .run_script__console--run {
@@ -99,15 +100,27 @@ body {
 }
 
 .run_script__console_record--warn {
-  color: yellow;
+  color: orange;
   transition: color 0.5s;
 }
 
 .run_script__console_record--system {
+  color: #a9a903;
+  transition: color 0.5s;
+}
+
+.run_script__console_record--ok {
   color: #27ae60;
   transition: color 0.5s;
 }
 
+.run_script__console_record--success {
+  color: #27ae60;
+  transition: color 0.5s;
+  font-size: 20px;
+  text-align: center;
+  padding: 10px;
+}
 
 .run_script__button {
   padding: 10px 15px;

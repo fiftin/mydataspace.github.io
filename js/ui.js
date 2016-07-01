@@ -96,7 +96,7 @@ UI = {
             onFocus: function() {
               if (data.type === 'j') {
                 UI.editScriptFieldId = 'entity_form__' + data.name + '_value';
-                $$('edit_script_window__title').setValues({ title: data.name });
+                $$('edit_script_window__title').setValue(data.name);
                 $$('edit_script_window').show();
               }
             }
@@ -364,6 +364,24 @@ UI = {
         rows: [
           { view: 'toolbar',
             elements: [
+              { view: 'label',
+                label: 'Edit Script:',
+                width: 100
+              },
+              { view: 'label',
+                id: 'edit_script_window__title',
+              },
+              {},
+              { view: 'button',
+                type: 'icon',
+                icon: 'save',
+                label: 'Save Entity',
+                width: 120,
+                click: function() {
+                  $$(UI.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
+                  UI.entityForm_save();
+                }
+              },
               { view: 'button',
                 type: 'icon',
                 icon: 'play',
@@ -374,34 +392,6 @@ UI = {
                   var runScriptWindow = UIHelper.popupCenter('/run_script.html', 'Run Script', 600, 400);
                 }
               },
-              // { view: 'button',
-              //   type: 'icon',
-              //   icon: 'save',
-              //   label: 'Save Entity',
-              //   width: 120,
-              //   click: function() {
-              //     $$(UI.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
-              //     UI.entityForm_save();
-              //   }
-              // },
-              {},
-              { view: 'template',
-                templete: 'Title: #title#',
-                css: 'edit_script_window__title',
-                id: 'edit_script_window__title',
-                data: { title: 'No title' }
-              },
-              {},
-              // { view: 'button',
-              //   type: 'icon',
-              //   icon: 'check',
-              //   label: 'OK',
-              //   width: 100,
-              //   click: function() {
-              //     $$(UI.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
-              //     $$('edit_script_window').hide();
-              //   }
-              // },
               { view: 'button',
                 type: 'icon',
                 icon: 'times',
@@ -422,8 +412,19 @@ UI = {
             height: 600,
             on: {
               onReady: function(editor) {
+                editor.getSession().setTabSize(2);
                 editor.getSession().setUseSoftTabs(true);
-                editor.getSession().setUseWrapMode(true);
+                // editor.getSession().setUseWrapMode(true);
+                editor.getSession().setUseWorker(false);
+                // editor.execCommand('find')
+                editor.commands.addCommand({
+                  name: 'save',
+                  bindKey: { win: 'Ctrl-S' },
+                  exec: function(editor) {
+                    $$(UI.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
+                    UI.entityForm_save();
+                  }
+                });
               }
             }
           },

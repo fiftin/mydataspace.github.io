@@ -21,36 +21,39 @@ title: Run Script
 
       function addScript(options) {
         var script = options.scripts[options.lastScriptIndex];
-
+        options.lastScriptIndex++;
         var scriptTag = document.createElement('script');
+        document.body.appendChild(scriptTag);
+
+
         if (script.type === 'j') {
-          MDSConsole.system('Start script: ' + script.name);
+          MDSConsole.system('Executing `' + script.name + '`...');
           scriptTag.innerHTML = script.value;
-          // MDSConsole.info('Script executed: ' + script.name);
-          // addScript(options);
-          // return;
-        } else {
-          scriptTag.src = script.value;
-        }
-
-        scriptTag.setAttribute('data-script-name', script.name);
-        scriptTag.addEventListener('error', function() {
-          // Stop loading
-          lastScriptIndex = 10000000;
-          MDSConsole.fail();
-          MDSConsole.error('Remote script failed: ' + this.getAttribute('data-script-name') + '. Running aborted');
-        });
-
-        scriptTag.addEventListener('load', function() {
-          MDSConsole.system('Script finished: ' + this.getAttribute('data-script-name'));
+          MDSConsole.ok('          `' + script.name + '` ok');
           if (options.lastScriptIndex > options.scripts.length - 1) {
             return;
           }
           addScript(options);
-        });
+        } else {
 
-        options.lastScriptIndex++;
-        document.body.appendChild(scriptTag);
+          scriptTag.setAttribute('data-script-name', script.name);
+          scriptTag.addEventListener('load', function() {
+            MDSConsole.ok('        `' + this.getAttribute('data-script-name') + '` ok');
+            if (options.lastScriptIndex > options.scripts.length - 1) {
+              return;
+            }
+            addScript(options);
+          });
+          scriptTag.addEventListener('error', function() {
+            lastScriptIndex = 10000000; // Stop loading
+            MDSConsole.fail();
+            MDSConsole.error('Remote script failed: ' + this.getAttribute('data-script-name') + '. Running aborted');
+          });
+
+          MDSConsole.system('Loading `' + script.name + '`...');
+          scriptTag.src = script.value;
+        }
+
       }
 
       window.addEventListener('message', function(e) {
@@ -107,7 +110,7 @@ title: Run Script
         post: function(type, message) {
           var logRecord = document.createElement('div');
           logRecord.classList.add('run_script__console_record');
-          logRecord.innerText = message;
+          logRecord.textContent = message;
           var console = document.getElementById('run_script__console');
           console.appendChild(logRecord);
           console.scrollTop = console.scrollHeight - console.clientHeight;
@@ -118,6 +121,7 @@ title: Run Script
         error: function(message) { MDSConsole.post('error', message) },
         warn: function(message) { MDSConsole.post('warn', message) },
         system: function(message) { MDSConsole.post('system', message) },
+        ok: function(message) { MDSConsole.post('ok', message) },
 
         success: function(message) {
           document.getElementById('run_script__state').classList.remove('fa-spin');
@@ -128,7 +132,7 @@ title: Run Script
           if (message == null) {
             message = 'The script completed successfully';
           }
-          MDSConsole.system(message);
+          MDSConsole.post('success', message)
         },
         fail: function(message) {
           if (message == null) {

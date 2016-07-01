@@ -49,7 +49,12 @@ gulp.task('vendor:sio', function () {
 });
 
 gulp.task('vendor:ace', function () {
-  return gulp.src('bower_components/ace-builds/src-noconflict/ace.js').pipe(gulp.dest('vendor'));
+  return gulp.src([
+    'bower_components/ace-builds/src-noconflict/ace.js',
+    'bower_components/ace-builds/src-noconflict/ext-searchbox.js',
+    'bower_components/ace-builds/src-noconflict/theme-monokai.js',
+    'bower_components/ace-builds/src-noconflict/mode-javascript.js'
+  ]).pipe(gulp.dest('vendor/ace/src-noconflict'));
 });
 
 gulp.task('vendor:clean', function() {

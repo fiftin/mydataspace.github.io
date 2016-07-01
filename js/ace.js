@@ -10,12 +10,12 @@ webix.protoUI({
 
 	_render_cm_editor:function(){
 		webix.require([
-			"ace/src-min-noconflict/ace.js"
+			"ace/src-noconflict/ace.js"
 		], this._render_when_ready, this);
 	},
 
 	_render_when_ready:function(){
-        var basePath = webix.codebase+"ace/src-min-noconflict/";
+        var basePath = webix.codebase+"ace/src-noconflict/";
 
         ace.config.set("basePath", basePath);
         ace.config.set("modePath", basePath);
