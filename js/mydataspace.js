@@ -1,5 +1,22 @@
 'use strict';
+/*
 
+static class MDSConsole
+  function log(message, ...args);
+  function warn(message, ...args)
+  function info(message, ...args)
+  function system(message, ...args)
+  function error(message, ...args)
+
+  function success(message, ...args)
+  function fail(message, ...args)
+
+  var fields: Object;
+*/
+
+/**
+ *
+ */
 var Mydataspace = {
   initialized: false,
   connected: false,

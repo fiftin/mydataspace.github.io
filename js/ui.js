@@ -716,9 +716,8 @@ UI = {
                   { view: 'button',
                     type: 'icon',
                     icon: 'save',
-                    label: 'Save',
                     id: 'entity_form__save_button',
-                    width: 90,
+                    width: 30,
                     click: function() {
                       UI.entityForm_save();
                     }
@@ -726,8 +725,7 @@ UI = {
                   { view: 'button',
                     type: 'icon',
                     icon: 'refresh',
-                    label: 'Refresh',
-                    width: 100,
+                    width: 30,
                     click: function() {
                       Mydataspace.emit(
                         'entities.getWithMeta',
@@ -736,9 +734,17 @@ UI = {
                   },
                   { view: 'button',
                     type: 'icon',
+                    icon: 'cloud-download',
+                    width: 30,
+                    click: function() {
+
+                    }
+                  },
+                  { view: 'button',
+                    type: 'icon',
                     icon: 'plus',
                     label: 'Add Fields',
-                    width: 120,
+                    width: 100,
                     click: function() {
                       $$('add_field_window').show();
                     }
@@ -747,7 +753,7 @@ UI = {
                     type: 'icon',
                     icon: 'play',
                     label: 'Run Script',
-                    width: 120,
+                    width: 100,
                     id: 'entity_form__run_script_button',
                     hidden: true,
                     click: function() {
@@ -758,8 +764,8 @@ UI = {
                   { view: 'button',
                     type: 'icon',
                     icon: 'remove',
-                    label: 'Delete',
-                    width: 100,
+                    // label: 'Delete',
+                    width: 30,
                     click: function() {
                       webix.confirm({
                         title: 'Delete Entity',
