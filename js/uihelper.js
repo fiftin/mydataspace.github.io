@@ -134,9 +134,9 @@ UIHelper = {
         newWindow.focus();
     }
     return newWindow;
-  }
+  },
 
-  export: function(root, path) {
-    
+  exp: function(root, path) {
+
   }
 }
