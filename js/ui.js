@@ -182,7 +182,7 @@ UI = {
     var data = UIHelper.dataFromId($$('entity_tree').getSelectedId());
     var seatch = $$('entity_list__search').getValue();
     if (common.isPresent(seatch)) {
-      data['search'] = seatch;
+      data['filter_by_name'] = seatch;
     }
     Mydataspace.emit('entities.getChildren', data);
   },
