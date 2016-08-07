@@ -1,7 +1,10 @@
 UIHelper = {
+  NUMBER_OF_ENTITIES_LOADED_AT_TIME: 10,
   LABEL_WIDTH: 120,
   NUMBER_OF_FIXED_INPUTS_IN_FIELDS_FORM: 6,
   MAX_STRING_FIELD_LENGTH: 1000,
+  ENTITY_TREE_SHOW_MORE_ID: 'show_more_23478_3832ee',
+  ENTITY_TREE_DUMMY_ID: 'dummy_483__4734_47e4',
   FIELD_TYPES: {
     s: {
       title: 'String',
@@ -64,7 +67,7 @@ UIHelper = {
     var children = [];
     if (!common.isBlank(data.numberOfChildren) && data.numberOfChildren > 0) {
       children.push({
-        id: UIHelper.childId(entityId, 'dummy'),
+        id: UIHelper.childId(entityId, UIHelper.ENTITY_TREE_DUMMY_ID),
         value: ''
       });
     }
@@ -138,5 +141,6 @@ UIHelper = {
 
   exp: function(root, path) {
 
-  }
+  },
+
 }

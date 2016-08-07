@@ -179,7 +179,7 @@ UI = {
   },
 
   entityList_refreshData: function() {
-    var data = UIHelper.dataFromId($$('entity_tree').getSelectedId());
+    var data = UIHelper.dataFromId(UI.entityTree_selectedId());
     var seatch = $$('entity_list__search').getValue();
     if (common.isPresent(seatch)) {
       data['filter_by_name'] = seatch;
@@ -196,21 +196,79 @@ UI = {
     $$('entity_list').select(entityId);
   },
 
+  /**
+   * Override entity children nodes recursively.
+   */
   entityTree_setChildren: function(entityId, children) {
+    var dummyChildId = UIHelper.childId(entityId, UIHelper.ENTITY_TREE_DUMMY_ID);
+    var showMoreChildId = UIHelper.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID);
+
     var firstChildId = $$('entity_tree').getFirstChildId(entityId);
-    var dummyChildId = UIHelper.childId(entityId, 'dummy');
-    if (firstChildId !== null && firstChildId !== dummyChildId) {
-      return;
-    }
-    children.forEach(function(entity) {
-      var tmpId = $$('entity_tree').add(entity, 0, entityId);
-      if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-        UI.entityTree_setChildren(entity.id, entity.data);
+    if (firstChildId == null || firstChildId === dummyChildId) {
+      if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
+        children[children.length - 1] = {
+          id: UIHelper.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID),
+          value: STRINGS.SHOW_MORE
+        }
       }
-    });
-    if (firstChildId !== null) {
-      $$('entity_tree').remove(firstChildId);
+      children.reverse().forEach(function(entity) {
+        var tmpId = $$('entity_tree').add(entity, 0, entityId);
+        if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
+          UI.entityTree_setChildren(entity.id, entity.data);
+        }
+      });
+      if (firstChildId !== null) {
+        $$('entity_tree').remove(firstChildId);
+      }
+      $$('entity_tree').addCss(showMoreChildId, 'entity_tree__show_more_item');
+    } else { // Show more pressed
+      if ($$('entity_tree').exists(showMoreChildId)) {
+        if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
+          delete children[children.length - 1];
+        } else {
+          $$('entity_tree').remove(showMoreChildId);
+        }
+        children.reverse().forEach(function(entity) {
+          var nChildren = UI.entityTree_numberOfChildren(entityId);
+          $$('entity_tree').add(entity, nChildren - 1, entityId);
+          if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
+            UI.entityTree_setChildren(entity.id, entity.data);
+          }
+        });
+      }
     }
+  },
+
+  entityTree_selectedId: function() {
+    return UI.selectedId;
+  },
+
+  entityTree_showMore: function(id) {
+    var req = UIHelper.dataFromId(id);
+    req.offset = UI.entityTree_numberOfChildren(id);
+    Mydataspace.request('entities.getChildren', req);
+  },
+
+  entityTree_numberOfChildren(id) {
+    var n = 0;
+    var prevChildId = null;
+    var childId = $$('entity_tree').getFirstChildId(id);
+    while (childId != null && prevChildId !== childId) {
+      n++;
+      prevChildId = childId;
+      childId = $$('entity_tree').getNextSiblingId(childId);
+    }
+    return n;
+  },
+
+  entityTree_lastChildId: function(id) {
+    var prevChildId = null;
+    var childId = $$('entity_tree').getFirstChildId(id);
+    while (childId != null && prevChildId !== childId) {
+      prevChildId = childId;
+      childId = $$('entity_tree').getNextSiblingId(childId);
+    }
+    return prevChildId;
   },
 
   /**
@@ -241,7 +299,6 @@ UI = {
       UI.clear();
     });
 
-    // Initialize event listeners
     Mydataspace.on('entities.create.res', function(data) {
       $$('add_root_window').hide();
       $$('add_entity_window').hide();
@@ -257,7 +314,7 @@ UI = {
           UI.entityTree_setChildren(entity.id, entity.data);
         }
       } else if (!common.isNull($$('entity_tree').getItem(parentId)) &&
-          common.isNull($$('entity_tree').getItem(UIHelper.childId(parentId, 'dummy')))) {
+          common.isNull($$('entity_tree').getItem(UIHelper.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)))) {
         $$('entity_tree').add(entity, 0, parentId);
         if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
           UI.entityTree_setChildren(entity.id, entity.data);
@@ -288,8 +345,9 @@ UI = {
     Mydataspace.on('entities.getChildren.res', function(data) {
       var entityId = UIHelper.idFromData(data);
       var children = data.children.map(UIHelper.entityFromData);
+
       UI.entityTree_setChildren(entityId, children);
-      if ($$('entity_tree').getSelectedId() === entityId) {
+      if (UI.entityTree_selectedId() === entityId) {
         UI.entityList_fill(entityId, children);
       }
     });
@@ -365,7 +423,7 @@ UI = {
           { view: 'toolbar',
             elements: [
               { view: 'label',
-                label: 'Edit Script:',
+                label: STRINGS.EDIT_SCRIPT,
                 width: 100
               },
               { view: 'label',
@@ -375,7 +433,7 @@ UI = {
               { view: 'button',
                 type: 'icon',
                 icon: 'save',
-                label: 'Save Entity',
+                label: STRINGS.SAVE_ENTITY,
                 width: 120,
                 click: function() {
                   $$(UI.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
@@ -385,7 +443,7 @@ UI = {
               { view: 'button',
                 type: 'icon',
                 icon: 'play',
-                label: 'Run Script',
+                label: STRINGS.RUN_SCRIPT,
                 width: 120,
                 click: function() {
                   $$(UI.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
@@ -484,7 +542,7 @@ UI = {
                 return;
               }
               var formData = $$('add_entity_form').getValues();
-              var newEntityId = UIHelper.childId($$('entity_tree').getSelectedId(), formData.name);
+              var newEntityId = UIHelper.childId(UI.entityTree_selectedId(), formData.name);
               var data = UIHelper.dataFromId(newEntityId);
               data.fields = [];
               data.type = formData.type;
@@ -658,12 +716,30 @@ UI = {
                   gravity: 0.4,
                   select: true,
                   on: {
-                    onBeforeOpen: function(id) {
-                      Mydataspace.request(
-                        'entities.getChildren', UIHelper.dataFromId(id));
+                    onAfterLoad: function() {
+                      UI.selectedId = $$('entity_tree').getFirstId();
+                      $$('entity_tree').select(UI.selectedId);
                     },
-                    onSelectChange:function () {
-                      UI.entityList_refreshData();
+                    onBeforeOpen: function(id) {
+                      var firstChildId = $$('entity_tree').getFirstChildId(id);
+                      if (firstChildId == null || firstChildId === UIHelper.childId(id, UIHelper.ENTITY_TREE_DUMMY_ID)) {
+                        Mydataspace.request(
+                          'entities.getChildren', UIHelper.dataFromId(id));
+                        }
+                    },
+                    onSelectChange: function(ids) {
+                      var id = ids[0];
+                      if (id.endsWith(UIHelper.ENTITY_TREE_SHOW_MORE_ID)) {
+                        $$('entity_tree').select(UI.entityTree_selectedId());
+                      } else {
+                        UI.selectedId = $$('entity_tree').getSelectedId();
+                        UI.entityList_refreshData();
+                      }
+                    },
+                    onBeforeSelect: function(id, selection) {
+                      if (id.endsWith(UIHelper.ENTITY_TREE_SHOW_MORE_ID)) {
+                        UI.entityTree_showMore(UIHelper.parentId(id));
+                      }
                     }
                   }
                 },
