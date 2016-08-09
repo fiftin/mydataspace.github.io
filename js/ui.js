@@ -179,21 +179,75 @@ UI = {
   },
 
   entityList_refreshData: function() {
-    var data = UIHelper.dataFromId(UI.entityTree_selectedId());
+    var req = UIHelper.dataFromId(UI.entityTree_getSelectedId());
     var seatch = $$('entity_list__search').getValue();
     if (common.isPresent(seatch)) {
-      data['filter_by_name'] = seatch;
+      req['filter_by_name'] = seatch;
     }
-    Mydataspace.emit('entities.getChildren', data);
+    Mydataspace.request('entities.getChildren', req, function(data) {
+      var showMoreChildId =
+        UIHelper.childId(UI.entityTree_getSelectedId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
+      var entityId = UIHelper.idFromData(data);
+      var children = data.children.map(UIHelper.entityFromData);
+      if (UI.entityTree_getSelectedId() === entityId) {
+        if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
+          children[children.length - 1] = {
+            id: UIHelper.childId(entityId, UIHelper.ENTITY_LIST_SHOW_MORE_ID),
+            value: STRINGS.SHOW_MORE
+          }
+        }
+        UI.entityList_fill(entityId, children);
+        $$('entity_list').addCss(showMoreChildId, 'entity_list__show_more_item');
+      }
+    });
   },
 
   entityList_fill: function(entityId, children) {
     $$('entity_list').clearAll();
     for (var i in children) {
-      $$('entity_list').add(children[i], 0);
+      $$('entity_list').add(children[i], -1);
     }
     $$('entity_list').add({ id: entityId,  value: '.' }, 0);
     $$('entity_list').select(entityId);
+  },
+
+  entityList_addChildren: function(children) {
+    var showMoreChildId =
+      UIHelper.childId(UI.entityTree_getSelectedId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
+    if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
+      delete children[children.length - 1];
+    } else {
+      $$('entity_list').remove(showMoreChildId);
+    }
+    var startIndex = UI.entityList_count() + 1;
+    var offset = 0;
+    for (var i in children) {
+      $$('entity_list').add(children[i], startIndex + offset);
+      offset++;
+    }
+  },
+
+  entityList_showMore: function() {
+    var req = UIHelper.dataFromId(UI.entityTree_getSelectedId());
+    req.offset = UI.entityList_count();
+    Mydataspace.request('entities.getChildren', req, function(data) {
+      var entityId = UIHelper.idFromData(data);
+      var children = data.children.map(UIHelper.entityFromData);
+      UI.entityList_addChildren(children);
+    });
+  },
+
+  entityList_count: function() {
+    var lastId = $$('entity_list').getLastId();
+    var lastIndex = $$('entity_list').getIndexById(lastId) - 1;
+    if (lastId.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID)) {
+      return lastIndex;
+    }
+    return lastIndex + 1;
+  },
+
+  entityList_getSelectedId: function() {
+    return UI.entityList_selectedId;
   },
 
   /**
@@ -202,51 +256,60 @@ UI = {
   entityTree_setChildren: function(entityId, children) {
     var dummyChildId = UIHelper.childId(entityId, UIHelper.ENTITY_TREE_DUMMY_ID);
     var showMoreChildId = UIHelper.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID);
-
     var firstChildId = $$('entity_tree').getFirstChildId(entityId);
-    if (firstChildId == null || firstChildId === dummyChildId) {
-      if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
-        children[children.length - 1] = {
-          id: UIHelper.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID),
-          value: STRINGS.SHOW_MORE
-        }
-      }
-      children.reverse().forEach(function(entity) {
-        var tmpId = $$('entity_tree').add(entity, 0, entityId);
-        if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-          UI.entityTree_setChildren(entity.id, entity.data);
-        }
-      });
-      if (firstChildId !== null) {
-        $$('entity_tree').remove(firstChildId);
-      }
-      $$('entity_tree').addCss(showMoreChildId, 'entity_tree__show_more_item');
-    } else { // Show more pressed
-      if ($$('entity_tree').exists(showMoreChildId)) {
-        if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
-          delete children[children.length - 1];
-        } else {
-          $$('entity_tree').remove(showMoreChildId);
-        }
-        children.reverse().forEach(function(entity) {
-          var nChildren = UI.entityTree_numberOfChildren(entityId);
-          $$('entity_tree').add(entity, nChildren - 1, entityId);
-          if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-            UI.entityTree_setChildren(entity.id, entity.data);
-          }
-        });
+    if (firstChildId != null && firstChildId !== dummyChildId) {
+      return;
+    }
+    if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
+      children[children.length - 1] = {
+        id: UIHelper.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID),
+        value: STRINGS.SHOW_MORE
       }
     }
+    children.reverse().forEach(function(entity) {
+      var tmpId = $$('entity_tree').add(entity, 0, entityId);
+      if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
+        UI.entityTree_setChildren(entity.id, entity.data);
+      }
+    });
+    if (firstChildId !== null) {
+      $$('entity_tree').remove(firstChildId);
+    }
+    $$('entity_tree').addCss(showMoreChildId, 'entity_tree__show_more_item');
   },
 
-  entityTree_selectedId: function() {
-    return UI.selectedId;
+  entityTree_addChildren: function(entityId, children) {
+    var showMoreChildId = UIHelper.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID);
+    var firstChildId = $$('entity_tree').getFirstChildId(entityId);
+    if (!$$('entity_tree').exists(showMoreChildId)) {
+      return;
+    }
+    if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
+      delete children[children.length - 1];
+    } else {
+      $$('entity_tree').remove(showMoreChildId);
+    }
+    children.reverse().forEach(function(entity) {
+      var nChildren = UI.entityTree_numberOfChildren(entityId);
+      $$('entity_tree').add(entity, nChildren - 1, entityId);
+      if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
+        UI.entityTree_setChildren(entity.id, entity.data);
+      }
+    });
+  },
+
+  entityTree_getSelectedId: function() {
+    return UI.entityTree_selectedId;
   },
 
   entityTree_showMore: function(id) {
     var req = UIHelper.dataFromId(id);
     req.offset = UI.entityTree_numberOfChildren(id);
-    Mydataspace.request('entities.getChildren', req);
+    Mydataspace.request('entities.getChildren', req, function(data) {
+      var entityId = UIHelper.idFromData(data);
+      var children = data.children.map(UIHelper.entityFromData);
+      UI.entityTree_addChildren(entityId, children);
+    });
   },
 
   entityTree_numberOfChildren(id) {
@@ -340,16 +403,6 @@ UI = {
       var entityId = UIHelper.idFromData(data);
       $$('entity_list').remove(entityId);
       $$('entity_tree').remove(entityId);
-    });
-
-    Mydataspace.on('entities.getChildren.res', function(data) {
-      var entityId = UIHelper.idFromData(data);
-      var children = data.children.map(UIHelper.entityFromData);
-
-      UI.entityTree_setChildren(entityId, children);
-      if (UI.entityTree_selectedId() === entityId) {
-        UI.entityList_fill(entityId, children);
-      }
     });
 
     Mydataspace.on('entities.getWithMeta.res', function(data) {
@@ -542,7 +595,7 @@ UI = {
                 return;
               }
               var formData = $$('add_entity_form').getValues();
-              var newEntityId = UIHelper.childId(UI.entityTree_selectedId(), formData.name);
+              var newEntityId = UIHelper.childId(UI.entityTree_getSelectedId(), formData.name);
               var data = UIHelper.dataFromId(newEntityId);
               data.fields = [];
               data.type = formData.type;
@@ -717,22 +770,27 @@ UI = {
                   select: true,
                   on: {
                     onAfterLoad: function() {
-                      UI.selectedId = $$('entity_tree').getFirstId();
-                      $$('entity_tree').select(UI.selectedId);
+                      UI.entityTree_selectedId = $$('entity_tree').getFirstId();
+                      $$('entity_tree').select(UI.entityTree_getSelectedId());
                     },
                     onBeforeOpen: function(id) {
                       var firstChildId = $$('entity_tree').getFirstChildId(id);
-                      if (firstChildId == null || firstChildId === UIHelper.childId(id, UIHelper.ENTITY_TREE_DUMMY_ID)) {
-                        Mydataspace.request(
-                          'entities.getChildren', UIHelper.dataFromId(id));
-                        }
+                      if (firstChildId != null && firstChildId !== UIHelper.childId(id, UIHelper.ENTITY_TREE_DUMMY_ID)) {
+                        return;
+                      }
+                      // Load children to first time opened node.
+                      Mydataspace.request('entities.getChildren', UIHelper.dataFromId(id), function(data) {
+                        var entityId = UIHelper.idFromData(data);
+                        var children = data.children.map(UIHelper.entityFromData);
+                        UI.entityTree_setChildren(entityId, children);
+                      });
                     },
                     onSelectChange: function(ids) {
                       var id = ids[0];
                       if (id.endsWith(UIHelper.ENTITY_TREE_SHOW_MORE_ID)) {
-                        $$('entity_tree').select(UI.entityTree_selectedId());
+                        $$('entity_tree').select(UI.entityTree_getSelectedId());
                       } else {
-                        UI.selectedId = $$('entity_tree').getSelectedId();
+                        UI.entityTree_selectedId = $$('entity_tree').getSelectedId();
                         UI.entityList_refreshData();
                       }
                     },
@@ -778,8 +836,22 @@ UI = {
                   select: true,
                   template: '<div>#value#</div>',
                   on: {
-                    onSelectChange:function () {
-                      Mydataspace.emit('entities.getWithMeta', UIHelper.dataFromId($$('entity_list').getSelectedId()));
+                    onBeforeSelect: function(id, selection) {
+                      if (id.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID)) {
+                        UI.entityList_showMore();
+                      } else {
+                        UI.entityList_selectedId = id;
+                      }
+                    },
+                    onSelectChange: function (ids) {
+                      var id = ids[0];
+                      if (id.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID)) {
+                        $$('entity_list').select(UI.entityList_getSelectedId());
+                      } else {
+                        Mydataspace.emit(
+                          'entities.getWithMeta',
+                          UIHelper.dataFromId(UI.entityList_getSelectedId()));
+                      }
                     }
                   }
                 },

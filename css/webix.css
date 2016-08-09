@@ -75,3 +75,7 @@
 .entity_tree__show_more_item .webix_tree_file {
   visibility: hidden;
 }
+
+.entity_list__show_more_item {
+  text-align: center;
+}

@@ -35,7 +35,7 @@ var Mydataspace = {
     facebook: {
       title: 'Connect to Facebook',
       icon: 'facebook',
-      url: 'https://www.facebook.com/dialog/oauth?client_id=827438877364954&scope=email&redirect_uri={{api_url}}/auth?authProvider=facebook&display=popup',
+      url: 'https://www.facebook.com/dialog/oauth?client_id=827438877364954&scope=email&redirect_uri={{api_url}}%2fauth%3fauthProvider%3dfacebook%26permission%3dadmin&display=popup',
       loginWindow: {
         height: 400
       }
@@ -43,7 +43,7 @@ var Mydataspace = {
     google: {
       title: 'Connect to Google',
       icon: 'google-plus',
-      url: 'https://accounts.google.com/o/oauth2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.me%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.profile.emails.read&response_type=code&client_id=821397494321-s85oh989s0ip2msnock29bq1gpprk07f.apps.googleusercontent.com&redirect_uri={{api_url}}%2Fauth%3FauthProvider%3Dgoogle',
+      url: 'https://accounts.google.com/o/oauth2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.me%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.profile.emails.read&response_type=code&client_id=821397494321-s85oh989s0ip2msnock29bq1gpprk07f.apps.googleusercontent.com&state=permission%3dadmin%26clientId%3dmy-data.space&redirect_uri={{api_url}}%2fauth%3fauthProvider%3dgoogle',
       loginWindow: {
         height: 800
       }

@@ -5,6 +5,7 @@ UIHelper = {
   MAX_STRING_FIELD_LENGTH: 1000,
   ENTITY_TREE_SHOW_MORE_ID: 'show_more_23478_3832ee',
   ENTITY_TREE_DUMMY_ID: 'dummy_483__4734_47e4',
+  ENTITY_LIST_SHOW_MORE_ID: 'show_more_47384_3338222',
   FIELD_TYPES: {
     s: {
       title: 'String',
