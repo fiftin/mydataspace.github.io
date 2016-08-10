@@ -35,7 +35,9 @@ var Mydataspace = {
     facebook: {
       title: 'Connect to Facebook',
       icon: 'facebook',
-      url: 'https://www.facebook.com/dialog/oauth?client_id=827438877364954&scope=email&redirect_uri={{api_url}}%2fauth%3fauthProvider%3dfacebook%26permission%3dadmin&display=popup',
+      url: 'https://www.facebook.com/dialog/oauth?client_id=827438877364954&scope=email' +
+           '&redirect_uri={{api_url}}%2fauth%3fauthProvider%3dfacebook%26permission%3d{{permission}}%26clientId%3d{{client_id}}' +
+           '&display=popup',
       loginWindow: {
         height: 400
       }
@@ -43,7 +45,11 @@ var Mydataspace = {
     google: {
       title: 'Connect to Google',
       icon: 'google-plus',
-      url: 'https://accounts.google.com/o/oauth2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.me%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.profile.emails.read&response_type=code&client_id=821397494321-s85oh989s0ip2msnock29bq1gpprk07f.apps.googleusercontent.com&state=permission%3dadmin%26clientId%3dmy-data.space&redirect_uri={{api_url}}%2fauth%3fauthProvider%3dgoogle',
+      url: 'https://accounts.google.com/o/oauth2/auth' +
+           '?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.me%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.profile.emails.read&response_type=code' +
+           '&client_id=821397494321-s85oh989s0ip2msnock29bq1gpprk07f.apps.googleusercontent.com' +
+           '&state=permission%3d{{permission}}%26clientId%3d{{client_id}}' +
+           '&redirect_uri={{api_url}}%2fauth%3fauthProvider%3dgoogle',
       loginWindow: {
         height: 800
       }
@@ -53,7 +59,12 @@ var Mydataspace = {
   getAuthProviders: function() {
     var ret = common.copy(Mydataspace.authProviders);
     for (var providerName in ret) {
-      ret[providerName].url = ret[providerName].url.replace('{{api_url}}', encodeURIComponent(Mydataspace.options.apiURL));
+      ret[providerName].url =
+        ret[providerName].url.replace('{{api_url}}', encodeURIComponent(Mydataspace.options.apiURL));
+      ret[providerName].url =
+        ret[providerName].url.replace('{{permission}}', Mydataspace.options.permission);
+      ret[providerName].url =
+        ret[providerName].url.replace('{{client_id}}', Mydataspace.options.clientId);
     }
     return ret;
   },
@@ -65,6 +76,8 @@ var Mydataspace = {
     }
     var ret = common.copy(prov);
     ret.url = ret.url.replace('{{api_url}}', encodeURIComponent(Mydataspace.options.apiURL));
+    ret.url = ret.url.replace('{{permission}}', Mydataspace.options.permission);
+    ret.url = ret.url.replace('{{client_id}}', Mydataspace.options.clientId);
     return ret;
   },
 

@@ -17,7 +17,7 @@ baseurl: ""
 url: "http://mydataspace.github.io"
 api_url: "http://api-mydatasp.rhcloud.com"
 api_websocket_url: "http://api-mydatasp.rhcloud.com:8000"
-
+client_id: "a56e6a0c-06ab-bca7-bb97-18c8898c68f9"
 github_username:  fiftin
 
 # Build settings
