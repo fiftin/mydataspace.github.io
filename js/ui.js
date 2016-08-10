@@ -334,6 +334,23 @@ UI = {
     return prevChildId;
   },
 
+
+  //
+  // Apps helper methods
+  //
+
+  refreshApps: function() {
+    Mydataspace.emit('apps.getAll', {});
+  },
+
+  appForm_save: function() {
+    Mydataspace.emit('apps.change', $$('app_form').getValues());
+  },
+
+  appForm_updateToolbar: function() {
+
+  },
+
   /**
    * Reload data from the server.
    */
@@ -351,14 +368,14 @@ UI = {
     Mydataspace.on('login', function() {
       $$('menu__item_list').select($$('menu__item_list').getFirstId());
       $$('login_panel').hide();
-      $$('data_panel').show();
+      $$('admin_panel').show();
       UI.refresh();
     });
 
     Mydataspace.on('logout', function() {
       $$('menu').hide();
       $$('login_panel').show();
-      $$('data_panel').hide();
+      $$('admin_panel').hide();
       UI.clear();
     });
 
@@ -419,6 +436,52 @@ UI = {
         UI.entityForm_setClean();
       }
     });
+
+    Mydataspace.on('entities.err', function(data) {
+    });
+
+    Mydataspace.on('apps.create.res', function(data) {
+      $$('add_app_window').hide();
+      $$('app_list').add({
+        id: data.clientId,
+        value: data.name
+      });
+      $$('app_list').select(data.clientId);
+    });
+
+    Mydataspace.on('apps.change.res', function(data) {
+      $$('app_form').setValues(data);
+      $$('entity_form').setDirty(false);
+    });
+
+    Mydataspace.on('apps.delete.res', function(data) {
+      $$('app_list').remove(data.clientId);
+    });
+
+    Mydataspace.on('apps.get.res', function(data) {
+      $$('app_form').setValues(data);
+      $$('entity_form').setDirty(false);
+    });
+
+    Mydataspace.on('apps.getAll.res', function(data) {
+      var items = data.map(function(x) {
+        return {
+          id: x.clientId,
+          value: x.name
+        }
+      });
+      $$('app_list').clearAll();
+      for (var i in items) {
+        $$('app_list').add(items[i], -1);
+      }
+      if (items.length > 0) {
+        $$('app_list').select(items[0].id);
+      }
+    });
+
+    Mydataspace.on('apps.err', function(data) {
+    });
+
   },
 
   /**
@@ -649,7 +712,43 @@ UI = {
       }
     });
 
+    //
+    // 'Add new app' window
+    //
+    webix.ui({
+        view: 'window',
+        id: 'add_app_window',
+        width: 300,
+        position: 'center',
+        modal: true,
+        head: 'New App',
+        on: UIControls.getOnForFormWindow('add_app'),
+        body: {
+          view: 'form',
+          id: 'add_app_form',
+          borderless: true,
+          on: {
+            onSubmit: function() {
+              if (!$$('add_app_form').validate()) {
+                return;
+              }
+              // Send request to create new app
+              var data = $$('add_app_form').getValues();
+              data.path = '';
+              data.fields = [];
+              Mydataspace.emit('apps.create', data);
+            }
+          },
+          elements: [
+            { view: 'text', label: 'Name', required: true, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
+            UIControls.getSubmitCancelForFormWindow('add_app')
+          ]
+        }
+    });
+
+    //
     // Left side menu
+    //
 		webix.ui({
 			view: 'sidemenu',
 			id: 'menu',
@@ -679,18 +778,23 @@ UI = {
             scroll: false,
             template: '<span class="webix_icon fa-#icon#"></span> #value#',
             data:[
-              // { id: 1, value: 'Profile', icon: 'user' },
               { id: 'my-data', value: 'My Data', icon: 'database' },
-              // { id: 5, value: 'Settings', icon: 'cog' },
+              { id: 'my-apps', value: 'My Apps', icon: 'cogs' },
               { id: 'logout', value: 'Sign out', icon: 'sign-out' }
             ],
             select: true,
             type: { height: 40 },
             on: {
-              onSelectChange:function () {
+              onSelectChange: function () {
                 switch (this.getSelectedId()) {
                   case 'my-data':
-                    // UI.refresh();
+                    $$('my_data_panel').show();
+                    $$('my_apps_panel').hide();
+                    break;
+                  case 'my-apps':
+                    $$('my_data_panel').hide();
+                    $$('my_apps_panel').show();
+                    UI.refreshApps();
                     break;
                   case 'logout':
                     Mydataspace.logout();
@@ -719,9 +823,11 @@ UI = {
       ]
     });
 
-    // Init Webix UI
+    //
+    // Admin panel
+    //
     webix.ui({
-      id: 'data_panel',
+      id: 'admin_panel',
       hidden: true,
       rows: [
         { cols: [
@@ -739,7 +845,128 @@ UI = {
             },
           ]
         },
-        { cols: [
+
+        //
+        // My Apps Page
+        //
+        { id: 'my_apps_panel',
+          height: window.innerHeight - 46,
+          hidden: true,
+          cols: [
+            // List of apps
+            { rows: [
+                { view: 'toolbar',
+                  elements: [
+                    { view: 'button',
+                      type: 'icon',
+                      icon: 'plus',
+                      label: 'New App',
+                      width: 100,
+                      click: function() {
+                        $$('add_app_window').show();
+                      }
+                    },
+                    { view: 'button',
+                      type: 'icon',
+                      icon: 'refresh',
+                      label: 'Refresh',
+                      width: 100,
+                      click: function() {
+                        UI.refreshApps();
+                      }
+                    },
+                    {}
+                  ]
+                },
+                { view: 'list',
+                  id: 'app_list',
+                  select: true,
+                  template: '<div>#value#</div>',
+                  on: {
+                    onSelectChange: function (ids) {
+                      Mydataspace.emit(
+                        'apps.get',
+                        { clientId: ids[0] });
+                    }
+                  }
+                }
+              ]
+            },
+            { view: 'resizer' },
+            // Selected app edit
+            { rows: [
+              { view: 'toolbar',
+                cols: [
+                  { view: 'button',
+                    type: 'icon',
+                    icon: 'save',
+                    label: 'Save',
+                    id: 'app_form__save_button',
+                    width: 70,
+                    click: function() {
+                      UI.appForm_save();
+                    }
+                  },
+                  { view: 'button',
+                    type: 'icon',
+                    icon: 'refresh',
+                    label: 'Refresh App',
+                    width: 120,
+                    click: function() {
+                      Mydataspace.emit(
+                        'apps.get',
+                        { clientId: $$('app_list').getSelectedId() });
+                    }
+                  },
+                  {},
+                  { view: 'button',
+                    type: 'icon',
+                    icon: 'remove',
+                    label: 'Delete',
+                    width: 100,
+                    click: function() {
+                      webix.confirm({
+                        title: 'Delete App',
+                        text: 'You really want delete this app?',
+                        ok: 'Yes',
+                        cancel: 'No',
+                        callback: function(result) {
+                          if (result) {
+                            Mydataspace.request(
+                              'apps.delete',
+                              { clientId: $$('app_list').getSelectedId() });
+                          }
+                        }
+                      });
+                    }
+                  },
+                ]
+              },
+              { view: 'form',
+                id: 'app_form',
+                complexData: true,
+                scroll: true,
+                elements: [
+                  { view: 'text', label: 'Name', name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
+                  { view: 'textarea', label: 'Decription', height: 100, name: 'description', labelWidth: UIHelper.LABEL_WIDTH },
+                  { view: 'text', label: 'Logo URL', name: 'logoURL', labelWidth: UIHelper.LABEL_WIDTH },
+                  { view: 'text', label: 'Site URL', name: 'url', labelWidth: UIHelper.LABEL_WIDTH },
+                  { view: 'text', label: 'Clien ID', name: 'clientId', readonly:true, labelWidth: UIHelper.LABEL_WIDTH },
+                ],
+                on: {
+                  onChange: function() { UI.appForm_updateToolbar() }
+                }
+              },
+            ]}
+          ]
+        },
+
+        //
+        // My Data Page
+        //
+        { id: 'my_data_panel',
+          height: window.innerHeight - 46,
+          cols: [
             { rows: [
                 { view: 'toolbar',
                   elements: [
@@ -912,7 +1139,6 @@ UI = {
                   { view: 'button',
                     type: 'icon',
                     icon: 'remove',
-                    // label: 'Delete',
                     width: 30,
                     click: function() {
                       webix.confirm({
@@ -952,6 +1178,20 @@ UI = {
           ]
         }
       ]
+    });
+
+    webix.event(window, 'resize', function(e) {
+      $$('admin_panel').define({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+      $$('my_data_panel').define({
+        height: window.innerHeight - 46
+      });
+      $$('my_apps_panel').define({
+        height: window.innerHeight - 46
+      });
+      $$('admin_panel').resize();
     });
   },
 };
