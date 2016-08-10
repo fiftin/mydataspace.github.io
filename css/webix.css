@@ -5,12 +5,18 @@
   width: auto !important;
 }
 
+.logo {
+  width: 250px;
+  position: absolute;
+  z-index: 1000;
+}
+
 /**
  * Site header style
  */
 .webix_header > div {
-  background: black !important;
-  color: #868181 !important;
+  background: #292929 !important;
+  color: #292929 !important;
 }
 
 .menu__item_list > .webix_scroll_cont > .webix_list_item:first-child {
@@ -18,7 +24,7 @@
 }
 
 .menu_button {
-  background: black;
+  background: #292929;
 }
 
 .menu_button .webix_icon {
@@ -96,4 +102,8 @@
 
 .entity_list__show_more_item {
   text-align: center;
+}
+
+.entity_form textarea {
+  overflow: hidden;
 }

@@ -1162,6 +1162,7 @@ UI = {
               },
               { view: 'form',
                 id: 'entity_form',
+                css: 'entity_form',
                 complexData: true,
                 scroll: true,
                 elements: [
