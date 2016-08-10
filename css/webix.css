@@ -13,7 +13,25 @@
   color: #868181 !important;
 }
 
+.menu__item_list > .webix_scroll_cont > .webix_list_item:first-child {
+  border-top: 1px solid #ebebeb;
+}
 
+.menu_button {
+  background: black;
+}
+
+.menu_button .webix_icon {
+  color: #a9a9a9;
+  transition-property: color;
+  transition-duration: 0.3s;
+}
+
+.menu_button:hover .webix_icon {
+  color: white;
+  transition-property: color;
+  transition-duration: 0.3s;
+}
 
 .profile {
   padding-bottom: 12px;

@@ -776,6 +776,7 @@ UI = {
             id: 'menu__item_list',
             borderless: true,
             scroll: false,
+            css: 'menu__item_list',
             template: '<span class="webix_icon fa-#icon#"></span> #value#',
             data:[
               { id: 'my-data', value: 'My Data', icon: 'database' },
@@ -835,6 +836,7 @@ UI = {
             { view: 'icon',
               icon: 'bars',
               id: 'menu_button',
+              css: 'menu_button',
               click: function() {
                 if( $$('menu').config.hidden) {
                   $$('menu').show();
