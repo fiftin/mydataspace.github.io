@@ -40,7 +40,7 @@ var common = {
       for (let item of source) {
         dest.push(common.copy(item));
       }
-      
+
     } else { // object
       for (let i in dest) {
         if (typeof source[i] === 'undefined') {
@@ -134,7 +134,8 @@ var common = {
   getChildName: function(path) {
     var i = path.lastIndexOf('/');
     if (i === -1) {
-      throw new Error('Path has no child');
+      return path;
+      // throw new Error('Path has no child');
     }
     return path.substr(i + 1);
   },

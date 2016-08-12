@@ -397,7 +397,6 @@ UI = {
       if ($$('entity_list').getSelectedId() === parentId) {
         $$('entity_list').add(entity);
       }
-
       if (parentId === 'root') {
         $$('entity_tree').add(entity, 0);
         if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
@@ -1118,14 +1117,20 @@ UI = {
                         UIHelper.dataFromId($$('entity_list').getSelectedId()));
                     }
                   },
-                  { view: 'button',
-                    type: 'icon',
-                    icon: 'cloud-download',
-                    width: 30,
-                    click: function() {
-
-                    }
-                  },
+                  // { view: 'button',
+                  //   type: 'icon',
+                  //   icon: 'cloud-download',
+                  //   width: 30,
+                  //   click: function() {
+                  //     Mydataspace.request(
+                  //       'entities.initiateExport',
+                  //       UIHelper.dataFromId($$('entity_list').getSelectedId()),
+                  //       function(data) {
+                  //         UIHelper.popupCenter(data.url, 'Download', 600, 400);
+                  //       }
+                  //     );
+                  //   }
+                  // },
                   { view: 'button',
                     type: 'icon',
                     icon: 'plus',
