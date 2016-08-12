@@ -10,6 +10,7 @@ UI = {
   entityForm_setClean: function() {
     $$('entity_form').setDirty(false);
     UI.entityForm_updateToolbar();
+    $$('entity_form').enable();
   },
 
   entityForm_setDirty: function() {
@@ -182,7 +183,7 @@ UI = {
     var req = UIHelper.dataFromId(UI.entityTree_getSelectedId());
     var seatch = $$('entity_list__search').getValue();
     if (common.isPresent(seatch)) {
-      req['filter_by_name'] = seatch;
+      req['filterByName'] = seatch;
     }
     Mydataspace.request('entities.getChildren', req, function(data) {
       var showMoreChildId =
@@ -351,6 +352,15 @@ UI = {
 
   },
 
+  error: function(err) {
+    webix.message({ type: 'error', text: err.message || err.name });
+    switch (err.name) {
+      case 'NotAuthorizedErr':
+        // Mydataspace.logout();
+        break;
+    }
+  },
+
   /**
    * Reload data from the server.
    */
@@ -437,8 +447,7 @@ UI = {
       }
     });
 
-    Mydataspace.on('entities.err', function(data) {
-    });
+    Mydataspace.on('entities.err', UI.error);
 
     Mydataspace.on('apps.create.res', function(data) {
       $$('add_app_window').hide();
@@ -479,8 +488,7 @@ UI = {
       }
     });
 
-    Mydataspace.on('apps.err', function(data) {
-    });
+    Mydataspace.on('apps.err', UI.error);
 
   },
 
@@ -1104,6 +1112,7 @@ UI = {
                     icon: 'refresh',
                     width: 30,
                     click: function() {
+                      $$('entity_form').disable();
                       Mydataspace.emit(
                         'entities.getWithMeta',
                         UIHelper.dataFromId($$('entity_list').getSelectedId()));
