@@ -392,6 +392,11 @@ UI = {
     Mydataspace.on('entities.create.res', function(data) {
       $$('add_root_window').hide();
       $$('add_entity_window').hide();
+      UIControls.removeSpinnerFromWindow($$('add_root_window'));
+      UIControls.removeSpinnerFromWindow($$('add_entity_window'));
+      $$('add_root_form').enable();
+      $$('add_entity_form').enable();
+
       var parentId = UIHelper.parentId(UIHelper.idFromData(data));
       var entity = UIHelper.entityFromData(data);
       if ($$('entity_list').getSelectedId() === parentId) {
@@ -1117,20 +1122,6 @@ UI = {
                         UIHelper.dataFromId($$('entity_list').getSelectedId()));
                     }
                   },
-                  // { view: 'button',
-                  //   type: 'icon',
-                  //   icon: 'cloud-download',
-                  //   width: 30,
-                  //   click: function() {
-                  //     Mydataspace.request(
-                  //       'entities.initiateExport',
-                  //       UIHelper.dataFromId($$('entity_list').getSelectedId()),
-                  //       function(data) {
-                  //         UIHelper.popupCenter(data.url, 'Download', 600, 400);
-                  //       }
-                  //     );
-                  //   }
-                  // },
                   { view: 'button',
                     type: 'icon',
                     icon: 'plus',

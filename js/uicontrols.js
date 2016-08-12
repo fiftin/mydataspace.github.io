@@ -43,6 +43,21 @@ UIControls = {
     };
   },
 
+  addSpinnerToWindow: function(windowId) {
+    var head = $$(windowId).getNode().querySelector('.webix_win_head > .webix_view > .webix_template');
+    var spinner = document.createElement('i');
+    spinner.className = 'fa fa-cog fa-spin fa-2x fa-fw webix_win_head_spinner';
+    head.appendChild(spinner);
+  },
+
+  removeSpinnerFromWindow: function(windowId) {
+    var head = $$(windowId).getNode().querySelector('.webix_win_head > .webix_view > .webix_template');
+    var spinners = head.getElementsByClassName('webix_win_head_spinner');
+    if (spinners.length !== 0) {
+      head.removeChild(spinners[0]);
+    }
+  },
+
   getSubmitCancelForFormWindow: function(id) {
     var formId = id + '_form';
     var windowId = id + '_window';
@@ -50,7 +65,11 @@ UIControls = {
         { view: 'button',
           value: 'Create',
           type: 'form',
-          click: function() { $$(formId).callEvent('onSubmit') }
+          click: function() {
+            $$(formId).disable();
+            UIControls.addSpinnerToWindow($$(windowId));
+            $$(formId).callEvent('onSubmit');
+          }
         },
         { view: 'button',
           id: windowId + '__cancel_button',

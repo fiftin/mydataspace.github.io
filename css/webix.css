@@ -107,3 +107,11 @@
 .entity_form textarea {
   overflow: hidden;
 }
+
+.webix_win_head_spinner {
+  float: right;
+  margin-top: 5px;
+  margin-left: -45px;
+  width: 45px;
+  color: #3498db;
+}
