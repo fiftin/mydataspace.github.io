@@ -21,7 +21,7 @@ UIControls = {
       options: [
         { id: 'private', value: 'Only Read' },
         { id: 'public', value: 'Create Children' },
-        { id: 'unqiue', value: 'Create One Child' },
+        { id: 'unique', value: 'Create One Child' },
       ],
       labelWidth: UIHelper.LABEL_WIDTH
     };
