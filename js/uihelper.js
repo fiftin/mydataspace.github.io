@@ -1,5 +1,11 @@
 UIHelper = {
+  /**
+   * Number of entities received by single request.
+   */
   NUMBER_OF_ENTITIES_LOADED_AT_TIME: 10,
+  /**
+   * Width of label of field in form.
+   */
   LABEL_WIDTH: 120,
   NUMBER_OF_FIXED_INPUTS_IN_FIELDS_FORM: 6,
   MAX_STRING_FIELD_LENGTH: 1000,
@@ -38,6 +44,7 @@ UIHelper = {
       }
     }
   },
+
   getFieldTypesAsArrayOfIdValue: function() {
     var ret = [];
     for (var key in UIHelper.FIELD_TYPES) {
@@ -49,6 +56,13 @@ UIHelper = {
     return ret;
   },
 
+  /**
+   *
+   * @param dirtyFields
+   * @param currentFieldNames
+   * @param oldFields
+   * @returns {*}
+   */
   getFieldsForSave: function(dirtyFields, currentFieldNames, oldFields) {
     if (typeof dirtyFields === 'undefined') dirtyFields = {};
     var deletedFields = {};
@@ -86,6 +100,11 @@ UIHelper = {
     return data.path.split('/').slice(-1)[0];
   },
 
+  /**
+   * Forms string with id of entity.
+   * @param data Entity data included root & path.
+   * @returns string Entity id
+   */
   idFromData: function(data) {
     if (common.isBlank(data.path)) {
       return data.root;

@@ -1,4 +1,8 @@
 UI = {
+  //
+  // Entity form
+  //
+
   entityForm_updateToolbar: function() {
     if (!$$('entity_form').isDirty()) {
       $$('entity_form__save_button').disable();
@@ -7,12 +11,18 @@ UI = {
     }
   },
 
+  /**
+   * Marks entity form as unchanged.
+   */
   entityForm_setClean: function() {
     $$('entity_form').setDirty(false);
     UI.entityForm_updateToolbar();
     $$('entity_form').enable();
   },
 
+  /**
+   * Marks entity form as changed.
+   */
   entityForm_setDirty: function() {
     $$('entity_form').setDirty(true);
     UI.entityForm_updateToolbar();
@@ -37,8 +47,8 @@ UI = {
       $$('entity_form').enable();
       UI.entityForm_setClean();
     }, function(err) {
-      webix.message({ type: 'error', text: err.message || err.name });
       $$('entity_form').enable();
+      UI.error(err);
     });
   },
 
@@ -169,7 +179,7 @@ UI = {
     let fields = $$('entity_form').getValues().fields;
     for (let fieldName in fields) {
       let field = fields[fieldName];
-      if (fields.type === 'j' || fields.type === 'u') {
+      if (field.type === 'j' || field.type === 'u') {
         hasScripts = true;
         break;
       }
@@ -179,13 +189,18 @@ UI = {
     }
   },
 
+  /**
+   * Reload data (from server) of entity list.
+   * Uses entityList_fill internally.
+   */
   entityList_refreshData: function() {
-    var req = UIHelper.dataFromId(UI.entityTree_getSelectedId());
-    var seatch = $$('entity_list__search').getValue();
-    if (common.isPresent(seatch)) {
-      req['filterByName'] = seatch;
+    var identity = UIHelper.dataFromId(UI.entityTree_getSelectedId());
+    var search = $$('entity_list__search').getValue();
+    if (common.isPresent(search)) {
+      identity['filterByName'] = search;
     }
-    Mydataspace.request('entities.getChildren', req, function(data) {
+    $$('entity_list').disable();
+    Mydataspace.request('entities.getChildren', identity, function(data) {
       var showMoreChildId =
         UIHelper.childId(UI.entityTree_getSelectedId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
       var entityId = UIHelper.idFromData(data);
@@ -200,16 +215,23 @@ UI = {
         UI.entityList_fill(entityId, children);
         $$('entity_list').addCss(showMoreChildId, 'entity_list__show_more_item');
       }
-    });
+    }, function(err) { UI.error(err); });
   },
 
-  entityList_fill: function(entityId, children) {
+  /**
+   * Fills entity list by items from children array.
+   *
+   * @param parentEntityId Root entity (selected in entity tree).
+   *                       Displays as '.' in entity list.
+   * @param children Items of entity list.
+   */
+  entityList_fill: function(parentEntityId, children) {
     $$('entity_list').clearAll();
     for (var i in children) {
       $$('entity_list').add(children[i], -1);
     }
-    $$('entity_list').add({ id: entityId,  value: '.' }, 0);
-    $$('entity_list').select(entityId);
+    $$('entity_list').add({ id: parentEntityId,  value: '.' }, 0);
+    $$('entity_list').select(parentEntityId);
   },
 
   entityList_addChildren: function(children) {
@@ -232,12 +254,15 @@ UI = {
     var req = UIHelper.dataFromId(UI.entityTree_getSelectedId());
     req.offset = UI.entityList_count();
     Mydataspace.request('entities.getChildren', req, function(data) {
-      var entityId = UIHelper.idFromData(data);
       var children = data.children.map(UIHelper.entityFromData);
       UI.entityList_addChildren(children);
     });
   },
 
+  /**
+   * Calculates number of items of entity list.
+   * @returns {number} Number of items in entity list.
+   */
   entityList_count: function() {
     var lastId = $$('entity_list').getLastId();
     var lastIndex = $$('entity_list').getIndexById(lastId) - 1;
@@ -251,8 +276,12 @@ UI = {
     return UI.entityList_selectedId;
   },
 
+  //
+  // Entity list
+  //
+
   /**
-   * Override entity children nodes recursively.
+   * Override entity's children of nodes recursively.
    */
   entityTree_setChildren: function(entityId, children) {
     var dummyChildId = UIHelper.childId(entityId, UIHelper.ENTITY_TREE_DUMMY_ID);
@@ -268,7 +297,7 @@ UI = {
       }
     }
     children.reverse().forEach(function(entity) {
-      var tmpId = $$('entity_tree').add(entity, 0, entityId);
+      $$('entity_tree').add(entity, 0, entityId);
       if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
         UI.entityTree_setChildren(entity.id, entity.data);
       }
@@ -281,7 +310,6 @@ UI = {
 
   entityTree_addChildren: function(entityId, children) {
     var showMoreChildId = UIHelper.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID);
-    var firstChildId = $$('entity_tree').getFirstChildId(entityId);
     if (!$$('entity_tree').exists(showMoreChildId)) {
       return;
     }
@@ -297,10 +325,6 @@ UI = {
         UI.entityTree_setChildren(entity.id, entity.data);
       }
     });
-  },
-
-  entityTree_getSelectedId: function() {
-    return UI.entityTree_selectedId;
   },
 
   entityTree_showMore: function(id) {
@@ -335,9 +359,12 @@ UI = {
     return prevChildId;
   },
 
+  entityTree_getSelectedId: function() {
+    return UI.entityTree_selectedId;
+  },
 
   //
-  // Apps helper methods
+  // Apps
   //
 
   refreshApps: function() {
@@ -352,11 +379,14 @@ UI = {
 
   },
 
+  //
+  //
+  //
+
   error: function(err) {
     webix.message({ type: 'error', text: err.message || err.name });
     switch (err.name) {
       case 'NotAuthorizedErr':
-        // Mydataspace.logout();
         break;
     }
   },
@@ -1114,6 +1144,7 @@ UI = {
                   { view: 'button',
                     type: 'icon',
                     icon: 'refresh',
+                    id: 'entity_form__refresh_button',
                     width: 30,
                     click: function() {
                       $$('entity_form').disable();
@@ -1173,7 +1204,7 @@ UI = {
                 elements: [
                   { view: 'text', label: 'Name', name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
                   UIControls.getEntityTypeSelectTemplate(),
-                  { view: 'text', label: 'Decription', name: 'description', labelWidth: UIHelper.LABEL_WIDTH },
+                  { view: 'text', label: 'Description', name: 'description', labelWidth: UIHelper.LABEL_WIDTH },
                   { view: 'text', label: 'Child Proto', name: 'childPrototype', labelWidth: UIHelper.LABEL_WIDTH },
                   { template: 'Fields', type: 'section' },
                   { view: 'label', label: 'No field exists', id: 'entity_form__no_fields', align: 'center' }
