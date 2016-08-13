@@ -139,9 +139,4 @@ UIHelper = {
     }
     return newWindow;
   },
-
-  exp: function(root, path) {
-
-  },
-
-}
+};

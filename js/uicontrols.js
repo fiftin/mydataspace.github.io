@@ -21,7 +21,7 @@ UIControls = {
       options: [
         { id: 'private', value: 'Only Read' },
         { id: 'public', value: 'Create Children' },
-        { id: 'unique', value: 'Create One Child' },
+        { id: 'unique', value: 'Create One Child' }
       ],
       labelWidth: UIHelper.LABEL_WIDTH
     };
@@ -75,7 +75,7 @@ UIControls = {
           id: windowId + '__cancel_button',
           value: 'Cancel',
           type: 'danger', click: function() { $$(windowId).hide() }
-        },
+        }
       ]
     }
   },
@@ -97,5 +97,5 @@ UIControls = {
         Mydataspace.login(providerName);
       }
     };
-  },
+  }
 };

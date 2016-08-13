@@ -53,7 +53,7 @@ var Mydataspace = {
       loginWindow: {
         height: 800
       }
-    },
+    }
   },
 
   getAuthProviders: function() {
@@ -241,8 +241,8 @@ var Mydataspace = {
       data = data.datas;
     }
     if (formatterArr != null) {
-      for (let formatter of formatterArr) {
-        formatter.format(data);
+      for (let i in formatterArr) {
+        formatterArr[i].format(data);
       }
     }
     callback(data);

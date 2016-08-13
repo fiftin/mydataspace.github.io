@@ -22,7 +22,7 @@ UI = {
     var dirtyData = webix.CodeParser.expandNames($$('entity_form').getDirtyValues());
     var existingData =
       webix.CodeParser.expandNames(
-        Object.keys($$('entity_form').elements).reduce((ret, current) => {
+        Object.keys($$('entity_form').elements).reduce(function(ret, current) {
           ret[current] = '';
           return ret;
         }, {}));
@@ -146,7 +146,7 @@ UI = {
           click: function() {
             UI.entityForm_deleteField(data.name);
           }
-        },
+        }
       ]
     });
     if (setDirty) {
@@ -313,7 +313,7 @@ UI = {
     });
   },
 
-  entityTree_numberOfChildren(id) {
+  entityTree_numberOfChildren: function(id) {
     var n = 0;
     var prevChildId = null;
     var childId = $$('entity_tree').getFirstChildId(id);
@@ -513,8 +513,8 @@ UI = {
         if (typeof fields === 'undefined') {
           fields = {};
         }
-        var values = Object.keys(fields).map(key => fields[key]);
-        values.sort((a, b) => {
+        var values = Object.keys(fields).map(function(key) { return fields[key]; });
+        values.sort(function(a, b) {
           if (a.type === 'j' && b.type === 'u') {
             return 1;
           } else if (a.type === 'u' && b.type === 'j') {
@@ -555,7 +555,7 @@ UI = {
                 width: 100
               },
               { view: 'label',
-                id: 'edit_script_window__title',
+                id: 'edit_script_window__title'
               },
               {},
               { view: 'button',
@@ -588,7 +588,7 @@ UI = {
                   $$(UI.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
                   $$('edit_script_window').hide();
                 }
-              },
+              }
             ]
           },
           { view: 'ace-editor',
@@ -613,9 +613,9 @@ UI = {
                 });
               }
             }
-          },
+          }
         ]
-      },
+      }
     });
 
     // 'Add new root' window
@@ -824,7 +824,7 @@ UI = {
 
     var authProviders =
       Object.keys(Mydataspace.getAuthProviders())
-            .map(providerName => UIControls.getLoginButtonView(providerName));
+            .map(function(providerName) { return UIControls.getLoginButtonView(providerName); });
     authProviders.unshift({});
     authProviders.push({});
     authProviders.push({});
@@ -856,7 +856,7 @@ UI = {
                 else
                   $$('menu').hide();
               }
-            },
+            }
           ]
         },
 
@@ -953,7 +953,7 @@ UI = {
                         }
                       });
                     }
-                  },
+                  }
                 ]
               },
               { view: 'form',
@@ -965,12 +965,12 @@ UI = {
                   { view: 'textarea', label: 'Decription', height: 100, name: 'description', labelWidth: UIHelper.LABEL_WIDTH },
                   { view: 'text', label: 'Logo URL', name: 'logoURL', labelWidth: UIHelper.LABEL_WIDTH },
                   { view: 'text', label: 'Site URL', name: 'url', labelWidth: UIHelper.LABEL_WIDTH },
-                  { view: 'text', label: 'Clien ID', name: 'clientId', readonly:true, labelWidth: UIHelper.LABEL_WIDTH },
+                  { view: 'text', label: 'Clien ID', name: 'clientId', readonly:true, labelWidth: UIHelper.LABEL_WIDTH }
                 ],
                 on: {
                   onChange: function() { UI.appForm_updateToolbar() }
                 }
-              },
+              }
             ]}
           ]
         },
@@ -1041,7 +1041,7 @@ UI = {
                       }
                     }
                   }
-                },
+                }
               ]
             },
             { view: 'resizer' },
@@ -1069,7 +1069,7 @@ UI = {
                           }
                         }
                       }
-                    },
+                    }
                   ]
                 },
                 { view: 'list',
@@ -1095,7 +1095,7 @@ UI = {
                       }
                     }
                   }
-                },
+                }
               ]
             },
             { view: 'resizer' },
@@ -1162,7 +1162,7 @@ UI = {
                         }
                       });
                     }
-                  },
+                  }
                 ]
               },
               { view: 'form',
@@ -1176,12 +1176,12 @@ UI = {
                   { view: 'text', label: 'Decription', name: 'description', labelWidth: UIHelper.LABEL_WIDTH },
                   { view: 'text', label: 'Child Proto', name: 'childPrototype', labelWidth: UIHelper.LABEL_WIDTH },
                   { template: 'Fields', type: 'section' },
-                  { view: 'label', label: 'No field exists', id: 'entity_form__no_fields', align: 'center', }
+                  { view: 'label', label: 'No field exists', id: 'entity_form__no_fields', align: 'center' }
                 ],
                 on: {
                   onChange: function() { UI.entityForm_updateToolbar() }
                 }
-              },
+              }
             ]}
           ]
         }
@@ -1201,5 +1201,5 @@ UI = {
       });
       $$('admin_panel').resize();
     });
-  },
+  }
 };

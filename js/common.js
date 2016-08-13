@@ -37,10 +37,10 @@ var common = {
     }
 
     if (Array.isArray(dest) && Array.isArray(source)) {
-      for (let item of source) {
+      for (let i in source) {
+        let item = source[i];
         dest.push(common.copy(item));
       }
-
     } else { // object
       for (let i in dest) {
         if (typeof source[i] === 'undefined') {
@@ -52,7 +52,6 @@ var common = {
           common.extendOf(dest[i], source[i]);
         }
       }
-
       for (let i in source) {
         if (typeof dest[i] === 'undefined') {
           dest[i] = common.copy(source[i]);
@@ -72,7 +71,7 @@ var common = {
     return ret;
   },
 
-  primativeTypes: [
+  primitiveTypes: [
     'number',
     'string',
     'boolean',
@@ -81,7 +80,7 @@ var common = {
   ],
 
   isPrimative: function(value) {
-    return value === null || common.primativeTypes.indexOf(typeof value) > -1;
+    return value === null || common.primitiveTypes.indexOf(typeof value) > -1;
   },
 
   mapToArray: function(map, keyName) {
@@ -158,14 +157,13 @@ var common = {
       return decodeURIComponent(results[2].replace(/\+/g, " "));
   },
 
-
   permit: function(data, keys) {
     if (typeof data === 'undefined') {
       return [];
     }
     if (arguments.length > 2) {
       keys = [];
-      for (var i = 1; i < arguments.length; i++) {
+      for (let i = 1; i < arguments.length; i++) {
         keys.push(arguments[i]);
       }
     }
@@ -174,17 +172,17 @@ var common = {
     } else {
       var ret = {};
       if (Array.isArray(keys)) {
-        for (var i in keys) {
-          var k = keys[i];
-          var val = data[k];
+        for (let i in keys) {
+          let k = keys[i];
+          let val = data[k];
           if (typeof val !== 'undefined') {
             ret[k] = val;
           }
         }
       } else {
-        for (var k in keys) {
-          var type = keys[k];
-          var val = data[k];
+        for (let k in keys) {
+          let type = keys[k];
+          let val = data[k];
           if (typeof val !== 'undefined') {
             var ok = false;
             if (common.isPrimitive(type)) {
@@ -204,8 +202,8 @@ var common = {
 
   permitArray: function(arr, keys) {
     var ret = [];
-    for (var i in arr) {
-      var data = arr[i];
+    for (let i in arr) {
+      let data = arr[i];
       ret[i] = common.permit(data, keys);
     }
     return ret;
@@ -245,20 +243,15 @@ var common = {
     return !isNaN(parseFloat(value));
   },
 
-  isInt: function(value) {
-    return !isNaN(parseInt(value));
-  },
-
   isComplex: function(value) {
-    return isObject(value) || Array.isArray(value);
+    return common.isObject(value) || Array.isArray(value);
   },
 
   isPrimitive: function(value) {
-    return !isComplex(value);
+    return !common.isComplex(value);
   },
 
   isObject: function(value) {
     return typeof value === 'object';
-  },
-
-}
+  }
+};
