@@ -62,4 +62,4 @@ EntitySimplifier.prototype.formatEntity = function(entity) {
   }
   this.fieldsSimplifier.format(entity);
   this.childrenSimplifier.format(entity);
-}
+};

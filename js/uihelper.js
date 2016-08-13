@@ -16,13 +16,13 @@ UIHelper = {
     r: {
       title: 'Real',
       isValidValue: function(value) {
-        return common.isNumber(value) || (typeof value === 'string' && /^\d[\d\.]*$/.test(value));
+        return common.isNumber(value);
       }
     },
     i: {
       title: 'Int',
       isValidValue: function(value) {
-        return common.isInt(value) || (typeof value === 'string' && /^\d+$/.test(value));
+        return common.isInt(value);
       }
     },
     j: {
@@ -138,5 +138,5 @@ UIHelper = {
         newWindow.focus();
     }
     return newWindow;
-  },
+  }
 };
