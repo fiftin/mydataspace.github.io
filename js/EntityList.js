@@ -13,7 +13,7 @@ EntityList.prototype.onCreate = function(data) {
   var parentId = UIHelper.parentId(UIHelper.idFromData(data));
   var entity = UIHelper.entityFromData(data);
   if (this.getRootId() === parentId) {
-    $$('entity_list').add(entity);
+    $$('entity_list').add(entity, 1);
   }
 };
 
@@ -121,16 +121,17 @@ EntityList.prototype.createByFormData = function(formData) {
 EntityList.prototype.addChildren = function(children) {
   var showMoreChildId =
     UIHelper.childId(this.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
+
+  var startIndex;
   if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
     delete children[children.length - 1];
+    startIndex = -2;
   } else {
     $$('entity_list').remove(showMoreChildId);
+    startIndex = -1;
   }
-  var startIndex = this.count() + 1;
-  var offset = 0;
   for (var i in children) {
-    $$('entity_list').add(children[i], startIndex + offset);
-    offset++;
+    $$('entity_list').add(children[i], startIndex);
   }
 };
 
@@ -149,9 +150,9 @@ EntityList.prototype.showMore = function() {
  */
 EntityList.prototype.count = function() {
   var lastId = $$('entity_list').getLastId();
-  var lastIndex = $$('entity_list').getIndexById(lastId) - 1;
+  var lastIndex = $$('entity_list').getIndexById(lastId);
   if (lastId.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID)) {
-    return lastIndex;
+    return lastIndex - 1;
   }
-  return lastIndex + 1;
+  return lastIndex;
 };

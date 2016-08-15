@@ -99,14 +99,17 @@ EntityTree.prototype.addChildren = function(entityId, children) {
   if (!$$('entity_tree').exists(showMoreChildId)) {
     return;
   }
+  var offset;
   if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
     delete children[children.length - 1];
+    offset = 1;
   } else {
     $$('entity_tree').remove(showMoreChildId);
+    offset = 0;
   }
-  children.reverse().forEach(function(entity) {
+  children.forEach(function(entity) {
     var nChildren = this.numberOfChildren(entityId);
-    $$('entity_tree').add(entity, nChildren - 1, entityId);
+    $$('entity_tree').add(entity, nChildren - offset, entityId);
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
       this.setChildren(entity.id, entity.data);
     }
