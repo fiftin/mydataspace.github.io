@@ -5,10 +5,28 @@ UI = {
 
   entityTree: new EntityTree(),
 
+  /**
+   * Notify user about error.
+   * @param err Object in format:
+   *            { name: 'Exception name', message: 'Error message' }
+   *            Error object can also contains next fields:
+   *            - errors - array of errors if several errors happens.
+   */
+  error: function(err) {
+    switch (err.name) {
+      case 'NotAuthorizedErr':
+        break;
+      default:
+        webix.message({ type: 'error', text: err.message || err.name });
+        break;
+    }
+  },
+
   refresh: function() {
     UI.entityTree.refresh();
     Mydataspace.emit('users.getMyProfile', {});
   },
+
   //
   // Apps
   //
@@ -23,14 +41,6 @@ UI = {
 
   appForm_updateToolbar: function() {
 
-  },
-
-  error: function(err) {
-    webix.message({ type: 'error', text: err.message || err.name });
-    switch (err.name) {
-      case 'NotAuthorizedErr':
-        break;
-    }
   },
 
   initConnection: function() {
@@ -50,15 +60,6 @@ UI = {
     UI.entityForm.listen();
     UI.entityList.listen();
     UI.entityTree.listen();
-
-    Mydataspace.on('entities.create.res', function() {
-      $$('add_root_window').hide();
-      $$('add_entity_window').hide();
-      UIControls.removeSpinnerFromWindow($$('add_root_window'));
-      UIControls.removeSpinnerFromWindow($$('add_entity_window'));
-      $$('add_root_form').enable();
-      $$('add_entity_form').enable();
-    });
 
     Mydataspace.on('users.getMyProfile.res', function(data) {
       if (common.isBlank(data['avatar'])) {
@@ -188,13 +189,13 @@ UI = {
                 width: 120,
                 click: function() {
                   $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
-                  var runScriptWindow = UIHelper.popupCenter('/run_script.html', 'Run Script', 600, 400);
+                  UIHelper.popupCenter('/run_script.html', 'Run Script', 600, 400);
                 }
               },
               { view: 'button',
                 type: 'icon',
                 icon: 'times',
-                label: 'Close',
+                label: STRINGS.CLOSE,
                 id: 'edit_script_window__cancel_button',
                 width: 100,
                 click: function() {
@@ -238,7 +239,7 @@ UI = {
         width: 300,
         position: 'center',
         modal: true,
-        head: 'New Root',
+        head: STRINGS.NEW_ROOT,
         on: UIControls.getOnForFormWindow('add_root'),
         body: {
           view: 'form',
@@ -253,11 +254,34 @@ UI = {
               var data = $$('add_root_form').getValues();
               data.path = '';
               data.fields = [];
-              Mydataspace.emit('entities.create', data);
+              Mydataspace.request('entities.create', data, function() {
+                $$('add_root_window').hide();
+                UIControls.removeSpinnerFromWindow('add_root_window');
+              }, function(err) {
+                UIControls.removeSpinnerFromWindow('add_root_window');
+                if (err.errors != null) {
+                  for (let i in err.errors) {
+                    let e = err.errors[i];
+                    switch (e.type) {
+                      case 'unique violation':
+                        if (e.path === 'entities_root_path') {
+                          $$('add_root_form').elements.root.define('invalidMessage', 'Name already exists');
+                          $$('add_root_form').markInvalid('root', true);
+                        }
+                        break;
+                    }
+                  }
+                } else {
+                  if (err.message.startsWith('ER_DATA_TOO_LONG:')) {
+                    $$('add_root_form').elements.root.define('invalidMessage', 'Too long');
+                    $$('add_root_form').markInvalid('root', true);
+                  }
+                }
+              });
             }
           },
           elements: [
-            { view: 'text', label: 'Name', required: true, name: 'root', labelWidth: UIHelper.LABEL_WIDTH },
+            { view: 'text', label: STRINGS.NAME, required: true, name: 'root', labelWidth: UIHelper.LABEL_WIDTH },
             UIControls.getEntityTypeSelectTemplate(),
             UIControls.getSubmitCancelForFormWindow('add_root')
           ]
@@ -271,7 +295,7 @@ UI = {
         width: 300,
         position: 'center',
         modal: true,
-        head: 'New Entity',
+        head: STRINGS.NEW_ENTITY,
         on: UIControls.getOnForFormWindow('add_entity'),
         body: {
           view: 'form',
@@ -287,11 +311,9 @@ UI = {
                 data.type = formData.type;
                 Mydataspace.request('entities.create', data, function() {
                   $$('add_entity_window').hide();
-                  UIControls.removeSpinnerFromWindow($$('add_entity_window'));
-                  $$('add_entity_form').enable();
+                  UIControls.removeSpinnerFromWindow('add_entity_window');
                 }, function(err) {
-                  UIControls.removeSpinnerFromWindow($$('add_entity_window'));
-                  $$('add_entity_form').enable();
+                  UIControls.removeSpinnerFromWindow('add_entity_window');
                   for (let i in err.errors) {
                     let e = err.errors[i];
                     switch (e.type) {
@@ -308,7 +330,7 @@ UI = {
             }
           },
           elements: [
-            { view: 'text', required: true, label: 'Name', name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
+            { view: 'text', required: true, label: STRINGS.NAME, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
             UIControls.getEntityTypeSelectTemplate(),
             UIControls.getSubmitCancelForFormWindow('add_entity')
           ]
@@ -322,7 +344,7 @@ UI = {
       width: 300,
       position: 'center',
       modal: true,
-      head: 'New Field',
+      head: STRINGS.NEW_FIELD,
       on: UIControls.getOnForFormWindow('add_field'),
       body: {
         view: 'form',
@@ -334,14 +356,16 @@ UI = {
               return;
             }
             UI.entityForm.addField($$('add_field_form').getValues(), true);
-            setTimeout(function() { $$('add_field_window').hide() }, 100);
+            setTimeout(function() {
+              $$('add_field_window').hide();
+            }, 100);
           }
         },
         elements: [
-          { view: 'text', required: true, label: 'Name', name: 'name' },
+          { view: 'text', required: true, label: STRINGS.NAME, name: 'name' },
           UIControls.getFieldTypeSelectTemplate(),
-          { view: 'text', label: 'Value', name: 'value' },
-          UIControls.getSubmitCancelForFormWindow('add_field')
+          { view: 'text', label: STRINGS.VALUE, name: 'value' },
+          UIControls.getSubmitCancelForFormWindow('add_field', false)
         ],
         rules: {
           name: function(value) { return typeof $$('entity_form__' + value) === 'undefined' },
@@ -363,7 +387,7 @@ UI = {
         width: 300,
         position: 'center',
         modal: true,
-        head: 'New App',
+        head: STRINGS.NEW_APP,
         on: UIControls.getOnForFormWindow('add_app'),
         body: {
           view: 'form',
@@ -382,7 +406,7 @@ UI = {
             }
           },
           elements: [
-            { view: 'text', label: 'Name', required: true, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
+            { view: 'text', label: STRINGS.NAME, required: true, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
             UIControls.getSubmitCancelForFormWindow('add_app')
           ]
         }
@@ -421,9 +445,9 @@ UI = {
             css: 'menu__item_list',
             template: '<span class="webix_icon fa-#icon#"></span> #value#',
             data:[
-              { id: 'my-data', value: 'My Data', icon: 'database' },
-              { id: 'my-apps', value: 'My Apps', icon: 'cogs' },
-              { id: 'logout', value: 'Sign out', icon: 'sign-out' }
+              { id: 'my-data', value: STRINGS.MY_DATA, icon: 'database' },
+              { id: 'my-apps', value: STRINGS.MY_APPS, icon: 'cogs' },
+              { id: 'logout', value: STRINGS.SIGN_OUT, icon: 'sign-out' }
             ],
             select: true,
             type: { height: 40 },
@@ -443,7 +467,7 @@ UI = {
                     Mydataspace.logout();
                     break;
                   default:
-                    throw new Error('Elligal menu item id');
+                    throw new Error('Illegal menu item id');
                 }
               }
             }
@@ -504,7 +528,7 @@ UI = {
                     { view: 'button',
                       type: 'icon',
                       icon: 'plus',
-                      label: 'New App',
+                      label: STRINGS.NEW_APP,
                       width: 100,
                       click: function() {
                         $$('add_app_window').show();
@@ -513,7 +537,7 @@ UI = {
                     { view: 'button',
                       type: 'icon',
                       icon: 'refresh',
-                      label: 'Refresh',
+                      label: STRINGS.REFRESH,
                       width: 100,
                       click: function() {
                         UI.refreshApps();
@@ -544,7 +568,7 @@ UI = {
                   { view: 'button',
                     type: 'icon',
                     icon: 'save',
-                    label: 'Save',
+                    label: STRINGS.SAVE,
                     id: 'app_form__save_button',
                     width: 70,
                     click: function() {
@@ -554,7 +578,7 @@ UI = {
                   { view: 'button',
                     type: 'icon',
                     icon: 'refresh',
-                    label: 'Refresh App',
+                    label: STRINGS.REFRESH_APP,
                     width: 120,
                     click: function() {
                       Mydataspace.emit(
@@ -566,14 +590,14 @@ UI = {
                   { view: 'button',
                     type: 'icon',
                     icon: 'remove',
-                    label: 'Delete',
+                    label: STRINGS.DELETE,
                     width: 100,
                     click: function() {
                       webix.confirm({
-                        title: 'Delete App',
+                        title: STRINGS.DELETE_APP,
                         text: 'You really want delete this app?',
-                        ok: 'Yes',
-                        cancel: 'No',
+                        ok: STRINGS.YES,
+                        cancel: STRINGS.NO  ,
                         callback: function(result) {
                           if (result) {
                             Mydataspace.request(
@@ -591,11 +615,11 @@ UI = {
                 complexData: true,
                 scroll: true,
                 elements: [
-                  { view: 'text', label: 'Name', name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
-                  { view: 'textarea', label: 'Decription', height: 100, name: 'description', labelWidth: UIHelper.LABEL_WIDTH },
-                  { view: 'text', label: 'Logo URL', name: 'logoURL', labelWidth: UIHelper.LABEL_WIDTH },
-                  { view: 'text', label: 'Site URL', name: 'url', labelWidth: UIHelper.LABEL_WIDTH },
-                  { view: 'text', label: 'Clien ID', name: 'clientId', readonly:true, labelWidth: UIHelper.LABEL_WIDTH }
+                  { view: 'text', label: STRINGS.NAME, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
+                  { view: 'textarea', label: STRINGS.DESCRIPTION, height: 100, name: 'description', labelWidth: UIHelper.LABEL_WIDTH },
+                  { view: 'text', label: STRINGS.LOGO_URL, name: 'logoURL', labelWidth: UIHelper.LABEL_WIDTH },
+                  { view: 'text', label: STRINGS.SITE_URL, name: 'url', labelWidth: UIHelper.LABEL_WIDTH },
+                  { view: 'text', label: STRINGS.CLIENT_ID, name: 'clientId', readonly:true, labelWidth: UIHelper.LABEL_WIDTH }
                 ],
                 on: {
                   onChange: function() { UI.appForm_updateToolbar() }
@@ -617,8 +641,8 @@ UI = {
                     { view: 'button',
                       type: 'icon',
                       icon: 'plus',
-                      label: 'New Root',
-                      width: 100,
+                      label: STRINGS.NEW_ROOT,
+                      width: 130,
                       click: function() {
                         $$('add_root_window').show();
                       }
@@ -626,7 +650,7 @@ UI = {
                     { view: 'button',
                       type: 'icon',
                       icon: 'refresh',
-                      label: 'Refresh',
+                      label: STRINGS.REFRESH,
                       width: 100,
                       click: function() {
                         UI.entityTree.refresh();
@@ -681,7 +705,7 @@ UI = {
                     { view: 'button',
                       type: 'icon',
                       icon: 'plus',
-                      label: 'New Entity',
+                      label: STRINGS.NEW_ENTITY,
                       width: 110,
                       click: function() {
                         $$('add_entity_window').show();
@@ -690,7 +714,7 @@ UI = {
                     { view: 'search',
                       id: 'entity_list__search',
                       align: 'center',
-                      placeholder: 'Search...',
+                      placeholder: STRINGS.SEARCH,
                       on: {
                         onKeyPress: function(code, e) {
                           if (code === 13 && !e.ctrlKey && !e.shiftKey && !e.altKey) {
@@ -751,8 +775,8 @@ UI = {
                   { view: 'button',
                     type: 'icon',
                     icon: 'plus',
-                    label: 'Add Fields',
-                    width: 100,
+                    label: STRINGS.NEW_FIELD,
+                    width: 120,
                     click: function() {
                       $$('add_field_window').show();
                     }
@@ -760,12 +784,12 @@ UI = {
                   { view: 'button',
                     type: 'icon',
                     icon: 'play',
-                    label: 'Run Script',
+                    label: STRINGS.RUN_SCRIPT,
                     width: 100,
                     id: 'entity_form__run_script_button',
                     hidden: true,
                     click: function() {
-                      var runScriptWindow = UIHelper.popupCenter('/run_script.html', 'Run Script', 600, 400);
+                      UIHelper.popupCenter('/run_script.html', 'Run Script', 600, 400);
                     }
                   },
                   {},
@@ -775,7 +799,7 @@ UI = {
                     width: 30,
                     click: function() {
                       webix.confirm({
-                        title: 'Delete Entity',
+                        title: STRINGS.DELETE_ENTITY,
                         text: 'You really want delete this entity?',
                         ok: 'Yes',
                         cancel: 'No',
@@ -795,12 +819,12 @@ UI = {
                 complexData: true,
                 scroll: true,
                 elements: [
-                  { view: 'text', label: 'Name', name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
+                  { view: 'text', label: STRINGS.NAME, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
                   UIControls.getEntityTypeSelectTemplate(),
-                  { view: 'text', label: 'Description', name: 'description', labelWidth: UIHelper.LABEL_WIDTH },
-                  { view: 'text', label: 'Child Proto', name: 'childPrototype', labelWidth: UIHelper.LABEL_WIDTH },
-                  { template: 'Fields', type: 'section' },
-                  { view: 'label', label: 'No field exists', id: 'entity_form__no_fields', align: 'center' }
+                  { view: 'text', label: STRINGS.DESCRIPTION, name: 'description', labelWidth: UIHelper.LABEL_WIDTH },
+                  { view: 'text', label: STRINGS.CHILD_PROTO, name: 'childPrototype', labelWidth: UIHelper.LABEL_WIDTH },
+                  { template: STRINGS.FIELDS, type: 'section' },
+                  { view: 'label', label: STRINGS.NO_FIELDS, id: 'entity_form__no_fields', align: 'center' }
                 ],
                 on: {
                   onChange: function() { UI.entityForm.updateToolbar() }

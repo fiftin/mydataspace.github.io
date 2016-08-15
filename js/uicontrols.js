@@ -1,14 +1,14 @@
 UIControls = {
   getFieldTypeSelectTemplate: function() {
     var options = [];
-    for (var id in UIHelper.FIELD_TYPES) {
+    for (let id in UIHelper.FIELD_TYPES) {
       options.push({ id: id, value: UIHelper.FIELD_TYPES[id].title });
     }
     return {
       view: 'select',
       required: true,
       name: 'type',
-      label: 'Type',
+      label: STRINGS.TYPE,
       options: options
     };
   },
@@ -16,12 +16,12 @@ UIControls = {
   getEntityTypeSelectTemplate: function() {
     return {
       view: 'select',
-      label: 'Others Can',
+      label: STRINGS.OTHERS_CAN,
       name: 'type',
       options: [
-        { id: 'private', value: 'Only Read' },
-        { id: 'public', value: 'Create Children' },
-        { id: 'unique', value: 'Create One Child' }
+        { id: 'private', value: STRINGS.ONLY_READ },
+        { id: 'public', value: STRINGS.CREATE_CHILDREN },
+        { id: 'unique', value: STRINGS.CREATE_ONE_CHILD }
       ],
       labelWidth: UIHelper.LABEL_WIDTH
     };
@@ -44,6 +44,7 @@ UIControls = {
   },
 
   addSpinnerToWindow: function(windowId) {
+    $$(windowId.replace(/_window$/, '_form')).disable();
     var head = $$(windowId).getNode().querySelector('.webix_win_head > .webix_view > .webix_template');
     var spinner = document.createElement('i');
     spinner.className = 'fa fa-cog fa-spin fa-2x fa-fw webix_win_head_spinner';
@@ -56,24 +57,29 @@ UIControls = {
     if (spinners.length !== 0) {
       head.removeChild(spinners[0]);
     }
+    $$(windowId.replace(/_window$/, '_form')).enable();
   },
 
-  getSubmitCancelForFormWindow: function(id) {
+  getSubmitCancelForFormWindow: function(id, isLongExecutable) {
+    if (isLongExecutable == null) {
+      isLongExecutable = true;
+    }
     var formId = id + '_form';
     var windowId = id + '_window';
     return { cols: [
         { view: 'button',
-          value: 'Create',
+          value: STRINGS.CREATE,
           type: 'form',
           click: function() {
-            $$(formId).disable();
-            UIControls.addSpinnerToWindow($$(windowId));
+            if (isLongExecutable) {
+              UIControls.addSpinnerToWindow(windowId);
+            }
             $$(formId).callEvent('onSubmit');
           }
         },
         { view: 'button',
           id: windowId + '__cancel_button',
-          value: 'Cancel',
+          value: STRINGS.CANCEL,
           type: 'danger', click: function() { $$(windowId).hide() }
         }
       ]
@@ -92,7 +98,7 @@ UIControls = {
       css: 'login_panel__' + providerName + '_button',
       click: function() {
         if (Mydataspace.isLoggedIn()) {
-          throw new Error('Already logged in');
+          throw new Error(STRINGS.ALREADY_LOGGED_IN);
         }
         Mydataspace.login(providerName);
       }

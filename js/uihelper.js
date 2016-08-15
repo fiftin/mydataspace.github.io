@@ -14,19 +14,19 @@ UIHelper = {
   ENTITY_LIST_SHOW_MORE_ID: 'show_more_47384_3338222',
   FIELD_TYPES: {
     s: {
-      title: 'String',
+      title: STRINGS.STRING,
       isValidValue: function(value) {
         return value.toString().length < UIHelper.MAX_STRING_FIELD_LENGTH;
       }
     },
     r: {
-      title: 'Real',
+      title: STRINGS.REAL,
       isValidValue: function(value) {
         return common.isNumber(value);
       }
     },
     i: {
-      title: 'Int',
+      title: STRINGS.INT,
       isValidValue: function(value) {
         return common.isInt(value);
       }
