@@ -41,7 +41,10 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     NO_FIELDS: 'No fields exists',
     MY_APPS: 'My Apps',
     MY_DATA: 'My Data',
-    SIGN_OUT: 'Sign out'
+    SIGN_OUT: 'Sign out',
+    CONNECT_TO_FACEBOOK: 'Connect to Facebook',
+    CONNECT_TO_GOOGLE: 'Connect to Google',
+    REALLY_DELETE: 'You really want delete this entity?'
   },
   RU: {
     YES: 'Да',
@@ -50,7 +53,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SHOW_MORE: 'Показать ещё...',
     EDIT_SCRIPT: 'Ред. скрипта:',
     SAVE_ENTITY: 'Сохранить элемент',
-    RUN_SCRIPT: 'Запустить скрипт',
+    RUN_SCRIPT: 'Запустить',
     ONLY_READ: 'Только читать',
     NEW_ENTITY: 'Новый эл-т',
     SEARCH: 'Поиск...',
@@ -85,6 +88,9 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     NO_FIELDS: 'Нет ни одного поля',
     MY_APPS: 'Мои приложения',
     MY_DATA: 'Мои данные',
-    SIGN_OUT: 'Выход'
+    SIGN_OUT: 'Выход',
+    CONNECT_TO_FACEBOOK: 'Войти через Facebook',
+    CONNECT_TO_GOOGLE: 'Войти через Google',
+    REALLY_DELETE: 'Вы действительно хотите удалить этот элемент?'
   }
 };

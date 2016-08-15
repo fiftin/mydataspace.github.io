@@ -481,12 +481,34 @@ UI = {
             .map(function(providerName) { return UIControls.getLoginButtonView(providerName); });
     authProviders.unshift({});
     authProviders.push({});
-    authProviders.push({});
     webix.ui({
       id: 'login_panel',
       rows: [
-        { type: 'header', template: 'my data space' },
-        { cols: [ {}, { rows: authProviders}, {} ]}
+        { cols: [
+          { type: 'header', template: 'my data space' },
+          { view: 'button',
+            width: 30,
+            css: 'menu__language_button ' + (LANGUAGE === 'EN' ? 'menu__language_button--selected' : ''),
+            label: 'EN',
+            click: function() {
+              localStorage.setItem('language', 'EN');
+              location.href = location.href;
+            }
+          },
+          { view: 'button',
+            width: 30,
+            css: 'menu__language_button ' + (LANGUAGE === 'RU' ? 'menu__language_button--selected' : ''),
+            label: 'RU',
+            click: function() {
+              localStorage.setItem('language', 'RU');
+              location.href = location.href;
+            }
+          }
+        ] },
+        {
+          css: 'login_panel__providers',
+          cols: [ {}, { rows: authProviders}, {} ]
+        }
       ]
     });
 
@@ -499,6 +521,25 @@ UI = {
       rows: [
         { cols: [
             { type: 'header', template: 'my data space' },
+            { view: 'button',
+              width: 30,
+              css: 'menu__language_button ' + (LANGUAGE === 'EN' ? 'menu__language_button--selected' : ''),
+              label: 'EN',
+              click: function() {
+                localStorage.setItem('language', 'EN');
+                location.href = location.href;
+              }
+            },
+            { view: 'button',
+              width: 30,
+              css: 'menu__language_button ' + (LANGUAGE === 'RU' ? 'menu__language_button--selected' : ''),
+              label: 'RU',
+              click: function() {
+                localStorage.setItem('language', 'RU');
+                location.href = location.href;
+              }
+            },
+            { width: 20, css: 'menu__spacer' },
             { view: 'icon',
               icon: 'bars',
               id: 'menu_button',
@@ -800,9 +841,9 @@ UI = {
                     click: function() {
                       webix.confirm({
                         title: STRINGS.DELETE_ENTITY,
-                        text: 'You really want delete this entity?',
-                        ok: 'Yes',
-                        cancel: 'No',
+                        text: STRINGS.REALLY_DELETE,
+                        ok: STRINGS.YES,
+                        cancel: STRINGS.NO,
                         callback: function(result) {
                           if (result) {
                             UI.entityForm.delete();

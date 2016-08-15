@@ -33,7 +33,7 @@ var Mydataspace = {
 
   authProviders: {
     facebook: {
-      title: 'Connect to Facebook',
+      title: STRINGS.CONNECT_TO_FACEBOOK,
       icon: 'facebook',
       url: 'https://www.facebook.com/dialog/oauth?client_id=827438877364954&scope=email' +
            '&redirect_uri={{api_url}}%2fauth%3fauthProvider%3dfacebook%26permission%3d{{permission}}%26clientId%3d{{client_id}}' +
@@ -43,7 +43,7 @@ var Mydataspace = {
       }
     },
     google: {
-      title: 'Connect to Google',
+      title: STRINGS.CONNECT_TO_GOOGLE,
       icon: 'google-plus',
       url: 'https://accounts.google.com/o/oauth2/auth' +
            '?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.me%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.profile.emails.read&response_type=code' +

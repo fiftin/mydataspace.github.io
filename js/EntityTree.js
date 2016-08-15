@@ -34,13 +34,6 @@ EntityTree.prototype.onCreate = function(data) {
 };
 
 EntityTree.prototype.listen = function() {
-  Mydataspace.on('entities.getMyRoots.res', function(data) {
-    $$('entity_tree').clearAll();
-    // convert received data to treeview format and load its to entity_tree.
-    var formattedData = data.map(UIHelper.entityFromData);
-    $$('entity_tree').parse(formattedData);
-  });
-
   Mydataspace.on('entities.delete.res', function(data) {
     var entityId = UIHelper.idFromData(data);
 
@@ -60,17 +53,17 @@ EntityTree.prototype.listen = function() {
 };
 
 EntityTree.prototype.refresh = function() {
-  Mydataspace.emit('entities.getMyRoots', {});
-
-
-//  Mydataspace.request('entities.getMyRoots', {}, function(data) {
-//    $$('entity_tree').clearAll();
-//    // convert received data to treeview format and load its to entity_tree.
-//    var formattedData = data.map(UIHelper.entityFromData);
-//    $$('entity_tree').parse(formattedData);
-//  }, function(err) {
-//    UI.error(err);
-//  });
+  $$('entity_tree').disable();
+  Mydataspace.request('entities.getMyRoots', {}, function(data) {
+    $$('entity_tree').clearAll();
+    // convert received data to treeview format and load its to entity_tree.
+    var formattedData = data.map(UIHelper.entityFromData);
+    $$('entity_tree').parse(formattedData);
+    $$('entity_tree').enable();
+  }, function(err) {
+    UI.error(err);
+    $$('entity_tree').enable();
+  });
 };
 
 /**
