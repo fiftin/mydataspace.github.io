@@ -1,97 +1,14 @@
 UI = {
-  //
-  // Entity form
-  //
   entityForm: new EntityForm(),
 
-  //
-  // Entity list
-  //
   entityList: new EntityList(),
 
-  /**
-   * Override entity's children of nodes recursively.
-   */
-  entityTree_setChildren: function(entityId, children) {
-    var dummyChildId = UIHelper.childId(entityId, UIHelper.ENTITY_TREE_DUMMY_ID);
-    var showMoreChildId = UIHelper.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID);
-    var firstChildId = $$('entity_tree').getFirstChildId(entityId);
-    if (firstChildId != null && firstChildId !== dummyChildId) {
-      return;
-    }
-    if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
-      children[children.length - 1] = {
-        id: UIHelper.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID),
-        value: STRINGS.SHOW_MORE
-      }
-    }
-    children.reverse().forEach(function(entity) {
-      $$('entity_tree').add(entity, 0, entityId);
-      if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-        UI.entityTree_setChildren(entity.id, entity.data);
-      }
-    });
-    if (firstChildId !== null) {
-      $$('entity_tree').remove(firstChildId);
-    }
-    $$('entity_tree').addCss(showMoreChildId, 'entity_tree__show_more_item');
-  },
+  entityTree: new EntityTree(),
 
-  entityTree_addChildren: function(entityId, children) {
-    var showMoreChildId = UIHelper.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID);
-    if (!$$('entity_tree').exists(showMoreChildId)) {
-      return;
-    }
-    if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
-      delete children[children.length - 1];
-    } else {
-      $$('entity_tree').remove(showMoreChildId);
-    }
-    children.reverse().forEach(function(entity) {
-      var nChildren = UI.entityTree_numberOfChildren(entityId);
-      $$('entity_tree').add(entity, nChildren - 1, entityId);
-      if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-        UI.entityTree_setChildren(entity.id, entity.data);
-      }
-    });
+  refresh: function() {
+    UI.entityTree.refresh();
+    Mydataspace.emit('users.getMyProfile', {});
   },
-
-  entityTree_showMore: function(id) {
-    var req = UIHelper.dataFromId(id);
-    req.offset = UI.entityTree_numberOfChildren(id);
-    Mydataspace.request('entities.getChildren', req, function(data) {
-      var entityId = UIHelper.idFromData(data);
-      var children = data.children.map(UIHelper.entityFromData);
-      UI.entityTree_addChildren(entityId, children);
-    });
-  },
-
-  entityTree_numberOfChildren: function(id) {
-    var n = 0;
-    var prevChildId = null;
-    var childId = $$('entity_tree').getFirstChildId(id);
-    while (childId != null && prevChildId !== childId) {
-      n++;
-      prevChildId = childId;
-      childId = $$('entity_tree').getNextSiblingId(childId);
-    }
-    return n;
-  },
-
-  entityTree_lastChildId: function(id) {
-    var prevChildId = null;
-    var childId = $$('entity_tree').getFirstChildId(id);
-    while (childId != null && prevChildId !== childId) {
-      prevChildId = childId;
-      childId = $$('entity_tree').getNextSiblingId(childId);
-    }
-    return prevChildId;
-  },
-
-  entityTree_getSelectedId: function() {
-    return UI.entityTree_selectedId;
-  },
-
   //
   // Apps
   //
@@ -108,29 +25,12 @@ UI = {
 
   },
 
-  //
-  //
-  //
-
   error: function(err) {
     webix.message({ type: 'error', text: err.message || err.name });
     switch (err.name) {
       case 'NotAuthorizedErr':
         break;
     }
-  },
-
-  /**
-   * Reload data from the server.
-   */
-  refresh: function() {
-    Mydataspace.emit('entities.getMyRoots', {});
-    Mydataspace.emit('users.getMyProfile', {});
-  },
-
-  clear: function() {
-    $$('entity_list').clearAll();
-    $$('entity_tree').clearAll();
   },
 
   initConnection: function() {
@@ -145,41 +45,19 @@ UI = {
       $$('menu').hide();
       $$('login_panel').show();
       $$('admin_panel').hide();
-      UI.clear();
     });
 
-    Mydataspace.on('entities.create.res', function(data) {
+    UI.entityForm.listen();
+    UI.entityList.listen();
+    UI.entityTree.listen();
+
+    Mydataspace.on('entities.create.res', function() {
       $$('add_root_window').hide();
       $$('add_entity_window').hide();
       UIControls.removeSpinnerFromWindow($$('add_root_window'));
       UIControls.removeSpinnerFromWindow($$('add_entity_window'));
       $$('add_root_form').enable();
       $$('add_entity_form').enable();
-
-      var parentId = UIHelper.parentId(UIHelper.idFromData(data));
-      var entity = UIHelper.entityFromData(data);
-      if ($$('entity_list').getSelectedId() === parentId) {
-        $$('entity_list').add(entity);
-      }
-      if (parentId === 'root') {
-        $$('entity_tree').add(entity, 0);
-        if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-          UI.entityTree_setChildren(entity.id, entity.data);
-        }
-      } else if (!common.isNull($$('entity_tree').getItem(parentId)) &&
-          common.isNull($$('entity_tree').getItem(UIHelper.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)))) {
-        $$('entity_tree').add(entity, 0, parentId);
-        if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-          UI.entityTree_setChildren(entity.id, entity.data);
-        }
-      }
-    });
-
-    Mydataspace.on('entities.getMyRoots.res', function(data) {
-      $$('entity_tree').clearAll();
-      // convert received data to treeview format and load its to entity_tree.
-      var formattedData = data.map(UIHelper.entityFromData);
-      $$('entity_tree').parse(formattedData);
     });
 
     Mydataspace.on('users.getMyProfile.res', function(data) {
@@ -188,14 +66,6 @@ UI = {
       }
       $$('profile').setValues(data);
     });
-
-    Mydataspace.on('entities.delete.res', function(data) {
-      var entityId = UIHelper.idFromData(data);
-      $$('entity_list').remove(entityId);
-      $$('entity_tree').remove(entityId);
-    });
-
-    Mydataspace.on('entities.err', UI.error);
 
     Mydataspace.on('apps.create.res', function(data) {
       $$('add_app_window').hide();
@@ -237,7 +107,7 @@ UI = {
     });
 
     Mydataspace.on('apps.err', UI.error);
-
+    Mydataspace.on('entities.err', UI.error);
   },
 
   /**
@@ -249,7 +119,6 @@ UI = {
       return;
     }
     UI.rendered = true;
-
 
     window.addEventListener('message', function(e) {
       if (e.data.message === 'getScripts') {
@@ -410,15 +279,10 @@ UI = {
           borderless: true,
           on: {
             onSubmit: function() {
-              if (!$$('add_entity_form').validate()) {
-                return;
+              if ($$('add_entity_form').validate()) {
+                var formData = $$('add_entity_form').getValues();
+                UI.entityList.createByFormData(formData);
               }
-              var formData = $$('add_entity_form').getValues();
-              var newEntityId = UIHelper.childId(UI.entityTree_getSelectedId(), formData.name);
-              var data = UIHelper.dataFromId(newEntityId);
-              data.fields = [];
-              data.type = formData.type;
-              Mydataspace.emit('entities.create', data);
             }
           },
           elements: [
@@ -743,7 +607,7 @@ UI = {
                       label: 'Refresh',
                       width: 100,
                       click: function() {
-                        UI.refresh();
+                        UI.entityTree.refresh();
                       }
                     },
                     {}
@@ -755,8 +619,7 @@ UI = {
                   select: true,
                   on: {
                     onAfterLoad: function() {
-                      UI.entityTree_selectedId = $$('entity_tree').getFirstId();
-                      $$('entity_tree').select(UI.entityTree_getSelectedId());
+                      $$('entity_tree').select(UI.entityTree.setCurrentIdToFirst());
                     },
                     onBeforeOpen: function(id) {
                       var firstChildId = $$('entity_tree').getFirstChildId(id);
@@ -767,21 +630,22 @@ UI = {
                       Mydataspace.request('entities.getChildren', UIHelper.dataFromId(id), function(data) {
                         var entityId = UIHelper.idFromData(data);
                         var children = data.children.map(UIHelper.entityFromData);
-                        UI.entityTree_setChildren(entityId, children);
+                        UI.entityTree.setChildren(entityId, children);
                       });
                     },
                     onSelectChange: function(ids) {
                       var id = ids[0];
                       if (id.endsWith(UIHelper.ENTITY_TREE_SHOW_MORE_ID)) {
-                        $$('entity_tree').select(UI.entityTree_getSelectedId());
+                        $$('entity_tree').select(UI.entityTree.getCurrentId());
                       } else {
-                        UI.entityList.setSelectedId($$('entity_tree').getSelectedId());
-                        UI.entityList.refreshData();
+                        UI.entityTree.setCurrentId(id);
+                        UI.entityList.setRootId(id);
+                        UI.entityForm.setSelectedId(id);
                       }
                     },
                     onBeforeSelect: function(id, selection) {
                       if (id.endsWith(UIHelper.ENTITY_TREE_SHOW_MORE_ID)) {
-                        UI.entityTree_showMore(UIHelper.parentId(id));
+                        UI.entityTree.showMore(UIHelper.parentId(id));
                       }
                     }
                   }
@@ -825,13 +689,13 @@ UI = {
                       if (id.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID)) {
                         UI.entityList.showMore();
                       } else {
-                        UI.entityList.selectedId = id;
+                        UI.entityList.setCurrentId(id);
                       }
                     },
                     onSelectChange: function (ids) {
                       var id = ids[0];
                       if (id.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID)) {
-                        $$('entity_list').select(UI.entityList.getSelectedId());
+                        $$('entity_list').select(UI.entityList.getCurrentId());
                       } else {
                         UI.entityForm.setSelectedId(id);
                       }
@@ -895,9 +759,7 @@ UI = {
                         cancel: 'No',
                         callback: function(result) {
                           if (result) {
-                            Mydataspace.request(
-                              'entities.delete',
-                              UIHelper.dataFromId($$('entity_list').getSelectedId()));
+                            UI.entityForm.delete();
                           }
                         }
                       });

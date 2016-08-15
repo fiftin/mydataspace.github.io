@@ -2,7 +2,16 @@ function EntityForm() {
   
 }
 
+EntityForm.prototype.listen = function() {
+  Mydataspace.on('entities.delete.res', function() {
+    $$('entity_form').disable();
+  });
+};
+
 EntityForm.prototype.setSelectedId = function(id) {
+  if (this.selectedId === id) {
+    return;
+  }
   this.selectedId = id;
   this.refresh();
 };
@@ -25,7 +34,30 @@ EntityForm.prototype.refresh = function() {
   Mydataspace.request('entities.getWithMeta', UIHelper.dataFromId(this.selectedId), function(data) {
     this.setData(data);
     $$('entity_form').enable();
-  }.bind(this), function() {
+  }.bind(this), function(err) {
+    UI.error(err);
+    $$('entity_form').enable();
+  });
+};
+
+/**
+ * Creates new entity by data received from the 'New Entity' form.
+ * @param formData data received from form by method getValues.
+ */
+EntityForm.prototype.createByFormData = function(formData) {
+  var newEntityId = UIHelper.childId(this.selectedId, formData.name);
+  var data = UIHelper.dataFromId(newEntityId);
+  data.fields = [];
+  data.type = formData.type;
+  Mydataspace.emit('entities.create', data);
+};
+
+EntityForm.prototype.delete = function() {
+  $$('entity_form').disable();
+  Mydataspace.request('entities.delete', UIHelper.dataFromId(this.selectedId), function(data) {
+    // do nothing because selected item already deleted.
+  }, function(err) {
+    UI.error(err);
     $$('entity_form').enable();
   });
 };

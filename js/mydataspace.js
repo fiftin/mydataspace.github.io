@@ -102,7 +102,7 @@ var Mydataspace = {
     Mydataspace.initialized = true;
   },
 
-  connect: function(done) {
+  connect: function() {
     Mydataspace.socket = io(Mydataspace.options.websocketURL, {
       // secure: true,
       'force new connection' : true,
@@ -221,7 +221,7 @@ var Mydataspace = {
     Mydataspace.requests[data.requestId] = {
       options: options,
       eventName: responseEventName
-    }
+    };
 
     // Init response handler
     if (Mydataspace.subscriptions.indexOf(responseEventName) === -1) {
