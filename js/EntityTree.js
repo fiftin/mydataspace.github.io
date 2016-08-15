@@ -14,7 +14,24 @@ EntityTree.prototype.setCurrentIdToFirst = function() {
   var firstId = $$('entity_tree').getFirstId();
   this.setCurrentId(firstId);
   return firstId;
-}
+};
+
+EntityTree.prototype.onCreate = function(data) {
+  var parentId = UIHelper.parentId(UIHelper.idFromData(data));
+  var entity = UIHelper.entityFromData(data);
+  if (parentId === 'root') {
+    $$('entity_tree').add(entity, 0);
+    if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
+      UI.entityTree.setChildren(entity.id, entity.data);
+    }
+  } else if (!common.isNull($$('entity_tree').getItem(parentId)) &&
+    common.isNull($$('entity_tree').getItem(UIHelper.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)))) {
+    $$('entity_tree').add(entity, 0, parentId);
+    if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
+      UI.entityTree.setChildren(entity.id, entity.data);
+    }
+  }
+};
 
 EntityTree.prototype.listen = function() {
   Mydataspace.on('entities.getMyRoots.res', function(data) {
@@ -39,22 +56,7 @@ EntityTree.prototype.listen = function() {
     $$('entity_tree').remove(entityId);
   }.bind(this));
 
-  Mydataspace.on('entities.create.res', function(data) {
-    var parentId = UIHelper.parentId(UIHelper.idFromData(data));
-    var entity = UIHelper.entityFromData(data);
-    if (parentId === 'root') {
-      $$('entity_tree').add(entity, 0);
-      if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-        UI.entityTree.setChildren(entity.id, entity.data);
-      }
-    } else if (!common.isNull($$('entity_tree').getItem(parentId)) &&
-      common.isNull($$('entity_tree').getItem(UIHelper.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)))) {
-      $$('entity_tree').add(entity, 0, parentId);
-      if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-        UI.entityTree.setChildren(entity.id, entity.data);
-      }
-    }
-  });
+  Mydataspace.on('entities.create.res', this.onCreate.bind(this));
 };
 
 EntityTree.prototype.refresh = function() {

@@ -134,7 +134,13 @@ var Mydataspace = {
 
     Mydataspace.on('entities.err', function(data) {
       Mydataspace.handleResponse(data, 'fail');
-    });
+    }, false);
+    Mydataspace.on('apps.err', function(data) {
+      Mydataspace.handleResponse(data, 'fail');
+    }, false);
+    Mydataspace.on('users.err', function(data) {
+      Mydataspace.handleResponse(data, 'fail');
+    }, false);
   },
 
   callListeners: function(eventName, args) {
@@ -190,15 +196,15 @@ var Mydataspace = {
     Mydataspace.socket.emit(eventName, data);
   },
 
-  on: function(eventName, callback) {
+  on: function(eventName, callback, ignoreRequestErrors) {
     if (typeof Mydataspace.listeners[eventName] !== 'undefined') {
-      Mydataspace.listeners[eventName].push(Mydataspace.formatAndCall.bind(Mydataspace, eventName, callback));
+      Mydataspace.listeners[eventName].push(Mydataspace.formatAndCallIgnoreRequestErrors.bind(Mydataspace, eventName, callback, ignoreRequestErrors));
       return;
     }
     if (typeof Mydataspace.socket === 'undefined') {
       throw new Error('You must connect to server before subscribe to events');
     }
-    Mydataspace.socket.on(eventName, Mydataspace.formatAndCall.bind(Mydataspace, eventName, callback));
+    Mydataspace.socket.on(eventName, Mydataspace.formatAndCallIgnoreRequestErrors.bind(Mydataspace, eventName, callback, ignoreRequestErrors));
   },
 
   request: function(eventName, data, successCallback, failCallback) {
@@ -233,6 +239,16 @@ var Mydataspace = {
 
     // Send request
     Mydataspace.emit(eventName, data);
+  },
+
+  formatAndCallIgnoreRequestErrors: function(eventName, callback, ignoreRequestErrors, data) {
+    if (ignoreRequestErrors == null) {
+      ignoreRequestErrors = true;
+    }
+    if (ignoreRequestErrors && data != null && data.requestId != null && eventName.endsWith('.err')) {
+      return;
+    }
+    Mydataspace.formatAndCall(eventName, callback, data);
   },
 
   formatAndCall: function(eventName, callback, data) {

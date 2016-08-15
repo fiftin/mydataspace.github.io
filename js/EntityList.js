@@ -9,6 +9,14 @@ function EntityList() {
   
 }
 
+EntityList.prototype.onCreate = function(data) {
+  var parentId = UIHelper.parentId(UIHelper.idFromData(data));
+  var entity = UIHelper.entityFromData(data);
+  if (this.getRootId() === parentId) {
+    $$('entity_list').add(entity);
+  }
+};
+
 EntityList.prototype.listen = function() {
   Mydataspace.on('entities.delete.res', function(data) {
     var entityId = UIHelper.idFromData(data);
@@ -29,13 +37,7 @@ EntityList.prototype.listen = function() {
     $$('entity_list').remove(entityId);
   }.bind(this));
 
-  Mydataspace.on('entities.create.res', function(data) {
-    var parentId = UIHelper.parentId(UIHelper.idFromData(data));
-    var entity = UIHelper.entityFromData(data);
-    if (this.getRootId() === parentId) {
-      $$('entity_list').add(entity);
-    }
-  }.bind(this));
+  Mydataspace.on('entities.create.res', this.onCreate.bind(this));
 };
 
 EntityList.prototype.setRootId = function(id) {

@@ -281,7 +281,29 @@ UI = {
             onSubmit: function() {
               if ($$('add_entity_form').validate()) {
                 var formData = $$('add_entity_form').getValues();
-                UI.entityList.createByFormData(formData);
+                var newEntityId = UIHelper.childId(UI.entityList.getRootId(), formData.name);
+                var data = UIHelper.dataFromId(newEntityId);
+                data.fields = [];
+                data.type = formData.type;
+                Mydataspace.request('entities.create', data, function() {
+                  $$('add_entity_window').hide();
+                  UIControls.removeSpinnerFromWindow($$('add_entity_window'));
+                  $$('add_entity_form').enable();
+                }, function(err) {
+                  UIControls.removeSpinnerFromWindow($$('add_entity_window'));
+                  $$('add_entity_form').enable();
+                  for (let i in err.errors) {
+                    let e = err.errors[i];
+                    switch (e.type) {
+                      case 'unique violation':
+                        if (e.path === 'entities_root_path') {
+                          $$('add_entity_form').elements.name.define('invalidMessage', 'Name already exists');
+                          $$('add_entity_form').markInvalid('name', true);
+                        }
+                        break;
+                    }
+                  }
+                });
               }
             }
           },

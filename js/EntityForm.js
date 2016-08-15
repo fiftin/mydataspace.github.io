@@ -44,13 +44,13 @@ EntityForm.prototype.refresh = function() {
  * Creates new entity by data received from the 'New Entity' form.
  * @param formData data received from form by method getValues.
  */
-EntityForm.prototype.createByFormData = function(formData) {
-  var newEntityId = UIHelper.childId(this.selectedId, formData.name);
-  var data = UIHelper.dataFromId(newEntityId);
-  data.fields = [];
-  data.type = formData.type;
-  Mydataspace.emit('entities.create', data);
-};
+//EntityForm.prototype.createByFormData = function(formData) {
+//  var newEntityId = UIHelper.childId(this.selectedId, formData.name);
+//  var data = UIHelper.dataFromId(newEntityId);
+//  data.fields = [];
+//  data.type = formData.type;
+//  Mydataspace.emit('entities.create', data);
+//};
 
 EntityForm.prototype.delete = function() {
   $$('entity_form').disable();
