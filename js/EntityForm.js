@@ -214,7 +214,7 @@ EntityForm.prototype.addField = function(data, setDirty) {
         width: 25,
         click: function() {
           this.deleteField(data.name);
-        }
+        }.bind(this)
       }
     ]
   });

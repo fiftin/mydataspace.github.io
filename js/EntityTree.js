@@ -57,7 +57,7 @@ EntityTree.prototype.refresh = function() {
   Mydataspace.request('entities.getMyRoots', {}, function(data) {
     $$('entity_tree').clearAll();
     // convert received data to treeview format and load its to entity_tree.
-    var formattedData = data.map(UIHelper.entityFromData);
+    var formattedData = data['roots'].map(UIHelper.entityFromData);
     $$('entity_tree').parse(formattedData);
     $$('entity_tree').enable();
   }, function(err) {
