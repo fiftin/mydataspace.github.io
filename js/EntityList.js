@@ -125,13 +125,16 @@ EntityList.prototype.addChildren = function(children) {
   var startIndex;
   if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
     delete children[children.length - 1];
-    startIndex = -2;
+    startIndex = this.count() + 1;
   } else {
     $$('entity_list').remove(showMoreChildId);
-    startIndex = -1;
+    startIndex = this.count() + 2;
   }
+
+  var offset = 0;
   for (var i in children) {
-    $$('entity_list').add(children[i], startIndex);
+    $$('entity_list').add(children[i], startIndex + offset);
+    offset++;
   }
 };
 

@@ -505,7 +505,8 @@ UI = {
               localStorage.setItem('language', 'RU');
               location.href = location.href;
             }
-          }
+          },
+          { width: 20, css: 'menu__spacer' }
         ] },
         {
           css: 'login_panel__providers',
