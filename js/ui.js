@@ -2,192 +2,7 @@ UI = {
   //
   // Entity form
   //
-
-  entityForm_updateToolbar: function() {
-    if (!$$('entity_form').isDirty()) {
-      $$('entity_form__save_button').disable();
-    } else {
-      $$('entity_form__save_button').enable();
-    }
-  },
-
-  /**
-   * Marks entity form as unchanged.
-   */
-  entityForm_setClean: function() {
-    $$('entity_form').setDirty(false);
-    UI.entityForm_updateToolbar();
-    $$('entity_form').enable();
-  },
-
-  /**
-   * Marks entity form as changed.
-   */
-  entityForm_setDirty: function() {
-    $$('entity_form').setDirty(true);
-    UI.entityForm_updateToolbar();
-  },
-
-  entityForm_save: function() {
-    var dirtyData = webix.CodeParser.expandNames($$('entity_form').getDirtyValues());
-    var existingData =
-      webix.CodeParser.expandNames(
-        Object.keys($$('entity_form').elements).reduce(function(ret, current) {
-          ret[current] = '';
-          return ret;
-        }, {}));
-    var oldData = webix.CodeParser.expandNames($$('entity_form')._values);
-    common.extendOf(dirtyData, UIHelper.dataFromId($$('entity_list').getSelectedId()));
-    dirtyData.fields = UIHelper.getFieldsForSave(dirtyData.fields, Object.keys(existingData.fields || {}), oldData.fields);
-    $$('entity_form').disable();
-    if (typeof dirtyData.childPrototype !== 'undefined') {
-      dirtyData.childPrototype = UIHelper.dataFromId(dirtyData.childPrototype);
-    }
-    Mydataspace.request('entities.change', dirtyData, function(res) {
-      $$('entity_form').enable();
-      UI.entityForm_setClean();
-    }, function(err) {
-      $$('entity_form').enable();
-      UI.error(err);
-    });
-  },
-
-  /**
-   * Removes all fields from the form.
-   */
-  entityForm_clear: function() {
-    var rows = $$('entity_form').getChildViews();
-    for (var i = rows.length - 1; i >= UIHelper.NUMBER_OF_FIXED_INPUTS_IN_FIELDS_FORM; i--) {
-      var row = rows[i];
-      if (typeof row !== 'undefined') {
-        $$('entity_form').removeView(row.config.id);
-      }
-    }
-    $$('entity_form__no_fields').show();
-    $$('entity_form__run_script_button').hide();
-  },
-
-  entityForm_addFields: function(fields, setDirty) {
-    for (var i in fields) {
-      UI.entityForm_addField(fields[i], setDirty);
-    }
-  },
-
-  entityForm_addField: function(data, setDirty) {
-    if (typeof $$('entity_form__' + data.name) !== 'undefined') {
-      throw new Error('Field with this name already exists');
-    }
-    $$('entity_form__no_fields').hide();
-    if (typeof setDirty === 'undefined') {
-      setDirty = false;
-    }
-    if (setDirty) {
-      var values = webix.copy($$('entity_form')._values);
-    }
-    if ((data.type === 'j' || data.type === 'u') && !$$('entity_form__run_script_button').isVisible()) {
-      $$('entity_form__run_script_button').show();
-    }
-    $$('entity_form').addView({
-      id: 'entity_form__' + data.name,
-      cols: [
-        { view: 'text',
-          value: data.name,
-          name: 'fields.' + data.name + '.name',
-          hidden: true
-        },
-        { view: data.type === 'j' ? 'textarea' : 'text',
-          label: data.name,
-          name: 'fields.' + data.name + '.value',
-          id: 'entity_form__' + data.name + '_value',
-          value: data.value,
-          labelWidth: UIHelper.LABEL_WIDTH,
-          height: 32,
-          css: 'entity_form__text_label',
-          on: {
-            onFocus: function() {
-              if (data.type === 'j') {
-                UI.editScriptFieldId = 'entity_form__' + data.name + '_value';
-                $$('edit_script_window__title').setValue(data.name);
-                $$('edit_script_window').show();
-              }
-            }
-          }
-        },
-        { view: 'select',
-          width: 70,
-          options: UIHelper.getFieldTypesAsArrayOfIdValue(),
-          value: data.type,
-          id: 'entity_form__' + data.name + '_type',
-          name: 'fields.' + data.name + '.type',
-          on: {
-            onChange: function(newv, oldv) {
-              if (newv === 'j' || oldv === 'j') {
-                var oldValues = webix.copy($$('entity_form')._values);
-                webix.ui(
-                  { view: newv === 'j' ? 'textarea' : 'text',
-                    label: data.name,
-                    name: 'fields.' + data.name + '.value',
-                    id: 'entity_form__' + data.name + '_value',
-                    value: data.value,
-                    labelWidth: UIHelper.LABEL_WIDTH,
-                    height: 32,
-                    css: 'entity_form__text_label',
-                    on: {
-                      onFocus: function() {
-                        if (newv === 'j') {
-                          UI.editScriptFieldId = 'entity_form__' + data.name + '_value';
-                          $$('edit_script_window').show();
-                        }
-                      }
-                    }
-                  },
-                  $$('entity_form__' + data.name),
-                  $$('entity_form__' + data.name + '_value')
-                );
-                $$('entity_form')._values = oldValues;
-              }
-            }
-          }
-        },
-        { view: 'button',
-          type: 'icon',
-          icon: 'remove',
-          width: 25,
-          click: function() {
-            UI.entityForm_deleteField(data.name);
-          }
-        }
-      ]
-    });
-    if (setDirty) {
-      $$('entity_form')._values = values;
-      UI.entityForm_updateToolbar();
-    }
-  },
-
-  entityForm_deleteField: function(name) {
-    var values = webix.copy($$('entity_form')._values);
-    $$('entity_form').removeView('entity_form__' + name);
-    $$('entity_form')._values = values;
-    UI.entityForm_setDirty();
-    var rows = $$('entity_form').getChildViews();
-    if (rows.length === UIHelper.NUMBER_OF_FIXED_INPUTS_IN_FIELDS_FORM) {
-      $$('entity_form__no_fields').show();
-    }
-
-    let hasScripts = false;
-    let fields = $$('entity_form').getValues().fields;
-    for (let fieldName in fields) {
-      let field = fields[fieldName];
-      if (field.type === 'j' || field.type === 'u') {
-        hasScripts = true;
-        break;
-      }
-    }
-    if (!hasScripts) {
-      $$('entity_form__run_script_button').hide();
-    }
-  },
+  entityForm: new EntityForm(),
 
   /**
    * Reload data (from server) of entity list.
@@ -215,6 +30,7 @@ UI = {
         UI.entityList_fill(entityId, children);
         $$('entity_list').addCss(showMoreChildId, 'entity_list__show_more_item');
       }
+      $$('entity_list').enable();
     }, function(err) { UI.error(err); });
   },
 
@@ -466,21 +282,6 @@ UI = {
       $$('entity_tree').remove(entityId);
     });
 
-    Mydataspace.on('entities.getWithMeta.res', function(data) {
-      if (UIHelper.idFromData(data) === $$('entity_list').getSelectedId()) {
-        var formData = {
-          name: UIHelper.nameFromData(data),
-          type: data.type,
-          description: data.description,
-          childPrototype: UIHelper.idFromData(data.childPrototype)
-        }
-        UI.entityForm_clear();
-        $$('entity_form').setValues(formData);
-        UI.entityForm_addFields(data.fields);
-        UI.entityForm_setClean();
-      }
-    });
-
     Mydataspace.on('entities.err', UI.error);
 
     Mydataspace.on('apps.create.res', function(data) {
@@ -572,7 +373,7 @@ UI = {
       head: false,
       on: {
         onShow: function() {
-          $$('edit_script_window__editor').setValue($$(UI.editScriptFieldId).getValue());
+          $$('edit_script_window__editor').setValue($$(UI.entityForm.editScriptFieldId).getValue());
           $$('edit_script_window__cancel_button').define('hotkey', 'escape');
         }
       },
@@ -594,8 +395,8 @@ UI = {
                 label: STRINGS.SAVE_ENTITY,
                 width: 120,
                 click: function() {
-                  $$(UI.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
-                  UI.entityForm_save();
+                  $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
+                  UI.entityForm.save();
                 }
               },
               { view: 'button',
@@ -604,7 +405,7 @@ UI = {
                 label: STRINGS.RUN_SCRIPT,
                 width: 120,
                 click: function() {
-                  $$(UI.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
+                  $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
                   var runScriptWindow = UIHelper.popupCenter('/run_script.html', 'Run Script', 600, 400);
                 }
               },
@@ -615,7 +416,7 @@ UI = {
                 id: 'edit_script_window__cancel_button',
                 width: 100,
                 click: function() {
-                  $$(UI.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
+                  $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
                   $$('edit_script_window').hide();
                 }
               }
@@ -637,8 +438,8 @@ UI = {
                   name: 'save',
                   bindKey: { win: 'Ctrl-S' },
                   exec: function(editor) {
-                    $$(UI.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
-                    UI.entityForm_save();
+                    $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
+                    UI.entityForm.save();
                   }
                 });
               }
@@ -733,7 +534,7 @@ UI = {
             if (!$$('add_field_form').validate()) {
               return;
             }
-            UI.entityForm_addField($$('add_field_form').getValues(), true);
+            UI.entityForm.addField($$('add_field_form').getValues(), true);
             setTimeout(function() { $$('add_field_window').hide() }, 100);
           }
         },
@@ -1119,9 +920,7 @@ UI = {
                       if (id.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID)) {
                         $$('entity_list').select(UI.entityList_getSelectedId());
                       } else {
-                        Mydataspace.emit(
-                          'entities.getWithMeta',
-                          UIHelper.dataFromId(UI.entityList_getSelectedId()));
+                        UI.entityForm.setSelectedId(id);
                       }
                     }
                   }
@@ -1138,7 +937,7 @@ UI = {
                     id: 'entity_form__save_button',
                     width: 30,
                     click: function() {
-                      UI.entityForm_save();
+                      UI.entityForm.save();
                     }
                   },
                   { view: 'button',
@@ -1147,10 +946,7 @@ UI = {
                     id: 'entity_form__refresh_button',
                     width: 30,
                     click: function() {
-                      $$('entity_form').disable();
-                      Mydataspace.emit(
-                        'entities.getWithMeta',
-                        UIHelper.dataFromId($$('entity_list').getSelectedId()));
+                      UI.entityForm.refresh();
                     }
                   },
                   { view: 'button',
@@ -1210,7 +1006,7 @@ UI = {
                   { view: 'label', label: 'No field exists', id: 'entity_form__no_fields', align: 'center' }
                 ],
                 on: {
-                  onChange: function() { UI.entityForm_updateToolbar() }
+                  onChange: function() { UI.entityForm.updateToolbar() }
                 }
               }
             ]}
@@ -1231,6 +1027,11 @@ UI = {
         height: window.innerHeight - 46
       });
       $$('admin_panel').resize();
+    });
+
+    window.addEventListener('error', function (e) {
+      UI.error(e.error.message);
+      return false;
     });
   }
 };
