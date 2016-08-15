@@ -4,97 +4,10 @@ UI = {
   //
   entityForm: new EntityForm(),
 
-  /**
-   * Reload data (from server) of entity list.
-   * Uses entityList_fill internally.
-   */
-  entityList_refreshData: function() {
-    var identity = UIHelper.dataFromId(UI.entityTree_getSelectedId());
-    var search = $$('entity_list__search').getValue();
-    if (common.isPresent(search)) {
-      identity['filterByName'] = search;
-    }
-    $$('entity_list').disable();
-    Mydataspace.request('entities.getChildren', identity, function(data) {
-      var showMoreChildId =
-        UIHelper.childId(UI.entityTree_getSelectedId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
-      var entityId = UIHelper.idFromData(data);
-      var children = data.children.map(UIHelper.entityFromData);
-      if (UI.entityTree_getSelectedId() === entityId) {
-        if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
-          children[children.length - 1] = {
-            id: UIHelper.childId(entityId, UIHelper.ENTITY_LIST_SHOW_MORE_ID),
-            value: STRINGS.SHOW_MORE
-          }
-        }
-        UI.entityList_fill(entityId, children);
-        $$('entity_list').addCss(showMoreChildId, 'entity_list__show_more_item');
-      }
-      $$('entity_list').enable();
-    }, function(err) { UI.error(err); });
-  },
-
-  /**
-   * Fills entity list by items from children array.
-   *
-   * @param parentEntityId Root entity (selected in entity tree).
-   *                       Displays as '.' in entity list.
-   * @param children Items of entity list.
-   */
-  entityList_fill: function(parentEntityId, children) {
-    $$('entity_list').clearAll();
-    for (var i in children) {
-      $$('entity_list').add(children[i], -1);
-    }
-    $$('entity_list').add({ id: parentEntityId,  value: '.' }, 0);
-    $$('entity_list').select(parentEntityId);
-  },
-
-  entityList_addChildren: function(children) {
-    var showMoreChildId =
-      UIHelper.childId(UI.entityTree_getSelectedId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
-    if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
-      delete children[children.length - 1];
-    } else {
-      $$('entity_list').remove(showMoreChildId);
-    }
-    var startIndex = UI.entityList_count() + 1;
-    var offset = 0;
-    for (var i in children) {
-      $$('entity_list').add(children[i], startIndex + offset);
-      offset++;
-    }
-  },
-
-  entityList_showMore: function() {
-    var req = UIHelper.dataFromId(UI.entityTree_getSelectedId());
-    req.offset = UI.entityList_count();
-    Mydataspace.request('entities.getChildren', req, function(data) {
-      var children = data.children.map(UIHelper.entityFromData);
-      UI.entityList_addChildren(children);
-    });
-  },
-
-  /**
-   * Calculates number of items of entity list.
-   * @returns {number} Number of items in entity list.
-   */
-  entityList_count: function() {
-    var lastId = $$('entity_list').getLastId();
-    var lastIndex = $$('entity_list').getIndexById(lastId) - 1;
-    if (lastId.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID)) {
-      return lastIndex;
-    }
-    return lastIndex + 1;
-  },
-
-  entityList_getSelectedId: function() {
-    return UI.entityList_selectedId;
-  },
-
   //
   // Entity list
   //
+  entityList: new EntityList(),
 
   /**
    * Override entity's children of nodes recursively.
@@ -862,8 +775,8 @@ UI = {
                       if (id.endsWith(UIHelper.ENTITY_TREE_SHOW_MORE_ID)) {
                         $$('entity_tree').select(UI.entityTree_getSelectedId());
                       } else {
-                        UI.entityTree_selectedId = $$('entity_tree').getSelectedId();
-                        UI.entityList_refreshData();
+                        UI.entityList.setSelectedId($$('entity_tree').getSelectedId());
+                        UI.entityList.refreshData();
                       }
                     },
                     onBeforeSelect: function(id, selection) {
@@ -895,7 +808,7 @@ UI = {
                       on: {
                         onKeyPress: function(code, e) {
                           if (code === 13 && !e.ctrlKey && !e.shiftKey && !e.altKey) {
-                            UI.entityList_refreshData();
+                            UI.entityList.refreshData();
                             return false;
                           }
                         }
@@ -910,15 +823,15 @@ UI = {
                   on: {
                     onBeforeSelect: function(id, selection) {
                       if (id.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID)) {
-                        UI.entityList_showMore();
+                        UI.entityList.showMore();
                       } else {
-                        UI.entityList_selectedId = id;
+                        UI.entityList.selectedId = id;
                       }
                     },
                     onSelectChange: function (ids) {
                       var id = ids[0];
                       if (id.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID)) {
-                        $$('entity_list').select(UI.entityList_getSelectedId());
+                        $$('entity_list').select(UI.entityList.getSelectedId());
                       } else {
                         UI.entityForm.setSelectedId(id);
                       }
