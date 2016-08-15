@@ -275,6 +275,8 @@ UI = {
                   if (err.message.startsWith('ER_DATA_TOO_LONG:')) {
                     $$('add_root_form').elements.root.define('invalidMessage', 'Too long');
                     $$('add_root_form').markInvalid('root', true);
+                  } else {
+                    UI.error(err);
                   }
                 }
               });
