@@ -42,8 +42,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     MY_APPS: 'My Apps',
     MY_DATA: 'My Data',
     SIGN_OUT: 'Sign out',
-    CONNECT_TO_FACEBOOK: 'Connect to Facebook',
-    CONNECT_TO_GOOGLE: 'Connect to Google',
+    CONNECT_TO_FACEBOOK: 'Connect through Facebook',
+    CONNECT_TO_GOOGLE: 'Connect through Google',
     REALLY_DELETE: 'You really want delete this entity?'
   },
   RU: {
