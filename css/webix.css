@@ -145,7 +145,7 @@
   text-align: center;
 }
 
-.entity_form textarea {
+.entity_form__text_label .entity_form textarea {
   overflow: hidden;
 }
 

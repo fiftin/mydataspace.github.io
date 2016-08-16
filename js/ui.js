@@ -87,7 +87,7 @@ UI = {
 
     Mydataspace.on('apps.change.res', function(data) {
       $$('app_form').setValues(data);
-      $$('entity_form').setDirty(false);
+      $$('app_form').setDirty(false);
     });
 
     Mydataspace.on('apps.delete.res', function(data) {
@@ -96,7 +96,7 @@ UI = {
 
     Mydataspace.on('apps.get.res', function(data) {
       $$('app_form').setValues(data);
-      $$('entity_form').setDirty(false);
+      $$('app_form').setDirty(false);
     });
 
     Mydataspace.on('apps.getAll.res', function(data) {
@@ -872,8 +872,8 @@ UI = {
                 elements: [
                   { view: 'text', label: STRINGS.NAME, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
                   UIControls.getEntityTypeSelectTemplate(),
-                  { view: 'text', label: STRINGS.DESCRIPTION, name: 'description', labelWidth: UIHelper.LABEL_WIDTH },
                   { view: 'text', label: STRINGS.CHILD_PROTO, name: 'childPrototype', labelWidth: UIHelper.LABEL_WIDTH },
+                  { view: 'textarea', css: 'entity_form__description', height: 100, label: STRINGS.DESCRIPTION, name: 'description', labelWidth: UIHelper.LABEL_WIDTH },
                   { template: STRINGS.FIELDS, type: 'section' },
                   { view: 'label', label: STRINGS.NO_FIELDS, id: 'entity_form__no_fields', align: 'center' }
                 ],
