@@ -5,6 +5,12 @@
   width: auto !important;
 }
 
+.image-for-social-medias {
+  position: absolute;
+  width: 400px;
+  visibility: hidden;
+}
+
 .logo {
   width: 250px;
   position: absolute;
