@@ -36,7 +36,8 @@ var Mydataspace = {
       title: 'Connect through Facebook',
       icon: 'facebook',
       url: 'https://www.facebook.com/dialog/oauth?client_id=827438877364954&scope=email' +
-           '&redirect_uri={{api_url}}%2fauth%3fauthProvider%3dfacebook%26permission%3d{{permission}}%26clientId%3d{{client_id}}' +
+           // '&redirect_uri={{api_url}}%2fauth%3fauthProvider%3dfacebook%26permission%3d{{permission}}%26clientId%3d{{client_id}}' +
+           '&redirect_uri={{api_url}}%2fauth%3fauthProvider%3dfacebook' +
            '&display=popup',
       loginWindow: {
         height: 400
