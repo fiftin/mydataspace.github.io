@@ -22,6 +22,14 @@ UI = {
     }
   },
 
+  showMyData: function() {
+    if (!Mydataspace.isLoggedIn()) {
+      return;
+    }
+    $$('my_data_panel').show();
+    $$('my_apps_panel').hide();
+  },
+
   refresh: function() {
     UI.entityTree.refresh();
     Mydataspace.emit('users.getMyProfile', {});
@@ -457,8 +465,7 @@ UI = {
               onSelectChange: function () {
                 switch (this.getSelectedId()) {
                   case 'my-data':
-                    $$('my_data_panel').show();
-                    $$('my_apps_panel').hide();
+                    UI.showMyData();
                     break;
                   case 'my-apps':
                     $$('my_data_panel').hide();

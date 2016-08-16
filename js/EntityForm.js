@@ -1,5 +1,5 @@
 function EntityForm() {
-  
+
 }
 
 EntityForm.prototype.listen = function() {
@@ -169,7 +169,7 @@ EntityForm.prototype.addField = function(data, setDirty) {
               $$('edit_script_window__title').setValue(data.name);
               $$('edit_script_window').show();
             }
-          }
+          }.bind(this)
         }
       },
       { view: 'select',
