@@ -5,6 +5,8 @@ UI = {
 
   entityTree: new EntityTree(),
 
+  pages: new Pages(),
+
   /**
    * Notify user about error.
    * @param err Object in format:
@@ -22,13 +24,13 @@ UI = {
     }
   },
 
-  showMyData: function() {
-    if (!Mydataspace.isLoggedIn()) {
-      return;
-    }
-    $$('my_data_panel').show();
-    $$('my_apps_panel').hide();
-  },
+  // showMyData: function() {
+  //   if (!Mydataspace.isLoggedIn()) {
+  //     return;
+  //   }
+  //   $$('my_data_panel').show();
+  //   $$('my_apps_panel').hide();
+  // },
 
   refresh: function() {
     UI.entityTree.refresh();
@@ -53,16 +55,16 @@ UI = {
 
   initConnection: function() {
     Mydataspace.on('login', function() {
-      $$('menu__item_list').select($$('menu__item_list').getFirstId());
       $$('login_panel').hide();
       $$('admin_panel').show();
-      UI.refresh();
+      UI.pages.refreshCurrentPage();
     });
 
     Mydataspace.on('logout', function() {
       $$('menu').hide();
       $$('login_panel').show();
       $$('admin_panel').hide();
+      document.getElementById('no_items').style.display = 'none';
     });
 
     UI.entityForm.listen();
@@ -76,12 +78,25 @@ UI = {
       $$('profile').setValues(data);
     });
 
+    Mydataspace.on('entities.create.res', function() {
+      UI.pages.updatePageState('data');
+    });
+
+    Mydataspace.on('entities.delete.res', function() {
+      UI.pages.updatePageState('data');
+    });
+
+    Mydataspace.on('entities.getMyRoots.res', function() {
+      UI.pages.updatePageState('data');
+    });
+
     Mydataspace.on('apps.create.res', function(data) {
       $$('add_app_window').hide();
       $$('app_list').add({
         id: data.clientId,
         value: data.name
       });
+      UI.pages.updatePageState('apps');
       $$('app_list').select(data.clientId);
     });
 
@@ -91,7 +106,12 @@ UI = {
     });
 
     Mydataspace.on('apps.delete.res', function(data) {
+      var nextId = $$('app_list').getPrevId(data.clientId) || $$('app_list').getNextId(data.clientId);
+      if (nextId != null) {
+        $$('app_list').select(nextId);
+      }
       $$('app_list').remove(data.clientId);
+      UI.pages.updatePageState('apps');
     });
 
     Mydataspace.on('apps.get.res', function(data) {
@@ -110,9 +130,7 @@ UI = {
       for (var i in items) {
         $$('app_list').add(items[i], -1);
       }
-      if (items.length > 0) {
-        $$('app_list').select(items[0].id);
-      }
+      UI.pages.updatePageState('apps');
     });
 
     Mydataspace.on('apps.err', UI.error);
@@ -417,6 +435,7 @@ UI = {
           },
           elements: [
             { view: 'text', label: STRINGS.NAME, required: true, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
+            { view: 'text', label: STRINGS.SITE_URL, required: true, name: 'url', labelWidth: UIHelper.LABEL_WIDTH },
             UIControls.getSubmitCancelForFormWindow('add_app')
           ]
         }
@@ -455,8 +474,8 @@ UI = {
             css: 'menu__item_list',
             template: '<span class="webix_icon fa-#icon#"></span> #value#',
             data:[
-              { id: 'my-data', value: STRINGS.MY_DATA, icon: 'database' },
-              { id: 'my-apps', value: STRINGS.MY_APPS, icon: 'cogs' },
+              { id: 'data', value: STRINGS.MY_DATA, icon: 'database' },
+              { id: 'apps', value: STRINGS.MY_APPS, icon: 'cogs' },
               { id: 'logout', value: STRINGS.SIGN_OUT, icon: 'sign-out' }
             ],
             select: true,
@@ -464,13 +483,11 @@ UI = {
             on: {
               onSelectChange: function () {
                 switch (this.getSelectedId()) {
-                  case 'my-data':
-                    UI.showMyData();
+                  case 'data':
+                    UI.pages.setCurrentPage('data');
                     break;
-                  case 'my-apps':
-                    $$('my_data_panel').hide();
-                    $$('my_apps_panel').show();
-                    UI.refreshApps();
+                  case 'apps':
+                    UI.pages.setCurrentPage('apps');
                     break;
                   case 'logout':
                     Mydataspace.logout();
@@ -580,7 +597,7 @@ UI = {
                       type: 'icon',
                       icon: 'plus',
                       label: STRINGS.NEW_APP,
-                      width: 100,
+                      width: 120,
                       click: function() {
                         $$('add_app_window').show();
                       }
@@ -611,9 +628,13 @@ UI = {
                 }
               ]
             },
-            { view: 'resizer' },
+            {
+              view: 'resizer',
+              id: 'my_apps_panel__resizer',
+            },
             // Selected app edit
-            { rows: [
+            { id: 'my_apps_panel__right_panel',
+              rows: [
               { view: 'toolbar',
                 cols: [
                   { view: 'button',
@@ -621,7 +642,7 @@ UI = {
                     icon: 'save',
                     label: STRINGS.SAVE,
                     id: 'app_form__save_button',
-                    width: 70,
+                    width: 110,
                     click: function() {
                       UI.appForm_save();
                     }
@@ -686,7 +707,8 @@ UI = {
         { id: 'my_data_panel',
           height: window.innerHeight - 46,
           cols: [
-            { rows: [
+            { id: 'my_data_panel__left_panel',
+              rows: [
                 { view: 'toolbar',
                   elements: [
                     { view: 'button',
@@ -749,8 +771,12 @@ UI = {
                 }
               ]
             },
-            { view: 'resizer' },
-            { rows: [
+            {
+              id: 'my_data_panel__resizer_1',
+              view: 'resizer'
+            },
+            { id: 'my_data_panel__central_panel',
+              rows: [
                 { view: 'toolbar',
                   cols: [
                     { view: 'button',
@@ -801,8 +827,12 @@ UI = {
                 }
               ]
             },
-            { view: 'resizer' },
-            { rows: [
+            {
+              id: 'my_data_panel__resizer_2',
+              view: 'resizer'
+            },
+            { id: 'my_data_panel__right_panel',
+              rows: [
               { view: 'toolbar',
                 cols: [
                   { view: 'button',

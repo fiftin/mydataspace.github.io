@@ -12,9 +12,11 @@ title: My Data Space
   {% assign api_websocket_url = site.api_websocket_url %}
 {% endif %}
 
-<img src="/images/logo_text.png" class="logo" onclick="UI.showMyData()" />
+<img src="/images/logo_text.png" class="logo" onclick="UI.pages.setCurrentPage('data');" />
 
-<img src="/images/logo_social.jpg" class="image-for-social-medias" />
+<!-- <img src="/images/logo_social.jpg" class="image-for-social-medias" /> -->
+
+<div id="no_items" class="no_items">No items yet</div>
 
 <script type="text/javascript" charset="utf-8">
   Mydataspace.init({

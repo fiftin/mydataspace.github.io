@@ -18,6 +18,22 @@
   cursor: pointer;
 }
 
+.no_items {
+  position: absolute;
+  margin: 200px auto 0 auto;
+  font-size: 20px;
+  color: gray;
+  z-index: 100;
+  left: 0;
+  right: 0;
+  text-align: center;
+  display: none;
+  font-family: "PT Sans", Tahoma;
+}
+
+.no_items--active {
+  display: block;
+}
 /**
  * Site header style
  */
@@ -104,7 +120,8 @@
 }
 
 .login_panel__providers {
-  background-image: url(/images/background.jpg);
+  background: #292929 !important;
+  /*background-image: url(/images/background.jpg);*/
 }
 
 .login_panel__facebook_button button,
