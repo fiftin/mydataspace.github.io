@@ -45,12 +45,13 @@ EntityList.prototype.setRootId = function(id) {
     return;
   }
   this.rootId = id;
-  var subscription = UIHelper.dataFromId(id);
-  var childrenSubscription = UIHelper.dataFromId(id);
-  childrenSubscription.path += '/*';
 
-  Mydataspace.emit('entities.subscribe', subscription);
-  Mydataspace.emit('entities.subscribe', childrenSubscription);
+  // var subscription = UIHelper.dataFromId(id);
+  // var childrenSubscription = UIHelper.dataFromId(id);
+  // childrenSubscription.path += '/*';
+  // Mydataspace.emit('entities.subscribe', subscription);
+  // Mydataspace.emit('entities.subscribe', childrenSubscription);
+
   this.refreshData();
 };
 
