@@ -43,8 +43,8 @@
 }
 
 .webix_header > div {
-  background: #292929 !important;
-  color: #292929 !important;
+  background: black !important;
+  color: black !important;
 }
 
 .menu__item_list > .webix_scroll_cont > .webix_list_item:first-child {
@@ -52,22 +52,22 @@
 }
 
 .menu_button {
-  background: #292929;
+  background: black;
 }
 
 .menu__spacer {
-  background: #292929;
+  background: black;
 }
 
 .menu__language_button {
-  background: #292929;
+  background: black;
     height: 46px !important;
 }
 
 .menu__language_button button,
 .menu__language_button button:focus {
-  border-color: #292929;
-  background: #292929;
+  border-color: black;
+  background: black;
   color: #a9a9a9;
   transition-property: color;
   transition-duration: 0.3s;
@@ -75,8 +75,8 @@
 
 .menu__language_button button:hover,
 .menu__language_button button:active {
-    border-color: #292929;
-    background: #292929;
+    border-color: black;
+    background: black;
     color: white;
     transition-property: color;
     transition-duration: 0.3s;
@@ -120,8 +120,7 @@
 }
 
 .login_panel__providers {
-  background: #292929 !important;
-  /*background-image: url(/images/background.jpg);*/
+  background-image: url(/images/background.jpg);
 }
 
 .login_panel__facebook_button button,
