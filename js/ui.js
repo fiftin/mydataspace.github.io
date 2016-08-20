@@ -24,17 +24,10 @@ UI = {
     }
   },
 
-  // showMyData: function() {
-  //   if (!Mydataspace.isLoggedIn()) {
-  //     return;
-  //   }
-  //   $$('my_data_panel').show();
-  //   $$('my_apps_panel').hide();
-  // },
-
   refresh: function() {
     UI.entityTree.refresh();
     Mydataspace.emit('users.getMyProfile', {});
+    UI.refreshApps();
   },
 
   //
@@ -42,15 +35,42 @@ UI = {
   //
 
   refreshApps: function() {
-    Mydataspace.emit('apps.getAll', {});
+    // $$('app_list').disable();
+    Mydataspace.request('apps.getAll', {}, function() {
+      $$('app_list').enable();
+    }, function(err) {
+      $$('app_list').enable();
+      UI.error(err);
+    });
   },
 
   appForm_save: function() {
-    Mydataspace.emit('apps.change', $$('app_form').getValues());
+    $$('app_form').disable();
+    Mydataspace.request('apps.change', $$('app_form').getValues(), function() {
+      $$('app_form').enable();
+    }, function(err) {
+      $$('app_form').enable();
+      UI.error(err);
+    });
   },
 
   appForm_updateToolbar: function() {
+    if (!$$('app_form').isDirty()) {
+      $$('app_form__save_button').disable();
+    } else {
+      $$('app_form__save_button').enable();
+    }
+  },
 
+  appForm_setClean: function() {
+    $$('app_form').setDirty(false);
+    UI.appForm_updateToolbar();
+    $$('app_form').enable();
+  },
+
+  appForm_setData: function(data) {
+    $$('app_form').setValues(data);
+    UI.appForm_setClean();
   },
 
   initConnection: function() {
@@ -103,6 +123,7 @@ UI = {
     Mydataspace.on('apps.change.res', function(data) {
       $$('app_form').setValues(data);
       $$('app_form').setDirty(false);
+      UI.appForm_setData(data);
     });
 
     Mydataspace.on('apps.delete.res', function(data) {
@@ -115,8 +136,7 @@ UI = {
     });
 
     Mydataspace.on('apps.get.res', function(data) {
-      $$('app_form').setValues(data);
-      $$('app_form').setDirty(false);
+      UI.appForm_setData(data);
     });
 
     Mydataspace.on('apps.getAll.res', function(data) {
@@ -124,7 +144,7 @@ UI = {
         return {
           id: x.clientId,
           value: x.name
-        }
+        };
       });
       $$('app_list').clearAll();
       for (var i in items) {
@@ -430,7 +450,11 @@ UI = {
               var data = $$('add_app_form').getValues();
               data.path = '';
               data.fields = [];
-              Mydataspace.emit('apps.create', data);
+              Mydataspace.request('apps.create', data, function() {
+                UIControls.removeSpinnerFromWindow('add_app_window');
+              }, function() {
+                ;
+              });
             }
           },
           elements: [
@@ -620,9 +644,15 @@ UI = {
                   template: '<div>#value#</div>',
                   on: {
                     onSelectChange: function (ids) {
-                      Mydataspace.emit(
+                      $$('app_form').disable();
+                      Mydataspace.request(
                         'apps.get',
-                        { clientId: ids[0] });
+                        { clientId: ids[0] }, function() {
+                          $$('app_form').enable();
+                        }, function(err) {
+                          $$('app_form').enable();
+                          UI.error(err);
+                        });
                     }
                   }
                 }
@@ -653,9 +683,15 @@ UI = {
                     label: STRINGS.REFRESH_APP,
                     width: 120,
                     click: function() {
-                      Mydataspace.emit(
+                      $$('app_form').disable();
+                      Mydataspace.request(
                         'apps.get',
-                        { clientId: $$('app_list').getSelectedId() });
+                        { clientId: $$('app_list').getSelectedId() }, function() {
+                          $$('app_form').enable();
+                        }, function(err) {
+                          $$('app_form').enable();
+                          UI.error(err);
+                        });
                     }
                   },
                   {},
@@ -672,6 +708,7 @@ UI = {
                         cancel: STRINGS.NO  ,
                         callback: function(result) {
                           if (result) {
+                            $$('app_form').disable();
                             Mydataspace.request(
                               'apps.delete',
                               { clientId: $$('app_list').getSelectedId() });
