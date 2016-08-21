@@ -154,6 +154,7 @@ UI = {
       if (firstId !== null) {
         $$('app_list').select(firstId);
       }
+      $$('app_list').enable();
       UI.pages.updatePageState('apps');
     });
 
