@@ -54,6 +54,12 @@ UI = {
     });
   },
 
+  appList_setCurrentIdToFirst: function() {
+    var firstId = $$('app_list').getFirstId();
+    this.setCurrentId(firstId);
+    return firstId;
+  },
+
   appForm_updateToolbar: function() {
     if (!$$('app_form').isDirty()) {
       $$('app_form__save_button').disable();
@@ -643,6 +649,9 @@ UI = {
                   select: true,
                   template: '<div>#value#</div>',
                   on: {
+                    onAfterLoad: function() {
+                      $$('app_list').select(UI.appList_setCurrentIdToFirst());
+                    },
                     onSelectChange: function (ids) {
                       $$('app_form').disable();
                       Mydataspace.request(
