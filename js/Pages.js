@@ -67,7 +67,7 @@ Pages.prototype.refreshCurrentPage = function() {
   this.refreshPage(this.currentPage);
 };
 
-Pages.prototype.refreshPage = function(page) {
+Pages.prototype.refreshPage = function(page, selectPage) {
   switch (page) {
     case 'apps':
       UI.refreshApps();
@@ -78,7 +78,7 @@ Pages.prototype.refreshPage = function(page) {
     default:
       throw new Error('Illegal page: ' + page);
   }
-  if ($$('menu__item_list').getSelectedId() !== page) {
+  if ($$('menu__item_list').getSelectedId() !== page && selectPage) {
     $$('menu__item_list').select(page);
   }
 };

@@ -26,7 +26,8 @@ UI = {
 
   refresh: function() {
     Mydataspace.emit('users.getMyProfile', {});
-    UI.pages.refreshCurrentPage();
+    UI.pages.refreshPage('apps', false);
+    UI.pages.refreshPage('data', false);
   },
 
   //
@@ -631,7 +632,7 @@ UI = {
                       label: STRINGS.REFRESH,
                       width: 100,
                       click: function() {
-                        UI.refreshApps();
+                        UI.refreshPage('apps');
                       }
                     },
                     {}
