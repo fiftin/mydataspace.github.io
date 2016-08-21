@@ -542,6 +542,14 @@ UI = {
         { cols: [
           { type: 'header', template: 'my data space' },
           { view: 'button',
+            width: 40,
+            css: 'menu__language_button',
+            label: 'Docs',
+            click: function() {
+            }
+          },
+          { width: 20, css: 'menu__spacer' },
+          { view: 'button',
             width: 30,
             css: 'menu__language_button ' + (LANGUAGE === 'EN' ? 'menu__language_button--selected' : ''),
             label: 'EN',
@@ -577,6 +585,21 @@ UI = {
       rows: [
         { cols: [
             { type: 'header', template: 'my data space' },
+            { view: 'button',
+              width: 90,
+              css: 'menu__language_button',
+              label: 'Demos',
+              click: function() {
+              }
+            },
+            { view: 'button',
+              width: 40,
+              css: 'menu__language_button',
+              label: 'Docs',
+              click: function() {
+              }
+            },
+            { width: 20, css: 'menu__spacer' },
             { view: 'button',
               width: 30,
               css: 'menu__language_button ' + (LANGUAGE === 'EN' ? 'menu__language_button--selected' : ''),
