@@ -32,6 +32,7 @@ Pages.prototype.updatePageState = function(page) {
   switch (page) {
     case 'apps':
       if ($$('app_list').getFirstId() == null) {
+        document.getElementById('no_items').innerText = STRINGS.NO_APPS;
         document.getElementById('no_items').style.display = 'block';
         $$('my_apps_panel__right_panel').hide();
         $$('my_apps_panel__resizer').hide();
@@ -43,6 +44,7 @@ Pages.prototype.updatePageState = function(page) {
       break;
     case 'data':
       if ($$('entity_tree').getFirstId() == null) {
+        document.getElementById('no_items').innerText = STRINGS.NO_DATA;
         document.getElementById('no_items').style.display = 'block';
         $$('my_data_panel__right_panel').hide();
         $$('my_data_panel__resizer_2').hide();
@@ -63,7 +65,7 @@ Pages.prototype.updatePageState = function(page) {
 
 Pages.prototype.refreshCurrentPage = function() {
   this.refreshPage(this.currentPage);
-}
+};
 
 Pages.prototype.refreshPage = function(page) {
   switch (page) {

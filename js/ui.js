@@ -25,9 +25,8 @@ UI = {
   },
 
   refresh: function() {
-    UI.entityTree.refresh();
     Mydataspace.emit('users.getMyProfile', {});
-    UI.refreshApps();
+    UI.pages.refreshCurrentPage();
   },
 
   //
@@ -77,7 +76,7 @@ UI = {
     Mydataspace.on('login', function() {
       $$('login_panel').hide();
       $$('admin_panel').show();
-      UI.pages.refreshCurrentPage();
+      UI.refresh();
     });
 
     Mydataspace.on('logout', function() {
@@ -763,7 +762,7 @@ UI = {
                       label: STRINGS.REFRESH,
                       width: 100,
                       click: function() {
-                        UI.entityTree.refresh();
+                        UI.pages.refreshPage('apps');
                       }
                     },
                     {}
