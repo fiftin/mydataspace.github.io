@@ -632,7 +632,7 @@ UI = {
                       label: STRINGS.REFRESH,
                       width: 100,
                       click: function() {
-                        UI.refreshPage('apps');
+                        UI.pages.refreshPage('apps');
                       }
                     },
                     {}
