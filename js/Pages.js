@@ -78,7 +78,6 @@ Pages.prototype.refreshPage = function(page, selectOnlyCurrentPage) {
     default:
       throw new Error('Illegal page: ' + page);
   }
-  if ()
   if ($$('menu__item_list').getSelectedId() !== page
       && (selectOnlyCurrentPage && this.currentPage === page || !selectOnlyCurrentPage)) {
     $$('menu__item_list').select(page);
