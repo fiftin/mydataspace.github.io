@@ -12,10 +12,46 @@
 }
 
 .logo {
-  width: 250px;
   position: absolute;
   z-index: 20;
   cursor: pointer;
+  height: 45px;
+}
+
+.logo__shading {
+  position: absolute;
+  left: 60px;
+  top: 0;
+  right: 0;
+  background: black;
+  opacity: 0.3;
+  height: 40px;
+  transition: opacity 0.3s;
+}
+
+.logo:hover .logo__shading {
+  opacity: 0;
+}
+
+.logo:hover .logo__img {
+  transform: rotate(20deg);
+  transition: transform 0.3s;
+}
+
+.logo__img {
+  transform: rotate(0);
+  transition: transform 0.3s;
+  width: 50px;
+  display: block;
+  float: left;
+  margin-left: 3px;
+  margin-top: 3px;
+}
+
+.logo__img_text {
+  width: 200px;
+  display: block;
+  float: left;
 }
 
 .no_items {
@@ -120,6 +156,7 @@
 }
 
 .login_panel__providers {
+  background-color: black;
   background-image: url(/images/background.jpg);
 }
 

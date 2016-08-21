@@ -12,7 +12,11 @@ title: My Data Space
   {% assign api_websocket_url = site.api_websocket_url %}
 {% endif %}
 
-<img src="/images/logo_text.png" class="logo" onclick="UI.pages.setCurrentPage('data');" />
+<div class="logo" onclick="UI.pages.setCurrentPage('data');">
+  <div class="logo__shading"></div>
+  <img src="/images/logo.png" class="logo__img" />
+  <img src="/images/logo_text.png" class="logo__img_text" onclick="UI.pages.setCurrentPage('data');" />
+</div>
 
 <!-- <img src="/images/logo_social.jpg" class="image-for-social-medias" /> -->
 
