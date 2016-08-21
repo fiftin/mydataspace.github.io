@@ -67,7 +67,7 @@ Pages.prototype.refreshCurrentPage = function() {
   this.refreshPage(this.currentPage);
 };
 
-Pages.prototype.refreshPage = function(page, selectPage) {
+Pages.prototype.refreshPage = function(page, selectOnlyCurrentPage) {
   switch (page) {
     case 'apps':
       UI.refreshApps();
@@ -78,7 +78,9 @@ Pages.prototype.refreshPage = function(page, selectPage) {
     default:
       throw new Error('Illegal page: ' + page);
   }
-  if ($$('menu__item_list').getSelectedId() !== page && selectPage) {
+  if ()
+  if ($$('menu__item_list').getSelectedId() !== page
+      && (selectOnlyCurrentPage && this.currentPage === page || !selectOnlyCurrentPage)) {
     $$('menu__item_list').select(page);
   }
 };

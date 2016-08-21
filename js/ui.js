@@ -26,8 +26,8 @@ UI = {
 
   refresh: function() {
     Mydataspace.emit('users.getMyProfile', {});
-    UI.pages.refreshPage('apps', false);
-    UI.pages.refreshPage('data', false);
+    UI.pages.refreshPage('apps', true);
+    UI.pages.refreshPage('data', true);
   },
 
   //
