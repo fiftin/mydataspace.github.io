@@ -35,7 +35,7 @@ UI = {
   //
 
   refreshApps: function() {
-    // $$('app_list').disable();
+    $$('app_list').disable();
     Mydataspace.request('apps.getAll', {}, function() {
       $$('app_list').enable();
     }, function(err) {
@@ -52,12 +52,6 @@ UI = {
       $$('app_form').enable();
       UI.error(err);
     });
-  },
-
-  appList_setCurrentIdToFirst: function() {
-    var firstId = $$('app_list').getFirstId();
-    this.setCurrentId(firstId);
-    return firstId;
   },
 
   appForm_updateToolbar: function() {
@@ -155,6 +149,10 @@ UI = {
       $$('app_list').clearAll();
       for (var i in items) {
         $$('app_list').add(items[i], -1);
+      }
+      var firstId = $$('app_list').getFirstId();
+      if (firstId !== null) {
+        $$('app_list').select(firstId);
       }
       UI.pages.updatePageState('apps');
     });
@@ -649,9 +647,6 @@ UI = {
                   select: true,
                   template: '<div>#value#</div>',
                   on: {
-                    onAfterLoad: function() {
-                      $$('app_list').select(UI.appList_setCurrentIdToFirst());
-                    },
                     onSelectChange: function (ids) {
                       $$('app_form').disable();
                       Mydataspace.request(
