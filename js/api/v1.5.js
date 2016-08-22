@@ -453,13 +453,8 @@ function Entities(myda) {
 }
 
 Entities.prototype.request = function(eventName, data) {
-  var myda = this.myda;
   return new Promise(function(resolve, reject) {
-    myda.request('entities.create', {
-      root: myda.root,
-      path: path,
-      fields: fields
-    }, resolve, reject);
+    myda.request(eventName, data, resolve, reject);
   });
 };
 
