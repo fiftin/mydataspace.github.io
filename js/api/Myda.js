@@ -1,8 +1,12 @@
 'use strict';
 
-function Myda(root) {
-  this.root = root;
-  this.initialized = false;
+function Myda(options) {
+  this.options = common.extend({
+    connected: function() {
+      console.log('Maybe you forgot to specify connected-event handler');
+    }
+  }, options);
+  this.root = options.root;
   this.connected = false;
   this.loggedIn = false;
   this.requests = {};
@@ -14,7 +18,6 @@ function Myda(root) {
     logout: [],
     connected: []
   };
-
   this.authProviders = {
     facebook: {
       title: 'Connect through Facebook',
@@ -40,6 +43,17 @@ function Myda(root) {
       }
     }
   };
+  this.entities = new Entities(this);
+
+  this.on('connected', options.connected);
+
+  window.addEventListener('message', function(e) {
+    if (e.data.message === 'authResult') {
+      localStorage.setItem('authToken', e.data.result);
+      this.emit('authenticate', { token: e.data.result });
+      e.source.close();
+    }
+  }.bind(this));
 }
 
 Myda.prototype.getAuthProviders = function() {
@@ -65,27 +79,6 @@ Myda.prototype.getAuthProvider = function(providerName) {
   ret.url = ret.url.replace('{{permission}}', this.options.permission);
   ret.url = ret.url.replace('{{client_id}}', this.options.clientId);
   return ret;
-};
-
-Myda.prototype.init = function(options) {
-  if (this.initialized) {
-    console.warn('An attempt to re-initialize the Mydataspace');
-    return;
-  }
-  this.options = common.extend({
-    connected: function() {
-      console.log('Maybe you forgot to specify connected-event handler');
-    }
-  }, options);
-  this.on('connected', options.connected);
-  window.addEventListener('message', function(e) {
-    if (e.data.message === 'authResult') {
-      localStorage.setItem('authToken', e.data.result);
-      this.emit('authenticate', { token: e.data.result });
-      e.source.close();
-    }
-  });
-  this.initialized = true;
 };
 
 Myda.prototype.connect = function() {
@@ -240,7 +233,7 @@ Myda.prototype.request = function(eventName, data, successCallback, failCallback
     this.subscriptions.push(responseEventName);
     this.socket.on(responseEventName, function(data) {
       this.handleResponse(data, 'success');
-    });
+    }.bind(this));
   }
 
   // Send request

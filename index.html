@@ -24,7 +24,7 @@ title: My Data Space
 <div id="no_items" class="no_items"></div>
 
 <script type="text/javascript" charset="utf-8">
-  Mydataspace.init({
+  Mydataspace = new Myda({
     apiURL: '{{ api_url }}',
     websocketURL: '{{ api_websocket_url }}',
     clientId: '{{ client_id }}',
@@ -34,6 +34,8 @@ title: My Data Space
       UI.refresh();
     }
   });
+  Mydataspace.authProviders.facebook.title = STRINGS.CONNECT_TO_FACEBOOK;
+  Mydataspace.authProviders.google.title = STRINGS.CONNECT_TO_GOOGLE;
   UI.render();
   Mydataspace.connect();
 </script>
