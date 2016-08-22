@@ -471,7 +471,7 @@ Entities.prototype.get = function(path, options) {
     root: this.myda.root,
     path: path
   };
-  return this.request('entities.data', data);
+  return this.request('entities.get', data);
 };
 
 Entities.prototype.delete = function(path) {
