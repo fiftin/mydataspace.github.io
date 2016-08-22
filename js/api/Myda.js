@@ -2,6 +2,8 @@
 
 function Myda(options) {
   this.options = common.extend({
+		apiURL: 'http://api-mydatasp.rhcloud.com',
+		websocketURL: 'http://api-mydatasp.rhcloud.com:8000',
     connected: function() {
       // console.log('Maybe you forgot to specify connected-event handler');
     }
