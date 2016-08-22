@@ -8,7 +8,7 @@ Entities.prototype.request = function(eventName, data) {
   });
 };
 
-Entities.prototype.create = function(entity, fields) {
+Entities.prototype.create = function(path, fields) {
   return this.request('entities.create', {
     root: this.myda.root,
     path: path,

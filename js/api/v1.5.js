@@ -458,7 +458,7 @@ Entities.prototype.request = function(eventName, data) {
   });
 };
 
-Entities.prototype.create = function(entity, fields) {
+Entities.prototype.create = function(path, fields) {
   return this.request('entities.create', {
     root: this.myda.root,
     path: path,
@@ -667,7 +667,7 @@ Myda.prototype.popupCenter = function(url, title, w, h) {
   var newWindow = window.open(url, title, 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
 
   // Puts focus on the newWindow
-  if (window.focus) {
+  if (newWindow.focus) {
     newWindow.focus();
   }
   return newWindow;
