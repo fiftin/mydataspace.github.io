@@ -11,7 +11,7 @@ Entities.prototype.request = function(eventName, data) {
       fields: fields
     }, resolve, reject);
   });
-}
+};
 
 Entities.prototype.create = function(entity, fields) {
   return this.request('entities.create', {

@@ -1,11 +1,11 @@
 describe('Myda', function() {
   it('#constructor', function() {
     var myda = new Myda({
-
+      apiURL: '',
+      websocketURL: '',
+      clientId: '',
+      permission: 'admin'
     });
-    myda.on('connected', function() {
-
-    });
-    myda.connect();
+    var myda.connect();
   });
 });

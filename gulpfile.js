@@ -8,6 +8,12 @@ var concat = require('gulp-concat');
 var fs = require('fs');
 var uglify = require('gulp-uglifyjs');
 
+gulp.task('api', function() {
+  return gulp.src(['./js/common.js', './js/api/Entities.js', './js/api/Myda.js'])
+    .pipe(concat('v1.5.js'))
+    .pipe(gulp.dest('./js/api/'));
+});
+
 gulp.task('test', function (done) {
   new Server({
     configFile: __dirname + '/karma.conf.js',

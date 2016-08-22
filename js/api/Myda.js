@@ -3,7 +3,7 @@
 function Myda(options) {
   this.options = common.extend({
     connected: function() {
-      console.log('Maybe you forgot to specify connected-event handler');
+      // console.log('Maybe you forgot to specify connected-event handler');
     }
   }, options);
   this.root = options.root;
@@ -43,6 +43,7 @@ function Myda(options) {
       }
     }
   };
+
   this.entities = new Entities(this);
 
   this.on('connected', options.connected);
