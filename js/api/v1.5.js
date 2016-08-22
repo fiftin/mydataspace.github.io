@@ -561,7 +561,7 @@ function Myda(options) {
 
   this.entities = new Entities(this);
 
-  this.on('connected', options.connected);
+  this.on('connected', this.options.connected);
 
   window.addEventListener('message', function(e) {
     if (e.data.message === 'authResult') {
