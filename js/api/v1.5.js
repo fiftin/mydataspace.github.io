@@ -512,6 +512,7 @@ Entities.prototype.on = function(eventName, callback) {
 
 function Myda(options) {
   this.options = common.extend({
+    useLocalStorage: true,
 		apiURL: 'http://api-mydatasp.rhcloud.com',
 		websocketURL: 'http://api-mydatasp.rhcloud.com:8000',
     connected: function() {
@@ -562,7 +563,9 @@ function Myda(options) {
 
   window.addEventListener('message', function(e) {
     if (e.data.message === 'authResult') {
-      localStorage.setItem('authToken', e.data.result);
+      if (this.options.useLocalStorage) {
+        localStorage.setItem('authToken', e.data.result);
+      }
       this.emit('authenticate', { token: e.data.result });
       e.source.close();
     }
@@ -605,7 +608,7 @@ Myda.prototype.connect = function() {
 
   this.on('connect', function () {
     this.connected = true;
-    if (common.isPresent(localStorage.getItem('authToken'))) {
+    if (this.options.useLocalStorage && common.isPresent(localStorage.getItem('authToken'))) {
       this.emit('authenticate', { token: localStorage.getItem('authToken') });
     }
     this.callListeners('connected');
