@@ -49,9 +49,15 @@
 }
 
 .logo__img_text {
-  width: 200px;
+  width: 270px;
   display: block;
   float: left;
+  color: white;
+  font-size: 32px;
+
+font-family: 'Lalezar', cursive;
+
+  padding-left: 10px;
 }
 
 .no_items {
