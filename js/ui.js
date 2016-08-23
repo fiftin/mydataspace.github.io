@@ -99,15 +99,21 @@ UI = {
     });
 
     Mydataspace.on('entities.create.res', function() {
-      UI.pages.updatePageState('data');
+      setTimeout(function() {
+        UI.pages.updatePageState('data');
+      }, 10);
     });
 
     Mydataspace.on('entities.delete.res', function() {
-      UI.pages.updatePageState('data');
+      setTimeout(function() {
+        UI.pages.updatePageState('data');
+      }, 10);
     });
 
     Mydataspace.on('entities.getMyRoots.res', function() {
-      UI.pages.updatePageState('data');
+      setTimeout(function() {
+        UI.pages.updatePageState('data');
+      }, 10);
     });
 
     Mydataspace.on('apps.create.res', function(data) {
