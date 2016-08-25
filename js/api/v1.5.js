@@ -7832,8 +7832,8 @@ Entities.prototype.on = function(eventName, callback) {
 function Myda(options) {
   this.options = common.extend({
     useLocalStorage: true,
-		apiURL: 'http://api-mydatasp.rhcloud.com',
-		websocketURL: 'http://api-mydatasp.rhcloud.com:8000',
+		apiURL: 'http://api.my-data.com',
+		websocketURL: 'http://api.my-data.com:8000',
     connected: function() {
       // console.log('Maybe you forgot to specify connected-event handler');
     }
