@@ -15,6 +15,8 @@ description: > # this means to ignore newlines until "baseurl:"
 baseurl: ""
 
 url: "https://my-data.space"
+enforce_ssl: my-data.space
+
 api_url: "https://api.my-data.space"
 api_websocket_url: "https://api.my-data.space:8443"
 client_id: "a56e6a0c-06ab-bca7-bb97-18c8898c68f9"
