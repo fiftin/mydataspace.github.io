@@ -3,8 +3,8 @@
 function Myda(options) {
   this.options = common.extend({
     useLocalStorage: true,
-		apiURL: 'http://api.my-data.com',
-		websocketURL: 'http://api.my-data.com:8000',
+		apiURL: 'https://api.my-data.com',
+		websocketURL: 'https://api.my-data.com:8443',
     connected: function() {
       // console.log('Maybe you forgot to specify connected-event handler');
     }
