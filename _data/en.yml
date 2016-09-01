@@ -1,7 +1,7 @@
 slogan: Incredibly fast backend of your web site
 description: You will be surprised how fast and responsive web site can be
 special_offer: Free now and <b>forever</b> for registered users.
-prompt: Sign in with:
+prompt: "Sign in with:"
 buttons:
   - id: facebook
     title: Facebook

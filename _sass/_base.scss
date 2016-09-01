@@ -4,6 +4,13 @@ body {
   margin: 0;
 }
 
+.feature__icon {
+  svg {
+    width: 100%;
+  }
+}
+
+
 %vertical-rhythm {
     margin-bottom: $spacing-unit / 2;
 }

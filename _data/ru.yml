@@ -1,7 +1,7 @@
 slogan: Невероятно быстрый бэкенд вашего сайта
-description: Вы поразитесь насколько быстрым и отзывчивым может быть веб-сайт.
-special_offer: Бесплатно сейчас и <b>навсегда</b> для зарегистрированных пользователей.
-prompt: Войти через:
+description: Вы поразитесь насколько быстрым и отзывчивым может быть веб-сайт
+special_offer: Бесплатно сейчас и <b>навсегда</b> для зарегистрированных пользователей
+prompt: "Войти через:"
 buttons:
   - id: facebook
     title: Facebook
@@ -19,7 +19,7 @@ sections:
       - id: scalability
         title: Масштабируемость вычислительных ресурсов
         description:
-      - id: Distribution
+      - id: distribution
         title: Распределенное хранение данных
         description:
   - id: ease

@@ -1,21 +1,24 @@
-<section id="{{ section.id }}">
-  <div class="container">
-    <div class="row">
-      
-      <div class="col-md-4">
-
-        <div class="feature">
-          <div class="feature__icon">
-            {% include "icons/rocket.svg" %}
+{% for section in site.data[page.language].sections %}
+  <section id="{{ section.id }}">
+    <div class="container">
+      <div class="row">
+        {% for feature in section.features %}
+          <div class="col-md-4">
+            <div class="feature">
+              <div class="feature__icon">
+                {% assign icon_name = "icons/" | append:feature.id | append:".svg"  %}
+                {% include {{icon_name}} %}
+              </div>
+              <div class="feature__title">
+                {{ feature.title }}
+              </div>
+              <div class="feature__descrtion">
+                {{ feature.description }}
+              </div>
+            </div>
           </div>
-          <div class="feature__title">
-          </div>
-          <div class="feature__descrtion">
-          </div>
-        </div>
-
+        {% endfor %}
       </div>
-
     </div>
-  </div>
-</section>
+  </section>
+{% endfor %}
