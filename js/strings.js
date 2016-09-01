@@ -46,7 +46,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     CONNECT_TO_GOOGLE: 'Connect through Google',
     REALLY_DELETE: 'You really want delete this entity?',
     NO_DATA: 'You have no data',
-    NO_APPS: 'You have no apps'
+    NO_APPS: 'You have no apps',
   },
   RU: {
     YES: 'Да',
@@ -95,6 +95,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     CONNECT_TO_GOOGLE: 'Войти через Google',
     REALLY_DELETE: 'Вы действительно хотите удалить этот элемент?',
     NO_DATA: 'У вас нет данных',
-    NO_APPS: 'У вас нет приложений'
+    NO_APPS: 'У вас нет приложений',
+    REALLY_DELETE_APP: 'Вы действительно хотите удалить это приложение?'
   }
 };

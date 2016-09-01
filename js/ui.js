@@ -7,6 +7,25 @@ UI = {
 
   pages: new Pages(),
 
+  updateLanguage: function() {
+    var language = localStorage.getItem('language') || 'EN';
+    var strings = STRINGS_ON_DIFFERENT_LANGUAGES[language];
+    for (var key in strings) {
+      var label = $$(key + '_LABEL');
+      if (label == null) {
+        continue;
+      }
+
+      var i = 1;
+      while (label != null) {
+        label.define('label', strings[key]);
+        label.refresh();
+        label = $$(key + '_LABEL_' + i);
+        i++;
+      }
+    }
+  },
+
   /**
    * Notify user about error.
    * @param err Object in format:
@@ -222,7 +241,7 @@ UI = {
           { view: 'toolbar',
             elements: [
               { view: 'label',
-                label: STRINGS.EDIT_SCRIPT,
+                id: 'EDIT_SCRIPT_LABEL', label: STRINGS.EDIT_SCRIPT,
                 width: 100
               },
               { view: 'label',
@@ -232,7 +251,7 @@ UI = {
               { view: 'button',
                 type: 'icon',
                 icon: 'save',
-                label: STRINGS.SAVE_ENTITY,
+                id: 'SAVE_ENTITY_LABEL', label: STRINGS.SAVE_ENTITY,
                 width: 120,
                 click: function() {
                   $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
@@ -242,7 +261,7 @@ UI = {
               { view: 'button',
                 type: 'icon',
                 icon: 'play',
-                label: STRINGS.RUN_SCRIPT,
+                id: 'RUN_SCRIPT_LABEL', label: STRINGS.RUN_SCRIPT,
                 width: 120,
                 click: function() {
                   $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
@@ -252,7 +271,7 @@ UI = {
               { view: 'button',
                 type: 'icon',
                 icon: 'times',
-                label: STRINGS.CLOSE,
+                id: 'CLOSE_LABEL', label: STRINGS.CLOSE,
                 id: 'edit_script_window__cancel_button',
                 width: 100,
                 click: function() {
@@ -340,7 +359,7 @@ UI = {
             }
           },
           elements: [
-            { view: 'text', label: STRINGS.NAME, required: true, name: 'root', labelWidth: UIHelper.LABEL_WIDTH },
+            { view: 'text', id: 'NAME_LABEL', label: STRINGS.NAME, required: true, name: 'root', labelWidth: UIHelper.LABEL_WIDTH },
             UIControls.getEntityTypeSelectTemplate(),
             UIControls.getSubmitCancelForFormWindow('add_root')
           ]
@@ -389,7 +408,7 @@ UI = {
             }
           },
           elements: [
-            { view: 'text', required: true, label: STRINGS.NAME, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
+            { view: 'text', required: true, id: 'NAME_LABEL_1', label: STRINGS.NAME, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
             UIControls.getEntityTypeSelectTemplate(),
             UIControls.getSubmitCancelForFormWindow('add_entity')
           ]
@@ -421,9 +440,9 @@ UI = {
           }
         },
         elements: [
-          { view: 'text', required: true, label: STRINGS.NAME, name: 'name' },
+          { view: 'text', required: true, id: 'NAME_LABEL_2', label: STRINGS.NAME, name: 'name' },
           UIControls.getFieldTypeSelectTemplate(),
-          { view: 'text', label: STRINGS.VALUE, name: 'value' },
+          { view: 'text', id: 'VALUE_LABEL', label: STRINGS.VALUE, name: 'value' },
           UIControls.getSubmitCancelForFormWindow('add_field', false)
         ],
         rules: {
@@ -469,8 +488,8 @@ UI = {
             }
           },
           elements: [
-            { view: 'text', label: STRINGS.NAME, required: true, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
-            { view: 'text', label: STRINGS.SITE_URL, required: true, name: 'url', labelWidth: UIHelper.LABEL_WIDTH },
+            { view: 'text', id: 'NAME_LABEL_3', label: STRINGS.NAME, required: true, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
+            { view: 'text', id: 'SITE_URL_LABEL', label: STRINGS.SITE_URL, required: true, name: 'url', labelWidth: UIHelper.LABEL_WIDTH },
             UIControls.getSubmitCancelForFormWindow('add_app')
           ]
         }
@@ -561,7 +580,7 @@ UI = {
             label: 'EN',
             click: function() {
               localStorage.setItem('language', 'EN');
-              location.href = location.href;
+              UI.updateLanguage();
             }
           },
           { view: 'button',
@@ -570,7 +589,7 @@ UI = {
             label: 'RU',
             click: function() {
               localStorage.setItem('language', 'RU');
-              location.href = location.href;
+              UI.updateLanguage();
             }
           },
           { width: 20, css: 'menu__spacer' }
@@ -612,7 +631,7 @@ UI = {
               label: 'EN',
               click: function() {
                 localStorage.setItem('language', 'EN');
-                location.href = location.href;
+                UI.updateLanguage();
               }
             },
             { view: 'button',
@@ -621,7 +640,7 @@ UI = {
               label: 'RU',
               click: function() {
                 localStorage.setItem('language', 'RU');
-                location.href = location.href;
+                UI.updateLanguage();
               }
             },
             { width: 20, css: 'menu__spacer' },
@@ -654,7 +673,7 @@ UI = {
                     { view: 'button',
                       type: 'icon',
                       icon: 'plus',
-                      label: STRINGS.NEW_APP,
+                      id: 'NEW_APP_LABEL', label: STRINGS.NEW_APP,
                       width: 120,
                       click: function() {
                         $$('add_app_window').show();
@@ -663,7 +682,7 @@ UI = {
                     { view: 'button',
                       type: 'icon',
                       icon: 'refresh',
-                      label: STRINGS.REFRESH,
+                      id: 'REFRESH_LABEL_1', label: STRINGS.REFRESH,
                       width: 100,
                       click: function() {
                         UI.pages.refreshPage('apps');
@@ -704,7 +723,7 @@ UI = {
                   { view: 'button',
                     type: 'icon',
                     icon: 'save',
-                    label: STRINGS.SAVE,
+                    id: 'SAVE_LABEL', label: STRINGS.SAVE,
                     id: 'app_form__save_button',
                     width: 110,
                     click: function() {
@@ -714,7 +733,7 @@ UI = {
                   { view: 'button',
                     type: 'icon',
                     icon: 'refresh',
-                    label: STRINGS.REFRESH_APP,
+                    id: 'REFRESH_APP_LABEL', label: STRINGS.REFRESH_APP,
                     width: 120,
                     click: function() {
                       $$('app_form').disable();
@@ -732,12 +751,12 @@ UI = {
                   { view: 'button',
                     type: 'icon',
                     icon: 'remove',
-                    label: STRINGS.DELETE,
+                    id: 'DELETE_LABEL', label: STRINGS.DELETE,
                     width: 100,
                     click: function() {
                       webix.confirm({
                         title: STRINGS.DELETE_APP,
-                        text: 'You really want delete this app?',
+                        text: STRINGS.REALLY_DELETE_APP,
                         ok: STRINGS.YES,
                         cancel: STRINGS.NO  ,
                         callback: function(result) {
@@ -758,11 +777,11 @@ UI = {
                 complexData: true,
                 scroll: true,
                 elements: [
-                  { view: 'text', label: STRINGS.NAME, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
-                  { view: 'textarea', label: STRINGS.DESCRIPTION, height: 100, name: 'description', labelWidth: UIHelper.LABEL_WIDTH },
-                  { view: 'text', label: STRINGS.LOGO_URL, name: 'logoURL', labelWidth: UIHelper.LABEL_WIDTH },
-                  { view: 'text', label: STRINGS.SITE_URL, name: 'url', labelWidth: UIHelper.LABEL_WIDTH },
-                  { view: 'text', label: STRINGS.CLIENT_ID, name: 'clientId', readonly:true, labelWidth: UIHelper.LABEL_WIDTH }
+                  { view: 'text', id: 'NAME_LABEL_4', label: STRINGS.NAME, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
+                  { view: 'textarea', id: 'DESCRIPTION_LABEL', label: STRINGS.DESCRIPTION, height: 100, name: 'description', labelWidth: UIHelper.LABEL_WIDTH },
+                  { view: 'text', id: 'LOGO_URL_LABEL', label: STRINGS.LOGO_URL, name: 'logoURL', labelWidth: UIHelper.LABEL_WIDTH },
+                  { view: 'text', id: 'SITE_URL_LABEL_1', label: STRINGS.SITE_URL, name: 'url', labelWidth: UIHelper.LABEL_WIDTH },
+                  { view: 'text', id: 'CLIENT_ID_LABEL', label: STRINGS.CLIENT_ID, name: 'clientId', readonly:true, labelWidth: UIHelper.LABEL_WIDTH }
                 ],
                 on: {
                   onChange: function() { UI.appForm_updateToolbar() }
@@ -785,7 +804,7 @@ UI = {
                     { view: 'button',
                       type: 'icon',
                       icon: 'plus',
-                      label: STRINGS.NEW_ROOT,
+                      id: 'NEW_ROOT_LABEL', label: STRINGS.NEW_ROOT,
                       width: 130,
                       click: function() {
                         $$('add_root_window').show();
@@ -794,7 +813,7 @@ UI = {
                     { view: 'button',
                       type: 'icon',
                       icon: 'refresh',
-                      label: STRINGS.REFRESH,
+                      id: 'REFRESH_LABEL', label: STRINGS.REFRESH,
                       width: 100,
                       click: function() {
                         UI.pages.refreshPage('data');
@@ -853,7 +872,7 @@ UI = {
                     { view: 'button',
                       type: 'icon',
                       icon: 'plus',
-                      label: STRINGS.NEW_ENTITY,
+                      id: 'NEW_ENTITY_LABEL', label: STRINGS.NEW_ENTITY,
                       width: 110,
                       click: function() {
                         $$('add_entity_window').show();
@@ -927,7 +946,7 @@ UI = {
                   { view: 'button',
                     type: 'icon',
                     icon: 'plus',
-                    label: STRINGS.NEW_FIELD,
+                    id: 'NEW_FIELD_LABEL', label: STRINGS.NEW_FIELD,
                     width: 120,
                     click: function() {
                       $$('add_field_window').show();
@@ -936,7 +955,7 @@ UI = {
                   { view: 'button',
                     type: 'icon',
                     icon: 'play',
-                    label: STRINGS.RUN_SCRIPT,
+                    id: 'RUN_SCRIPT_LABEL', label: STRINGS.RUN_SCRIPT,
                     width: 100,
                     id: 'entity_form__run_script_button',
                     hidden: true,
@@ -971,12 +990,12 @@ UI = {
                 complexData: true,
                 scroll: true,
                 elements: [
-                  { view: 'text', label: STRINGS.NAME, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
+                  { view: 'text', id: 'NAME_LABEL_5', label: STRINGS.NAME, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
                   UIControls.getEntityTypeSelectTemplate(),
-                  { view: 'text', label: STRINGS.CHILD_PROTO, name: 'childPrototype', labelWidth: UIHelper.LABEL_WIDTH },
-                  { view: 'textarea', css: 'entity_form__description', height: 100, label: STRINGS.DESCRIPTION, name: 'description', labelWidth: UIHelper.LABEL_WIDTH },
+                  { view: 'text', id: 'CHILD_PROTO_LABEL', label: STRINGS.CHILD_PROTO, name: 'childPrototype', labelWidth: UIHelper.LABEL_WIDTH },
+                  { view: 'textarea', css: 'entity_form__description', height: 100, id: 'DESCRIPTION_LABEL_1', label: STRINGS.DESCRIPTION, name: 'description', labelWidth: UIHelper.LABEL_WIDTH },
                   { template: STRINGS.FIELDS, type: 'section' },
-                  { view: 'label', label: STRINGS.NO_FIELDS, id: 'entity_form__no_fields', align: 'center' }
+                  { view: 'label', id: 'NO_FIELDS_LABEL', label: STRINGS.NO_FIELDS, id: 'entity_form__no_fields', align: 'center' }
                 ],
                 on: {
                   onChange: function() { UI.entityForm.updateToolbar() }
