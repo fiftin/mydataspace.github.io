@@ -8,8 +8,23 @@ UI = {
   pages: new Pages(),
 
   updateLanguage: function() {
-    var language = localStorage.getItem('language') || 'EN';
-    var strings = STRINGS_ON_DIFFERENT_LANGUAGES[language];
+
+    var currentLang = localStorage.getItem('language') || 'EN';
+    var strings = STRINGS_ON_DIFFERENT_LANGUAGES[currentLang];
+
+    // Language swithcer
+
+    for (var lang in STRINGS_ON_DIFFERENT_LANGUAGES) {
+      var langButton = $$('menu__language_button_' + lang.toLowerCase());
+      if (lang === currentLang) {
+        webix.html.addCss(langButton.getNode(), 'menu__language_button--selected');
+      } else {
+        webix.html.removeCss(langButton.getNode(), 'menu__language_button--selected');
+      }
+    }
+
+    // Labels
+
     for (var key in strings) {
       var label = $$(key + '_LABEL');
       if (label == null) {
@@ -24,6 +39,38 @@ UI = {
         i++;
       }
     }
+
+    // Menu
+
+    var menuItemList = $$('menu__item_list');
+    var menuItemListSelectedId = menuItemList.getSelectedId();
+    var data = [
+      { id: 'data', value: strings.MY_DATA, icon: 'database' },
+      { id: 'apps', value: strings.MY_APPS, icon: 'cogs' },
+      { id: 'logout', value: strings.SIGN_OUT, icon: 'sign-out' }
+    ];
+    menuItemList.clearAll();
+    for (var i in data) {
+      menuItemList.add(data[i]);
+    }
+    menuItemList.select(menuItemListSelectedId);
+
+
+    // Dialogs
+    var dialogs = ['ADD_ROOT', 'ADD_ENTITY', 'ADD_FIELD'];
+    for (var i in dialogs) {
+      var dialogId = dialogs[i];
+      var dialog = $$(dialogId.toLowerCase() + '_window');
+      dialog.getHead().define('template', strings[dialogId]);
+      dialog.getHead().refresh();
+      $$(dialogId.toLowerCase() + '_window__create_button').setValue(strings.CREATE);
+      $$(dialogId.toLowerCase() + '_window__cancel_button').setValue(strings.CANCEL);
+    }
+
+    // Comboboxes
+
+    $$('entity_form__fields_title').define('template', strings.FIELDS);
+    $$('entity_form__fields_title').refresh();
   },
 
   /**
@@ -315,7 +362,7 @@ UI = {
         width: 300,
         position: 'center',
         modal: true,
-        head: STRINGS.NEW_ROOT,
+        head: STRINGS.ADD_ROOT,
         on: UIControls.getOnForFormWindow('add_root'),
         body: {
           view: 'form',
@@ -373,7 +420,7 @@ UI = {
         width: 300,
         position: 'center',
         modal: true,
-        head: STRINGS.NEW_ENTITY,
+        head: STRINGS.ADD_ENTITY,
         on: UIControls.getOnForFormWindow('add_entity'),
         body: {
           view: 'form',
@@ -422,7 +469,7 @@ UI = {
       width: 300,
       position: 'center',
       modal: true,
-      head: STRINGS.NEW_FIELD,
+      head: STRINGS.ADD_FIELD,
       on: UIControls.getOnForFormWindow('add_field'),
       body: {
         view: 'form',
@@ -627,6 +674,7 @@ UI = {
             { width: 20, css: 'menu__spacer' },
             { view: 'button',
               width: 30,
+              id: 'menu__language_button_en',
               css: 'menu__language_button ' + (LANGUAGE === 'EN' ? 'menu__language_button--selected' : ''),
               label: 'EN',
               click: function() {
@@ -636,6 +684,7 @@ UI = {
             },
             { view: 'button',
               width: 30,
+              id: 'menu__language_button_ru',
               css: 'menu__language_button ' + (LANGUAGE === 'RU' ? 'menu__language_button--selected' : ''),
               label: 'RU',
               click: function() {
@@ -804,7 +853,7 @@ UI = {
                     { view: 'button',
                       type: 'icon',
                       icon: 'plus',
-                      id: 'NEW_ROOT_LABEL', label: STRINGS.NEW_ROOT,
+                      id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
                       width: 130,
                       click: function() {
                         $$('add_root_window').show();
@@ -872,7 +921,7 @@ UI = {
                     { view: 'button',
                       type: 'icon',
                       icon: 'plus',
-                      id: 'NEW_ENTITY_LABEL', label: STRINGS.NEW_ENTITY,
+                      id: 'ADD_ENTITY_LABEL', label: STRINGS.ADD_ENTITY,
                       width: 110,
                       click: function() {
                         $$('add_entity_window').show();
@@ -946,7 +995,7 @@ UI = {
                   { view: 'button',
                     type: 'icon',
                     icon: 'plus',
-                    id: 'NEW_FIELD_LABEL', label: STRINGS.NEW_FIELD,
+                    id: 'ADD_FIELD_LABEL', label: STRINGS.ADD_FIELD,
                     width: 120,
                     click: function() {
                       $$('add_field_window').show();
@@ -994,8 +1043,8 @@ UI = {
                   UIControls.getEntityTypeSelectTemplate(),
                   { view: 'text', id: 'CHILD_PROTO_LABEL', label: STRINGS.CHILD_PROTO, name: 'childPrototype', labelWidth: UIHelper.LABEL_WIDTH },
                   { view: 'textarea', css: 'entity_form__description', height: 100, id: 'DESCRIPTION_LABEL_1', label: STRINGS.DESCRIPTION, name: 'description', labelWidth: UIHelper.LABEL_WIDTH },
-                  { template: STRINGS.FIELDS, type: 'section' },
-                  { view: 'label', id: 'NO_FIELDS_LABEL', label: STRINGS.NO_FIELDS, id: 'entity_form__no_fields', align: 'center' }
+                  { id: 'entity_form__fields_title', template: STRINGS.FIELDS, type: 'section' },
+                  { view: 'label', id: 'NO_FIELDS_LABEL', label: STRINGS.NO_FIELDS, align: 'center' }
                 ],
                 on: {
                   onChange: function() { UI.entityForm.updateToolbar() }

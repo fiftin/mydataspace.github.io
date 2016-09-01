@@ -122,7 +122,7 @@ EntityForm.prototype.clear = function() {
       $$('entity_form').removeView(row.config.id);
     }
   }
-  $$('entity_form__no_fields').show();
+  $$('NO_FIELDS_LABEL').show();
   $$('entity_form__run_script_button').hide();
 };
 
@@ -136,7 +136,7 @@ EntityForm.prototype.addField = function(data, setDirty) {
   if (typeof $$('entity_form__' + data.name) !== 'undefined') {
     throw new Error('Field with this name already exists');
   }
-  $$('entity_form__no_fields').hide();
+  $$('NO_FIELDS_LABEL').hide();
   if (typeof setDirty === 'undefined') {
     setDirty = false;
   }
@@ -231,7 +231,7 @@ EntityForm.prototype.deleteField = function(name) {
   this.setDirty();
   var rows = $$('entity_form').getChildViews();
   if (rows.length === UIHelper.NUMBER_OF_FIXED_INPUTS_IN_FIELDS_FORM) {
-    $$('entity_form__no_fields').show();
+    $$('NO_FIELDS_LABEL').show();
   }
 
   let hasScripts = false;

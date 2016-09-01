@@ -68,6 +68,7 @@ UIControls = {
     var windowId = id + '_window';
     return { cols: [
         { view: 'button',
+          id: windowId + '__create_button',
           value: STRINGS.CREATE,
           type: 'form',
           click: function() {
