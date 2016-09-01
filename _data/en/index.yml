@@ -1,0 +1,49 @@
+slogan: Incredibly fast backend of your web site
+description: You will be surprised how fast and responsive web site can be
+special_offer: Free now and <b>forever</b> for registered users.
+prompt: Sign in with:
+buttons:
+  - id: facebook
+    title: Facebook
+  - id: google
+    title: Google
+  - id: github
+    title: GitHub
+sections:
+  - id: speed
+    title: Speed
+    features:
+      - id: websocket
+        title: WebSockets
+        description:
+      - id: scalability
+        title: Scalability
+        description:
+      - id: distribution
+        title: Distributed data storage
+        description:
+  - id: ease
+    title: Ease
+    features:
+      - id: coding
+        title: HTML/CSS/JS
+        description: All you need to know to create amazing web site
+      - id: console
+        title: WebSockets
+        description:
+      - id: configuration
+        title: WebSockets
+        description:
+    additional_features:
+      - Create UI of your web site
+      - Upload data to backend
+      - Connect your UI to backend
+  - id: reliability
+    title: Reliability
+    features:
+      - id: cloud
+        title: Cloud Infrastructure
+      - id: availability
+        title: Availability 99.999%
+      - id: security
+        title: DDoS Protection

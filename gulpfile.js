@@ -31,6 +31,26 @@ gulp.task('bower', function() {
   return bower();
 });
 
+
+
+//
+// Bootstrap
+//
+
+gulp.task('vendor:bootstrap', function() {
+  return gulp.src(
+    'bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js'
+  ).pipe(gulp.dest('vendor'));
+});
+
+gulp.task('vendor:jquery', function() {
+  return gulp.src(
+    'bower_components/jquery/dist/jquery.js'
+  ).pipe(gulp.dest('vendor'));
+});
+
+
+
 gulp.task('vendor:fa:css', function () {
   return gulp.src('bower_components/fontawesome/css/*').pipe(gulp.dest('vendor/fontawesome/css'));
 });
@@ -52,9 +72,9 @@ gulp.task('vendor:webix:code', function () {
 gulp.task('vendor:webix', ['vendor:webix:fonts', 'vendor:webix:code']);
 
 
-gulp.task('vendor:jquery', function () {
-  return gulp.src('bower_components/jquery/dist/*').pipe(gulp.dest('vendor/jquery'));
-});
+// gulp.task('vendor:jquery', function () {
+//   return gulp.src('bower_components/jquery/dist/*').pipe(gulp.dest('vendor/jquery'));
+// });
 
 gulp.task('vendor:sio', function () {
   return gulp.src('bower_components/socket.io-client/socket.io.js').pipe(gulp.dest('vendor'));
@@ -75,7 +95,7 @@ gulp.task('vendor:clean', function() {
 
 gulp.task('jekyll:build', function (done){
   var spawn = require('child_process').spawn;
-  var jekyll = spawn('jekyll', ['build'], {stdio: 'inherit'});
+  var jekyll = spawn('jekyll', ['build'], {stdio: 'inherit', shell: true});
   jekyll.on('exit', function(code) {
     done(code === 0 ? null : 'ERROR: Jekyll process exited with code: ' + code);
   });
@@ -87,7 +107,7 @@ gulp.task('jekyll:clean', function() {
 
 gulp.task('jekyll:serve', function (done){
   var spawn = require('child_process').spawn;
-  var jekyll = spawn('jekyll', ['serve', '--incremental', '--watch'], {stdio: 'inherit'});
+  var jekyll = spawn('jekyll', ['serve', '--incremental', '--watch'], {stdio: 'inherit', shell: true});
   jekyll.on('exit', function(code) {
     done(code === 0 ? null : 'ERROR: Jekyll process exited with code: ' + code);
   });
@@ -102,6 +122,8 @@ gulp.task('default', function() {
       'vendor:fa',
       'vendor:sio',
       'vendor:webix',
+      'vendor:bootstrap',
+      'api',
       'vendor:ace'
     ],
     'jekyll:clean',
@@ -117,6 +139,8 @@ gulp.task('serve', function() {
       'vendor:fa',
       'vendor:sio',
       'vendor:webix',
+      'vendor:bootstrap',
+      'api',
       'vendor:ace'
     ],
     'jekyll:clean',

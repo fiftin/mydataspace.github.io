@@ -1,0 +1,49 @@
+slogan: Невероятно быстрый бэкенд вашего сайта
+description: Вы поразитесь насколько быстрым и отзывчивым может быть веб-сайт.
+special_offer: Бесплатно сейчас и <b>навсегда</b> для зарегистрированных пользователей.
+prompt: Войти через:
+buttons:
+  - id: facebook
+    title: Facebook
+  - id: google
+    title: Google
+  - id: github
+    title: GitHub
+sections:
+  - id: speed
+    title: Скорость
+    features:
+      - id: websocket
+        title: WebSocket-ы
+        description:
+      - id: scalability
+        title: Масштабируемость вычислительных ресурсов
+        description:
+      - id: Distribution
+        title: Распределенное хранение данных
+        description:
+  - id: ease
+    title: Ease
+    features:
+      - id: coding
+        title: HTML/CSS/JS
+        description: Все что нужно знать для создания крутого сайта
+      - id: console
+        title: Удобная панель управление
+        description: Единая точка управления данными и кодом
+      - id: configuration
+        title: WebSockets
+        description: Скажи нет администрированию БД и веб-сервера
+    additional_features:
+      - Создайте интерфейс вашего сайта
+      - Загрузите данные на бэкенд
+      - Подключите интерфейс к бэкенду
+  - id: reliability
+    title: Reliability
+    features:
+      - id: cloud
+        title: Облачная инфраструктура
+      - id: availability
+        title: Доступность 99.999%
+      - id: security
+        title: Защита от DDoS
