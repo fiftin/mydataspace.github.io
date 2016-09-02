@@ -53,8 +53,6 @@ gulp.task('vendor:bootstrap:css', function() {
 gulp.task('vendor:bootstrap', ['vendor:bootstrap:js', 'vendor:bootstrap:css']);
 
 
-
-
 gulp.task('vendor:jquery', function() {
   return gulp.src(
     'bower_components/jquery/dist/jquery.js'

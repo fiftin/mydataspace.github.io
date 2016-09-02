@@ -1,3 +1,7 @@
+menu:
+  get_started: Для начала
+  demos: Примеры
+  docs: Документация
 slogan: Невероятно быстрый бэкенд вашего сайта
 description: Вы поразитесь насколько быстрым и отзывчивым может быть веб-сайт
 special_offer: Бесплатно сейчас и <b>навсегда</b> для зарегистрированных пользователей
@@ -23,23 +27,23 @@ sections:
         title: Распределенное хранение данных
         description:
   - id: ease
-    title: Ease
+    title: Простота
     features:
       - id: coding
         title: HTML/CSS/JS
         description: Все что нужно знать для создания крутого сайта
       - id: console
         title: Удобная панель управление
-        description: Единая точка управления данными и кодом
+        description: Единый инструмент управления данными и кодом
       - id: configuration
-        title: WebSockets
+        title: Простота в обслуживание
         description: Скажи нет администрированию БД и веб-сервера
     additional_features:
       - Создайте интерфейс вашего сайта
       - Загрузите данные на бэкенд
       - Подключите интерфейс к бэкенду
   - id: reliability
-    title: Reliability
+    title: Надежность
     features:
       - id: cloud
         title: Облачная инфраструктура

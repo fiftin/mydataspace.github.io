@@ -1,0 +1,36 @@
+.auth_buttons {
+  // margin: -10px 0 -10px 0;
+}
+
+.auth_button {
+  display: block;
+  width: 100%;
+  margin: 10px 0 10px 0;
+  font-size: 24px;
+  text-align: left;
+  padding-left: 50px;
+}
+
+.auth_button--facebook {
+  &, &:hover, &:active, &:focus {
+    background: #3b5998 !important;
+    border-color: #3b5998 !important;
+    color: white !important;
+  }
+}
+
+.auth_button--google {
+  &, &:hover, &:active, &:focus {
+    background: #d34836 !important;
+    border-color: #d34836 !important;
+    color: white !important;
+  }
+}
+
+.auth_button--github {
+  &, &:hover, &:active, &:focus {
+    background: #313131 !important;
+    border-color: #313131 !important;
+    color: white !important;
+  }
+}

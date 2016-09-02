@@ -1,0 +1,131 @@
+
+.run_script__wrap {
+  width: 100%;
+  position: absolute;
+  bottom: $control-panel-height;
+  top: 0;
+}
+
+.run_script__control_panel {
+  text-align: center;
+  height: $control-panel-height;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: #3498db;
+}
+
+.run_script {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.run_script__state {
+  color: #268fd5;
+}
+
+.run_script__state--run {
+}
+
+.run_script__state--success {
+  color: #27ae60;
+}
+
+.run_script__state--fail {
+  color: #ce5545;
+}
+
+.run_script__state_container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.run_script__state_wrap {
+  width: 100%;
+  height: 100%;
+  transition: 0.3s;
+  position: relative;
+}
+
+.run_script__state_wrap--run {
+  height: 40%;
+}
+
+.run_script__console {
+  font-family: "Courier New";
+  font-size: 16px;
+  height: 0;
+  overflow-y: scroll;
+  transition: height 0.3s;
+  background: black;
+  color: black;
+  white-space: pre;
+}
+
+.run_script__console--run {
+  height: 60%;
+}
+
+.run_script__console_record {
+  padding: 5px;
+}
+
+.run_script__console_record--log {
+  color: #aaa;
+  transition: color 0.5s;
+}
+
+.run_script__console_record--error {
+  color: #ce5545;
+  transition: color 0.5s;
+}
+
+.run_script__console_record--info {
+  color: #3498db;
+  transition: color 0.5s;
+}
+
+.run_script__console_record--warn {
+  color: orange;
+  transition: color 0.5s;
+}
+
+.run_script__console_record--system {
+  color: #a9a903;
+  transition: color 0.5s;
+}
+
+.run_script__console_record--ok {
+  color: #27ae60;
+  transition: color 0.5s;
+}
+
+.run_script__console_record--success {
+  color: #27ae60;
+  transition: color 0.5s;
+  text-align: center;
+  padding: 7px;
+  font-size: 18px;
+}
+
+.run_script__button {
+  padding: 10px 15px;
+  margin-top: 5px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-radius: 6px;
+  color: white;
+  &:hover {
+    background: #268fd5;
+  }
+  &:active {
+    background: #268fd5;
+  }
+}

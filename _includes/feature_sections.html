@@ -1,7 +1,16 @@
 {% for section in site.data[page.language].sections %}
-  <section id="{{ section.id }}">
-    <h1>
+  <section id="{{ section.id }}" class="section section--{{ section.id }}">
+    <h2 class="section__title section__title--{{ section.id }}">{{ section.title }}</h2>
     <div class="container">
+
+      {% if section.additional_features %}
+        <div class="additional_features additional_features--{{ section.id }}">
+          {% for additional_feature in section.additional_features %}
+            <div>{{ additional_feature }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
       <div class="row">
         {% for feature in section.features %}
           <div class="col-md-4">

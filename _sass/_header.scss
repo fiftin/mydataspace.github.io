@@ -1,0 +1,37 @@
+.header {
+  background: url('/images/background.jpg');
+  height: 600px;
+  background-size: cover;
+  color: white;
+}
+
+.intro {
+
+}
+
+.intro__slogan {
+  font-size: 80px;
+  line-height: 1.01;
+}
+
+.intro__description {
+  margin-top: 20px;
+  font-size: 35px;
+  line-height: 1.01;
+}
+
+.intro__prompt {
+  font-size: 25px;
+  line-height: 1.01;
+}
+
+.intro__special_offer {
+  font-size: 25px;
+  line-height: 1.1;
+}
+
+.header__smoke {
+  height: 600px;
+  background: rgba(0, 0, 0, 0.5);
+  padding-top: 50px;
+}
