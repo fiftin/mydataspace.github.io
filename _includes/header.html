@@ -28,9 +28,10 @@
                 <li>
                     <a href="/docs">{{ site.data[page.language].menu.docs }}</a>
                 </li>
-
+                <li>
                 {% if page.url != "/404.html" %}
-                  <li>
+                  <ul class="header__languages">
+                  <li class="header__language">
                     {% if page.language == site.default_language %}
                       {% assign url = page.url %}
                     {% else %}
@@ -44,7 +45,7 @@
                     {% endif %}
                   </li>
                   {% for lang in site.languages %}
-                    <li>
+                    <li class="header__language">
                       {% assign page_lang = page.language | prepend:'/' | append:'/' %}
                       {% assign curr_lang = lang | prepend:'/' | append:'/' %}
 
@@ -67,7 +68,9 @@
                       {% endif %}
                     </li>
                   {% endfor %}
+                  </ul>
                 {% endif %}
+                </li>
             </ul>
         </div>
     </div>

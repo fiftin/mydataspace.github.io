@@ -1,3 +1,26 @@
+.navbar-nav {
+  li {
+    a {
+      opacity: 0.5;
+      transition: opacity 0.3s;
+    }
+    a:hover {
+      opacity: 1;
+      transition: opacity 0.3s;
+    }
+  }
+  @media (max-width: $screen-xs-max) {
+    a {
+      font-size: 18px;
+    }
+  }
+}
+
+.navbar-collapse {
+  border-top: 0;
+  box-shadow: none;
+}
+
 .navbar-brand {
   font-size: 32px;
   font-family: 'Lalezar', cursive;
