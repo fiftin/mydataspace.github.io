@@ -37,11 +37,23 @@ gulp.task('bower', function() {
 // Bootstrap
 //
 
-gulp.task('vendor:bootstrap', function() {
+gulp.task('vendor:bootstrap:js', function() {
   return gulp.src(
-    'bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js'
-  ).pipe(gulp.dest('vendor'));
+    ['bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js',
+    'bower_components/bootstrap-sass/assets/javascripts/bootstrap.js']
+  ).pipe(gulp.dest('vendor/bootstrap'));
 });
+
+gulp.task('vendor:bootstrap:css', function() {
+  return gulp.src(
+    'bower_components/bootstrap-sass/assets/stylesheets/**/*'
+  ).pipe(gulp.dest('vendor/bootstrap/stylesheets'));
+});
+
+gulp.task('vendor:bootstrap', ['vendor:bootstrap:js', 'vendor:bootstrap:css']);
+
+
+
 
 gulp.task('vendor:jquery', function() {
   return gulp.src(
