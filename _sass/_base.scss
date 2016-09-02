@@ -4,8 +4,9 @@ $navbar-margin-bottom: 0;
 $navbar-border-radius: 0;
 $navbar-inverse-bg: black;
 $navbar-inverse-border: black;
-
-
+$navbar-inverse-toggle-border-color: transparent;
+$navbar-inverse-toggle-hover-bg: black;
+$navbar-inverse-toggle-icon-bar-bg: black;
 body {
   margin: 0;
 }

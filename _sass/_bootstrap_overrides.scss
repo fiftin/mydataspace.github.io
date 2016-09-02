@@ -4,3 +4,11 @@
   padding-top: 0;
   padding-bottom: 0;
 }
+
+.navbar-toggle {
+  padding:2px 5px;
+  color: #9d9d9d;
+  &:hover, &:active {
+    color: white !important;
+  }
+}
