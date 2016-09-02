@@ -21,6 +21,24 @@
   margin-bottom: 40px;
 }
 
+.additional_features {
+  font-size: 25px;
+  margin-top: 20px;
+}
+
+.additional_features__star {
+  float: left;
+  svg {
+      width: 40px;
+  }
+}
+
+.additional_features__text {
+  float: left;
+  margin-left: 15px;
+  margin-top: 5px;
+}
+
 .feature {
   text-align: center;
 }
@@ -40,7 +58,7 @@
   margin: 0 70px 0 70px;
   svg {
     width: 100%;
-    max-width: 400px;
+    max-width: 250px;
   }
 }
 

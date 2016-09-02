@@ -1,8 +1,24 @@
+
+
 .header {
   background: url('/images/background.jpg');
-  height: 600px;
   background-size: cover;
+  background-color: black;
   color: white;
+}
+
+.header__logo {
+}
+
+.header__logo_img {
+  width: 50px;
+  float: left;
+}
+
+.header__logo_text {
+  float: left;
+  margin-top: 19px;
+  margin-left: 15px;
 }
 
 .intro {
@@ -31,7 +47,7 @@
 }
 
 .header__smoke {
-  height: 600px;
+  height: 100%;
   background: rgba(0, 0, 0, 0.5);
   padding-top: 50px;
 }

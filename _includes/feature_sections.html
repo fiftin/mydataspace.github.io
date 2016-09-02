@@ -4,10 +4,17 @@
     <div class="container">
 
       {% if section.additional_features %}
-        <div class="additional_features additional_features--{{ section.id }}">
-          {% for additional_feature in section.additional_features %}
-            <div>{{ additional_feature }}</div>
-          {% endfor %}
+        <div class="row">
+          <div class="col-md-8 col-md-offset-4">
+            <div class="additional_features additional_features--{{ section.id }}">
+              {% for additional_feature in section.additional_features %}
+                <div class="additional_feature clearfix">
+                  <div class="additional_features__star">{% include icons/star.svg %}</div>
+                  <div class="additional_features__text">{{ additional_feature }}</div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
         </div>
       {% endif %}
 

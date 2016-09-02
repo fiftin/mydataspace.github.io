@@ -19,13 +19,13 @@ sections:
     features:
       - id: websocket
         title: WebSockets
-        description:
+        description: What makes a web site reactive
       - id: scalability
         title: Scalability
-        description:
+        description: It allows to handle any load
       - id: distribution
         title: Distributed data storage
-        description:
+        description: Quick access from anywhere
   - id: ease
     title: Ease
     features:
