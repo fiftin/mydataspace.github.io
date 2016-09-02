@@ -87,12 +87,6 @@
 }
 
 @media (max-width: $screen-xs-max) {
-  .intro__slogan {
-    font-size: 60px;
-  }
-}
-
-@media (max-width: $screen-xs-min) {
   .intro__description {
     font-size: 25px;
   }
