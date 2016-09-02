@@ -150,6 +150,7 @@ UI = {
     Mydataspace.on('login', function() {
       $('#bootstrap').hide();
       $('#webix').show();
+      UI.updateSize();
       UI.refresh();
     });
 
@@ -1019,23 +1020,26 @@ UI = {
     });
 
     webix.event(window, 'resize', function(e) {
-
-      $$('admin_panel').define({
-        width: window.innerWidth,
-        height: window.innerHeight
-      });
-      $$('my_data_panel').define({
-        height: window.innerHeight - 46
-      });
-      $$('my_apps_panel').define({
-        height: window.innerHeight - 46
-      });
-      $$('admin_panel').resize();
+      UI.updateSize();
     });
 
     window.addEventListener('error', function (e) {
       UI.error(e.error.message);
       return false;
     });
+  },
+
+  updateSize: function() {
+    $$('admin_panel').define({
+      width: window.innerWidth,
+      height: window.innerHeight
+    });
+    $$('my_data_panel').define({
+      height: window.innerHeight - 46
+    });
+    $$('my_apps_panel').define({
+      height: window.innerHeight - 46
+    });
+    $$('admin_panel').resize();
   }
 };
