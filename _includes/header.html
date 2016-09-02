@@ -27,12 +27,65 @@
                 <li>
                     <a href="/docs">{{ site.data[page.language].menu.docs }}</a>
                 </li>
+
+                {% if page.url != "/404.html" %}
+                  <li>
+                    {% if page.language == site.default_language %}
+                      {% assign url = page.url %}
+                    {% else %}
+                      {% assign page_lang = page.language | prepend:'/' | append:'/' %}
+                      {% assign url = page.url | replace_first:page_lang,"/" %}
+                    {% endif %}
+                    {% if site.default_language == page.language %}
+                    <a class="header__language_button header__language_button--active" href="{{ url }}">{{ site.default_language | upcase }}</a>
+                    {% else %}
+                    <a class="header__language_button" href="{{ url }}">{{ site.default_language | upcase }}</a>
+                    {% endif %}
+                  </li>
+                  {% for lang in site.languages %}
+                    <li>
+                      {% assign page_lang = page.language | prepend:'/' | append:'/' %}
+                      {% assign curr_lang = lang | prepend:'/' | append:'/' %}
+
+                      {% if lang == page.language %}
+                        {% assign url = page.url %}
+                      {% elsif page.language == site.default_language %}
+                        {% assign url = page.url | prepend:lang | prepend:'/' %}
+                      {% else %}
+                        {% assign url = page.url | replace_first:page_lang,curr_lang %}
+                      {% endif %}
+
+                      {% if lang == page.language %}
+                        <a class="header__language_button header__language_button--active" href="{{ url }}">
+                          {{ lang | upcase }}
+                        </a>
+                      {% else %}
+                        <a class="header__language_button" href="{{ url }}">
+                          {{ lang | upcase }}
+                        </a>
+                      {% endif %}
+                    </li>
+                  {% endfor %}
+                {% endif %}
             </ul>
         </div>
     </div>
 </nav>
 
 <header id="header" class="header">
+  <script type="text/javascript">
+    if (window.innerHeight > 800 && window.innerWidth > 1200) {
+      document.getElementById('header').style.height = (window.innerHeight - 52 - 270) + 'px';
+    }
+    window.addEventListener('resize', function() {
+      if (window.innerHeight > 800 && window.innerWidth > 1200) {
+        document.getElementById('header').style.height = (window.innerHeight - 52 - 270) + 'px';
+      }
+      else {
+        document.getElementById('header').style.height = 'auto';
+      }
+    });
+  </script>
   <div class="header__smoke">
     <div class="container">
       <div class="intro">
@@ -42,7 +95,7 @@
             <div class="intro__description">{{ site.data[page.language].description }}</div>
           </div>
           <div class="col-md-3">
-            <div class="intro__prompt">{{ site.data[page.language].prompt }}</div>
+            <div class="intro__prompt hidden-xs hidden-sm">{{ site.data[page.language].prompt }}</div>
             <div class="auth_buttons">
               {% for btn in site.data[page.language].buttons %}
                 <button class="btn btn-default btn-lg auth_button auth_button--{{ btn.id }}" onclick="Mydataspace.login('{{ btn.id }}');">
@@ -58,10 +111,4 @@
     </div>
   </div>
 
-  <script type="text/javascript">
-    document.getElementById('header').style.height = (window.innerHeight - 52 - 370) + 'px';
-    window.addEventListener('resize', function() {
-      document.getElementById('header').style.height = (window.innerHeight - 52 - 370) + 'px';
-    });
-  </script>
 </header>

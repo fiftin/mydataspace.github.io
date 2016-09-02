@@ -25,6 +25,11 @@ github_username:  fiftin
 # Build settings
 markdown: kramdown
 
+default_language: en
+
+languages:
+  - ru
+
 exclude:
   - vendor/bootstrap/stylesheets
   - vendor/fa/scss

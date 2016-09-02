@@ -1,11 +1,17 @@
-
-
 .header {
   background: url('/images/background.jpg');
   background-size: cover;
   background-color: black;
   color: white;
-  height: 500px;
+}
+
+.header__language_button {
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+
+.header__language_button--active {
+  font-weight: bold !important;
 }
 
 .header__logo_img {
@@ -36,8 +42,9 @@
 }
 
 .intro__special_offer {
-  font-size: 25px;
-  line-height: 1.1;
+  font-size: 22px;
+  line-height: 1.3;
+  padding-bottom: 20px;
 }
 
 .header__smoke {
