@@ -148,15 +148,15 @@ UI = {
 
   initConnection: function() {
     Mydataspace.on('login', function() {
-      //$$('login_panel').hide();
-      $$('admin_panel').show();
+      $('#bootstrap').hide();
+      $('#webix').show();
       UI.refresh();
     });
 
     Mydataspace.on('logout', function() {
       $$('menu').hide();
-      //$$('login_panel').show();
-      $$('admin_panel').hide();
+      $('#webix').hide();
+      $('#bootstrap').show();
       document.getElementById('no_items').style.display = 'none';
     });
 
