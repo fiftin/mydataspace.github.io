@@ -1,18 +1,19 @@
 {% for section in site.data[page.language].sections %}
   <section id="{{ section.id }}">
+    <h1>
     <div class="container">
       <div class="row">
         {% for feature in section.features %}
           <div class="col-md-4">
             <div class="feature">
-              <div class="feature__icon">
+              <div class="feature__icon feature__icon--{{ section.id }}">
                 {% assign icon_name = "icons/" | append:feature.id | append:".svg"  %}
                 {% include {{icon_name}} %}
               </div>
               <div class="feature__title">
                 {{ feature.title }}
               </div>
-              <div class="feature__descrtion">
+              <div class="feature__description">
                 {{ feature.description }}
               </div>
             </div>

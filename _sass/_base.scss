@@ -3,13 +3,44 @@ $control-panel-height: 70px;
 body {
   margin: 0;
 }
+.feature {
+  text-align: center;
+}
+
+.feature__title {
+  font-size: 35px;
+}
+
+.feature__description {
+  font-size: 20px;
+  margin-top: 10px;
+}
 
 .feature__icon {
+  margin: 0 70px 0 70px;
   svg {
     width: 100%;
+    max-width: 400px;
   }
 }
 
+.feature__icon--speed {
+  svg {
+    fill: #29a3d2;
+  }
+}
+
+.feature__icon--ease {
+  svg {
+    fill: #ff9126;
+  }
+}
+
+.feature__icon--reliability {
+  svg {
+    fill: #be55a2;
+  }
+}
 
 %vertical-rhythm {
     margin-bottom: $spacing-unit / 2;
