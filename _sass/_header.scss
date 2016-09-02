@@ -1,7 +1,10 @@
-.header {
+.top {
   background: url('/images/background.jpg');
   background-size: cover;
-  background-color: black;
+  background-position: center -600px;
+}
+
+.header {
   color: white;
 }
 
@@ -49,7 +52,7 @@
 
 .header__smoke {
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.8);
   padding-top: 50px;
 }
 

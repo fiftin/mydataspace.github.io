@@ -2,11 +2,21 @@ $control-panel-height: 70px;
 
 $navbar-margin-bottom: 0;
 $navbar-border-radius: 0;
-$navbar-inverse-bg: black;
-$navbar-inverse-border: black;
+// $navbar-inverse-bg: rgba(104, 0, 160, 0.8)
+$navbar-inverse-bg: rgba(0, 0, 0, 0.8);
+$navbar-inverse-border: transparent;
 $navbar-inverse-toggle-border-color: transparent;
-$navbar-inverse-toggle-hover-bg: black;
-$navbar-inverse-toggle-icon-bar-bg: black;
+$navbar-inverse-toggle-hover-bg: transparent;
+$navbar-inverse-toggle-icon-bar-bg: transparent;
+
+
+$navbar-inverse-link-color:                 rgba(256, 256, 256, 0.5);
+$navbar-inverse-link-hover-color:           #fff !default;
+$navbar-inverse-link-hover-bg:              transparent;
+$navbar-inverse-link-active-color:          white;
+$navbar-inverse-link-active-bg:             transparent;
+$navbar-inverse-link-disabled-color:        #444 !default;
+$navbar-inverse-link-disabled-bg:           transparent !default;
 body {
   margin: 0;
 }

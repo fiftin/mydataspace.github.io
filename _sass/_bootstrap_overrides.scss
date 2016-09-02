@@ -3,6 +3,29 @@
   font-family: 'Lalezar', cursive;
   padding-top: 0;
   padding-bottom: 0;
+
+  .header__logo_text {
+    color: white;
+    opacity: 0.3;
+    transition: opacity 0.3s;
+  }
+
+  .header__logo_img {
+    transform: rotate(0);
+    transition: transform 0.3s;
+  }
+
+  &:hover {
+    .header__logo_img {
+      transform: rotate(20deg);
+      transition: transform 0.3s;
+    }
+    .header__logo_text {
+      color: white;
+      opacity: 1;
+      transition: opacity 0.3s;
+    }
+  }
 }
 
 .navbar-toggle {
