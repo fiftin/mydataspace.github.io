@@ -610,52 +610,6 @@ UI = {
       }
     });
 
-    // var authProviders =
-    //   Object.keys(Mydataspace.getAuthProviders())
-    //         .map(function(providerName) { return UIControls.getLoginButtonView(providerName); });
-    // authProviders.unshift({});
-    // authProviders.push({});
-    //
-    // webix.ui({
-    //   id: 'login_panel',
-    //   rows: [
-    //     { cols: [
-    //       { type: 'header', template: 'my data space' },
-    //       { view: 'button',
-    //         width: 40,
-    //         css: 'menu__language_button',
-    //         label: 'Docs',
-    //         click: function() {
-    //         }
-    //       },
-    //       { width: 20, css: 'menu__spacer' },
-    //       { view: 'button',
-    //         width: 30,
-    //         css: 'menu__language_button ' + (LANGUAGE === 'EN' ? 'menu__language_button--selected' : ''),
-    //         label: 'EN',
-    //         click: function() {
-    //           localStorage.setItem('language', 'EN');
-    //           UI.updateLanguage();
-    //         }
-    //       },
-    //       { view: 'button',
-    //         width: 30,
-    //         css: 'menu__language_button ' + (LANGUAGE === 'RU' ? 'menu__language_button--selected' : ''),
-    //         label: 'RU',
-    //         click: function() {
-    //           localStorage.setItem('language', 'RU');
-    //           UI.updateLanguage();
-    //         }
-    //       },
-    //       { width: 20, css: 'menu__spacer' }
-    //     ] },
-    //     {
-    //       css: 'login_panel__providers',
-    //       cols: [ {}, { rows: authProviders}, {} ]
-    //     }
-    //   ]
-    // });
-
     //
     // Admin panel
     //
@@ -1065,6 +1019,7 @@ UI = {
     });
 
     webix.event(window, 'resize', function(e) {
+
       $$('admin_panel').define({
         width: window.innerWidth,
         height: window.innerHeight

@@ -5,6 +5,15 @@
   width: auto !important;
 }
 
+#admin_panel__loading {
+  text-align: center;
+  margin-top: 150px;
+  color: #3498db;
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+}
+
 .image-for-social-medias {
   position: absolute;
   width: 400px;
@@ -54,10 +63,9 @@
   float: left;
   color: white;
   font-size: 32px;
-
-font-family: 'Lalezar', cursive;
-
+  font-family: 'Lalezar', cursive;
   padding-left: 10px;
+  padding-top: 3px;
 }
 
 .no_items {
@@ -79,6 +87,15 @@ font-family: 'Lalezar', cursive;
 /**
  * Site header style
  */
+
+ .webix_preloaded_header {
+   background: black;
+   position: absolute;
+   left: 0;
+   right: 0;
+   top: 0;
+   height: 46px;
+ }
 
 .webix_header {
   border-bottom: 0;
@@ -103,7 +120,8 @@ font-family: 'Lalezar', cursive;
 
 .menu__language_button {
   background: black;
-    height: 46px !important;
+  height: 46px !important;
+  border: 1px solid black !important;
 }
 
 .menu__language_button button,

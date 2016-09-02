@@ -20,3 +20,12 @@ body {
 @import "bootstrap_overrides";
 @import "auth_buttons";
 @import "header";
+
+.admin_panel {
+  top: -1px;
+  bottom: 0;
+  right: 0;
+  left: -1px;
+  position: absolute;
+  overflow: hidden;
+}

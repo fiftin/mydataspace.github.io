@@ -34,27 +34,45 @@
   <body>
 
     <div id="bootstrap">
+      <script type="text/javascript">
+        if (localStorage.getItem('authToken') != null) {
+          document.getElementById('bootstrap').style.display = 'none';
+        }
+      </script>
       {% include header.html %}
       {% include feature_sections.html %}
     </div>
 
     <div id="webix">
+      <script type="text/javascript">
+        if (localStorage.getItem('authToken') == null) {
+          document.getElementById('webix').style.display = 'none';
+        }
+      </script>
+      <div class="webix_preloaded_header"></div>
+
+      <div id="admin_panel__loading">
+        <i class="fa fa-cog fa-spin fa-5x fa-fw"></i>
+      </div>
+
       <div class="logo" onclick="UI.pages.setCurrentPage('data');">
         <div class="logo__shading"></div>
         <img src="/images/logo.png" class="logo__img" />
         <div class="logo__img_text">My Data Space</div>
       </div>
+
       <div id="no_items" class="no_items"></div>
-      <div id="admin_panel"></div>
+
+      <div id="admin_panel" class="admin_panel">
+      </div>
+
+      <script type="text/javascript">
+        setTimeout(function() {
+          $('#admin_panel__loading').remove();
+        }, 1500);
+      </script>
     </div>
 
-    <script type="text/javascript">
-      if (localStorage.getItem('authToken') == null) {
-        document.getElementById('webix').style.display = 'none';
-      } else {
-        document.getElementById('bootstrap').style.display = 'none';
-      }
-    </script>
 
     <script src="/vendor/jquery.js"></script>
     <script src="/vendor/bootstrap/bootstrap.min.js"></script>
