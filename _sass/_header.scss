@@ -52,3 +52,21 @@
   background: rgba(0, 0, 0, 0.5);
   padding-top: 50px;
 }
+
+@media (max-width: $screen-md-max) {
+  .intro__slogan {
+    font-size: 67px;
+  }
+}
+
+@media (max-width: $screen-sm-max) {
+  .intro__slogan {
+    font-size: 70px;
+  }
+}
+
+@media (max-width: $screen-xs-max) {
+  .intro__slogan {
+    font-size: 60px;
+  }
+}
