@@ -44,6 +44,7 @@
 
 .footer__socials {
   margin-right: -10px;
+  float: right;
 }
 
 .footer__link--social {
@@ -58,4 +59,12 @@
   .footer__link--social {
     float: left;
   }
+  .footer__socials {
+    margin-top: -40px;
+  }
+
+  .footer {
+    padding: 0 0;
+  }
+
 }
