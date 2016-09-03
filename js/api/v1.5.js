@@ -7774,7 +7774,7 @@ function Entities(myda) {
 Entities.prototype.request = function(eventName, data) {
   return new Promise(function(resolve, reject) {
     this.myda.request(eventName, data, resolve, reject);
-  });
+  }.bind(this));
 };
 
 Entities.prototype.create = function(path, fields) {
