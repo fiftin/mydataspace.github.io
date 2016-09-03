@@ -16,10 +16,14 @@
 }
 
 .auth_button--facebook {
-  &, &:hover, &:active, &:focus {
+  &, &:focus {
     background: #3b5998 !important;
     border-color: #3b5998 !important;
     color: white !important;
+  }
+  &:hover, &:active {
+    background: #2a3f6b !important;
+    border-color: #2a3f6b !important;
   }
 }
 
@@ -29,6 +33,10 @@
     border-color: #d34836 !important;
     color: white !important;
   }
+  &:hover, &:active {
+    background: #882f24 !important;
+    border-color: #882f24 !important;
+  }
 }
 
 .auth_button--github {
@@ -36,5 +44,9 @@
     background: #313131 !important;
     border-color: #313131 !important;
     color: white !important;
+  }
+  &:hover, &:active {
+    background: #1b1b1b !important;
+    border-color: #1b1b1b !important;
   }
 }
