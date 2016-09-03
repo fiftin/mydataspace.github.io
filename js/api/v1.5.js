@@ -7773,7 +7773,7 @@ function Entities(myda) {
 
 Entities.prototype.request = function(eventName, data) {
   return new Promise(function(resolve, reject) {
-    myda.request(eventName, data, resolve, reject);
+    this.myda.request(eventName, data, resolve, reject);
   });
 };
 
