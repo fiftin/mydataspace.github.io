@@ -4,9 +4,15 @@
 }
 
 .section--ease {
-  background: url(/images/background_light.jpg);
-  color: white;
+  // color: white;
+  background: url(/images/background_rocket_flat.jpg);
+  background-size: cover;
   background-attachment: fixed;
+  background-position: center;
+}
+
+.smoke--ease {
+  display: block !important;
 }
 
 .section__title {
@@ -66,7 +72,7 @@
 
 .feature__icon--speed {
   svg {
-    fill: #29a3d2;
+    fill: #294dd2;
   }
 }
 
@@ -74,6 +80,9 @@
   svg {
     fill: #ff9126;
   }
+}
+
+.section--ease {
 }
 
 .feature__icon--reliability {

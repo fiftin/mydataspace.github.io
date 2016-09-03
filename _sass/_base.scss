@@ -3,7 +3,7 @@ $control-panel-height: 70px;
 $navbar-margin-bottom: 0;
 $navbar-border-radius: 0;
 // $navbar-inverse-bg: rgba(104, 0, 160, 0.8)
-$navbar-inverse-bg: rgba(0, 0, 0, 0.8);
+$navbar-inverse-bg: transparent;
 $navbar-inverse-border: transparent;
 $navbar-inverse-toggle-border-color: transparent;
 $navbar-inverse-toggle-hover-bg: transparent;
@@ -17,6 +17,30 @@ $navbar-inverse-link-disabled-color:        #444 !default;
 $navbar-inverse-link-disabled-bg:           transparent !default;
 body {
   margin: 0;
+}
+
+.smoke {
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.smoke--light {
+  background: rgba(256, 256, 256, 0.9);
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.absolute--fill {
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
 }
 
 %vertical-rhythm {

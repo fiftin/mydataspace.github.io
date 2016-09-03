@@ -1,8 +1,8 @@
 {% for section in site.data[page.language].sections %}
-  <section id="{{ section.id }}" class="section section--{{ section.id }}">
-    <h2 class="section__title section__title--{{ section.id }}">{{ section.title }}</h2>
-    <div class="container">
-
+  <section id="{{ section.id }}" class="section relative section--{{ section.id }}">
+    <div style="display: none;" class="smoke smoke--light absolute absolute--fill smoke--{{ section.id }}"></div>
+    <div class="container relative">
+      <h2 class="section__title section__title--{{ section.id }}">{{ section.title }}</h2>
       {% if section.additional_features %}
         <div class="row">
           <div class="col-md-8 col-md-offset-4">
