@@ -7785,12 +7785,22 @@ Entities.prototype.create = function(path, fields) {
   });
 };
 
-Entities.prototype.get = function(path, options) {
+Entities.prototype.get = function(path, fields) {
   var data = {
     root: this.myda.root,
-    path: path
+    path: path,
+    fields: fields
   };
   return this.request('entities.get', data);
+};
+
+Entities.prototype.getChildren = function(path, options) {
+  var data = {
+    root: this.myda.root,
+    path: path,
+    children: []
+  };
+  return this.request('entities.get', common.extend(data, options));
 };
 
 Entities.prototype.delete = function(path) {
