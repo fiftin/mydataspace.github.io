@@ -83,6 +83,7 @@
     background: url('/images/background.jpg');
     background-attachment: fixed;
     background-size: cover;
+    background-position: bottom;
   }
 }
 
@@ -96,16 +97,16 @@
   .top {
     background: url('/images/background_blur.jpg');
     background-size: 800px 800px;
-    background-position: top;
+    background-position: center;
   }
 }
 
 @media (min-width: $screen-md-min) {
   .top {
-    background: url('/images/background.jpg');
+    background: url('/images/background_short.jpg');
     background-attachment: fixed;
     background-size: cover;
-    background-position: center -600px;
+    background-position: top;
   }
 
   .header {
