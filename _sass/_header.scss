@@ -68,6 +68,7 @@
   background: url('/images/background.jpg');
   background-size: cover;
   background-position: bottom;
+  background-attachment: fixed;
 }
 
 
@@ -82,7 +83,7 @@
     font-size: 70px;
   }
   .top {
-    background: url('/images/background.jpg');
+    background-image: url('/images/background.jpg');
     background-size: cover;
     background-position: bottom;
   }
@@ -96,7 +97,7 @@
     font-size: 40px;
   }
   .top {
-    background: url('/images/background.jpg');
+    background-image: url('/images/background.jpg');
     background-size: 1200px 1200px;
     background-position: right top;
   }
@@ -104,7 +105,7 @@
 
 @media (min-width: $screen-md-min) {
   .top {
-    background: url('/images/background_short.jpg');
+    background-image: url('/images/background_short.jpg');
     background-size: cover;
     background-position: top;
   }

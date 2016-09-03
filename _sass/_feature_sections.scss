@@ -4,10 +4,8 @@
 }
 
 .section--ease {
-  // color: white;
   background: url(/images/background_rocket_flat.jpg);
   background-size: cover;
-  background-attachment: fixed;
   background-position: center;
 }
 
@@ -92,6 +90,10 @@
 }
 
 @media (max-width: $screen-sm-max) {
+  .section--ease {
+    background-attachment: fixed;
+  }
+  
   .feature {
     margin-top: 70px;
   }
