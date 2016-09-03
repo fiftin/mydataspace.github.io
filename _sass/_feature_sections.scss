@@ -81,3 +81,12 @@
     fill: #be55a2;
   }
 }
+
+@media (max-width: $screen-sm-max) {
+  .feature {
+    margin-top: 70px;
+  }
+  .feature_column:first-child .feature {
+    margin-top: 10px;
+  }
+}

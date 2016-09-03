@@ -23,12 +23,12 @@ body {
     margin-bottom: $spacing-unit / 2;
 }
 
-@import "feature_sections";
 @import "run_script";
 @import "../vendor/bootstrap/stylesheets/bootstrap";
 @import "bootstrap_overrides";
 @import "auth_buttons";
 @import "header";
+@import "feature_sections";
 
 .admin_panel {
   top: -1px;
