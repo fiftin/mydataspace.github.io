@@ -7,6 +7,11 @@
   {% assign api_url = site.api_url %}
   {% assign api_websocket_url = site.api_websocket_url %}
 {% endif %}
+{% if page.language == site.default_language %}
+  {% assign baseurl = "" %}
+{% else %}
+  {% assign baseurl = page.language | prepend:"/" %}
+{% endif %}
 <!DOCTYPE html>
 <html>
   <head>

@@ -5,6 +5,8 @@ menu:
 slogan: Incredibly fast backend of your web site
 description: You will be surprised how fast and responsive web site can be
 special_offer: Free now and <b>forever</b> for registered users
+final_prompt: "Become part of the feature"
+get_started: Get Started
 prompt: "Sign in with:"
 buttons:
   - id: facebook
