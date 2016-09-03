@@ -1,10 +1,3 @@
-.top {
-  background: url('/images/background.jpg');
-  background-size: contain;
-  background-position: center -600px;
-  background-attachment: fixed;
-}
-
 .header {
   color: white;
 }
@@ -86,6 +79,11 @@
   .intro__slogan {
     font-size: 70px;
   }
+  .top {
+    background: url('/images/background.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+  }
 }
 
 @media (max-width: $screen-xs-max) {
@@ -95,9 +93,21 @@
   .intro__slogan {
     font-size: 40px;
   }
+  .top {
+    background: url('/images/background_blur.jpg');
+    background-size: 800px 800px;
+    background-position: top;
+  }
 }
 
 @media (min-width: $screen-md-min) {
+  .top {
+    background: url('/images/background.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center -600px;
+  }
+
   .header {
     height: 600px;
   }
