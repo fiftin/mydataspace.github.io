@@ -64,6 +64,13 @@
   padding-bottom: 20px;
 }
 
+.top {
+  background: url('/images/background.jpg');
+  background-size: cover;
+  background-position: bottom;
+}
+
+
 @media (max-width: $screen-md-max) {
   .intro__slogan {
     font-size: 67px;
@@ -76,7 +83,6 @@
   }
   .top {
     background: url('/images/background.jpg');
-    background-attachment: fixed;
     background-size: cover;
     background-position: bottom;
   }
@@ -99,7 +105,6 @@
 @media (min-width: $screen-md-min) {
   .top {
     background: url('/images/background_short.jpg');
-    background-attachment: fixed;
     background-size: cover;
     background-position: top;
   }
