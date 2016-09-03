@@ -1,0 +1,22 @@
+.sub_footer {
+  text-align: center;
+  background: white; // #0069ff;
+  color: black;
+  padding-bottom: 80px;
+  font-size: 25px;
+}
+
+.sub_footer__prompt {
+  margin-bottom: 22px;
+}
+
+.sub_footer__botton {
+  background: #ffd400;
+  border-color: #ffd400;
+  padding: 10px 20px;
+  font-size: 20px;
+  &:hover, &:active {
+    background: #ffd400;
+    border-color: #ffd400;
+  }
+}
