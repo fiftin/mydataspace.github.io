@@ -46,11 +46,11 @@ function Myda(options) {
       }
     }
   };
-
+  if (options.simpleFormat === true) {
+    this.registerFormatter('entities.get', new EntitySimplifier());
+  }
   this.entities = new Entities(this);
-
   this.on('connected', this.options.connected);
-
   window.addEventListener('message', function(e) {
     if (e.data.message === 'authResult') {
       if (this.options.useLocalStorage) {
