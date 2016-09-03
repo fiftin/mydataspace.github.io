@@ -36,6 +36,16 @@
           </div>
         {% endfor %}
       </div>
+
+      {% if section.id == "ease"%}
+        <div class="section__code_simple">
+          <a class="jsbin-embed"
+             href="http://jsbin.com/badubufili/1/embed?js,console">
+            JS Bin on jsbin.com
+          </a>
+          <script src="http://static.jsbin.com/js/embed.min.js?3.39.14"></script>
+        </div>
+      {% endif %}
     </div>
   </section>
 {% endfor %}
