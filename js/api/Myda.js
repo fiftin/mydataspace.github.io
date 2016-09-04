@@ -50,7 +50,7 @@ function Myda(options) {
     }
   };
   if (options.simpleFormat !== false) {
-    this.registerFormatter('entities.get.res', new EntityFieldsSimplifier());
+    this.registerFormatter('entities.get.res', new EntitySimplifier());
   }
   this.entities = new Entities(this);
   this.on('connected', this.options.connected);

@@ -7705,11 +7705,11 @@ if (typeof module !== 'undefined') {
 
 function EntitySimplifier() {
   this.fieldsSimplifier = new EntityFieldsSimplifier();
-  this.childrenSimplifier = new EntityChildrenSimplifier();
+  // this.childrenSimplifier = new EntityChildrenSimplifier();
 }
 
 function EntityFieldsSimplifier() {}
-function EntityChildrenSimplifier() {}
+// function EntityChildrenSimplifier() {}
 
 EntityFieldsSimplifier.prototype.format = function(data) {
   var res = {};
@@ -7724,21 +7724,21 @@ EntityFieldsSimplifier.prototype.format = function(data) {
   }
   data.fields = res;
 };
-
-EntityChildrenSimplifier.prototype.format = function(data) {
-  var res = {};
-  if (data != null && data.children != null) {
-    if (!Array.isArray(data.children)) {
-      throw new Error('children field must be array');
-    }
-    for (let i in data.children) {
-      let child = data.children[i];
-      let childName = common.getChildName(child.path)
-      res[childName] = child;
-    }
-  }
-  data.children = res;
-};
+//
+// EntityChildrenSimplifier.prototype.format = function(data) {
+//   var res = {};
+//   if (data != null && data.children != null) {
+//     if (!Array.isArray(data.children)) {
+//       throw new Error('children field must be array');
+//     }
+//     for (let i in data.children) {
+//       let child = data.children[i];
+//       let childName = common.getChildName(child.path)
+//       res[childName] = child;
+//     }
+//   }
+//   data.children = res;
+// };
 
 EntitySimplifier.prototype.format = function(data) {
   var datas;
@@ -7764,7 +7764,7 @@ EntitySimplifier.prototype.formatEntity = function(entity) {
     }
   }
   this.fieldsSimplifier.format(entity);
-  this.childrenSimplifier.format(entity);
+  // this.childrenSimplifier.format(entity);
 };
 
 function Entities(myda) {
@@ -7893,7 +7893,7 @@ function Myda(options) {
     }
   };
   if (options.simpleFormat !== false) {
-    this.registerFormatter('entities.get.res', new EntityFieldsSimplifier());
+    this.registerFormatter('entities.get.res', new EntitySimplifier());
   }
   this.entities = new Entities(this);
   this.on('connected', this.options.connected);
