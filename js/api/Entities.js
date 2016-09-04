@@ -34,7 +34,8 @@ Entities.prototype.getChildren = function(path, options) {
   if (typeof options === 'string') {
     options = { search: options }
   }
-  return this.request('entities.get', common.extend(data, options));
+  return this.request('entities.get', common.extend(data, options))
+         .then(function(data) { return data.children });
 };
 
 Entities.prototype.delete = function(path) {
