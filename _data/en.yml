@@ -45,7 +45,7 @@ sections:
       - Create UI of your web site
       - Upload data to backend
       - Connect your UI to backend
-    code_simple_description: Demo of using data from <a target="_blank" href="https://spreex.github.io">spreex.github.io</a>
+    code_simple_description: Example of using data from <a target="_blank" href="https://spreex.github.io">spreex.github.io</a>
   - id: reliability
     title: Reliability
     features:
