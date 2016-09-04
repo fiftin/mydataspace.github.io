@@ -1,6 +1,9 @@
 'use strict';
 
 function Myda(options) {
+  if (typeof options === 'string') {
+    options = { root: options };
+  }
   this.options = common.extend({
     useLocalStorage: true,
 		apiURL: 'https://api.my-data.com',

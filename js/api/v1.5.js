@@ -7803,7 +7803,8 @@ Entities.prototype.getChildren = function(path, options) {
   if (typeof options === 'string') {
     options = { search: options }
   }
-  return this.request('entities.get', common.extend(data, options));
+  return this.request('entities.get', common.extend(data, options))
+         .then(function(data) { return data.children });
 };
 
 Entities.prototype.delete = function(path) {
@@ -7843,6 +7844,9 @@ Entities.prototype.on = function(eventName, callback) {
 'use strict';
 
 function Myda(options) {
+  if (typeof options === 'string') {
+    options = { root: options };
+  }
   this.options = common.extend({
     useLocalStorage: true,
 		apiURL: 'https://api.my-data.com',
