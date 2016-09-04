@@ -25,11 +25,12 @@ Entities.prototype.get = function(path, fields) {
   return this.request('entities.get', data);
 };
 
-Entities.prototype.getChildren = function(path, options) {
+Entities.prototype.getChildren = function(path, options, limit) {
   var data = {
     root: this.myda.root,
     path: path,
-    children: []
+    children: [],
+    limit: limit
   };
   if (typeof options === 'string') {
     options = { search: options }

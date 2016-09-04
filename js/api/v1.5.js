@@ -7794,11 +7794,12 @@ Entities.prototype.get = function(path, fields) {
   return this.request('entities.get', data);
 };
 
-Entities.prototype.getChildren = function(path, options) {
+Entities.prototype.getChildren = function(path, options, limit) {
   var data = {
     root: this.myda.root,
     path: path,
-    children: []
+    children: [],
+    limit: limit
   };
   if (typeof options === 'string') {
     options = { search: options }
@@ -7850,7 +7851,7 @@ function Myda(options) {
   this.options = common.extend({
     useLocalStorage: true,
 		apiURL: 'https://api.my-data.com',
-		websocketURL: 'https://api.my-data.com:8443',
+		websocketURL: 'https://api-mydatasp.rhcloud.com:8443',
     connected: function() {
       // console.log('Maybe you forgot to specify connected-event handler');
     }
