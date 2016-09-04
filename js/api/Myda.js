@@ -25,6 +25,16 @@ function Myda(options) {
     connected: []
   };
   this.authProviders = {
+    github: {
+      title: 'Connect through GitHub',
+      icon: 'github',
+      url: 'https://github.com/login/oauth/authorize?client_id=eaa5d1176778a1626379&scope=user:email' +
+           '&state=permission%3d{{permission}}%26clientId%3d{{client_id}}' +
+           '&redirect_uri={{api_url}}%2fauth%3fauthProvider%3dgithub',
+      loginWindow: {
+        height: 600
+      }
+    },
     facebook: {
       title: 'Connect through Facebook',
       icon: 'facebook',

@@ -2,8 +2,9 @@
   text-align: center;
   background: white;
   color: black;
-  padding-bottom: 80px;
+  padding-bottom: 90px;
   font-size: 25px;
+  margin-top: -10px;
 }
 
 .sub_footer__prompt {
@@ -11,16 +12,24 @@
 }
 
 .sub_footer__botton {
-  &, :focus {
+  &, &:focus {
     color: black;
-    background: #ffd400;
-    border-color: #ffd400;
+    background: #ffd400 !important;
+    border-color: #ffd400 !important;
     padding: 12px 45px;
-    font-size: 25px;
+    font-size: 30px;
+    // text-transform: uppercase;
+    // font-family: Lalezar, cursive;
   }
   &:hover, &:active {
     color: black;
-    background: #ffd400;
-    border-color: #ffd400;
+    background: #ffe253 !important;
+    border-color: #ffe253 !important;
+  }
+}
+
+@media (max-width: $screen-xs-min) {
+  .sub_footer__botton {
+    width: 100%;
   }
 }

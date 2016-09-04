@@ -1,4 +1,8 @@
 <div class="sub_footer">
-  <div class="sub_footer__prompt">{{ site.data[page.language].final_prompt }}</div>
-  <button class="btn btn-default sub_footer__botton">{{ site.data[page.language].get_started }}</button>
+  <div class="container">
+    {% if site.data[page.language].final_prompt != "" %}
+    <div class="sub_footer__prompt">{{ site.data[page.language].final_prompt }}</div>
+    {% endif %}
+    <button class="btn btn-default sub_footer__botton">{{ site.data[page.language].get_started }}</button>
+  </div>
 </div>

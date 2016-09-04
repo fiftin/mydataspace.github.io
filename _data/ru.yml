@@ -1,5 +1,5 @@
 menu:
-  get_started: Для начала
+  get_started: С чего начать
   demos: Примеры
   docs: Документация
 slogan: Невероятно быстрый бэкенд вашего сайта
@@ -8,7 +8,7 @@ mission: С самого начала мы создавали быстрый, п
 description: Вы поразитесь насколько быстрым и отзывчивым может быть веб-сайт
 special_offer: Бесплатно сейчас и <b>навсегда</b> для зарегистрированных пользователей
 final_prompt: ""
-get_started: Начать прямо сейчас
+get_started: Начать использовать сейчас!
 prompt: "Войти через:"
 buttons:
   - id: facebook
@@ -38,7 +38,7 @@ sections:
         description: Все что нужно знать для создания крутого сайта
       - id: open_data
         title: Открытые данные
-        description: Делись данными с другими
+        description: Делитесь данными с другими
       - id: console
         title: Простота в обслуживание
         description: Единый инструмент управления данными и кодом
@@ -52,7 +52,10 @@ sections:
     features:
       - id: cloud
         title: Облачная инфраструктура
+        description: Облачная инфраструктура <a target="_blank" href="http://ovh.com">OVH</a>.
       - id: availability
         title: Доступность 99.999%
+        description: Облачная инфраструктура <a href="http://ovh.com">OVH</a>.
       - id: security
         title: Защита от DDoS
+        description: Облачная инфраструктура <a href="http://ovh.com">OVH</a>.
