@@ -35,12 +35,12 @@ sections:
       - id: coding
         title: HTML/CSS/JS
         description: All you need to know to create amazing web site
+      - id: open_data
+        title: Open Data
+        description: Use data of others and share data with others
       - id: console
-        title: User-friendly control panel
-        description: Unified data and code management tool
-      - id: configuration
         title: Easy maintenance
-        description: Say No administration web server and database
+        description: Unified data and code management tool
     additional_features:
       - Create UI of your web site
       - Upload data to backend

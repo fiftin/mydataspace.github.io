@@ -36,12 +36,12 @@ sections:
       - id: coding
         title: HTML/CSS/JS
         description: Все что нужно знать для создания крутого сайта
+      - id: open_data
+        title: Открытые данные
+        description: Делись данными с другими
       - id: console
-        title: Удобная панель управление
-        description: Единый инструмент управления данными и кодом
-      - id: configuration
         title: Простота в обслуживание
-        description: Скажи нет администрированию БД и веб-сервера
+        description: Единый инструмент управления данными и кодом
     additional_features:
       - Создайте интерфейс вашего сайта
       - Загрузите данные на бэкенд
