@@ -33,17 +33,18 @@
 
 @media (max-width: $screen-sm-max) {
   .footer__link--section {
-    width: 50%;
+    text-align: center;
   }
   .footer__link--social {
     float: left;
   }
   .footer__socials {
-    margin-top: -40px;
+    margin-right: 50%;
+    transform: translateX(50%);
   }
 
   .footer {
-    padding: 0 0;
+    padding: 20px 0
   }
 
 }
