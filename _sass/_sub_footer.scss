@@ -1,6 +1,6 @@
 .sub_footer {
   text-align: center;
-  background: white; // #0069ff;
+  background: white;
   color: black;
   padding-bottom: 80px;
   font-size: 25px;
@@ -11,11 +11,13 @@
 }
 
 .sub_footer__botton {
-  color: black;
-  background: #ffd400;
-  border-color: #ffd400;
-  padding: 10px 30px;
-  font-size: 20px;
+  &, :focus {
+    color: black;
+    background: #ffd400;
+    border-color: #ffd400;
+    padding: 12px 45px;
+    font-size: 25px;
+  }
   &:hover, &:active {
     color: black;
     background: #ffd400;
