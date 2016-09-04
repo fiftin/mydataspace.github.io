@@ -31,6 +31,9 @@ Entities.prototype.getChildren = function(path, options) {
     path: path,
     children: []
   };
+  if (typeof options === 'string') {
+    options = { search: options }
+  }
   return this.request('entities.get', common.extend(data, options));
 };
 

@@ -7800,6 +7800,9 @@ Entities.prototype.getChildren = function(path, options) {
     path: path,
     children: []
   };
+  if (typeof options === 'string') {
+    options = { search: options }
+  }
   return this.request('entities.get', common.extend(data, options));
 };
 
@@ -7885,8 +7888,8 @@ function Myda(options) {
       }
     }
   };
-  if (options.simpleFormat === true) {
-    this.registerFormatter('entities.get.res', new EntitySimplifier());
+  if (options.simpleFormat !== false) {
+    this.registerFormatter('entities.get.res', new EntityFieldsSimplifier());
   }
   this.entities = new Entities(this);
   this.on('connected', this.options.connected);
@@ -7927,44 +7930,47 @@ Myda.prototype.getAuthProvider = function(providerName) {
 };
 
 Myda.prototype.connect = function() {
-  this.socket = io(this.options.websocketURL, {
-    // secure: true,
-    'force new connection' : true,
-    'reconnectionAttempts': 'Infinity', //avoid having user reconnect manually in order to prevent dead clients after a server restart
-    'timeout' : 10000, //before connect_error and connect_timeout are emitted.
-    'transports' : ['websocket']
+  new Promise(function(resolve, reject) {
+    this.socket = io(this.options.websocketURL, {
+      secure: true,
+      'force new connection' : true,
+      'reconnectionAttempts': 'Infinity', //avoid having user reconnect manually in order to prevent dead clients after a server restart
+      'timeout' : 10000, //before connect_error and connect_timeout are emitted.
+      'transports' : ['websocket']
+    });
+
+    this.on('connect', function () {
+      this.connected = true;
+      if (this.options.useLocalStorage && common.isPresent(localStorage.getItem('authToken'))) {
+        this.emit('authenticate', { token: localStorage.getItem('authToken') });
+      }
+      this.callListeners('connected');
+      resolve();
+    }.bind(this));
+
+    this.on('authenticated', function() {
+      this.loggedIn = true;
+      this.callListeners('login');
+    }.bind(this));
+
+    this.on('disconnect', function() {
+      this.connected = false;
+      this.loggedIn = false;
+      this.subscriptions = [];
+      this.lastRequestId = 10000;
+      this.requests = {};
+    }.bind(this));
+
+    this.on('entities.err', function(data) {
+      this.handleResponse(data, 'fail');
+    }.bind(this), false);
+    this.on('apps.err', function(data) {
+      this.handleResponse(data, 'fail');
+    }.bind(this), false);
+    this.on('users.err', function(data) {
+      this.handleResponse(data, 'fail');
+    }.bind(this), false);
   });
-
-  this.on('connect', function () {
-    this.connected = true;
-    if (this.options.useLocalStorage && common.isPresent(localStorage.getItem('authToken'))) {
-      this.emit('authenticate', { token: localStorage.getItem('authToken') });
-    }
-    this.callListeners('connected');
-  }.bind(this));
-
-  this.on('authenticated', function() {
-    this.loggedIn = true;
-    this.callListeners('login');
-  }.bind(this));
-
-  this.on('disconnect', function() {
-    this.connected = false;
-    this.loggedIn = false;
-    this.subscriptions = [];
-    this.lastRequestId = 10000;
-    this.requests = {};
-  }.bind(this));
-
-  this.on('entities.err', function(data) {
-    this.handleResponse(data, 'fail');
-  }.bind(this), false);
-  this.on('apps.err', function(data) {
-    this.handleResponse(data, 'fail');
-  }.bind(this), false);
-  this.on('users.err', function(data) {
-    this.handleResponse(data, 'fail');
-  }.bind(this), false);
 };
 
 Myda.prototype.callListeners = function(eventName, args) {
