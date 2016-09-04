@@ -128,7 +128,7 @@ Myda.prototype.connect = function() {
     this.on('users.err', function(data) {
       this.handleResponse(data, 'fail');
     }.bind(this), false);
-  });
+  }.bind(this));
 };
 
 Myda.prototype.callListeners = function(eventName, args) {
