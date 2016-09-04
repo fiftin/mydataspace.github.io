@@ -7934,7 +7934,7 @@ Myda.prototype.getAuthProvider = function(providerName) {
 };
 
 Myda.prototype.connect = function() {
-  new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, reject) {
     this.socket = io(this.options.websocketURL, {
       secure: true,
       'force new connection' : true,
