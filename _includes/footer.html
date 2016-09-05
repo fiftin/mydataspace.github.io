@@ -21,24 +21,20 @@
   </container>
 </footer>
 
-
-
 <div id="signin_modal" class="modal fade signin_modal" tabindex="-1" role="dialog" aria-labelledby="Sign In">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" style="padding-left: 10px;" id="myModalLabel">Sign in with:</h4>
-      </div>
       <div class="modal-body">
-        <div id="modal_auth_buttons" class="auth_buttons auth_buttons--modal">
+        <div class="intro__prompt hidden-xs hidden-sm">{{ site.data[page.language].prompt }}</div>
+        <div class="auth_buttons">
           {% for btn in site.data[page.language].buttons %}
-            <button class="btn btn-default btn-lg auth_button auth_button--modal auth_button--{{ btn.id }}" onclick="Mydataspace.login('{{ btn.id }}');">
+            <button class="btn btn-default btn-lg auth_button auth_button--{{ btn.id }}" onclick="Mydataspace.login('{{ btn.id }}');">
               <i class="fa fa-{{ btn.id }}" aria-hidden="true"></i>
               <span>{{ btn.title }}</span>
             </button>
           {% endfor %}
         </div>
+        <div class="intro__special_offer intro__special_offer--popover">{{ site.data[page.language].special_offer }}</div>
       </div>
     </div>
   </div>

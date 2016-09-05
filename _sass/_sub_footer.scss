@@ -20,6 +20,10 @@
   }
 }
 
+.intro__special_offer--popover {
+  padding-bottom: 0;
+}
+
 // @media (max-width: $screen-xs-min) {
 //   .sub_footer__botton {
 //     width: 100%;
@@ -33,12 +37,11 @@
   }
 
   .popover-content {
-    padding-top: 0 !important;
+    // padding-top: 0 !important;
+    padding: 15px 22px;
   }
 
   .popover-title {
     padding-bottom: 0 !important;
   }
-
-
 }
