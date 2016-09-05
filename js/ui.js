@@ -621,7 +621,7 @@ UI = {
         { cols: [
             { type: 'header', template: 'my data space' },
             { view: 'button',
-              width: 90,
+              width: 130,
               css: 'menu__language_button',
               id: 'GET_STARTED_LABEL',
               label: STRINGS.GET_STARTED,
@@ -637,7 +637,7 @@ UI = {
               }
             },
             { view: 'button',
-              width: 40,
+              width: 100,
               css: 'menu__language_button',
               id: 'DOCS_LABEL',
               label: STRINGS.DOCS,
