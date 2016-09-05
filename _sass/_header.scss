@@ -64,7 +64,7 @@
   padding-bottom: 20px;
 }
 
-.top {
+.page_top {
   background: url('/images/background.jpg');
   background-size: cover;
   background-position: bottom;
@@ -82,7 +82,7 @@
   .intro__slogan {
     font-size: 70px;
   }
-  .top {
+  .page_top {
     background-image: url('/images/background.jpg');
     background-size: cover;
     background-position: bottom;
@@ -96,7 +96,7 @@
   .intro__slogan {
     font-size: 40px;
   }
-  .top {
+  .paege_top {
     background-image: url('/images/background.jpg');
     background-size: 1200px 1200px;
     background-position: right top;
@@ -104,7 +104,7 @@
 }
 
 @media (min-width: $screen-md-min) {
-  .top {
+  .page_top {
     background-image: url('/images/background_short.jpg');
     background-size: cover;
     background-position: top;

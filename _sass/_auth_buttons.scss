@@ -4,6 +4,10 @@
   }
 }
 
+.auth_buttons--modal {
+  margin: 0 10px;
+}
+
 .auth_button {
   display: block;
   width: 100%;
@@ -13,6 +17,13 @@
   .fa {
     width: 30px;
   }
+}
+
+.auth_buttons--popover {
+}
+
+.auth_button--popover {
+  padding-right: 150px !important;
 }
 
 .auth_button--facebook {

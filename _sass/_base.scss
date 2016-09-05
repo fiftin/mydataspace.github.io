@@ -1,5 +1,8 @@
 $control-panel-height: 70px;
 
+$modal-sm: 400px;
+$font-size-h4: 24px;
+
 $navbar-margin-bottom: 0;
 $navbar-border-radius: 0;
 // $navbar-inverse-bg: rgba(104, 0, 160, 0.8)
@@ -15,6 +18,7 @@ $navbar-inverse-link-active-color:          white;
 $navbar-inverse-link-active-bg:             transparent;
 $navbar-inverse-link-disabled-color:        #444 !default;
 $navbar-inverse-link-disabled-bg:           transparent !default;
+
 body {
   margin: 0;
 }
