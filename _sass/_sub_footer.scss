@@ -20,8 +20,25 @@
   }
 }
 
-@media (max-width: $screen-xs-min) {
-  .sub_footer__botton {
-    width: 100%;
+// @media (max-width: $screen-xs-min) {
+//   .sub_footer__botton {
+//     width: 100%;
+//   }
+// }
+
+.sub_footer {
+  .popover-title {
+    border-bottom: 0 !important;
+    background: white !important;
   }
+
+  .popover-content {
+    padding-top: 0 !important;
+  }
+
+  .popover-title {
+    padding-bottom: 0 !important;
+  }
+
+  
 }

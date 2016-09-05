@@ -5,16 +5,24 @@
     {% endif %}
     <button id="sub_footer__botton" class="btn btn-success sub_footer__botton">{{ site.data[page.language].get_started }}</button>
   </div>
+
+  <div id="signin_popover" class="hidden">
+    <div class="auth_buttons auth_buttons--popover">
+      {% for btn in site.data[page.language].buttons %}
+        <button class="btn btn-default btn-lg auth_button auth_button--popover auth_button--{{ btn.id }}" onclick="Mydataspace.login('{{ btn.id }}');">
+          <i class="fa fa-{{ btn.id }}" aria-hidden="true"></i>
+          <span>{{ btn.title }}</span>
+        </button>
+      {% endfor %}
+    </div>
+  </div>
+
   <script type="text/javascript">
-    // document.getElementById('sub_footer__botton').addEventListener('click', function() {
-    //   // $('.signin_modal').modal('show');
-    //
-    // });
     document.addEventListener("DOMContentLoaded", function(event) {
       $("#sub_footer__botton").popover({
         placement: 'top',
         html : true,
-        trigger: 'focus',
+        // trigger: 'focus',
         content: function() {
           return $("#signin_popover").html();
         },

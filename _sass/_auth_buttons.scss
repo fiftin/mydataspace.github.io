@@ -20,11 +20,21 @@
 }
 
 .auth_buttons--popover {
+  margin: 0;
+  padding: 0;
 }
+
 
 .auth_button--popover {
   padding-right: 150px !important;
+  &:last-child {
+    margin-bottom: 8px !important;
+  }
+  &:first-child {
+    margin-top: 15px !important;
+  }
 }
+
 
 .auth_button--facebook {
   &, &:focus {
