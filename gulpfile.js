@@ -133,9 +133,9 @@ gulp.task('default', function() {
       'vendor:sio',
       'vendor:webix',
       'vendor:bootstrap',
-      'api',
       'vendor:ace'
     ],
+    'api',
     'jekyll:clean',
     'jekyll:build');
 });
@@ -150,9 +150,9 @@ gulp.task('serve', function() {
       'vendor:sio',
       'vendor:webix',
       'vendor:bootstrap',
-      'api',
       'vendor:ace'
     ],
+    'api',
     'jekyll:clean',
     'jekyll:serve');
 });

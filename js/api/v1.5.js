@@ -7874,10 +7874,9 @@ function Myda(options) {
       icon: 'github',
       url: 'https://github.com/login/oauth/authorize?client_id=eaa5d1176778a1626379&scope=user:email' +
            '&state=permission%3d{{permission}}%26clientId%3d{{client_id}}' +
-           '&redirect_uri={{api_url}}%2fauth%3fauthProvider%3dgithub' +
-           '&display=popup',
+           '&redirect_uri={{api_url}}%2fauth%3fauthProvider%3dgithub',
       loginWindow: {
-        height: 400
+        height: 600
       }
     },
     facebook: {

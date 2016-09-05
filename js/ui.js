@@ -623,14 +623,24 @@ UI = {
             { view: 'button',
               width: 90,
               css: 'menu__language_button',
-              label: 'Demos',
+              id: 'GET_STARTED_LABEL',
+              label: STRINGS.GET_STARTED,
+              click: function() {
+              }
+            },
+            { view: 'button',
+              width: 90,
+              css: 'menu__language_button',
+              id: 'DEMOS_LABEL',
+              label: STRINGS.DEMOS,
               click: function() {
               }
             },
             { view: 'button',
               width: 40,
               css: 'menu__language_button',
-              label: 'Docs',
+              id: 'DOCS_LABEL',
+              label: STRINGS.DOCS,
               click: function() {
               }
             },
