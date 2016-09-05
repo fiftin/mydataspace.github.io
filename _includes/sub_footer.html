@@ -11,7 +11,7 @@
       {% for btn in site.data[page.language].buttons %}
         <button class="btn btn-default btn-lg auth_button auth_button--popover auth_button--{{ btn.id }}" onclick="Mydataspace.login('{{ btn.id }}');">
           <i class="fa fa-{{ btn.id }}" aria-hidden="true"></i>
-          <span>{{ btn.title }}</span>
+          <span>Connect with {{ btn.title }}</span>
         </button>
       {% endfor %}
     </div>
@@ -22,11 +22,11 @@
       $("#sub_footer__botton").popover({
         placement: 'top',
         html : true,
-        // trigger: 'focus',
+        trigger: 'focus',
         content: function() {
           return $("#signin_popover").html();
-        },
-        title: '<h4>Sign in with:</h4>'
+        }
+        // title: '<h4>Sign in with:</h4>'
       });
     });
   </script>
