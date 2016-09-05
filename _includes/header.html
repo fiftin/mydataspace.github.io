@@ -1,82 +1,3 @@
-<!-- Navigation -->
-<div class="top">
-<div class="smoke">
-<nav class="navbar navbar-inverse navbar-custom">
-    <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span> <i class="fa fa-2x fa-bars"></i>
-            </button>
-            <a class="navbar-brand header__logo" href="/">
-              <img class="header__logo_img" src="/images/transparent_logo_128.png" />
-              <div class="header__logo_text" >My Data Space</div>
-            </a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="hidden">
-                    <a href="#page-top"></a>
-                </li>
-                <li>
-                    <a href="{{ baseurl }}/get-started">{{ site.data[page.language].menu.get_started }}</a>
-                </li>
-                <li>
-                    <a href="{{ baseurl }}/demos">{{ site.data[page.language].menu.demos }}</a>
-                </li>
-                <li>
-                    <a href="{{ baseurl }}/docs">{{ site.data[page.language].menu.docs }}</a>
-                </li>
-                <li>
-                {% if page.url != "/404.html" %}
-                  <ul class="header__languages">
-                  <li class="header__language">
-                    {% if page.language == site.default_language %}
-                      {% assign url = page.url %}
-                    {% else %}
-                      {% assign page_lang = page.language | prepend:'/' | append:'/' %}
-                      {% assign url = page.url | replace_first:page_lang,"/" %}
-                    {% endif %}
-                    {% if site.default_language == page.language %}
-                    <a class="header__language_button header__language_button--active" href="{{ url }}">{{ site.default_language | upcase }}</a>
-                    {% else %}
-                    <a class="header__language_button" href="{{ url }}">{{ site.default_language | upcase }}</a>
-                    {% endif %}
-                  </li>
-                  {% for lang in site.languages %}
-                    <li class="header__language">
-                      {% assign page_lang = page.language | prepend:'/' | append:'/' %}
-                      {% assign curr_lang = lang | prepend:'/' | append:'/' %}
-
-                      {% if lang == page.language %}
-                        {% assign url = page.url %}
-                      {% elsif page.language == site.default_language %}
-                        {% assign url = page.url | prepend:lang | prepend:'/' %}
-                      {% else %}
-                        {% assign url = page.url | replace_first:page_lang,curr_lang %}
-                      {% endif %}
-
-                      {% if lang == page.language %}
-                        <a class="header__language_button header__language_button--active" href="{{ url }}">
-                          {{ lang | upcase }}
-                        </a>
-                      {% else %}
-                        <a class="header__language_button" href="{{ url }}">
-                          {{ lang | upcase }}
-                        </a>
-                      {% endif %}
-                    </li>
-                  {% endfor %}
-                  </ul>
-                {% endif %}
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
 <header id="header" class="header">
   <script type="text/javascript">
     // if (window.innerHeight > 800 && window.innerWidth > 1200) {
@@ -91,29 +12,26 @@
     //   }
     // });
   </script>
-    <div class="container">
-      <div class="intro">
-        <div class="row">
-          <div class="col-md-9">
-            <h1 class="intro__slogan">{{ site.data[page.language].slogan }}</h1>
-            <div class="intro__description">{{ site.data[page.language].slogan_description }}</div>
+  <div class="container">
+    <div class="intro">
+      <div class="row">
+        <div class="col-md-9">
+          <h1 class="intro__slogan">{{ site.data[page.language].slogan }}</h1>
+          <div class="intro__description">{{ site.data[page.language].slogan_description }}</div>
+        </div>
+        <div class="col-md-3">
+          <div class="intro__prompt hidden-xs hidden-sm">{{ site.data[page.language].prompt }}</div>
+          <div class="auth_buttons">
+            {% for btn in site.data[page.language].buttons %}
+              <button class="btn btn-default btn-lg auth_button auth_button--{{ btn.id }}" onclick="Mydataspace.login('{{ btn.id }}');">
+                <i class="fa fa-{{ btn.id }}" aria-hidden="true"></i>
+                <span>{{ btn.title }}</span>
+              </button>
+            {% endfor %}
           </div>
-          <div class="col-md-3">
-            <div class="intro__prompt hidden-xs hidden-sm">{{ site.data[page.language].prompt }}</div>
-            <div class="auth_buttons">
-              {% for btn in site.data[page.language].buttons %}
-                <button class="btn btn-default btn-lg auth_button auth_button--{{ btn.id }}" onclick="Mydataspace.login('{{ btn.id }}');">
-                  <i class="fa fa-{{ btn.id }}" aria-hidden="true"></i>
-                  <span>{{ btn.title }}</span>
-                </button>
-              {% endfor %}
-            </div>
-            <div class="intro__special_offer">{{ site.data[page.language].special_offer }}</div>
-          </div>
+          <div class="intro__special_offer">{{ site.data[page.language].special_offer }}</div>
         </div>
       </div>
     </div>
-
+  </div>
 </header>
-</div>
-</div>

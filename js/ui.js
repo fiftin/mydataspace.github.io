@@ -626,6 +626,7 @@ UI = {
               id: 'GET_STARTED_LABEL',
               label: STRINGS.GET_STARTED,
               click: function() {
+                location.href = 'get-started';
               }
             },
             { view: 'button',
@@ -634,6 +635,7 @@ UI = {
               id: 'DEMOS_LABEL',
               label: STRINGS.DEMOS,
               click: function() {
+                location.href = 'demos';
               }
             },
             { view: 'button',
@@ -642,6 +644,7 @@ UI = {
               id: 'DOCS_LABEL',
               label: STRINGS.DOCS,
               click: function() {
+                location.href = 'docs';
               }
             },
             { width: 20, css: 'menu__spacer' },

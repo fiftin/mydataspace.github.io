@@ -5,15 +5,20 @@
 
   <body>
 
-    {% include header.html %}
-
-    <div class="page-content">
-      <div class="wrapper">
-        {{ content }}
+    <div class="top">
+      <div class="smoke">
+        {% include nav.html %}
       </div>
     </div>
 
+    <main>
+      {{ content }}
+    </main>
+
     {% include footer.html %}
+
+    <script src="/vendor/jquery.js"></script>
+    <script src="/vendor/bootstrap/bootstrap.min.js"></script>
 
   </body>
 

@@ -31,6 +31,7 @@ languages:
   - ru
 
 exclude:
+  - test
   - vendor/bootstrap/stylesheets
   - vendor/fa/scss
   - gulpfile.js

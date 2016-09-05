@@ -7,48 +7,29 @@
   {% assign api_url = site.api_url %}
   {% assign api_websocket_url = site.api_websocket_url %}
 {% endif %}
-{% if page.language == site.default_language %}
-  {% assign baseurl = "" %}
-{% else %}
-  {% assign baseurl = page.language | prepend:"/" %}
-{% endif %}
-<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
-    <meta name="description" content="{{ site.data[page.language].slogan }}">
-    <link rel="stylesheet" href="/vendor/webix/webix.css" type="text/css">
-    <link rel="stylesheet" href="/vendor/fontawesome/css/font-awesome.css" type="text/css">
-    <link rel="stylesheet" href="/css/main.css" type="text/css">
-    <link rel="stylesheet" href="/css/webix.css" type="text/css">
-    <meta name="theme-color" content="black" />
-    <meta property="og:url"                content="http://my-data.space" />
-    <meta property="og:type"               content="article" />
-    <meta property="og:title"              content="{{ site.title }}" />
-    <meta property="og:description"        content="{{ site.data[page.language].slogan }}" />
-    <meta property="og:image"              content="http://my-data.space/images/logo_social.jpg" />
-    <link href="https://fonts.googleapis.com/css?family=Lalezar|Candal|Audiowide" rel="stylesheet">
-    <script src="/js/strings.js" type="text/javascript"></script>
-    <script>
-      LANGUAGE = localStorage.getItem('language') || 'EN';
-      STRINGS = STRINGS_ON_DIFFERENT_LANGUAGES[LANGUAGE];
-    </script>
-  </head>
-  <body>
 
+  {% include head.html %}
+
+  <body>
     <div id="bootstrap">
       <script type="text/javascript">
         if (localStorage.getItem('authToken') != null) {
           document.getElementById('bootstrap').style.display = 'none';
         }
       </script>
-      {% include header.html %}
+
+      <div class="top">
+        <div class="smoke">
+          {% include nav.html %}
+          {% include header.html %}
+        </div>
+      </div>
+
       <div class="mission">
         <div class="container">{{ site.data[page.language].mission }}</div>
       </div>
+
       {% include feature_sections.html %}
       {% include sub_footer.html %}
       {% include footer.html %}
@@ -81,12 +62,6 @@
     <script src="/vendor/webix/webix_debug.js"></script>
     <script src="/js/ace.js"></script>
     <script src="/js/api/v1.5.js" type="text/javascript"></script>
-    <!--
-    <script src="/vendor/socket.io.js"></script>
-    <script src="/js/common.js" type="text/javascript"></script>
-    <script src="/js/api/Entities.js" type="text/javascript"></script>
-    <script src="/js/api/Myda.js" type="text/javascript"></script>
-    -->
     <script src="/js/uihelper.js" type="text/javascript"></script>
     <script src="/js/uicontrols.js" type="text/javascript"></script>
     <script src="/js/EntityForm.js" type="text/javascript"></script>

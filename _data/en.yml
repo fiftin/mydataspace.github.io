@@ -2,6 +2,8 @@ menu:
   get_started: Get Started
   demos: Demos
   docs: Documentation
+  console: Console
+  login: Login
 slogan: Incredibly fast backend of your web site
 slogan_description: You will be surprised how fast and responsive web site can be
 mission: From the outset we wanted to create a simple, reliable and fast product.
