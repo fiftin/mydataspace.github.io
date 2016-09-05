@@ -118,6 +118,10 @@
   background: black;
 }
 
+.menu__language_button--get_started {
+  margin-left: -15px !important;
+}
+
 .menu__language_button {
   background: black;
   height: 46px !important;
