@@ -3,7 +3,6 @@ layout: page
 title: Demos - My Data Space
 language: ru
 ---
-
 <h1>{{ site.data[page.language].demos_title }}</h1>
 
 <div class="demos">
@@ -20,7 +19,7 @@ language: ru
         <h4 class="media-heading">
           <a href="{{ demo.website }}" target="_blank">{{ demo.title }}</a>
         </h4>
-        <div>
+        <div class="demo__info">
           <div class="demo__source">
             {{site.data[page.language].source_code}}: <a href="{{ demo.source }}" target="_blank">{{ demo.source }}</a>
           </div>
