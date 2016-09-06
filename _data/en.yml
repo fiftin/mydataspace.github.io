@@ -65,7 +65,7 @@ demos:
     website: https://spreex.github.io
     source: https://github.com/spreex/spreex.github.io
   - id: console
-    title: My Data Space control panel
+    title: My Data Space
     website: https://my-data.space
     source: https://github.com/mydataspace/mydataspace.github.io
   # - id: chat
