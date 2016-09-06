@@ -12,12 +12,16 @@
 }
 
 .sub_footer__botton {
-  padding: 12px 25px;
+  padding: 12px 40px;
   font-size: 30px;
   text-shadow: 1px 1px #43a043;
   &:hover, &:active {
     text-shadow: 1px 1px #3a843a;
   }
+}
+
+.intro__special_offer--popover {
+  padding-bottom: 0;
 }
 
 // @media (max-width: $screen-xs-min) {
@@ -33,12 +37,11 @@
   }
 
   .popover-content {
-    padding-top: 0 !important;
+    // padding-top: 0 !important;
+    padding: 15px 22px;
   }
 
   .popover-title {
     padding-bottom: 0 !important;
   }
-
-  
 }

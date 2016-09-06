@@ -1,7 +1,8 @@
 $control-panel-height: 70px;
 
-$modal-sm: 400px;
+$modal-sm: 300px;
 $font-size-h4: 24px;
+$popover-max-width: 350px;
 
 $navbar-margin-bottom: 0;
 $navbar-border-radius: 0;
@@ -24,7 +25,6 @@ body {
 }
 
 .smoke {
-  height: 100%;
   background: rgba(0, 0, 0, 0.8);
 }
 
