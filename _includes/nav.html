@@ -29,13 +29,28 @@
                 {% if page.name != 'index.html' %}
                 <li>
                   <a id="open_console_button" href="{{ baseurl }}/">{{ site.data[page.language].menu.console }}</a>
-                  <a id="login_button" data-toggle="modal" data-target="#signin_modal" href="javascript: void(0);">{{ site.data[page.language].menu.login }}</a>
+                  <a id="login_button"
+                     data-toggle="modal"
+                     data-target="#signin_modal"
+                     href="javascript: void(0);">{{ site.data[page.language].menu.login }}</a>
+
                   <script type="text/javascript">
                     if (localStorage.getItem('authToken') == null) {
                       document.getElementById('open_console_button').style.display = 'none';
                     } else {
                       document.getElementById('login_button').style.display = 'none';
                     }
+                    document.getElementById('login_button', function() {
+                      $("#sub_footer__botton").popover({
+                        placement: 'top',
+                        html : true,
+                        trigger: 'focus',
+                        content: function() {
+                          return $("#signin_popover").html();
+                        },
+                        title: '<h4>Sign in with:</h4>'
+                      });
+                    });
                   </script>
                 </li>
                 {% endif %}
