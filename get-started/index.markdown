@@ -1,6 +1,0 @@
----
-layout: page
-title: Get Started - My Data Space
-language: en
----
-Hello, World!
