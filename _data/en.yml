@@ -10,6 +10,7 @@ mission: From the outset we wanted to create a simple, reliable and fast product
 special_offer: Free now and <b>forever</b> for registered users
 final_prompt: ""
 get_started: Get started now!
+source_code: Source Code
 prompt: "Sign in with:"
 buttons:
   - id: facebook
@@ -57,3 +58,17 @@ sections:
         title: Availability 99.999%
       - id: security
         title: DDoS Protection
+demos_title: Demos
+demos:
+  - id: spreex
+    title: Spree Commerce extensions catalogue
+    website: https://spreex.github.io
+    source: https://github.com/spreex/spreex.github.io
+  - id: console
+    title: My Data Space control panel
+    website: https://my-data.space
+    source: https://github.com/mydataspace/mydataspace.github.io
+  # - id: chat
+  #   title: Simple Chat
+  #   website: https://my-data.space/chat
+  #   source: https://github.com/mydataspace/chat

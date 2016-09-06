@@ -1,0 +1,32 @@
+---
+layout: page
+title: Demos - My Data Space
+language: en
+---
+
+<h1>{{ site.data[page.language].demos_title }}</h1>
+
+<div class="demos">
+  {% for demo in site.data[page.language].demos %}
+    <div class="media">
+      <div class="media-left">
+        <a href="{{ demo.website }}" target="_blank">
+          <img class="media-object demo__logo"
+               src="/images/demos/{{ demo.id }}.png"
+               alt="{{ demo.title }}" />
+        </a>
+      </div>
+      <div class="media-body">
+        <h4 class="media-heading">
+          <a href="{{ demo.website }}" target="_blank">{{ demo.title }}</a>
+        </h4>
+        <div class="demo__info">
+          <div class="demo__source">
+            {{site.data[page.language].source_code}}: <a href="{{ demo.source }}" target="_blank">{{ demo.source }}</a>
+          </div>
+          <img class="demo__screenshot" src="/images/demos/{{ demo.id }}-screenshot.jpg" />
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>

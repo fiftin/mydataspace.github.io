@@ -11,6 +11,7 @@ description: Вы поразитесь насколько быстрым и от
 special_offer: Бесплатно сейчас и <b>навсегда</b> для зарегистрированных пользователей
 final_prompt: ""
 get_started: Начать сейчас!
+source_code: Source Code
 prompt: "Войти через:"
 buttons:
   - id: facebook
@@ -61,3 +62,17 @@ sections:
       - id: security
         title: Защита от DDoS
         description: Облачная инфраструктура <a href="http://ovh.com">OVH</a>.
+demos_title: Примеры
+demos:
+  - id: spreex
+    title: Каталог расширений для Spree Commerce
+    website: https://spreex.github.io
+    source: https://github.com/spreex/spreex.github.io
+  - id: console
+    title: Панель управления My Data Space
+    website: https://my-data.space
+    source: https://github.com/mydataspace/mydataspace.github.io
+  # - id: chat
+  #   title: Простой чат
+  #   website: https://my-data.space/chat
+  #   source: https://github.com/mydataspace/chat
