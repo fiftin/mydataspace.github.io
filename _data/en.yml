@@ -58,7 +58,6 @@ sections:
         title: Availability 99.999%
       - id: security
         title: DDoS Protection
-demos_title: Demos
 demos:
   - id: spreex
     title: Spree Commerce extensions catalogue
