@@ -22,13 +22,14 @@ EntityTree.prototype.onCreate = function(data) {
   if (parentId === 'root') {
     $$('entity_tree').add(entity, 0);
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-      UI.entityTree.setChildren(entity.id, entity.data);
+      this.setChildren(entity.id, entity.data);
     }
+    $$('entity_tree').select(entity.id);
   } else if (!common.isNull($$('entity_tree').getItem(parentId)) &&
     common.isNull($$('entity_tree').getItem(UIHelper.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)))) {
     $$('entity_tree').add(entity, 0, parentId);
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-      UI.entityTree.setChildren(entity.id, entity.data);
+      this.setChildren(entity.id, entity.data);
     }
   }
 };

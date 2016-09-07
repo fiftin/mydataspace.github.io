@@ -14,6 +14,7 @@ EntityList.prototype.onCreate = function(data) {
   var entity = UIHelper.entityFromData(data);
   if (this.getRootId() === parentId) {
     $$('entity_list').add(entity, 1);
+    $$('entity_list').select(entity.id);
   }
 };
 
