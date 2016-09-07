@@ -1,6 +1,6 @@
 $control-panel-height: 70px;
 
-$modal-sm: 300px;
+$modal-sm: 350px;
 $font-size-h4: 24px;
 $popover-max-width: 350px;
 
@@ -76,8 +76,8 @@ body {
 }
 
 .signin_modal {
-  modal-body  {
-    padding: 20px;
+  .modal-body  {
+    padding: 20px 25px 15px 25px !important;
   }
 }
 
@@ -99,6 +99,7 @@ body {
 }
 
 .demo__info {
+  margin-top: 10px;
   padding-bottom: 30px;
 }
 

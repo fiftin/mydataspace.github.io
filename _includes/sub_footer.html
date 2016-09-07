@@ -7,16 +7,7 @@
   </div>
 
   <div id="signin_popover" class="hidden">
-    <div class="intro__prompt hidden-xs hidden-sm">{{ site.data[page.language].prompt }}</div>
-    <div class="auth_buttons">
-      {% for btn in site.data[page.language].buttons %}
-        <button class="btn btn-default btn-lg auth_button auth_button--{{ btn.id }}" onclick="Mydataspace.login('{{ btn.id }}');">
-          <i class="fa fa-{{ btn.id }}" aria-hidden="true"></i>
-          <span>{{ btn.title }}</span>
-        </button>
-      {% endfor %}
-    </div>
-    <div class="intro__special_offer intro__special_offer--popover">{{ site.data[page.language].special_offer }}</div>
+    {% include auth_prompt.html class_suffix="popover" %}
   </div>
 
   <script type="text/javascript">

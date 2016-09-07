@@ -5,7 +5,7 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> <i class="fa fa-2x fa-bars"></i>
             </button>
-            <a class="navbar-brand header__logo" href="/">
+            <a class="navbar-brand header__logo" href="{{ baseurl }}/">
               <img class="header__logo_img" src="/images/transparent_logo_128.png" />
               <div class="header__logo_text" >My Data Space</div>
             </a>
@@ -26,7 +26,7 @@
                 <li>
                     <a href="{{ baseurl }}/docs">{{ site.data[page.language].menu.docs }}</a>
                 </li>
-                {% if page.url != baseurl %}
+                {% if page.url != baseurl_with_trailing_slash %}
                 <li>
                   <a id="open_console_button" href="{{ baseurl }}/">{{ site.data[page.language].menu.console }}</a>
                   <a id="login_button"

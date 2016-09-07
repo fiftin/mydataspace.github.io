@@ -49,6 +49,7 @@
   .header__logo_img {
     transform: rotate(0);
     transition: transform 0.3s;
+    border-radius: 50%;
   }
 
   &:hover {

@@ -1,0 +1,12 @@
+<div class="intro__prompt{% if include.hide_prompt_on_xs %} hidden-xs hidden-sm{% endif %}">{{ site.data[page.language].prompt }}</div>
+<div class="auth_buttons">
+  {% for btn in site.data[page.language].buttons %}
+    <button class="btn btn-default btn-lg auth_button auth_button--{{ btn.id }}" onclick="Mydataspace.login('{{ btn.id }}');">
+      <i class="fa fa-{{ btn.id }}" aria-hidden="true"></i>
+      <span>{{ btn.title }}</span>
+    </button>
+  {% endfor %}
+</div>
+<div class="intro__special_offer{% if include.class_suffix %} intro__special_offer--{{ include.class_suffix }}{% endif %}">
+  {{ site.data[page.language].special_offer }}
+</div>
