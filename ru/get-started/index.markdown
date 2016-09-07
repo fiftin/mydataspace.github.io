@@ -1,6 +1,0 @@
----
-layout: page
-title: С чего начать - My Data Space
-language: ru
----
-Hello, World!

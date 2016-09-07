@@ -74,7 +74,17 @@ demos:
     website: https://my-data.space
     source: https://github.com/mydataspace/mydataspace.github.io
     description: ""
-  # - id: chat
-  #   title: Простой чат
-  #   website: https://my-data.space/chat
-  #   source: https://github.com/mydataspace/chat
+  - id: chat
+    title: Простой чат
+    website: https://my-data.space/chat
+    source: https://github.com/mydataspace/chat
+
+get_started:
+  - id: read_data
+    title: Получение данных с сервера
+  - id: store_data
+    title: Сохранение данных на сервере
+  - id: chat
+    title: Чат
+  - id: vote
+    title: Голосование

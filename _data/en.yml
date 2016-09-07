@@ -9,7 +9,7 @@ slogan_description: You will be surprised how fast and responsive web site can b
 mission: From the outset we wanted to create a simple, reliable and fast product.
 special_offer: Free now and <b>forever</b> for registered users
 final_prompt: ""
-get_started: Get started now!
+get_started_now: Get started now!
 source_code: Source Code
 prompt: "Sign in with:"
 buttons:
@@ -48,7 +48,10 @@ sections:
       - Create UI of your web site
       - Upload data to backend
       - Connect your UI to backend
-    code_simple_description: Example of using data from <a target="_blank" href="https://spreex.github.io">spreex.github.io</a>
+    code_simple_description: >
+      Example of using data from <a target="_blank" href="https://spreex.github.io">spreex.github.io</a>.
+    code_simple_post_description: >
+      More examples you can find in <a target="_blank" href="/get-started">Get Started</a> section.
   - id: reliability
     title: Reliability
     features:
@@ -60,16 +63,27 @@ sections:
         title: DDoS Protection
 demos:
   - id: spreex
-    title: Spree Commerce extensions catalogue
+    title: Spreex
     website: https://spreex.github.io
     source: https://github.com/spreex/spreex.github.io
-    description: ""
+    description: Spree Commerce extensions catalogue
   - id: console
     title: My Data Space
     website: https://my-data.space
     source: https://github.com/mydataspace/mydataspace.github.io
-    description: ""
+    description: My Data Space administrative panel and other content
   - id: chat
     title: Simple Chat
     website: https://my-data.space/chat
     source: https://github.com/mydataspace/chat
+    description: Chat where conversation stored on the service
+
+get_started:
+  - id: read_data
+    title: Read data from server
+  - id: store_data
+    title: Store data on server
+  - id: chat
+    title: Chat
+  - id: vote
+    title: Vote
