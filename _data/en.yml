@@ -69,7 +69,7 @@ demos:
     website: https://my-data.space
     source: https://github.com/mydataspace/mydataspace.github.io
     description: ""
-  # - id: chat
-  #   title: Simple Chat
-  #   website: https://my-data.space/chat
-  #   source: https://github.com/mydataspace/chat
+  - id: chat
+    title: Simple Chat
+    website: https://my-data.space/chat
+    source: https://github.com/mydataspace/chat

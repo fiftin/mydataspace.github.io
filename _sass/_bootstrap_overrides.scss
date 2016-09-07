@@ -40,10 +40,11 @@
   padding-top: 0;
   padding-bottom: 0;
 
+  opacity: 0.5;
+  transition: opacity 0.3s;
+
   .header__logo_text {
     color: white;
-    opacity: 0.3;
-    transition: opacity 0.3s;
   }
 
   .header__logo_img {
@@ -53,14 +54,15 @@
   }
 
   &:hover {
+    opacity: 1;
+    transition: opacity 0.3s;
+
     .header__logo_img {
       transform: rotate(20deg);
       transition: transform 0.3s;
     }
     .header__logo_text {
       color: white;
-      opacity: 1;
-      transition: opacity 0.3s;
     }
   }
 }
