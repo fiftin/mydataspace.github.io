@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-md-3">
         <a class="footer__link footer__link--section" href="{{ baseurl }}/get-started">{{ site.data[page.language].menu.get_started }}</a>
-        {% for demo in site.data[page.language].get_started %}
-          <a class="footer__link footer__link--subsection" href="{{ baseurl }}/demos#{{ demo.id }}">{{ demo.title }}</a>
+        {% for example in site.data[page.language].get_started %}
+          <a class="footer__link footer__link--subsection" href="{{ baseurl }}/get-started#{{ example.id }}">{{ example.title }}</a>
         {% endfor %}
       </div>
       <div class="col-md-3">
@@ -15,6 +15,9 @@
       </div>
       <div class="col-md-3">
         <a class="footer__link footer__link--section" href="{{ baseurl }}/docs">{{ site.data[page.language].menu.docs }}</a>
+        {% for doc in site.data[page.language].docs %}
+          <a class="footer__link footer__link--subsection" href="{{ baseurl }}/docs#{{ doc.id }}">{{ doc.title }}</a>
+        {% endfor %}
       </div>
       <div class="col-md-3">
         <div class="clearfix footer__socials">

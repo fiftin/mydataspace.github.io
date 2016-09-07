@@ -87,3 +87,9 @@ get_started:
     title: Chat
   - id: vote
     title: Vote
+
+docs:
+  - id: server
+    title: Server
+  - id: client
+    title: Client
