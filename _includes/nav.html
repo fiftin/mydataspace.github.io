@@ -26,7 +26,7 @@
                 <li>
                     <a href="{{ baseurl }}/docs">{{ site.data[page.language].menu.docs }}</a>
                 </li>
-                {% if page.name != 'index.html' %}
+                {% if page.url != baseurl %}
                 <li>
                   <a id="open_console_button" href="{{ baseurl }}/">{{ site.data[page.language].menu.console }}</a>
                   <a id="login_button"

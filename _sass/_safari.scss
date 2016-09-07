@@ -1,0 +1,54 @@
+.safari {
+  box-shadow: 0px 0px 32px 0px rgba(0, 0, 0, 0.3);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.safari__header {
+  background: #BDBDBD;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding: 15px;
+  height: 54px;
+}
+
+.safari__buttons_wrap {
+  display: table-cell;
+}
+
+.safari__buttons {
+  width: 90px;
+  padding: 5px 0;
+}
+
+.safari__address_bar {
+  background: white;
+  display: table-cell;
+  width: 100%;
+  padding: 5px 0 0 10px;
+  border-radius: 3px;
+}
+
+.safari__url {
+  position: absolute;
+}
+
+.safari__button {
+  border-radius: 50%;
+  float: left;
+  margin-right: 7px;
+  height: 18px;
+  width: 18px;
+}
+
+.safari__button--red {
+  background: #F06352;
+}
+
+.safari__button--green {
+  background: #80C433;
+}
+
+.safari__button--orange {
+  background: #F1AA2A;
+}

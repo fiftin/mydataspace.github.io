@@ -63,10 +63,12 @@ demos:
     title: Spree Commerce extensions catalogue
     website: https://spreex.github.io
     source: https://github.com/spreex/spreex.github.io
+    description: ""
   - id: console
     title: My Data Space
     website: https://my-data.space
     source: https://github.com/mydataspace/mydataspace.github.io
+    description: ""
   # - id: chat
   #   title: Simple Chat
   #   website: https://my-data.space/chat

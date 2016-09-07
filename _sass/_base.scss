@@ -58,6 +58,7 @@ body {
 @import "feature_sections";
 @import "sub_footer";
 @import "footer";
+@import "safari";
 
 .admin_panel {
   top: -1px;
@@ -94,7 +95,7 @@ body {
 }
 
 .demo__source {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .demo__info {

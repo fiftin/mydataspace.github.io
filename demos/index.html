@@ -7,7 +7,7 @@ language: en
 
 <div class="demos">
   {% for demo in site.data[page.language].demos %}
-    <div class="media">
+    <div class="media without_overflow">
       <div class="media-left">
         <a href="{{ demo.website }}" target="_blank">
           <img class="media-object demo__logo"
@@ -15,7 +15,7 @@ language: en
                alt="{{ demo.title }}" />
         </a>
       </div>
-      <div class="media-body">
+      <div class="media-body without_overflow">
         <h4 class="media-heading">
           <a href="{{ demo.website }}" target="_blank">{{ demo.title }}</a>
         </h4>
@@ -23,10 +23,24 @@ language: en
           <div class="demo__source">
             {{site.data[page.language].source_code}}: <a href="{{ demo.source }}" target="_blank">{{ demo.source }}</a>
           </div>
-          <div class="demo__description">
-            sdf asdf asdf asdf asdf asdf asdf asdf asf asdf asdfsadfasdf asdf asdf ssdfas.
+          {% if demo.description != "" %}
+            <div class="demo__description">
+              {{ demo.description }}
+            </div>
+          {% endif %}
+          <div class="safari">
+            <div class="safari__header clearfix">
+              <div class="safari__buttons_wrap">
+                <div class="safari__buttons clearfix">
+                  <div class="safari__button safari__button--red"></div>
+                  <div class="safari__button safari__button--orange"></div>
+                  <div class="safari__button safari__button--green"></div>
+                </div>
+              </div>
+              <div class="safari__address_bar"><div class="safari__url">{{ demo.website }}</div></div>
+            </div>
+            <img class="demo__screenshot" src="/images/demos/{{ demo.id }}-screenshot.jpg" />
           </div>
-          <img class="demo__screenshot" src="/images/demos/{{ demo.id }}-screenshot.jpg" />
         </div>
       </div>
     </div>
