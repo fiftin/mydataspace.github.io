@@ -1,12 +1,3 @@
-{% if jekyll.environment == "local" %}
-  {% assign client_id = "my-data.space" %}
-  {% assign api_url = "http://localhost:8080" %}
-  {% assign api_websocket_url = "http://localhost:8080" %}
-{% else %}
-  {% assign client_id = site.client_id %}
-  {% assign api_url = site.api_url %}
-  {% assign api_websocket_url = site.api_websocket_url %}
-{% endif %}
 <html>
 
   {% include head.html webix=true %}

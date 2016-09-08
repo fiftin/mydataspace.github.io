@@ -5,6 +5,15 @@
   {% assign baseurl = page.language | prepend:"/" %}
   {% assign baseurl_with_trailing_slash = baseurl | append:"/" %}
 {% endif %}
+{% if jekyll.environment == "local" %}
+  {% assign client_id = "my-data.space" %}
+  {% assign api_url = "http://localhost:8080" %}
+  {% assign api_websocket_url = "http://localhost:8080" %}
+{% else %}
+  {% assign client_id = site.client_id %}
+  {% assign api_url = site.api_url %}
+  {% assign api_websocket_url = site.api_websocket_url %}
+{% endif %}
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">

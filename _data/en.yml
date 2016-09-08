@@ -69,19 +69,13 @@ demos:
     description: Spree Commerce extensions catalogue.
     screenshot_width: 1088
     screenshot_height: 663
-  - id: console
+  - id: ui
     title: My Data Space
     website: https://my-data.space
     source: https://github.com/mydataspace/mydataspace.github.io
     description: My Data Space administrative panel.
     screenshot_width: 1105
     screenshot_height: 662
-  # - id: chat
-  #   title: Simple Chat
-  #   website: https://my-data.space/chat
-  #   source: https://github.com/mydataspace/chat
-  #   description: Chat where conversation stored on the service
-
 get_started:
   - id: hello-world
     title: Hello World!
