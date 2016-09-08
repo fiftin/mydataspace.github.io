@@ -1,7 +1,12 @@
 .login_button {
   margin-top: 8px;
   width: 80px;
-  opacity: 0;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+  &:hover, &:active {
+    opacity: 1;
+    transition: opacity 0.3s;
+  }
 }
 
 .header {

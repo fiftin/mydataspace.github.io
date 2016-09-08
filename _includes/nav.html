@@ -75,13 +75,11 @@
                      class="open_console_button"
                      href="{{ baseurl }}/">{{ site.data[page.language].menu.console }}</a> -->
                   <button id="login_button"
-                          class="login_button btn btn-success"
+                          class="login_button btn btn-default"
                           data-toggle="modal"
                           data-target="#signin_modal">
                      <script>
-                       if (localStorage.getItem('authToken') == null) {
-                         document.getElementById('login_button').style.opacity = 1;
-                       } else {
+                       if (localStorage.getItem('authToken') != null) {
                          document.getElementById('login_button').style.display = 'none';
                        }
                      </script>
