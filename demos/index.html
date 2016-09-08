@@ -1,10 +1,8 @@
 ---
 layout: page
-title: Demos - My Data Space
+title: Demos
 language: en
 ---
-<h1>{{ site.data[page.language].menu.demos }}</h1>
-
 <div class="demos">
   {% for demo in site.data[page.language].demos %}
     <div class="media without_overflow">
@@ -18,11 +16,12 @@ language: en
       <div class="media-body without_overflow">
         <h4 class="media-heading">
           <a href="{{ demo.website }}" target="_blank">{{ demo.title }}</a>
+          <!-- <a class="demo__source_url" href="{{ demo.source }}" target="_blank">
+            <i class="fa fa-code" aria-hidden="true"></i>
+            {{site.data[page.language].source_code}}
+          </a> -->
         </h4>
         <div class="demo__info">
-          <div class="demo__source">
-            {{site.data[page.language].source_code}}: <a href="{{ demo.source }}" target="_blank">{{ demo.source }}</a>
-          </div>
           {% if demo.description != "" %}
             <div class="demo__description">
               {{ demo.description }}
@@ -37,7 +36,9 @@ language: en
                   <div class="safari__button safari__button--green"></div>
                 </div>
               </div>
-              <div class="safari__address_bar"><div class="safari__url">{{ demo.website }}</div></div>
+              <div class="safari__address_bar">
+                <div class="safari__url">{{ demo.website | replace: "https://","<span class='safari__url__https'>https://</span>" }}</div>
+              </div>
             </div>
             <img class="demo__screenshot" id="demo_{{ demo.id }}_screenshot" src="/images/demos/{{ demo.id }}-screenshot-preview.jpg" />
             <script>

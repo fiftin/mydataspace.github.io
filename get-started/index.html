@@ -1,27 +1,16 @@
 ---
 layout: page
-title: Get Started - My Data Space
+title: Get Started
 language: en
 ---
-<h1>{{ site.data[page.language].menu.get_started }}</h1>
-
-<h2>Reading data from service</h2>
-
-<div class="example example--1">
-  <p data-height="448" data-theme-id="0" data-slug-hash="rraKXX" data-default-tab="js,result" data-user="mydataspace" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/mydataspace/pen/rraKXX/">rraKXX</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p>
-  <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
-</div>
-
-<h2>Upload data to service</h2>
-
-<div class="example example--1">
-  <p data-height="448" data-theme-id="0" data-slug-hash="rraKXX" data-default-tab="js,result" data-user="mydataspace" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/mydataspace/pen/rraKXX/">rraKXX</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p>
-  <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
-</div>
-
-<h2>Simple chat</h2>
-
-<div class="example">
-  <p data-height="448" data-theme-id="0" data-slug-hash="rraKXX" data-default-tab="js,result" data-user="mydataspace" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/mydataspace/pen/rraKXX/">rraKXX</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p>
-  <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+<div class="row">
+  {% for example in site.data[page.language].get_started %}
+  <div class="col-md-4">
+    <a class="example" href="{{ baseurl }}/get-started/{{ example.id }}">
+      <div class="example__icon"><i class="fa fa-5x fa-{{ example.icon }}"></i></div>
+      <h2 class="example__title">{{ example.title }}</h2>
+      <div class="example__description">{{ example.description }}</div>
+    </a>
+  </div>
+  {% endfor %}
 </div>

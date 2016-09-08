@@ -4,7 +4,7 @@
       <div class="col-md-3">
         <a class="footer__link footer__link--section" href="{{ baseurl }}/get-started">{{ site.data[page.language].menu.get_started }}</a>
         {% for example in site.data[page.language].get_started %}
-          <a class="footer__link footer__link--subsection" href="{{ baseurl }}/get-started#{{ example.id }}">{{ example.title }}</a>
+          <a class="footer__link footer__link--subsection" href="{{ baseurl }}/get-started/{{ example.id }}">{{ example.title }}</a>
         {% endfor %}
       </div>
       <div class="col-md-3">

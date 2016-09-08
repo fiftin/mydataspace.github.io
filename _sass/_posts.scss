@@ -1,13 +1,29 @@
+.page__content {
+  margin-top: 70px;
+  margin-bottom: 50px;
+}
+
+.page__title {
+  margin-top: 50px;
+  text-align: center;
+  font-size: 60px;
+}
+
 .example {
-  background: white;
+  display: block;
+  margin-top: 40px;
+  text-align: center;
+  &, &:focus, &:link {
+    color: black;
+  }
+  &:hover, &:active {
+    color: black;
+    text-decoration: none;
+    .example__title {
+      text-decoration: underline;
+    }
+  }
 }
-
-.example--1 {
-  height: 448px;
-
-}
-
-
 
 
 
@@ -24,8 +40,18 @@
   margin-right: 15px;
 }
 
-.demo__source {
-  margin-bottom: 15px;
+.demo__source_url {
+  margin-left: 20px;
+  border: 1px solid gray;
+  border-radius: 6px;
+  font-size: 18px;
+  padding: 10px 15px;
+  &, &:focus, &:link {
+    color: gray;
+  }
+  &:hover, &:active {
+    color: gray;
+  }
 }
 
 .demo__info {
@@ -34,5 +60,7 @@
 }
 
 .demo__description {
-  margin-bottom: 10px;
+  font-size: 18px;
+  margin-top: 25px;
+  margin-bottom: 32px;
 }
