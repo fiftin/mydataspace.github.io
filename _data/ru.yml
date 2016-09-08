@@ -65,15 +65,19 @@ sections:
 demos_title: Примеры
 demos:
   - id: spreex
-    title: Каталог расширений для Spree Commerce
+    title: Spreex
     website: https://spreex.github.io
     source: https://github.com/spreex/spreex.github.io
-    description: ""
+    description: Каталог расширений для Spree Commerce
+    screenshot_width: 1088
+    screenshot_height: 663
   - id: console
     title: My Data Space
     website: https://my-data.space
     source: https://github.com/mydataspace/mydataspace.github.io
-    description: ""
+    description: Административная панель My Data Space
+    screenshot_width: 1105
+    screenshot_height: 662
   # - id: chat
   #   title: Простой чат
   #   website: https://my-data.space/chat
