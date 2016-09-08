@@ -1,13 +1,14 @@
 ---
 layout: page
 title: Get Started
+description: Choose your own adventure
 language: en
 ---
 <div class="row">
   {% for example in site.data[page.language].get_started %}
   <div class="col-md-4">
     <a class="example" href="{{ baseurl }}/get-started/{{ example.id }}">
-      <div class="example__icon"><i class="fa fa-5x fa-{{ example.icon }}"></i></div>
+      <div class="example__icon"><i class="fa fa fa-{{ example.icon }}"></i></div>
       <h2 class="example__title">{{ example.title }}</h2>
       <div class="example__description">{{ example.description }}</div>
     </a>
