@@ -20,6 +20,22 @@ gulp.task('api', function() {
     .pipe(gulp.dest('./js/api/'));
 });
 
+gulp.task('ui', function() {
+  return gulp.src([
+      './js/strings.js',
+      './js/ace.js',
+      './js/uihelper.js',
+      './js/uicontrols.js',
+      './js/EntityForm.js',
+      './js/EntityList.js',
+      './js/EntityTree.js',
+      './js/Pages.js',
+      './js/ui.js',
+    ])
+    .pipe(concat('ui.js'))
+    .pipe(gulp.dest('./js/dist'));
+});
+
 gulp.task('test', function (done) {
   new Server({
     configFile: __dirname + '/karma.conf.js',
@@ -55,7 +71,10 @@ gulp.task('vendor:bootstrap', ['vendor:bootstrap:js', 'vendor:bootstrap:css']);
 
 gulp.task('vendor:jquery', function() {
   return gulp.src(
-    'bower_components/jquery/dist/jquery.js'
+    [
+      'bower_components/jquery/dist/jquery.min.js',
+      'bower_components/jquery/dist/jquery.js'
+    ]
   ).pipe(gulp.dest('vendor'));
 });
 
@@ -72,7 +91,7 @@ gulp.task('vendor:fa:fonts', function () {
 gulp.task('vendor:fa', ['vendor:fa:fonts', 'vendor:fa:css']);
 
 gulp.task('vendor:webix:fonts', function () {
-  return gulp.src('bower_components/webix/codebase/fonts/PTS-*.woff').pipe(gulp.dest('vendor/webix/fonts'));
+  return gulp.src('bower_components/webix/codebase/fonts/*').pipe(gulp.dest('vendor/webix/fonts'));
 });
 
 gulp.task('vendor:webix:code', function () {
@@ -136,6 +155,7 @@ gulp.task('default', function() {
       'vendor:ace'
     ],
     'api',
+    'ui',
     'jekyll:clean',
     'jekyll:build');
 });
@@ -153,6 +173,7 @@ gulp.task('serve', function() {
       'vendor:ace'
     ],
     'api',
+    'ui',
     'jekyll:clean',
     'jekyll:serve');
 });

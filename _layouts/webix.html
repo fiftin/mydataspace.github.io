@@ -9,15 +9,15 @@
 {% endif %}
 <html>
 
-  {% include head.html %}
+  {% include head.html webix=true %}
 
   <body>
     <div id="bootstrap">
-      <script type="text/javascript">
+      <!-- <script type="text/javascript">
         if (localStorage.getItem('authToken') != null) {
           document.getElementById('bootstrap').style.display = 'none';
         }
-      </script>
+      </script> -->
 
       <div class="page_top">
         <div class="smoke">
@@ -57,18 +57,23 @@
       </script>
     </div>
 
+    <script src="/vendor/jquery.min.js"></script>
     <script src="/vendor/bootstrap/bootstrap.min.js"></script>
-    <script src="/vendor/webix/webix_debug.js"></script>
-    <script src="/js/ace.js"></script>
+    <script src="/vendor/webix/webix.js"></script>
     <script src="/js/api/v1.5.js" type="text/javascript"></script>
-    <script src="/js/uihelper.js" type="text/javascript"></script>
-    <script src="/js/uicontrols.js" type="text/javascript"></script>
-    <script src="/js/EntityForm.js" type="text/javascript"></script>
-    <script src="/js/EntityList.js" type="text/javascript"></script>
-    <script src="/js/EntityTree.js" type="text/javascript"></script>
-    <script src="/js/Pages.js" type="text/javascript"></script>
-    <script src="/js/ui.js" type="text/javascript"></script>
+    <script src="/js/dist/ui.js"></script>
     <script>
+      $(function() {
+        $("#sub_footer__botton").popover({
+          placement: 'top',
+          html : true,
+          trigger: 'focus',
+          content: function() {
+            return $("#signin_popover").html();
+          }
+        });
+      });
+
       webix.codebase = "/vendor/";
       Mydataspace = new Myda({
         apiURL: '{{ api_url }}',

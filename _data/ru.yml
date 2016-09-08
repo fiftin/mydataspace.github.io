@@ -10,7 +10,7 @@ mission: С самого начала мы создавали быстрый, п
 description: Вы поразитесь насколько быстрым и отзывчивым может быть веб-сайт
 special_offer: Бесплатно сейчас и <b>навсегда</b> для зарегистрированных пользователей
 final_prompt: ""
-get_started: Начать сейчас!
+get_started_now: Начать сейчас!
 source_code: Source Code
 prompt: "Войти через:"
 buttons:

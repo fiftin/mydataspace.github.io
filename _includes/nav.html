@@ -74,22 +74,19 @@
                   <!-- <a id="open_console_button"
                      class="open_console_button"
                      href="{{ baseurl }}/">{{ site.data[page.language].menu.console }}</a> -->
-
                   <button id="login_button"
                           class="login_button btn btn-success"
                           data-toggle="modal"
-                          data-target="#signin_modal"
-                          href="javascript: void(0);">
+                          data-target="#signin_modal">
+                     <script>
+                       if (localStorage.getItem('authToken') == null) {
+                         document.getElementById('login_button').style.opacity = 1;
+                       } else {
+                         document.getElementById('login_button').style.display = 'none';
+                       }
+                     </script>
                      {{ site.data[page.language].menu.login }}
                   </button>
-
-                  <script type="text/javascript">
-                    if (localStorage.getItem('authToken') == null) {
-                      document.getElementById('open_console_button').style.display = 'none';
-                    } else {
-                      document.getElementById('login_button').style.display = 'none';
-                    }
-                  </script>
                 </li>
                 {% endif %}
             </ul>

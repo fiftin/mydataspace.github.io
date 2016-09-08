@@ -105,3 +105,5 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     GET_STARTED: 'С чего начать'
   }
 };
+var LANGUAGE = localStorage.getItem('language') || 'EN';
+var STRINGS = STRINGS_ON_DIFFERENT_LANGUAGES[LANGUAGE];
