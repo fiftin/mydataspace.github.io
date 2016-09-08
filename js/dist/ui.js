@@ -1300,7 +1300,7 @@ UI = {
 
     Mydataspace.on('users.getMyProfile.res', function(data) {
       if (common.isBlank(data['avatar'])) {
-        data['avatar'] = '/images/no-avatar.png';
+        data['avatar'] = '/images/no_avatar.png';
       }
       $$('profile').setValues(data);
     });
@@ -1705,7 +1705,7 @@ UI = {
             autoheight: true,
             template: '<div class="profile__img_wrap"><img class="profile__img" src="#avatar#" /></div><div class="profile__name">#name#</div>',
             data: {
-              avatar: '/images/no-avatar.png',
+              avatar: '/images/no_avatar.png',
               name: 'No name'
             }
           },

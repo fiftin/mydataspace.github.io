@@ -29,7 +29,10 @@
       });
       Mydataspace.connect();
       Mydataspace.on('login', function() {
-        location.href = '/';
+        document.getElementById('login_button').style.display = 'none';
+      });
+      Mydataspace.on('logout', function() {
+        document.getElementById('login_button').style.display = 'block';
       });
     </script>
   </body>
