@@ -882,6 +882,25 @@ EntityTree.prototype.setCurrentId = function(id) {
   this.currentId = id;
 };
 
+EntityTree.prototype.resolveChildren = function(id) {
+  return new Promise(function(resolve, reject) {
+    var firstChildId = $$('entity_tree').getFirstChildId(id);
+    if (firstChildId != null && firstChildId !== UIHelper.childId(id, UIHelper.ENTITY_TREE_DUMMY_ID)) {
+      resolve();
+      return;
+    }
+    // Load children to first time opened node.
+    Mydataspace.request('entities.getChildren', UIHelper.dataFromId(id), function(data) {
+      var entityId = UIHelper.idFromData(data);
+      var children = data.children.map(UIHelper.entityFromData);
+      UI.entityTree.setChildren(entityId, children);
+      resolve();
+    }, function(err) {
+      reject(err);
+    });
+  });
+};
+
 EntityTree.prototype.setCurrentIdToFirst = function() {
   var firstId = $$('entity_tree').getFirstId();
   this.setCurrentId(firstId);
@@ -903,6 +922,11 @@ EntityTree.prototype.onCreate = function(data) {
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
       this.setChildren(entity.id, entity.data);
     }
+
+    this.resolveChildren(parentId).then(function() {
+      $$('entity_tree').open(entity.id);
+    });
+
   }
 };
 
@@ -1965,16 +1989,7 @@ UI = {
                       $$('entity_tree').select(UI.entityTree.setCurrentIdToFirst());
                     },
                     onBeforeOpen: function(id) {
-                      var firstChildId = $$('entity_tree').getFirstChildId(id);
-                      if (firstChildId != null && firstChildId !== UIHelper.childId(id, UIHelper.ENTITY_TREE_DUMMY_ID)) {
-                        return;
-                      }
-                      // Load children to first time opened node.
-                      Mydataspace.request('entities.getChildren', UIHelper.dataFromId(id), function(data) {
-                        var entityId = UIHelper.idFromData(data);
-                        var children = data.children.map(UIHelper.entityFromData);
-                        UI.entityTree.setChildren(entityId, children);
-                      });
+                      UI.entityTree.resolveChildren(id);
                     },
                     onSelectChange: function(ids) {
                       var id = ids[0];
@@ -2046,6 +2061,16 @@ UI = {
                       } else {
                         UI.entityForm.setSelectedId(id);
                       }
+                    },
+                    onItemDblClick: function(id) {
+                      var parentId = UIHelper.parentId(id);
+                      if (id === 'root' || parentId === 'root') {
+                        return;
+                      }
+                      UI.entityTree.resolveChildren(parentId).then(function() {
+                        $$('entity_tree').open(parentId);
+                        $$('entity_tree').select(id);
+                      });
                     }
                   }
                 }
