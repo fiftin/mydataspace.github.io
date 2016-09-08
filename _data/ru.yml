@@ -2,8 +2,8 @@ menu:
   get_started: С чего начать
   demos: Примеры
   docs: Документация
-  console: Консоль
-  login: Вход
+  console: Мои данные
+  login: Войти
 slogan: Невероятно быстрый бэкенд вашего сайта
 slogan_description: Вы поразитесь насколько быстрым и отзывчивым может быть веб-сайт
 mission: С самого начала мы создавали быстрый, простой и надежный продукт.
@@ -74,10 +74,10 @@ demos:
     website: https://my-data.space
     source: https://github.com/mydataspace/mydataspace.github.io
     description: ""
-  - id: chat
-    title: Простой чат
-    website: https://my-data.space/chat
-    source: https://github.com/mydataspace/chat
+  # - id: chat
+  #   title: Простой чат
+  #   website: https://my-data.space/chat
+  #   source: https://github.com/mydataspace/chat
 
 get_started:
   - id: read_data

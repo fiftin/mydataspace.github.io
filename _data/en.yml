@@ -2,8 +2,8 @@ menu:
   get_started: Get Started
   demos: Demos
   docs: Documentation
-  console: Console
-  login: Login
+  console: My Data
+  login: Sign In
 slogan: Incredibly fast backend of your web site
 slogan_description: You will be surprised how fast and responsive web site can be
 mission: From the outset we wanted to create a simple, reliable and fast product.
@@ -72,11 +72,11 @@ demos:
     website: https://my-data.space
     source: https://github.com/mydataspace/mydataspace.github.io
     description: My Data Space administrative panel and other content
-  - id: chat
-    title: Simple Chat
-    website: https://my-data.space/chat
-    source: https://github.com/mydataspace/chat
-    description: Chat where conversation stored on the service
+  # - id: chat
+  #   title: Simple Chat
+  #   website: https://my-data.space/chat
+  #   source: https://github.com/mydataspace/chat
+  #   description: Chat where conversation stored on the service
 
 get_started:
   - id: read_data
@@ -89,7 +89,9 @@ get_started:
     title: Vote
 
 docs:
+  - id: overview
+    title: Overview
   - id: server
-    title: Server
+    title: Backend
   - id: client
-    title: Client
+    title: Client API

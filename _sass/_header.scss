@@ -1,3 +1,11 @@
+.open_console_button {
+
+}
+
+.login_button {
+  margin-top: 8px;
+}
+
 .header {
   color: white;
 }
@@ -103,7 +111,18 @@
   }
 }
 
+@media (max-width: $screen-sm-max) {
+  .login_button {
+    margin-left: 15px;
+    margin-bottom: 15px;
+    font-size: 18px
+  }
+}
+
 @media (min-width: $screen-md-min) {
+  .login_button {
+    margin-left: 25px;
+  }
   .page_top {
     background-image: url('/images/background_short.jpg');
     background-size: cover;
