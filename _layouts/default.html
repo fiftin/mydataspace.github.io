@@ -25,14 +25,22 @@
         apiURL: '{{ api_url }}',
         websocketURL: '{{ api_websocket_url }}',
         clientId: '{{ client_id }}',
-        permission: 'admin'
+        permission: 'admin',
+        connected: function() {
+          Mydataspace.on('users.getMyProfile.res', function(data) {
+            document.getElementById('profile_button').style.backgroundImage = 'url(' + data.avatar + ')';
+          });
+        }
       });
       Mydataspace.connect();
       Mydataspace.on('login', function() {
         document.getElementById('login_button').style.display = 'none';
+        document.getElementById('profile_button').style.display = 'block';
+        Mydataspace.emit('users.getMyProfile', {});
       });
       Mydataspace.on('logout', function() {
         document.getElementById('login_button').style.display = 'block';
+        document.getElementById('profile_button').style.display = 'none';
       });
     </script>
   </body>
