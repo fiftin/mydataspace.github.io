@@ -39,8 +39,16 @@ language: en
               </div>
               <div class="safari__address_bar"><div class="safari__url">{{ demo.website }}</div></div>
             </div>
-            <img class="demo__screenshot"
-                 src="/images/demos/{{ demo.id }}-screenshot.jpg" />
+            <img class="demo__screenshot" id="demo_{{ demo.id }}_screenshot" src="/images/demos/{{ demo.id }}-screenshot-preview.jpg" />
+            <script>
+              document.getElementById('demo_{{ demo.id }}_screenshot').style.height = Math.ceil(document.getElementById('demo_{{ demo.id }}_screenshot').width * {{ demo.screenshot_height }} / {{ demo.screenshot_width }}) + 'px';
+              var demo_{{ demo.id }}_screenshot_image = new Image();
+              demo_{{ demo.id }}_screenshot_image.src = '/images/demos/{{ demo.id }}-screenshot.jpg';
+              demo_{{ demo.id }}_screenshot_image.onload = function() {
+                document.getElementById('demo_{{ demo.id }}_screenshot').src = demo_{{ demo.id }}_screenshot_image.src;
+                document.getElementById('demo_{{ demo.id }}_screenshot').style.height = 'auto';
+              };
+            </script>
           </div>
         </div>
       </div>
