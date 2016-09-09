@@ -34,13 +34,13 @@
       });
       Mydataspace.connect();
       Mydataspace.on('login', function() {
-        document.getElementById('login_button').style.display = 'none';
-        document.getElementById('profile_button').style.display = 'block';
+        document.getElementById('login_button_menu_item').style.display = 'none';
+        document.getElementById('profile_button_menu_item').style.display = 'block';
         Mydataspace.emit('users.getMyProfile', {});
       });
       Mydataspace.on('logout', function() {
-        document.getElementById('login_button').style.display = 'block';
-        document.getElementById('profile_button').style.display = 'none';
+        document.getElementById('login_button_menu_item').style.display = 'block';
+        document.getElementById('profile_button_menu_item').style.display = 'none';
       });
     </script>
   </body>

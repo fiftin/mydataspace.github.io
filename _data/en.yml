@@ -80,15 +80,15 @@ get_started:
   - id: hello-world
     title: Hello World!
     description: The &#8220;Hello world!&#8221; of the service is here.
-    icon: magic
+    #icon: magic
   - id: goods-catalog
     title: Goods Catalog
     description: Backend for simple goods catalog.
-    icon: shopping-cart
+    #icon: shopping-cart
   - id: chat
     title: Chat
     description: Backend for simple goods catalog.
-    icon: comments
+    #icon: comments
 docs:
   - id: overview
     title: Overview

@@ -70,23 +70,24 @@
                 {% endif %}
                 </li>
                 {% if page.url != baseurl_with_trailing_slash %}
-                <li>
-                  <a id="profile_button" class="profile_button" href="{{ baseurl }}/">
-                    <script>
-                      if (localStorage.getItem('authToken') != null) {
-                        document.getElementById('profile_button').style.display = 'block';
-                      }
-                    </script>
-                  </a>
+                <li id="profile_button_menu_item">
+                  <script>
+                    if (localStorage.getItem('authToken') != null) {
+                      document.getElementById('profile_button_menu_item').style.display = 'block';
+                    }
+                  </script>
+                  <a id="profile_button" class="profile_button" href="{{ baseurl }}/"></a>
+                </li>
+                <li id="login_button_menu_item">
+                  <script>
+                    if (localStorage.getItem('authToken') != null) {
+                      document.getElementById('login_button_menu_item').style.display = 'none';
+                    }
+                  </script>
                   <button id="login_button"
                           class="login_button btn btn-default"
                           data-toggle="modal"
                           data-target="#signin_modal">
-                    <script>
-                      if (localStorage.getItem('authToken') != null) {
-                        document.getElementById('login_button').style.display = 'none';
-                      }
-                    </script>
                   {{ site.data[page.language].menu.login }}
                   </button>
                 </li>
