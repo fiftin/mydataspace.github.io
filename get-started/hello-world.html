@@ -5,9 +5,34 @@ language: en
 ---
 {% include spinner.html id="hello_world_spinner_example_1" %}
 
-<iframe id="hello_world_iframe_example_1" height='448' scrolling='no' src='//codepen.io/mydataspace/embed/rraKXX/?height=448&theme-id=0&default-tab=js,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>
-  See the Pen <a href='https://codepen.io/mydataspace/pen/rraKXX/'>Reading data from service</a> by My Data Space (<a href='http://codepen.io/mydataspace'>@mydataspace</a>) on <a href='http://codepen.io'>CodePen</a>.
-</iframe>
+<section>
+  <div class="row">
+    <div class="col-md-4">
+      <h2 class="margin-top-0">Backend</h2>
+      <p class="feature__description">
+        Create greetings for world in different languages
+      </p>
+    </div>
+    <div class="col-md-8">
+      <img class="width-100" src="/images/hello_world.gif" />
+    </div>
+  </div>
+</section>
+
+<section style="margin-top: 70px;">
+  <div class="row">
+    <div class="col-md-4">
+      <h2 class="margin-top-0">Client</h2>
+      <p class="feature__description">
+        Simply print JSON received from the backend
+      </p>
+    </div>
+    <div class="col-md-8">
+      <iframe id='hello_world_iframe_example_1' height='350' scrolling='no' src='//codepen.io/mydataspace/embed/jrPQwR/?height=350&theme-id=0&default-tab=js,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/mydataspace/pen/jrPQwR/'>Reading data from service</a> by My Data Space (<a href='http://codepen.io/mydataspace'>@mydataspace</a>) on <a href='http://codepen.io'>CodePen</a>.
+      </iframe>
+    </div>
+  </div>
+</section>
 
 <script>
   document.getElementById('hello_world_iframe_example_1').onload = function() {

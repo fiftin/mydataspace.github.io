@@ -144,6 +144,12 @@
   }
 }
 
+@media (max-width: $screen-xs-min) {
+  .header__logo_text {
+    display: none;
+  }
+}
+
 @media (min-width: $screen-md-min) {
   .login_button {
     margin-left: 25px;
