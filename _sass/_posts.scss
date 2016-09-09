@@ -1,7 +1,17 @@
-.example__icon {
-  color: #ff9126;
-  font-size: 10em;
-  margin-bottom: -30px;
+#hello_world_iframe_example_1 {
+  position: relative;
+}
+
+#hello_world_spinner_example_1 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 360px;
+  z-index: 2;
+}
+
+.feature__icon--example {
+  fill: #ff9126;
 }
 
 .page__content {
@@ -18,22 +28,6 @@
 .page__descripiton {
   text-align: center;
   font-size: 30px;
-}
-
-.example {
-  display: block;
-  margin-top: 40px;
-  text-align: center;
-  &, &:focus, &:link {
-    color: black;
-  }
-  &:hover, &:active {
-    color: black;
-    text-decoration: none;
-    .example__title {
-      text-decoration: underline;
-    }
-  }
 }
 
 .demo__screenshot {
@@ -67,7 +61,7 @@
 }
 
 .demo__description {
-  font-size: 18px;
+  font-size: 25px;
   margin-top: 25px;
   margin-bottom: 32px;
 }

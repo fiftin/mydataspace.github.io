@@ -5,7 +5,7 @@ description: Web sites created with using the service
 language: en
 ---
 {% for demo in site.data[page.language].demos %}
-  <div class="media without_overflow">
+  <div class="media without_overflow media--big-top-margin">
     <div class="media-left hidden-xs">
       <a href="{{ demo.website }}" target="_blank">
         <img class="media-object demo__logo"
@@ -14,13 +14,13 @@ language: en
       </a>
     </div>
     <div class="media-body without_overflow">
-      <h4 class="media-heading">
+      <h2 class="media-heading">
         <a href="{{ demo.website }}" target="_blank">{{ demo.title }}</a>
         <!-- <a class="demo__source_url" href="{{ demo.source }}" target="_blank">
           <i class="fa fa-code" aria-hidden="true"></i>
           {{site.data[page.language].source_code}}
         </a> -->
-      </h4>
+      </h2>
       <div class="demo__info">
         {% if demo.description != "" %}
           <div class="demo__description">

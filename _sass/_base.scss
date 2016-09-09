@@ -1,6 +1,7 @@
 $control-panel-height: 70px;
 
 $modal-sm: 350px;
+$font-size-h2: 35px;
 $font-size-h4: 24px;
 $popover-max-width: 350px;
 
@@ -66,6 +67,7 @@ body {
 @import "footer";
 @import "safari";
 @import "posts";
+@import "spinner";
 
 .admin_panel {
   top: -1px;
