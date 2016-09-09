@@ -29,6 +29,7 @@
         connected: function() {
           Mydataspace.on('users.getMyProfile.res', function(data) {
             document.getElementById('profile_button').style.backgroundImage = 'url(' + data.avatar + ')';
+            $('#signin_modal').modal('hide');
           });
         }
       });
@@ -44,5 +45,4 @@
       });
     </script>
   </body>
-
 </html>
