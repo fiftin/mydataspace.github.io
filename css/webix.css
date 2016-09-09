@@ -25,39 +25,40 @@
   z-index: 20;
   cursor: pointer;
   height: 45px;
+  width: 350px;
 }
 
-.logo__shading {
-  position: absolute;
-  left: 60px;
-  top: 0;
-  right: 0;
-  background: black;
-  opacity: 0.3;
-  height: 40px;
+.logo:hover {
+  opacity: 1;
   transition: opacity 0.3s;
-}
-
-.logo:hover .logo__shading {
-  opacity: 0;
-}
-
-.logo:hover .logo__img {
-  transform: rotate(20deg);
-  transition: transform 0.3s;
 }
 
 .logo__img {
   transform: rotate(0);
   transition: transform 0.3s;
   width: 50px;
-  display: block;
+  border-radius: 50%;
+  opacity: 0.6;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.logo:hover .logo__img {
+  transform: rotate(90deg);
+  opacity: 1;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.logo__img_wrap {
+  border-radius: 50%;
+  background: black;
   float: left;
   margin-left: 3px;
   margin-top: 3px;
+  width: 50px;
 }
 
-.logo__img_text {
+.logo__text_img {
+  margin-top: 6px;
   width: 270px;
   display: block;
   float: left;
@@ -66,6 +67,14 @@
   font-family: 'Lalezar', cursive;
   padding-left: 10px;
   padding-top: 3px;
+  margin-left: 10px;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+.logo:hover .logo__text_img {
+  opacity: 1;
+  transition: opacity 0.3s;
 }
 
 .no_items {
