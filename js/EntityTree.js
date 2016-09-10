@@ -79,16 +79,29 @@ EntityTree.prototype.listen = function() {
 
 EntityTree.prototype.refresh = function() {
   $$('entity_tree').disable();
-  Mydataspace.request('entities.getMyRoots', {}, function(data) {
-    $$('entity_tree').clearAll();
-    // convert received data to treeview format and load its to entity_tree.
-    var formattedData = data['roots'].map(UIHelper.entityFromData);
-    $$('entity_tree').parse(formattedData);
-    $$('entity_tree').enable();
-  }, function(err) {
-    UI.error(err);
-    $$('entity_tree').enable();
-  });
+  if (UI.isViewOnly()) {
+    Mydataspace.request('entities.get', { root: UI.getViewOnlyRoot(), path: '' }, function(data) {
+      $$('entity_tree').clearAll();
+      // convert received data to treeview format and load its to entity_tree.
+      var formattedData = UIHelper.entityFromData(data);
+      $$('entity_tree').parse(formattedData);
+      $$('entity_tree').enable();
+    }, function(err) {
+      UI.error(err);
+      $$('entity_tree').enable();
+    });
+  } else {
+    Mydataspace.request('entities.getMyRoots', {}, function(data) {
+      $$('entity_tree').clearAll();
+      // convert received data to treeview format and load its to entity_tree.
+      var formattedData = data['roots'].map(UIHelper.entityFromData);
+      $$('entity_tree').parse(formattedData);
+      $$('entity_tree').enable();
+    }, function(err) {
+      UI.error(err);
+      $$('entity_tree').enable();
+    });
+  }
 };
 
 /**

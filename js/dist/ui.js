@@ -951,16 +951,29 @@ EntityTree.prototype.listen = function() {
 
 EntityTree.prototype.refresh = function() {
   $$('entity_tree').disable();
-  Mydataspace.request('entities.getMyRoots', {}, function(data) {
-    $$('entity_tree').clearAll();
-    // convert received data to treeview format and load its to entity_tree.
-    var formattedData = data['roots'].map(UIHelper.entityFromData);
-    $$('entity_tree').parse(formattedData);
-    $$('entity_tree').enable();
-  }, function(err) {
-    UI.error(err);
-    $$('entity_tree').enable();
-  });
+  if (UI.isViewOnly()) {
+    Mydataspace.request('entities.get', { root: UI.getViewOnlyRoot(), path: '' }, function(data) {
+      $$('entity_tree').clearAll();
+      // convert received data to treeview format and load its to entity_tree.
+      var formattedData = UIHelper.entityFromData(data);
+      $$('entity_tree').parse(formattedData);
+      $$('entity_tree').enable();
+    }, function(err) {
+      UI.error(err);
+      $$('entity_tree').enable();
+    });
+  } else {
+    Mydataspace.request('entities.getMyRoots', {}, function(data) {
+      $$('entity_tree').clearAll();
+      // convert received data to treeview format and load its to entity_tree.
+      var formattedData = data['roots'].map(UIHelper.entityFromData);
+      $$('entity_tree').parse(formattedData);
+      $$('entity_tree').enable();
+    }, function(err) {
+      UI.error(err);
+      $$('entity_tree').enable();
+    });
+  }
 };
 
 /**
@@ -1139,6 +1152,14 @@ UI = {
   entityTree: new EntityTree(),
 
   pages: new Pages(),
+
+  isViewOnly: function() {
+    return window.location.hash != null && window.location.hash !== '#';
+  },
+
+  getViewOnlyRoot: function() {
+    return window.location.hash.substring(1);
+  },
 
   updateLanguage: function() {
 
@@ -1963,6 +1984,7 @@ UI = {
                       type: 'icon',
                       icon: 'plus',
                       id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
+                      disabled: UI.isViewOnly(),
                       width: 130,
                       click: function() {
                         $$('add_root_window').show();
@@ -2022,6 +2044,7 @@ UI = {
                       type: 'icon',
                       icon: 'plus',
                       id: 'ADD_ENTITY_LABEL', label: STRINGS.ADD_ENTITY,
+                      disabled: UI.isViewOnly(),
                       width: 110,
                       click: function() {
                         $$('add_entity_window').show();
@@ -2088,6 +2111,7 @@ UI = {
                     type: 'icon',
                     icon: 'save',
                     id: 'entity_form__save_button',
+                    disabled: UI.isViewOnly(),
                     width: 30,
                     click: function() {
                       UI.entityForm.save();
@@ -2106,6 +2130,7 @@ UI = {
                     type: 'icon',
                     icon: 'plus',
                     id: 'ADD_FIELD_LABEL', label: STRINGS.ADD_FIELD,
+                    disabled: UI.isViewOnly(),
                     width: 120,
                     click: function() {
                       $$('add_field_window').show();
@@ -2115,6 +2140,7 @@ UI = {
                     type: 'icon',
                     icon: 'play',
                     id: 'RUN_SCRIPT_LABEL', label: STRINGS.RUN_SCRIPT,
+                    disabled: UI.isViewOnly(),
                     width: 100,
                     id: 'entity_form__run_script_button',
                     hidden: true,
@@ -2126,6 +2152,7 @@ UI = {
                   { view: 'button',
                     type: 'icon',
                     icon: 'remove',
+                    disabled: UI.isViewOnly(),
                     width: 30,
                     click: function() {
                       webix.confirm({

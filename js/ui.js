@@ -7,6 +7,14 @@ UI = {
 
   pages: new Pages(),
 
+  isViewOnly: function() {
+    return window.location.hash != null && window.location.hash !== '#';
+  },
+
+  getViewOnlyRoot: function() {
+    return window.location.hash.substring(1);
+  },
+
   updateLanguage: function() {
 
     var currentLang = localStorage.getItem('language') || 'EN';
@@ -830,6 +838,7 @@ UI = {
                       type: 'icon',
                       icon: 'plus',
                       id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
+                      disabled: UI.isViewOnly(),
                       width: 130,
                       click: function() {
                         $$('add_root_window').show();
@@ -889,6 +898,7 @@ UI = {
                       type: 'icon',
                       icon: 'plus',
                       id: 'ADD_ENTITY_LABEL', label: STRINGS.ADD_ENTITY,
+                      disabled: UI.isViewOnly(),
                       width: 110,
                       click: function() {
                         $$('add_entity_window').show();
@@ -955,6 +965,7 @@ UI = {
                     type: 'icon',
                     icon: 'save',
                     id: 'entity_form__save_button',
+                    disabled: UI.isViewOnly(),
                     width: 30,
                     click: function() {
                       UI.entityForm.save();
@@ -973,6 +984,7 @@ UI = {
                     type: 'icon',
                     icon: 'plus',
                     id: 'ADD_FIELD_LABEL', label: STRINGS.ADD_FIELD,
+                    disabled: UI.isViewOnly(),
                     width: 120,
                     click: function() {
                       $$('add_field_window').show();
@@ -982,6 +994,7 @@ UI = {
                     type: 'icon',
                     icon: 'play',
                     id: 'RUN_SCRIPT_LABEL', label: STRINGS.RUN_SCRIPT,
+                    disabled: UI.isViewOnly(),
                     width: 100,
                     id: 'entity_form__run_script_button',
                     hidden: true,
@@ -993,6 +1006,7 @@ UI = {
                   { view: 'button',
                     type: 'icon',
                     icon: 'remove',
+                    disabled: UI.isViewOnly(),
                     width: 30,
                     click: function() {
                       webix.confirm({
