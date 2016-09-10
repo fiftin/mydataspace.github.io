@@ -74,6 +74,7 @@
         websocketURL: '{{ api_websocket_url }}',
         clientId: '{{ client_id }}',
         permission: 'admin',
+        simpleFormat: false,
         connected: function() {
           UI.initConnection();
           UI.refresh();

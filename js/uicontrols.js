@@ -18,6 +18,7 @@ UIControls = {
       view: 'select',
       label: STRINGS.OTHERS_CAN,
       name: 'type',
+      hidden: UI.isViewOnly(),
       options: [
         { id: 'private', value: STRINGS.ONLY_READ },
         { id: 'public', value: STRINGS.CREATE_CHILDREN },
