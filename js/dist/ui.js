@@ -615,7 +615,8 @@ EntityForm.prototype.addField = function(data, setDirty) {
         value: data.value,
         labelWidth: UIHelper.LABEL_WIDTH,
         height: 32,
-        css: 'entity_form__text_label',
+        css: 'entity_form__text_label',,
+        readonly: UI.isViewOnly(),
         on: {
           onFocus: function() {
             if (data.type === 'j') {
@@ -2184,7 +2185,8 @@ UI = {
                     id: 'NAME_LABEL_5',
                     label: STRINGS.NAME,
                     name: 'name',
-                    labelWidth: UIHelper.LABEL_WIDTH
+                    labelWidth: UIHelper.LABEL_WIDTH,
+                    readonly: UI.isViewOnly()
                   },
                   UIControls.getEntityTypeSelectTemplate(),
                   { view: 'text',
