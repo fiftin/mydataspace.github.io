@@ -1154,7 +1154,7 @@ UI = {
   pages: new Pages(),
 
   isViewOnly: function() {
-    return window.location.hash != null && window.location.hash !== '#';
+    return window.location.hash != null && window.location.hash !== '' && window.location.hash !== '#';
   },
 
   getViewOnlyRoot: function() {
