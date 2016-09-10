@@ -3,7 +3,6 @@ layout: page
 title: "Hello, World!"
 language: en
 ---
-{% include spinner.html id="hello_world_spinner_example_1" %}
 
 <section>
   <div class="row">
@@ -14,7 +13,8 @@ language: en
       </p>
     </div>
     <div class="col-md-8">
-      <img class="width-100" src="/images/hello_world.gif" />
+      <img class="width-100" id="hello_world__image_1" />
+      {% include image_waiter.html id="hello_world__image_1" width="1130" height="683" url="/images/hello_world.gif" %}
     </div>
   </div>
 </section>
@@ -28,15 +28,17 @@ language: en
       </p>
     </div>
     <div class="col-md-8">
-      <iframe id='hello_world_iframe_example_1' height='350' scrolling='no' src='//codepen.io/mydataspace/embed/jrPQwR/?height=350&theme-id=0&default-tab=js,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/mydataspace/pen/jrPQwR/'>Reading data from service</a> by My Data Space (<a href='http://codepen.io/mydataspace'>@mydataspace</a>) on <a href='http://codepen.io'>CodePen</a>.
+      <iframe id='hello_world__codepen_1'
+              height='350'
+              scrolling='no'
+              src='//codepen.io/mydataspace/embed/jrPQwR/?height=350&theme-id=0&default-tab=js,result&embed-version=2'
+              frameborder='no'
+              allowtransparency='true'
+              allowfullscreen='true'
+              style='width: 100%;'>
+        See the Pen <a href='https://codepen.io/mydataspace/pen/jrPQwR/'>Reading data from service</a> by My Data Space (<a href='http://codepen.io/mydataspace'>@mydataspace</a>) on <a href='http://codepen.io'>CodePen</a>.
       </iframe>
     </div>
+    {% include waiter.html id="hello_world__codepen_1" %}
   </div>
 </section>
-
-<script>
-  document.getElementById('hello_world_iframe_example_1').onload = function() {
-    var spinner_example_1 = document.getElementById('hello_world_spinner_example_1');
-    spinner_example_1.parentNode.removeChild(spinner_example_1);
-  };
-</script>

@@ -1,0 +1,35 @@
+{% assign spinner_id = include.id | append:"__spinner" %}
+
+{% include spinner.html id=spinner_id %}
+
+<script>
+  (function() {
+    // Set image dimentions
+    document.getElementById('{{ include.id }}').style.height =
+      Math.ceil(document.getElementById('{{ include.id }}').width *
+                {{ include.height }} / {{ include.width }}) + 'px';
+
+    // Run spinner
+    var tether = new Tether({
+      element: document.getElementById('{{ spinner_id }}'),
+      target: document.getElementById('{{ include.id }}'),
+      attachment: 'middle center',
+      targetAttachment: 'middle center'
+    });
+
+    // Load image
+    var image = new Image();
+    image.src = '{{ include.url }}';
+
+    image.onload = function() {
+      document.getElementById('{{ include.id }}').onload = function() {
+        this.style.height = 'auto';
+        var spinner = document.getElementById('{{ spinner_id }}');
+        spinner.parentNode.removeChild(spinner);
+        tether.destroy();
+      }
+      document.getElementById('{{ include.id }}').src = image.src;
+    };
+
+  })();
+</script>
