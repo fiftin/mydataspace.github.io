@@ -483,7 +483,8 @@ EntityForm.prototype.setData = function(data) {
 
 EntityForm.prototype.refresh = function() {
   $$('entity_form').disable();
-  Mydataspace.request('entities.getWithMeta', UIHelper.dataFromId(this.selectedId), function(data) {
+  var req = UI.isViewOnly() ? 'entities.get' : 'entities.getWithMeta';
+  Mydataspace.request(req, UIHelper.dataFromId(this.selectedId), function(data) {
     this.setData(data);
     $$('entity_form').enable();
   }.bind(this), function(err) {
@@ -626,6 +627,7 @@ EntityForm.prototype.addField = function(data, setDirty) {
       },
       { view: 'select',
         width: 70,
+        hidden: UI.isViewOnly(),
         options: UIHelper.getFieldTypesAsArrayOfIdValue(),
         value: data.type,
         id: 'entity_form__' + data.name + '_type',
@@ -664,6 +666,7 @@ EntityForm.prototype.addField = function(data, setDirty) {
         type: 'icon',
         icon: 'remove',
         width: 25,
+        hidden: UI.isViewOnly(),
         click: function() {
           this.deleteField(data.name);
         }.bind(this)
@@ -2176,12 +2179,38 @@ UI = {
                 complexData: true,
                 scroll: true,
                 elements: [
-                  { view: 'text', id: 'NAME_LABEL_5', label: STRINGS.NAME, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
+                  { view: 'text',
+                    id: 'NAME_LABEL_5',
+                    label: STRINGS.NAME,
+                    name: 'name',
+                    labelWidth: UIHelper.LABEL_WIDTH
+                  },
                   UIControls.getEntityTypeSelectTemplate(),
-                  { view: 'text', id: 'CHILD_PROTO_LABEL', label: STRINGS.CHILD_PROTO, name: 'childPrototype', labelWidth: UIHelper.LABEL_WIDTH },
-                  { view: 'textarea', css: 'entity_form__description', height: 100, id: 'DESCRIPTION_LABEL_1', label: STRINGS.DESCRIPTION, name: 'description', labelWidth: UIHelper.LABEL_WIDTH },
-                  { id: 'entity_form__fields_title', template: STRINGS.FIELDS, type: 'section' },
-                  { view: 'label', id: 'NO_FIELDS_LABEL', label: STRINGS.NO_FIELDS, align: 'center' }
+                  { view: 'text',
+                    id: 'CHILD_PROTO_LABEL',
+                    label: STRINGS.CHILD_PROTO,
+                    name: 'childPrototype',
+                    labelWidth: UIHelper.LABEL_WIDTH,
+                    hidden: UI.isViewOnly()
+                  },
+                  { view: 'textarea',
+                    css: 'entity_form__description',
+                    height: 100,
+                    id: 'DESCRIPTION_LABEL_1',
+                    label: STRINGS.DESCRIPTION,
+                    name: 'description',
+                    labelWidth: UIHelper.LABEL_WIDTH,
+                    hidden: UI.isViewOnly()
+                  },
+                  { id: 'entity_form__fields_title',
+                    template: STRINGS.FIELDS,
+                    type: 'section'
+                  },
+                  { view: 'label',
+                    id: 'NO_FIELDS_LABEL',
+                    label: STRINGS.NO_FIELDS,
+                    align: 'center'
+                  }
                 ],
                 on: {
                   onChange: function() { UI.entityForm.updateToolbar() }
