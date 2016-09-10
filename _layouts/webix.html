@@ -5,7 +5,8 @@
   <body>
     <div id="bootstrap" style="min-height: 3000px">
       <script type="text/javascript">
-        if (localStorage.getItem('authToken') != null || window.location.hash != null && window.location.hash !== '') {
+        if (localStorage.getItem('authToken') != null ||
+            window.location.hash != null && window.location.hash !== '' && window.location.hash !== '#') {
           document.getElementById('bootstrap').style.display = 'none';
         }
       </script>
@@ -28,7 +29,8 @@
 
     <div id="webix">
       <script type="text/javascript">
-        if (localStorage.getItem('authToken') == null && (window.location.hash == null || window.location.hash === '')) {
+        if (localStorage.getItem('authToken') == null &&
+            !(window.location.hash != null && window.location.hash !== '' && window.location.hash !== '#')) {
           document.getElementById('webix').style.display = 'none';
         }
       </script>
