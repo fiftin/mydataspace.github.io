@@ -31,7 +31,8 @@ EntityForm.prototype.setData = function(data) {
 
 EntityForm.prototype.refresh = function() {
   $$('entity_form').disable();
-  Mydataspace.request('entities.getWithMeta', UIHelper.dataFromId(this.selectedId), function(data) {
+  var req = UI.isViewOnly() ? 'entities.get' : 'entities.getWithMeta';
+  Mydataspace.request(req, UIHelper.dataFromId(this.selectedId), function(data) {
     this.setData(data);
     $$('entity_form').enable();
   }.bind(this), function(err) {
@@ -174,6 +175,7 @@ EntityForm.prototype.addField = function(data, setDirty) {
       },
       { view: 'select',
         width: 70,
+        hidden: UI.isViewOnly(),
         options: UIHelper.getFieldTypesAsArrayOfIdValue(),
         value: data.type,
         id: 'entity_form__' + data.name + '_type',
@@ -212,6 +214,7 @@ EntityForm.prototype.addField = function(data, setDirty) {
         type: 'icon',
         icon: 'remove',
         width: 25,
+        hidden: UI.isViewOnly(),
         click: function() {
           this.deleteField(data.name);
         }.bind(this)
