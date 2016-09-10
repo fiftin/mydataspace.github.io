@@ -21,7 +21,7 @@ EntityForm.prototype.setData = function(data) {
     name: UIHelper.nameFromData(data),
     type: data.type,
     description: data.description,
-    childPrototype: UIHelper.idFromData(data.childPrototype)
+    childPrototype: UI.isViewOnly() ? null : UIHelper.idFromData(data.childPrototype)
   };
   this.clear();
   $$('entity_form').setValues(formData);
