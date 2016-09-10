@@ -956,7 +956,7 @@ EntityTree.prototype.refresh = function() {
       $$('entity_tree').clearAll();
       // convert received data to treeview format and load its to entity_tree.
       var formattedData = UIHelper.entityFromData(data);
-      $$('entity_tree').parse(formattedData);
+      $$('entity_tree').parse([formattedData]);
       $$('entity_tree').enable();
     }, function(err) {
       UI.error(err);
