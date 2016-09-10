@@ -1,4 +1,5 @@
 UI = {
+
   entityForm: new EntityForm(),
 
   entityList: new EntityList(),
@@ -13,6 +14,41 @@ UI = {
 
   getViewOnlyRoot: function() {
     return window.location.hash.substring(1);
+  },
+
+  DISABLED_ON_VIEW_ONLY: [
+    'ADD_ROOT_LABEL',
+    'ADD_ENTITY_LABEL',
+    'entity_form__save_button',
+    'ADD_FIELD_LABEL',
+    'RUN_SCRIPT_LABEL',
+    'entity_form__remove_button'
+  ],
+
+  HIDDEN_ON_VIEW_ONLY: [
+    'NAME_LABEL_5',
+    'CHILD_PROTO_LABEL',
+    'DESCRIPTION_LABEL_1'
+  ],
+
+  updateViewOnlyState: function() {
+    if (UI.isViewOnly()) {
+      UI.DISABLED_ON_VIEW_ONLY.forEach(function(item) {
+        $$(item).disable()
+      });
+      UI.HIDDEN_ON_VIEW_ONLY.forEach(function(item) {
+        $$(item).hide()
+      });
+    } else {
+      UI.DISABLED_ON_VIEW_ONLY.forEach(function(item) {
+        $$(item).enable()
+      });
+      UI.HIDDEN_ON_VIEW_ONLY.forEach(function(item) {
+        $$(item).show()
+      });
+    }
+    UI.entityTree.refresh();
+    UI.updateSize();
   },
 
   updateLanguage: function() {
@@ -1006,6 +1042,7 @@ UI = {
                   { view: 'button',
                     type: 'icon',
                     icon: 'remove',
+                    id: 'entity_form__remove_button',
                     disabled: UI.isViewOnly(),
                     width: 30,
                     click: function() {

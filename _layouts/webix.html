@@ -68,6 +68,14 @@
         });
       });
 
+      $(window).on('hashchange', function() {
+        if (UI.isViewOnly() && document.getElementById('webix').style.display == 'none') {
+          document.getElementById('bootstrap').style.display = 'none';
+          document.getElementById('webix').style.display = 'block';
+        };
+        UI.updateViewOnlyState();
+      });
+
       webix.codebase = "/vendor/";
       Mydataspace = new Myda({
         apiURL: '{{ api_url }}',
