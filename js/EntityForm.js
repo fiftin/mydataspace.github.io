@@ -162,7 +162,7 @@ EntityForm.prototype.addField = function(data, setDirty) {
         value: data.value,
         labelWidth: UIHelper.LABEL_WIDTH,
         height: 32,
-        css: 'entity_form__text_label',,
+        css: 'entity_form__text_label',
         readonly: UI.isViewOnly(),
         on: {
           onFocus: function() {
