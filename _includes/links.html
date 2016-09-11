@@ -1,11 +1,11 @@
 <div class="links">
 {% if include.links.source_code_url %}
-  <a href="{{ demo.source_code_url }}" class="links__link" target="_blank">
+  <a href="{{ include.links.source_code_url }}" class="links__link" target="_blank">
     <i class="fa fa-code-fork" aria-hidden="true"></i><span class="links__link_text">{{ site.data[page.language].strings.view_source_code }}</span>
   </a>
 {% endif %}
 {% if include.links.data_url %}
-  <a href="{{ demo.data_url }}" class="links__link" target="_blank">
+  <a href="{{ include.links.data_url }}" class="links__link" target="_blank">
     <i class="fa fa-database" aria-hidden="true"></i><span class="links__link_text">{{ site.data[page.language].strings.view_data }}</span>
   </a>
 {% endif %}
