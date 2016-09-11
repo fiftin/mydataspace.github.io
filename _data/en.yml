@@ -10,8 +10,10 @@ mission: From the outset we wanted to create a simple, reliable and fast product
 special_offer: Free now and <b>forever</b> for registered users
 final_prompt: ""
 get_started_now: Get started now!
-source_code: Source Code
 prompt: "Sign in with:"
+strings:
+  view_source_code: View Code
+  view_data: View Data
 buttons:
   - id: facebook
     title: Facebook
@@ -65,14 +67,15 @@ demos:
   - id: spreex
     title: Spreex
     website: https://spreex.github.io
-    source: https://github.com/spreex/spreex.github.io
+    source_code_url: https://github.com/spreex/spreex.github.io
+    data_url: https://my-data.space/#spreex
     description: Spree Commerce extensions catalogue.
     screenshot_width: 1088
     screenshot_height: 663
   - id: ui
     title: My Data Space
     website: https://my-data.space
-    source: https://github.com/mydataspace/mydataspace.github.io
+    source_code_url: https://github.com/mydataspace/mydataspace.github.io
     description: My Data Space administrative panel.
     screenshot_width: 1105
     screenshot_height: 662
@@ -90,6 +93,7 @@ get_started:
         height: 1000
         website: https://my-data.space
         url: /images/hello_world.gif
+        data_url: https://my-data.space/#hello-world
       - id: client
         title: Client
         description: Simply print JSON received from the backend
@@ -97,7 +101,6 @@ get_started:
         height: 1000
         height: 350
         id: jrPQwR
-
   - id: goods-catalog
     title: Goods Catalog
     description: Backend for simple goods catalog.

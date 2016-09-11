@@ -22,32 +22,18 @@
   font-size: $font-size-h3;
 }
 
-// .demo__logo {
-//   width: 100px;
-//   margin-right: 15px;
-// }
-//
-// .demo__source_url {
-//   margin-left: 20px;
-//   border: 1px solid gray;
-//   border-radius: 6px;
-//   font-size: $font-size-base;
-//   padding: 10px 15px;
-//   &, &:focus, &:link {
-//     color: gray;
-//   }
-//   &:hover, &:active {
-//     color: gray;
-//   }
-// }
-//
-// .demo__info {
-//   margin-top: 10px;
-//   padding-bottom: 30px;
-// }
-//
-// .demo__description {
-//   font-size: $font-size-large;
-//   margin-top: 25px;
-//   margin-bottom: 32px;
-// }
+.links {
+  margin-left: -15px;
+}
+
+.links__link {
+  font-size: $font-size-base;
+  float: left;
+  display: block;
+  padding: 10px 15px;
+}
+
+.links__link_text {
+  margin-left: 5px;
+  font-weight: bold;
+}

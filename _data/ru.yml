@@ -7,12 +7,13 @@ menu:
 slogan: Невероятно быстрый бэкенд вашего сайта
 slogan_description: Вы поразитесь насколько быстрым и отзывчивым может быть веб-сайт
 mission: С самого начала мы создавали быстрый, простой и надежный продукт.
-description: Вы поразитесь насколько быстрым и отзывчивым может быть веб-сайт
 special_offer: Бесплатно сейчас и <b>навсегда</b> для зарегистрированных пользователей
 final_prompt: ""
 get_started_now: Начать сейчас!
-source_code: Source Code
 prompt: "Войти через:"
+strings:
+  view_source_code: См. код
+  view_data: См. данные
 buttons:
   - id: facebook
     title: Facebook
@@ -67,14 +68,15 @@ demos:
   - id: spreex
     title: Spreex
     website: https://spreex.github.io
-    source: https://github.com/spreex/spreex.github.io
+    source_code_url: https://github.com/spreex/spreex.github.io
+    data_url: https://my-data.space/#spreex
     description: Каталог расширений для Spree Commerce
     screenshot_width: 1088
     screenshot_height: 663
-  - id: console
+  - id: ui
     title: My Data Space
     website: https://my-data.space
-    source: https://github.com/mydataspace/mydataspace.github.io
+    source_code_url: https://github.com/mydataspace/mydataspace.github.io
     description: Административная панель My Data Space
     screenshot_width: 1105
     screenshot_height: 662
@@ -92,6 +94,7 @@ get_started:
           width: 100
           height: 1000
           url: /images/hello_world.gif
+          data_url: https://my-data.space/#hello-world
       - id: client
         title: Клиент
         description: Просто выводим на экран JSON полученный с бэкенда

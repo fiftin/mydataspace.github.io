@@ -9,9 +9,10 @@ layout: page
           <div class="col-md-4">
             <h2 class="margin-top-0">{{ section.title }}</h2>
             <p class="feature__description">{{ section.description }}</p>
+            {% include links.html links=section %}
           </div>
           <div class="col-md-8">
-            {% assign section_media_id = example.id | append:"__" | section.id %}
+            {% assign section_media_id = example.id | append:"__" | append:section.id %}
             {% case section.type %}
             {% when "image" %}
               <img class="width-100" id="{{ section_media_id }}" />
