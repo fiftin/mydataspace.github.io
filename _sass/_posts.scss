@@ -11,12 +11,11 @@
 .page__title {
   margin-top: 50px;
   text-align: center;
-  font-size: 60px;
 }
 
 .page__descripiton {
   text-align: center;
-  font-size: 30px;
+  font-size: $font-size-h3;
 }
 
 .demo__screenshot {
@@ -34,7 +33,7 @@
   margin-left: 20px;
   border: 1px solid gray;
   border-radius: 6px;
-  font-size: 18px;
+  font-size: $font-size-base;
   padding: 10px 15px;
   &, &:focus, &:link {
     color: gray;
@@ -50,7 +49,7 @@
 }
 
 .demo__description {
-  font-size: 25px;
+  font-size: $font-size-large;
   margin-top: 25px;
   margin-bottom: 32px;
 }

@@ -31,7 +31,7 @@ label {
   }
   @media (max-width: $screen-xs-max) {
     a {
-      font-size: 18px;
+      font-size: $font-size-base;
     }
   }
 }
@@ -42,28 +42,21 @@ label {
 }
 
 .navbar-brand {
-  font-size: 32px;
-  font-family: 'Lalezar', cursive;
   padding-top: 0;
   padding-bottom: 0;
-
   opacity: 0.5;
   transition: opacity 0.3s;
-
   .header__logo_text {
     color: white;
   }
-
   .header__logo_img {
     transform: rotate(0);
     transition: transform 0.3s;
     border-radius: 50%;
   }
-
   &:hover {
     opacity: 1;
     transition: opacity 0.3s;
-
     .header__logo_img {
       transform: rotate(90deg);
       transition: transform 0.3s;

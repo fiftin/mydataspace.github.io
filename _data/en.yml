@@ -88,15 +88,12 @@ get_started:
           type: image
           width: 100
           height: 1000
-          
-
       - id: client
         title: Client
         description: Simply print JSON received from the backend
-        media: codepen
-        codepen_height: 300
-
-
+        media:
+          type: codepen
+          height: 1000
   - id: goods-catalog
     title: Goods Catalog
     description: Backend for simple goods catalog.
