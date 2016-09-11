@@ -76,6 +76,7 @@ demos:
     description: My Data Space administrative panel.
     screenshot_width: 1105
     screenshot_height: 662
+
 get_started:
   - id: hello-world
     title: Hello World!
@@ -84,24 +85,27 @@ get_started:
       - id: backend
         title: Backend
         description: Create greetings for world in different languages
-        media:
-          type: image
-          width: 100
-          height: 1000
+        type: demo
+        width: 100
+        height: 1000
+        website: https://my-data.space
+        url: /images/hello_world.gif
       - id: client
         title: Client
         description: Simply print JSON received from the backend
-        media:
-          type: codepen
-          height: 1000
+        type: code
+        height: 1000
+        height: 350
+        id: jrPQwR
+
   - id: goods-catalog
     title: Goods Catalog
     description: Backend for simple goods catalog.
-    #icon: shopping-cart
+
   - id: chat
     title: Chat
     description: Backend for simple goods catalog.
-    #icon: comments
+
 docs:
   - id: overview
     title: Overview

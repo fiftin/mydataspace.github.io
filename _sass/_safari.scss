@@ -24,8 +24,15 @@
   background: white;
   display: table-cell;
   width: 100%;
-  padding: 5px 0 0 10px;
+  padding: 0 0 0 10px;
   border-radius: 3px;
+  position: relative;
+}
+
+.safari__img {
+  width: 100%;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .safari__url {

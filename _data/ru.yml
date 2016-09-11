@@ -78,17 +78,41 @@ demos:
     description: Административная панель My Data Space
     screenshot_width: 1105
     screenshot_height: 662
-  # - id: chat
-  #   title: Простой чат
-  #   website: https://my-data.space/chat
-  #   source: https://github.com/mydataspace/chat
 
 get_started:
-  - id: read_data
-    title: Получение данных с сервера
-  - id: store_data
-    title: Сохранение данных на сервере
+  - id: hello-world
+    title: Здравствуй, мир!
+    description: The &#8220;Hello world!&#8221; of the service is here.
+    sections:
+      - id: backend
+        title: Бэкенд
+        description: Create greetings for world in different languages
+        media:
+          type: image
+          width: 100
+          height: 1000
+          url: /images/hello_world.gif
+      - id: client
+        title: Клиент
+        description: Просто выводим на экран JSON полученный с бэкенда
+        media:
+          type: code
+          height: 1000
+          height: 350
+          id: jrPQwR
+
+  - id: goods-catalog
+    title: Каталог товаров
+    description: Backend for simple goods catalog.
+
   - id: chat
     title: Чат
-  - id: vote
-    title: Голосование
+    description: Backend for simple goods catalog.
+
+docs:
+  - id: overview
+    title: Обзор
+  - id: server
+    title: Бэкенд
+  - id: client
+    title: Клиентский API
