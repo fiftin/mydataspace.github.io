@@ -196,6 +196,8 @@ UI = {
       $('#webix').show();
       UI.updateSize();
       UI.refresh();
+      $$('SIGN_IN_LABEL').hide();
+      $$('menu_button').show();
     });
 
     Mydataspace.on('logout', function() {
@@ -203,6 +205,8 @@ UI = {
       $('#webix').hide();
       $('#bootstrap').show();
       document.getElementById('no_items').style.display = 'none';
+      $$('SIGN_IN_LABEL').show();
+      $$('menu_button').hide();
     });
 
     UI.entityForm.listen();
@@ -713,8 +717,19 @@ UI = {
               }
             },
             { width: 20, css: 'menu__spacer' },
+            { view: 'button',
+              width: 80,
+              hidden: localStorage.getItem('authToken') != null,
+              id: 'SIGN_IN_LABEL',
+              css: 'menu__login_button',
+              label: STRINGS.SIGN_IN,
+              click: function() {
+                $('#signin_modal').modal('show');
+              }
+            },
             { view: 'icon',
               icon: 'bars',
+              hidden: localStorage.getItem('authToken') == null,
               id: 'menu_button',
               css: 'menu_button',
               click: function() {

@@ -5,6 +5,32 @@
   width: auto !important;
 }
 
+.menu__login_button {
+  height: 40px !important;
+  margin-top: 5px !important;
+}
+
+.menu__login_button .webix_el_box {
+  height: 40px !important;
+}
+
+.menu__login_button button,
+.menu__login_button button:focus,
+.menu__login_button button:hover,
+.menu__login_button button:active {
+  background: white !important;
+  color: black !important;
+  border: white !important;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+.menu__login_button button:hover,
+.menu__login_button button:active {
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
 #admin_panel__loading {
   text-align: center;
   margin-top: 150px;

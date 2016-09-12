@@ -49,7 +49,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     NO_APPS: 'You have no apps',
     DOCS: 'Documentation',
     DEMOS: 'Demos',
-    GET_STARTED: 'Get Started'
+    GET_STARTED: 'Get Started',
+    SIGN_IN: 'Sign In'
   },
   RU: {
     YES: 'Да',
@@ -102,7 +103,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     REALLY_DELETE_APP: 'Вы действительно хотите удалить это приложение?',
     DOCS: 'Документация',
     DEMOS: 'Примеры',
-    GET_STARTED: 'С чего начать'
+    GET_STARTED: 'С чего начать',
+    SIGN_IN: 'Войти'
   }
 };
 var LANGUAGE = localStorage.getItem('language') || 'EN';

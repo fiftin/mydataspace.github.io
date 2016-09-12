@@ -49,7 +49,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     NO_APPS: 'You have no apps',
     DOCS: 'Documentation',
     DEMOS: 'Demos',
-    GET_STARTED: 'Get Started'
+    GET_STARTED: 'Get Started',
+    SIGN_IN: 'Sign In'
   },
   RU: {
     YES: 'Да',
@@ -102,7 +103,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     REALLY_DELETE_APP: 'Вы действительно хотите удалить это приложение?',
     DOCS: 'Документация',
     DEMOS: 'Примеры',
-    GET_STARTED: 'С чего начать'
+    GET_STARTED: 'С чего начать',
+    SIGN_IN: 'Войти'
   }
 };
 var LANGUAGE = localStorage.getItem('language') || 'EN';
@@ -1347,6 +1349,8 @@ UI = {
       $('#webix').show();
       UI.updateSize();
       UI.refresh();
+      $$('SIGN_IN_LABEL').hide();
+      $$('menu_button').show();
     });
 
     Mydataspace.on('logout', function() {
@@ -1354,6 +1358,8 @@ UI = {
       $('#webix').hide();
       $('#bootstrap').show();
       document.getElementById('no_items').style.display = 'none';
+      $$('SIGN_IN_LABEL').show();
+      $$('menu_button').hide();
     });
 
     UI.entityForm.listen();
@@ -1864,8 +1870,19 @@ UI = {
               }
             },
             { width: 20, css: 'menu__spacer' },
+            { view: 'button',
+              width: 80,
+              hidden: localStorage.getItem('authToken') != null,
+              id: 'SIGN_IN_LABEL',
+              css: 'menu__login_button',
+              label: STRINGS.SIGN_IN,
+              click: function() {
+                $('#signin_modal').modal('show');
+              }
+            },
             { view: 'icon',
               icon: 'bars',
+              hidden: localStorage.getItem('authToken') == null,
               id: 'menu_button',
               css: 'menu_button',
               click: function() {
