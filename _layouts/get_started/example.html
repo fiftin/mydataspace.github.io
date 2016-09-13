@@ -17,6 +17,26 @@ layout: page
             {% when "image" %}
               <img class="width-100" id="{{ section_media_id }}" />
               {% include image_waiter.html id=section_media_id width="1130" height="683" url=section.url %}
+            {% when "video_demo" %}
+              <div class="safari">
+                <div class="safari__header clearfix">
+                  <div class="safari__buttons_wrap">
+                    <div class="safari__buttons clearfix">
+                      <div class="safari__button safari__button--red"></div>
+                      <div class="safari__button safari__button--orange"></div>
+                      <div class="safari__button safari__button--green"></div>
+                    </div>
+                  </div>
+                  <div class="safari__address_bar">
+                    <div class="safari__url">{{ section.website | replace: "https://","<span class='safari__url__https'>https://</span>" }}</div>
+                  </div>
+                </div>
+                <video id="{{ section_media_id }}" class="safari__video" autoplay loop>
+                  <source src="{{ section.url }}" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                {% include video_waiter.html id=section_media_id width=section.width height=section.height url=section.url %}
+              </div>
             {% when "demo" %}
               <div class="safari">
                 <div class="safari__header clearfix">
@@ -32,7 +52,7 @@ layout: page
                   </div>
                 </div>
                 <img class="safari__img" id="{{ section_media_id }}" />
-                {% include image_waiter.html id=section_media_id width="1130" height="683" url=section.url %}
+                {% include image_waiter.html id=section_media_id id=section_media_id width=section.width height=section.height url=section.url %}
               </div>
             {% when "code" %}
               <iframe id='{{ example.id }}__{{ section.id }}'
