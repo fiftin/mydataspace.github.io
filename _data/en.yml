@@ -92,7 +92,7 @@ get_started:
         height: 1034
         width: 600
         website: https://my-data.space
-        url: /images/get_started/hello_world.mp4
+        url: /images/get_started/hello_world.ogg
         data_url: https://my-data.space/#hello-world
       - id: client
         title: Client
