@@ -33,7 +33,6 @@ layout: page
                 </div>
                 <video id="{{ section_media_id }}" class="safari__video" autoplay loop>
                   <source src="{{ section.url }}" type="video/mp4" />
-                  Your browser does not support the video tag.
                 </video>
                 {% include video_waiter.html id=section_media_id width=section.width height=section.height url=section.url %}
               </div>
