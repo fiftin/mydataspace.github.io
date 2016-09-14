@@ -83,11 +83,11 @@ demos:
 get_started:
   - id: hello-world
     title: Hello World!
-    description: The &#8220;Hello world!&#8221; of the service is here.
+    # description: The &#8220;Hello world!&#8221; of the service is here.
     sections:
       - id: backend
         title: Backend
-        description: Create demo data on the backend
+        description: Create demo data
         type: demo
         # type: video_demo
         # height: 600
@@ -100,17 +100,18 @@ get_started:
         data_url: https://my-data.space/#hello-world
       - id: client
         title: Client
-        description: Simply print JSON received from the backend
+        description: Print JSON received from the backend
         type: code
         height: 350
         id: jrPQwR
-  - id: goods-catalog
-    title: Goods Catalog
-    description: Backend for simple goods catalog.
+
+  # - id: goods-catalog
+  #   title: Goods Catalog
+  #   description: Backend for simple goods catalog.
 
   - id: chat
     title: Chat
-    description: Backend for simple goods catalog.
+    # description: Backend for simple goods catalog.
 
 docs:
   - id: overview

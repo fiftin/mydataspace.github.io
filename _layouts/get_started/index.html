@@ -1,7 +1,15 @@
 ---
 layout: page
 ---
+{% if page.language == site.default_language %}
+  {% assign baseurl = "" %}
+  {% assign baseurl_with_trailing_slash = baseurl | append:"/" %}
+{% else %}
+  {% assign baseurl = page.language | prepend:"/" %}
+  {% assign baseurl_with_trailing_slash = baseurl | append:"/" %}
+{% endif %}
 <div class="row">
+  <div class="col-md-2"></div>
   {% for example in site.data[page.language].get_started %}
   <div class="col-md-4">
     <a class="feature" href="{{ baseurl }}/get-started/{{ example.id }}">
