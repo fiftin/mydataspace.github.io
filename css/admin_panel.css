@@ -90,10 +90,8 @@
   display: block;
   float: left;
   color: white;
-  font-size: 32px;
-  font-family: 'Lalezar', cursive;
   padding-left: 10px;
-  padding-top: 3px;
+  padding-top: 2px;
   margin-left: 10px;
   opacity: 0.6;
   transition: opacity 0.3s;
