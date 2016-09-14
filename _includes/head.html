@@ -21,11 +21,12 @@
   <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
   <meta name="description" content="{{ site.data[page.language].slogan }}">
   <link rel="stylesheet" href="/css/main.css" type="text/css">
+  <link rel="stylesheet" href="/vendor/fontawesome/css/font-awesome.css" type="text/css">
   {% if include.webix %}
-    <link rel="stylesheet" href="/vendor/webix/webix.css" type="text/css">
-    <link rel="stylesheet" href="/css/webix.css" type="text/css">
+    <!-- <link rel="stylesheet" href="/vendor/webix/webix.css" type="text/css"> -->
+    <link rel="stylesheet" href="/skins/flat/webix.css" type="text/css">
+    <link rel="stylesheet" href="/css/admin_panel.css" type="text/css">
   {% else %}
-    <link rel="stylesheet" href="/vendor/fontawesome/css/font-awesome.css" type="text/css">
     <link rel="stylesheet" href="/vendor/tether/tether.css" type="text/css">
   {% endif %}
 
