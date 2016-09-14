@@ -87,14 +87,16 @@ get_started:
     sections:
       - id: backend
         title: Backend
-        description: Create greetings for world in different languages
+        description: Create demo data on the backend
         type: demo
+        # type: video_demo
         # height: 600
         # width: 1034
         height: 612
         width: 1045
         website: https://my-data.space
         url: /images/get_started/hello_world.gif
+        preview_url: /images/get_started/hello_world.jpg
         data_url: https://my-data.space/#hello-world
       - id: client
         title: Client

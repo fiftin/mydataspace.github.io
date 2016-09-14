@@ -50,7 +50,7 @@ layout: page
                     <div class="safari__url">{{ section.website | replace: "https://","<span class='safari__url__https'>https://</span>" }}</div>
                   </div>
                 </div>
-                <img class="safari__img" id="{{ section_media_id }}" />
+                <img class="safari__img" id="{{ section_media_id }}" src="{{ section.preview_url }}" />
                 {% include image_waiter.html id=section_media_id id=section_media_id width=section.width height=section.height url=section.url %}
               </div>
             {% when "code" %}
