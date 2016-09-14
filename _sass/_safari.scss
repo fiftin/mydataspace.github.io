@@ -24,7 +24,7 @@
   background: white;
   display: table-cell;
   width: 100%;
-  padding: 0 0 0 10px;
+  padding: 0;
   border-radius: 3px;
   position: relative;
 }
@@ -47,7 +47,7 @@
 .safari__url {
   position: absolute;
   top: 0;
-  left: 0;
+  left: 10px;
 }
 
 .safari__url__https {
