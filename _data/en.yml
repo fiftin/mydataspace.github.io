@@ -110,7 +110,7 @@ get_started:
   #   description: Backend for simple goods catalog.
 
   - id: chat
-    title: Chat
+    title: Simple Chat
     # description: Backend for simple goods catalog.
 
 docs:

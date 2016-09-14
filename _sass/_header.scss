@@ -24,7 +24,7 @@
 }
 
 .login_button {
-  margin-top: 8px;
+  margin-top: 6px;
   width: 80px;
   opacity: 0.5;
   transition: opacity 0.3s;
@@ -45,15 +45,15 @@
 
 .header__language {
   display: inline-block;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-top: 13px;
+  padding-bottom: 13px;
 }
 
 .header__language_button {
   padding-left: 5px;
   padding-right: 5px;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-top: 13px;
+  padding-bottom: 13px;
   line-height: 20px;
   color: white;
   &:hover, &:focus, &:active {

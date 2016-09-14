@@ -29,7 +29,7 @@ sections:
         title: WebSocket-ы
         description: То что делает сайт реактивным
       - id: scalability
-        title: Масштабируемость вычислительных ресурсов
+        title: Масштабируемость
         description: Позволяет справиться с любой нагрузкой
       - id: distribution
         title: Распределенное хранение данных
@@ -103,7 +103,7 @@ get_started:
   #   title: Каталог товаров
     # description: Бэкенд простого каталога товаров.
   - id: chat
-    title: Чат
+    title: Простой чат
     # description:
 docs:
   - id: overview
