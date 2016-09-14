@@ -2,7 +2,7 @@ UIHelper = {
   /**
    * Number of entities received by single request.
    */
-  NUMBER_OF_ENTITIES_LOADED_AT_TIME: 30,
+  NUMBER_OF_ENTITIES_LOADED_AT_TIME: 20,
   /**
    * Width of label of field in form.
    */
