@@ -28,6 +28,7 @@
 .footer__socials {
   margin-right: -10px;
   float: right;
+  font-size: $font-size-large;
 }
 
 .footer__link--social {
@@ -46,6 +47,7 @@
 
 @media (max-width: $screen-sm-max) {
   .footer__link--section {
+    margin-top: 20px;
     text-align: center;
   }
   .footer__link--subsection {
@@ -55,6 +57,7 @@
     float: left;
   }
   .footer__socials {
+    margin-top: 20px;
     margin-right: 50%;
     transform: translateX(50%);
   }

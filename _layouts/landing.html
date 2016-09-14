@@ -4,7 +4,7 @@
   {% include head.html webix=true %}
 
   <body>
-    <div id="bootstrap" style="min-height: 3000px">
+    <div id="bootstrap" class="landing landing--{{ page.language }}">
       <script type="text/javascript">
         if (localStorage.getItem('authToken') != null ||
             window.location.hash != null && window.location.hash !== '' && window.location.hash !== '#') {
