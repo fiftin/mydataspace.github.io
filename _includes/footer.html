@@ -16,7 +16,7 @@
       <div class="col-md-3">
         <a class="footer__link footer__link--section" href="{{ baseurl }}/docs">{{ site.data[page.language].menu.docs }}</a>
         {% for doc in site.data[page.language].docs %}
-          <a class="footer__link footer__link--subsection" href="{{ baseurl }}/docs#{{ doc.id }}">{{ doc.title }}</a>
+          <a class="footer__link footer__link--subsection" href="{{ baseurl }}/docs/{{ doc.id }}">{{ doc.title }}</a>
         {% endfor %}
       </div>
       <div class="col-md-3">

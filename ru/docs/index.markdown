@@ -1,6 +1,5 @@
 ---
-layout: page
-title: Документация - My Data Space
+layout: docs/index
+title: Документация
 language: ru
 ---
-Hello, World!

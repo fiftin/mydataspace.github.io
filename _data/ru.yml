@@ -108,7 +108,7 @@ get_started:
 docs:
   - id: overview
     title: Обзор
-  - id: server
+  - id: backend
     title: Бэкенд
-  - id: client
+  - id: client-api
     title: Клиентский API

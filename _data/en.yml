@@ -116,7 +116,7 @@ get_started:
 docs:
   - id: overview
     title: Overview
-  - id: server
+  - id: backend
     title: Backend
-  - id: client
+  - id: client-api
     title: Client API
