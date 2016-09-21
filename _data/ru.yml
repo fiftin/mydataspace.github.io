@@ -58,7 +58,7 @@ sections:
         title: Облачная инфраструктура
         # description: Облачная инфраструктура <a target="_blank" href="http://ovh.com">OVH</a>.
       - id: availability
-        title: Доступность 99.999%
+        title: Доступность 99.99%
       - id: security
         title: Защита от DDoS
 demos_title: Примеры
