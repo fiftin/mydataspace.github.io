@@ -610,7 +610,7 @@ UI = {
 			width: 200,
 			position: 'right',
 			state: function(state) {
-				var toolbarHeight = 47;
+				var toolbarHeight = 46;
 				state.top = toolbarHeight;
 				state.height -= toolbarHeight;
 			},
@@ -620,7 +620,6 @@ UI = {
             borderless: true,
             id: 'profile',
             css: 'profile',
-            autoheight: true,
             template: '<div class="profile__img_wrap"><img class="profile__img" src="#avatar#" /></div><div class="profile__name">#name#</div>',
             data: {
               avatar: '/images/no_avatar.png',

@@ -197,6 +197,7 @@
 }
 
 .profile {
+  height: 240px !important;
 }
 
 .profile__img_wrap {
@@ -213,7 +214,7 @@
 .profile__name {
   text-align: center;
   font-weight: bold;
-  margin-top: 6px;
+  margin-top: 9px;
 }
 
 .login_panel__providers {

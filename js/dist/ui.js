@@ -1773,7 +1773,6 @@ UI = {
             borderless: true,
             id: 'profile',
             css: 'profile',
-            autoheight: true,
             template: '<div class="profile__img_wrap"><img class="profile__img" src="#avatar#" /></div><div class="profile__name">#name#</div>',
             data: {
               avatar: '/images/no_avatar.png',
