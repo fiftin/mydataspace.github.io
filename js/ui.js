@@ -1088,8 +1088,7 @@ UI = {
                     id: 'NAME_LABEL_5',
                     label: STRINGS.NAME,
                     name: 'name',
-                    labelWidth: UIHelper.LABEL_WIDTH,
-                    readonly: UI.isViewOnly()
+                    labelWidth: UIHelper.LABEL_WIDTH
                   },
                   UIControls.getEntityTypeSelectTemplate(),
                   { view: 'text',
