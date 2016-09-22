@@ -7851,7 +7851,7 @@ function Myda(options) {
   this.options = common.extend({
     useLocalStorage: true,
 		apiURL: 'https://api.my-data.com',
-		websocketURL: 'https://api-mydatasp.rhcloud.com:8443',
+		websocketURL: 'https://api.my-data.com',
     connected: function() {
       // console.log('Maybe you forgot to specify connected-event handler');
     }
