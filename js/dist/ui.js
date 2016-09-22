@@ -1763,7 +1763,7 @@ UI = {
 			width: 200,
 			position: 'right',
 			state: function(state) {
-				var toolbarHeight = 47;
+				var toolbarHeight = 46;
 				state.top = toolbarHeight;
 				state.height -= toolbarHeight;
 			},
