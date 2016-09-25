@@ -21,6 +21,7 @@ title: Run Script
 
       function addScript(options) {
         var script = options.scripts[options.lastScriptIndex];
+
         options.lastScriptIndex++;
         var scriptTag = document.createElement('script');
         document.body.appendChild(scriptTag);
@@ -68,7 +69,9 @@ title: Run Script
             scripts: scripts,
             lastScriptIndex: 0
           }
-          addScript(options);
+          if (Array.isArray(scripts) && scripts.length > 0) {
+            addScript(options);
+          }
         }
       });
 
