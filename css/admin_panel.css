@@ -259,6 +259,17 @@ input:read-only {
   font-size: 16px;
 }
 
+.entity_form__text_label .webix_el_box {
+  padding-left: 0;
+}
+
+.entity_form__text_label input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  transform: translateX(2px);
+
+}
+
 .entity_tree__show_more_item {
   cursor: pointer;
 }
