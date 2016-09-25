@@ -266,8 +266,7 @@ input:read-only {
 .entity_form__text_label input {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
-  transform: translateX(2px);
-
+  transform: translateX(4px);
 }
 
 .entity_tree__show_more_item {
