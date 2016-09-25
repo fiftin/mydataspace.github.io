@@ -65,24 +65,9 @@ title: Run Script
               e.data.fields.filter(value => value.type !== 'j' && value.type !== 'u'));
 
           scripts.unshift({
-            name: 'socketio',
-            type: 'u',
-            value: 'https://cdn.socket.io/socket.io-1.4.5.js'
-          });
-          scripts.unshift({
-            name: 'common',
-            type: 'u',
-            value: 'https://my-data.space/js/common.js'
-          });
-          scripts.unshift({
-            name: 'formatters',
-            type: 'u',
-            value: 'https://my-data.space/js/formatters.js'
-          });
-          scripts.unshift({
             name: 'mydataspace',
             type: 'u',
-            value: 'https://my-data.space/js/mydataspace.js'
+            value: 'https://my-data.space/js/api/v1.5.js'
           });
 
           var options = {
