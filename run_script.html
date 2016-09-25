@@ -64,12 +64,6 @@ title: Run Script
             common.convertNameValueArrayToMap(
               e.data.fields.filter(value => value.type !== 'j' && value.type !== 'u'));
 
-          scripts.unshift({
-            name: 'mydataspace',
-            type: 'u',
-            value: 'https://my-data.space/js/api/v1.5.js'
-          });
-
           var options = {
             scripts: scripts,
             lastScriptIndex: 0
