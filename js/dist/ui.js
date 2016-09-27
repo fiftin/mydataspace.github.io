@@ -365,9 +365,11 @@ UIControls = {
       name: 'othersCan',
       hidden: UI.isViewOnly(),
       options: [
-        { id: 'private', value: STRINGS.ONLY_READ },
-        { id: 'public', value: STRINGS.CREATE_CHILDREN },
-        { id: 'unique', value: STRINGS.CREATE_ONE_CHILD }
+        { id: 'nothing', value: STRINGS.NOTHING },
+        { id: 'read', value: STRINGS.ONLY_READ },
+        { id: 'view_children', value: STRINGS.READ_AND_VIEW_CHILDREN },
+        { id: 'create_child', value: STRINGS.CREATE_ONE_CHILD },
+        { id: 'create_children', value: STRINGS.CREATE_CHILDREN }
       ],
       labelWidth: UIHelper.LABEL_WIDTH
     };

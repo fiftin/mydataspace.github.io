@@ -50,7 +50,9 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     DOCS: 'Documentation',
     DEMOS: 'Demos',
     GET_STARTED: 'Get Started',
-    SIGN_IN: 'Sign In'
+    SIGN_IN: 'Sign In',
+    NOTHING: 'Nothing',
+    READ_AND_VIEW_CHILDREN: 'Read and view children'
   },
   RU: {
     YES: 'Да',
@@ -104,7 +106,9 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     DOCS: 'Документация',
     DEMOS: 'Примеры',
     GET_STARTED: 'С чего начать',
-    SIGN_IN: 'Войти'
+    SIGN_IN: 'Войти',
+    NOTHING: 'Ничего',
+    READ_AND_VIEW_CHILDREN: 'Чтение и просм. доч. эл.'
   }
 };
 var LANGUAGE = localStorage.getItem('language') || 'EN';
