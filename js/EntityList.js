@@ -122,7 +122,7 @@ EntityList.prototype.createByFormData = function(formData) {
   var newEntityId = UIHelper.childId(this.getRootId(), formData.name);
   var data = UIHelper.dataFromId(newEntityId);
   data.fields = [];
-  data.type = formData.type;
+  data.othersCan = formData.othersCan;
   Mydataspace.emit('entities.create', data);
 };
 

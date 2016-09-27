@@ -492,7 +492,7 @@ UI = {
                 var newEntityId = UIHelper.childId(UI.entityList.getRootId(), formData.name);
                 var data = UIHelper.dataFromId(newEntityId);
                 data.fields = [];
-                data.type = formData.type;
+                data.othersCan = formData.othersCan;
                 Mydataspace.request('entities.create', data, function() {
                   $$('add_entity_window').hide();
                   UIControls.removeSpinnerFromWindow('add_entity_window');

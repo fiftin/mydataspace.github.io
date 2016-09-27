@@ -362,7 +362,7 @@ UIControls = {
     return {
       view: 'select',
       label: STRINGS.OTHERS_CAN,
-      name: 'type',
+      name: 'othersCan',
       hidden: UI.isViewOnly(),
       options: [
         { id: 'private', value: STRINGS.ONLY_READ },
@@ -474,7 +474,7 @@ EntityForm.prototype.setSelectedId = function(id) {
 EntityForm.prototype.setData = function(data) {
   var formData = {
     name: UIHelper.nameFromData(data),
-    type: data.type,
+    othersCan: data.othersCan,
     description: data.description,
     childPrototype: UI.isViewOnly() ? null : UIHelper.idFromData(data.childPrototype)
   };
@@ -831,7 +831,7 @@ EntityList.prototype.createByFormData = function(formData) {
   var newEntityId = UIHelper.childId(this.getRootId(), formData.name);
   var data = UIHelper.dataFromId(newEntityId);
   data.fields = [];
-  data.type = formData.type;
+  data.othersCan = formData.othersCan;
   Mydataspace.emit('entities.create', data);
 };
 
@@ -1645,7 +1645,7 @@ UI = {
                 var newEntityId = UIHelper.childId(UI.entityList.getRootId(), formData.name);
                 var data = UIHelper.dataFromId(newEntityId);
                 data.fields = [];
-                data.type = formData.type;
+                data.othersCan = formData.othersCan;
                 Mydataspace.request('entities.create', data, function() {
                   $$('add_entity_window').hide();
                   UIControls.removeSpinnerFromWindow('add_entity_window');

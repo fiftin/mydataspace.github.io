@@ -19,7 +19,7 @@ EntityForm.prototype.setSelectedId = function(id) {
 EntityForm.prototype.setData = function(data) {
   var formData = {
     name: UIHelper.nameFromData(data),
-    type: data.type,
+    othersCan: data.othersCan,
     description: data.description,
     childPrototype: UI.isViewOnly() ? null : UIHelper.idFromData(data.childPrototype)
   };

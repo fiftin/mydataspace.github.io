@@ -219,7 +219,7 @@ input:read-only {
 .profile__name {
   text-align: center;
   font-weight: bold;
-  margin-top: 9px;
+  margin-top: 11px;
 }
 
 .login_panel__providers {
