@@ -7715,7 +7715,7 @@ EntityFieldsSimplifier.prototype.format = function(data) {
   var res = {};
   if (data != null && data.fields != null) {
     if (!Array.isArray(data.fields)) {
-      throw new Error('fields field must be array');
+      throw new Error('fields field must be array, ' + (typeof data.fields) + ' received.');
     }
     for (let i in data.fields) {
       let field = data.fields[i];
@@ -7850,8 +7850,8 @@ function Myda(options) {
   }
   this.options = common.extend({
     useLocalStorage: true,
-		apiURL: 'https://api.my-data.com',
-		websocketURL: 'https://api.my-data.com',
+		apiURL: 'https://api.my-data.space',
+		websocketURL: 'https://api.my-data.space',
     connected: function() {
       // console.log('Maybe you forgot to specify connected-event handler');
     }
