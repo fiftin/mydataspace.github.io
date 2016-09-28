@@ -355,9 +355,10 @@ UIControls = {
       options.push({ id: id, value: UIHelper.FIELD_TYPES[id].title });
     }
     return {
-      view: 'select',
+      view: 'combo',
       required: true,
       name: 'type',
+      value: 's',
       label: STRINGS.TYPE,
       options: options
     };
@@ -365,10 +366,11 @@ UIControls = {
 
   getEntityTypeSelectTemplate: function() {
     return {
-      view: 'select',
+      view: 'combo',
       label: STRINGS.OTHERS_CAN,
       name: 'othersCan',
       hidden: UI.isViewOnly(),
+      value: 'view_children',
       options: [
         { id: 'nothing', value: STRINGS.NOTHING },
         { id: 'read', value: STRINGS.ONLY_READ },
@@ -636,8 +638,9 @@ EntityForm.prototype.addField = function(data, setDirty) {
           }.bind(this)
         }
       },
-      { view: 'select',
-        width: 70,
+      { view: 'richselect',
+        width: 30,
+        popupWidth: 400,
         hidden: UI.isViewOnly(),
         options: UIHelper.getFieldTypesAsArrayOfIdValue(),
         value: data.type,

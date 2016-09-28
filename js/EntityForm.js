@@ -174,8 +174,9 @@ EntityForm.prototype.addField = function(data, setDirty) {
           }.bind(this)
         }
       },
-      { view: 'select',
-        width: 70,
+      { view: 'richselect',
+        width: 30,
+        popupWidth: 400,
         hidden: UI.isViewOnly(),
         options: UIHelper.getFieldTypesAsArrayOfIdValue(),
         value: data.type,
