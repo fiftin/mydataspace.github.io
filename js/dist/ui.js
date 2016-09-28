@@ -799,7 +799,7 @@ EntityList.prototype.refreshData = function() {
     var showMoreChildId =
       UIHelper.childId(this.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
     var entityId = UIHelper.idFromData(data);
-    var children = data.children.map(UIHelper.entityFromData);
+    var children = data.children.filter(x => x.root !== 'root' || x.path !== '').map(UIHelper.entityFromData);
     if (this.getRootId() === entityId) {
       if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
         children[children.length - 1] = {
@@ -906,7 +906,7 @@ EntityTree.prototype.resolveChildren = function(id) {
     // Load children to first time opened node.
     Mydataspace.request('entities.getChildren', UIHelper.dataFromId(id), function(data) {
       var entityId = UIHelper.idFromData(data);
-      var children = data.children.map(UIHelper.entityFromData);
+      var children = data.children.filter(x => x.root !== 'root' || x.path !== '').map(UIHelper.entityFromData);
       UI.entityTree.setChildren(entityId, children);
       resolve();
     }, function(err) {
