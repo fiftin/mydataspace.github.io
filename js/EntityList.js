@@ -91,7 +91,7 @@ EntityList.prototype.refreshData = function() {
           value: STRINGS.SHOW_MORE
         }
       }
-      this.fill(entityId, children);
+      this.fill(entityId, children, data);
       $$('entity_list').addCss(showMoreChildId, 'entity_list__show_more_item');
     }
     $$('entity_list').enable();
@@ -105,12 +105,12 @@ EntityList.prototype.refreshData = function() {
  *                       Displays as '.' in entity list.
  * @param children Items of entity list.
  */
-EntityList.prototype.fill = function(parentEntityId, children) {
+EntityList.prototype.fill = function(parentEntityId, children, data) {
   $$('entity_list').clearAll();
   for (var i in children) {
     $$('entity_list').add(children[i], -1);
   }
-  $$('entity_list').add({ id: parentEntityId,  value: '.' }, 0);
+  $$('entity_list').add({ id: parentEntityId,  value: '.', count: data.numberOfChildren }, 0);
   $$('entity_list').select(parentEntityId);
 };
 

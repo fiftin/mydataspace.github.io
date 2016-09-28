@@ -50,7 +50,9 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     DOCS: 'Documentation',
     DEMOS: 'Demos',
     GET_STARTED: 'Get Started',
-    SIGN_IN: 'Sign In'
+    SIGN_IN: 'Sign In',
+    NOTHING: 'Nothing',
+    READ_AND_VIEW_CHILDREN: 'Read and view children'
   },
   RU: {
     YES: 'Да',
@@ -104,7 +106,9 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     DOCS: 'Документация',
     DEMOS: 'Примеры',
     GET_STARTED: 'С чего начать',
-    SIGN_IN: 'Войти'
+    SIGN_IN: 'Войти',
+    NOTHING: 'Ничего',
+    READ_AND_VIEW_CHILDREN: 'Чтение и просм. доч. эл.'
   }
 };
 var LANGUAGE = localStorage.getItem('language') || 'EN';
@@ -272,6 +276,7 @@ UIHelper = {
     return {
       id: entityId,
       value: UIHelper.nameFromData(data),
+      count: data.numberOfChildren,
       data: children
     };
   },
@@ -802,7 +807,7 @@ EntityList.prototype.refreshData = function() {
           value: STRINGS.SHOW_MORE
         }
       }
-      this.fill(entityId, children);
+      this.fill(entityId, children, data);
       $$('entity_list').addCss(showMoreChildId, 'entity_list__show_more_item');
     }
     $$('entity_list').enable();
@@ -816,12 +821,12 @@ EntityList.prototype.refreshData = function() {
  *                       Displays as '.' in entity list.
  * @param children Items of entity list.
  */
-EntityList.prototype.fill = function(parentEntityId, children) {
+EntityList.prototype.fill = function(parentEntityId, children, data) {
   $$('entity_list').clearAll();
   for (var i in children) {
     $$('entity_list').add(children[i], -1);
   }
-  $$('entity_list').add({ id: parentEntityId,  value: '.' }, 0);
+  $$('entity_list').add({ id: parentEntityId,  value: '.', count: data.numberOfChildren }, 0);
   $$('entity_list').select(parentEntityId);
 };
 
@@ -2130,7 +2135,10 @@ UI = {
                 { view: 'list',
                   id: 'entity_list',
                   select: true,
-                  template: '<div>#value#</div>',
+                  template: '<div class="entity_list__item">' +
+                            '<div class="entity_list__item_name">#value#</div>' +
+                            '<div class="entity_list__item_count">#count#</div>' +
+                            '</div>',
                   on: {
                     onBeforeSelect: function(id, selection) {
                       if (id.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID)) {

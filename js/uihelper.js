@@ -89,6 +89,7 @@ UIHelper = {
     return {
       id: entityId,
       value: UIHelper.nameFromData(data),
+      count: data.numberOfChildren,
       data: children
     };
   },

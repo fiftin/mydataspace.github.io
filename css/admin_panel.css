@@ -286,6 +286,18 @@ input:read-only {
   text-align: center;
 }
 
+.entity_list__item {
+
+}
+
+.entity_list__item_name {
+  float: left;
+}
+
+.entity_list__item_count {
+  float: right;
+}
+
 .entity_form__text_label .entity_form textarea {
   overflow: hidden;
 }

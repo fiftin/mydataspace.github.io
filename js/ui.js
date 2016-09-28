@@ -975,7 +975,10 @@ UI = {
                 { view: 'list',
                   id: 'entity_list',
                   select: true,
-                  template: '<div>#value#</div>',
+                  template: '<div class="entity_list__item">' +
+                            '<div class="entity_list__item_name">#value#</div>' +
+                            '<div class="entity_list__item_count">#count#</div>' +
+                            '</div>',
                   on: {
                     onBeforeSelect: function(id, selection) {
                       if (id.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID)) {
