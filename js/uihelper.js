@@ -45,6 +45,16 @@ UIHelper = {
     }
   },
 
+  FIELD_TYPE_ICONS: {
+    s: 'commenting',
+    w: 'lock',
+    t: 'align-justify',
+    i: 'italic',
+    r: 'calculator',
+    b: 'check-square-o',
+    d: 'calendar-o',
+  },
+
   getFieldTypesAsArrayOfIdValue: function() {
     var ret = [];
     for (var key in UIHelper.FIELD_TYPES) {

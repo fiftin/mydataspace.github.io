@@ -264,14 +264,37 @@ input:read-only {
 }
 
 .entity_form__text_label input {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  transform: translateX(4px);
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
 }
 
-.entity_form__text_label  select {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+.entity_form__field {
+  
+}
+
+.entity_form__field_type_button {
+  transform: translateX(-4px);
+}
+
+.entity_form__field_type_button .webix_icon {
+  margin-left: 5px !important;
+}
+
+.entity_form__field_type_popup {
+  transform: translateX(-30px);
+}
+
+.entity_form__field_delete {
+  transform: scale(1.2);
+}
+
+.entity_form__field_type_button button {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+.entity_form__field_type_button .webix_el_box {
+  padding-left: 0 !important;
 }
 
 .entity_tree__show_more_item {

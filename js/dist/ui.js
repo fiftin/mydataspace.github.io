@@ -232,6 +232,16 @@ UIHelper = {
     }
   },
 
+  FIELD_TYPE_ICONS: {
+    s: 'commenting',
+    w: 'lock',
+    t: 'align-justify',
+    i: 'italic',
+    r: 'calculator',
+    b: 'check-square-o',
+    d: 'calendar-o',
+  },
+
   getFieldTypesAsArrayOfIdValue: function() {
     var ret = [];
     for (var key in UIHelper.FIELD_TYPES) {
@@ -613,10 +623,17 @@ EntityForm.prototype.addField = function(data, setDirty) {
   }
   $$('entity_form').addView({
     id: 'entity_form__' + data.name,
+    css: 'entity_form__field',
     cols: [
       { view: 'text',
         value: data.name,
         name: 'fields.' + data.name + '.name',
+        hidden: true
+      },
+      { view: 'text',
+        value: data.type,
+        id: 'entity_form__' + data.name + '_type',
+        name: 'fields.' + data.name + '.type',
         hidden: true
       },
       { view: data.type === 'j' ? 'textarea' : 'text',
@@ -638,46 +655,25 @@ EntityForm.prototype.addField = function(data, setDirty) {
           }.bind(this)
         }
       },
-      { view: 'richselect',
+      { view: 'button',
         width: 30,
-        popupWidth: 400,
+        type: 'iconButton',
+        icon: UIHelper.FIELD_TYPE_ICONS[data.type],
+        css: 'entity_form__field_type_button',
+        popup: 'entity_form__field_type_popup',
         hidden: UI.isViewOnly(),
         options: UIHelper.getFieldTypesAsArrayOfIdValue(),
-        value: data.type,
-        id: 'entity_form__' + data.name + '_type',
-        name: 'fields.' + data.name + '.type',
+        id: 'entity_form__' + data.name + '_type_button',
         on: {
-          onChange: function(newv, oldv) {
-            if (newv === 'j' || oldv === 'j') {
-              var oldValues = webix.copy($$('entity_form')._values);
-              webix.ui(
-                { view: newv === 'j' ? 'textarea' : 'text',
-                  label: data.name,
-                  name: 'fields.' + data.name + '.value',
-                  id: 'entity_form__' + data.name + '_value',
-                  value: data.value,
-                  labelWidth: UIHelper.LABEL_WIDTH,
-                  height: 32,
-                  css: 'entity_form__text_label',
-                  on: {
-                    onFocus: function() {
-                      if (newv === 'j') {
-                        this.editScriptFieldId = 'entity_form__' + data.name + '_value';
-                        $$('edit_script_window').show();
-                      }
-                    }
-                  }
-                },
-                $$('entity_form__' + data.name),
-                $$('entity_form__' + data.name + '_value')
-              );
-              $$('entity_form')._values = oldValues;
-            }
-          }
+          onItemClick: function() {
+            this.currentFieldId = 'entity_form__' + data.name;
+            $$('entity_form__field_type_popup_list').select(data.type);
+          }.bind(this)
         }
       },
       { view: 'button',
         type: 'icon',
+        css: 'entity_form__field_delete',
         icon: 'remove',
         width: 25,
         hidden: UI.isViewOnly(),
@@ -1490,6 +1486,76 @@ UI = {
         });
         e.source.postMessage({ message: 'fields', fields: values }, '*');
       }
+    });
+
+    webix.ui({
+    	view: 'popup',
+    	id: 'entity_form__field_type_popup',
+      css: 'entity_form__field_type_popup',
+    	width: 130,
+    	body:{
+    		view: 'list',
+        id: 'entity_form__field_type_popup_list',
+        class: 'entity_form__field_type_popup_list',
+        borderless: true,
+    		data:[
+          { id: 's', value: 'String', icon: 'commenting' },
+          { id: 'w', value: 'Secret', icon: 'lock' },
+          { id: 't', value: 'Text', icon: 'align-justify' },
+          { id: 'i', value: 'Integer', icon: 'italic' },
+          { id: 'r', value: 'Float', icon: 'calculator'  },
+          // { id: 'b', value: 'Boolean', icon: 'check-square-o' },
+          // { id: 'd', value: 'Date', icon: 'calendar-o' },
+
+          // { id: 'x', value: 'Non-indexed', icon: 'low-vision' },
+          // { id: 'm', value: 'Money', icon: 'dollar' },
+          // { id: 'u', value: 'URL', icon: 'link' },
+          // { id: 'e', value: 'Email', icon: 'envelope' },
+          // { id: 'p', value: 'Phone', icon: 'phone' },
+          // { id: 'c', value: 'Custom', icon: 'pencil' },
+
+          // { value: 'More...', icon: '' },
+    		],
+    		datatype: 'json',
+    		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
+    		autoheight: true,
+    		select: true,
+        on: {
+          onItemClick: function(newv) {
+            $$(UI.entityForm.currentFieldId + '_type_button').define('icon', UIHelper.FIELD_TYPE_ICONS[newv]);
+            $$(UI.entityForm.currentFieldId + '_type_button').refresh();
+            var oldv = $$(UI.entityForm.currentFieldId + '_type').getValue();
+            $$(UI.entityForm.currentFieldId + '_type').setValue(newv);
+            $$('entity_form__field_type_popup').hide();
+            
+            if (newv === 't' || oldv === 't') {
+              var oldValues = webix.copy($$('entity_form')._values);
+              webix.ui(
+                { view: newv === 't' ? 'textarea' : 'text',
+                  label: data.name,
+                  name: 'fields.' + data.name + '.value',
+                  id: 'entity_form__' + data.name + '_value',
+                  value: data.value,
+                  labelWidth: UIHelper.LABEL_WIDTH,
+                  height: 32,
+                  css: 'entity_form__text_label',
+                  on: {
+                    onFocus: function() {
+                      if (newv === 'j') {
+                        this.editScriptFieldId = 'entity_form__' + data.name + '_value';
+                        $$('edit_script_window').show();
+                      }
+                    }
+                  }
+                },
+                $$('entity_form__' + data.name),
+                $$('entity_form__' + data.name + '_value')
+              );
+              $$('entity_form')._values = oldValues;
+            }
+          }
+        }
+    	}
     });
 
     webix.ui({

@@ -330,6 +330,76 @@ UI = {
     });
 
     webix.ui({
+    	view: 'popup',
+    	id: 'entity_form__field_type_popup',
+      css: 'entity_form__field_type_popup',
+    	width: 130,
+    	body:{
+    		view: 'list',
+        id: 'entity_form__field_type_popup_list',
+        class: 'entity_form__field_type_popup_list',
+        borderless: true,
+    		data:[
+          { id: 's', value: 'String', icon: 'commenting' },
+          { id: 'w', value: 'Secret', icon: 'lock' },
+          { id: 't', value: 'Text', icon: 'align-justify' },
+          { id: 'i', value: 'Integer', icon: 'italic' },
+          { id: 'r', value: 'Float', icon: 'calculator'  },
+          // { id: 'b', value: 'Boolean', icon: 'check-square-o' },
+          // { id: 'd', value: 'Date', icon: 'calendar-o' },
+
+          // { id: 'x', value: 'Non-indexed', icon: 'low-vision' },
+          // { id: 'm', value: 'Money', icon: 'dollar' },
+          // { id: 'u', value: 'URL', icon: 'link' },
+          // { id: 'e', value: 'Email', icon: 'envelope' },
+          // { id: 'p', value: 'Phone', icon: 'phone' },
+          // { id: 'c', value: 'Custom', icon: 'pencil' },
+
+          // { value: 'More...', icon: '' },
+    		],
+    		datatype: 'json',
+    		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
+    		autoheight: true,
+    		select: true,
+        on: {
+          onItemClick: function(newv) {
+            $$(UI.entityForm.currentFieldId + '_type_button').define('icon', UIHelper.FIELD_TYPE_ICONS[newv]);
+            $$(UI.entityForm.currentFieldId + '_type_button').refresh();
+            var oldv = $$(UI.entityForm.currentFieldId + '_type').getValue();
+            $$(UI.entityForm.currentFieldId + '_type').setValue(newv);
+            $$('entity_form__field_type_popup').hide();
+            
+            if (newv === 't' || oldv === 't') {
+              var oldValues = webix.copy($$('entity_form')._values);
+              webix.ui(
+                { view: newv === 't' ? 'textarea' : 'text',
+                  label: data.name,
+                  name: 'fields.' + data.name + '.value',
+                  id: 'entity_form__' + data.name + '_value',
+                  value: data.value,
+                  labelWidth: UIHelper.LABEL_WIDTH,
+                  height: 32,
+                  css: 'entity_form__text_label',
+                  on: {
+                    onFocus: function() {
+                      if (newv === 'j') {
+                        this.editScriptFieldId = 'entity_form__' + data.name + '_value';
+                        $$('edit_script_window').show();
+                      }
+                    }
+                  }
+                },
+                $$('entity_form__' + data.name),
+                $$('entity_form__' + data.name + '_value')
+              );
+              $$('entity_form')._values = oldValues;
+            }
+          }
+        }
+    	}
+    });
+
+    webix.ui({
       view: 'window',
       id: 'edit_script_window',
       modal: true,
