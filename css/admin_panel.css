@@ -259,6 +259,29 @@ input:read-only {
   font-size: 16px;
 }
 
+.entity_form__text_label label {
+  position: relative !important;
+}
+
+.entity_form__field_label {
+  transform: translateX(0);
+  transition: transform 0.5s;
+}
+
+.entity_form__field_label:hover {
+  transform: translateX(-60px);
+  transition: transform 2s;
+}
+
+.entity_form__field_label_ellipse {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 10px;
+  background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,1))
+}
+
 .entity_form__text_label .webix_el_box {
   padding-left: 0 !important;
 }
@@ -269,8 +292,9 @@ input:read-only {
 }
 
 .entity_form__field {
-  
+
 }
+
 
 .entity_form__field_type_button {
   transform: translateX(-4px);
