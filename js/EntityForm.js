@@ -168,7 +168,12 @@ EntityForm.prototype.addField = function(data, setDirty) {
       //   inputWidth: UIHelper.LABEL_WIDTH,
       // },
       { view: data.type === 'j' ? 'textarea' : 'text',
-        label: '<div class="entity_form__field_label">' + data.name + '</div><div class="entity_form__field_label_ellipse"></div>',
+        label: '<div style="visibility: hidden">fake</div>' +
+               '<div class="entity_form__field_label">' +
+                data.name +
+               '</div>' +
+               '<div class="entity_form__field_label_ellipse_right"></div>' +
+               '<div class="entity_form__field_label_ellipse"></div>',
         labelWidth: UIHelper.LABEL_WIDTH,
         name: 'fields.' + data.name + '.value',
         id: 'entity_form__' + data.name + '_value',
