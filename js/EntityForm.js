@@ -210,7 +210,7 @@ EntityForm.prototype.addField = function(data, setDirty) {
       { view: 'button',
         type: 'icon',
         css: 'entity_form__field_delete',
-        icon: 'remove',
+        icon: 'trash-o',
         width: 25,
         hidden: UI.isViewOnly(),
         click: function() {
