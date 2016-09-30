@@ -368,7 +368,7 @@ UI = {
             var oldv = $$(UI.entityForm.currentFieldId + '_type').getValue();
             $$(UI.entityForm.currentFieldId + '_type').setValue(newv);
             $$('entity_form__field_type_popup').hide();
-            
+
             if (newv === 't' || oldv === 't') {
               var oldValues = webix.copy($$('entity_form')._values);
               webix.ui(
@@ -906,7 +906,7 @@ UI = {
                   {},
                   { view: 'button',
                     type: 'icon',
-                    icon: 'remove',
+                    icon: 'trash-o',
                     id: 'DELETE_LABEL', label: STRINGS.DELETE,
                     width: 100,
                     click: function() {
@@ -1131,7 +1131,7 @@ UI = {
                   {},
                   { view: 'button',
                     type: 'icon',
-                    icon: 'remove',
+                    icon: 'trash-o',
                     id: 'entity_form__remove_button',
                     disabled: UI.isViewOnly(),
                     width: 30,
