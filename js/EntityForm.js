@@ -202,7 +202,7 @@ EntityForm.prototype.addField = function(data, setDirty) {
         id: 'entity_form__' + data.name + '_type_button',
         on: {
           onItemClick: function() {
-            this.currentFieldId = 'entity_form__' + data.name;
+            this.currentFieldName = data.name;
             $$('entity_form__field_type_popup_list').select(data.type);
           }.bind(this)
         }

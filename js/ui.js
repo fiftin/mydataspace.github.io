@@ -363,37 +363,38 @@ UI = {
     		select: true,
         on: {
           onItemClick: function(newv) {
-            $$(UI.entityForm.currentFieldId + '_type_button').define('icon', UIHelper.FIELD_TYPE_ICONS[newv]);
-            $$(UI.entityForm.currentFieldId + '_type_button').refresh();
-            var oldv = $$(UI.entityForm.currentFieldId + '_type').getValue();
-            $$(UI.entityForm.currentFieldId + '_type').setValue(newv);
+            var fieldId = 'entity_form__' + UI.entityForm.currentFieldName;
+            $$(fieldId + '_type_button').define('icon', UIHelper.FIELD_TYPE_ICONS[newv]);
+            $$(fieldId + '_type_button').refresh();
+            var oldv = $$(fieldId + '_type').getValue();
+            $$(fieldId + '_type').setValue(newv);
             $$('entity_form__field_type_popup').hide();
-
+            // var oldValues = webix.copy($$('entity_form')._values);
+            // delete oldValues['fields.' + UI.entityForm.currentFieldName + '.value'];
             if (newv === 't' || oldv === 't') {
-              var oldValues = webix.copy($$('entity_form')._values);
-              webix.ui(
-                { view: newv === 't' ? 'textarea' : 'text',
-                  label: data.name,
-                  name: 'fields.' + data.name + '.value',
-                  id: 'entity_form__' + data.name + '_value',
-                  value: data.value,
-                  labelWidth: UIHelper.LABEL_WIDTH,
-                  height: 32,
-                  css: 'entity_form__text_label',
-                  on: {
-                    onFocus: function() {
-                      if (newv === 'j') {
-                        this.editScriptFieldId = 'entity_form__' + data.name + '_value';
-                        $$('edit_script_window').show();
-                      }
-                    }
-                  }
-                },
-                $$('entity_form__' + data.name),
-                $$('entity_form__' + data.name + '_value')
-              );
-              $$('entity_form')._values = oldValues;
+              // webix.ui(
+              //   { view: newv === 't' ? 'textarea' : 'text',
+              //     label: data.name,
+              //     name: 'fields.' + data.name + '.value',
+              //     id: 'entity_form__' + data.name + '_value',
+              //     value: data.value,
+              //     labelWidth: UIHelper.LABEL_WIDTH,
+              //     height: 32,
+              //     css: 'entity_form__text_label',
+              //     on: {
+              //       onFocus: function() {
+              //         if (newv === 'j') {
+              //           this.editScriptFieldId = 'entity_form__' + data.name + '_value';
+              //           $$('edit_script_window').show();
+              //         }
+              //       }
+              //     }
+              //   },
+              //   $$('entity_form__' + data.name),
+              //   $$('entity_form__' + data.name + '_value')
+              // );
             }
+            // $$('entity_form')._values = oldValues;
           }
         }
     	}
