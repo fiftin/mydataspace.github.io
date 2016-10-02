@@ -25,6 +25,8 @@ EntityForm.prototype.setData = function(data) {
     name: UIHelper.nameFromData(data),
     othersCan: data.othersCan,
     description: data.description,
+    maxNumberOfChildren: data.maxNumberOfChildren,
+    isFixed: data.isFixed,
     childPrototype: UI.isViewOnly() ? null : UIHelper.idFromData(data.childPrototype)
   };
   this.clear();
