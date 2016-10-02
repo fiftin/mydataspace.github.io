@@ -53,7 +53,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SIGN_IN: 'Sign In',
     NOTHING: 'Nothing',
     READ_AND_VIEW_CHILDREN: 'Read and view children',
-    PROTO_IS_FIXED: 'Is Fixed'
+    PROTO_IS_FIXED: 'Is Fixed',
+    MAX_NUMBER_OF_CHILDREN: 'Max number of children'
   },
   RU: {
     YES: 'Да',
@@ -110,7 +111,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SIGN_IN: 'Войти',
     NOTHING: 'Ничего',
     READ_AND_VIEW_CHILDREN: 'Чтение и просм. доч. эл.',
-    PROTO_IS_FIXED: 'Зафиксирован'
+    PROTO_IS_FIXED: 'Зафиксирован',
+    MAX_NUMBER_OF_CHILDREN: 'Макс. число доч. эл.'
   }
 };
 var LANGUAGE = localStorage.getItem('language') || 'EN';
