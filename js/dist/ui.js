@@ -2371,7 +2371,7 @@ UI = {
                   { view: 'text',
                     id: 'MAX_NUMBER_OF_CHILDREN_LABEL',
                     label: STRINGS.MAX_NUMBER_OF_CHILDREN,
-                    name: 'maxNumberOfChildren`',
+                    name: 'maxNumberOfChildren',
                     labelWidth: UIHelper.LABEL_WIDTH,
                     hidden: UI.isViewOnly()
                   },
