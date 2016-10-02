@@ -56,6 +56,9 @@ UIHelper = {
   },
 
   isProto: function(id) {
+    if (id == null) {
+      return false;
+    }
     var idParts = id.split(':');
     if (idParts.length < 2) {
       return false;

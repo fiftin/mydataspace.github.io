@@ -52,7 +52,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     GET_STARTED: 'Get Started',
     SIGN_IN: 'Sign In',
     NOTHING: 'Nothing',
-    READ_AND_VIEW_CHILDREN: 'Read and view children'
+    READ_AND_VIEW_CHILDREN: 'Read and view children',
+    PROTO_IS_FIXED: 'Is Fixed'
   },
   RU: {
     YES: 'Да',
@@ -108,7 +109,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     GET_STARTED: 'С чего начать',
     SIGN_IN: 'Войти',
     NOTHING: 'Ничего',
-    READ_AND_VIEW_CHILDREN: 'Чтение и просм. доч. эл.'
+    READ_AND_VIEW_CHILDREN: 'Чтение и просм. доч. эл.',
+    PROTO_IS_FIXED: 'Зафиксирован'
   }
 };
 var LANGUAGE = localStorage.getItem('language') || 'EN';
@@ -240,6 +242,17 @@ UIHelper = {
     r: 'calculator',
     b: 'check-square-o',
     d: 'calendar-o',
+  },
+
+  isProto: function(id) {
+    if (id == null) {
+      return false;
+    }
+    var idParts = id.split(':');
+    if (idParts.length < 2) {
+      return false;
+    }
+    return idParts[1].startsWith('protos/');
   },
 
   getFieldTypesAsArrayOfIdValue: function() {
@@ -480,6 +493,10 @@ EntityForm.prototype.listen = function() {
   Mydataspace.on('entities.delete.res', function() {
     $$('entity_form').disable();
   });
+};
+
+EntityForm.prototype.isProto = function() {
+  return UIHelper.isProto(this.selectedId);
 };
 
 EntityForm.prototype.setSelectedId = function(id) {
@@ -1538,8 +1555,8 @@ UI = {
             var oldv = $$(fieldId + '_type').getValue();
             $$(fieldId + '_type').setValue(newv);
             $$('entity_form__field_type_popup').hide();
-            var oldValues = webix.copy($$('entity_form')._values);
-            delete oldValues['fields.' + UI.entityForm.currentFieldName + '.value'];
+            // var oldValues = webix.copy($$('entity_form')._values);
+            // delete oldValues['fields.' + UI.entityForm.currentFieldName + '.value'];
             if (newv === 't' || oldv === 't') {
               // webix.ui(
               //   { view: newv === 't' ? 'textarea' : 'text',
@@ -1563,7 +1580,7 @@ UI = {
               //   $$('entity_form__' + data.name + '_value')
               // );
             }
-            $$('entity_form')._values = oldValues;
+            // $$('entity_form')._values = oldValues;
           }
         }
     	}
@@ -2339,6 +2356,20 @@ UI = {
                     id: 'CHILD_PROTO_LABEL',
                     label: STRINGS.CHILD_PROTO,
                     name: 'childPrototype',
+                    labelWidth: UIHelper.LABEL_WIDTH,
+                    hidden: UI.isViewOnly()
+                  },
+                  { view: 'checkbox',
+                    id: 'PROTO_IS_FIXED_LABEL',
+                    label: STRINGS.PROTO_IS_FIXED,
+                    name: 'isFixed',
+                    labelWidth: UIHelper.LABEL_WIDTH,
+                    hidden: !UI.entityForm.isProto()
+                  },
+                  { view: 'text',
+                    id: 'MAX_NUMBER_OF_CHILDREN_LABEL',
+                    label: STRINGS.MAX_NUMBER_OF_CHILDREN,
+                    name: 'maxNumberOfChildren`',
                     labelWidth: UIHelper.LABEL_WIDTH,
                     hidden: UI.isViewOnly()
                   },
