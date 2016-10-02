@@ -40,6 +40,11 @@ EntityForm.prototype.refresh = function() {
   var req = UI.isViewOnly() ? 'entities.get' : 'entities.getWithMeta';
   Mydataspace.request(req, UIHelper.dataFromId(this.selectedId), function(data) {
     this.setData(data);
+    if (this.isProto()) {
+      $$('PROTO_IS_FIXED_LABEL').show();
+    } else {
+      $$('PROTO_IS_FIXED_LABEL').hide();
+    }
     $$('entity_form').enable();
   }.bind(this), function(err) {
     UI.error(err);

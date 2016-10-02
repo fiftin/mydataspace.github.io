@@ -1177,8 +1177,7 @@ UI = {
                     id: 'PROTO_IS_FIXED_LABEL',
                     label: STRINGS.PROTO_IS_FIXED,
                     name: 'isFixed',
-                    labelWidth: UIHelper.LABEL_WIDTH,
-                    hidden: !UI.entityForm.isProto()
+                    labelWidth: UIHelper.LABEL_WIDTH
                   },
                   { view: 'text',
                     id: 'MAX_NUMBER_OF_CHILDREN_LABEL',
