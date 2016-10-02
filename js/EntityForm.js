@@ -8,6 +8,10 @@ EntityForm.prototype.listen = function() {
   });
 };
 
+EntityForm.prototype.isProto = function() {
+  return UIHelper.isProto(this.selectedId);
+};
+
 EntityForm.prototype.setSelectedId = function(id) {
   if (this.selectedId === id) {
     return;

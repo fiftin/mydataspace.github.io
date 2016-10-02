@@ -52,7 +52,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     GET_STARTED: 'Get Started',
     SIGN_IN: 'Sign In',
     NOTHING: 'Nothing',
-    READ_AND_VIEW_CHILDREN: 'Read and view children'
+    READ_AND_VIEW_CHILDREN: 'Read and view children',
+    PROTO_IS_FIXED: 'Is Fixed'
   },
   RU: {
     YES: 'Да',
@@ -108,7 +109,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     GET_STARTED: 'С чего начать',
     SIGN_IN: 'Войти',
     NOTHING: 'Ничего',
-    READ_AND_VIEW_CHILDREN: 'Чтение и просм. доч. эл.'
+    READ_AND_VIEW_CHILDREN: 'Чтение и просм. доч. эл.',
+    PROTO_IS_FIXED: 'Зафиксирован'
   }
 };
 var LANGUAGE = localStorage.getItem('language') || 'EN';

@@ -55,6 +55,14 @@ UIHelper = {
     d: 'calendar-o',
   },
 
+  isProto: function(id) {
+    var idParts = id.split(':');
+    if (idParts.length < 2) {
+      return false;
+    }
+    return idParts[1].startsWith('protos/');
+  },
+
   getFieldTypesAsArrayOfIdValue: function() {
     var ret = [];
     for (var key in UIHelper.FIELD_TYPES) {

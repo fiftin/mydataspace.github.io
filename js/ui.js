@@ -1173,6 +1173,13 @@ UI = {
                     labelWidth: UIHelper.LABEL_WIDTH,
                     hidden: UI.isViewOnly()
                   },
+                  { view: 'checkbox',
+                    id: 'PROTO_IS_FIXED_LABEL',
+                    label: STRINGS.PROTO_IS_FIXED,
+                    name: 'isFixed',
+                    labelWidth: UIHelper.LABEL_WIDTH,
+                    hidden: !UI.entityForm.isProto()
+                  },
                   { view: 'textarea',
                     css: 'entity_form__description',
                     height: 100,
