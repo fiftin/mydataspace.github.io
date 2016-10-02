@@ -1180,6 +1180,13 @@ UI = {
                     labelWidth: UIHelper.LABEL_WIDTH,
                     hidden: !UI.entityForm.isProto()
                   },
+                  { view: 'text',
+                    id: 'MAX_NUMBER_OF_CHILDREN_LABEL',
+                    label: STRINGS.MAX_NUMBER_OF_CHILDREN,
+                    name: 'maxNumberOfChildren`',
+                    labelWidth: UIHelper.LABEL_WIDTH,
+                    hidden: UI.isViewOnly()
+                  },
                   { view: 'textarea',
                     css: 'entity_form__description',
                     height: 100,
