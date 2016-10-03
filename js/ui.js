@@ -984,6 +984,22 @@ UI = {
                   id: 'entity_tree',
                   gravity: 0.4,
                   select: true,
+                  // template: '{common.icon()}{common.folder()}<span>#value#<span>',
+                  template:function(obj, common){
+                      return common.icon(obj, common) +
+                             common.folder(obj, common) +
+                             "<span>" + obj.value + "</span>";
+                  },
+                  // template:function(obj, common){
+                  //   var icon = common.icon(obj, common);
+                  //   var folder = common.folder(obj, common);
+                  //   // if (obj.id == 2){
+                  //   //   if (status == true)
+                  //   //     return icon+folder+obj.value;
+                  //   //   return icon+obj.value;
+                  //   // }
+                  //   return icon + folder + obj.value;
+                  // },
                   on: {
                     onAfterLoad: function() {
                       $$('entity_tree').select(UI.entityTree.setCurrentIdToFirst());
