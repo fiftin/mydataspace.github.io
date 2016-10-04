@@ -115,6 +115,10 @@ UIHelper = {
     };
   },
 
+  getEntityTypeByPath: function(path) {
+    // if (path.startsWith(''))
+  },
+
   nameFromData: function(data) {
     if (common.isBlank(data.path)) {
       return data.root;

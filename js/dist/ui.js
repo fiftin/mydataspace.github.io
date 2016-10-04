@@ -306,6 +306,10 @@ UIHelper = {
     };
   },
 
+  getEntityTypeByPath: function(path) {
+    // if (path.startsWith(''))
+  },
+
   nameFromData: function(data) {
     if (common.isBlank(data.path)) {
       return data.root;
@@ -2179,22 +2183,50 @@ UI = {
                   id: 'entity_tree',
                   gravity: 0.4,
                   select: true,
-                  // template: '{common.icon()}{common.folder()}<span>#value#<span>',
-                  template:function(obj, common){
-                      return common.icon(obj, common) +
-                             common.folder(obj, common) +
-                             "<span>" + obj.value + "</span>";
+
+                  template:function(obj, common) {
+                    console.log(obj)
+                    var icon;
+                    switch (obj.$level) {
+                      case 1:
+                        icon = 'database';
+                        break;
+                      case 2:
+                        switch(obj.value) {
+                          case 'protos':
+                            icon = 'cubes';
+                            break;
+                          case 'tasks':
+                            icon = 'code';
+                            break;
+                        }
+                        break;
+                      case 3:
+                        var path = UIHelper.dataFromId(obj.id).path;
+                        if (path.startsWith('tasks')) {
+                          icon = 'file-code-o';
+                        } else if (path.startsWith('protos')) {
+                          icon = 'cube';
+                        }
+                        break;
+                    }
+
+                    if (icon == null) {
+                      // folder = common.folder(obj, common);
+                      if (obj.$count > 0) {
+                        icon = obj.open ? 'folder-open' : 'folder';
+                      } else {
+                        icon = 'file-o';
+                      }
+                    }
+
+                    folder =
+                      '<div class="webix_tree_folder_open webix_tree_folder_open--none fa fa-' + icon + '"></div>';
+
+                    return common.icon(obj, common) +
+                           folder +
+                           '<span>' + obj.value + '</span>';
                   },
-                  // template:function(obj, common){
-                  //   var icon = common.icon(obj, common);
-                  //   var folder = common.folder(obj, common);
-                  //   // if (obj.id == 2){
-                  //   //   if (status == true)
-                  //   //     return icon+folder+obj.value;
-                  //   //   return icon+obj.value;
-                  //   // }
-                  //   return icon + folder + obj.value;
-                  // },
                   on: {
                     onAfterLoad: function() {
                       $$('entity_tree').select(UI.entityTree.setCurrentIdToFirst());

@@ -3,6 +3,45 @@ input:read-only {
     box-shadow: none !important;
 }
 
+/*.webix_tree_folder_open--none {
+  background-image: none;
+}*/
+
+.webix_tree_folder_open {
+  background-image: none;
+  font-size: 17px;
+  padding-top: 5px;
+  color: #3498db !important;
+}
+/*
+.webix_tree_folder_open.fa {
+}*/
+
+/*.webix_tree_folder_open {
+
+}*/
+
+.webix_tree_folder_open--root {
+  background-image: url(/images/icons/root.svg);
+}
+
+.webix_tree_folder_open--tasks {
+  background-image: url(/images/icons/tasks.svg);
+}
+
+.webix_tree_folder_open--protos {
+  background-image: url(/images/icons/protos.svg);
+}
+
+.webix_tree_folder_open--task {
+  background-image: url(/images/icons/task.svg);
+}
+
+.webix_tree_folder_open--logs {
+  background-image: url(/images/icons/logs.svg);
+}
+
+
 /*
  * Fix bug with horizon
  */
