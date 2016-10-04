@@ -246,6 +246,32 @@ UIHelper = {
     d: 'calendar-o',
   },
 
+  getIconByPath: function(path, isEmpty, isOpened) {
+    var icon;
+    switch (path) {
+      case '':
+        icon = 'database';
+        break;
+      case 'protos':
+        icon = 'cubes';
+        break;
+      case 'tasks':
+        icon = 'code';
+        break;
+      default:
+        if (path.startsWith('tasks')) {
+          icon = 'file-code-o';
+        } else if (path.startsWith('protos')) {
+          icon = 'cube';
+        } else if (isEmpty) {
+          icon = 'file-o';
+        } else {
+          icon = isOpened ? 'folder-open' : 'folder';
+        }
+    }
+    return icon;
+  },
+
   isProto: function(id) {
     if (id == null) {
       return false;
@@ -2183,46 +2209,13 @@ UI = {
                   id: 'entity_tree',
                   gravity: 0.4,
                   select: true,
-
                   template:function(obj, common) {
-                    console.log(obj)
-                    var icon;
-                    switch (obj.$level) {
-                      case 1:
-                        icon = 'database';
-                        break;
-                      case 2:
-                        switch(obj.value) {
-                          case 'protos':
-                            icon = 'cubes';
-                            break;
-                          case 'tasks':
-                            icon = 'code';
-                            break;
-                        }
-                        break;
-                      case 3:
-                        var path = UIHelper.dataFromId(obj.id).path;
-                        if (path.startsWith('tasks')) {
-                          icon = 'file-code-o';
-                        } else if (path.startsWith('protos')) {
-                          icon = 'cube';
-                        }
-                        break;
-                    }
-
-                    if (icon == null) {
-                      // folder = common.folder(obj, common);
-                      if (obj.$count > 0) {
-                        icon = obj.open ? 'folder-open' : 'folder';
-                      } else {
-                        icon = 'file-o';
-                      }
-                    }
-
+                    var icon =
+                      UIHelper.getIconByPath(UIHelper.dataFromId(obj.id).path,
+                                             obj.$count === 0,
+                                             obj.open);
                     folder =
-                      '<div class="webix_tree_folder_open webix_tree_folder_open--none fa fa-' + icon + '"></div>';
-
+                      '<div class="webix_tree_folder_open fa fa-' + icon + '"></div>';
                     return common.icon(obj, common) +
                            folder +
                            '<span>' + obj.value + '</span>';
@@ -2289,10 +2282,18 @@ UI = {
                 { view: 'list',
                   id: 'entity_list',
                   select: true,
-                  template: '<div class="entity_list__item">' +
-                            '<div class="entity_list__item_name">#value#</div>' +
-                            '<div class="entity_list__item_count">#count#</div>' +
-                            '</div>',
+                  template: function(obj) {
+                    var icon =
+                      UIHelper.getIconByPath(UIHelper.dataFromId(obj.id).path,
+                                             obj.count === 0,
+                                             false);
+                    return '<div class="entity_list__item_icon fa fa-' + icon + '"></div>' +
+                           '<div class="entity_list__item">' +
+                           '<div class="entity_list__item_name">' + obj.value + '</div>' +
+                           '<div class="entity_list__item_count">' + obj.count + '</div>' +
+                           '<div class="entity_list__item_count_prefix fa fa-child"></div>' +
+                           '</div>';
+                  },
                   on: {
                     onBeforeSelect: function(id, selection) {
                       if (id.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID)) {

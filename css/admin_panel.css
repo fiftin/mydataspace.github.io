@@ -3,23 +3,12 @@ input:read-only {
     box-shadow: none !important;
 }
 
-/*.webix_tree_folder_open--none {
-  background-image: none;
-}*/
-
 .webix_tree_folder_open {
   background-image: none;
   font-size: 17px;
   padding-top: 5px;
   color: #3498db !important;
 }
-/*
-.webix_tree_folder_open.fa {
-}*/
-
-/*.webix_tree_folder_open {
-
-}*/
 
 .webix_tree_folder_open--root {
   background-image: url(/images/icons/root.svg);
@@ -388,8 +377,23 @@ input:read-only {
 
 }
 
+.entity_list__item_icon {
+  float: left;
+  width: 25px;
+  font-size: 17px;
+  padding-top: 5px;
+  color: #3498db !important;
+}
+
 .entity_list__item_name {
   float: left;
+}
+
+.entity_list__item_count_prefix {
+  float: right;
+  width: 20px;
+  font-size: 17px;
+  padding-top: 5px;
 }
 
 .entity_list__item_count {

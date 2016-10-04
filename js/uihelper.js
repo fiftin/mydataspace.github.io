@@ -55,6 +55,32 @@ UIHelper = {
     d: 'calendar-o',
   },
 
+  getIconByPath: function(path, isEmpty, isOpened) {
+    var icon;
+    switch (path) {
+      case '':
+        icon = 'database';
+        break;
+      case 'protos':
+        icon = 'cubes';
+        break;
+      case 'tasks':
+        icon = 'code';
+        break;
+      default:
+        if (path.startsWith('tasks')) {
+          icon = 'file-code-o';
+        } else if (path.startsWith('protos')) {
+          icon = 'cube';
+        } else if (isEmpty) {
+          icon = 'file-o';
+        } else {
+          icon = isOpened ? 'folder-open' : 'folder';
+        }
+    }
+    return icon;
+  },
+
   isProto: function(id) {
     if (id == null) {
       return false;
