@@ -385,6 +385,10 @@ input:read-only {
   color: #3498db !important;
 }
 
+.webix_selected .entity_list__item_icon {
+  color: white !important;
+}
+
 .entity_list__item_name {
   float: left;
 }
