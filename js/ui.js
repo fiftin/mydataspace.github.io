@@ -442,7 +442,7 @@ UI = {
                 width: 120,
                 click: function() {
                   $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
-                  UIHelper.popupCenter('/run_script.html', 'Run Script', 600, 400);
+                  UIHelper.popupCenter('/run-script.html', 'Run Script', 600, 400);
                 }
               },
               { view: 'button',
@@ -1147,7 +1147,7 @@ UI = {
                     id: 'entity_form__run_script_button',
                     hidden: true,
                     click: function() {
-                      UIHelper.popupCenter('/run_script.html', 'Run Script', 600, 400);
+                      UIHelper.popupCenter('/run-script.html', 'Run Script', 600, 400);
                     }
                   },
                   {},
@@ -1194,12 +1194,6 @@ UI = {
                     labelWidth: UIHelper.LABEL_WIDTH,
                     hidden: UI.isViewOnly()
                   },
-                  { view: 'checkbox',
-                    id: 'PROTO_IS_FIXED_LABEL',
-                    label: STRINGS.PROTO_IS_FIXED,
-                    name: 'isFixed',
-                    labelWidth: UIHelper.LABEL_WIDTH
-                  },
                   { view: 'text',
                     id: 'MAX_NUMBER_OF_CHILDREN_LABEL',
                     label: STRINGS.MAX_NUMBER_OF_CHILDREN,
@@ -1215,6 +1209,12 @@ UI = {
                     name: 'description',
                     labelWidth: UIHelper.LABEL_WIDTH,
                     hidden: UI.isViewOnly()
+                  },
+                  { view: 'checkbox',
+                    id: 'PROTO_IS_FIXED_LABEL',
+                    label: STRINGS.PROTO_IS_FIXED,
+                    name: 'isFixed',
+                    labelWidth: UIHelper.LABEL_WIDTH
                   },
                   { id: 'entity_form__fields_title',
                     template: STRINGS.FIELDS,

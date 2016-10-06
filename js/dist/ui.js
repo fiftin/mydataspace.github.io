@@ -247,6 +247,7 @@ UIHelper = {
   },
 
   getIconByPath: function(path, isEmpty, isOpened) {
+    var depth = UIHelper.getEntityDepthByPath(path);
     var icon;
     switch (path) {
       case '':
@@ -259,9 +260,9 @@ UIHelper = {
         icon = 'code';
         break;
       default:
-        if (path.startsWith('tasks')) {
+        if (path.startsWith('tasks') && depth === 2) {
           icon = 'file-code-o';
-        } else if (path.startsWith('protos')) {
+        } else if (path.startsWith('protos') && depth === 2) {
           icon = 'cube';
         } else if (isEmpty) {
           icon = 'file-o';
@@ -272,15 +273,26 @@ UIHelper = {
     return icon;
   },
 
+  getEntityDepthByPath: function(path) {
+   var depth = 1;
+   for (var i = 0; i < path.length; i++) {
+     if (path[i] === '/') {
+       depth++;
+     }
+   }
+   return depth;
+  },
+
   isProto: function(id) {
     if (id == null) {
       return false;
     }
-    var idParts = id.split(':');
-    if (idParts.length < 2) {
+    var identity = UIHelper.dataFromId(id);
+    if (identity.path == null) {
       return false;
     }
-    return idParts[1].startsWith('protos/');
+    return identity.path.startsWith('protos/') &&
+           UIHelper.getEntityDepthByPath(identity.path) === 2;
   },
 
   getFieldTypesAsArrayOfIdValue: function() {
@@ -1667,7 +1679,7 @@ UI = {
                 width: 120,
                 click: function() {
                   $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
-                  UIHelper.popupCenter('/run_script.html', 'Run Script', 600, 400);
+                  UIHelper.popupCenter('/run-script.html', 'Run Script', 600, 400);
                 }
               },
               { view: 'button',
@@ -2372,7 +2384,7 @@ UI = {
                     id: 'entity_form__run_script_button',
                     hidden: true,
                     click: function() {
-                      UIHelper.popupCenter('/run_script.html', 'Run Script', 600, 400);
+                      UIHelper.popupCenter('/run-script.html', 'Run Script', 600, 400);
                     }
                   },
                   {},

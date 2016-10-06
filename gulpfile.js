@@ -13,8 +13,8 @@ gulp.task('api', function() {
       './vendor/socket.io.js',
       './js/common.js',
       './js/formatters.js',
-      './js/api/Entities.js',
-      './js/api/Myda.js'
+      './js/api/entities.js',
+      './js/api/myda.js'
     ])
     .pipe(concat('v1.5.js'))
     .pipe(gulp.dest('./js/api/'));
@@ -24,12 +24,12 @@ gulp.task('ui', function() {
   return gulp.src([
       './js/strings.js',
       './js/ace.js',
-      './js/uihelper.js',
-      './js/uicontrols.js',
-      './js/EntityForm.js',
-      './js/EntityList.js',
-      './js/EntityTree.js',
-      './js/Pages.js',
+      './js/ui-helper.js',
+      './js/ui-controls.js',
+      './js/entity-form.js',
+      './js/entity-list.js',
+      './js/entity-tree.js',
+      './js/pages.js',
       './js/ui.js',
     ])
     .pipe(concat('ui.js'))
