@@ -1126,8 +1126,10 @@ UI = {
                   { view: 'button',
                     type: 'icon',
                     icon: 'refresh',
-                    id: 'entity_form__refresh_button',
-                    width: 30,
+                    // id: 'entity_form__refresh_button',
+                    // width: 30,
+                    id: 'REFRESH_LABEL_2', label: STRINGS.REFRESH,
+                    width: 100,
                     click: function() {
                       UI.entityForm.refresh();
                     }
