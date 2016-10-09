@@ -371,6 +371,7 @@ input:read-only {
 
 .entity_list__show_more_item {
   text-align: center;
+  background: #ffff9a;
 }
 
 .entity_list__item {
@@ -391,6 +392,10 @@ input:read-only {
 
 .entity_list__item_name {
   float: left;
+}
+
+.entity_list__show_more_item .entity_list__item_name {
+  float: none;
 }
 
 .entity_list__item_count_prefix {
