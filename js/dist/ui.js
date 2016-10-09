@@ -551,6 +551,48 @@ EntityForm.prototype.setSelectedId = function(id) {
   this.refresh();
 };
 
+EntityForm.prototype.setViewFields = function(fields, ignoredFieldNames, addLabelIfNoFieldsExists) {
+  if (!Array.isArray(ignoredFieldNames)) {
+    ignoredFieldNames = [];
+  }
+  if (addLabelIfNoFieldsExists == null) {
+    addLabelIfNoFieldsExists = true;
+  }
+  var viewFields = document.getElementById('view__fields');
+  if (common.isBlank(fields)) {
+    viewFields.innerHTML =
+      addLabelIfNoFieldsExists ?
+      '<div class="view__no_fields_exists">' + STRINGS.NO_FIELDS + '</div>' :
+      '';
+  } else {
+    viewFields.innerHTML = '';
+    var numberOfChildren = 0;
+    for (var i in fields) {
+      var field = fields[i];
+      if (ignoredFieldNames.indexOf(field.name) >= 0) {
+        continue;
+      }
+      numberOfChildren++;
+      $(viewFields).append('<div class="view__field">\n' +
+                           '  <div class="view__field_name">\n' +
+                           '    <div class="view__field_name_box">\n' +
+                                  field.name +
+                           '    </div>\n' +
+                           '  </div>\n' +
+                           '  <div class="view__field_value">\n' +
+                                field.value +
+                           '  </div>\n' +
+                           '</div>');
+    }
+  }
+  if (numberOfChildren === 0) {
+    viewFields.innerHTML =
+      addLabelIfNoFieldsExists ?
+      '<div class="view__no_fields_exists">' + STRINGS.NO_FIELDS + '</div>' :
+      '';
+  }
+};
+
 EntityForm.prototype.setRootView = function(data) {
   $.ajax({ url: '/fragments/root-view.html', method: 'get' }).then(function(html) {
     var view = document.getElementById('view');
@@ -561,12 +603,17 @@ EntityForm.prototype.setRootView = function(data) {
     document.getElementById('view__title').innerText =
       common.findValueByName(data.fields, 'name') || common.getChildName(data.root);
 
-    // document.getElementById('view__likes').innerText = 0;
-    // document.getElementById('view__clones').innerText =
-    //   common.findValueByName(data.fields, 'clones') || 0;
-
     document.getElementById('view__tags').innerText =
       common.findValueByName(data.fields, 'tags') || '';
+
+    var websiteURL = common.findValueByName(data.fields, 'websiteURL');
+    if (common.isBlank(websiteURL)) {
+      document.getElementById('view__websiteURL').style.display = 'none';
+    } else {
+      document.getElementById('view__websiteURL').style.display = 'block';
+      document.getElementById('view__websiteURL').innerText = websiteURL;
+      document.getElementById('view__websiteURL').href = websiteURL;
+    }
 
     document.getElementById('view__description').innerText =
       common.findValueByName(data.fields, 'description') || '';
@@ -578,7 +625,16 @@ EntityForm.prototype.setRootView = function(data) {
       document.getElementById('view__content').style.display = 'block';
     }
     document.getElementById('view__readme').innerHTML = md.render(readme);
-  });
+    this.setViewFields(data.fields,
+                       ['name',
+                        'avatar',
+                        'description',
+                        'websiteURL',
+                        'readme',
+                        'tags'],
+                       false);
+  }.bind(this));
+
 };
 
 EntityForm.prototype.setEntityView = function(data) {
@@ -592,27 +648,8 @@ EntityForm.prototype.setEntityView = function(data) {
                              false);
     document.getElementById('view__title').innerText =
       common.getChildName(data.path);
-
-    var viewFields = document.getElementById('view__fields');
-    if (common.isBlank(data.fields)) {
-      viewFields.innerHTML = '<div class="view__no_fields_exists">' + STRINGS.NO_FIELDS + '</div>';
-    } else {
-      viewFields.innerHTML = '';
-      for (var i in data.fields) {
-        var field = data.fields[i];
-        $(viewFields).append('<div class="view__field">\n' +
-                             '  <div class="view__field_name">\n' +
-                             '    <div class="view__field_name_box">\n' +
-                                    field.name +
-                             '    </div>\n' +
-                             '  </div>\n' +
-                             '  <div class="view__field_value">\n' +
-                                  field.value +
-                             '  </div>\n' +
-                             '</div>');
-      }
-    }
-  });
+    this.setViewFields(data.fields);
+  }.bind(this));
 };
 
 EntityForm.prototype.setView = function(data) {

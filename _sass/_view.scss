@@ -89,6 +89,10 @@
   font-size: 14px;
 }
 
+.view__websiteURL {
+  display: block;
+}
+
 .view__description {
   margin-bottom: 25px;
   font-size: 16px;
@@ -127,10 +131,12 @@
 }
 
 .view__field_name_box {
+  max-width: 150px;
+  overflow: hidden;
 }
 
 .view__field_value {
-  padding: 10px 0;
+  padding: 10px 0 10px 15px;
   display: table-cell;
   border-top: 1px solid lightgray;
   width: 100%;
