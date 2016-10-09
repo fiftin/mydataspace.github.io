@@ -173,6 +173,14 @@ var common = {
     return undefined;
   },
 
+  findValueByName: function(arr, name, caseInsensitive) {
+    var item = common.findByName(arr, name, caseInsensitive);
+    if (item == null) {
+      return item;
+    }
+    return item.value;
+  },
+
   getChildName: function(path) {
     var i = path.lastIndexOf('/');
     if (i === -1) {

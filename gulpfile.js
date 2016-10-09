@@ -48,6 +48,10 @@ gulp.task('bower', function() {
 });
 
 
+gulp.task('vendor:md', function () {
+  return gulp.src('bower_components/remarkable/dist/*.js').pipe(gulp.dest('vendor'));
+});
+
 
 //
 // Bootstrap

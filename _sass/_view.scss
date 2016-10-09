@@ -1,0 +1,144 @@
+/**
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    contenteditable attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that are clearfixed.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+    *zoom: 1;
+}
+
+.view {
+  font-family: Ubuntu;
+  color: black;
+  padding: 5px;
+}
+
+.view__overview {
+  display: table;
+  margin-bottom: 10px;
+}
+
+.view__overview--root {
+  margin-bottom: 20px;
+}
+
+.view__overview_image_wrap, .view__info {
+  display: table-cell;
+  vertical-align: top;
+}
+
+.view__overview_image {
+  width: 75px;
+  height: 75px;
+  border-radius: 10px;
+}
+
+.view__overview_icon {
+  border-radius: 10px;
+  color: #3498db;
+  font-size: 35px !important;
+}
+
+.view__info {
+  padding-left: 15px;
+}
+
+.view__title {
+  margin: 0 0 5px 0;
+  padding: 0;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.view__stats {
+  margin-bottom: 5px;
+  font-weight: bold;
+  display: none;
+}
+
+.view__stat {
+  float: left;
+  margin-right: 20px;
+}
+
+.view__stat:last-child {
+  float: left;
+  margin-right: 0;
+}
+
+.view__tags {
+  color: gray;
+  font-size: 14px;
+}
+
+.view__description {
+  margin-bottom: 25px;
+  font-size: 16px;
+}
+
+.view__tabs {
+  margin-bottom: 18px;
+}
+
+.view__tab {
+  border-top: 2px solid black;
+  border-radius: 10px;
+  padding: 3px 10px 0 10px;
+  font-weight: bold;
+  float: left;
+}
+
+.view__readme {
+  clear: both;
+  line-height: 1.4;
+}
+
+.view__fields {
+  display: table;
+}
+
+.view__field {
+  display: table-row;
+}
+
+.view__field_name {
+  padding: 10px 0;
+  display: table-cell;
+  border-top: 1px solid lightgray;
+  font-weight: bold;
+}
+
+.view__field_name_box {
+}
+
+.view__field_value {
+  padding: 10px 0;
+  display: table-cell;
+  border-top: 1px solid lightgray;
+  width: 100%;
+}
+
+.view__no_fields_exists {
+  padding: 10px 0;
+  border-top: 1px solid lightgray;
+  display: table-cell;
+  width: 10000px; // unreal big
+}

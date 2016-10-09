@@ -551,6 +551,80 @@ EntityForm.prototype.setSelectedId = function(id) {
   this.refresh();
 };
 
+EntityForm.prototype.setRootView = function(data) {
+  $.ajax({ url: '/fragments/root-view.html', method: 'get' }).then(function(html) {
+    var view = document.getElementById('view');
+    view.innerHTML = html;
+    document.getElementById('view__overview_image').src =
+      common.findValueByName(data.fields, 'avatar') || '/images/app.png';
+
+    document.getElementById('view__title').innerText =
+      common.findValueByName(data.fields, 'name') || common.getChildName(data.root);
+
+    // document.getElementById('view__likes').innerText = 0;
+    // document.getElementById('view__clones').innerText =
+    //   common.findValueByName(data.fields, 'clones') || 0;
+
+    document.getElementById('view__tags').innerText =
+      common.findValueByName(data.fields, 'tags') || '';
+
+    document.getElementById('view__description').innerText =
+      common.findValueByName(data.fields, 'description') || '';
+
+    var readme = common.findValueByName(data.fields, 'readme');
+    if (common.isBlank(readme)) {
+      document.getElementById('view__content').style.display = 'none';
+    } else {
+      document.getElementById('view__content').style.display = 'block';
+    }
+    document.getElementById('view__readme').innerHTML = md.render(readme);
+  });
+};
+
+EntityForm.prototype.setEntityView = function(data) {
+  $.ajax({ url: '/fragments/entity-view.html', method: 'get' }).then(function(html) {
+    var view = document.getElementById('view');
+    view.innerHTML = html;
+    document.getElementById('view__overview_icon').className =
+      'view__overview_icon fa fa-' +
+      UIHelper.getIconByPath(data.path,
+                             data.numberOfChildren === 0,
+                             false);
+    document.getElementById('view__title').innerText =
+      common.getChildName(data.path);
+
+    var viewFields = document.getElementById('view__fields');
+    if (common.isBlank(data.fields)) {
+      viewFields.innerHTML = '<div class="view__no_fields_exists">' + STRINGS.NO_FIELDS + '</div>';
+    } else {
+      viewFields.innerHTML = '';
+      for (var i in data.fields) {
+        var field = data.fields[i];
+        $(viewFields).append('<div class="view__field">\n' +
+                             '  <div class="view__field_name">\n' +
+                             '    <div class="view__field_name_box">\n' +
+                                    field.name +
+                             '    </div>\n' +
+                             '  </div>\n' +
+                             '  <div class="view__field_value">\n' +
+                                  field.value +
+                             '  </div>\n' +
+                             '</div>');
+      }
+    }
+  });
+};
+
+EntityForm.prototype.setView = function(data) {
+  if (common.isBlank(data.path)) {
+    this.setRootView(data);
+  } else if (data.path.startsWith('tasks/')) {
+    this.setTaskView(data);
+  } else {
+    this.setEntityView(data);
+  }
+};
+
 EntityForm.prototype.setData = function(data) {
   var formData = {
     name: UIHelper.nameFromData(data),
@@ -558,7 +632,7 @@ EntityForm.prototype.setData = function(data) {
     description: data.description,
     maxNumberOfChildren: data.maxNumberOfChildren,
     isFixed: data.isFixed,
-    childPrototype: UI.isViewOnly() ? null : UIHelper.idFromData(data.childPrototype)
+    childPrototype: UIHelper.idFromData(data.childPrototype)
   };
   this.clear();
   $$('entity_form').setValues(formData);
@@ -570,13 +644,17 @@ EntityForm.prototype.refresh = function() {
   $$('entity_form').disable();
   var req = UI.isViewOnly() ? 'entities.get' : 'entities.getWithMeta';
   Mydataspace.request(req, UIHelper.dataFromId(this.selectedId), function(data) {
-    this.setData(data);
-    if (this.isProto()) {
-      $$('PROTO_IS_FIXED_LABEL').show();
+    if (UI.isViewOnly()) {
+      this.setView(data);
     } else {
-      $$('PROTO_IS_FIXED_LABEL').hide();
+      this.setData(data);
+      if (this.isProto()) {
+        $$('PROTO_IS_FIXED_LABEL').show();
+      } else {
+        $$('PROTO_IS_FIXED_LABEL').hide();
+      }
+      $$('entity_form').enable();
     }
-    $$('entity_form').enable();
   }.bind(this), function(err) {
     UI.error(err);
     $$('entity_form').enable();
@@ -1271,18 +1349,22 @@ UI = {
   updateViewOnlyState: function() {
     if (UI.isViewOnly()) {
       UI.DISABLED_ON_VIEW_ONLY.forEach(function(item) {
-        $$(item).disable()
+        $$(item).hide()
       });
       UI.HIDDEN_ON_VIEW_ONLY.forEach(function(item) {
         $$(item).hide()
       });
+      $$('entity_form').hide();
+      $$('entity_view').show();
     } else {
       UI.DISABLED_ON_VIEW_ONLY.forEach(function(item) {
-        $$(item).enable()
+        $$(item).show()
       });
       UI.HIDDEN_ON_VIEW_ONLY.forEach(function(item) {
         $$(item).show()
       });
+      $$('entity_form').show();
+      $$('entity_view').hide();
     }
     UI.entityTree.refresh();
     UI.updateSize();
@@ -1429,8 +1511,8 @@ UI = {
 
   initConnection: function() {
     Mydataspace.on('login', function() {
-      $('#bootstrap').hide();
-      $('#webix').show();
+      document.getElementById('bootstrap').style.display = 'none';
+      document.getElementById('webix').style.display = 'block';
       UI.updateSize();
       UI.refresh();
       $$('SIGN_IN_LABEL').hide();
@@ -1441,8 +1523,8 @@ UI = {
     Mydataspace.on('logout', function() {
       $$('menu').hide();
       if (!UI.isViewOnly()) {
-        $('#webix').hide();
-        $('#bootstrap').show();
+        document.getElementById('bootstrap').style.display = 'block';
+        document.getElementById('webix').style.display = 'none';
       }
       document.getElementById('no_items').style.display = 'none';
       $$('SIGN_IN_LABEL').show();
@@ -2199,7 +2281,7 @@ UI = {
                       type: 'icon',
                       icon: 'plus',
                       id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
-                      disabled: UI.isViewOnly(),
+                      hidden: UI.isViewOnly(),
                       width: 130,
                       click: function() {
                         $$('add_root_window').show();
@@ -2270,7 +2352,7 @@ UI = {
                       type: 'icon',
                       icon: 'plus',
                       id: 'ADD_ENTITY_LABEL', label: STRINGS.ADD_ENTITY,
-                      disabled: UI.isViewOnly(),
+                      hidden: UI.isViewOnly(),
                       width: 110,
                       click: function() {
                         $$('add_entity_window').show();
@@ -2350,7 +2432,7 @@ UI = {
                     type: 'icon',
                     icon: 'save',
                     id: 'entity_form__save_button',
-                    disabled: UI.isViewOnly(),
+                    hidden: UI.isViewOnly(),
                     width: 30,
                     click: function() {
                       UI.entityForm.save();
@@ -2369,7 +2451,7 @@ UI = {
                     type: 'icon',
                     icon: 'plus',
                     id: 'ADD_FIELD_LABEL', label: STRINGS.ADD_FIELD,
-                    disabled: UI.isViewOnly(),
+                    hidden: UI.isViewOnly(),
                     width: 120,
                     click: function() {
                       $$('add_field_window').show();
@@ -2379,7 +2461,7 @@ UI = {
                     type: 'icon',
                     icon: 'play',
                     id: 'RUN_SCRIPT_LABEL', label: STRINGS.RUN_SCRIPT,
-                    disabled: UI.isViewOnly(),
+                    hidden: UI.isViewOnly(),
                     width: 100,
                     id: 'entity_form__run_script_button',
                     hidden: true,
@@ -2392,7 +2474,7 @@ UI = {
                     type: 'icon',
                     icon: 'trash-o',
                     id: 'entity_form__remove_button',
-                    disabled: UI.isViewOnly(),
+                    hidden: UI.isViewOnly(),
                     width: 30,
                     click: function() {
                       webix.confirm({
@@ -2410,39 +2492,36 @@ UI = {
                   }
                 ]
               },
+              {
+                id: 'entity_view',
+                template: '<div id="view">Hello, World!</div>',
+                hidden: !UI.isViewOnly()
+              },
               { view: 'form',
                 id: 'entity_form',
                 css: 'entity_form',
                 complexData: true,
                 scroll: true,
+                hidden: UI.isViewOnly(),
                 elements: [
                   { view: 'text',
                     id: 'NAME_LABEL_5',
                     label: STRINGS.NAME,
                     name: 'name',
-                    labelWidth: UIHelper.LABEL_WIDTH,
-                    readonly: UI.isViewOnly()
+                    labelWidth: UIHelper.LABEL_WIDTH
                   },
                   UIControls.getEntityTypeSelectTemplate(),
                   { view: 'text',
                     id: 'CHILD_PROTO_LABEL',
                     label: STRINGS.CHILD_PROTO,
                     name: 'childPrototype',
-                    labelWidth: UIHelper.LABEL_WIDTH,
-                    hidden: UI.isViewOnly()
-                  },
-                  { view: 'checkbox',
-                    id: 'PROTO_IS_FIXED_LABEL',
-                    label: STRINGS.PROTO_IS_FIXED,
-                    name: 'isFixed',
                     labelWidth: UIHelper.LABEL_WIDTH
                   },
                   { view: 'text',
                     id: 'MAX_NUMBER_OF_CHILDREN_LABEL',
                     label: STRINGS.MAX_NUMBER_OF_CHILDREN,
                     name: 'maxNumberOfChildren',
-                    labelWidth: UIHelper.LABEL_WIDTH,
-                    hidden: UI.isViewOnly()
+                    labelWidth: UIHelper.LABEL_WIDTH
                   },
                   { view: 'textarea',
                     css: 'entity_form__description',
@@ -2450,8 +2529,13 @@ UI = {
                     id: 'DESCRIPTION_LABEL_1',
                     label: STRINGS.DESCRIPTION,
                     name: 'description',
-                    labelWidth: UIHelper.LABEL_WIDTH,
-                    hidden: UI.isViewOnly()
+                    labelWidth: UIHelper.LABEL_WIDTH
+                  },
+                  { view: 'checkbox',
+                    id: 'PROTO_IS_FIXED_LABEL',
+                    label: STRINGS.PROTO_IS_FIXED,
+                    name: 'isFixed',
+                    labelWidth: UIHelper.LABEL_WIDTH
                   },
                   { id: 'entity_form__fields_title',
                     template: STRINGS.FIELDS,

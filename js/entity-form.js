@@ -20,6 +20,80 @@ EntityForm.prototype.setSelectedId = function(id) {
   this.refresh();
 };
 
+EntityForm.prototype.setRootView = function(data) {
+  $.ajax({ url: '/fragments/root-view.html', method: 'get' }).then(function(html) {
+    var view = document.getElementById('view');
+    view.innerHTML = html;
+    document.getElementById('view__overview_image').src =
+      common.findValueByName(data.fields, 'avatar') || '/images/app.png';
+
+    document.getElementById('view__title').innerText =
+      common.findValueByName(data.fields, 'name') || common.getChildName(data.root);
+
+    // document.getElementById('view__likes').innerText = 0;
+    // document.getElementById('view__clones').innerText =
+    //   common.findValueByName(data.fields, 'clones') || 0;
+
+    document.getElementById('view__tags').innerText =
+      common.findValueByName(data.fields, 'tags') || '';
+
+    document.getElementById('view__description').innerText =
+      common.findValueByName(data.fields, 'description') || '';
+
+    var readme = common.findValueByName(data.fields, 'readme');
+    if (common.isBlank(readme)) {
+      document.getElementById('view__content').style.display = 'none';
+    } else {
+      document.getElementById('view__content').style.display = 'block';
+    }
+    document.getElementById('view__readme').innerHTML = md.render(readme);
+  });
+};
+
+EntityForm.prototype.setEntityView = function(data) {
+  $.ajax({ url: '/fragments/entity-view.html', method: 'get' }).then(function(html) {
+    var view = document.getElementById('view');
+    view.innerHTML = html;
+    document.getElementById('view__overview_icon').className =
+      'view__overview_icon fa fa-' +
+      UIHelper.getIconByPath(data.path,
+                             data.numberOfChildren === 0,
+                             false);
+    document.getElementById('view__title').innerText =
+      common.getChildName(data.path);
+
+    var viewFields = document.getElementById('view__fields');
+    if (common.isBlank(data.fields)) {
+      viewFields.innerHTML = '<div class="view__no_fields_exists">' + STRINGS.NO_FIELDS + '</div>';
+    } else {
+      viewFields.innerHTML = '';
+      for (var i in data.fields) {
+        var field = data.fields[i];
+        $(viewFields).append('<div class="view__field">\n' +
+                             '  <div class="view__field_name">\n' +
+                             '    <div class="view__field_name_box">\n' +
+                                    field.name +
+                             '    </div>\n' +
+                             '  </div>\n' +
+                             '  <div class="view__field_value">\n' +
+                                  field.value +
+                             '  </div>\n' +
+                             '</div>');
+      }
+    }
+  });
+};
+
+EntityForm.prototype.setView = function(data) {
+  if (common.isBlank(data.path)) {
+    this.setRootView(data);
+  } else if (data.path.startsWith('tasks/')) {
+    this.setTaskView(data);
+  } else {
+    this.setEntityView(data);
+  }
+};
+
 EntityForm.prototype.setData = function(data) {
   var formData = {
     name: UIHelper.nameFromData(data),
@@ -27,7 +101,7 @@ EntityForm.prototype.setData = function(data) {
     description: data.description,
     maxNumberOfChildren: data.maxNumberOfChildren,
     isFixed: data.isFixed,
-    childPrototype: UI.isViewOnly() ? null : UIHelper.idFromData(data.childPrototype)
+    childPrototype: UIHelper.idFromData(data.childPrototype)
   };
   this.clear();
   $$('entity_form').setValues(formData);
@@ -39,13 +113,17 @@ EntityForm.prototype.refresh = function() {
   $$('entity_form').disable();
   var req = UI.isViewOnly() ? 'entities.get' : 'entities.getWithMeta';
   Mydataspace.request(req, UIHelper.dataFromId(this.selectedId), function(data) {
-    this.setData(data);
-    if (this.isProto()) {
-      $$('PROTO_IS_FIXED_LABEL').show();
+    if (UI.isViewOnly()) {
+      this.setView(data);
     } else {
-      $$('PROTO_IS_FIXED_LABEL').hide();
+      this.setData(data);
+      if (this.isProto()) {
+        $$('PROTO_IS_FIXED_LABEL').show();
+      } else {
+        $$('PROTO_IS_FIXED_LABEL').hide();
+      }
+      $$('entity_form').enable();
     }
-    $$('entity_form').enable();
   }.bind(this), function(err) {
     UI.error(err);
     $$('entity_form').enable();
