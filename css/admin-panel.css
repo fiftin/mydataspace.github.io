@@ -363,6 +363,11 @@ input:read-only {
 
 .entity_tree__show_more_item {
   cursor: pointer;
+  background: #ffff9a;
+}
+
+.entity_tree__show_more_item .webix_tree_folder_open {
+  visibility: hidden !important;
 }
 
 .entity_tree__show_more_item .webix_tree_file {
