@@ -1180,6 +1180,7 @@ UI = {
               {
                 id: 'entity_view',
                 template: '<div id="view">Hello, World!</div>',
+                scroll: true,
                 hidden: !UI.isViewOnly()
               },
               { view: 'form',
