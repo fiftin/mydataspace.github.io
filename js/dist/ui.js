@@ -581,7 +581,7 @@ EntityForm.prototype.setViewFields = function(fields, ignoredFieldNames, addLabe
                            '  </div>\n' +
                            '  <div class="view__field_value">\n' +
                            '    <div class="view__field_value_box">\n' +
-                                  field.value +
+                                  (common.isPresent(field.value) ? field.value : '&mdash;') +
                            '    </div>\n' +
                            '  </div>\n' +
                            '</div>');
