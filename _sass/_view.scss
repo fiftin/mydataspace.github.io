@@ -28,7 +28,18 @@
 .view {
   font-family: Ubuntu;
   color: black;
-  padding: 5px;
+  padding: 10px;
+  position: relative;
+}
+
+.view__loading {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  background: rbga(0, 0, 0, 0.5);
+  z-index: 100000;
 }
 
 .view__overview {
@@ -132,8 +143,9 @@
 }
 
 .view__field_name_box {
-  max-width: 150px;
   overflow: hidden;
+  max-width: 150px;
+  min-width: 70px;
 }
 
 .view__field_value {
@@ -141,6 +153,9 @@
   display: table-cell;
   border-top: 1px solid lightgray;
   width: 100%;
+}
+
+.view__field_value_box {
   word-wrap: break-word;
 }
 

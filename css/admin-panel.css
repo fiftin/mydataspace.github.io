@@ -416,3 +416,7 @@ input:read-only {
   width: 45px;
   color: #3498db;
 }
+
+.entity_view > .webix_template {
+  padding: 0;
+}

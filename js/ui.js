@@ -1179,9 +1179,10 @@ UI = {
               },
               {
                 id: 'entity_view',
-                template: '<div id="view">Hello, World!</div>',
+                template: '<div id="view" class="view"><div class="view__loading"></div></div>',
                 scroll: true,
-                hidden: !UI.isViewOnly()
+                hidden: !UI.isViewOnly(),
+                css: 'entity_view'
               },
               { view: 'form',
                 id: 'entity_form',

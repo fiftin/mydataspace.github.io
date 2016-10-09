@@ -49,7 +49,9 @@ EntityForm.prototype.setViewFields = function(fields, ignoredFieldNames, addLabe
                            '    </div>\n' +
                            '  </div>\n' +
                            '  <div class="view__field_value">\n' +
-                                field.value +
+                           '    <div class="view__field_value_box">\n' +
+                                  common.longWordWrap(field.value) +
+                           '    </div>\n' +
                            '  </div>\n' +
                            '</div>');
     }
@@ -122,6 +124,7 @@ EntityForm.prototype.setEntityView = function(data) {
 };
 
 EntityForm.prototype.setView = function(data) {
+  $('#view').append('<div class="view__loading"></div>');
   if (common.isBlank(data.path)) {
     this.setRootView(data);
   } else if (data.path.startsWith('tasks/')) {
