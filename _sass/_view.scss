@@ -113,6 +113,7 @@
 .view__readme {
   clear: both;
   line-height: 1.4;
+  word-wrap: break-word;
 }
 
 .view__fields {
@@ -140,6 +141,7 @@
   display: table-cell;
   border-top: 1px solid lightgray;
   width: 100%;
+  word-wrap: break-word;
 }
 
 .view__no_fields_exists {
