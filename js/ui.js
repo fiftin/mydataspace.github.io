@@ -52,7 +52,7 @@ UI = {
       $$('entity_view').hide();
     }
     UI.entityTree.refresh();
-    UI.updateSize();
+    UI.updateSizes();
   },
 
   updateLanguage: function() {
@@ -198,7 +198,7 @@ UI = {
     Mydataspace.on('login', function() {
       document.getElementById('bootstrap').style.display = 'none';
       document.getElementById('webix').style.display = 'block';
-      UI.updateSize();
+      UI.updateSizes();
       UI.refresh();
       $$('SIGN_IN_LABEL').hide();
       $$('menu_button').show();
@@ -407,56 +407,75 @@ UI = {
     webix.ui({
       view: 'window',
       id: 'edit_script_window',
-      modal: true,
-      width: 1000,
-      position: 'center',
       head: false,
+      left: 0,
+      top: 45,
       on: {
         onShow: function() {
-          $$('edit_script_window__editor').setValue($$(UI.entityForm.editScriptFieldId).getValue());
-          $$('edit_script_window__cancel_button').define('hotkey', 'escape');
-        }
+          $$('CLOSE_LABEL').define('hotkey', 'escape');
+          var windowWidth =
+            $$('admin_panel').$width -
+            $$('my_data_panel__right_panel').$width -
+            $$('my_data_panel__resizer_2').$width - 1;
+          var windowHeight = $$('my_data_panel').$height - 1;
+          $$('edit_script_window').define('width', windowWidth);
+          $$('edit_script_window').define('height', windowHeight);
+          $$('edit_script_window').resize();
+          $$('my_data_panel__resizer_2').disable();
+        },
+
+        onBlur: function() {
+          $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
+        },
+
+        onHide: function() {
+          // $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
+          $$('my_data_panel__resizer_2').enable();
+        },
       },
       body: {
         rows: [
           { view: 'toolbar',
             elements: [
-              { view: 'label',
-                id: 'EDIT_SCRIPT_LABEL', label: STRINGS.EDIT_SCRIPT,
-                width: 100
+              // { view: 'label',
+              //   id: 'EDIT_SCRIPT_LABEL', label: STRINGS.EDIT_SCRIPT,
+              //   width: 100
+              // },
+              // { view: 'label',
+              //   id: 'edit_script_window__title'
+              // },
+              { view: 'button',
+                type: 'icon',
+                icon: 'align-justify',
+                width: 70,
+                label: 'Text'
               },
-              { view: 'label',
-                id: 'edit_script_window__title'
+              { view: 'button',
+                type: 'icon',
+                icon: 'bookmark',
+                width: 110,
+                label: 'Markdown'
+              },
+              { view: 'button',
+                type: 'icon',
+                icon: 'code',
+                width: 80,
+                label: 'HTML'
+              },
+              { view: 'button',
+                type: 'icon',
+                icon: 'cog',
+                width: 110,
+                label: 'JavaScript',
+                css:   'webix_el_button--active'
               },
               {},
               { view: 'button',
                 type: 'icon',
-                icon: 'save',
-                id: 'SAVE_ENTITY_LABEL', label: STRINGS.SAVE_ENTITY,
-                width: 120,
-                click: function() {
-                  $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
-                  UI.entityForm.save();
-                }
-              },
-              { view: 'button',
-                type: 'icon',
-                icon: 'play',
-                id: 'RUN_SCRIPT_LABEL', label: STRINGS.RUN_SCRIPT,
-                width: 120,
-                click: function() {
-                  $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
-                  UIHelper.popupCenter('/run-script.html', 'Run Script', 600, 400);
-                }
-              },
-              { view: 'button',
-                type: 'icon',
                 icon: 'times',
                 id: 'CLOSE_LABEL', label: STRINGS.CLOSE,
-                id: 'edit_script_window__cancel_button',
-                width: 100,
+                width: 90,
                 click: function() {
-                  $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
                   $$('edit_script_window').hide();
                 }
               }
@@ -466,7 +485,6 @@ UI = {
             id: 'edit_script_window__editor',
             theme: 'monokai',
             mode: 'javascript',
-            height: 600,
             on: {
               onReady: function(editor) {
                 editor.getSession().setTabSize(2);
@@ -481,6 +499,9 @@ UI = {
                     $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
                     UI.entityForm.save();
                   }
+                });
+                editor.on('change', function() {
+                  $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
                 });
               }
             }
@@ -875,6 +896,7 @@ UI = {
             {
               view: 'resizer',
               id: 'my_apps_panel__resizer',
+              disabled: true
             },
             // Selected app edit
             { id: 'my_apps_panel__right_panel',
@@ -1117,8 +1139,9 @@ UI = {
                     type: 'icon',
                     icon: 'save',
                     id: 'entity_form__save_button',
+                    label: STRINGS.SAVE,
                     hidden: UI.isViewOnly(),
-                    width: 30,
+                    width: 70,
                     click: function() {
                       UI.entityForm.save();
                     }
@@ -1139,7 +1162,7 @@ UI = {
                     icon: 'plus',
                     id: 'ADD_FIELD_LABEL', label: STRINGS.ADD_FIELD,
                     hidden: UI.isViewOnly(),
-                    width: 120,
+                    width: 100,
                     click: function() {
                       $$('add_field_window').show();
                     }
@@ -1149,7 +1172,7 @@ UI = {
                     icon: 'play',
                     id: 'RUN_SCRIPT_LABEL', label: STRINGS.RUN_SCRIPT,
                     hidden: UI.isViewOnly(),
-                    width: 100,
+                    width: 60,
                     id: 'entity_form__run_script_button',
                     hidden: true,
                     click: function() {
@@ -1247,7 +1270,7 @@ UI = {
     });
 
     webix.event(window, 'resize', function(e) {
-      UI.updateSize();
+      UI.updateSizes();
     });
 
     window.addEventListener('error', function (e) {
@@ -1256,7 +1279,7 @@ UI = {
     });
   },
 
-  updateSize: function() {
+  updateSizes: function() {
     $$('admin_panel').define({
       width: window.innerWidth,
       height: window.innerHeight
@@ -1267,6 +1290,11 @@ UI = {
     $$('my_apps_panel').define({
       height: window.innerHeight - 46
     });
+    $$('edit_script_window').define({
+      height: $$('my_data_panel__resizer_2').$height
+    });
     $$('admin_panel').resize();
+    $$('admin_panel').resize();
+    $$('edit_script_window').resize();
   }
 };

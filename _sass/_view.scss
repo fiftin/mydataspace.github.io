@@ -27,9 +27,8 @@
 
 .view {
   font-family: Ubuntu;
-  color: black;
-  padding: 10px;
   position: relative;
+  padding-bottom: 20px;
 }
 
 .view__loading {
@@ -44,16 +43,24 @@
 
 .view__overview {
   display: table;
-  margin-bottom: 10px;
-}
-
-.view__overview--root {
-  margin-bottom: 20px;
+  padding: 10px;
+  background: rgb(243, 243, 243);
+  width: 100%;
+  table-layout: fixed;
+  border-bottom: 1px solid lightgray;
 }
 
 .view__overview_image_wrap, .view__info {
   display: table-cell;
   vertical-align: top;
+}
+
+.view__overview_image_wrap {
+  width: 35px;
+}
+
+.view__overview_image_wrap--large {
+  width: 75px;
 }
 
 .view__overview_image {
@@ -73,10 +80,9 @@
 }
 
 .view__title {
-  margin: 0 0 5px 0;
+  margin: 0;
   padding: 0;
   font-size: 30px;
-  font-weight: bold;
 }
 
 .view__stats {
@@ -105,8 +111,9 @@
 }
 
 .view__description {
-  margin-bottom: 25px;
+  padding: 20px 10px;
   font-size: 16px;
+  border-top: 1px solid #ebebeb;
 }
 
 .view__tabs {
@@ -114,11 +121,16 @@
 }
 
 .view__tab {
-  border-top: 2px solid black;
-  border-radius: 10px;
-  padding: 3px 10px 0 10px;
+  // border-top: 2px solid black;
+  // border-radius: 10px;
+  // padding: 3px 10px 0 10px;
   font-weight: bold;
   float: left;
+}
+
+.view__content {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .view__readme {
@@ -138,24 +150,21 @@
 }
 
 .view__field_name {
-  padding: 10px 0;
+  padding: 10px 0 10px 10px;
   display: table-cell;
-  border-top: 1px solid lightgray;
-  font-weight: bold;
+  border-top: 1px solid #ebebeb;
   width: 130px;
+  color: #3498db
 }
 
 .view__field_name_box {
   word-wrap: break-word;
-  // overflow: hidden;
-  // max-width: 150px;
-  // min-width: 70px;
 }
 
 .view__field_value {
-  padding: 10px 0 10px 15px;
+  padding: 10px 10px 10px 15px;
   display: table-cell;
-  border-top: 1px solid lightgray;
+  border-top: 1px solid #ebebeb;
   width: 100%;
 }
 
@@ -164,9 +173,8 @@
 }
 
 .view__no_fields_exists {
-  padding: 10px 0;
-  border-top: 1px solid lightgray;
+  padding: 10px 0 10px 10px;
+  border-top: 1px solid #ebebeb;
   display: table-cell;
   width: 100%;
-  // width: 10000px; // unreal big
 }

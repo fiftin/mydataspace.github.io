@@ -82,7 +82,7 @@ input:read-only {
 
 .logo {
   position: absolute;
-  z-index: 20;
+  z-index: 999;
   cursor: pointer;
   height: 45px;
   width: 350px;
@@ -291,6 +291,11 @@ input:read-only {
   position: relative !important;
 }
 
+label {
+  font-weight: normal !important;
+  color: #3498db !important;
+}
+
 .entity_form__field_label {
   position: absolute;
   top: 0;
@@ -414,8 +419,10 @@ input:read-only {
   float: right;
 }
 
-.entity_form__text_label .entity_form textarea {
+.entity_form__text_label textarea {
   overflow: hidden;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 
@@ -429,4 +436,44 @@ input:read-only {
 
 .entity_view > .webix_template {
   padding: 0;
+}
+
+.webix_window {
+  /*box-shadow: none !important;*/
+}
+
+.webix_el_button--active button {
+  background: #484848; /*27ae60*/
+}
+
+.webix_el_search input,
+.webix_el_text input,
+.webix_el_combo input,
+.webix_el_colorpicker input,
+.webix_el_datepicker input,
+.webix_el_textarea textarea {
+  border: 1px solid #3498db;
+  border-bottom-width: 2px;
+  border-radius: 10px;
+}
+
+.webix_el_search input:focus,
+.webix_el_text input:focus,
+.webix_el_combo input:focus,
+.webix_el_colorpicker input:focus,
+.webix_el_datepicker input:focus,
+.webix_el_textarea textarea:focus {
+  border: 1px solid #3498db;
+  border-bottom-width: 2px;
+  border-radius: 10px;
+  box-shadow: none;
+}
+
+.webix_el_combo span.webix_input_icon,
+.webix_el_richselect span.webix_input_icon,
+.webix_el_datepicker span.webix_input_icon,
+.webix_el_colorpicker span.webix_input_icon,
+.webix_el_dbldatepicker span.webix_input_icon {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }

@@ -314,8 +314,11 @@ EntityForm.prototype.addField = function(data, setDirty) {
           onFocus: function() {
             if (data.type === 'j') {
               this.editScriptFieldId = 'entity_form__' + data.name + '_value';
-              $$('edit_script_window__title').setValue(data.name);
-              $$('edit_script_window').show();
+              // $$('edit_script_window__title').setValue(data.name);
+              $$('edit_script_window__editor').setValue($$(UI.entityForm.editScriptFieldId).getValue());
+              if (!$$('edit_script_window').isVisible()) {
+                $$('edit_script_window').show();
+              }
             }
           }.bind(this)
         }
@@ -326,7 +329,6 @@ EntityForm.prototype.addField = function(data, setDirty) {
         icon: UIHelper.FIELD_TYPE_ICONS[data.type],
         css: 'entity_form__field_type_button',
         popup: 'entity_form__field_type_popup',
-        hidden: UI.isViewOnly(),
         options: UIHelper.getFieldTypesAsArrayOfIdValue(),
         id: 'entity_form__' + data.name + '_type_button',
         on: {
@@ -341,7 +343,6 @@ EntityForm.prototype.addField = function(data, setDirty) {
         css: 'entity_form__field_delete',
         icon: 'trash-o',
         width: 25,
-        hidden: UI.isViewOnly(),
         click: function() {
           this.deleteField(data.name);
         }.bind(this)
