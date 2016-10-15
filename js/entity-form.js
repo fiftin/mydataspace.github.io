@@ -42,18 +42,18 @@ EntityForm.prototype.setViewFields = function(fields, ignoredFieldNames, addLabe
         continue;
       }
       numberOfChildren++;
-      $('<div class="view__field">\n' +
-        '  <div class="view__field_name">\n' +
-        '    <div class="view__field_name_box">\n' +
-               field.name +
-        '    </div>\n' +
-        '  </div>\n' +
-        '  <div class="view__field_value">\n' +
-        '    <div class="view__field_value_box">' +
-               common.isPresent(field.value) ? common.textToHtml(field.value) : '&mdash;' +
-        '    </div>\n' +
-        '  </div>\n' +
-        '</div>').appendTo(viewFields);
+      $(viewFields).append('<div class="view__field">\n' +
+                           '  <div class="view__field_name">\n' +
+                           '    <div class="view__field_name_box">\n' +
+                                  field.name +
+                           '    </div>\n' +
+                           '  </div>\n' +
+                           '  <div class="view__field_value">\n' +
+                           '    <div class="view__field_value_box">\n' +
+                                  (common.isPresent(field.value) ? common.textToHtml(field.value) : '&mdash;') +
+                           '    </div>\n' +
+                           '  </div>\n' +
+                           '</div>');
     }
   }
   if (numberOfChildren === 0) {
