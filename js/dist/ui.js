@@ -580,7 +580,7 @@ EntityForm.prototype.setViewFields = function(fields, ignoredFieldNames, addLabe
         '    </div>\n' +
         '  </div>\n' +
         '  <div class="view__field_value">\n' +
-        '    <div class="view__field_value_box"></div>\n' +
+        '    <pre class="view__field_value_box"></pre>\n' +
         '  </div>\n' +
         '</div>').appendTo(viewFields)
                  .find('.view__field_value > .view__field_value_box')
