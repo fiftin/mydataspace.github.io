@@ -11,7 +11,65 @@ var common = {
 
   longWordWrap: function(str, options) {
     return str;
-  }
+  },
+
+  escapeHtml: function(string) {
+    var str = '' + string;
+    var match = /["'&<>]/.exec(str);
+
+    if (!match) {
+      return str;
+    }
+
+    var escape;
+    var html = '';
+    var index = 0;
+    var lastIndex = 0;
+
+    for (index = match.index; index < str.length; index++) {
+      switch (str.charCodeAt(index)) {
+        case 34: // "
+          escape = '&quot;';
+          break;
+        case 38: // &
+          escape = '&amp;';
+          break;
+        case 39: // '
+          escape = '&#39;';
+          break;
+        case 60: // <
+          escape = '&lt;';
+          break;
+        case 62: // >
+          escape = '&gt;';
+          break;
+        default:
+          continue;
+      }
+
+      if (lastIndex !== index) {
+        html += str.substring(lastIndex, index);
+      }
+
+      lastIndex = index + 1;
+      html += escape;
+    }
+
+    return lastIndex !== index
+      ? html + str.substring(lastIndex, index)
+      : html;
+  },
+
+  textToHtml: function(str) {
+    var escaped = common.escapeHtml(str);
+    var lines = escaped.split('\n');
+    if (lines.length === 1) {
+      return escaped;
+    }
+    return lines.map(function(line) {
+      return '<p>' + line + '</p>';
+    }).join('\n');
+  },
 
   // def long_word_wrap(str, options = {})
   //   opts = { length: 10000, word_length: 10, shy_length: 4 }.merge(options)

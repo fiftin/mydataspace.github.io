@@ -14,7 +14,11 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'test/**/*Spec.js',
-      'js/**/*.js'
+      'js/common.js',
+      'js/api/myda.js',
+      'js/api/entities.js',
+      'js/strings.js',
+      'js/ui-helper.js'
     ],
 
 

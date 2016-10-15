@@ -3,7 +3,7 @@
 describe('formatters', function() {
 
   describe('EntityFieldsSimplifier', function() {
-    it('should returns short form of fields', function() {
+    xit('should returns short form of fields', function() {
       var data = {
         fields: [
           { name: 'address', value: 'Lenin st. 101', type: 's' },
@@ -18,7 +18,7 @@ describe('formatters', function() {
   });
 
   describe('EntityChildrenSimplifier', function() {
-    it('should returns short form of children', function() {
+    xit('should returns short form of children', function() {
       var data = {
         children: [
           { path: 'users/denis-gukov/address', title: 'Address' },
@@ -35,7 +35,7 @@ describe('formatters', function() {
   });
 
   describe('EntitySimplifier', function() {
-    it('should returns short form of entity in depth', function() {
+    xit('should returns short form of entity in depth', function() {
       var data = {
         children: [
           {
@@ -82,7 +82,7 @@ describe('formatters', function() {
       expect(data.children.addresses.children.addr1.fields.zip).to.eq(455000);
     });
 
-    it('should returns short form of datas', function() {
+    xit('should returns short form of datas', function() {
       var data = {
         datas: [
           {
