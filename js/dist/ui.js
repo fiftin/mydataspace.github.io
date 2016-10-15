@@ -573,18 +573,18 @@ EntityForm.prototype.setViewFields = function(fields, ignoredFieldNames, addLabe
         continue;
       }
       numberOfChildren++;
-      $(viewFields).append('<div class="view__field">\n' +
-                           '  <div class="view__field_name">\n' +
-                           '    <div class="view__field_name_box">\n' +
-                                  field.name +
-                           '    </div>\n' +
-                           '  </div>\n' +
-                           '  <div class="view__field_value">\n' +
-                           '    <div class="view__field_value_box">\n' +
-                                  (common.isPresent(field.value) ? field.value : '&mdash;') +
-                           '    </div>\n' +
-                           '  </div>\n' +
-                           '</div>');
+      $('<div class="view__field">\n' +
+        '  <div class="view__field_name">\n' +
+        '    <div class="view__field_name_box">\n' +
+               field.name +
+        '    </div>\n' +
+        '  </div>\n' +
+        '  <div class="view__field_value">\n' +
+        '    <div class="view__field_value_box"></div>\n' +
+        '  </div>\n' +
+        '</div>').appendTo(viewFields)
+                 .find('.view__field_value > .view__field_value_box')
+                 .text(common.isPresent(field.value) ? field.value : '&mdash;');
     }
   }
   if (numberOfChildren === 0) {
