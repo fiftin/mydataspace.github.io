@@ -845,7 +845,6 @@ EntityForm.prototype.addField = function(data, setDirty) {
           onFocus: function() {
             if (data.type === 'j') {
               this.editScriptFieldId = 'entity_form__' + data.name + '_value';
-              // $$('edit_script_window__title').setValue(data.name);
               $$('edit_script_window__editor').setValue($$(UI.entityForm.editScriptFieldId).getValue());
               if (!$$('edit_script_window').isVisible()) {
                 $$('edit_script_window').show();

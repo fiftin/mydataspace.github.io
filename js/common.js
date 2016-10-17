@@ -15,7 +15,7 @@ var common = {
 
   escapeHtml: function(string) {
     var str = '' + string;
-    var match = /["'&<>]/.exec(str);
+    var match = /["'&<> ]/.exec(str);
 
     if (!match) {
       return str;
@@ -28,6 +28,9 @@ var common = {
 
     for (index = match.index; index < str.length; index++) {
       switch (str.charCodeAt(index)) {
+        case 32: // space
+          escape = '&nbsp;';
+          break;
         case 34: // "
           escape = '&quot;';
           break;

@@ -170,6 +170,11 @@
 
 .view__field_value_box {
   word-wrap: break-word;
+  max-height: 300px;
+  overflow-y: auto;
+  p {
+    margin-bottom: 0;
+  }
 }
 
 .view__no_fields_exists {
