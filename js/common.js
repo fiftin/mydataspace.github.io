@@ -74,23 +74,6 @@ var common = {
     }).join('\n');
   },
 
-  // def long_word_wrap(str, options = {})
-  //   opts = { length: 10000, word_length: 10, shy_length: 4 }.merge(options)
-  //   ret = ''
-  //   offset = 0
-  //   str = truncate(str, length: opts[:length]) if str.length > opts[:length]
-  //   m = str.match(/[^\s\n\r]{#{opts[:word_length]},}/, offset)
-  //   while m
-  //     ret << h(str[offset..m.begin(0)-1]) if offset < m.begin(0)
-  //     s = m[0].scan(/[^\s\n\r]{1,#{opts[:shy_length]}}/)
-  //     ret << s.map{ |x| h(x) }.join('&shy;')
-  //     offset = m.end(0)
-  //     m = str.match(/[^\s\n\r]{#{opts[:word_length],}/, offset)
-  //   end
-  //   ret << h(str[offset..-1])
-  //   ret.html_safe
-  // end
-
   isNumber: function(n) {
     return Number(n) === n || (typeof n === 'string' && /^\d[\d\.]*$/.test(n));
   },

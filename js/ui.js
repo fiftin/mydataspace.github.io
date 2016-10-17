@@ -1182,6 +1182,16 @@ UI = {
                   {},
                   { view: 'button',
                     type: 'icon',
+                    icon: 'pencil-square-o',
+                    id: 'entity_form__edit_button',
+                    hidden: UI.isViewOnly(),
+                    width: 30,
+                    click: function() {
+                      UI.entityForm.refresh(true);
+                    }
+                  },
+                  { view: 'button',
+                    type: 'icon',
                     icon: 'trash-o',
                     id: 'entity_form__remove_button',
                     hidden: UI.isViewOnly(),
@@ -1206,7 +1216,6 @@ UI = {
                 id: 'entity_view',
                 template: '<div id="view" class="view"><div class="view__loading"></div></div>',
                 scroll: true,
-                hidden: !UI.isViewOnly(),
                 css: 'entity_view'
               },
               { view: 'form',
@@ -1214,7 +1223,7 @@ UI = {
                 css: 'entity_form',
                 complexData: true,
                 scroll: true,
-                hidden: UI.isViewOnly(),
+                hidden: true,
                 elements: [
                   { view: 'text',
                     id: 'NAME_LABEL_5',

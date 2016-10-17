@@ -663,6 +663,8 @@ EntityForm.prototype.setView = function(data) {
   } else {
     this.setEntityView(data);
   }
+  $$('entity_form').hide();
+  $$('entity_view').show();
 };
 
 EntityForm.prototype.setData = function(data) {
@@ -678,13 +680,15 @@ EntityForm.prototype.setData = function(data) {
   $$('entity_form').setValues(formData);
   this.addFields(data.fields);
   this.setClean();
+  $$('entity_view').hide();
+  $$('entity_form').show();
 };
 
-EntityForm.prototype.refresh = function() {
+EntityForm.prototype.refresh = function(isWithMeta) {
   $$('entity_form').disable();
-  var req = UI.isViewOnly() ? 'entities.get' : 'entities.getWithMeta';
+  var req = !isWithMeta ? 'entities.get' : 'entities.getWithMeta';
   Mydataspace.request(req, UIHelper.dataFromId(this.selectedId), function(data) {
-    if (UI.isViewOnly()) {
+    if (!isWithMeta) { // UI.isViewOnly()) {
       this.setView(data);
     } else {
       this.setData(data);
@@ -2537,6 +2541,16 @@ UI = {
                   {},
                   { view: 'button',
                     type: 'icon',
+                    icon: 'pencil-square-o',
+                    id: 'entity_form__edit_button',
+                    hidden: UI.isViewOnly(),
+                    width: 30,
+                    click: function() {
+                      UI.entityForm.refresh(true);
+                    }
+                  },
+                  { view: 'button',
+                    type: 'icon',
                     icon: 'trash-o',
                     id: 'entity_form__remove_button',
                     hidden: UI.isViewOnly(),
@@ -2561,7 +2575,6 @@ UI = {
                 id: 'entity_view',
                 template: '<div id="view" class="view"><div class="view__loading"></div></div>',
                 scroll: true,
-                hidden: !UI.isViewOnly(),
                 css: 'entity_view'
               },
               { view: 'form',
@@ -2569,7 +2582,7 @@ UI = {
                 css: 'entity_form',
                 complexData: true,
                 scroll: true,
-                hidden: UI.isViewOnly(),
+                hidden: true,
                 elements: [
                   { view: 'text',
                     id: 'NAME_LABEL_5',

@@ -132,6 +132,8 @@ EntityForm.prototype.setView = function(data) {
   } else {
     this.setEntityView(data);
   }
+  $$('entity_form').hide();
+  $$('entity_view').show();
 };
 
 EntityForm.prototype.setData = function(data) {
@@ -147,13 +149,15 @@ EntityForm.prototype.setData = function(data) {
   $$('entity_form').setValues(formData);
   this.addFields(data.fields);
   this.setClean();
+  $$('entity_view').hide();
+  $$('entity_form').show();
 };
 
-EntityForm.prototype.refresh = function() {
+EntityForm.prototype.refresh = function(isWithMeta) {
   $$('entity_form').disable();
-  var req = UI.isViewOnly() ? 'entities.get' : 'entities.getWithMeta';
+  var req = !isWithMeta ? 'entities.get' : 'entities.getWithMeta';
   Mydataspace.request(req, UIHelper.dataFromId(this.selectedId), function(data) {
-    if (UI.isViewOnly()) {
+    if (!isWithMeta) { // UI.isViewOnly()) {
       this.setView(data);
     } else {
       this.setData(data);
