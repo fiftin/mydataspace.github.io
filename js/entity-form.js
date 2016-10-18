@@ -197,11 +197,11 @@ EntityForm.prototype.delete = function() {
 };
 
 EntityForm.prototype.updateToolbar = function() {
-  if (!$$('entity_form').isDirty()) {
-    $$('entity_form__save_button').disable();
-  } else {
-    $$('entity_form__save_button').enable();
-  }
+  // if (!$$('entity_form').isDirty()) {
+  //   $$('SAVE_ENTITY_LABEL').disable();
+  // } else {
+  //   $$('SAVE_ENTITY_LABEL').enable();
+  // }
 };
 
 /**
@@ -257,7 +257,7 @@ EntityForm.prototype.clear = function() {
     }
   }
   $$('NO_FIELDS_LABEL').show();
-  $$('entity_form__run_script_button').hide();
+  $$('RUN_SCRIPT_LABEL').hide();
 };
 
 EntityForm.prototype.addFields = function(fields, setDirty) {
@@ -277,8 +277,8 @@ EntityForm.prototype.addField = function(data, setDirty) {
   if (setDirty) {
     var values = webix.copy($$('entity_form')._values);
   }
-  if ((data.type === 'j' || data.type === 'u') && !$$('entity_form__run_script_button').isVisible()) {
-    $$('entity_form__run_script_button').show();
+  if ((data.type === 'j' || data.type === 'u') && !$$('RUN_SCRIPT_LABEL').isVisible()) {
+    // $$('RUN_SCRIPT_LABEL').show();
   }
   $$('entity_form').addView({
     id: 'entity_form__' + data.name,
@@ -378,6 +378,27 @@ EntityForm.prototype.deleteField = function(name) {
     }
   }
   if (!hasScripts) {
-    $$('entity_form__run_script_button').hide();
+    $$('RUN_SCRIPT_LABEL').hide();
   }
 };
+
+EntityForm.prototype.setMode = function(mode) {
+  switch (mode) {
+    case 'edit':
+      $$('EDIT_ENTITY_LABEL').hide();
+      $$('SAVE_ENTITY_LABEL').show();
+      $$('CANCEL_ENTITY_LABEL').show();
+      $$('REFRESH_ENTITY_LABEL').hide();
+      $$('ADD_FIELD_LABEL').show();
+      // $$('RUN_SCRIPT_LABEL').hide();
+      break;
+    case 'view':
+      $$('EDIT_ENTITY_LABEL').show();
+      $$('SAVE_ENTITY_LABEL').hide();
+      $$('CANCEL_ENTITY_LABEL').hide();
+      $$('REFRESH_ENTITY_LABEL').show();
+      $$('ADD_FIELD_LABEL').hide();
+      // $$('RUN_SCRIPT_LABEL').show();
+      break;
+  }
+}

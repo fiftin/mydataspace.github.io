@@ -27,6 +27,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     ADD_FIELD: 'New Field',
     REFRESH: 'Refresh',
     SAVE: 'Save',
+    SAVE_APP: 'Save',
     REFRESH_APP: 'Refresh App',
     DELETE: 'Delete',
     DELETE_APP: 'Delete App',
@@ -54,7 +55,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     NOTHING: 'Nothing',
     READ_AND_VIEW_CHILDREN: 'Read and view children',
     PROTO_IS_FIXED: 'Is Fixed',
-    MAX_NUMBER_OF_CHILDREN: 'Max number of children'
+    MAX_NUMBER_OF_CHILDREN: 'Max number of children',
+    EDIT_ENTITY: 'Edit',
+    SAVE_ENTITY: 'Save',
+    REFRESH_ENTITY: 'Refresh',
+    CANCEL_ENTITY: 'Cancel'
   },
   RU: {
     YES: 'Да',
@@ -84,6 +89,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     ADD_FIELD: 'Нов. поле',
     REFRESH: 'Обновить',
     SAVE: 'Сохр.',
+    SAVE_APP: 'Сохр.',
     REFRESH_APP: 'Обновить прил.',
     DELETE: 'Удалить',
     DELETE_APP: 'Удалить прил.',
@@ -112,7 +118,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     NOTHING: 'Ничего',
     READ_AND_VIEW_CHILDREN: 'Чтение и просм. доч. эл.',
     PROTO_IS_FIXED: 'Зафиксирован',
-    MAX_NUMBER_OF_CHILDREN: 'Макс. число доч. эл.'
+    MAX_NUMBER_OF_CHILDREN: 'Макс. число доч. эл.',
+    EDIT_ENTITY: 'Ред.',
+    SAVE_ENTITY: 'Сохр.',
+    REFRESH_ENTITY: 'Обновить',
+    CANCEL_ENTITY: 'Отмена'
   }
 };
 var LANGUAGE = localStorage.getItem('language') || 'EN';
@@ -728,11 +738,11 @@ EntityForm.prototype.delete = function() {
 };
 
 EntityForm.prototype.updateToolbar = function() {
-  if (!$$('entity_form').isDirty()) {
-    $$('entity_form__save_button').disable();
-  } else {
-    $$('entity_form__save_button').enable();
-  }
+  // if (!$$('entity_form').isDirty()) {
+  //   $$('SAVE_ENTITY_LABEL').disable();
+  // } else {
+  //   $$('SAVE_ENTITY_LABEL').enable();
+  // }
 };
 
 /**
@@ -788,7 +798,7 @@ EntityForm.prototype.clear = function() {
     }
   }
   $$('NO_FIELDS_LABEL').show();
-  $$('entity_form__run_script_button').hide();
+  $$('RUN_SCRIPT_LABEL').hide();
 };
 
 EntityForm.prototype.addFields = function(fields, setDirty) {
@@ -808,8 +818,8 @@ EntityForm.prototype.addField = function(data, setDirty) {
   if (setDirty) {
     var values = webix.copy($$('entity_form')._values);
   }
-  if ((data.type === 'j' || data.type === 'u') && !$$('entity_form__run_script_button').isVisible()) {
-    $$('entity_form__run_script_button').show();
+  if ((data.type === 'j' || data.type === 'u') && !$$('RUN_SCRIPT_LABEL').isVisible()) {
+    // $$('RUN_SCRIPT_LABEL').show();
   }
   $$('entity_form').addView({
     id: 'entity_form__' + data.name,
@@ -909,9 +919,30 @@ EntityForm.prototype.deleteField = function(name) {
     }
   }
   if (!hasScripts) {
-    $$('entity_form__run_script_button').hide();
+    $$('RUN_SCRIPT_LABEL').hide();
   }
 };
+
+EntityForm.prototype.setMode = function(mode) {
+  switch (mode) {
+    case 'edit':
+      $$('EDIT_ENTITY_LABEL').hide();
+      $$('SAVE_ENTITY_LABEL').show();
+      $$('CANCEL_ENTITY_LABEL').show();
+      $$('REFRESH_ENTITY_LABEL').hide();
+      $$('ADD_FIELD_LABEL').show();
+      // $$('RUN_SCRIPT_LABEL').hide();
+      break;
+    case 'view':
+      $$('EDIT_ENTITY_LABEL').show();
+      $$('SAVE_ENTITY_LABEL').hide();
+      $$('CANCEL_ENTITY_LABEL').hide();
+      $$('REFRESH_ENTITY_LABEL').show();
+      $$('ADD_FIELD_LABEL').hide();
+      // $$('RUN_SCRIPT_LABEL').show();
+      break;
+  }
+}
 
 /**
  * Created with JetBrains PhpStorm.
@@ -1378,7 +1409,7 @@ UI = {
   DISABLED_ON_VIEW_ONLY: [
     'ADD_ROOT_LABEL',
     'ADD_ENTITY_LABEL',
-    'entity_form__save_button',
+    'SAVE_ENTITY_LABEL',
     'ADD_FIELD_LABEL',
     'RUN_SCRIPT_LABEL',
     'entity_form__remove_button'
@@ -1536,9 +1567,9 @@ UI = {
 
   appForm_updateToolbar: function() {
     if (!$$('app_form').isDirty()) {
-      $$('app_form__save_button').disable();
+      $$('SAVE_APP_LABEL').disable();
     } else {
-      $$('app_form__save_button').enable();
+      $$('SAVE_APP_LABEL').enable();
     }
   },
 
@@ -2265,8 +2296,8 @@ UI = {
                   { view: 'button',
                     type: 'icon',
                     icon: 'save',
-                    id: 'SAVE_LABEL', label: STRINGS.SAVE,
-                    id: 'app_form__save_button',
+                    // id: 'SAVE_LABEL', label: STRINGS.SAVE,
+                    id: 'SAVE_APP_LABEL', label: STRINGS.SAVE_APP,
                     width: 110,
                     click: function() {
                       UI.appForm_save();
@@ -2496,31 +2527,54 @@ UI = {
                 cols: [
                   { view: 'button',
                     type: 'icon',
-                    icon: 'save',
-                    id: 'entity_form__save_button',
-                    label: STRINGS.SAVE,
+                    icon: 'pencil-square-o',
+                    id: 'EDIT_ENTITY_LABEL',
+                    label: STRINGS.EDIT_ENTITY,
                     hidden: UI.isViewOnly(),
                     width: 70,
                     click: function() {
+                      UI.entityForm.refresh(true);
+                      UI.entityForm.setMode('edit');
+                    }
+                  },
+                  { view: 'button',
+                    type: 'icon',
+                    icon: 'save',
+                    id: 'SAVE_ENTITY_LABEL',
+                    label: STRINGS.SAVE_ENTITY,
+                    hidden: true,
+                    width: 70,
+                    click: function() {
                       UI.entityForm.save();
+                      UI.entityForm.setMode('view');
+                    }
+                  },
+                  { view: 'button',
+                    type: 'icon',
+                    icon: 'close',
+                    id: 'CANCEL_ENTITY_LABEL', label: STRINGS.CANCEL_ENTITY,
+                    width: 80,
+                    hidden: true,
+                    click: function() {
+                      UI.entityForm.refresh();
+                      UI.entityForm.setMode('view');
                     }
                   },
                   { view: 'button',
                     type: 'icon',
                     icon: 'refresh',
-                    // id: 'entity_form__refresh_button',
-                    // width: 30,
-                    id: 'REFRESH_LABEL_2', label: STRINGS.REFRESH,
+                    id: 'REFRESH_ENTITY_LABEL', label: STRINGS.REFRESH_ENTITY,
                     width: 100,
                     click: function() {
                       UI.entityForm.refresh();
                     }
                   },
+                  { width: 30 },
                   { view: 'button',
                     type: 'icon',
                     icon: 'plus',
                     id: 'ADD_FIELD_LABEL', label: STRINGS.ADD_FIELD,
-                    hidden: UI.isViewOnly(),
+                    hidden: true,
                     width: 100,
                     click: function() {
                       $$('add_field_window').show();
@@ -2530,25 +2584,14 @@ UI = {
                     type: 'icon',
                     icon: 'play',
                     id: 'RUN_SCRIPT_LABEL', label: STRINGS.RUN_SCRIPT,
-                    hidden: UI.isViewOnly(),
+                    hidden: true,
                     width: 60,
-                    id: 'entity_form__run_script_button',
                     hidden: true,
                     click: function() {
                       UIHelper.popupCenter('/run-script.html', 'Run Script', 600, 400);
                     }
                   },
                   {},
-                  { view: 'button',
-                    type: 'icon',
-                    icon: 'pencil-square-o',
-                    id: 'entity_form__edit_button',
-                    hidden: UI.isViewOnly(),
-                    width: 30,
-                    click: function() {
-                      UI.entityForm.refresh(true);
-                    }
-                  },
                   { view: 'button',
                     type: 'icon',
                     icon: 'trash-o',

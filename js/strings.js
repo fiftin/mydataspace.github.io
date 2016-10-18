@@ -27,6 +27,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     ADD_FIELD: 'New Field',
     REFRESH: 'Refresh',
     SAVE: 'Save',
+    SAVE_APP: 'Save',
     REFRESH_APP: 'Refresh App',
     DELETE: 'Delete',
     DELETE_APP: 'Delete App',
@@ -54,7 +55,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     NOTHING: 'Nothing',
     READ_AND_VIEW_CHILDREN: 'Read and view children',
     PROTO_IS_FIXED: 'Is Fixed',
-    MAX_NUMBER_OF_CHILDREN: 'Max number of children'
+    MAX_NUMBER_OF_CHILDREN: 'Max number of children',
+    EDIT_ENTITY: 'Edit',
+    SAVE_ENTITY: 'Save',
+    REFRESH_ENTITY: 'Refresh',
+    CANCEL_ENTITY: 'Cancel'
   },
   RU: {
     YES: 'Да',
@@ -84,6 +89,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     ADD_FIELD: 'Нов. поле',
     REFRESH: 'Обновить',
     SAVE: 'Сохр.',
+    SAVE_APP: 'Сохр.',
     REFRESH_APP: 'Обновить прил.',
     DELETE: 'Удалить',
     DELETE_APP: 'Удалить прил.',
@@ -112,7 +118,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     NOTHING: 'Ничего',
     READ_AND_VIEW_CHILDREN: 'Чтение и просм. доч. эл.',
     PROTO_IS_FIXED: 'Зафиксирован',
-    MAX_NUMBER_OF_CHILDREN: 'Макс. число доч. эл.'
+    MAX_NUMBER_OF_CHILDREN: 'Макс. число доч. эл.',
+    EDIT_ENTITY: 'Ред.',
+    SAVE_ENTITY: 'Сохр.',
+    REFRESH_ENTITY: 'Обновить',
+    CANCEL_ENTITY: 'Отмена'
   }
 };
 var LANGUAGE = localStorage.getItem('language') || 'EN';

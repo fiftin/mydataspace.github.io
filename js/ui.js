@@ -19,7 +19,7 @@ UI = {
   DISABLED_ON_VIEW_ONLY: [
     'ADD_ROOT_LABEL',
     'ADD_ENTITY_LABEL',
-    'entity_form__save_button',
+    'SAVE_ENTITY_LABEL',
     'ADD_FIELD_LABEL',
     'RUN_SCRIPT_LABEL',
     'entity_form__remove_button'
@@ -177,9 +177,9 @@ UI = {
 
   appForm_updateToolbar: function() {
     if (!$$('app_form').isDirty()) {
-      $$('app_form__save_button').disable();
+      $$('SAVE_APP_LABEL').disable();
     } else {
-      $$('app_form__save_button').enable();
+      $$('SAVE_APP_LABEL').enable();
     }
   },
 
@@ -906,8 +906,8 @@ UI = {
                   { view: 'button',
                     type: 'icon',
                     icon: 'save',
-                    id: 'SAVE_LABEL', label: STRINGS.SAVE,
-                    id: 'app_form__save_button',
+                    // id: 'SAVE_LABEL', label: STRINGS.SAVE,
+                    id: 'SAVE_APP_LABEL', label: STRINGS.SAVE_APP,
                     width: 110,
                     click: function() {
                       UI.appForm_save();
@@ -1137,31 +1137,54 @@ UI = {
                 cols: [
                   { view: 'button',
                     type: 'icon',
-                    icon: 'save',
-                    id: 'entity_form__save_button',
-                    label: STRINGS.SAVE,
+                    icon: 'pencil-square-o',
+                    id: 'EDIT_ENTITY_LABEL',
+                    label: STRINGS.EDIT_ENTITY,
                     hidden: UI.isViewOnly(),
                     width: 70,
                     click: function() {
+                      UI.entityForm.refresh(true);
+                      UI.entityForm.setMode('edit');
+                    }
+                  },
+                  { view: 'button',
+                    type: 'icon',
+                    icon: 'save',
+                    id: 'SAVE_ENTITY_LABEL',
+                    label: STRINGS.SAVE_ENTITY,
+                    hidden: true,
+                    width: 70,
+                    click: function() {
                       UI.entityForm.save();
+                      UI.entityForm.setMode('view');
+                    }
+                  },
+                  { view: 'button',
+                    type: 'icon',
+                    icon: 'close',
+                    id: 'CANCEL_ENTITY_LABEL', label: STRINGS.CANCEL_ENTITY,
+                    width: 80,
+                    hidden: true,
+                    click: function() {
+                      UI.entityForm.refresh();
+                      UI.entityForm.setMode('view');
                     }
                   },
                   { view: 'button',
                     type: 'icon',
                     icon: 'refresh',
-                    // id: 'entity_form__refresh_button',
-                    // width: 30,
-                    id: 'REFRESH_LABEL_2', label: STRINGS.REFRESH,
+                    id: 'REFRESH_ENTITY_LABEL', label: STRINGS.REFRESH_ENTITY,
                     width: 100,
                     click: function() {
                       UI.entityForm.refresh();
                     }
                   },
+                  { width: 30 },
                   { view: 'button',
                     type: 'icon',
                     icon: 'plus',
                     id: 'ADD_FIELD_LABEL', label: STRINGS.ADD_FIELD,
-                    hidden: UI.isViewOnly(),
+                    hidden: true,
                     width: 100,
                     click: function() {
                       $$('add_field_window').show();
@@ -1171,25 +1194,14 @@ UI = {
                     type: 'icon',
                     icon: 'play',
                     id: 'RUN_SCRIPT_LABEL', label: STRINGS.RUN_SCRIPT,
-                    hidden: UI.isViewOnly(),
+                    hidden: true,
                     width: 60,
-                    id: 'entity_form__run_script_button',
                     hidden: true,
                     click: function() {
                       UIHelper.popupCenter('/run-script.html', 'Run Script', 600, 400);
                     }
                   },
                   {},
-                  { view: 'button',
-                    type: 'icon',
-                    icon: 'pencil-square-o',
-                    id: 'entity_form__edit_button',
-                    hidden: UI.isViewOnly(),
-                    width: 30,
-                    click: function() {
-                      UI.entityForm.refresh(true);
-                    }
-                  },
                   { view: 'button',
                     type: 'icon',
                     icon: 'trash-o',
