@@ -147,6 +147,18 @@
 
 .view__field {
   display: table-row;
+  &:hover {
+    .view__field_name, .view__field_value {
+      background: #f3f3f3;
+    }
+  }
+}
+
+.view__field--active, .view__field--active:hover {
+  .view__field_name, .view__field_value {
+    background: #27ae60;
+    color: white;
+  }
 }
 
 .view__field_name {

@@ -603,6 +603,7 @@ EntityForm.prototype.setViewFields = function(fields, ignoredFieldNames, addLabe
       '<div class="view__no_fields_exists">' + STRINGS.NO_FIELDS + '</div>' :
       '';
   }
+  return viewFields;
 };
 
 EntityForm.prototype.setRootView = function(data) {
@@ -637,14 +638,18 @@ EntityForm.prototype.setRootView = function(data) {
       document.getElementById('view__content').style.display = 'block';
     }
     document.getElementById('view__readme').innerHTML = md.render(readme);
-    this.setViewFields(data.fields,
-                       ['name',
-                        'avatar',
-                        'description',
-                        'websiteURL',
-                        'readme',
-                        'tags'],
-                       false);
+    var viewFields = this.setViewFields(data.fields,
+                                        ['name',
+                                         'avatar',
+                                         'description',
+                                         'websiteURL',
+                                         'readme',
+                                         'tags'],
+                                        false);
+    $(viewFields).on('click', '.view__field', function() {
+      $(viewFields).find('.view__field--active').removeClass('view__field--active');
+      $(this).addClass('view__field--active');
+    });
   }.bind(this));
 
 };
