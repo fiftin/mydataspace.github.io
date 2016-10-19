@@ -124,7 +124,11 @@ EntityForm.prototype.setEntityView = function(data) {
                              false);
     document.getElementById('view__title').innerText =
       common.getChildName(data.path);
-    this.setViewFields(data.fields);
+    var viewFields = this.setViewFields(data.fields);
+    $(viewFields).on('click', '.view__field', function() {
+      $(viewFields).find('.view__field--active').removeClass('view__field--active');
+      $(this).addClass('view__field--active');
+    });
   }.bind(this));
 };
 
