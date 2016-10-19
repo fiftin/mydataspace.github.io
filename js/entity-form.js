@@ -110,7 +110,6 @@ EntityForm.prototype.setRootView = function(data) {
       $(this).addClass('view__field--active');
     });
   }.bind(this));
-
 };
 
 EntityForm.prototype.setEntityView = function(data) {
