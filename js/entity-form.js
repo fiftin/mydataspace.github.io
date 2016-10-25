@@ -403,7 +403,7 @@ EntityForm.prototype.setMode = function(mode) {
       $$('CANCEL_ENTITY_LABEL').show();
       $$('REFRESH_ENTITY_LABEL').hide();
       $$('ADD_FIELD_LABEL').show();
-      // $$('RUN_SCRIPT_LABEL').hide();
+      webix.html.addCss($$('entity_form__toolbar').getNode(), 'entity_form__toolbar--edit');
       break;
     case 'view':
       $$('EDIT_ENTITY_LABEL').show();
@@ -411,7 +411,7 @@ EntityForm.prototype.setMode = function(mode) {
       $$('CANCEL_ENTITY_LABEL').hide();
       $$('REFRESH_ENTITY_LABEL').show();
       $$('ADD_FIELD_LABEL').hide();
-      // $$('RUN_SCRIPT_LABEL').show();
+      webix.html.removeCss($$('entity_form__toolbar').getNode(), 'entity_form__toolbar--edit');
       break;
   }
 }

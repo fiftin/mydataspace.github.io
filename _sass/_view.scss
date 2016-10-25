@@ -187,6 +187,11 @@ $view-field-value-max-height: 170px;
   position: relative;
 }
 
+.view__field_value--code {
+  font-family: consolas;
+  font-size: 12px;
+}
+
 .view__field_value__end {
   top: $view-field-value-max-height - 50px;
   left: 0;

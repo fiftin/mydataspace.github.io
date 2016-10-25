@@ -1134,6 +1134,7 @@ UI = {
             { id: 'my_data_panel__right_panel',
               rows: [
               { view: 'toolbar',
+                id: 'entity_form__toolbar',
                 cols: [
                   { view: 'button',
                     type: 'icon',
