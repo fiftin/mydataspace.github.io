@@ -42,16 +42,21 @@ EntityForm.prototype.setViewFields = function(fields, ignoredFieldNames, addLabe
         continue;
       }
       numberOfChildren++;
+      var html = common.textToHtml(field.value);
+      var multiline = html.indexOf('\n') >= 0;
+      var multilineClass = multiline ? 'view__field_value--multiline' : '';
+      var multilineEnd = multiline ? '    <div class="view__field_value__end"></div>\n' : '';
       $(viewFields).append('<div class="view__field">\n' +
                            '  <div class="view__field_name">\n' +
                            '    <div class="view__field_name_box">\n' +
                                   field.name +
                            '    </div>\n' +
                            '  </div>\n' +
-                           '  <div class="view__field_value">\n' +
+                           '  <div class="view__field_value ' + multilineClass + '">\n' +
                            '    <div class="view__field_value_box">\n' +
-                                  (common.isPresent(field.value) ? common.textToHtml(field.value) : '&mdash;') +
+                                  (common.isPresent(field.value) ? html : '&mdash;') +
                            '    </div>\n' +
+                                multilineEnd +
                            '  </div>\n' +
                            '</div>');
     }

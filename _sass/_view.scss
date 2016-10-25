@@ -7,6 +7,9 @@
  * 2. The use of `table` rather than `block` is only necessary if using
  *    `:before` to contain the top-margins of child elements.
  */
+
+$view-field-value-max-height: 170px;
+
 .cf:before,
 .cf:after {
     content: " "; /* 1 */
@@ -180,10 +183,37 @@
   width: 100%;
 }
 
+.view__field_value--multiline {
+  position: relative;
+}
+
+.view__field_value__end {
+  top: $view-field-value-max-height - 50px;
+  left: 0;
+  right: 0;
+  height: 70px;
+  position: absolute;
+  background: linear-gradient(to top, white, transparent);
+}
+
+.view__field {
+  &:hover {
+    .view__field_value__end {
+      background: linear-gradient(to top, #f3f3f3, transparent);
+    }
+  }
+}
+
+.view__field--active, .view__field--active:hover {
+  .view__field_value__end {
+    background: linear-gradient(to top, #27ae60, transparent);
+  }
+}
+
 .view__field_value_box {
+  max-height: $view-field-value-max-height;
+  overflow: hidden;
   word-wrap: break-word;
-  max-height: 300px;
-  overflow-y: auto;
   p {
     margin-bottom: 0;
   }
