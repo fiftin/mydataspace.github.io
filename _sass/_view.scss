@@ -185,6 +185,8 @@ $view-field-value-max-height: 170px;
 
 .view__field_value--multiline {
   position: relative;
+  font-size: 11px;
+  font-family: "Courier New";
 }
 
 .view__field_value--code {
