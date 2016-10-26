@@ -587,19 +587,22 @@ EntityForm.prototype.setViewFields = function(fields, ignoredFieldNames, addLabe
       var multiline = html.indexOf('\n') >= 0;
       var multilineClass = multiline ? 'view__field_value--multiline' : '';
       var multilineEnd = multiline ? '    <div class="view__field_value__end"></div>\n' : '';
-      $(viewFields).append('<div class="view__field">\n' +
-                           '  <div class="view__field_name">\n' +
-                           '    <div class="view__field_name_box">\n' +
-                                  field.name +
-                           '    </div>\n' +
-                           '  </div>\n' +
-                           '  <div class="view__field_value ' + multilineClass + '">\n' +
-                           '    <div class="view__field_value_box">\n' +
-                                  (common.isPresent(field.value) ? html : '&mdash;') +
-                           '    </div>\n' +
-                                multilineEnd +
-                           '  </div>\n' +
-                           '</div>');
+      var divFd = $('<div class="view__field">\n' +
+                    '  <div class="view__field_name">\n' +
+                    '    <div class="view__field_name_box">\n' +
+                           field.name +
+                    '    </div>\n' +
+                    '  </div>\n' +
+                    '  <div class="view__field_value ' + multilineClass + '">\n' +
+                    '    <div class="view__field_value_box">\n' +
+                           (common.isPresent(field.value) ? html : '&mdash;') +
+                    '    </div>\n' +
+                         multilineEnd +
+                    '  </div>\n' +
+                    '</div>').appendTo(viewFields);
+      if (multiline) {
+        divFd.data('value', field.value);
+      }
     }
   }
   if (numberOfChildren === 0) {
@@ -653,6 +656,15 @@ EntityForm.prototype.setRootView = function(data) {
                                         false);
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
+      var value = $(this).data('value');
+      if (value != null) {
+        $$('edit_script_window__editor').setValue(value);
+        if (!$$('edit_script_window').isVisible()) {
+          $$('edit_script_window').show();
+        }
+      } else {
+        $$('edit_script_window').hide();
+      }
       $(this).addClass('view__field--active');
     });
   }.bind(this));
@@ -672,6 +684,15 @@ EntityForm.prototype.setEntityView = function(data) {
     var viewFields = this.setViewFields(data.fields);
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
+      var value = $(this).data('value');
+      if (value != null) {
+        $$('edit_script_window__editor').setValue(value);
+        if (!$$('edit_script_window').isVisible()) {
+          $$('edit_script_window').show();
+        }
+      } else {
+        $$('edit_script_window').hide();
+      }
       $(this).addClass('view__field--active');
     });
   }.bind(this));
@@ -867,7 +888,7 @@ EntityForm.prototype.addField = function(data, setDirty) {
         value: data.value,
         height: 32,
         css: 'entity_form__text_label',
-        readonly: UI.isViewOnly(),
+        readonly: data.type === 'j',
         on: {
           onFocus: function() {
             if (data.type === 'j') {
@@ -1813,6 +1834,7 @@ UI = {
       head: false,
       left: 0,
       top: 45,
+      animate: { type: 'flip', subtype: 'vertical' },
       on: {
         onShow: function() {
           $$('CLOSE_LABEL').define('hotkey', 'escape');
@@ -1828,6 +1850,9 @@ UI = {
         },
 
         onBlur: function() {
+          if (UI.entityForm.editScriptFieldId == null) {
+            return;
+          }
           $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
         },
 
@@ -1839,6 +1864,7 @@ UI = {
       body: {
         rows: [
           { view: 'toolbar',
+            css: 'entity_form__toolbar--edit',
             elements: [
               // { view: 'label',
               //   id: 'EDIT_SCRIPT_LABEL', label: STRINGS.EDIT_SCRIPT,
@@ -1899,12 +1925,16 @@ UI = {
                   name: 'save',
                   bindKey: { win: 'Ctrl-S' },
                   exec: function(editor) {
-                    $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
+                    if (UI.entityForm.editScriptFieldId) {
+                      $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
+                    }
                     UI.entityForm.save();
                   }
                 });
                 editor.on('change', function() {
-                  $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
+                  if (UI.entityForm.editScriptFieldId) {
+                    $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
+                  }
                 });
               }
             }

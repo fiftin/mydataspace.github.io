@@ -291,7 +291,11 @@ input:read-only {
 }
 
 .entity_form__text_label .webix_inp_textarea {
-  font-size: 16px;
+  font-size: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  cursor: -webkit-zoom-in;
+  padding: 2px 2px 2px 10px;
 }
 
 .entity_form__text_label label {
@@ -489,4 +493,8 @@ label {
 
 .entity_form__toolbar--edit {
   background: #ce5545 !important;
+}
+
+.entity_form__toolbar--edit button:hover {
+  background: #a04235 !important;
 }

@@ -410,6 +410,7 @@ UI = {
       head: false,
       left: 0,
       top: 45,
+      animate: { type: 'flip', subtype: 'vertical' },
       on: {
         onShow: function() {
           $$('CLOSE_LABEL').define('hotkey', 'escape');
@@ -425,6 +426,9 @@ UI = {
         },
 
         onBlur: function() {
+          if (UI.entityForm.editScriptFieldId == null) {
+            return;
+          }
           $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
         },
 
@@ -436,6 +440,7 @@ UI = {
       body: {
         rows: [
           { view: 'toolbar',
+            css: 'entity_form__toolbar--edit',
             elements: [
               // { view: 'label',
               //   id: 'EDIT_SCRIPT_LABEL', label: STRINGS.EDIT_SCRIPT,
@@ -496,12 +501,16 @@ UI = {
                   name: 'save',
                   bindKey: { win: 'Ctrl-S' },
                   exec: function(editor) {
-                    $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
+                    if (UI.entityForm.editScriptFieldId) {
+                      $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
+                    }
                     UI.entityForm.save();
                   }
                 });
                 editor.on('change', function() {
-                  $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
+                  if (UI.entityForm.editScriptFieldId) {
+                    $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
+                  }
                 });
               }
             }
