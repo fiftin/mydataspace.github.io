@@ -64,7 +64,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
   RU: {
     YES: 'Да',
     NO: 'Нет',
-    CLOSE: 'Закрыть',
+    CLOSE: 'Закр.',
     SHOW_MORE: 'Показать ещё...',
     EDIT_SCRIPT: 'Ред. скрипта:',
     SAVE_ENTITY: 'Сохранить элемент',
@@ -156,8 +156,8 @@ webix.protoUI({
         this.editor.$blockScrolling = Infinity;
 
         this.editor.setOptions({
-			fontFamily: "consolas,monospace",
-			fontSize: "12pt"
+			fontFamily: "Monaco,consolas,monospace",
+			fontSize: "12px"
 		});
 
         if(this.config.theme)
@@ -540,8 +540,39 @@ UIControls = {
 };
 
 function EntityForm() {
-
+  this.editing = false;
 }
+
+/**
+ * Switchs Entity Form to edit/view mode.
+ */
+EntityForm.prototype.setEditing = function(editing) {
+  this.editing = editing;
+  $$('edit_script_window').hide();
+  if (editing) {
+    $$('EDIT_ENTITY_LABEL').hide();
+    $$('SAVE_ENTITY_LABEL').show();
+    $$('CANCEL_ENTITY_LABEL').show();
+    $$('REFRESH_ENTITY_LABEL').hide();
+    $$('ADD_FIELD_LABEL').show();
+    webix.html.addCss($$('edit_script_window__toolbar').getNode(), 'entity_form__toolbar--edit');
+    webix.html.addCss($$('entity_form__toolbar').getNode(), 'entity_form__toolbar--edit');
+    $$('edit_script_window__editor').getEditor().setReadOnly(false);
+  } else {
+    $$('EDIT_ENTITY_LABEL').show();
+    $$('SAVE_ENTITY_LABEL').hide();
+    $$('CANCEL_ENTITY_LABEL').hide();
+    $$('REFRESH_ENTITY_LABEL').show();
+    $$('ADD_FIELD_LABEL').hide();
+    webix.html.removeCss($$('edit_script_window__toolbar').getNode(), 'entity_form__toolbar--edit');
+    webix.html.removeCss($$('entity_form__toolbar').getNode(), 'entity_form__toolbar--edit');
+    $$('edit_script_window__editor').getEditor().setReadOnly(true);
+  }
+};
+
+EntityForm.prototype.isEditing = function() {
+  return this.editing;
+};
 
 EntityForm.prototype.listen = function() {
   Mydataspace.on('entities.delete.res', function() {
@@ -814,10 +845,12 @@ EntityForm.prototype.save = function() {
   Mydataspace.request('entities.change', dirtyData, function(res) {
     this.refresh();
     $$('entity_form').enable();
+    this.setEditing(false);
   }.bind(this), function(err) {
     UI.error(err);
     $$('entity_form').enable();
-  });
+    this.setEditing(false);
+  }.bind(this));
 };
 
 /**
@@ -897,6 +930,8 @@ EntityForm.prototype.addField = function(data, setDirty) {
               if (!$$('edit_script_window').isVisible()) {
                 $$('edit_script_window').show();
               }
+            } else {
+              $$('edit_script_window').hide();
             }
           }.bind(this)
         }
@@ -956,27 +991,6 @@ EntityForm.prototype.deleteField = function(name) {
     $$('RUN_SCRIPT_LABEL').hide();
   }
 };
-
-EntityForm.prototype.setMode = function(mode) {
-  switch (mode) {
-    case 'edit':
-      $$('EDIT_ENTITY_LABEL').hide();
-      $$('SAVE_ENTITY_LABEL').show();
-      $$('CANCEL_ENTITY_LABEL').show();
-      $$('REFRESH_ENTITY_LABEL').hide();
-      $$('ADD_FIELD_LABEL').show();
-      webix.html.addCss($$('entity_form__toolbar').getNode(), 'entity_form__toolbar--edit');
-      break;
-    case 'view':
-      $$('EDIT_ENTITY_LABEL').show();
-      $$('SAVE_ENTITY_LABEL').hide();
-      $$('CANCEL_ENTITY_LABEL').hide();
-      $$('REFRESH_ENTITY_LABEL').show();
-      $$('ADD_FIELD_LABEL').hide();
-      webix.html.removeCss($$('entity_form__toolbar').getNode(), 'entity_form__toolbar--edit');
-      break;
-  }
-}
 
 /**
  * Created with JetBrains PhpStorm.
@@ -1227,10 +1241,14 @@ EntityTree.prototype.listen = function() {
   Mydataspace.on('entities.create.res', this.onCreate.bind(this));
 };
 
+EntityTree.getViewOnlyRoot = function() {
+  return window.location.hash.substring(1);
+};
+
 EntityTree.prototype.refresh = function() {
   $$('entity_tree').disable();
   if (UI.isViewOnly()) {
-    Mydataspace.request('entities.get', { root: UI.getViewOnlyRoot(), path: '' }, function(data) {
+    Mydataspace.request('entities.get', { root: EntityTree.getViewOnlyRoot(), path: '' }, function(data) {
       $$('entity_tree').clearAll();
       // convert received data to treeview format and load its to entity_tree.
       var formattedData = UIHelper.entityFromData(data);
@@ -1432,12 +1450,14 @@ UI = {
 
   pages: new Pages(),
 
+  /**
+   * User can only view entities. All buttons for manipulations is hidden in
+   * this mode.
+   */
   isViewOnly: function() {
-    return window.location.hash != null && window.location.hash !== '' && window.location.hash !== '#';
-  },
-
-  getViewOnlyRoot: function() {
-    return window.location.hash.substring(1);
+    return window.location.hash != null &&
+           window.location.hash !== '' &&
+           window.location.hash !== '#';
   },
 
   DISABLED_ON_VIEW_ONLY: [
@@ -1449,31 +1469,15 @@ UI = {
     'entity_form__remove_button'
   ],
 
-  HIDDEN_ON_VIEW_ONLY: [
-    'NAME_LABEL_5',
-    'CHILD_PROTO_LABEL',
-    'DESCRIPTION_LABEL_1'
-  ],
-
   updateViewOnlyState: function() {
     if (UI.isViewOnly()) {
       UI.DISABLED_ON_VIEW_ONLY.forEach(function(item) {
-        $$(item).hide()
+        $$(item).hide();
       });
-      UI.HIDDEN_ON_VIEW_ONLY.forEach(function(item) {
-        $$(item).hide()
-      });
-      $$('entity_form').hide();
-      $$('entity_view').show();
     } else {
       UI.DISABLED_ON_VIEW_ONLY.forEach(function(item) {
-        $$(item).show()
+        $$(item).show();
       });
-      UI.HIDDEN_ON_VIEW_ONLY.forEach(function(item) {
-        $$(item).show()
-      });
-      $$('entity_form').show();
-      $$('entity_view').hide();
     }
     UI.entityTree.refresh();
     UI.updateSizes();
@@ -1725,6 +1729,7 @@ UI = {
    * Initialize UI only once!
    */
   rendered: false,
+
   render: function() {
     if (UI.rendered) {
       return;
@@ -1864,15 +1869,8 @@ UI = {
       body: {
         rows: [
           { view: 'toolbar',
-            css: 'entity_form__toolbar--edit',
+            id: 'edit_script_window__toolbar',
             elements: [
-              // { view: 'label',
-              //   id: 'EDIT_SCRIPT_LABEL', label: STRINGS.EDIT_SCRIPT,
-              //   width: 100
-              // },
-              // { view: 'label',
-              //   id: 'edit_script_window__title'
-              // },
               { view: 'button',
                 type: 'icon',
                 icon: 'align-justify',
@@ -1903,7 +1901,7 @@ UI = {
                 type: 'icon',
                 icon: 'times',
                 id: 'CLOSE_LABEL', label: STRINGS.CLOSE,
-                width: 90,
+                width: 70,
                 click: function() {
                   $$('edit_script_window').hide();
                 }
@@ -1912,12 +1910,13 @@ UI = {
           },
           { view: 'ace-editor',
             id: 'edit_script_window__editor',
-            theme: 'monokai',
+            theme: 'kr_theme',
             mode: 'javascript',
             on: {
               onReady: function(editor) {
                 editor.getSession().setTabSize(2);
                 editor.getSession().setUseSoftTabs(true);
+                editor.setReadOnly(true);
                 // editor.getSession().setUseWrapMode(true);
                 editor.getSession().setUseWorker(false);
                 // editor.execCommand('find')
@@ -2578,7 +2577,7 @@ UI = {
                     width: 70,
                     click: function() {
                       UI.entityForm.refresh(true);
-                      UI.entityForm.setMode('edit');
+                      UI.entityForm.setEditing(true);
                     }
                   },
                   { view: 'button',
@@ -2590,7 +2589,6 @@ UI = {
                     width: 70,
                     click: function() {
                       UI.entityForm.save();
-                      UI.entityForm.setMode('view');
                     }
                   },
                   { view: 'button',
@@ -2601,7 +2599,7 @@ UI = {
                     hidden: true,
                     click: function() {
                       UI.entityForm.refresh();
-                      UI.entityForm.setMode('view');
+                      UI.entityForm.setEditing(false);
                     }
                   },
                   { view: 'button',

@@ -1,6 +1,37 @@
 function EntityForm() {
-
+  this.editing = false;
 }
+
+/**
+ * Switchs Entity Form to edit/view mode.
+ */
+EntityForm.prototype.setEditing = function(editing) {
+  this.editing = editing;
+  $$('edit_script_window').hide();
+  if (editing) {
+    $$('EDIT_ENTITY_LABEL').hide();
+    $$('SAVE_ENTITY_LABEL').show();
+    $$('CANCEL_ENTITY_LABEL').show();
+    $$('REFRESH_ENTITY_LABEL').hide();
+    $$('ADD_FIELD_LABEL').show();
+    webix.html.addCss($$('edit_script_window__toolbar').getNode(), 'entity_form__toolbar--edit');
+    webix.html.addCss($$('entity_form__toolbar').getNode(), 'entity_form__toolbar--edit');
+    $$('edit_script_window__editor').getEditor().setReadOnly(false);
+  } else {
+    $$('EDIT_ENTITY_LABEL').show();
+    $$('SAVE_ENTITY_LABEL').hide();
+    $$('CANCEL_ENTITY_LABEL').hide();
+    $$('REFRESH_ENTITY_LABEL').show();
+    $$('ADD_FIELD_LABEL').hide();
+    webix.html.removeCss($$('edit_script_window__toolbar').getNode(), 'entity_form__toolbar--edit');
+    webix.html.removeCss($$('entity_form__toolbar').getNode(), 'entity_form__toolbar--edit');
+    $$('edit_script_window__editor').getEditor().setReadOnly(true);
+  }
+};
+
+EntityForm.prototype.isEditing = function() {
+  return this.editing;
+};
 
 EntityForm.prototype.listen = function() {
   Mydataspace.on('entities.delete.res', function() {
@@ -273,10 +304,12 @@ EntityForm.prototype.save = function() {
   Mydataspace.request('entities.change', dirtyData, function(res) {
     this.refresh();
     $$('entity_form').enable();
+    this.setEditing(false);
   }.bind(this), function(err) {
     UI.error(err);
     $$('entity_form').enable();
-  });
+    this.setEditing(false);
+  }.bind(this));
 };
 
 /**
@@ -356,6 +389,8 @@ EntityForm.prototype.addField = function(data, setDirty) {
               if (!$$('edit_script_window').isVisible()) {
                 $$('edit_script_window').show();
               }
+            } else {
+              $$('edit_script_window').hide();
             }
           }.bind(this)
         }
@@ -415,24 +450,3 @@ EntityForm.prototype.deleteField = function(name) {
     $$('RUN_SCRIPT_LABEL').hide();
   }
 };
-
-EntityForm.prototype.setMode = function(mode) {
-  switch (mode) {
-    case 'edit':
-      $$('EDIT_ENTITY_LABEL').hide();
-      $$('SAVE_ENTITY_LABEL').show();
-      $$('CANCEL_ENTITY_LABEL').show();
-      $$('REFRESH_ENTITY_LABEL').hide();
-      $$('ADD_FIELD_LABEL').show();
-      webix.html.addCss($$('entity_form__toolbar').getNode(), 'entity_form__toolbar--edit');
-      break;
-    case 'view':
-      $$('EDIT_ENTITY_LABEL').show();
-      $$('SAVE_ENTITY_LABEL').hide();
-      $$('CANCEL_ENTITY_LABEL').hide();
-      $$('REFRESH_ENTITY_LABEL').show();
-      $$('ADD_FIELD_LABEL').hide();
-      webix.html.removeCss($$('entity_form__toolbar').getNode(), 'entity_form__toolbar--edit');
-      break;
-  }
-}

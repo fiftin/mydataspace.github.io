@@ -8,12 +8,14 @@ UI = {
 
   pages: new Pages(),
 
+  /**
+   * User can only view entities. All buttons for manipulations is hidden in
+   * this mode.
+   */
   isViewOnly: function() {
-    return window.location.hash != null && window.location.hash !== '' && window.location.hash !== '#';
-  },
-
-  getViewOnlyRoot: function() {
-    return window.location.hash.substring(1);
+    return window.location.hash != null &&
+           window.location.hash !== '' &&
+           window.location.hash !== '#';
   },
 
   DISABLED_ON_VIEW_ONLY: [
@@ -25,31 +27,15 @@ UI = {
     'entity_form__remove_button'
   ],
 
-  HIDDEN_ON_VIEW_ONLY: [
-    'NAME_LABEL_5',
-    'CHILD_PROTO_LABEL',
-    'DESCRIPTION_LABEL_1'
-  ],
-
   updateViewOnlyState: function() {
     if (UI.isViewOnly()) {
       UI.DISABLED_ON_VIEW_ONLY.forEach(function(item) {
-        $$(item).hide()
+        $$(item).hide();
       });
-      UI.HIDDEN_ON_VIEW_ONLY.forEach(function(item) {
-        $$(item).hide()
-      });
-      $$('entity_form').hide();
-      $$('entity_view').show();
     } else {
       UI.DISABLED_ON_VIEW_ONLY.forEach(function(item) {
-        $$(item).show()
+        $$(item).show();
       });
-      UI.HIDDEN_ON_VIEW_ONLY.forEach(function(item) {
-        $$(item).show()
-      });
-      $$('entity_form').show();
-      $$('entity_view').hide();
     }
     UI.entityTree.refresh();
     UI.updateSizes();
@@ -301,6 +287,7 @@ UI = {
    * Initialize UI only once!
    */
   rendered: false,
+
   render: function() {
     if (UI.rendered) {
       return;
@@ -440,15 +427,8 @@ UI = {
       body: {
         rows: [
           { view: 'toolbar',
-            css: 'entity_form__toolbar--edit',
+            id: 'edit_script_window__toolbar',
             elements: [
-              // { view: 'label',
-              //   id: 'EDIT_SCRIPT_LABEL', label: STRINGS.EDIT_SCRIPT,
-              //   width: 100
-              // },
-              // { view: 'label',
-              //   id: 'edit_script_window__title'
-              // },
               { view: 'button',
                 type: 'icon',
                 icon: 'align-justify',
@@ -479,7 +459,7 @@ UI = {
                 type: 'icon',
                 icon: 'times',
                 id: 'CLOSE_LABEL', label: STRINGS.CLOSE,
-                width: 90,
+                width: 70,
                 click: function() {
                   $$('edit_script_window').hide();
                 }
@@ -488,12 +468,13 @@ UI = {
           },
           { view: 'ace-editor',
             id: 'edit_script_window__editor',
-            theme: 'monokai',
+            theme: 'kr_theme',
             mode: 'javascript',
             on: {
               onReady: function(editor) {
                 editor.getSession().setTabSize(2);
                 editor.getSession().setUseSoftTabs(true);
+                editor.setReadOnly(true);
                 // editor.getSession().setUseWrapMode(true);
                 editor.getSession().setUseWorker(false);
                 // editor.execCommand('find')
@@ -1154,7 +1135,7 @@ UI = {
                     width: 70,
                     click: function() {
                       UI.entityForm.refresh(true);
-                      UI.entityForm.setMode('edit');
+                      UI.entityForm.setEditing(true);
                     }
                   },
                   { view: 'button',
@@ -1166,7 +1147,6 @@ UI = {
                     width: 70,
                     click: function() {
                       UI.entityForm.save();
-                      UI.entityForm.setMode('view');
                     }
                   },
                   { view: 'button',
@@ -1177,7 +1157,7 @@ UI = {
                     hidden: true,
                     click: function() {
                       UI.entityForm.refresh();
-                      UI.entityForm.setMode('view');
+                      UI.entityForm.setEditing(false);
                     }
                   },
                   { view: 'button',

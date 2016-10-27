@@ -77,10 +77,14 @@ EntityTree.prototype.listen = function() {
   Mydataspace.on('entities.create.res', this.onCreate.bind(this));
 };
 
+EntityTree.getViewOnlyRoot = function() {
+  return window.location.hash.substring(1);
+};
+
 EntityTree.prototype.refresh = function() {
   $$('entity_tree').disable();
   if (UI.isViewOnly()) {
-    Mydataspace.request('entities.get', { root: UI.getViewOnlyRoot(), path: '' }, function(data) {
+    Mydataspace.request('entities.get', { root: EntityTree.getViewOnlyRoot(), path: '' }, function(data) {
       $$('entity_tree').clearAll();
       // convert received data to treeview format and load its to entity_tree.
       var formattedData = UIHelper.entityFromData(data);

@@ -64,7 +64,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
   RU: {
     YES: 'Да',
     NO: 'Нет',
-    CLOSE: 'Закрыть',
+    CLOSE: 'Закр.',
     SHOW_MORE: 'Показать ещё...',
     EDIT_SCRIPT: 'Ред. скрипта:',
     SAVE_ENTITY: 'Сохранить элемент',

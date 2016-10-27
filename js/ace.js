@@ -26,8 +26,8 @@ webix.protoUI({
         this.editor.$blockScrolling = Infinity;
 
         this.editor.setOptions({
-			fontFamily: "consolas,monospace",
-			fontSize: "12pt"
+			fontFamily: "Monaco,consolas,monospace",
+			fontSize: "12px"
 		});
 
         if(this.config.theme)
