@@ -47,7 +47,7 @@ $view-field-value-max-height: 170px;
 .view__overview {
   display: table;
   padding: 10px;
-  background: rgb(243, 243, 243);
+  background: $toolbar-bg;
   width: 100%;
   table-layout: fixed;
   border-bottom: 1px solid lightgray;
@@ -74,7 +74,7 @@ $view-field-value-max-height: 170px;
 
 .view__overview_icon {
   border-radius: 10px;
-  color: #3498db;
+  color: $brand-bg;
   font-size: 35px !important;
 }
 
@@ -116,7 +116,7 @@ $view-field-value-max-height: 170px;
 .view__description {
   padding: 20px 10px;
   font-size: 16px;
-  border-top: 1px solid #ebebeb;
+  border-top: 1px solid $shadow-color;
 }
 
 .view__tabs {
@@ -167,7 +167,7 @@ $view-field-value-max-height: 170px;
 .view__field_name {
   padding: 10px 0 10px 10px;
   display: table-cell;
-  border-top: 1px solid #ebebeb;
+  border-top: 1px solid $border-color-light;
   width: 130px;
   color: #a7a7a7;
 }
@@ -179,7 +179,7 @@ $view-field-value-max-height: 170px;
 .view__field_value {
   padding: 10px 10px 10px 15px;
   display: table-cell;
-  border-top: 1px solid #ebebeb;
+  border-top: 1px solid $border-color-light;
   width: 100%;
 }
 
@@ -192,6 +192,12 @@ $view-field-value-max-height: 170px;
 .view__field_value--code {
   font-family: consolas;
   font-size: 12px;
+}
+
+.view__field:first-child {
+  .view__field_name, .view__field_value {
+    border-top: 0;
+  }
 }
 
 .view__field_value__end {
@@ -228,7 +234,53 @@ $view-field-value-max-height: 170px;
 
 .view__no_fields_exists {
   padding: 10px 0 10px 10px;
-  border-top: 1px solid #ebebeb;
+  border-top: 1px solid $shadow-color;
   display: table-cell;
   width: 100%;
+}
+
+.view__status {
+  background: #c5c5c5;
+  padding: 4px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.view__status--success {
+  background: #27ae60;
+}
+
+.view__status--fail {
+  background: #ce5545;
+}
+
+.view__checks {
+  display: table;
+  width: 100%;
+  padding: 0 5px;
+  margin-bottom: 5px;
+}
+
+.view__check-wrap {
+  display: table-cell;
+  padding: 5px 5px;
+}
+
+.view__check {
+  color: white;
+  background: #c5c5c5;
+  border-radius: 4px;
+  padding: 7px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.view__check--checked {
+  background: #27ae60;
+}
+
+.view__check--fail.view__check--checked {
+  background: #ce5545;
 }

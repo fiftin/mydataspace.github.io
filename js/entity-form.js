@@ -160,6 +160,57 @@ EntityForm.prototype.setRootView = function(data) {
   }.bind(this));
 };
 
+EntityForm.prototype.setTaskView = function(data) {
+  $.ajax({ url: '/fragments/task-view.html', method: 'get' }).then(function(html) {
+    var view = document.getElementById('view');
+    view.innerHTML = html;
+    document.getElementById('view__overview_icon').className =
+      'view__overview_icon fa fa-' +
+      UIHelper.getIconByPath(data.path,
+                             data.numberOfChildren === 0,
+                             false);
+    document.getElementById('view__title').innerText =
+      common.getChildName(data.path);
+
+    var viewFields = this.setViewFields(data.fields, ['status', 'statusText', 'interval']);
+
+    var status = common.findValueByName(data.fields, 'status');
+    if (status != null) {
+      var statusClass;
+      switch (status) {
+        case 'success':
+          statusClass = 'view__status--success';
+          break;
+        case 'fail':
+          statusClass = 'view__status--fail';
+          break;
+      }
+      if (statusClass) {
+        document.getElementById('view__status').classList.add(statusClass);
+      }
+      document.getElementById('view__status').innerText =
+        common.findValueByName(data.fields, 'statusText');
+    }
+
+    var interval = common.findValueByName(data.fields, 'interval') || 'paused';
+    document.getElementById('view__interval_' + interval).classList.add('view__check--checked');
+
+    $(viewFields).on('click', '.view__field', function() {
+      $(viewFields).find('.view__field--active').removeClass('view__field--active');
+      var value = $(this).data('value');
+      if (value != null) {
+        $$('edit_script_window__editor').setValue(value);
+        if (!$$('edit_script_window').isVisible()) {
+          $$('edit_script_window').show();
+        }
+      } else {
+        $$('edit_script_window').hide();
+      }
+      $(this).addClass('view__field--active');
+    });
+  }.bind(this));
+};
+
 EntityForm.prototype.setEntityView = function(data) {
   $.ajax({ url: '/fragments/entity-view.html', method: 'get' }).then(function(html) {
     var view = document.getElementById('view');
@@ -222,7 +273,7 @@ EntityForm.prototype.refresh = function(isWithMeta) {
   $$('entity_form').disable();
   var req = !isWithMeta ? 'entities.get' : 'entities.getWithMeta';
   Mydataspace.request(req, UIHelper.dataFromId(this.selectedId), function(data) {
-    if (!isWithMeta) { // UI.isViewOnly()) {
+    if (!isWithMeta) { // UIHelper.isViewOnly()) {
       this.setView(data);
     } else {
       this.setData(data);

@@ -83,7 +83,7 @@ EntityTree.getViewOnlyRoot = function() {
 
 EntityTree.prototype.refresh = function() {
   $$('entity_tree').disable();
-  if (UI.isViewOnly()) {
+  if (UIHelper.isViewOnly()) {
     Mydataspace.request('entities.get', { root: EntityTree.getViewOnlyRoot(), path: '' }, function(data) {
       $$('entity_tree').clearAll();
       // convert received data to treeview format and load its to entity_tree.

@@ -55,11 +55,12 @@
         $('#admin_panel__loading').remove();
       }, 1500);
     </script>
+    <script src="/js/dist/api.js" type="text/javascript"></script>
+
     <script src="/vendor/bootstrap/bootstrap.min.js"></script>
     <script src="/vendor/webix/webix_debug.js"></script>
     <script src="/skins/flat/skin.js"></script>
     <script src="/vendor/remarkable.js"></script>
-    <script src="/js/api/v1.5.js" type="text/javascript"></script>
     <script src="/js/dist/ui.js"></script>
     <script>
       $(function() {
@@ -74,7 +75,7 @@
       });
 
       $(window).on('hashchange', function() {
-        if (UI.isViewOnly() && document.getElementById('webix').style.display == 'none') {
+        if (UIHelper.isViewOnly() && document.getElementById('webix').style.display == 'none') {
           document.getElementById('bootstrap').style.display = 'none';
           document.getElementById('webix').style.display = 'block';
         };

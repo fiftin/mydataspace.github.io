@@ -27,7 +27,7 @@ webix.protoUI({
 
         this.editor.setOptions({
 			fontFamily: "Monaco,consolas,monospace",
-			fontSize: "12px"
+			fontSize: "14px"
 		});
 
         if(this.config.theme)

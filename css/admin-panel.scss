@@ -1,6 +1,36 @@
 ---
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
+$header-height: 53px;
+
+$brand-bg: #85b4d4; // #3498db;
+$brand-text-color: white; // #3498db;
+$text-color: #666666;
+
+// $header-bg: #f1f9ff; // f2efea - light brown; // fdfdfd - light; // f1f9ff - light blue
+// $header-text-color: $text-color; // #f2efea - light brown; //#fdfdfd - light;
+
+
+$header-bg: rgb(62, 62, 62); // f2efea - light brown; // fdfdfd - light; // f1f9ff - light blue
+$header-text-color: rgba(255, 255, 255, 0.5); // #f2efea - light brown; //#fdfdfd - light;
+
+$toolbar-bg: #f0f3f5;
+$border-color: #dddddd;
+$border-color-light: #ebebeb;
+$tree-bg: $toolbar-bg;
+$shadow-color: white;
+$show-more-bg: #ffff9a;
+$disabled-bg: $toolbar-bg;
+$font-family: Ubuntu, Tahoma;
+$font-size: 14px;
+
+$selected-bg: #27ae60;
+
+$search-border-color: #ccc;
+$search-bg: white;
+$search-border-radius: 20px;
+$search-hover-color: $search-border-color;
 
 @import "../skins/flat/webix.scss";
 @import "admin";
+@import "view";

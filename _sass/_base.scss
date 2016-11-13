@@ -91,16 +91,6 @@ body {
 @import "safari";
 @import "page";
 @import "spinner";
-@import "view";
-
-.admin_panel {
-  top: -1px;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  position: absolute;
-  overflow: hidden;
-}
 
 .mission {
   text-align: center;

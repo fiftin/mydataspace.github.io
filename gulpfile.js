@@ -16,8 +16,8 @@ gulp.task('api', function() {
       './js/api/entities.js',
       './js/api/myda.js'
     ])
-    .pipe(concat('v1.5.js'))
-    .pipe(gulp.dest('./js/api/'));
+    .pipe(concat('api.js'))
+    .pipe(gulp.dest('./js/dist/'));
 });
 
 gulp.task('ui', function() {
@@ -30,6 +30,18 @@ gulp.task('ui', function() {
       './js/entity-list.js',
       './js/entity-tree.js',
       './js/pages.js',
+      './js/ui-layout/index.js',
+      './js/ui-layout/windows/add-app.js',
+      './js/ui-layout/windows/add-root.js',
+      './js/ui-layout/windows/add-entity.js',
+      './js/ui-layout/windows/add-field.js',
+      './js/ui-layout/windows/edit-script.js',
+      './js/ui-layout/side-menu.js',
+      './js/ui-layout/header.js',
+      './js/ui-layout/entity-tree.js',
+      './js/ui-layout/entity-list.js',
+      './js/ui-layout/entity-form.js',
+      './js/ui-layout/apps.js',
       './js/ui.js',
     ])
     .pipe(concat('ui.js'))

@@ -7,7 +7,7 @@ UIHelper = {
    * Width of label of field in form.
    */
   LABEL_WIDTH: 120,
-  NUMBER_OF_FIXED_INPUTS_IN_FIELDS_FORM: 8,
+  NUMBER_OF_FIXED_INPUTS_IN_FIELDS_FORM: 7,
   MAX_STRING_FIELD_LENGTH: 1000,
   ENTITY_TREE_SHOW_MORE_ID: 'show_more_23478_3832ee',
   ENTITY_TREE_DUMMY_ID: 'dummy_483__4734_47e4',
@@ -55,6 +55,16 @@ UIHelper = {
     d: 'calendar-o',
   },
 
+  /**
+   * User can only view entities. All buttons for manipulations is hidden in
+   * this mode.
+   */
+  isViewOnly: function() {
+    return window.location.hash != null &&
+           window.location.hash !== '' &&
+           window.location.hash !== '#';
+  },
+  
   getIconByPath: function(path, isEmpty, isOpened) {
     var depth = UIHelper.getEntityDepthByPath(path);
     var icon;
