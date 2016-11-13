@@ -16,7 +16,7 @@ UILayout.windows.editScript = {
         $$('admin_panel').$width -
         $$('my_data_panel__right_panel').$width -
         $$('my_data_panel__resizer_2').$width - 2;
-
+ 
       var windowHeight = $$('my_data_panel').$height - 2;
 
       $$('edit_script_window').define('width', windowWidth);
