@@ -56,8 +56,11 @@ UIHelper = {
   },
 
   expandField: function(field) {
+    if (field == null) {
+      return field;
+    }
     for (var key in field) {
-      if (typeof field[key] === 'object') {
+      if (field[key] != null && typeof field[key] === 'object') {
         return UIHelper.expandField(field[key]);
       }
     }

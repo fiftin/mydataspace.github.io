@@ -8,15 +8,11 @@ describe('UIHelper', function() {
       };
       expect(UIHelper.expandField(field)).to.eql(field);
     });
-  });
 
-  describe('#expendField', function() {
     it('returns null for null', function() {
       expect(UIHelper.expandField(null)).to.be.null;
     });
-  });
 
-  describe('#expendField', function() {
     it('returns nested object', function() {
       var field = {
         name: 'test',
@@ -29,6 +25,15 @@ describe('UIHelper', function() {
         }
       };
       expect(UIHelper.expandField(field)).to.eql(field.nested);
+    });
+
+    it('corrent handle null fields', function() {
+      var field = {
+        name: 'test',
+        type: 's',
+        value: null
+      };
+      expect(UIHelper.expandField(field)).to.eql(field);
     });
   });
 

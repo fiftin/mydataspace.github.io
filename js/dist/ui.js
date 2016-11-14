@@ -257,8 +257,11 @@ UIHelper = {
   },
 
   expandField: function(field) {
+    if (field == null) {
+      return field;
+    }
     for (var key in field) {
-      if (typeof field[key] === 'object') {
+      if (field[key] != null && typeof field[key] === 'object') {
         return UIHelper.expandField(field[key]);
       }
     }
@@ -908,11 +911,13 @@ EntityForm.prototype.save = function() {
       }, {}));
   var oldData = webix.CodeParser.expandNames($$('entity_form')._values);
   common.extendOf(dirtyData, UIHelper.dataFromId(this.selectedId));
-  dirtyData.fields =
-    UIHelper.getFieldsForSave(dirtyData.fields,
-                              Object.keys(existingData.fields || {}),
-                              oldData.fields);
 
+  dirtyData.fields =
+    UIHelper.getFieldsForSave(dirtyData.fields, // dirty fields
+                              Object.keys(existingData.fields || {}), // current exists field names
+                              oldData.fields); // old fields
+
+  console.log(dirtyData.fields);
   dirtyData.fields = dirtyData.fields.map(UIHelper.expandField);
 
   $$('entity_form').disable();
