@@ -888,6 +888,15 @@ EntityForm.prototype.setDirty = function() {
   this.updateToolbar();
 };
 
+EntityForm.expandField = function(field) {
+  for (var key in field) {
+    if (typeof field[key] === 'object') {
+      return EntityForm.expandField(field[key]);
+    }
+  }
+  return field;
+}
+
 EntityForm.prototype.save = function() {
   var dirtyData = webix.CodeParser.expandNames($$('entity_form').getDirtyValues());
   var existingData =
@@ -898,11 +907,18 @@ EntityForm.prototype.save = function() {
       }, {}));
   var oldData = webix.CodeParser.expandNames($$('entity_form')._values);
   common.extendOf(dirtyData, UIHelper.dataFromId(this.selectedId));
-  dirtyData.fields = UIHelper.getFieldsForSave(dirtyData.fields, Object.keys(existingData.fields || {}), oldData.fields);
+  dirtyData.fields =
+    UIHelper.getFieldsForSave(dirtyData.fields,
+                              Object.keys(existingData.fields || {}),
+                              oldData.fields);
+
+  dirtyData.fields = dirtyData.fields.map(EntityForm.expandField);
+
   $$('entity_form').disable();
   if (typeof dirtyData.childPrototype !== 'undefined') {
     dirtyData.childPrototype = UIHelper.dataFromId(dirtyData.childPrototype);
   }
+  console.log(dirtyData);
   Mydataspace.request('entities.change', dirtyData, function(res) {
     this.refresh();
     $$('entity_form').enable();
@@ -1705,7 +1721,7 @@ UILayout.windows.editScript = {
         $$('admin_panel').$width -
         $$('my_data_panel__right_panel').$width -
         $$('my_data_panel__resizer_2').$width - 2;
-
+ 
       var windowHeight = $$('my_data_panel').$height - 2;
 
       $$('edit_script_window').define('width', windowWidth);
