@@ -1,4 +1,38 @@
 describe('UIHelper', function() {
+  describe('#expendField', function() {
+    it('returns the same for normal field', function() {
+      var field = {
+        name: 'test',
+        type: 's',
+        value: 'hello'
+      };
+      expect(UIHelper.expandField(field)).to.eql(field);
+    });
+  });
+
+  describe('#expendField', function() {
+    it('returns null for null', function() {
+      expect(UIHelper.expandField(null)).to.be.null;
+    });
+  });
+
+  describe('#expendField', function() {
+    it('returns nested object', function() {
+      var field = {
+        name: 'test',
+        type: 's',
+        value: 'hello',
+        nested: {
+          name: 'test.a',
+          value: 10,
+          type: 'i'
+        }
+      };
+      expect(UIHelper.expandField(field)).to.eql(field.nested);
+    });
+  });
+
+
   it('#getFieldsForSave', function() {
     var dirtyFields;
     var currentFieldNames = ['a'];
@@ -14,4 +48,5 @@ describe('UIHelper', function() {
     expect(result[1].name).to.equal('d');
     expect(result[1].value).to.equal(null);
   });
+
 });

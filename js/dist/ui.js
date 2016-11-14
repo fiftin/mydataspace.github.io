@@ -256,6 +256,15 @@ UIHelper = {
     d: 'calendar-o',
   },
 
+  expandField: function(field) {
+    for (var key in field) {
+      if (typeof field[key] === 'object') {
+        return UIHelper.expandField(field[key]);
+      }
+    }
+    return field;
+  },
+
   /**
    * User can only view entities. All buttons for manipulations is hidden in
    * this mode.
@@ -265,7 +274,7 @@ UIHelper = {
            window.location.hash !== '' &&
            window.location.hash !== '#';
   },
-  
+
   getIconByPath: function(path, isEmpty, isOpened) {
     var depth = UIHelper.getEntityDepthByPath(path);
     var icon;
@@ -888,14 +897,6 @@ EntityForm.prototype.setDirty = function() {
   this.updateToolbar();
 };
 
-EntityForm.expandField = function(field) {
-  for (var key in field) {
-    if (typeof field[key] === 'object') {
-      return EntityForm.expandField(field[key]);
-    }
-  }
-  return field;
-}
 
 EntityForm.prototype.save = function() {
   var dirtyData = webix.CodeParser.expandNames($$('entity_form').getDirtyValues());
@@ -912,7 +913,7 @@ EntityForm.prototype.save = function() {
                               Object.keys(existingData.fields || {}),
                               oldData.fields);
 
-  dirtyData.fields = dirtyData.fields.map(EntityForm.expandField);
+  dirtyData.fields = dirtyData.fields.map(UIHelper.expandField);
 
   $$('entity_form').disable();
   if (typeof dirtyData.childPrototype !== 'undefined') {

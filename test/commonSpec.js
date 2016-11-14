@@ -1,28 +1,28 @@
 describe('common', function() {
   describe('#textToHtml', function() {
-    it('returns same text for simple text', function() {
+    xit('returns same text for simple text', function() {
       expect(common.textToHtml('Hello, World!')).to.eq('Hello, World!');
     });
 
-    it('returns escaped html for one line text', function() {
+    xit('returns escaped html for one line text', function() {
       var str = '<div>Hello</div><script>document.write(\'world\')</script>';
       expect(common.textToHtml(str)).to.eq(
         '&lt;div&gt;Hello&lt;/div&gt;&lt;script&gt;document.write(&#39;world&#39;)&lt;/script&gt;');
     });
 
-    it('returns paragraphs for simple multiline text', function() {
+    xit('returns paragraphs for simple multiline text', function() {
       var str = 'Hello, World!\nHello, Mother!\nHello, Father!\nHello, Brother!\nHello, Me!';
       expect(common.textToHtml(str)).to.eq(
         '<p>Hello, World!</p>\n<p>Hello, Mother!</p>\n<p>Hello, Father!</p>\n<p>Hello, Brother!</p>\n<p>Hello, Me!</p>');
     });
 
-    it('returns paragraphs for simple multiline text with empty lines', function() {
+    xit('returns paragraphs for simple multiline text with empty lines', function() {
       var str = 'Hello, World!\n\n\nHello, World!';
       expect(common.textToHtml(str)).to.eq(
         '<p>Hello, World!</p>\n<p></p>\n<p></p>\n<p>Hello, World!</p>');
     });
 
-    it('returns paragraphs for simple multiline text with empty lines at the end', function() {
+    xit('returns paragraphs for simple multiline text with empty lines at the end', function() {
       var str = 'Hello, World!\n\n\n';
       expect(common.textToHtml(str)).to.eq(
         '<p>Hello, World!</p>\n<p></p>\n<p></p>\n<p></p>');

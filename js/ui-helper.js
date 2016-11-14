@@ -55,6 +55,15 @@ UIHelper = {
     d: 'calendar-o',
   },
 
+  expandField: function(field) {
+    for (var key in field) {
+      if (typeof field[key] === 'object') {
+        return UIHelper.expandField(field[key]);
+      }
+    }
+    return field;
+  },
+
   /**
    * User can only view entities. All buttons for manipulations is hidden in
    * this mode.
@@ -64,7 +73,7 @@ UIHelper = {
            window.location.hash !== '' &&
            window.location.hash !== '#';
   },
-  
+
   getIconByPath: function(path, isEmpty, isOpened) {
     var depth = UIHelper.getEntityDepthByPath(path);
     var icon;
