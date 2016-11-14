@@ -689,9 +689,12 @@ EntityForm.prototype.setRootView = function(data) {
       document.getElementById('view__websiteURL').href = websiteURL;
     }
 
-    document.getElementById('view__description').innerText =
-      common.findValueByName(data.fields, 'description') || '';
-
+    var description = common.findValueByName(data.fields, 'description');
+    if (common.isBlank(description)) {
+      document.getElementById('view__description').style.display = 'none';
+    } else {
+      document.getElementById('view__description').innerText = description;
+    }
     var readme = common.findValueByName(data.fields, 'readme');
     if (common.isBlank(readme)) {
       document.getElementById('view__content').style.display = 'none';
