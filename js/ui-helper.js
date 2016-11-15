@@ -9,6 +9,7 @@ UIHelper = {
   LABEL_WIDTH: 120,
   NUMBER_OF_FIXED_INPUTS_IN_FIELDS_FORM: 7,
   MAX_STRING_FIELD_LENGTH: 1000,
+  MAX_TEXT_FIELD_LENGTH: 1000000,
   ENTITY_TREE_SHOW_MORE_ID: 'show_more_23478_3832ee',
   ENTITY_TREE_DUMMY_ID: 'dummy_483__4734_47e4',
   ENTITY_LIST_SHOW_MORE_ID: 'show_more_47384_3338222',
@@ -17,6 +18,12 @@ UIHelper = {
       title: STRINGS.STRING,
       isValidValue: function(value) {
         return value.toString().length < UIHelper.MAX_STRING_FIELD_LENGTH;
+      }
+    },
+    j: {
+      title: 'Text',
+      isValidValue: function(value) {
+        return value.toString().length < UIHelper.MAX_TEXT_FIELD_LENGTH;
       }
     },
     r: {
@@ -31,14 +38,14 @@ UIHelper = {
         return common.isInt(value);
       }
     },
-    j: {
-      title: 'JS',
-      isValidValue: function(value) {
-        return value.toString().length < UIHelper.MAX_STRING_FIELD_LENGTH;
-      }
-    },
+    // j: {
+    //   title: 'JS',
+    //   isValidValue: function(value) {
+    //     return value.toString().length < UIHelper.MAX_STRING_FIELD_LENGTH;
+    //   }
+    // },
     u: {
-      title: 'JS URL',
+      title: 'URL',
       isValidValue: function(value) {
         return value.toString().length < UIHelper.MAX_STRING_FIELD_LENGTH;
       }
@@ -48,11 +55,11 @@ UIHelper = {
   FIELD_TYPE_ICONS: {
     s: 'commenting',
     w: 'lock',
-    t: 'align-justify',
+    j: 'align-justify',
     i: 'italic',
     r: 'calculator',
     b: 'check-square-o',
-    d: 'calendar-o',
+    d: 'calendar-o'
   },
 
   expandFields: function(fields) {

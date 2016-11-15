@@ -2880,7 +2880,6 @@ div.webix_modal_cover {
 .webix_el_toggle button,
 .webixbutton {
   border-radius: 6px;
-  border: 1px solid #dddddd;
   height: 100%;
   width: 100%;
   cursor: pointer;
@@ -2889,7 +2888,7 @@ div.webix_modal_cover {
   padding: auto 6px;
   font-family: $font-family;
   border: 1px solid $brand-bg;
-  border-bottom: 1px solid #268fd5;
+  border-bottom: 1px solid $brand-bg;
   outline: none;
   -webkit-appearance: none;
 }
@@ -2916,13 +2915,12 @@ div.webix_modal_cover {
 .webixtype_next,
 .webixbutton {
   background: $brand-bg;
-  border-bottom: 1px solid #2386c8;
   color: #ffffff;
   font-size: $font-size;
   padding: auto 6px;
   font-family: $font-family;
   border: 1px solid $brand-bg;
-  border-bottom: 1px solid #268fd5;
+  border-bottom: 1px solid $brand-bg;
   outline: none;
   padding: 0px;
   border: 0px;
@@ -2932,12 +2930,11 @@ div.webix_modal_cover {
   padding: auto 6px;
   font-family: $font-family;
   border: 1px solid $brand-bg;
-  border-bottom: 1px solid #268fd5;
   outline: none;
   background: #27ae60;
   color: #ffffff;
   border-color: #27ae60;
-  border-bottom: 1px solid #209150;
+  border-bottom: 1px solid $brand-bg;
   box-shadow: none;
 }
 .webix_el_button .webixtype_danger {

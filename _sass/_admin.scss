@@ -405,6 +405,9 @@ label {
 .entity_form__field_type_button button {
   border-top-left-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
+  &:hover,&:focus, &:active {
+    background: $brand-bg;
+  }
 }
 
 .entity_form__field_type_button .webix_el_box {

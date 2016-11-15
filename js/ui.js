@@ -325,16 +325,16 @@ UI = {
         borderless: true,
     		data:[
           { id: 's', value: 'String', icon: 'commenting' },
-          { id: 'w', value: 'Secret', icon: 'lock' },
-          { id: 't', value: 'Text', icon: 'align-justify' },
+          { id: 'j', value: 'Text', icon: 'align-justify' },
           { id: 'i', value: 'Integer', icon: 'italic' },
           { id: 'r', value: 'Float', icon: 'calculator'  },
+          { id: 'w', value: 'Secret', icon: 'lock' },
           // { id: 'b', value: 'Boolean', icon: 'check-square-o' },
           // { id: 'd', value: 'Date', icon: 'calendar-o' },
 
           // { id: 'x', value: 'Non-indexed', icon: 'low-vision' },
           // { id: 'm', value: 'Money', icon: 'dollar' },
-          // { id: 'u', value: 'URL', icon: 'link' },
+          { id: 'u', value: 'URL', icon: 'link' },
           // { id: 'e', value: 'Email', icon: 'envelope' },
           // { id: 'p', value: 'Phone', icon: 'phone' },
           // { id: 'c', value: 'Custom', icon: 'pencil' },
@@ -347,38 +347,40 @@ UI = {
     		select: true,
         on: {
           onItemClick: function(newv) {
-            var fieldId = 'entity_form__' + UI.entityForm.currentFieldName;
+            var fieldName = UI.entityForm.currentFieldName;
+            var fieldId = 'entity_form__' + fieldName;
+            var fieldValue = $$(fieldId + '_type').getValue();
             $$(fieldId + '_type_button').define('icon', UIHelper.FIELD_TYPE_ICONS[newv]);
             $$(fieldId + '_type_button').refresh();
             var oldv = $$(fieldId + '_type').getValue();
             $$(fieldId + '_type').setValue(newv);
             $$('entity_form__field_type_popup').hide();
-            // var oldValues = webix.copy($$('entity_form')._values);
-            // delete oldValues['fields.' + UI.entityForm.currentFieldName + '.value'];
-            if (newv === 't' || oldv === 't') {
-              // webix.ui(
-              //   { view: newv === 't' ? 'textarea' : 'text',
-              //     label: data.name,
-              //     name: 'fields.' + data.name + '.value',
-              //     id: 'entity_form__' + data.name + '_value',
-              //     value: data.value,
-              //     labelWidth: UIHelper.LABEL_WIDTH,
-              //     height: 32,
-              //     css: 'entity_form__text_label',
-              //     on: {
-              //       onFocus: function() {
-              //         if (newv === 'j') {
-              //           this.editScriptFieldId = 'entity_form__' + data.name + '_value';
-              //           $$('edit_script_window').show();
-              //         }
-              //       }
-              //     }
-              //   },
-              //   $$('entity_form__' + data.name),
-              //   $$('entity_form__' + data.name + '_value')
-              // );
+            var oldValues = webix.copy($$('entity_form')._values);
+            delete oldValues['fields.' + UI.entityForm.currentFieldName + '.value'];
+            if (newv === 'j' || oldv === 'j') {
+              webix.ui(
+                { view: newv === 'j' ? 'textarea' : 'text',
+                  label: fieldName,
+                  name: 'fields.' + fieldName + '.value',
+                  id: 'entity_form__' + fieldName + '_value',
+                  value: fieldValue,
+                  labelWidth: UIHelper.LABEL_WIDTH,
+                  height: 32,
+                  css: 'entity_form__text_label',
+                  on: {
+                    onFocus: function() {
+                      if (newv === 'j') {
+                        this.editScriptFieldId = 'entity_form__' + fieldName + '_value';
+                        $$('edit_script_window').show();
+                      }
+                    }
+                  }
+                },
+                $$('entity_form__' + fieldName),
+                $$('entity_form__' + fieldName + '_value')
+              );
             }
-            // $$('entity_form')._values = oldValues;
+            $$('entity_form')._values = oldValues;
           }
         }
     	}
