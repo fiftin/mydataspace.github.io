@@ -353,13 +353,10 @@ EntityForm.prototype.save = function() {
   common.extendOf(dirtyData, UIHelper.dataFromId(this.selectedId));
 
   dirtyData.fields =
-    UIHelper.getFieldsForSave(dirtyData.fields, // dirty fields
-                              Object.keys(existingData.fields || {}), // current exists field names
-                              oldData.fields); // old fields
-
-  console.log(dirtyData.fields);
-  dirtyData.fields = dirtyData.fields.map(UIHelper.expandField);
-
+    UIHelper.expandFields(
+      UIHelper.getFieldsForSave(UIHelper.expandFields(dirtyData.fields), // dirty fields
+                                Object.keys(UIHelper.expandFields(existingData.fields) || {}), // current exists field names
+                                UIHelper.expandFields(oldData.fields))); // old fields
   $$('entity_form').disable();
   if (typeof dirtyData.childPrototype !== 'undefined') {
     dirtyData.childPrototype = UIHelper.dataFromId(dirtyData.childPrototype);

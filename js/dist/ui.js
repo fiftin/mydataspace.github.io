@@ -256,15 +256,45 @@ UIHelper = {
     d: 'calendar-o',
   },
 
-  expandField: function(field) {
+  expandFields: function(fields) {
+      if (fields == null || (!Array.isArray(fields) && typeof fields !== 'object')) {
+          return fields;
+      }
+      if (Array.isArray(fields)) {
+          return fields.map(function(field) {
+              return UIHelper.expandField(field);
+          });
+      } else {
+          var ret = {};
+          for (var key in fields) {
+              var field = UIHelper.expandField(fields[key], key);
+              ret[field.name] = field;
+          }
+          return ret;
+      }
+  },
+
+  expandField: function(field, name) {
+    if (name == null) {
+      name = '';
+    }
     if (field == null) {
       return field;
     }
     for (var key in field) {
       if (field[key] != null && typeof field[key] === 'object') {
-        return UIHelper.expandField(field[key]);
+        if (name !== '') {
+          name += '.';
+        }
+        name += key;
+        return UIHelper.expandField(field[key], name);
       }
     }
+
+    if (name !== '') {
+        field.name = name;
+    }
+
     return field;
   },
 
@@ -916,13 +946,10 @@ EntityForm.prototype.save = function() {
   common.extendOf(dirtyData, UIHelper.dataFromId(this.selectedId));
 
   dirtyData.fields =
-    UIHelper.getFieldsForSave(dirtyData.fields, // dirty fields
-                              Object.keys(existingData.fields || {}), // current exists field names
-                              oldData.fields); // old fields
-
-  console.log(dirtyData.fields);
-  dirtyData.fields = dirtyData.fields.map(UIHelper.expandField);
-
+    UIHelper.expandFields(
+      UIHelper.getFieldsForSave(UIHelper.expandFields(dirtyData.fields), // dirty fields
+                                Object.keys(UIHelper.expandFields(existingData.fields) || {}), // current exists field names
+                                UIHelper.expandFields(oldData.fields))); // old fields
   $$('entity_form').disable();
   if (typeof dirtyData.childPrototype !== 'undefined') {
     dirtyData.childPrototype = UIHelper.dataFromId(dirtyData.childPrototype);
