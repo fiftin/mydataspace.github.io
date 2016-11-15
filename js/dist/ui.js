@@ -892,8 +892,14 @@ EntityForm.prototype.setData = function(data) {
 EntityForm.prototype.refresh = function() {
   var isWithMeta = this.isEditing();
 
-  if (UIHelper.getEntityTypeByPath(UIHelper.dataFromId(this.selectedId).path) === 'task' && !$$('RUN_SCRIPT_LABEL').isVisible()) {
-    $$('RUN_SCRIPT_LABEL').show();
+  if (UIHelper.getEntityTypeByPath(UIHelper.dataFromId(this.selectedId).path) === 'task') {
+    if (!$$('RUN_SCRIPT_LABEL').isVisible()) {
+      $$('RUN_SCRIPT_LABEL').show();
+    }
+  } else {
+    if ($$('RUN_SCRIPT_LABEL').isVisible()) {
+      $$('RUN_SCRIPT_LABEL').hide();
+    }
   }
 
   $$('entity_form').disable();
@@ -1005,8 +1011,6 @@ EntityForm.prototype.clear = function() {
       $$('entity_form').removeView(row.config.id);
     }
   }
-  $$('NO_FIELDS_LABEL').show();
-  $$('RUN_SCRIPT_LABEL').hide();
 };
 
 EntityForm.prototype.addFields = function(fields, setDirty) {
@@ -1121,19 +1125,6 @@ EntityForm.prototype.deleteField = function(name) {
   var rows = $$('entity_form').getChildViews();
   if (rows.length === UIHelper.NUMBER_OF_FIXED_INPUTS_IN_FIELDS_FORM) {
     $$('NO_FIELDS_LABEL').show();
-  }
-
-  let hasScripts = false;
-  let fields = $$('entity_form').getValues().fields;
-  for (let fieldName in fields) {
-    let field = fields[fieldName];
-    if (field.type === 'j' || field.type === 'u') {
-      hasScripts = true;
-      break;
-    }
-  }
-  if (!hasScripts) {
-    $$('RUN_SCRIPT_LABEL').hide();
   }
 };
 
