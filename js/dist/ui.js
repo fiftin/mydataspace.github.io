@@ -2745,7 +2745,7 @@ UI = {
     //
     window.addEventListener('message', function(e) {
       if (e.data.message === 'getScripts') {
-        var fields = $$('entity_form').getValues().fields;
+        var fields = UIHelper.expandFields($$('entity_form').getValues().fields);
         if (typeof fields === 'undefined') {
           fields = {};
         }
