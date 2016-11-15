@@ -349,7 +349,7 @@ UI = {
           onItemClick: function(newv) {
             var fieldName = UI.entityForm.currentFieldName;
             var fieldId = 'entity_form__' + fieldName;
-            var fieldValue = $$(fieldId + '_type').getValue();
+            var fieldValue = $$(fieldId + '_value').getValue();
             $$(fieldId + '_type_button').define('icon', UIHelper.FIELD_TYPE_ICONS[newv]);
             $$(fieldId + '_type_button').refresh();
             var oldv = $$(fieldId + '_type').getValue();
