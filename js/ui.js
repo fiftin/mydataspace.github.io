@@ -300,9 +300,9 @@ UI = {
           } else if (a.type === 'u' && b.type === 'j') {
             return -1;
           } else if (a.type === 'j' && b.type === 'j') {
-            if (a.name.toUpperCase() === '__MAIN__') {
+            if (a.name.toUpperCase() === '__MAIN__' || a.name === 'main.js') {
               return 1;
-            } else if (b.name.toUpperCase() === '__MAIN__') {
+            } else if (b.name.toUpperCase() === '__MAIN__' || a.name === 'main.js') {
               return -1;
             }
             return 0;
