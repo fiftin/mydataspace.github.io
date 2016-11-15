@@ -13,7 +13,7 @@ UILayout.entityTree =
           click: function() {
             $$('add_root_window').show();
           }
-        },
+        }, 
         { view: 'button',
           type: 'icon',
           icon: 'refresh',
