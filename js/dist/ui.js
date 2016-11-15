@@ -11,6 +11,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     ADD_ENTITY: 'New Entity',
     SEARCH: 'Search...',
     DELETE_ENTITY: 'Delete Entity',
+    DELETE_ENTITY_SHORT: 'Delete',
     CREATE_CHILDREN: 'Create Children',
     CREATE_ONE_CHILD: 'Create One Child',
     OTHERS_CAN: 'Others Can',
@@ -55,11 +56,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     NOTHING: 'Nothing',
     READ_AND_VIEW_CHILDREN: 'Read and view children',
     PROTO_IS_FIXED: 'Is Fixed',
-    MAX_NUMBER_OF_CHILDREN: 'Max number of children',
+    MAX_NUMBER_OF_CHILDREN: 'Childrens',
     EDIT_ENTITY: 'Edit',
     SAVE_ENTITY: 'Save',
     REFRESH_ENTITY: 'Refresh',
-    CANCEL_ENTITY: 'Cancel'
+    CANCEL_ENTITY: 'View'
   },
   RU: {
     YES: 'Да',
@@ -72,7 +73,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     ONLY_READ: 'Только читать',
     ADD_ENTITY: 'Новый эл-т',
     SEARCH: 'Поиск...',
-    DELETE_ENTITY: 'Удалить эл-т',
+    DELETE_ENTITY: 'Удалить элемент',
+    DELETE_ENTITY_SHORT: 'Удал.',
     CREATE_CHILDREN: 'Создавать дочерние элементы',
     CREATE_ONE_CHILD: 'Создать один дочерний элемент',
     OTHERS_CAN: 'Другие могут',
@@ -118,11 +120,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     NOTHING: 'Ничего',
     READ_AND_VIEW_CHILDREN: 'Чтение и просм. доч. эл.',
     PROTO_IS_FIXED: 'Зафиксирован',
-    MAX_NUMBER_OF_CHILDREN: 'Макс. число доч. эл.',
+    MAX_NUMBER_OF_CHILDREN: 'Доч. эл-тов',
     EDIT_ENTITY: 'Ред.',
     SAVE_ENTITY: 'Сохр.',
-    REFRESH_ENTITY: 'Обновить',
-    CANCEL_ENTITY: 'Отмена'
+    REFRESH_ENTITY: 'Обнов.',
+    CANCEL_ENTITY: 'Пр.'
   }
 };
 var LANGUAGE = localStorage.getItem('language') || 'EN';
@@ -315,6 +317,25 @@ UIHelper = {
            window.location.hash !== '#';
   },
 
+  getEntityTypeByPath: function(path) {
+    var depth = UIHelper.getEntityDepthByPath(path);
+    switch (path) {
+      case '':
+        return 'root';
+      case 'protos':
+        return 'protos';
+      case 'tasks':
+        return 'tasks';
+      default:
+        if (path.startsWith('tasks') && depth === 2) {
+          return 'task';
+        } else if (path.startsWith('protos') && depth === 2) {
+          return 'proto';
+        }
+    }
+    return 'none';
+  },
+
   getIconByPath: function(path, isEmpty, isOpened) {
     var depth = UIHelper.getEntityDepthByPath(path);
     var icon;
@@ -411,10 +432,6 @@ UIHelper = {
       count: data.numberOfChildren,
       data: children
     };
-  },
-
-  getEntityTypeByPath: function(path) {
-    // if (path.startsWith(''))
   },
 
   nameFromData: function(data) {
@@ -872,7 +889,13 @@ EntityForm.prototype.setData = function(data) {
   $$('entity_form').show();
 };
 
-EntityForm.prototype.refresh = function(isWithMeta) {
+EntityForm.prototype.refresh = function() {
+  var isWithMeta = this.isEditing();
+
+  if (UIHelper.getEntityTypeByPath(UIHelper.dataFromId(this.selectedId).path) === 'task' && !$$('RUN_SCRIPT_LABEL').isVisible()) {
+    $$('RUN_SCRIPT_LABEL').show();
+  }
+
   $$('entity_form').disable();
   var req = !isWithMeta ? 'entities.get' : 'entities.getWithMeta';
   Mydataspace.request(req, UIHelper.dataFromId(this.selectedId), function(data) {
@@ -965,11 +988,9 @@ EntityForm.prototype.save = function() {
   Mydataspace.request('entities.change', dirtyData, function(res) {
     this.refresh();
     $$('entity_form').enable();
-    this.setEditing(false);
   }.bind(this), function(err) {
     UI.error(err);
     $$('entity_form').enable();
-    this.setEditing(false);
   }.bind(this));
 };
 
@@ -1005,9 +1026,7 @@ EntityForm.prototype.addField = function(data, setDirty) {
   if (setDirty) {
     var values = webix.copy($$('entity_form')._values);
   }
-  if ((data.type === 'j' || data.type === 'u') && !$$('RUN_SCRIPT_LABEL').isVisible()) {
-    // $$('RUN_SCRIPT_LABEL').show();
-  }
+
   $$('entity_form').addView({
     id: 'entity_form__' + data.name,
     css: 'entity_form__field',
@@ -1043,6 +1062,12 @@ EntityForm.prototype.addField = function(data, setDirty) {
         css: 'entity_form__text_label',
         readonly: data.type === 'j',
         on: {
+          onBlur: function() {
+            if (this.editScriptFieldId == 'entity_form__' + data.name + '_value') {
+              this.editScriptFieldId = null;
+            }
+          },
+
           onFocus: function() {
             if (data.type === 'j') {
               this.editScriptFieldId = 'entity_form__' + data.name + '_value';
@@ -2015,7 +2040,7 @@ UILayout.entityTree =
           click: function() {
             $$('add_root_window').show();
           }
-        },
+        }, 
         { view: 'button',
           type: 'icon',
           icon: 'refresh',
@@ -2158,18 +2183,6 @@ UILayout.entityForm =
     cols: [
       { view: 'button',
         type: 'icon',
-        icon: 'pencil-square-o',
-        id: 'EDIT_ENTITY_LABEL',
-        label: STRINGS.EDIT_ENTITY,
-        hidden: UIHelper.isViewOnly(),
-        width: 70,
-        click: function() {
-          UI.entityForm.refresh(true);
-          UI.entityForm.setEditing(true);
-        }
-      },
-      { view: 'button',
-        type: 'icon',
         icon: 'save',
         id: 'SAVE_ENTITY_LABEL',
         label: STRINGS.SAVE_ENTITY,
@@ -2181,25 +2194,13 @@ UILayout.entityForm =
       },
       { view: 'button',
         type: 'icon',
-        icon: 'close',
-        id: 'CANCEL_ENTITY_LABEL', label: STRINGS.CANCEL_ENTITY,
-        width: 80,
-        hidden: true,
-        click: function() {
-          UI.entityForm.refresh();
-          UI.entityForm.setEditing(false);
-        }
-      },
-      { view: 'button',
-        type: 'icon',
         icon: 'refresh',
         id: 'REFRESH_ENTITY_LABEL', label: STRINGS.REFRESH_ENTITY,
-        width: 100,
+        width: 80,
         click: function() {
           UI.entityForm.refresh();
         }
       },
-      { width: 30 },
       { view: 'button',
         type: 'icon',
         icon: 'plus',
@@ -2225,9 +2226,9 @@ UILayout.entityForm =
       { view: 'button',
         type: 'icon',
         icon: 'trash-o',
-        id: 'entity_form__remove_button',
+        id: 'DELETE_ENTITY_SHORT_LABEL', label: STRINGS.DELETE_ENTITY_SHORT,
         hidden: UIHelper.isViewOnly(),
-        width: 30,
+        width: 80,
         click: function() {
           webix.confirm({
             title: STRINGS.DELETE_ENTITY,
@@ -2240,6 +2241,29 @@ UILayout.entityForm =
               }
             }
           });
+        }
+      },
+      { view: 'button',
+        type: 'icon',
+        icon: 'pencil-square-o',
+        id: 'EDIT_ENTITY_LABEL',
+        label: STRINGS.EDIT_ENTITY,
+        hidden: UIHelper.isViewOnly(),
+        width: 60,
+        click: function() {
+          UI.entityForm.setEditing(true);
+          UI.entityForm.refresh();
+        }
+      },
+      { view: 'button',
+        type: 'icon',
+        icon: 'eye',
+        id: 'CANCEL_ENTITY_LABEL', label: STRINGS.CANCEL_ENTITY,
+        width: 60,
+        hidden: true,
+        click: function() {
+          UI.entityForm.setEditing(false);
+          UI.entityForm.refresh();
         }
       }
     ]
@@ -2456,7 +2480,7 @@ UI = {
     'SAVE_ENTITY_LABEL',
     'ADD_FIELD_LABEL',
     'RUN_SCRIPT_LABEL',
-    'entity_form__remove_button'
+    'DELETE_ENTITY_SHORT_LABEL'
   ],
 
   updateViewOnlyState: function() {

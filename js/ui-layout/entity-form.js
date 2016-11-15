@@ -6,18 +6,6 @@ UILayout.entityForm =
     cols: [
       { view: 'button',
         type: 'icon',
-        icon: 'pencil-square-o',
-        id: 'EDIT_ENTITY_LABEL',
-        label: STRINGS.EDIT_ENTITY,
-        hidden: UIHelper.isViewOnly(),
-        width: 70,
-        click: function() {
-          UI.entityForm.refresh(true);
-          UI.entityForm.setEditing(true);
-        }
-      },
-      { view: 'button',
-        type: 'icon',
         icon: 'save',
         id: 'SAVE_ENTITY_LABEL',
         label: STRINGS.SAVE_ENTITY,
@@ -29,25 +17,13 @@ UILayout.entityForm =
       },
       { view: 'button',
         type: 'icon',
-        icon: 'close',
-        id: 'CANCEL_ENTITY_LABEL', label: STRINGS.CANCEL_ENTITY,
-        width: 80,
-        hidden: true,
-        click: function() {
-          UI.entityForm.refresh();
-          UI.entityForm.setEditing(false);
-        }
-      },
-      { view: 'button',
-        type: 'icon',
         icon: 'refresh',
         id: 'REFRESH_ENTITY_LABEL', label: STRINGS.REFRESH_ENTITY,
-        width: 100,
+        width: 80,
         click: function() {
           UI.entityForm.refresh();
         }
       },
-      { width: 30 },
       { view: 'button',
         type: 'icon',
         icon: 'plus',
@@ -73,9 +49,9 @@ UILayout.entityForm =
       { view: 'button',
         type: 'icon',
         icon: 'trash-o',
-        id: 'entity_form__remove_button',
+        id: 'DELETE_ENTITY_SHORT_LABEL', label: STRINGS.DELETE_ENTITY_SHORT,
         hidden: UIHelper.isViewOnly(),
-        width: 30,
+        width: 80,
         click: function() {
           webix.confirm({
             title: STRINGS.DELETE_ENTITY,
@@ -88,6 +64,29 @@ UILayout.entityForm =
               }
             }
           });
+        }
+      },
+      { view: 'button',
+        type: 'icon',
+        icon: 'pencil-square-o',
+        id: 'EDIT_ENTITY_LABEL',
+        label: STRINGS.EDIT_ENTITY,
+        hidden: UIHelper.isViewOnly(),
+        width: 60,
+        click: function() {
+          UI.entityForm.setEditing(true);
+          UI.entityForm.refresh();
+        }
+      },
+      { view: 'button',
+        type: 'icon',
+        icon: 'eye',
+        id: 'CANCEL_ENTITY_LABEL', label: STRINGS.CANCEL_ENTITY,
+        width: 60,
+        hidden: true,
+        click: function() {
+          UI.entityForm.setEditing(false);
+          UI.entityForm.refresh();
         }
       }
     ]

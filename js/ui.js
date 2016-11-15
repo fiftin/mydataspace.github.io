@@ -15,7 +15,7 @@ UI = {
     'SAVE_ENTITY_LABEL',
     'ADD_FIELD_LABEL',
     'RUN_SCRIPT_LABEL',
-    'entity_form__remove_button'
+    'DELETE_ENTITY_SHORT_LABEL'
   ],
 
   updateViewOnlyState: function() {

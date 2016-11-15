@@ -272,7 +272,13 @@ EntityForm.prototype.setData = function(data) {
   $$('entity_form').show();
 };
 
-EntityForm.prototype.refresh = function(isWithMeta) {
+EntityForm.prototype.refresh = function() {
+  var isWithMeta = this.isEditing();
+
+  if (UIHelper.getEntityTypeByPath(UIHelper.dataFromId(this.selectedId).path) === 'task' && !$$('RUN_SCRIPT_LABEL').isVisible()) {
+    $$('RUN_SCRIPT_LABEL').show();
+  }
+
   $$('entity_form').disable();
   var req = !isWithMeta ? 'entities.get' : 'entities.getWithMeta';
   Mydataspace.request(req, UIHelper.dataFromId(this.selectedId), function(data) {
@@ -365,11 +371,9 @@ EntityForm.prototype.save = function() {
   Mydataspace.request('entities.change', dirtyData, function(res) {
     this.refresh();
     $$('entity_form').enable();
-    this.setEditing(false);
   }.bind(this), function(err) {
     UI.error(err);
     $$('entity_form').enable();
-    this.setEditing(false);
   }.bind(this));
 };
 
@@ -405,9 +409,7 @@ EntityForm.prototype.addField = function(data, setDirty) {
   if (setDirty) {
     var values = webix.copy($$('entity_form')._values);
   }
-  if ((data.type === 'j' || data.type === 'u') && !$$('RUN_SCRIPT_LABEL').isVisible()) {
-    // $$('RUN_SCRIPT_LABEL').show();
-  }
+
   $$('entity_form').addView({
     id: 'entity_form__' + data.name,
     css: 'entity_form__field',
@@ -443,6 +445,12 @@ EntityForm.prototype.addField = function(data, setDirty) {
         css: 'entity_form__text_label',
         readonly: data.type === 'j',
         on: {
+          onBlur: function() {
+            if (this.editScriptFieldId == 'entity_form__' + data.name + '_value') {
+              this.editScriptFieldId = null;
+            }
+          },
+
           onFocus: function() {
             if (data.type === 'j') {
               this.editScriptFieldId = 'entity_form__' + data.name + '_value';

@@ -114,6 +114,25 @@ UIHelper = {
            window.location.hash !== '#';
   },
 
+  getEntityTypeByPath: function(path) {
+    var depth = UIHelper.getEntityDepthByPath(path);
+    switch (path) {
+      case '':
+        return 'root';
+      case 'protos':
+        return 'protos';
+      case 'tasks':
+        return 'tasks';
+      default:
+        if (path.startsWith('tasks') && depth === 2) {
+          return 'task';
+        } else if (path.startsWith('protos') && depth === 2) {
+          return 'proto';
+        }
+    }
+    return 'none';
+  },
+
   getIconByPath: function(path, isEmpty, isOpened) {
     var depth = UIHelper.getEntityDepthByPath(path);
     var icon;
@@ -210,10 +229,6 @@ UIHelper = {
       count: data.numberOfChildren,
       data: children
     };
-  },
-
-  getEntityTypeByPath: function(path) {
-    // if (path.startsWith(''))
   },
 
   nameFromData: function(data) {

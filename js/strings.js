@@ -11,6 +11,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     ADD_ENTITY: 'New Entity',
     SEARCH: 'Search...',
     DELETE_ENTITY: 'Delete Entity',
+    DELETE_ENTITY_SHORT: 'Delete',
     CREATE_CHILDREN: 'Create Children',
     CREATE_ONE_CHILD: 'Create One Child',
     OTHERS_CAN: 'Others Can',
@@ -55,11 +56,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     NOTHING: 'Nothing',
     READ_AND_VIEW_CHILDREN: 'Read and view children',
     PROTO_IS_FIXED: 'Is Fixed',
-    MAX_NUMBER_OF_CHILDREN: 'Max number of children',
+    MAX_NUMBER_OF_CHILDREN: 'Childrens',
     EDIT_ENTITY: 'Edit',
     SAVE_ENTITY: 'Save',
     REFRESH_ENTITY: 'Refresh',
-    CANCEL_ENTITY: 'Cancel'
+    CANCEL_ENTITY: 'View'
   },
   RU: {
     YES: 'Да',
@@ -72,7 +73,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     ONLY_READ: 'Только читать',
     ADD_ENTITY: 'Новый эл-т',
     SEARCH: 'Поиск...',
-    DELETE_ENTITY: 'Удалить эл-т',
+    DELETE_ENTITY: 'Удалить элемент',
+    DELETE_ENTITY_SHORT: 'Удал.',
     CREATE_CHILDREN: 'Создавать дочерние элементы',
     CREATE_ONE_CHILD: 'Создать один дочерний элемент',
     OTHERS_CAN: 'Другие могут',
@@ -118,11 +120,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     NOTHING: 'Ничего',
     READ_AND_VIEW_CHILDREN: 'Чтение и просм. доч. эл.',
     PROTO_IS_FIXED: 'Зафиксирован',
-    MAX_NUMBER_OF_CHILDREN: 'Макс. число доч. эл.',
+    MAX_NUMBER_OF_CHILDREN: 'Доч. эл-тов',
     EDIT_ENTITY: 'Ред.',
     SAVE_ENTITY: 'Сохр.',
-    REFRESH_ENTITY: 'Обновить',
-    CANCEL_ENTITY: 'Отмена'
+    REFRESH_ENTITY: 'Обнов.',
+    CANCEL_ENTITY: 'Пр.'
   }
 };
 var LANGUAGE = localStorage.getItem('language') || 'EN';
