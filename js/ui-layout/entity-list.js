@@ -1,5 +1,6 @@
 UILayout.entityList =
 { id: 'my_data_panel__central_panel',
+  gravity: 0.8,
   rows: [
     { view: 'toolbar',
       cols: [

@@ -2002,6 +2002,7 @@ UILayout.header =
 
 UILayout.entityTree =
 { id: 'my_data_panel__left_panel',
+  gravity: 0.6,
   rows: [
     { view: 'toolbar',
       elements: [
@@ -2071,6 +2072,7 @@ UILayout.entityTree =
 
 UILayout.entityList =
 { id: 'my_data_panel__central_panel',
+  gravity: 0.8,
   rows: [
     { view: 'toolbar',
       cols: [
