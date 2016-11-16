@@ -262,7 +262,8 @@ UIHelper = {
     i: 'italic',
     r: 'calculator',
     b: 'check-square-o',
-    d: 'calendar-o'
+    d: 'calendar-o',
+    u: 'link'
   },
 
   expandFields: function(fields) {
@@ -512,6 +513,7 @@ UIControls = {
       required: true,
       name: 'type',
       value: 's',
+      // template:"#name#",
       label: STRINGS.TYPE,
       options: options
     };
@@ -589,7 +591,7 @@ UIControls = {
         { view: 'button',
           id: windowId + '__cancel_button',
           value: STRINGS.CANCEL,
-          type: 'danger', click: function() { $$(windowId).hide() }
+          click: function() { $$(windowId).hide() }
         }
       ]
     }
@@ -629,7 +631,12 @@ EntityForm.prototype.setEditing = function(editing) {
     $$('EDIT_ENTITY_LABEL').hide();
     $$('SAVE_ENTITY_LABEL').show();
     $$('CANCEL_ENTITY_LABEL').show();
-    $$('REFRESH_ENTITY_LABEL').hide();
+    // $$('REFRESH_ENTITY_LABEL').hide();
+    if (UIHelper.getEntityTypeByPath(UIHelper.dataFromId(this.selectedId).path) === 'task') {
+      $$('RUN_SCRIPT_LABEL').show();
+    } else {
+      $$('RUN_SCRIPT_LABEL').hide();
+    }
     $$('ADD_FIELD_LABEL').show();
     webix.html.addCss($$('edit_script_window__toolbar').getNode(), 'entity_form__toolbar--edit');
     webix.html.addCss($$('entity_form__toolbar').getNode(), 'entity_form__toolbar--edit');
@@ -638,7 +645,8 @@ EntityForm.prototype.setEditing = function(editing) {
     $$('EDIT_ENTITY_LABEL').show();
     $$('SAVE_ENTITY_LABEL').hide();
     $$('CANCEL_ENTITY_LABEL').hide();
-    $$('REFRESH_ENTITY_LABEL').show();
+    $$('RUN_SCRIPT_LABEL').hide();
+    // $$('REFRESH_ENTITY_LABEL').show();
     $$('ADD_FIELD_LABEL').hide();
     webix.html.removeCss($$('edit_script_window__toolbar').getNode(), 'entity_form__toolbar--edit');
     webix.html.removeCss($$('entity_form__toolbar').getNode(), 'entity_form__toolbar--edit');
@@ -892,15 +900,6 @@ EntityForm.prototype.setData = function(data) {
 EntityForm.prototype.refresh = function() {
   var isWithMeta = this.isEditing();
 
-  if (UIHelper.getEntityTypeByPath(UIHelper.dataFromId(this.selectedId).path) === 'task') {
-    if (!$$('RUN_SCRIPT_LABEL').isVisible()) {
-      $$('RUN_SCRIPT_LABEL').show();
-    }
-  } else {
-    if ($$('RUN_SCRIPT_LABEL').isVisible()) {
-      $$('RUN_SCRIPT_LABEL').hide();
-    }
-  }
 
   $$('entity_form').disable();
   var req = !isWithMeta ? 'entities.get' : 'entities.getWithMeta';
@@ -2174,22 +2173,22 @@ UILayout.entityForm =
     cols: [
       { view: 'button',
         type: 'icon',
-        icon: 'save',
-        id: 'SAVE_ENTITY_LABEL',
-        label: STRINGS.SAVE_ENTITY,
-        hidden: true,
-        width: 70,
-        click: function() {
-          UI.entityForm.save();
-        }
-      },
-      { view: 'button',
-        type: 'icon',
         icon: 'refresh',
         id: 'REFRESH_ENTITY_LABEL', label: STRINGS.REFRESH_ENTITY,
         width: 80,
         click: function() {
           UI.entityForm.refresh();
+        }
+      },
+      { view: 'button',
+        type: 'icon',
+        icon: 'save',
+        id: 'SAVE_ENTITY_LABEL',
+        label: STRINGS.SAVE_ENTITY,
+        hidden: true,
+        width: 65,
+        click: function() {
+          UI.entityForm.save();
         }
       },
       { view: 'button',
@@ -2784,13 +2783,14 @@ UI = {
           { id: 'j', value: 'Text', icon: 'align-justify' },
           { id: 'i', value: 'Integer', icon: 'italic' },
           { id: 'r', value: 'Float', icon: 'calculator'  },
+          { id: 'u', value: 'URL', icon: 'link' },
           { id: 'w', value: 'Secret', icon: 'lock' },
+
           // { id: 'b', value: 'Boolean', icon: 'check-square-o' },
           // { id: 'd', value: 'Date', icon: 'calendar-o' },
 
           // { id: 'x', value: 'Non-indexed', icon: 'low-vision' },
           // { id: 'm', value: 'Money', icon: 'dollar' },
-          { id: 'u', value: 'URL', icon: 'link' },
           // { id: 'e', value: 'Email', icon: 'envelope' },
           // { id: 'p', value: 'Phone', icon: 'phone' },
           // { id: 'c', value: 'Custom', icon: 'pencil' },

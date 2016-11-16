@@ -9,6 +9,7 @@ UIControls = {
       required: true,
       name: 'type',
       value: 's',
+      // template:"#name#",
       label: STRINGS.TYPE,
       options: options
     };
@@ -86,7 +87,7 @@ UIControls = {
         { view: 'button',
           id: windowId + '__cancel_button',
           value: STRINGS.CANCEL,
-          type: 'danger', click: function() { $$(windowId).hide() }
+          click: function() { $$(windowId).hide() }
         }
       ]
     }

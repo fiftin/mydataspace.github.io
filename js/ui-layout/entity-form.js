@@ -6,22 +6,22 @@ UILayout.entityForm =
     cols: [
       { view: 'button',
         type: 'icon',
-        icon: 'save',
-        id: 'SAVE_ENTITY_LABEL',
-        label: STRINGS.SAVE_ENTITY,
-        hidden: true,
-        width: 70,
-        click: function() {
-          UI.entityForm.save();
-        }
-      },
-      { view: 'button',
-        type: 'icon',
         icon: 'refresh',
         id: 'REFRESH_ENTITY_LABEL', label: STRINGS.REFRESH_ENTITY,
         width: 80,
         click: function() {
           UI.entityForm.refresh();
+        }
+      },
+      { view: 'button',
+        type: 'icon',
+        icon: 'save',
+        id: 'SAVE_ENTITY_LABEL',
+        label: STRINGS.SAVE_ENTITY,
+        hidden: true,
+        width: 65,
+        click: function() {
+          UI.entityForm.save();
         }
       },
       { view: 'button',

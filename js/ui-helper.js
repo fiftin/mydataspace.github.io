@@ -59,7 +59,8 @@ UIHelper = {
     i: 'italic',
     r: 'calculator',
     b: 'check-square-o',
-    d: 'calendar-o'
+    d: 'calendar-o',
+    u: 'link'
   },
 
   expandFields: function(fields) {

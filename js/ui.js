@@ -328,13 +328,14 @@ UI = {
           { id: 'j', value: 'Text', icon: 'align-justify' },
           { id: 'i', value: 'Integer', icon: 'italic' },
           { id: 'r', value: 'Float', icon: 'calculator'  },
+          { id: 'u', value: 'URL', icon: 'link' },
           { id: 'w', value: 'Secret', icon: 'lock' },
+
           // { id: 'b', value: 'Boolean', icon: 'check-square-o' },
           // { id: 'd', value: 'Date', icon: 'calendar-o' },
 
           // { id: 'x', value: 'Non-indexed', icon: 'low-vision' },
           // { id: 'm', value: 'Money', icon: 'dollar' },
-          { id: 'u', value: 'URL', icon: 'link' },
           // { id: 'e', value: 'Email', icon: 'envelope' },
           // { id: 'p', value: 'Phone', icon: 'phone' },
           // { id: 'c', value: 'Custom', icon: 'pencil' },
