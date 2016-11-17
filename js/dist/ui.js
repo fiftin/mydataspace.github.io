@@ -60,7 +60,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     EDIT_ENTITY: 'Edit',
     SAVE_ENTITY: 'Save',
     REFRESH_ENTITY: 'Refresh',
-    CANCEL_ENTITY: 'View'
+    CANCEL_ENTITY: 'View',
+    SIGN_OUT: 'Log Out'
   },
   RU: {
     YES: 'Да',
@@ -124,7 +125,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     EDIT_ENTITY: 'Ред.',
     SAVE_ENTITY: 'Сохр.',
     REFRESH_ENTITY: 'Обнов.',
-    CANCEL_ENTITY: 'Пр.'
+    CANCEL_ENTITY: 'Пр.',
+    SIGN_OUT: 'Выход'
   }
 };
 var LANGUAGE = localStorage.getItem('language') || 'EN';
@@ -202,6 +204,7 @@ webix.protoUI({
 }, webix.ui.view, webix.EventSystem);
 
 UIHelper = {
+  SCREEN_XS: 700,
   /**
    * Number of entities received by single request.
    */
@@ -1998,6 +2001,16 @@ UILayout.header =
           $('#signin_modal').modal('show');
         }
       },
+      { view: 'button',
+        width: 90,
+        hidden: localStorage.getItem('authToken') == null || window.innerWidth <= UIHelper.SCREEN_XS,
+        id: 'SIGN_OUT_LABEL',
+        css: 'menu__login_button',
+        label: STRINGS.SIGN_OUT,
+        click: function() {
+          Mydataspace.logout();
+        }
+      },
       { view: 'icon',
         icon: 'bars',
         hidden: localStorage.getItem('authToken') == null,
@@ -2470,7 +2483,8 @@ UI = {
     'SAVE_ENTITY_LABEL',
     'ADD_FIELD_LABEL',
     'RUN_SCRIPT_LABEL',
-    'DELETE_ENTITY_SHORT_LABEL'
+    'DELETE_ENTITY_SHORT_LABEL',
+    'menu_button'
   ],
 
   HIDDEN_ON_SMALL_SCREENS: [
@@ -2478,7 +2492,12 @@ UI = {
     'my_data_panel__resizer_1',
     'GET_STARTED_LABEL',
     'DEMOS_LABEL',
-    'DOCS_LABEL'
+    'DOCS_LABEL',
+    'menu_button'
+  ],
+
+  VISIBLE_ON_SMALL_SCREENS: [
+    'SIGN_OUT_LABEL'
   ],
 
   updateViewOnlyState: function() {
@@ -2886,9 +2905,10 @@ UI = {
           ]
         }
       ]
-      UI.updateSizes();
     });
 
+    UI.updateSizes();
+    
     webix.event(window, 'resize', function(e) {
       UI.updateSizes();
     });
@@ -2916,14 +2936,12 @@ UI = {
     $$('admin_panel').resize();
     $$('admin_panel').resize();
     $$('edit_script_window').resize();
-    if (window.innerWidth < 700) {
-      for (var i in UI.HIDDEN_ON_SMALL_SCREENS) {
-        $$(UI.HIDDEN_ON_SMALL_SCREENS[i]).hide();
-      }
+    if (window.innerWidth <= UIHelper.SCREEN_XS) {
+      UI.HIDDEN_ON_SMALL_SCREENS.forEach(function(x) { $$(x).hide(); });
+      UI.VISIBLE_ON_SMALL_SCREENS.forEach(function(x) { $$(x).show(); });
     } else {
-      for (var i in UI.HIDDEN_ON_SMALL_SCREENS) {
-        $$(UI.HIDDEN_ON_SMALL_SCREENS[i]).show();
-      }
+      UI.HIDDEN_ON_SMALL_SCREENS.forEach(function(x) { $$(x).show(); });
+      UI.VISIBLE_ON_SMALL_SCREENS.forEach(function(x) { $$(x).hide(); });
     }
   }
 };

@@ -15,7 +15,8 @@ UI = {
     'SAVE_ENTITY_LABEL',
     'ADD_FIELD_LABEL',
     'RUN_SCRIPT_LABEL',
-    'DELETE_ENTITY_SHORT_LABEL'
+    'DELETE_ENTITY_SHORT_LABEL',
+    'menu_button'
   ],
 
   HIDDEN_ON_SMALL_SCREENS: [
@@ -23,7 +24,12 @@ UI = {
     'my_data_panel__resizer_1',
     'GET_STARTED_LABEL',
     'DEMOS_LABEL',
-    'DOCS_LABEL'
+    'DOCS_LABEL',
+    'menu_button'
+  ],
+
+  VISIBLE_ON_SMALL_SCREENS: [
+    'SIGN_OUT_LABEL'
   ],
 
   updateViewOnlyState: function() {
@@ -431,9 +437,10 @@ UI = {
           ]
         }
       ]
-      UI.updateSizes();
     });
 
+    UI.updateSizes();
+    
     webix.event(window, 'resize', function(e) {
       UI.updateSizes();
     });
@@ -461,14 +468,12 @@ UI = {
     $$('admin_panel').resize();
     $$('admin_panel').resize();
     $$('edit_script_window').resize();
-    if (window.innerWidth < 700) {
-      for (var i in UI.HIDDEN_ON_SMALL_SCREENS) {
-        $$(UI.HIDDEN_ON_SMALL_SCREENS[i]).hide();
-      }
+    if (window.innerWidth <= UIHelper.SCREEN_XS) {
+      UI.HIDDEN_ON_SMALL_SCREENS.forEach(function(x) { $$(x).hide(); });
+      UI.VISIBLE_ON_SMALL_SCREENS.forEach(function(x) { $$(x).show(); });
     } else {
-      for (var i in UI.HIDDEN_ON_SMALL_SCREENS) {
-        $$(UI.HIDDEN_ON_SMALL_SCREENS[i]).show();
-      }
+      UI.HIDDEN_ON_SMALL_SCREENS.forEach(function(x) { $$(x).show(); });
+      UI.VISIBLE_ON_SMALL_SCREENS.forEach(function(x) { $$(x).hide(); });
     }
   }
 };
