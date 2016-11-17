@@ -60,7 +60,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     EDIT_ENTITY: 'Edit',
     SAVE_ENTITY: 'Save',
     REFRESH_ENTITY: 'Refresh',
-    CANCEL_ENTITY: 'View'
+    CANCEL_ENTITY: 'View',
+    SIGN_OUT: 'Log Out'
   },
   RU: {
     YES: 'Да',
@@ -124,7 +125,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     EDIT_ENTITY: 'Ред.',
     SAVE_ENTITY: 'Сохр.',
     REFRESH_ENTITY: 'Обнов.',
-    CANCEL_ENTITY: 'Пр.'
+    CANCEL_ENTITY: 'Пр.',
+    SIGN_OUT: 'Выход'
   }
 };
 var LANGUAGE = localStorage.getItem('language') || 'EN';
