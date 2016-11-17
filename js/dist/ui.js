@@ -2473,6 +2473,14 @@ UI = {
     'DELETE_ENTITY_SHORT_LABEL'
   ],
 
+  HIDDEN_ON_SMALL_SCREENS: [
+    'my_data_panel__left_panel',
+    'my_data_panel__resizer_1',
+    'GET_STARTED_LABEL',
+    'DEMOS_LABEL',
+    'DOCS_LABEL'
+  ],
+
   updateViewOnlyState: function() {
     if (UIHelper.isViewOnly()) {
       UI.DISABLED_ON_VIEW_ONLY.forEach(function(item) {
@@ -2910,5 +2918,14 @@ UI = {
     $$('admin_panel').resize();
     $$('admin_panel').resize();
     $$('edit_script_window').resize();
+    if (window.innerWidth < 700) {
+      for (var i in UI.HIDDEN_ON_SMALL_SCREENS) {
+        $$(UI.HIDDEN_ON_SMALL_SCREENS[i]).hide();
+      }
+    } else {
+      for (var i in UI.HIDDEN_ON_SMALL_SCREENS) {
+        $$(UI.HIDDEN_ON_SMALL_SCREENS[i]).show();
+      }
+    }
   }
 };
