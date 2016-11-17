@@ -52,10 +52,6 @@
   position: relative;
 }
 
-.run_script__state_wrap--run {
-  height: 40%;
-}
-
 .run_script__console {
   font-family: "Courier New";
   font-size: 16px;
@@ -67,8 +63,16 @@
   white-space: pre;
 }
 
+.run_script__state_wrap--run {
+  height: 100px;
+  .run_script__state {
+    font-size: 60px;
+    transition: font-size 0.5s;
+  }
+}
+
 .run_script__console--run {
-  height: 60%;
+  height: calc(100% - 100px);
 }
 
 .run_script__console_record {
@@ -115,7 +119,7 @@
 
 .run_script__button {
   font-size: 28px;
-  padding: 10px 15px;
+  padding: 10px 15px 5px 15px;
   margin-top: 5px;
   border: 0;
   background: none;
@@ -129,4 +133,8 @@
   &:active {
     background: #268fd5;
   }
+}
+
+.run_script__run_button_icon {
+  font-size: 40px;
 }
