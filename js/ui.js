@@ -431,6 +431,7 @@ UI = {
           ]
         }
       ]
+      UI.updateSizes();
     });
 
     webix.event(window, 'resize', function(e) {
@@ -443,9 +444,6 @@ UI = {
     });
   },
 
-  /**
-   *
-   */
   updateSizes: function() {
     $$('admin_panel').define({
       width: window.innerWidth,
