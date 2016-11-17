@@ -1,3 +1,4 @@
+$run-script-bg: #85b4d4; // #3498db;
 
 .run_script__wrap {
   width: 100%;
@@ -12,7 +13,7 @@
   position: absolute;
   bottom: 0;
   width: 100%;
-  background: #3498db;
+  background: $run-script-bg;
 }
 
 .run_script {
@@ -24,7 +25,7 @@
 }
 
 .run_script__state {
-  color: #268fd5;
+  color: $run-script-bg;
 }
 
 .run_script__state--run {
@@ -128,10 +129,10 @@
   border-radius: 6px;
   color: white;
   &:hover {
-    background: #268fd5;
+    background: rgba(0,0,0,0.1);
   }
   &:active {
-    background: #268fd5;
+    background: rgba(0,0,0,0.2);
   }
 }
 
