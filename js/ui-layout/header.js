@@ -61,6 +61,16 @@ UILayout.header =
           $('#signin_modal').modal('show');
         }
       },
+      { view: 'button',
+        width: 90,
+        hidden: localStorage.getItem('authToken') == null || window.innerWidth <= UIHelper.SCREEN_XS,
+        id: 'SIGN_OUT_LABEL',
+        css: 'menu__login_button',
+        label: STRINGS.SIGN_OUT,
+        click: function() {
+          Mydataspace.logout();
+        }
+      },
       { view: 'icon',
         icon: 'bars',
         hidden: localStorage.getItem('authToken') == null,

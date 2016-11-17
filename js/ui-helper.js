@@ -1,4 +1,5 @@
 UIHelper = {
+  SCREEN_XS: 700,
   /**
    * Number of entities received by single request.
    */
