@@ -1789,7 +1789,7 @@ UILayout.windows.editScript = {
         $$('admin_panel').$width -
         $$('my_data_panel__right_panel').$width -
         $$('my_data_panel__resizer_2').$width - 2;
- 
+
       var windowHeight = $$('my_data_panel').$height - 2;
 
       $$('edit_script_window').define('width', windowWidth);
@@ -1856,7 +1856,7 @@ UILayout.windows.editScript = {
       },
       { view: 'ace-editor',
         id: 'edit_script_window__editor',
-        theme: 'kr_theme',
+        // theme: 'kr_theme',
         mode: 'javascript',
         on: {
           onReady: function(editor) {
