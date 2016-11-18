@@ -18,7 +18,6 @@ title: Run Script
       <i id="run_script__run_button_icon" class="fa fa-play run_script__run_button_icon" aria-hidden="true"></i>
     </button>
     <script type="text/javascript">
-
       function addScript(options) {
         var script = options.scripts[options.lastScriptIndex];
 
@@ -88,48 +87,6 @@ title: Run Script
         document.getElementById('run_script__state').classList.add('run_script__state--run');
         window.opener.postMessage({ message: 'getScripts' }, '*');
       });
-
-      var MDSConsole = {
-        post: function(type, message) {
-          var logRecord = document.createElement('div');
-          logRecord.classList.add('run_script__console_record');
-          logRecord.textContent = message;
-          var console = document.getElementById('run_script__console');
-          console.appendChild(logRecord);
-          console.scrollTop = console.scrollHeight - console.clientHeight;
-          logRecord.classList.add('run_script__console_record--' + type);
-        },
-        log: function(message) { MDSConsole.post('log', message) },
-        info: function(message) { MDSConsole.post('info', message) },
-        error: function(message) { MDSConsole.post('error', message) },
-        warn: function(message) { MDSConsole.post('warn', message) },
-        system: function(message) { MDSConsole.post('system', message) },
-        ok: function(message) { MDSConsole.post('ok', message) },
-
-        success: function(message) {
-          document.getElementById('run_script__state').classList.remove('fa-spin');
-          document.getElementById('run_script__state').classList.remove('fa-cog');
-          document.getElementById('run_script__state').classList.remove('run_script__state--run');
-          document.getElementById('run_script__state').classList.add('fa-check');
-          document.getElementById('run_script__state').classList.add('run_script__state--success');
-          if (message == null) {
-            message = 'The script completed successfully';
-          }
-          MDSConsole.post('success', message)
-        },
-        fail: function(message) {
-          if (message == null) {
-            message = 'The script failed';
-          }
-          document.getElementById('run_script__state').classList.remove('fa-spin');
-          document.getElementById('run_script__state').classList.remove('fa-cog');
-          document.getElementById('run_script__state').classList.remove('run_script__state--run');
-          document.getElementById('run_script__state').classList.add('fa-times');
-          document.getElementById('run_script__state').classList.add('run_script__state--fail');
-          MDSConsole.error(message);
-        }
-      }
-
     </script>
   </div>
 
