@@ -1,6 +1,6 @@
 'use strict';
 
-var common = {
+var MDSCommon = {
   primitiveTypes: [
     'number',
     'string',
@@ -64,7 +64,7 @@ var common = {
   },
 
   textToHtml: function(str) {
-    var escaped = common.escapeHtml(str);
+    var escaped = MDSCommon.escapeHtml(str);
     var lines = escaped.split('\n');
     if (lines.length === 1) {
       return escaped;
@@ -79,11 +79,11 @@ var common = {
   },
 
   isInt: function(n) {
-    return (typeof n === 'string' && /^\d+$/.test(n)) || common.isNumber(n) && n % 1 === 0;
+    return (typeof n === 'string' && /^\d+$/.test(n)) || MDSCommon.isNumber(n) && n % 1 === 0;
   },
 
   isPrimitive: function(value) {
-    return value === null || common.primitiveTypes.indexOf(typeof value) > -1;
+    return value === null || MDSCommon.primitiveTypes.indexOf(typeof value) > -1;
   },
 
   isReal: function(value) {
@@ -91,7 +91,7 @@ var common = {
   },
 
   isComplex: function(value) {
-    return common.isObject(value) || Array.isArray(value);
+    return MDSCommon.isObject(value) || Array.isArray(value);
   },
 
   isObject: function(value) {
@@ -103,73 +103,73 @@ var common = {
   },
 
   isBlank: function(value) {
-    return common.isNull(value) || value === '' || Array.isArray(value) && value.length === 0;
+    return MDSCommon.isNull(value) || value === '' || Array.isArray(value) && value.length === 0;
   },
 
   throwIfBlank: function(value, message) {
-    if (common.isBlank(value)) {
+    if (MDSCommon.isBlank(value)) {
       throw new Error(message);
     }
     return value;
   },
 
   throwIfNull: function(value, message) {
-    if (common.isNull(value)) {
+    if (MDSCommon.isNull(value)) {
       throw new Error(message);
     }
     return value;
   },
 
   isPresent: function(value) {
-    return !common.isBlank(value);
+    return !MDSCommon.isBlank(value);
   },
 
   extend: function(dest, source) {
-    var ret = common.copy(dest);
-    common.extendOf(ret, source);
+    var ret = MDSCommon.copy(dest);
+    MDSCommon.extendOf(ret, source);
     return ret;
   },
 
   extendOf: function(dest, source) {
-    if (common.isBlank(source)) {
+    if (MDSCommon.isBlank(source)) {
       return;
     }
 
-    if (common.isPrimitive(dest) || common.isPrimitive(source)) {
+    if (MDSCommon.isPrimitive(dest) || MDSCommon.isPrimitive(source)) {
       throw new Error('Cant extend primative type');
     }
 
     if (Array.isArray(dest) && Array.isArray(source)) {
       for (let i in source) {
         let item = source[i];
-        dest.push(common.copy(item));
+        dest.push(MDSCommon.copy(item));
       }
     } else { // object
       for (let i in dest) {
         if (typeof source[i] === 'undefined') {
           continue;
         }
-        if (common.isPrimitive(dest[i]) || common.isPrimitive(source[i])) {
-          dest[i] = common.copy(source[i]);
+        if (MDSCommon.isPrimitive(dest[i]) || MDSCommon.isPrimitive(source[i])) {
+          dest[i] = MDSCommon.copy(source[i]);
         } else { // mergin
-          common.extendOf(dest[i], source[i]);
+          MDSCommon.extendOf(dest[i], source[i]);
         }
       }
       for (let i in source) {
         if (typeof dest[i] === 'undefined') {
-          dest[i] = common.copy(source[i]);
+          dest[i] = MDSCommon.copy(source[i]);
         }
       }
     }
   },
 
   copy: function(data) {
-    if (common.isPrimitive(data)) {
+    if (MDSCommon.isPrimitive(data)) {
       return data;
     }
     var ret = Array.isArray(data) ? [] : {};
     for (var i in data) {
-      ret[i] = common.copy(data[i]);
+      ret[i] = MDSCommon.copy(data[i]);
     }
     return ret;
   },
@@ -231,7 +231,7 @@ var common = {
   },
 
   findByName: function(arr, name, caseInsensitive) {
-    var index = common.findIndexByName(arr, name, caseInsensitive);
+    var index = MDSCommon.findIndexByName(arr, name, caseInsensitive);
     if (index !== -1) {
       return arr[index];
     }
@@ -239,7 +239,7 @@ var common = {
   },
 
   findValueByName: function(arr, name, caseInsensitive) {
-    var item = common.findByName(arr, name, caseInsensitive);
+    var item = MDSCommon.findByName(arr, name, caseInsensitive);
     if (item == null) {
       return item;
     }
@@ -270,10 +270,10 @@ var common = {
       date = new Date();
     }
     return String(date.getFullYear() + '-' +
-      common.intToFixedString(date.getMonth() + 1, 2) + '-' +
-      common.intToFixedString(date.getDate(), 2) + '_' +
-      common.intToFixedString(date.getHours(), 2) + '-' +
-      common.intToFixedString(date.getMinutes(), 2));
+      MDSCommon.intToFixedString(date.getMonth() + 1, 2) + '-' +
+      MDSCommon.intToFixedString(date.getDate(), 2) + '_' +
+      MDSCommon.intToFixedString(date.getHours(), 2) + '-' +
+      MDSCommon.intToFixedString(date.getMinutes(), 2));
   },
 
   intToFixedString: function(number, numberOfDigits) {
@@ -339,14 +339,14 @@ var common = {
   },
 
   requirePermit: function(data, keys) {
-    return common.permit(common.req(data, keys), keys);
+    return MDSCommon.permit(MDSCommon.req(data, keys), keys);
   },
 
   reqArray: function(data, keys) {
     var ret = [];
     for (var i in arr) {
       var data = arr[i];
-      ret[i] = common.req(data, keys);
+      ret[i] = MDSCommon.req(data, keys);
     }
     return ret;
   },
@@ -379,7 +379,7 @@ var common = {
       }
     }
     if (Array.isArray(data)) {
-      return common.reqArray(data, keys);
+      return MDSCommon.reqArray(data, keys);
     } else {
       if (Array.isArray(keys)) {
         for (var i in keys) {
@@ -396,10 +396,10 @@ var common = {
             throw new Error('Required field isn\'t provided: ' + k);
           }
           var ok = false;
-          if (common.isPrimitive(type)) {
-            ok = common.isValidPrimitiveType(val, type);
+          if (MDSCommon.isPrimitive(type)) {
+            ok = MDSCommon.isValidPrimitiveType(val, type);
           } else {
-            ok = common.req(val, type);
+            ok = MDSCommon.req(val, type);
           }
           if (!ok) {
             throw new Error('Illegal field or key type');
@@ -421,7 +421,7 @@ var common = {
       }
     }
     if (Array.isArray(data)) {
-      return common.permitArray(data, keys);
+      return MDSCommon.permitArray(data, keys);
     } else {
       var ret = {};
       if (Array.isArray(keys)) {
@@ -438,10 +438,10 @@ var common = {
           let val = data[k];
           if (typeof val !== 'undefined') {
             var ok = false;
-            if (common.isPrimitive(type)) {
-              ok = common.isValidPrimitiveType(val, type);
+            if (MDSCommon.isPrimitive(type)) {
+              ok = MDSCommon.isValidPrimitiveType(val, type);
             } else {
-              ret[k] = common.permit(val, type);
+              ret[k] = MDSCommon.permit(val, type);
             }
             if (ok) {
               ret[k] = val;
@@ -457,7 +457,7 @@ var common = {
     var ret = [];
     for (let i in arr) {
       let data = arr[i];
-      ret[i] = common.permit(data, keys);
+      ret[i] = MDSCommon.permit(data, keys);
     }
     return ret;
   },
@@ -470,20 +470,20 @@ var common = {
       case 'u': // javascript source
         if (Array.isArray(val)) {
           ok = val.reduce(function(prev, curr) {
-            return prev && common.isPrimitive(curr);
+            return prev && MDSCommon.isPrimitive(curr);
           });
         } else {
-          ok = common.isPrimitive(val);
+          ok = MDSCommon.isPrimitive(val);
         }
         break;
       case 'i':
-        ok = common.isInt(val);
+        ok = MDSCommon.isInt(val);
         break;
       case 'r':
-        ok = common.isReal(val);
+        ok = MDSCommon.isReal(val);
         break;
       case 'o':
-        ok = common.isObject(val);
+        ok = MDSCommon.isObject(val);
         break;
       case 'a':
         ok = true;
@@ -494,5 +494,5 @@ var common = {
 };
 
 if (typeof module !== 'undefined') {
-  module.exports = common;
+  module.exports = MDSCommon;
 }

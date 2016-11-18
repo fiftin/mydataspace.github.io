@@ -4,7 +4,7 @@ function Myda(options) {
   if (typeof options === 'string') {
     options = { root: options };
   }
-  this.options = common.extend({
+  this.options = MDSCommon.extend({
     useLocalStorage: true,
 		apiURL: 'https://api.my-data.space',
 		websocketURL: 'https://api.my-data.space',
@@ -76,7 +76,7 @@ function Myda(options) {
 }
 
 Myda.prototype.getAuthProviders = function() {
-  var ret = common.copy(this.authProviders);
+  var ret = MDSCommon.copy(this.authProviders);
   for (var providerName in ret) {
     ret[providerName].url =
       ret[providerName].url.replace('{{api_url}}', encodeURIComponent(this.options.apiURL));
@@ -93,7 +93,7 @@ Myda.prototype.getAuthProvider = function(providerName) {
   if (typeof prov === 'undefined') {
     return null;
   }
-  var ret = common.copy(prov);
+  var ret = MDSCommon.copy(prov);
   ret.url = ret.url.replace('{{api_url}}', encodeURIComponent(this.options.apiURL));
   ret.url = ret.url.replace('{{permission}}', this.options.permission);
   ret.url = ret.url.replace('{{client_id}}', this.options.clientId);
@@ -112,7 +112,7 @@ Myda.prototype.connect = function() {
 
     this.on('connect', function () {
       this.connected = true;
-      if (this.options.useLocalStorage && common.isPresent(localStorage.getItem('authToken'))) {
+      if (this.options.useLocalStorage && MDSCommon.isPresent(localStorage.getItem('authToken'))) {
         this.emit('authenticate', { token: localStorage.getItem('authToken') });
       }
       this.callListeners('connected');

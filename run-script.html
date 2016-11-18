@@ -62,7 +62,7 @@ title: Run Script
           var scripts = e.data.fields.filter(value => value.type === 'j' || value.type === 'u');
 
           MDSConsole.fields =
-            common.convertNameValueArrayToMap(
+            MDSCommon.convertNameValueArrayToMap(
               e.data.fields.filter(value => value.type !== 'j' && value.type !== 'u'));
 
           var options = {
@@ -88,6 +88,7 @@ title: Run Script
         document.getElementById('run_script__state').classList.add('run_script__state--run');
         window.opener.postMessage({ message: 'getScripts' }, '*');
       });
+
       var MDSConsole = {
         post: function(type, message) {
           var logRecord = document.createElement('div');

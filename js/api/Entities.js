@@ -35,7 +35,7 @@ Entities.prototype.getChildren = function(path, options, limit) {
   if (typeof options === 'string') {
     options = { search: options }
   }
-  return this.request('entities.get', common.extend(data, options))
+  return this.request('entities.get', MDSCommon.extend(data, options))
          .then(function(data) { return data.children });
 };
 

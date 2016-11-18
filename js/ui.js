@@ -211,7 +211,7 @@ UI = {
     UI.entityTree.listen();
 
     Mydataspace.on('users.getMyProfile.res', function(data) {
-      if (common.isBlank(data['avatar'])) {
+      if (MDSCommon.isBlank(data['avatar'])) {
         data['avatar'] = '/images/no_avatar.png';
       }
       $$('profile').setValues(data);

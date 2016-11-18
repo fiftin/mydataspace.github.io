@@ -17,13 +17,13 @@ var Fields = {
     r: {
       title: STRINGS.REAL,
       isValidValue: function(value) {
-        return common.isNumber(value);
+        return MDSCommon.isNumber(value);
       }
     },
     i: {
       title: STRINGS.INT,
       isValidValue: function(value) {
-        return common.isInt(value);
+        return MDSCommon.isInt(value);
       }
     },
     u: {
@@ -114,6 +114,6 @@ var Fields = {
         deletedFields[fieldName] = { value: null };
       }
     }
-    return common.mapToArray(common.extend(dirtyFields, deletedFields));
+    return MDSCommon.mapToArray(MDSCommon.extend(dirtyFields, deletedFields));
   }
 };

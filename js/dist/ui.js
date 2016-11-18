@@ -339,13 +339,13 @@ var Fields = {
     r: {
       title: STRINGS.REAL,
       isValidValue: function(value) {
-        return common.isNumber(value);
+        return MDSCommon.isNumber(value);
       }
     },
     i: {
       title: STRINGS.INT,
       isValidValue: function(value) {
-        return common.isInt(value);
+        return MDSCommon.isInt(value);
       }
     },
     u: {
@@ -436,7 +436,7 @@ var Fields = {
         deletedFields[fieldName] = { value: null };
       }
     }
-    return common.mapToArray(common.extend(dirtyFields, deletedFields));
+    return MDSCommon.mapToArray(MDSCommon.extend(dirtyFields, deletedFields));
   }
 };
 
@@ -447,7 +447,7 @@ var Identity = {
   entityFromData: function(data) {
     var entityId = Identity.idFromData(data);
     var children = [];
-    if (!common.isBlank(data.numberOfChildren) && data.numberOfChildren > 0) {
+    if (!MDSCommon.isBlank(data.numberOfChildren) && data.numberOfChildren > 0) {
       children.push({
         id: Identity.childId(entityId, UIHelper.ENTITY_TREE_DUMMY_ID),
         value: ''
@@ -465,7 +465,7 @@ var Identity = {
    * Returns name of entity or root from data.
    */
   nameFromData: function(data) {
-    if (common.isBlank(data.path)) {
+    if (MDSCommon.isBlank(data.path)) {
       return data.root;
     }
     return data.path.split('/').slice(-1)[0];
@@ -477,7 +477,7 @@ var Identity = {
    * @returns string Entity id
    */
   idFromData: function(data) {
-    if (common.isBlank(data.path)) {
+    if (MDSCommon.isBlank(data.path)) {
       return data.root;
     }
     return data.root + ':' + data.path;
@@ -694,7 +694,7 @@ EntityForm.prototype.setViewFields = function(fields, ignoredFieldNames, addLabe
     addLabelIfNoFieldsExists = true;
   }
   var viewFields = document.getElementById('view__fields');
-  if (common.isBlank(fields)) {
+  if (MDSCommon.isBlank(fields)) {
     viewFields.innerHTML =
       addLabelIfNoFieldsExists ?
       '<div class="view__no_fields_exists">' + STRINGS.NO_FIELDS + '</div>' :
@@ -708,7 +708,7 @@ EntityForm.prototype.setViewFields = function(fields, ignoredFieldNames, addLabe
         continue;
       }
       numberOfChildren++;
-      var html = common.textToHtml(field.value);
+      var html = MDSCommon.textToHtml(field.value);
       var multiline = html.indexOf('\n') >= 0;
       var multilineClass = multiline ? 'view__field_value--multiline' : '';
       var multilineEnd = multiline ? '    <div class="view__field_value__end"></div>\n' : '';
@@ -720,7 +720,7 @@ EntityForm.prototype.setViewFields = function(fields, ignoredFieldNames, addLabe
                     '  </div>\n' +
                     '  <div class="view__field_value ' + multilineClass + '">\n' +
                     '    <div class="view__field_value_box">\n' +
-                           (common.isPresent(field.value) ? html : '&mdash;') +
+                           (MDSCommon.isPresent(field.value) ? html : '&mdash;') +
                     '    </div>\n' +
                          multilineEnd +
                     '  </div>\n' +
@@ -744,16 +744,16 @@ EntityForm.prototype.setRootView = function(data) {
     var view = document.getElementById('view');
     view.innerHTML = html;
     document.getElementById('view__overview_image').src =
-      common.findValueByName(data.fields, 'avatar') || '/images/app.png';
+      MDSCommon.findValueByName(data.fields, 'avatar') || '/images/app.png';
 
     document.getElementById('view__title').innerText =
-      common.findValueByName(data.fields, 'name') || common.getPathName(data.root);
+      MDSCommon.findValueByName(data.fields, 'name') || MDSCommon.getPathName(data.root);
 
     document.getElementById('view__tags').innerText =
-      common.findValueByName(data.fields, 'tags') || '';
+      MDSCommon.findValueByName(data.fields, 'tags') || '';
 
-    var websiteURL = common.findValueByName(data.fields, 'websiteURL');
-    if (common.isBlank(websiteURL)) {
+    var websiteURL = MDSCommon.findValueByName(data.fields, 'websiteURL');
+    if (MDSCommon.isBlank(websiteURL)) {
       document.getElementById('view__websiteURL').style.display = 'none';
     } else {
       document.getElementById('view__websiteURL').style.display = 'block';
@@ -761,14 +761,14 @@ EntityForm.prototype.setRootView = function(data) {
       document.getElementById('view__websiteURL').href = websiteURL;
     }
 
-    var description = common.findValueByName(data.fields, 'description');
-    if (common.isBlank(description)) {
+    var description = MDSCommon.findValueByName(data.fields, 'description');
+    if (MDSCommon.isBlank(description)) {
       document.getElementById('view__description').style.display = 'none';
     } else {
       document.getElementById('view__description').innerText = description;
     }
-    var readme = common.findValueByName(data.fields, 'readme');
-    if (common.isBlank(readme)) {
+    var readme = MDSCommon.findValueByName(data.fields, 'readme');
+    if (MDSCommon.isBlank(readme)) {
       document.getElementById('view__content').style.display = 'none';
     } else {
       document.getElementById('view__content').style.display = 'block';
@@ -808,11 +808,11 @@ EntityForm.prototype.setTaskView = function(data) {
                              data.numberOfChildren === 0,
                              false);
     document.getElementById('view__title').innerText =
-      common.getPathName(data.path);
+      MDSCommon.getPathName(data.path);
 
     var viewFields = this.setViewFields(data.fields, ['status', 'statusText', 'interval']);
 
-    var status = common.findValueByName(data.fields, 'status');
+    var status = MDSCommon.findValueByName(data.fields, 'status');
     if (status != null) {
       var statusClass;
       switch (status) {
@@ -827,10 +827,10 @@ EntityForm.prototype.setTaskView = function(data) {
         document.getElementById('view__status').classList.add(statusClass);
       }
       document.getElementById('view__status').innerText =
-        common.findValueByName(data.fields, 'statusText');
+        MDSCommon.findValueByName(data.fields, 'statusText');
     }
 
-    var interval = common.findValueByName(data.fields, 'interval') || 'paused';
+    var interval = MDSCommon.findValueByName(data.fields, 'interval') || 'paused';
     document.getElementById('view__interval_' + interval).classList.add('view__check--checked');
 
     $(viewFields).on('click', '.view__field', function() {
@@ -859,7 +859,7 @@ EntityForm.prototype.setEntityView = function(data) {
                              data.numberOfChildren === 0,
                              false);
     document.getElementById('view__title').innerText =
-      common.getPathName(data.path);
+      MDSCommon.getPathName(data.path);
     var viewFields = this.setViewFields(data.fields);
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
@@ -879,7 +879,7 @@ EntityForm.prototype.setEntityView = function(data) {
 
 EntityForm.prototype.setView = function(data) {
   $('#view').append('<div class="view__loading"></div>');
-  if (common.isBlank(data.path)) {
+  if (MDSCommon.isBlank(data.path)) {
     this.setRootView(data);
   } else if (data.path.startsWith('tasks/')) {
     this.setTaskView(data);
@@ -988,7 +988,7 @@ EntityForm.prototype.save = function() {
         return ret;
       }, {}));
   var oldData = webix.CodeParser.expandNames($$('entity_form')._values);
-  common.extendOf(dirtyData, Identity.dataFromId(this.selectedId));
+  MDSCommon.extendOf(dirtyData, Identity.dataFromId(this.selectedId));
 
   dirtyData.fields =
     Fields.expandFields(
@@ -1214,7 +1214,7 @@ EntityList.prototype.getCurrentId = function() {
 EntityList.prototype.refreshData = function() {
   var identity = Identity.dataFromId(this.getRootId());
   var search = $$('entity_list__search').getValue();
-  if (common.isPresent(search)) {
+  if (MDSCommon.isPresent(search)) {
     identity['filterByName'] = search;
   }
   $$('entity_list').disable();
@@ -1353,8 +1353,8 @@ EntityTree.prototype.onCreate = function(data) {
       this.setChildren(entity.id, entity.data);
     }
     $$('entity_tree').select(entity.id);
-  } else if (!common.isNull($$('entity_tree').getItem(parentId)) &&
-    common.isNull($$('entity_tree').getItem(Identity.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)))) {
+  } else if (!MDSCommon.isNull($$('entity_tree').getItem(parentId)) &&
+    MDSCommon.isNull($$('entity_tree').getItem(Identity.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)))) {
     $$('entity_tree').add(entity, 0, parentId);
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
       this.setChildren(entity.id, entity.data);
@@ -2067,14 +2067,14 @@ UILayout.entityTree =
       id: 'entity_tree',
       gravity: 0.4,
       select: true,
-      template:function(obj, common) {
+      template:function(obj, MDSCommon) {
         var icon =
           UIHelper.getIconByPath(Identity.dataFromId(obj.id).path,
                                  obj.$count === 0,
                                  obj.open);
         folder =
           '<div class="webix_tree_folder_open fa fa-' + icon + '"></div>';
-        return common.icon(obj, common) +
+        return MDSCommon.icon(obj, MDSCommon) +
                folder +
                '<span>' + obj.value + '</span>';
       },
@@ -2686,7 +2686,7 @@ UI = {
     UI.entityTree.listen();
 
     Mydataspace.on('users.getMyProfile.res', function(data) {
-      if (common.isBlank(data['avatar'])) {
+      if (MDSCommon.isBlank(data['avatar'])) {
         data['avatar'] = '/images/no_avatar.png';
       }
       $$('profile').setValues(data);

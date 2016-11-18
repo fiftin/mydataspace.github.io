@@ -30,14 +30,14 @@ UILayout.entityTree =
       id: 'entity_tree',
       gravity: 0.4,
       select: true,
-      template:function(obj, common) {
+      template:function(obj, MDSCommon) {
         var icon =
           UIHelper.getIconByPath(Identity.dataFromId(obj.id).path,
                                  obj.$count === 0,
                                  obj.open);
         folder =
           '<div class="webix_tree_folder_open fa fa-' + icon + '"></div>';
-        return common.icon(obj, common) +
+        return MDSCommon.icon(obj, MDSCommon) +
                folder +
                '<span>' + obj.value + '</span>';
       },

@@ -75,7 +75,7 @@ EntityList.prototype.getCurrentId = function() {
 EntityList.prototype.refreshData = function() {
   var identity = Identity.dataFromId(this.getRootId());
   var search = $$('entity_list__search').getValue();
-  if (common.isPresent(search)) {
+  if (MDSCommon.isPresent(search)) {
     identity['filterByName'] = search;
   }
   $$('entity_list').disable();

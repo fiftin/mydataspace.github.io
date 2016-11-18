@@ -5,7 +5,7 @@ var Identity = {
   entityFromData: function(data) {
     var entityId = Identity.idFromData(data);
     var children = [];
-    if (!common.isBlank(data.numberOfChildren) && data.numberOfChildren > 0) {
+    if (!MDSCommon.isBlank(data.numberOfChildren) && data.numberOfChildren > 0) {
       children.push({
         id: Identity.childId(entityId, UIHelper.ENTITY_TREE_DUMMY_ID),
         value: ''
@@ -23,7 +23,7 @@ var Identity = {
    * Returns name of entity or root from data.
    */
   nameFromData: function(data) {
-    if (common.isBlank(data.path)) {
+    if (MDSCommon.isBlank(data.path)) {
       return data.root;
     }
     return data.path.split('/').slice(-1)[0];
@@ -35,7 +35,7 @@ var Identity = {
    * @returns string Entity id
    */
   idFromData: function(data) {
-    if (common.isBlank(data.path)) {
+    if (MDSCommon.isBlank(data.path)) {
       return data.root;
     }
     return data.root + ':' + data.path;
