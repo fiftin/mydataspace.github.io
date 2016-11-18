@@ -14,8 +14,8 @@ UILayout.windows.addEntity = {
         onSubmit: function() {
           if ($$('add_entity_form').validate()) {
             var formData = $$('add_entity_form').getValues();
-            var newEntityId = UIHelper.childId(UI.entityList.getRootId(), formData.name);
-            var data = UIHelper.dataFromId(newEntityId);
+            var newEntityId = Identity.childId(UI.entityList.getRootId(), formData.name);
+            var data = Identity.dataFromId(newEntityId);
             data.fields = [];
             data.othersCan = formData.othersCan;
             Mydataspace.request('entities.create', data, function() {

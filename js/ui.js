@@ -303,7 +303,7 @@ UI = {
     //
     window.addEventListener('message', function(e) {
       if (e.data.message === 'getScripts') {
-        var fields = UIHelper.expandFields($$('entity_form').getValues().fields);
+        var fields = Fields.expandFields($$('entity_form').getValues().fields);
         if (typeof fields === 'undefined') {
           fields = {};
         }
@@ -365,7 +365,7 @@ UI = {
             var fieldName = UI.entityForm.currentFieldName;
             var fieldId = 'entity_form__' + fieldName;
             var fieldValue = $$(fieldId + '_value').getValue();
-            $$(fieldId + '_type_button').define('icon', UIHelper.FIELD_TYPE_ICONS[newv]);
+            $$(fieldId + '_type_button').define('icon', Fields.FIELD_TYPE_ICONS[newv]);
             $$(fieldId + '_type_button').refresh();
             var oldv = $$(fieldId + '_type').getValue();
             $$(fieldId + '_type').setValue(newv);

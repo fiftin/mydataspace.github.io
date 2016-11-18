@@ -10,8 +10,8 @@ function EntityList() {
 }
 
 EntityList.prototype.onCreate = function(data) {
-  var parentId = UIHelper.parentId(UIHelper.idFromData(data));
-  var entity = UIHelper.entityFromData(data);
+  var parentId = Identity.parentId(Identity.idFromData(data));
+  var entity = Identity.entityFromData(data);
   if (this.getRootId() === parentId) {
     $$('entity_list').add(entity, 1);
     $$('entity_list').select(entity.id);
@@ -20,7 +20,7 @@ EntityList.prototype.onCreate = function(data) {
 
 EntityList.prototype.listen = function() {
   Mydataspace.on('entities.delete.res', function(data) {
-    var entityId = UIHelper.idFromData(data);
+    var entityId = Identity.idFromData(data);
 
     if ($$('entity_list').getFirstId() === entityId) { // Parent item "."
       return;
@@ -47,8 +47,8 @@ EntityList.prototype.setRootId = function(id) {
   }
   this.rootId = id;
 
-  // var subscription = UIHelper.dataFromId(id);
-  // var childrenSubscription = UIHelper.dataFromId(id);
+  // var subscription = Identity.dataFromId(id);
+  // var childrenSubscription = Identity.dataFromId(id);
   // childrenSubscription.path += '/*';
   // Mydataspace.emit('entities.subscribe', subscription);
   // Mydataspace.emit('entities.subscribe', childrenSubscription);
@@ -73,7 +73,7 @@ EntityList.prototype.getCurrentId = function() {
  * Uses entityList_fill internally.
  */
 EntityList.prototype.refreshData = function() {
-  var identity = UIHelper.dataFromId(this.getRootId());
+  var identity = Identity.dataFromId(this.getRootId());
   var search = $$('entity_list__search').getValue();
   if (common.isPresent(search)) {
     identity['filterByName'] = search;
@@ -81,13 +81,13 @@ EntityList.prototype.refreshData = function() {
   $$('entity_list').disable();
   Mydataspace.request('entities.getChildren', identity, function(data) {
     var showMoreChildId =
-      UIHelper.childId(this.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
-    var entityId = UIHelper.idFromData(data);
-    var children = data.children.filter(x => x.root !== 'root' || x.path !== '').map(UIHelper.entityFromData);
+      Identity.childId(this.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
+    var entityId = Identity.idFromData(data);
+    var children = data.children.filter(x => x.root !== 'root' || x.path !== '').map(Identity.entityFromData);
     if (this.getRootId() === entityId) {
       if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
         children[children.length - 1] = {
-          id: UIHelper.childId(entityId, UIHelper.ENTITY_LIST_SHOW_MORE_ID),
+          id: Identity.childId(entityId, UIHelper.ENTITY_LIST_SHOW_MORE_ID),
           value: STRINGS.SHOW_MORE
         }
       }
@@ -119,8 +119,8 @@ EntityList.prototype.fill = function(parentEntityId, children, data) {
  * @param formData data received from form by method getValues.
  */
 EntityList.prototype.createByFormData = function(formData) {
-  var newEntityId = UIHelper.childId(this.getRootId(), formData.name);
-  var data = UIHelper.dataFromId(newEntityId);
+  var newEntityId = Identity.childId(this.getRootId(), formData.name);
+  var data = Identity.dataFromId(newEntityId);
   data.fields = [];
   data.othersCan = formData.othersCan;
   Mydataspace.emit('entities.create', data);
@@ -128,7 +128,7 @@ EntityList.prototype.createByFormData = function(formData) {
 
 EntityList.prototype.addChildren = function(children) {
   var showMoreChildId =
-    UIHelper.childId(this.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
+    Identity.childId(this.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
 
   var startIndex;
   if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
@@ -147,10 +147,10 @@ EntityList.prototype.addChildren = function(children) {
 };
 
 EntityList.prototype.showMore = function() {
-  var req = UIHelper.dataFromId(this.getRootId());
+  var req = Identity.dataFromId(this.getRootId());
   req.offset = this.count();
   Mydataspace.request('entities.getChildren', req, function(data) {
-    var children = data.children.map(UIHelper.entityFromData);
+    var children = data.children.map(Identity.entityFromData);
     this.addChildren(children);
   }.bind(this));
 };

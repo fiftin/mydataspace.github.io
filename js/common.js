@@ -246,28 +246,13 @@ var common = {
     return item.value;
   },
 
-  getChildName: function(path) {
+  getPathName: function(path) {
     var i = path.lastIndexOf('/');
     if (i === -1) {
       return path;
       // throw new Error('Path has no child');
     }
     return path.substr(i + 1);
-  },
-
-  getParentPath: function(path) {
-    var i = path.lastIndexOf('/');
-    if (i === -1) {
-      return '';
-    }
-    return path.slice(0, i);
-  },
-
-  getChildPath: function(parentPath, childName) {
-    if (common.isBlank(parentPath)) {
-      return childName;
-    }
-    return parentPath + '/' + childName;
   },
 
   getURLParamByName: function(name, url) {
@@ -278,15 +263,6 @@ var common = {
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
-  },
-
-  getParentIdentity: function(data) {
-    var required = common.requirePermit(data, { root: 's', path: 's' });
-    if (common.isBlank(required['path'])) {
-      return { root: 'root', path: '' }
-    } else {
-      return { root: required['root'], path: common.getParentPath(required['path']) }
-    }
   },
 
   dateToString: function(date) {

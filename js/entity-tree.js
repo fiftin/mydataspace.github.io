@@ -13,14 +13,14 @@ EntityTree.prototype.setCurrentId = function(id) {
 EntityTree.prototype.resolveChildren = function(id) {
   return new Promise(function(resolve, reject) {
     var firstChildId = $$('entity_tree').getFirstChildId(id);
-    if (firstChildId != null && firstChildId !== UIHelper.childId(id, UIHelper.ENTITY_TREE_DUMMY_ID)) {
+    if (firstChildId != null && firstChildId !== Identity.childId(id, UIHelper.ENTITY_TREE_DUMMY_ID)) {
       resolve();
       return;
     }
     // Load children to first time opened node.
-    Mydataspace.request('entities.getChildren', UIHelper.dataFromId(id), function(data) {
-      var entityId = UIHelper.idFromData(data);
-      var children = data.children.filter(x => x.root !== 'root' || x.path !== '').map(UIHelper.entityFromData);
+    Mydataspace.request('entities.getChildren', Identity.dataFromId(id), function(data) {
+      var entityId = Identity.idFromData(data);
+      var children = data.children.filter(x => x.root !== 'root' || x.path !== '').map(Identity.entityFromData);
       UI.entityTree.setChildren(entityId, children);
       resolve();
     }, function(err) {
@@ -36,8 +36,8 @@ EntityTree.prototype.setCurrentIdToFirst = function() {
 };
 
 EntityTree.prototype.onCreate = function(data) {
-  var parentId = UIHelper.parentId(UIHelper.idFromData(data));
-  var entity = UIHelper.entityFromData(data);
+  var parentId = Identity.parentId(Identity.idFromData(data));
+  var entity = Identity.entityFromData(data);
   if (parentId === 'root') {
     $$('entity_tree').add(entity, 0);
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
@@ -45,7 +45,7 @@ EntityTree.prototype.onCreate = function(data) {
     }
     $$('entity_tree').select(entity.id);
   } else if (!common.isNull($$('entity_tree').getItem(parentId)) &&
-    common.isNull($$('entity_tree').getItem(UIHelper.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)))) {
+    common.isNull($$('entity_tree').getItem(Identity.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)))) {
     $$('entity_tree').add(entity, 0, parentId);
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
       this.setChildren(entity.id, entity.data);
@@ -60,7 +60,7 @@ EntityTree.prototype.onCreate = function(data) {
 
 EntityTree.prototype.listen = function() {
   Mydataspace.on('entities.delete.res', function(data) {
-    var entityId = UIHelper.idFromData(data);
+    var entityId = Identity.idFromData(data);
 
     if ($$('entity_tree').getItem(entityId) == null) {
       return;
@@ -87,7 +87,7 @@ EntityTree.prototype.refresh = function() {
     Mydataspace.request('entities.get', { root: EntityTree.getViewOnlyRoot(), path: '' }, function(data) {
       $$('entity_tree').clearAll();
       // convert received data to treeview format and load its to entity_tree.
-      var formattedData = UIHelper.entityFromData(data);
+      var formattedData = Identity.entityFromData(data);
       $$('entity_tree').parse([formattedData]);
       $$('entity_tree').enable();
     }, function(err) {
@@ -98,7 +98,7 @@ EntityTree.prototype.refresh = function() {
     Mydataspace.request('entities.getMyRoots', {}, function(data) {
       $$('entity_tree').clearAll();
       // convert received data to treeview format and load its to entity_tree.
-      var formattedData = data['roots'].map(UIHelper.entityFromData);
+      var formattedData = data['roots'].map(Identity.entityFromData);
       $$('entity_tree').parse(formattedData);
       $$('entity_tree').enable();
     }, function(err) {
@@ -112,15 +112,15 @@ EntityTree.prototype.refresh = function() {
  * Override entity's children of nodes recursively.
  */
 EntityTree.prototype.setChildren = function(entityId, children) {
-  var dummyChildId = UIHelper.childId(entityId, UIHelper.ENTITY_TREE_DUMMY_ID);
-  var showMoreChildId = UIHelper.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID);
+  var dummyChildId = Identity.childId(entityId, UIHelper.ENTITY_TREE_DUMMY_ID);
+  var showMoreChildId = Identity.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID);
   var firstChildId = $$('entity_tree').getFirstChildId(entityId);
   if (firstChildId != null && firstChildId !== dummyChildId) {
     return;
   }
   if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
     children[children.length - 1] = {
-      id: UIHelper.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID),
+      id: Identity.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID),
       value: STRINGS.SHOW_MORE
     }
   }
@@ -137,7 +137,7 @@ EntityTree.prototype.setChildren = function(entityId, children) {
 };
 
 EntityTree.prototype.addChildren = function(entityId, children) {
-  var showMoreChildId = UIHelper.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID);
+  var showMoreChildId = Identity.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID);
   if (!$$('entity_tree').exists(showMoreChildId)) {
     return;
   }
@@ -159,11 +159,11 @@ EntityTree.prototype.addChildren = function(entityId, children) {
 };
 
 EntityTree.prototype.showMore = function(id) {
-  var req = UIHelper.dataFromId(id);
+  var req = Identity.dataFromId(id);
   req.offset = this.numberOfChildren(id);
   Mydataspace.request('entities.getChildren', req, function(data) {
-    var entityId = UIHelper.idFromData(data);
-    var children = data.children.map(UIHelper.entityFromData);
+    var entityId = Identity.idFromData(data);
+    var children = data.children.map(Identity.entityFromData);
     this.addChildren(entityId, children);
   }.bind(this));
 };

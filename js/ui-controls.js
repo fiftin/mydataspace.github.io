@@ -1,8 +1,8 @@
 UIControls = {
   getFieldTypeSelectTemplate: function() {
     var options = [];
-    for (let id in UIHelper.FIELD_TYPES) {
-      options.push({ id: id, value: UIHelper.FIELD_TYPES[id].title });
+    for (let id in Fields.FIELD_TYPES) {
+      options.push({ id: id, value: Fields.FIELD_TYPES[id].title });
     }
     return {
       view: 'combo',

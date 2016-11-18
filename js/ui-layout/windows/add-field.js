@@ -31,7 +31,7 @@ UILayout.windows.addField = {
       name: function(value) { return typeof $$('entity_form__' + value) === 'undefined' },
       value: function(value) {
         var values = $$('add_field_form').getValues();
-        var typeInfo = UIHelper.FIELD_TYPES[values.type];
+        var typeInfo = Fields.FIELD_TYPES[values.type];
         return typeof typeInfo !== 'undefined' && typeInfo.isValidValue(value);
       }
     }

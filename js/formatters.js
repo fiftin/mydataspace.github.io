@@ -30,7 +30,7 @@ EntityFieldsSimplifier.prototype.format = function(data) {
 //     }
 //     for (let i in data.children) {
 //       let child = data.children[i];
-//       let childName = common.getChildName(child.path)
+//       let childName = common.getPathName(child.path)
 //       res[childName] = child;
 //     }
 //   }

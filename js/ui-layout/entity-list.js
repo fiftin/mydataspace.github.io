@@ -35,7 +35,7 @@ UILayout.entityList =
       select: true,
       template: function(obj) {
         var icon =
-          UIHelper.getIconByPath(UIHelper.dataFromId(obj.id).path,
+          UIHelper.getIconByPath(Identity.dataFromId(obj.id).path,
                                  obj.count === 0,
                                  false);
         return (obj.id.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID) ? '' :
@@ -64,7 +64,7 @@ UILayout.entityList =
           }
         },
         onItemDblClick: function(id) {
-          var parentId = UIHelper.parentId(id);
+          var parentId = Identity.parentId(id);
           if (id === 'root' || parentId === 'root') {
             return;
           }

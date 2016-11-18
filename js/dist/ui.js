@@ -214,102 +214,10 @@ UIHelper = {
    */
   LABEL_WIDTH: 120,
   NUMBER_OF_FIXED_INPUTS_IN_FIELDS_FORM: 7,
-  MAX_STRING_FIELD_LENGTH: 1000,
-  MAX_TEXT_FIELD_LENGTH: 1000000,
+
   ENTITY_TREE_SHOW_MORE_ID: 'show_more_23478_3832ee',
   ENTITY_TREE_DUMMY_ID: 'dummy_483__4734_47e4',
   ENTITY_LIST_SHOW_MORE_ID: 'show_more_47384_3338222',
-  FIELD_TYPES: {
-    s: {
-      title: STRINGS.STRING,
-      isValidValue: function(value) {
-        return value.toString().length < UIHelper.MAX_STRING_FIELD_LENGTH;
-      }
-    },
-    j: {
-      title: 'Text',
-      isValidValue: function(value) {
-        return value.toString().length < UIHelper.MAX_TEXT_FIELD_LENGTH;
-      }
-    },
-    r: {
-      title: STRINGS.REAL,
-      isValidValue: function(value) {
-        return common.isNumber(value);
-      }
-    },
-    i: {
-      title: STRINGS.INT,
-      isValidValue: function(value) {
-        return common.isInt(value);
-      }
-    },
-    // j: {
-    //   title: 'JS',
-    //   isValidValue: function(value) {
-    //     return value.toString().length < UIHelper.MAX_STRING_FIELD_LENGTH;
-    //   }
-    // },
-    u: {
-      title: 'URL',
-      isValidValue: function(value) {
-        return value.toString().length < UIHelper.MAX_STRING_FIELD_LENGTH;
-      }
-    }
-  },
-
-  FIELD_TYPE_ICONS: {
-    s: 'commenting',
-    w: 'lock',
-    j: 'align-justify',
-    i: 'italic',
-    r: 'calculator',
-    b: 'check-square-o',
-    d: 'calendar-o',
-    u: 'link'
-  },
-
-  expandFields: function(fields) {
-      if (fields == null || (!Array.isArray(fields) && typeof fields !== 'object')) {
-          return fields;
-      }
-      if (Array.isArray(fields)) {
-          return fields.map(function(field) {
-              return UIHelper.expandField(field);
-          });
-      } else {
-          var ret = {};
-          for (var key in fields) {
-              var field = UIHelper.expandField(fields[key], key);
-              ret[field.name] = field;
-          }
-          return ret;
-      }
-  },
-
-  expandField: function(field, name) {
-    if (name == null) {
-      name = '';
-    }
-    if (field == null) {
-      return field;
-    }
-    for (var key in field) {
-      if (field[key] != null && typeof field[key] === 'object') {
-        if (name !== '') {
-          name += '.';
-        }
-        name += key;
-        return UIHelper.expandField(field[key], name);
-      }
-    }
-
-    if (name !== '') {
-        field.name = name;
-    }
-
-    return field;
-  },
 
   /**
    * User can only view entities. All buttons for manipulations is hidden in
@@ -381,7 +289,7 @@ UIHelper = {
     if (id == null) {
       return false;
     }
-    var identity = UIHelper.dataFromId(id);
+    var identity = Identity.dataFromId(id);
     if (identity.path == null) {
       return false;
     }
@@ -389,23 +297,136 @@ UIHelper = {
            UIHelper.getEntityDepthByPath(identity.path) === 2;
   },
 
+
+
+
+  popupCenter: function(url, title, w, h) {
+    // Fixes dual-screen position                         Most browsers      Firefox
+    var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+    var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+
+    var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+    var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+    var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+    var top = ((height / 2) - (h / 2)) + dualScreenTop;
+    var newWindow = window.open(url, title, 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+
+    // Puts focus on the newWindow
+    if (window.focus) {
+        newWindow.focus();
+    }
+    return newWindow;
+  }
+};
+
+var Fields = {
+  MAX_STRING_FIELD_LENGTH: 1000,
+  MAX_TEXT_FIELD_LENGTH: 1000000,
+  FIELD_TYPES: {
+    s: {
+      title: STRINGS.STRING,
+      isValidValue: function(value) {
+        return value.toString().length < Fields.MAX_STRING_FIELD_LENGTH;
+      }
+    },
+    j: {
+      title: 'Text',
+      isValidValue: function(value) {
+        return value.toString().length < Fields.MAX_TEXT_FIELD_LENGTH;
+      }
+    },
+    r: {
+      title: STRINGS.REAL,
+      isValidValue: function(value) {
+        return common.isNumber(value);
+      }
+    },
+    i: {
+      title: STRINGS.INT,
+      isValidValue: function(value) {
+        return common.isInt(value);
+      }
+    },
+    u: {
+      title: 'URL',
+      isValidValue: function(value) {
+        return value.toString().length < Fields.MAX_STRING_FIELD_LENGTH;
+      }
+    }
+  },
+
+  FIELD_TYPE_ICONS: {
+    s: 'commenting',
+    w: 'lock',
+    j: 'align-justify',
+    i: 'italic',
+    r: 'calculator',
+    b: 'check-square-o',
+    d: 'calendar-o',
+    u: 'link'
+  },
+
+  expandFields: function(fields) {
+      if (fields == null || (!Array.isArray(fields) && typeof fields !== 'object')) {
+          return fields;
+      }
+      if (Array.isArray(fields)) {
+          return fields.map(function(field) {
+              return Fields.expandField(field);
+          });
+      } else {
+          var ret = {};
+          for (var key in fields) {
+              var field = Fields.expandField(fields[key], key);
+              ret[field.name] = field;
+          }
+          return ret;
+      }
+  },
+
+  expandField: function(field, name) {
+    if (name == null) {
+      name = '';
+    }
+    if (field == null) {
+      return field;
+    }
+    for (var key in field) {
+      if (field[key] != null && typeof field[key] === 'object') {
+        if (name !== '') {
+          name += '.';
+        }
+        name += key;
+        return Fields.expandField(field[key], name);
+      }
+    }
+
+    if (name !== '') {
+        field.name = name;
+    }
+
+    return field;
+  },
+
   getFieldTypesAsArrayOfIdValue: function() {
     var ret = [];
-    for (var key in UIHelper.FIELD_TYPES) {
+    for (var key in Fields.FIELD_TYPES) {
       ret.push({
         id: key,
-        value: UIHelper.FIELD_TYPES[key].title
+        value: Fields.FIELD_TYPES[key].title
       });
     }
     return ret;
   },
 
   /**
-   *
+   * Compate two collections of fields to determine what fields are changed,
+   * deleted or created.
    * @param dirtyFields
    * @param currentFieldNames
    * @param oldFields
-   * @returns {*}
+   * @returns {*} Object with fields for update.
    */
   getFieldsForSave: function(dirtyFields, currentFieldNames, oldFields) {
     if (typeof dirtyFields === 'undefined') dirtyFields = {};
@@ -416,28 +437,33 @@ UIHelper = {
       }
     }
     return common.mapToArray(common.extend(dirtyFields, deletedFields));
-  },
+  }
+};
 
+var Identity = {
   /**
    * Returns UI-formatted entity data from data received from server.
    */
   entityFromData: function(data) {
-    var entityId = UIHelper.idFromData(data);
+    var entityId = Identity.idFromData(data);
     var children = [];
     if (!common.isBlank(data.numberOfChildren) && data.numberOfChildren > 0) {
       children.push({
-        id: UIHelper.childId(entityId, UIHelper.ENTITY_TREE_DUMMY_ID),
+        id: Identity.childId(entityId, UIHelper.ENTITY_TREE_DUMMY_ID),
         value: ''
       });
     }
     return {
       id: entityId,
-      value: UIHelper.nameFromData(data),
+      value: Identity.nameFromData(data),
       count: data.numberOfChildren,
       data: children
     };
   },
 
+  /**
+   * Returns name of entity or root from data.
+   */
   nameFromData: function(data) {
     if (common.isBlank(data.path)) {
       return data.root;
@@ -484,32 +510,13 @@ UIHelper = {
     }
     return entityId.slice(0, i);
   },
-
-  popupCenter: function(url, title, w, h) {
-    // Fixes dual-screen position                         Most browsers      Firefox
-    var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
-    var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
-
-    var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
-    var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
-
-    var left = ((width / 2) - (w / 2)) + dualScreenLeft;
-    var top = ((height / 2) - (h / 2)) + dualScreenTop;
-    var newWindow = window.open(url, title, 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
-
-    // Puts focus on the newWindow
-    if (window.focus) {
-        newWindow.focus();
-    }
-    return newWindow;
-  }
 };
 
 UIControls = {
   getFieldTypeSelectTemplate: function() {
     var options = [];
-    for (let id in UIHelper.FIELD_TYPES) {
-      options.push({ id: id, value: UIHelper.FIELD_TYPES[id].title });
+    for (let id in Fields.FIELD_TYPES) {
+      options.push({ id: id, value: Fields.FIELD_TYPES[id].title });
     }
     return {
       view: 'combo',
@@ -635,7 +642,7 @@ EntityForm.prototype.setEditing = function(editing) {
     $$('SAVE_ENTITY_LABEL').show();
     $$('CANCEL_ENTITY_LABEL').show();
     // $$('REFRESH_ENTITY_LABEL').hide();
-    if (UIHelper.getEntityTypeByPath(UIHelper.dataFromId(this.selectedId).path) === 'task') {
+    if (UIHelper.getEntityTypeByPath(Identity.dataFromId(this.selectedId).path) === 'task') {
       $$('RUN_SCRIPT_LABEL').show();
     } else {
       $$('RUN_SCRIPT_LABEL').hide();
@@ -740,7 +747,7 @@ EntityForm.prototype.setRootView = function(data) {
       common.findValueByName(data.fields, 'avatar') || '/images/app.png';
 
     document.getElementById('view__title').innerText =
-      common.findValueByName(data.fields, 'name') || common.getChildName(data.root);
+      common.findValueByName(data.fields, 'name') || common.getPathName(data.root);
 
     document.getElementById('view__tags').innerText =
       common.findValueByName(data.fields, 'tags') || '';
@@ -801,7 +808,7 @@ EntityForm.prototype.setTaskView = function(data) {
                              data.numberOfChildren === 0,
                              false);
     document.getElementById('view__title').innerText =
-      common.getChildName(data.path);
+      common.getPathName(data.path);
 
     var viewFields = this.setViewFields(data.fields, ['status', 'statusText', 'interval']);
 
@@ -852,7 +859,7 @@ EntityForm.prototype.setEntityView = function(data) {
                              data.numberOfChildren === 0,
                              false);
     document.getElementById('view__title').innerText =
-      common.getChildName(data.path);
+      common.getPathName(data.path);
     var viewFields = this.setViewFields(data.fields);
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
@@ -885,12 +892,12 @@ EntityForm.prototype.setView = function(data) {
 
 EntityForm.prototype.setData = function(data) {
   var formData = {
-    name: UIHelper.nameFromData(data),
+    name: Identity.nameFromData(data),
     othersCan: data.othersCan,
     description: data.description,
     maxNumberOfChildren: data.maxNumberOfChildren,
     isFixed: data.isFixed,
-    childPrototype: UIHelper.idFromData(data.childPrototype)
+    childPrototype: Identity.idFromData(data.childPrototype)
   };
   this.clear();
   $$('entity_form').setValues(formData);
@@ -906,7 +913,7 @@ EntityForm.prototype.refresh = function() {
 
   $$('entity_form').disable();
   var req = !isWithMeta ? 'entities.get' : 'entities.getWithMeta';
-  Mydataspace.request(req, UIHelper.dataFromId(this.selectedId), function(data) {
+  Mydataspace.request(req, Identity.dataFromId(this.selectedId), function(data) {
     if (!isWithMeta) { // UIHelper.isViewOnly()) {
       this.setView(data);
     } else {
@@ -929,8 +936,8 @@ EntityForm.prototype.refresh = function() {
  * @param formData data received from form by method getValues.
  */
 //EntityForm.prototype.createByFormData = function(formData) {
-//  var newEntityId = UIHelper.childId(this.selectedId, formData.name);
-//  var data = UIHelper.dataFromId(newEntityId);
+//  var newEntityId = Identity.childId(this.selectedId, formData.name);
+//  var data = Identity.dataFromId(newEntityId);
 //  data.fields = [];
 //  data.type = formData.type;
 //  Mydataspace.emit('entities.create', data);
@@ -938,7 +945,7 @@ EntityForm.prototype.refresh = function() {
 
 EntityForm.prototype.delete = function() {
   $$('entity_form').disable();
-  Mydataspace.request('entities.delete', UIHelper.dataFromId(this.selectedId), function(data) {
+  Mydataspace.request('entities.delete', Identity.dataFromId(this.selectedId), function(data) {
     // do nothing because selected item already deleted.
   }, function(err) {
     UI.error(err);
@@ -981,16 +988,16 @@ EntityForm.prototype.save = function() {
         return ret;
       }, {}));
   var oldData = webix.CodeParser.expandNames($$('entity_form')._values);
-  common.extendOf(dirtyData, UIHelper.dataFromId(this.selectedId));
+  common.extendOf(dirtyData, Identity.dataFromId(this.selectedId));
 
   dirtyData.fields =
-    UIHelper.expandFields(
-      UIHelper.getFieldsForSave(UIHelper.expandFields(dirtyData.fields), // dirty fields
-                                Object.keys(UIHelper.expandFields(existingData.fields) || {}), // current exists field names
-                                UIHelper.expandFields(oldData.fields))); // old fields
+    Fields.expandFields(
+      Fields.getFieldsForSave(Fields.expandFields(dirtyData.fields), // dirty fields
+                                Object.keys(Fields.expandFields(existingData.fields) || {}), // current exists field names
+                                Fields.expandFields(oldData.fields))); // old fields
   $$('entity_form').disable();
   if (typeof dirtyData.childPrototype !== 'undefined') {
-    dirtyData.childPrototype = UIHelper.dataFromId(dirtyData.childPrototype);
+    dirtyData.childPrototype = Identity.dataFromId(dirtyData.childPrototype);
   }
   console.log(dirtyData);
   Mydataspace.request('entities.change', dirtyData, function(res) {
@@ -1090,10 +1097,10 @@ EntityForm.prototype.addField = function(data, setDirty) {
       { view: 'button',
         width: 30,
         type: 'iconButton',
-        icon: UIHelper.FIELD_TYPE_ICONS[data.type],
+        icon: Fields.FIELD_TYPE_ICONS[data.type],
         css: 'entity_form__field_type_button',
         popup: 'entity_form__field_type_popup',
-        options: UIHelper.getFieldTypesAsArrayOfIdValue(),
+        options: Fields.getFieldTypesAsArrayOfIdValue(),
         id: 'entity_form__' + data.name + '_type_button',
         on: {
           onItemClick: function() {
@@ -1142,8 +1149,8 @@ function EntityList() {
 }
 
 EntityList.prototype.onCreate = function(data) {
-  var parentId = UIHelper.parentId(UIHelper.idFromData(data));
-  var entity = UIHelper.entityFromData(data);
+  var parentId = Identity.parentId(Identity.idFromData(data));
+  var entity = Identity.entityFromData(data);
   if (this.getRootId() === parentId) {
     $$('entity_list').add(entity, 1);
     $$('entity_list').select(entity.id);
@@ -1152,7 +1159,7 @@ EntityList.prototype.onCreate = function(data) {
 
 EntityList.prototype.listen = function() {
   Mydataspace.on('entities.delete.res', function(data) {
-    var entityId = UIHelper.idFromData(data);
+    var entityId = Identity.idFromData(data);
 
     if ($$('entity_list').getFirstId() === entityId) { // Parent item "."
       return;
@@ -1179,8 +1186,8 @@ EntityList.prototype.setRootId = function(id) {
   }
   this.rootId = id;
 
-  // var subscription = UIHelper.dataFromId(id);
-  // var childrenSubscription = UIHelper.dataFromId(id);
+  // var subscription = Identity.dataFromId(id);
+  // var childrenSubscription = Identity.dataFromId(id);
   // childrenSubscription.path += '/*';
   // Mydataspace.emit('entities.subscribe', subscription);
   // Mydataspace.emit('entities.subscribe', childrenSubscription);
@@ -1205,7 +1212,7 @@ EntityList.prototype.getCurrentId = function() {
  * Uses entityList_fill internally.
  */
 EntityList.prototype.refreshData = function() {
-  var identity = UIHelper.dataFromId(this.getRootId());
+  var identity = Identity.dataFromId(this.getRootId());
   var search = $$('entity_list__search').getValue();
   if (common.isPresent(search)) {
     identity['filterByName'] = search;
@@ -1213,13 +1220,13 @@ EntityList.prototype.refreshData = function() {
   $$('entity_list').disable();
   Mydataspace.request('entities.getChildren', identity, function(data) {
     var showMoreChildId =
-      UIHelper.childId(this.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
-    var entityId = UIHelper.idFromData(data);
-    var children = data.children.filter(x => x.root !== 'root' || x.path !== '').map(UIHelper.entityFromData);
+      Identity.childId(this.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
+    var entityId = Identity.idFromData(data);
+    var children = data.children.filter(x => x.root !== 'root' || x.path !== '').map(Identity.entityFromData);
     if (this.getRootId() === entityId) {
       if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
         children[children.length - 1] = {
-          id: UIHelper.childId(entityId, UIHelper.ENTITY_LIST_SHOW_MORE_ID),
+          id: Identity.childId(entityId, UIHelper.ENTITY_LIST_SHOW_MORE_ID),
           value: STRINGS.SHOW_MORE
         }
       }
@@ -1251,8 +1258,8 @@ EntityList.prototype.fill = function(parentEntityId, children, data) {
  * @param formData data received from form by method getValues.
  */
 EntityList.prototype.createByFormData = function(formData) {
-  var newEntityId = UIHelper.childId(this.getRootId(), formData.name);
-  var data = UIHelper.dataFromId(newEntityId);
+  var newEntityId = Identity.childId(this.getRootId(), formData.name);
+  var data = Identity.dataFromId(newEntityId);
   data.fields = [];
   data.othersCan = formData.othersCan;
   Mydataspace.emit('entities.create', data);
@@ -1260,7 +1267,7 @@ EntityList.prototype.createByFormData = function(formData) {
 
 EntityList.prototype.addChildren = function(children) {
   var showMoreChildId =
-    UIHelper.childId(this.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
+    Identity.childId(this.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
 
   var startIndex;
   if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
@@ -1279,10 +1286,10 @@ EntityList.prototype.addChildren = function(children) {
 };
 
 EntityList.prototype.showMore = function() {
-  var req = UIHelper.dataFromId(this.getRootId());
+  var req = Identity.dataFromId(this.getRootId());
   req.offset = this.count();
   Mydataspace.request('entities.getChildren', req, function(data) {
-    var children = data.children.map(UIHelper.entityFromData);
+    var children = data.children.map(Identity.entityFromData);
     this.addChildren(children);
   }.bind(this));
 };
@@ -1315,14 +1322,14 @@ EntityTree.prototype.setCurrentId = function(id) {
 EntityTree.prototype.resolveChildren = function(id) {
   return new Promise(function(resolve, reject) {
     var firstChildId = $$('entity_tree').getFirstChildId(id);
-    if (firstChildId != null && firstChildId !== UIHelper.childId(id, UIHelper.ENTITY_TREE_DUMMY_ID)) {
+    if (firstChildId != null && firstChildId !== Identity.childId(id, UIHelper.ENTITY_TREE_DUMMY_ID)) {
       resolve();
       return;
     }
     // Load children to first time opened node.
-    Mydataspace.request('entities.getChildren', UIHelper.dataFromId(id), function(data) {
-      var entityId = UIHelper.idFromData(data);
-      var children = data.children.filter(x => x.root !== 'root' || x.path !== '').map(UIHelper.entityFromData);
+    Mydataspace.request('entities.getChildren', Identity.dataFromId(id), function(data) {
+      var entityId = Identity.idFromData(data);
+      var children = data.children.filter(x => x.root !== 'root' || x.path !== '').map(Identity.entityFromData);
       UI.entityTree.setChildren(entityId, children);
       resolve();
     }, function(err) {
@@ -1338,8 +1345,8 @@ EntityTree.prototype.setCurrentIdToFirst = function() {
 };
 
 EntityTree.prototype.onCreate = function(data) {
-  var parentId = UIHelper.parentId(UIHelper.idFromData(data));
-  var entity = UIHelper.entityFromData(data);
+  var parentId = Identity.parentId(Identity.idFromData(data));
+  var entity = Identity.entityFromData(data);
   if (parentId === 'root') {
     $$('entity_tree').add(entity, 0);
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
@@ -1347,7 +1354,7 @@ EntityTree.prototype.onCreate = function(data) {
     }
     $$('entity_tree').select(entity.id);
   } else if (!common.isNull($$('entity_tree').getItem(parentId)) &&
-    common.isNull($$('entity_tree').getItem(UIHelper.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)))) {
+    common.isNull($$('entity_tree').getItem(Identity.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)))) {
     $$('entity_tree').add(entity, 0, parentId);
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
       this.setChildren(entity.id, entity.data);
@@ -1362,7 +1369,7 @@ EntityTree.prototype.onCreate = function(data) {
 
 EntityTree.prototype.listen = function() {
   Mydataspace.on('entities.delete.res', function(data) {
-    var entityId = UIHelper.idFromData(data);
+    var entityId = Identity.idFromData(data);
 
     if ($$('entity_tree').getItem(entityId) == null) {
       return;
@@ -1389,7 +1396,7 @@ EntityTree.prototype.refresh = function() {
     Mydataspace.request('entities.get', { root: EntityTree.getViewOnlyRoot(), path: '' }, function(data) {
       $$('entity_tree').clearAll();
       // convert received data to treeview format and load its to entity_tree.
-      var formattedData = UIHelper.entityFromData(data);
+      var formattedData = Identity.entityFromData(data);
       $$('entity_tree').parse([formattedData]);
       $$('entity_tree').enable();
     }, function(err) {
@@ -1400,7 +1407,7 @@ EntityTree.prototype.refresh = function() {
     Mydataspace.request('entities.getMyRoots', {}, function(data) {
       $$('entity_tree').clearAll();
       // convert received data to treeview format and load its to entity_tree.
-      var formattedData = data['roots'].map(UIHelper.entityFromData);
+      var formattedData = data['roots'].map(Identity.entityFromData);
       $$('entity_tree').parse(formattedData);
       $$('entity_tree').enable();
     }, function(err) {
@@ -1414,15 +1421,15 @@ EntityTree.prototype.refresh = function() {
  * Override entity's children of nodes recursively.
  */
 EntityTree.prototype.setChildren = function(entityId, children) {
-  var dummyChildId = UIHelper.childId(entityId, UIHelper.ENTITY_TREE_DUMMY_ID);
-  var showMoreChildId = UIHelper.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID);
+  var dummyChildId = Identity.childId(entityId, UIHelper.ENTITY_TREE_DUMMY_ID);
+  var showMoreChildId = Identity.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID);
   var firstChildId = $$('entity_tree').getFirstChildId(entityId);
   if (firstChildId != null && firstChildId !== dummyChildId) {
     return;
   }
   if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
     children[children.length - 1] = {
-      id: UIHelper.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID),
+      id: Identity.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID),
       value: STRINGS.SHOW_MORE
     }
   }
@@ -1439,7 +1446,7 @@ EntityTree.prototype.setChildren = function(entityId, children) {
 };
 
 EntityTree.prototype.addChildren = function(entityId, children) {
-  var showMoreChildId = UIHelper.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID);
+  var showMoreChildId = Identity.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID);
   if (!$$('entity_tree').exists(showMoreChildId)) {
     return;
   }
@@ -1461,11 +1468,11 @@ EntityTree.prototype.addChildren = function(entityId, children) {
 };
 
 EntityTree.prototype.showMore = function(id) {
-  var req = UIHelper.dataFromId(id);
+  var req = Identity.dataFromId(id);
   req.offset = this.numberOfChildren(id);
   Mydataspace.request('entities.getChildren', req, function(data) {
-    var entityId = UIHelper.idFromData(data);
-    var children = data.children.map(UIHelper.entityFromData);
+    var entityId = Identity.idFromData(data);
+    var children = data.children.map(Identity.entityFromData);
     this.addChildren(entityId, children);
   }.bind(this));
 };
@@ -1692,8 +1699,8 @@ UILayout.windows.addEntity = {
         onSubmit: function() {
           if ($$('add_entity_form').validate()) {
             var formData = $$('add_entity_form').getValues();
-            var newEntityId = UIHelper.childId(UI.entityList.getRootId(), formData.name);
-            var data = UIHelper.dataFromId(newEntityId);
+            var newEntityId = Identity.childId(UI.entityList.getRootId(), formData.name);
+            var data = Identity.dataFromId(newEntityId);
             data.fields = [];
             data.othersCan = formData.othersCan;
             Mydataspace.request('entities.create', data, function() {
@@ -1757,7 +1764,7 @@ UILayout.windows.addField = {
       name: function(value) { return typeof $$('entity_form__' + value) === 'undefined' },
       value: function(value) {
         var values = $$('add_field_form').getValues();
-        var typeInfo = UIHelper.FIELD_TYPES[values.type];
+        var typeInfo = Fields.FIELD_TYPES[values.type];
         return typeof typeInfo !== 'undefined' && typeInfo.isValidValue(value);
       }
     }
@@ -2062,7 +2069,7 @@ UILayout.entityTree =
       select: true,
       template:function(obj, common) {
         var icon =
-          UIHelper.getIconByPath(UIHelper.dataFromId(obj.id).path,
+          UIHelper.getIconByPath(Identity.dataFromId(obj.id).path,
                                  obj.$count === 0,
                                  obj.open);
         folder =
@@ -2090,7 +2097,7 @@ UILayout.entityTree =
         },
         onBeforeSelect: function(id, selection) {
           if (id.endsWith(UIHelper.ENTITY_TREE_SHOW_MORE_ID)) {
-            UI.entityTree.showMore(UIHelper.parentId(id));
+            UI.entityTree.showMore(Identity.parentId(id));
           }
         }
       }
@@ -2135,7 +2142,7 @@ UILayout.entityList =
       select: true,
       template: function(obj) {
         var icon =
-          UIHelper.getIconByPath(UIHelper.dataFromId(obj.id).path,
+          UIHelper.getIconByPath(Identity.dataFromId(obj.id).path,
                                  obj.count === 0,
                                  false);
         return (obj.id.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID) ? '' :
@@ -2164,7 +2171,7 @@ UILayout.entityList =
           }
         },
         onItemDblClick: function(id) {
-          var parentId = UIHelper.parentId(id);
+          var parentId = Identity.parentId(id);
           if (id === 'root' || parentId === 'root') {
             return;
           }
@@ -2771,7 +2778,7 @@ UI = {
     //
     window.addEventListener('message', function(e) {
       if (e.data.message === 'getScripts') {
-        var fields = UIHelper.expandFields($$('entity_form').getValues().fields);
+        var fields = Fields.expandFields($$('entity_form').getValues().fields);
         if (typeof fields === 'undefined') {
           fields = {};
         }
@@ -2833,7 +2840,7 @@ UI = {
             var fieldName = UI.entityForm.currentFieldName;
             var fieldId = 'entity_form__' + fieldName;
             var fieldValue = $$(fieldId + '_value').getValue();
-            $$(fieldId + '_type_button').define('icon', UIHelper.FIELD_TYPE_ICONS[newv]);
+            $$(fieldId + '_type_button').define('icon', Fields.FIELD_TYPE_ICONS[newv]);
             $$(fieldId + '_type_button').refresh();
             var oldv = $$(fieldId + '_type').getValue();
             $$(fieldId + '_type').setValue(newv);

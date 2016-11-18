@@ -32,7 +32,7 @@ UILayout.entityTree =
       select: true,
       template:function(obj, common) {
         var icon =
-          UIHelper.getIconByPath(UIHelper.dataFromId(obj.id).path,
+          UIHelper.getIconByPath(Identity.dataFromId(obj.id).path,
                                  obj.$count === 0,
                                  obj.open);
         folder =
@@ -60,7 +60,7 @@ UILayout.entityTree =
         },
         onBeforeSelect: function(id, selection) {
           if (id.endsWith(UIHelper.ENTITY_TREE_SHOW_MORE_ID)) {
-            UI.entityTree.showMore(UIHelper.parentId(id));
+            UI.entityTree.showMore(Identity.parentId(id));
           }
         }
       }

@@ -25,6 +25,8 @@ gulp.task('ui', function() {
       './js/strings.js',
       './js/ace.js',
       './js/ui-helper.js',
+      './js/fields.js',
+      './js/identity.js',
       './js/ui-controls.js',
       './js/entity-form.js',
       './js/entity-list.js',

@@ -13,7 +13,7 @@ EntityForm.prototype.setEditing = function(editing) {
     $$('SAVE_ENTITY_LABEL').show();
     $$('CANCEL_ENTITY_LABEL').show();
     // $$('REFRESH_ENTITY_LABEL').hide();
-    if (UIHelper.getEntityTypeByPath(UIHelper.dataFromId(this.selectedId).path) === 'task') {
+    if (UIHelper.getEntityTypeByPath(Identity.dataFromId(this.selectedId).path) === 'task') {
       $$('RUN_SCRIPT_LABEL').show();
     } else {
       $$('RUN_SCRIPT_LABEL').hide();
@@ -118,7 +118,7 @@ EntityForm.prototype.setRootView = function(data) {
       common.findValueByName(data.fields, 'avatar') || '/images/app.png';
 
     document.getElementById('view__title').innerText =
-      common.findValueByName(data.fields, 'name') || common.getChildName(data.root);
+      common.findValueByName(data.fields, 'name') || common.getPathName(data.root);
 
     document.getElementById('view__tags').innerText =
       common.findValueByName(data.fields, 'tags') || '';
@@ -179,7 +179,7 @@ EntityForm.prototype.setTaskView = function(data) {
                              data.numberOfChildren === 0,
                              false);
     document.getElementById('view__title').innerText =
-      common.getChildName(data.path);
+      common.getPathName(data.path);
 
     var viewFields = this.setViewFields(data.fields, ['status', 'statusText', 'interval']);
 
@@ -230,7 +230,7 @@ EntityForm.prototype.setEntityView = function(data) {
                              data.numberOfChildren === 0,
                              false);
     document.getElementById('view__title').innerText =
-      common.getChildName(data.path);
+      common.getPathName(data.path);
     var viewFields = this.setViewFields(data.fields);
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
@@ -263,12 +263,12 @@ EntityForm.prototype.setView = function(data) {
 
 EntityForm.prototype.setData = function(data) {
   var formData = {
-    name: UIHelper.nameFromData(data),
+    name: Identity.nameFromData(data),
     othersCan: data.othersCan,
     description: data.description,
     maxNumberOfChildren: data.maxNumberOfChildren,
     isFixed: data.isFixed,
-    childPrototype: UIHelper.idFromData(data.childPrototype)
+    childPrototype: Identity.idFromData(data.childPrototype)
   };
   this.clear();
   $$('entity_form').setValues(formData);
@@ -284,7 +284,7 @@ EntityForm.prototype.refresh = function() {
 
   $$('entity_form').disable();
   var req = !isWithMeta ? 'entities.get' : 'entities.getWithMeta';
-  Mydataspace.request(req, UIHelper.dataFromId(this.selectedId), function(data) {
+  Mydataspace.request(req, Identity.dataFromId(this.selectedId), function(data) {
     if (!isWithMeta) { // UIHelper.isViewOnly()) {
       this.setView(data);
     } else {
@@ -307,8 +307,8 @@ EntityForm.prototype.refresh = function() {
  * @param formData data received from form by method getValues.
  */
 //EntityForm.prototype.createByFormData = function(formData) {
-//  var newEntityId = UIHelper.childId(this.selectedId, formData.name);
-//  var data = UIHelper.dataFromId(newEntityId);
+//  var newEntityId = Identity.childId(this.selectedId, formData.name);
+//  var data = Identity.dataFromId(newEntityId);
 //  data.fields = [];
 //  data.type = formData.type;
 //  Mydataspace.emit('entities.create', data);
@@ -316,7 +316,7 @@ EntityForm.prototype.refresh = function() {
 
 EntityForm.prototype.delete = function() {
   $$('entity_form').disable();
-  Mydataspace.request('entities.delete', UIHelper.dataFromId(this.selectedId), function(data) {
+  Mydataspace.request('entities.delete', Identity.dataFromId(this.selectedId), function(data) {
     // do nothing because selected item already deleted.
   }, function(err) {
     UI.error(err);
@@ -359,16 +359,16 @@ EntityForm.prototype.save = function() {
         return ret;
       }, {}));
   var oldData = webix.CodeParser.expandNames($$('entity_form')._values);
-  common.extendOf(dirtyData, UIHelper.dataFromId(this.selectedId));
+  common.extendOf(dirtyData, Identity.dataFromId(this.selectedId));
 
   dirtyData.fields =
-    UIHelper.expandFields(
-      UIHelper.getFieldsForSave(UIHelper.expandFields(dirtyData.fields), // dirty fields
-                                Object.keys(UIHelper.expandFields(existingData.fields) || {}), // current exists field names
-                                UIHelper.expandFields(oldData.fields))); // old fields
+    Fields.expandFields(
+      Fields.getFieldsForSave(Fields.expandFields(dirtyData.fields), // dirty fields
+                                Object.keys(Fields.expandFields(existingData.fields) || {}), // current exists field names
+                                Fields.expandFields(oldData.fields))); // old fields
   $$('entity_form').disable();
   if (typeof dirtyData.childPrototype !== 'undefined') {
-    dirtyData.childPrototype = UIHelper.dataFromId(dirtyData.childPrototype);
+    dirtyData.childPrototype = Identity.dataFromId(dirtyData.childPrototype);
   }
   console.log(dirtyData);
   Mydataspace.request('entities.change', dirtyData, function(res) {
@@ -468,10 +468,10 @@ EntityForm.prototype.addField = function(data, setDirty) {
       { view: 'button',
         width: 30,
         type: 'iconButton',
-        icon: UIHelper.FIELD_TYPE_ICONS[data.type],
+        icon: Fields.FIELD_TYPE_ICONS[data.type],
         css: 'entity_form__field_type_button',
         popup: 'entity_form__field_type_popup',
-        options: UIHelper.getFieldTypesAsArrayOfIdValue(),
+        options: Fields.getFieldTypesAsArrayOfIdValue(),
         id: 'entity_form__' + data.name + '_type_button',
         on: {
           onItemClick: function() {

@@ -6,11 +6,11 @@ describe('UIHelper', function() {
         type: 's',
         value: 'hello'
       };
-      expect(UIHelper.expandField(field)).to.eql(field);
+      expect(Fields.expandField(field)).to.eql(field);
     });
 
     it('returns null for null', function() {
-      expect(UIHelper.expandField(null)).to.be.null;
+      expect(Fields.expandField(null)).to.be.null;
     });
 
     it('returns nested object', function() {
@@ -24,7 +24,7 @@ describe('UIHelper', function() {
           type: 'i'
         }
       };
-      expect(UIHelper.expandField(field)).to.eql(field.nested);
+      expect(Fields.expandField(field)).to.eql(field.nested);
     });
 
     it('corrent handle null fields', function() {
@@ -33,7 +33,7 @@ describe('UIHelper', function() {
         type: 's',
         value: null
       };
-      expect(UIHelper.expandField(field)).to.eql(field);
+      expect(Fields.expandField(field)).to.eql(field);
     });
   });
 
@@ -46,7 +46,7 @@ describe('UIHelper', function() {
       c: 'c',
       d: 'd'
     };
-    var result = UIHelper.getFieldsForSave(dirtyFields, currentFieldNames, oldFields);
+    var result = Fields.getFieldsForSave(dirtyFields, currentFieldNames, oldFields);
     expect(result.length).to.equal(2);
     expect(result[0].name).to.equal('c');
     expect(result[0].value).to.equal(null);
