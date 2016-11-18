@@ -1857,7 +1857,7 @@ function localstorage(){
 },{"./debug":15}],15:[function(_dereq_,module,exports){
 
 /**
- * This is the MDSCommon logic for both the Node.js and web browser
+ * This is the common logic for both the Node.js and web browser
  * implementations of `debug()`.
  *
  * Expose `debug()` as the module.
@@ -5396,7 +5396,7 @@ module.exports = Array.isArray || function (arr) {
     }
 
     if (!has("json")) {
-      // MDSCommon `[[Class]]` name aliases.
+      // Common `[[Class]]` name aliases.
       var functionClass = "[object Function]",
           dateClass = "[object Date]",
           numberClass = "[object Number]",
@@ -5839,7 +5839,7 @@ module.exports = Array.isArray || function (arr) {
                     }
                     charCode = source.charCodeAt(Index);
                     begin = Index;
-                    // Optimize for the MDSCommon case where a string is valid.
+                    // Optimize for the common case where a string is valid.
                     while (charCode >= 32 && charCode != 92 && charCode != 34) {
                       charCode = source.charCodeAt(++Index);
                     }
@@ -7249,7 +7249,7 @@ module.exports = yeast;
 
 'use strict';
 
-var MDSCommon = {
+var common = {
   primitiveTypes: [
     'number',
     'string',
@@ -7313,7 +7313,7 @@ var MDSCommon = {
   },
 
   textToHtml: function(str) {
-    var escaped = MDSCommon.escapeHtml(str);
+    var escaped = common.escapeHtml(str);
     var lines = escaped.split('\n');
     if (lines.length === 1) {
       return escaped;
@@ -7345,11 +7345,11 @@ var MDSCommon = {
   },
 
   isInt: function(n) {
-    return (typeof n === 'string' && /^\d+$/.test(n)) || MDSCommon.isNumber(n) && n % 1 === 0;
+    return (typeof n === 'string' && /^\d+$/.test(n)) || common.isNumber(n) && n % 1 === 0;
   },
 
   isPrimitive: function(value) {
-    return value === null || MDSCommon.primitiveTypes.indexOf(typeof value) > -1;
+    return value === null || common.primitiveTypes.indexOf(typeof value) > -1;
   },
 
   isReal: function(value) {
@@ -7357,7 +7357,7 @@ var MDSCommon = {
   },
 
   isComplex: function(value) {
-    return MDSCommon.isObject(value) || Array.isArray(value);
+    return common.isObject(value) || Array.isArray(value);
   },
 
   isObject: function(value) {
@@ -7369,73 +7369,73 @@ var MDSCommon = {
   },
 
   isBlank: function(value) {
-    return MDSCommon.isNull(value) || value === '' || Array.isArray(value) && value.length === 0;
+    return common.isNull(value) || value === '' || Array.isArray(value) && value.length === 0;
   },
 
   throwIfBlank: function(value, message) {
-    if (MDSCommon.isBlank(value)) {
+    if (common.isBlank(value)) {
       throw new Error(message);
     }
     return value;
   },
 
   throwIfNull: function(value, message) {
-    if (MDSCommon.isNull(value)) {
+    if (common.isNull(value)) {
       throw new Error(message);
     }
     return value;
   },
 
   isPresent: function(value) {
-    return !MDSCommon.isBlank(value);
+    return !common.isBlank(value);
   },
 
   extend: function(dest, source) {
-    var ret = MDSCommon.copy(dest);
-    MDSCommon.extendOf(ret, source);
+    var ret = common.copy(dest);
+    common.extendOf(ret, source);
     return ret;
   },
 
   extendOf: function(dest, source) {
-    if (MDSCommon.isBlank(source)) {
+    if (common.isBlank(source)) {
       return;
     }
 
-    if (MDSCommon.isPrimitive(dest) || MDSCommon.isPrimitive(source)) {
+    if (common.isPrimitive(dest) || common.isPrimitive(source)) {
       throw new Error('Cant extend primative type');
     }
 
     if (Array.isArray(dest) && Array.isArray(source)) {
       for (let i in source) {
         let item = source[i];
-        dest.push(MDSCommon.copy(item));
+        dest.push(common.copy(item));
       }
     } else { // object
       for (let i in dest) {
         if (typeof source[i] === 'undefined') {
           continue;
         }
-        if (MDSCommon.isPrimitive(dest[i]) || MDSCommon.isPrimitive(source[i])) {
-          dest[i] = MDSCommon.copy(source[i]);
+        if (common.isPrimitive(dest[i]) || common.isPrimitive(source[i])) {
+          dest[i] = common.copy(source[i]);
         } else { // mergin
-          MDSCommon.extendOf(dest[i], source[i]);
+          common.extendOf(dest[i], source[i]);
         }
       }
       for (let i in source) {
         if (typeof dest[i] === 'undefined') {
-          dest[i] = MDSCommon.copy(source[i]);
+          dest[i] = common.copy(source[i]);
         }
       }
     }
   },
 
   copy: function(data) {
-    if (MDSCommon.isPrimitive(data)) {
+    if (common.isPrimitive(data)) {
       return data;
     }
     var ret = Array.isArray(data) ? [] : {};
     for (var i in data) {
-      ret[i] = MDSCommon.copy(data[i]);
+      ret[i] = common.copy(data[i]);
     }
     return ret;
   },
@@ -7497,7 +7497,7 @@ var MDSCommon = {
   },
 
   findByName: function(arr, name, caseInsensitive) {
-    var index = MDSCommon.findIndexByName(arr, name, caseInsensitive);
+    var index = common.findIndexByName(arr, name, caseInsensitive);
     if (index !== -1) {
       return arr[index];
     }
@@ -7505,7 +7505,7 @@ var MDSCommon = {
   },
 
   findValueByName: function(arr, name, caseInsensitive) {
-    var item = MDSCommon.findByName(arr, name, caseInsensitive);
+    var item = common.findByName(arr, name, caseInsensitive);
     if (item == null) {
       return item;
     }
@@ -7530,7 +7530,7 @@ var MDSCommon = {
   },
 
   getChildPath: function(parentPath, childName) {
-    if (MDSCommon.isBlank(parentPath)) {
+    if (common.isBlank(parentPath)) {
       return childName;
     }
     return parentPath + '/' + childName;
@@ -7547,11 +7547,11 @@ var MDSCommon = {
   },
 
   getParentIdentity: function(data) {
-    var required = MDSCommon.requirePermit(data, { root: 's', path: 's' });
-    if (MDSCommon.isBlank(required['path'])) {
+    var required = common.requirePermit(data, { root: 's', path: 's' });
+    if (common.isBlank(required['path'])) {
       return { root: 'root', path: '' }
     } else {
-      return { root: required['root'], path: MDSCommon.getParentPath(required['path']) }
+      return { root: required['root'], path: common.getParentPath(required['path']) }
     }
   },
 
@@ -7560,10 +7560,10 @@ var MDSCommon = {
       date = new Date();
     }
     return String(date.getFullYear() + '-' +
-      MDSCommon.intToFixedString(date.getMonth() + 1, 2) + '-' +
-      MDSCommon.intToFixedString(date.getDate(), 2) + '_' +
-      MDSCommon.intToFixedString(date.getHours(), 2) + '-' +
-      MDSCommon.intToFixedString(date.getMinutes(), 2));
+      common.intToFixedString(date.getMonth() + 1, 2) + '-' +
+      common.intToFixedString(date.getDate(), 2) + '_' +
+      common.intToFixedString(date.getHours(), 2) + '-' +
+      common.intToFixedString(date.getMinutes(), 2));
   },
 
   intToFixedString: function(number, numberOfDigits) {
@@ -7629,14 +7629,14 @@ var MDSCommon = {
   },
 
   requirePermit: function(data, keys) {
-    return MDSCommon.permit(MDSCommon.req(data, keys), keys);
+    return common.permit(common.req(data, keys), keys);
   },
 
   reqArray: function(data, keys) {
     var ret = [];
     for (var i in arr) {
       var data = arr[i];
-      ret[i] = MDSCommon.req(data, keys);
+      ret[i] = common.req(data, keys);
     }
     return ret;
   },
@@ -7669,7 +7669,7 @@ var MDSCommon = {
       }
     }
     if (Array.isArray(data)) {
-      return MDSCommon.reqArray(data, keys);
+      return common.reqArray(data, keys);
     } else {
       if (Array.isArray(keys)) {
         for (var i in keys) {
@@ -7686,10 +7686,10 @@ var MDSCommon = {
             throw new Error('Required field isn\'t provided: ' + k);
           }
           var ok = false;
-          if (MDSCommon.isPrimitive(type)) {
-            ok = MDSCommon.isValidPrimitiveType(val, type);
+          if (common.isPrimitive(type)) {
+            ok = common.isValidPrimitiveType(val, type);
           } else {
-            ok = MDSCommon.req(val, type);
+            ok = common.req(val, type);
           }
           if (!ok) {
             throw new Error('Illegal field or key type');
@@ -7711,7 +7711,7 @@ var MDSCommon = {
       }
     }
     if (Array.isArray(data)) {
-      return MDSCommon.permitArray(data, keys);
+      return common.permitArray(data, keys);
     } else {
       var ret = {};
       if (Array.isArray(keys)) {
@@ -7728,10 +7728,10 @@ var MDSCommon = {
           let val = data[k];
           if (typeof val !== 'undefined') {
             var ok = false;
-            if (MDSCommon.isPrimitive(type)) {
-              ok = MDSCommon.isValidPrimitiveType(val, type);
+            if (common.isPrimitive(type)) {
+              ok = common.isValidPrimitiveType(val, type);
             } else {
-              ret[k] = MDSCommon.permit(val, type);
+              ret[k] = common.permit(val, type);
             }
             if (ok) {
               ret[k] = val;
@@ -7747,7 +7747,7 @@ var MDSCommon = {
     var ret = [];
     for (let i in arr) {
       let data = arr[i];
-      ret[i] = MDSCommon.permit(data, keys);
+      ret[i] = common.permit(data, keys);
     }
     return ret;
   },
@@ -7760,20 +7760,20 @@ var MDSCommon = {
       case 'u': // javascript source
         if (Array.isArray(val)) {
           ok = val.reduce(function(prev, curr) {
-            return prev && MDSCommon.isPrimitive(curr);
+            return prev && common.isPrimitive(curr);
           });
         } else {
-          ok = MDSCommon.isPrimitive(val);
+          ok = common.isPrimitive(val);
         }
         break;
       case 'i':
-        ok = MDSCommon.isInt(val);
+        ok = common.isInt(val);
         break;
       case 'r':
-        ok = MDSCommon.isReal(val);
+        ok = common.isReal(val);
         break;
       case 'o':
-        ok = MDSCommon.isObject(val);
+        ok = common.isObject(val);
         break;
       case 'a':
         ok = true;
@@ -7784,7 +7784,7 @@ var MDSCommon = {
 };
 
 if (typeof module !== 'undefined') {
-  module.exports = MDSCommon;
+  module.exports = common;
 }
 
 'use strict';
@@ -7819,7 +7819,7 @@ EntityFieldsSimplifier.prototype.format = function(data) {
 //     }
 //     for (let i in data.children) {
 //       let child = data.children[i];
-//       let childName = MDSCommon.getPathName(child.path)
+//       let childName = common.getChildName(child.path)
 //       res[childName] = child;
 //     }
 //   }
@@ -7890,7 +7890,7 @@ Entities.prototype.getChildren = function(path, options, limit) {
   if (typeof options === 'string') {
     options = { search: options }
   }
-  return this.request('entities.get', MDSCommon.extend(data, options))
+  return this.request('entities.get', common.extend(data, options))
          .then(function(data) { return data.children });
 };
 
@@ -7934,7 +7934,7 @@ function Myda(options) {
   if (typeof options === 'string') {
     options = { root: options };
   }
-  this.options = MDSCommon.extend({
+  this.options = common.extend({
     useLocalStorage: true,
 		apiURL: 'https://api.my-data.space',
 		websocketURL: 'https://api.my-data.space',
@@ -8006,7 +8006,7 @@ function Myda(options) {
 }
 
 Myda.prototype.getAuthProviders = function() {
-  var ret = MDSCommon.copy(this.authProviders);
+  var ret = common.copy(this.authProviders);
   for (var providerName in ret) {
     ret[providerName].url =
       ret[providerName].url.replace('{{api_url}}', encodeURIComponent(this.options.apiURL));
@@ -8023,7 +8023,7 @@ Myda.prototype.getAuthProvider = function(providerName) {
   if (typeof prov === 'undefined') {
     return null;
   }
-  var ret = MDSCommon.copy(prov);
+  var ret = common.copy(prov);
   ret.url = ret.url.replace('{{api_url}}', encodeURIComponent(this.options.apiURL));
   ret.url = ret.url.replace('{{permission}}', this.options.permission);
   ret.url = ret.url.replace('{{client_id}}', this.options.clientId);
@@ -8042,7 +8042,7 @@ Myda.prototype.connect = function() {
 
     this.on('connect', function () {
       this.connected = true;
-      if (this.options.useLocalStorage && MDSCommon.isPresent(localStorage.getItem('authToken'))) {
+      if (this.options.useLocalStorage && common.isPresent(localStorage.getItem('authToken'))) {
         this.emit('authenticate', { token: localStorage.getItem('authToken') });
       }
       this.callListeners('connected');
