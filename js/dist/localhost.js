@@ -9,10 +9,6 @@ var MDSCommon = {
     'function'
   ],
 
-  longWordWrap: function(str, options) {
-    return str;
-  },
-
   escapeHtml: function(string) {
     var str = '' + string;
     var match = /["'&<> ]/.exec(str);
@@ -253,6 +249,17 @@ var MDSCommon = {
       // throw new Error('Path has no child');
     }
     return path.substr(i + 1);
+  },
+
+  getParentPath: function(path) {
+    if (MDSCommon.isBlank(path)) {
+      return null;
+    }
+    var i = path.lastIndexOf('/');
+    if (i === -1) {
+      return '';
+    }
+    return path.slice(0, i);
   },
 
   getURLParamByName: function(name, url) {
@@ -948,7 +955,6 @@ Myda.prototype.registerFormatter = function(eventName, formatter) {
 };
 
 var Mydataspace = new Myda({
-  // websocketURL: 'http://localhost',
   clientId: 'de96bb70-29b2-454f-8813-ea6e4769414a',
   permission: 'admin'
 });
