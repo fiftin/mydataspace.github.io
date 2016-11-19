@@ -28,7 +28,7 @@ gulp.task('mds', function() {
       './js/api/myda.js',
       './js/api/mydataspace.js'
     ])
-    .pipe(concat('mydataspce.js'))
+    .pipe(concat('localhost.js'))
     .pipe(gulp.dest('./js/dist/'));
 });
 
