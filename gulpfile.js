@@ -20,6 +20,18 @@ gulp.task('api', function() {
     .pipe(gulp.dest('./js/dist/'));
 });
 
+gulp.task('mds', function() {
+  return gulp.src([
+      './js/common.js',
+      './js/formatters.js',
+      './js/api/entities.js',
+      './js/api/myda.js',
+      './js/api/mydataspace.js'
+    ])
+    .pipe(concat('mydataspce.js'))
+    .pipe(gulp.dest('./js/dist/'));
+});
+
 gulp.task('ui', function() {
   return gulp.src([
       './js/strings.js',
