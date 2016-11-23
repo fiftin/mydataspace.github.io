@@ -148,6 +148,48 @@ $view-field-value-max-height: 170px;
   width: 100%;
 }
 
+.view__fields--log {
+  font-family: "Courier New";
+  font-size: 16px;
+  background: black;
+  white-space: pre;
+}
+
+.view__field--log {
+  padding: 5px;
+}
+
+.view__field--log--log {
+  color: #aaa;
+}
+
+.view__field--log--error {
+  color: #ce5545;
+}
+
+.view__field--log--info {
+  color: #3498db;
+}
+
+.view__field--log--warn {
+  color: orange;
+}
+
+.view__field--log--system {
+  color: #a9a903;
+}
+
+.view__field--log--ok {
+  color: #27ae60;
+}
+
+.view__field--log--success {
+  color: #27ae60;
+  text-align: center;
+  padding: 7px;
+  font-size: 18px;
+}
+
 .view__field {
   display: table-row;
   &:hover {
@@ -174,6 +216,10 @@ $view-field-value-max-height: 170px;
 
 .view__field_name_box {
   word-wrap: break-word;
+}
+
+.view__field--log {
+    display: none;
 }
 
 .view__field_value {

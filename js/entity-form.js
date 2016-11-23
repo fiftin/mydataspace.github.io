@@ -248,12 +248,42 @@ EntityForm.prototype.setEntityView = function(data) {
   }.bind(this));
 };
 
+EntityForm.prototype.setLogView = function(data) {
+  $.ajax({ url: '/fragments/log-view.html', method: 'get' }).then(function(html) {
+    var view = document.getElementById('view');
+    view.innerHTML = html;
+    document.getElementById('view__overview_icon').className =
+      'view__overview_icon fa fa-' +
+      UIHelper.getIconByPath(data.path,
+                             data.numberOfChildren === 0,
+                             false);
+    document.getElementById('view__title').innerText =
+      MDSCommon.getPathName(data.path);
+    var viewFields = this.setViewFields(data.fields);
+    $(viewFields).on('click', '.view__field', function() {
+      $(viewFields).find('.view__field--active').removeClass('view__field--active');
+      var value = $(this).data('value');
+      if (value != null) {
+        $$('edit_script_window__editor').setValue(value);
+        if (!$$('edit_script_window').isVisible()) {
+          $$('edit_script_window').show();
+        }
+      } else {
+        $$('edit_script_window').hide();
+      }
+      $(this).addClass('view__field--active');
+    });
+  }.bind(this));
+};
+
 EntityForm.prototype.setView = function(data) {
   $('#view').append('<div class="view__loading"></div>');
   if (MDSCommon.isBlank(data.path)) {
     this.setRootView(data);
-  } else if (data.path.startsWith('tasks/')) {
+  } else if (UIHelper.getEntityTypeByPath(path) === 'task')) {
     this.setTaskView(data);
+  } else if (UIHelper.getEntityTypeByPath(path) === 'log')) {
+    this.setLogView(data);
   } else {
     this.setEntityView(data);
   }
