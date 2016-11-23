@@ -148,42 +148,42 @@ $view-field-value-max-height: 170px;
   width: 100%;
 }
 
-.view__fields--log {
+.view__log_records {
   font-family: "Courier New";
   font-size: 16px;
   background: black;
   white-space: pre;
 }
 
-.view__field--log {
+.view__log_record {
   padding: 5px;
 }
 
-.view__field--log--log {
+.view__log_record--log {
   color: #aaa;
 }
 
-.view__field--log--error {
+.view__log_record--error {
   color: #ce5545;
 }
 
-.view__field--log--info {
+.view__log_record--info {
   color: #3498db;
 }
 
-.view__field--log--warn {
+.view__log_record--warn {
   color: orange;
 }
 
-.view__field--log--system {
+.view__log_record--system {
   color: #a9a903;
 }
 
-.view__field--log--ok {
+.view__log_record--ok {
   color: #27ae60;
 }
 
-.view__field--log--success {
+.view__log_record--success {
   color: #27ae60;
   text-align: center;
   padding: 7px;

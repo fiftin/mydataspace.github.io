@@ -57,6 +57,46 @@ EntityForm.prototype.setSelectedId = function(id) {
   this.refresh();
 };
 
+
+EntityForm.prototype.setLogRecords = function(fields, ignoredFieldNames, addLabelIfNoFieldsExists) {
+  if (!Array.isArray(ignoredFieldNames)) {
+    ignoredFieldNames = [];
+  }
+  if (addLabelIfNoFieldsExists == null) {
+    addLabelIfNoFieldsExists = true;
+  }
+  var viewFields = document.getElementById('view__fields');
+  if (MDSCommon.isBlank(fields)) {
+    viewFields.innerHTML =
+      addLabelIfNoFieldsExists ?
+      '<div class="view__no_fields_exists">' + STRINGS.NO_FIELDS + '</div>' :
+      '';
+  } else {
+    viewFields.innerHTML = '';
+    var numberOfChildren = 0;
+    for (var i in fields) {
+      var field = fields[i];
+      if (ignoredFieldNames.indexOf(field.name) >= 0) {
+        continue;
+      }
+      numberOfChildren++;
+      var html = MDSCommon.textToHtml(field.value);
+      var recordClass = 'view__log_record--' + field.name.split('_')[1];
+      var divFd = $('<div class="view__log_record ' + recordClass + '">' +
+                        html +
+                    '</div>').appendTo(viewFields);
+    }
+  }
+  if (numberOfChildren === 0) {
+    viewFields.innerHTML =
+      addLabelIfNoFieldsExists ?
+      '<div class="view__no_fields_exists">' + STRINGS.NO_FIELDS + '</div>' :
+      '';
+  }
+  return viewFields;
+};
+
+
 EntityForm.prototype.setViewFields = function(fields, ignoredFieldNames, addLabelIfNoFieldsExists) {
   if (!Array.isArray(ignoredFieldNames)) {
     ignoredFieldNames = [];
@@ -109,6 +149,9 @@ EntityForm.prototype.setViewFields = function(fields, ignoredFieldNames, addLabe
   }
   return viewFields;
 };
+
+
+
 
 EntityForm.prototype.setRootView = function(data) {
   $.ajax({ url: '/fragments/root-view.html', method: 'get' }).then(function(html) {
@@ -259,7 +302,7 @@ EntityForm.prototype.setLogView = function(data) {
                              false);
     document.getElementById('view__title').innerText =
       MDSCommon.getPathName(data.path);
-    var viewFields = this.setViewFields(data.fields);
+    var viewFields = this.setLogRecords(data.fields);
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
       var value = $(this).data('value');
