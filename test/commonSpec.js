@@ -1,10 +1,10 @@
 describe('MDSCommon', function() {
   describe('#textToHtml', function() {
-    xit('returns same text for simple text', function() {
-      expect(MDSCommon.textToHtml('Hello, World!')).to.eq('Hello, World!');
+    it('returns same text for simple text', function() {
+      expect(MDSCommon.textToHtml('Hello, World!')).to.eq('Hello,&nbsp;World!');
     });
 
-    xit('returns escaped html for one line text', function() {
+    it('returns escaped html for one line text', function() {
       var str = '<div>Hello</div><script>document.write(\'world\')</script>';
       expect(MDSCommon.textToHtml(str)).to.eq(
         '&lt;div&gt;Hello&lt;/div&gt;&lt;script&gt;document.write(&#39;world&#39;)&lt;/script&gt;');

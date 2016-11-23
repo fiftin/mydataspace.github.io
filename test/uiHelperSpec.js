@@ -1,4 +1,12 @@
 describe('UIHelper', function() {
+  describe('#getIconByPath', function() {
+      it('returns valid icons of paths', function() {
+          expect(UIHelper.getIconByPath('tasks')).to.eq('code');
+          expect(UIHelper.getIconByPath('tasks/test')).to.eq('file-code-o');
+          expect(UIHelper.getIconByPath('test/hello-world', true)).to.eq('file-o');
+      });
+  });
+
   describe('#getEntityTypeByPath', function() {
       it('returns valid types of paths', function() {
           expect(UIHelper.getEntityTypeByPath('tasks')).to.eq('tasks');
