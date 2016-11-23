@@ -81,7 +81,18 @@ EntityForm.prototype.setLogRecords = function(fields, ignoredFieldNames, addLabe
       }
       numberOfChildren++;
       var html = MDSCommon.textToHtml(field.value);
-      var recordClass = 'view__log_record--' + field.name.split('_')[1];
+      var status = field.name.split('_')[1];
+      var recordClass = 'view__log_record--' + status;
+      if (common.isBlank(html)) {
+        switch (status) {
+          case 'success':
+            html = 'Script executed successfully';
+            break;
+          case 'fail':
+            html = 'Script failed';
+            break;
+        }
+      }
       var divFd = $('<div class="view__log_record ' + recordClass + '">' +
                         html +
                     '</div>').appendTo(viewFields);
