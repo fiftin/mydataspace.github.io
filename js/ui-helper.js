@@ -34,11 +34,18 @@ UIHelper = {
       case 'tasks':
         return 'tasks';
       default:
-        if (path.startsWith('tasks') && depth === 2) {
-          return 'task';
-        } else if (path.startsWith('protos') && depth === 2) {
-          return 'proto';
-        }
+          if (/^tasks\/[^\/]+$/.test(path)) {
+              return 'task';
+          }
+          if (/^tasks\/[^\/]+\/logs$/.test(path)) {
+              return 'logs';
+          }
+          if (/^tasks\/[^\/]+\/logs\/[^\/]+$/.test(path)) {
+              return 'log';
+          }
+          if (path.startsWith('protos') && depth === 2) {
+            return 'proto';
+          }
     }
     return 'none';
   },

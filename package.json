@@ -28,6 +28,7 @@
     "karma-chai": "^0.1.0",
     "karma-chrome-extra-launcher": "^0.1.0",
     "karma-chrome-launcher": "^1.0.1",
+    "karma-jsdom-launcher": "^5.0.0",
     "karma-mocha": "^0.2.1",
     "mocha": "^2.4.5",
     "run-sequence": "^1.1.5"

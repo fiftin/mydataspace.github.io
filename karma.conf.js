@@ -18,6 +18,8 @@ module.exports = function(config) {
       'js/api/myda.js',
       'js/api/entities.js',
       'js/strings.js',
+      'js/fields.js',
+      'js/identity.js',
       'js/ui-helper.js'
     ],
 
@@ -58,7 +60,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['jsdom'],
 
 
     // Continuous Integration mode

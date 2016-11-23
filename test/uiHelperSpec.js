@@ -1,4 +1,13 @@
 describe('UIHelper', function() {
+  describe('#getEntityTypeByPath', function() {
+      it('returns valid types of paths', function() {
+          expect(UIHelper.getEntityTypeByPath('tasks')).to.eq('tasks');
+          expect(UIHelper.getEntityTypeByPath('tasks/ghertwer')).to.eq('task');
+          expect(UIHelper.getEntityTypeByPath('tasks/test/logs')).to.eq('logs');
+          expect(UIHelper.getEntityTypeByPath('tasks/test/logs/345345')).to.eq('log');
+      });
+  });
+
   describe('#expendField', function() {
     it('returns the same for normal field', function() {
       var field = {
