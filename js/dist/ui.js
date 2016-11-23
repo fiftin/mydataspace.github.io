@@ -716,7 +716,7 @@ EntityForm.prototype.setLogRecords = function(fields, ignoredFieldNames, addLabe
       var html = MDSCommon.textToHtml(field.value);
       var status = field.name.split('_')[1];
       var recordClass = 'view__log_record--' + status;
-      if (common.isBlank(html)) {
+      if (MDSCommon.isBlank(html)) {
         switch (status) {
           case 'success':
             html = 'Script executed successfully';
