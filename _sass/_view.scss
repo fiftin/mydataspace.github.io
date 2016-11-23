@@ -207,6 +207,18 @@ $view-field-value-max-height: 170px;
   }
 }
 
+.view__field--script {
+    .view__field_name {
+        font-weight: bold;
+    }
+}
+
+.view__field--script--main {
+    .view__field_name {
+        color: black;
+    }
+}
+
 .view__field--active, .view__field--active:hover {
   .view__field_name, .view__field_value {
     background: #27ae60;

@@ -733,7 +733,8 @@ EntityForm.prototype.setLogRecords = function(fields, ignoredFieldNames, addLabe
 EntityForm.prototype.setViewFields = function(fields,
                                               ignoredFieldNames,
                                               addLabelIfNoFieldsExists,
-                                              comparer) {
+                                              comparer,
+                                              classResolver) {
   if (!Array.isArray(ignoredFieldNames)) {
     ignoredFieldNames = [];
   }
@@ -762,7 +763,8 @@ EntityForm.prototype.setViewFields = function(fields,
       var multiline = html.indexOf('\n') >= 0;
       var multilineClass = multiline ? 'view__field_value--multiline' : '';
       var multilineEnd = multiline ? '    <div class="view__field_value__end"></div>\n' : '';
-      var divFd = $('<div class="view__field">\n' +
+      var fieldClass = classResolver ? classResolver(field) : '';
+      var divFd = $('<div class="view__field ' + fieldClass + '">\n' +
                     '  <div class="view__field_name">\n' +
                     '    <div class="view__field_name_box">\n' +
                            field.name +
@@ -886,7 +888,15 @@ EntityForm.prototype.setTaskView = function(data) {
                              } else {
                                  return -1;
                              }
-                           });
+                         }, function(x) {
+                           if (x.name === 'main.js') {
+                               return 'view__field--script view__field--script--main';
+                           }
+                           if (/.*\.js$/.test(x.name)) {
+                             return 'view__field--script';
+                           }
+                           return '';
+                         });
     var status = MDSCommon.findValueByName(data.fields, 'status');
     if (status != null) {
       var statusClass;
