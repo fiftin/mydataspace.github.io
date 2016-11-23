@@ -22,7 +22,7 @@ UIHelper = {
       'tasks': 'code',
       'task': 'file-code-o',
       'logs': 'history',
-      'logs': 'file-movie-o',
+      'log': 'file-movie-o',
   },
   /**
    * User can only view entities. All buttons for manipulations is hidden in
