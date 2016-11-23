@@ -148,6 +148,56 @@ $view-field-value-max-height: 170px;
   width: 100%;
 }
 
+.view__log_records {
+  font-family: "Courier New";
+  font-size: 16px;
+  background: black;
+  white-space: pre;
+}
+
+.view__log_record {
+  padding: 5px;
+}
+
+.view__log_record--log {
+  color: #aaa;
+}
+
+.view__log_record--error {
+  color: #ce5545;
+}
+
+.view__log_record--info {
+  color: #3498db;
+}
+
+.view__log_record--warn {
+  color: orange;
+}
+
+.view__log_record--system {
+  color: #a9a903;
+}
+
+.view__log_record--ok {
+  color: #27ae60;
+}
+
+.view__log_record--success {
+  color: #27ae60;
+  text-align: center;
+  padding: 7px;
+  font-size: 18px;
+}
+
+.view__log_record--fail {
+  color: #ce5545;
+  transition: color 0.5s;
+  text-align: center;
+  padding: 7px;
+  font-size: 18px;
+}
+
 .view__field {
   display: table-row;
   &:hover {
@@ -155,6 +205,15 @@ $view-field-value-max-height: 170px;
       background: #f3f3f3;
     }
   }
+}
+
+.view__field--script {
+    .view__field_name {
+        font-weight: bold;
+    }
+}
+
+.view__field--script--main {
 }
 
 .view__field--active, .view__field--active:hover {
@@ -174,6 +233,10 @@ $view-field-value-max-height: 170px;
 
 .view__field_name_box {
   word-wrap: break-word;
+}
+
+.view__field--log {
+    display: none;
 }
 
 .view__field_value {

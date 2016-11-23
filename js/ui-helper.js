@@ -14,6 +14,16 @@ UIHelper = {
   ENTITY_TREE_DUMMY_ID: 'dummy_483__4734_47e4',
   ENTITY_LIST_SHOW_MORE_ID: 'show_more_47384_3338222',
 
+
+  ENTITY_ICONS: {
+      'root': 'database',
+      'protos': 'cubes',
+      'proto': 'cube',
+      'tasks': 'code',
+      'task': 'file-code-o',
+      'logs': 'history',
+      'log': 'file-movie-o',
+  },
   /**
    * User can only view entities. All buttons for manipulations is hidden in
    * this mode.
@@ -34,40 +44,32 @@ UIHelper = {
       case 'tasks':
         return 'tasks';
       default:
-        if (path.startsWith('tasks') && depth === 2) {
-          return 'task';
-        } else if (path.startsWith('protos') && depth === 2) {
-          return 'proto';
-        }
+          if (/^tasks\/[^\/]+$/.test(path)) {
+              return 'task';
+          }
+          if (/^tasks\/[^\/]+\/logs$/.test(path)) {
+              return 'logs';
+          }
+          if (/^tasks\/[^\/]+\/logs\/[^\/]+$/.test(path)) {
+              return 'log';
+          }
+          if (path.startsWith('protos') && depth === 2) {
+            return 'proto';
+          }
     }
     return 'none';
   },
 
   getIconByPath: function(path, isEmpty, isOpened) {
-    var depth = UIHelper.getEntityDepthByPath(path);
-    var icon;
-    switch (path) {
-      case '':
-        icon = 'database';
-        break;
-      case 'protos':
-        icon = 'cubes';
-        break;
-      case 'tasks':
-        icon = 'code';
-        break;
-      default:
-        if (path.startsWith('tasks') && depth === 2) {
-          icon = 'file-code-o';
-        } else if (path.startsWith('protos') && depth === 2) {
-          icon = 'cube';
-        } else if (isEmpty) {
-          icon = 'file-o';
-        } else {
-          icon = isOpened ? 'folder-open' : 'folder';
-        }
+    var icon = UIHelper.ENTITY_ICONS[UIHelper.getEntityTypeByPath(path)];
+    if (icon) {
+        return icon;
     }
-    return icon;
+    if (isEmpty) {
+      return 'file-o';
+    } else {
+      return isOpened ? 'folder-open' : 'folder';
+    }
   },
 
   getEntityDepthByPath: function(path) {

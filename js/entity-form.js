@@ -57,7 +57,8 @@ EntityForm.prototype.setSelectedId = function(id) {
   this.refresh();
 };
 
-EntityForm.prototype.setViewFields = function(fields, ignoredFieldNames, addLabelIfNoFieldsExists) {
+
+EntityForm.prototype.setLogRecords = function(fields, ignoredFieldNames, addLabelIfNoFieldsExists) {
   if (!Array.isArray(ignoredFieldNames)) {
     ignoredFieldNames = [];
   }
@@ -80,10 +81,68 @@ EntityForm.prototype.setViewFields = function(fields, ignoredFieldNames, addLabe
       }
       numberOfChildren++;
       var html = MDSCommon.textToHtml(field.value);
+      var status = field.name.split('_')[1];
+      var recordClass = 'view__log_record--' + status;
+      if (MDSCommon.isBlank(html)) {
+        switch (status) {
+          case 'success':
+            html = 'Script executed successfully';
+            break;
+          case 'fail':
+            html = 'Script failed';
+            break;
+        }
+      }
+      var divFd = $('<div class="view__log_record ' + recordClass + '">' +
+                        html +
+                    '</div>').appendTo(viewFields);
+    }
+  }
+  if (numberOfChildren === 0) {
+    viewFields.innerHTML =
+      addLabelIfNoFieldsExists ?
+      '<div class="view__no_fields_exists">' + STRINGS.NO_FIELDS + '</div>' :
+      '';
+  }
+  return viewFields;
+};
+
+
+EntityForm.prototype.setViewFields = function(fields,
+                                              ignoredFieldNames,
+                                              addLabelIfNoFieldsExists,
+                                              comparer,
+                                              classResolver) {
+  if (!Array.isArray(ignoredFieldNames)) {
+    ignoredFieldNames = [];
+  }
+  if (addLabelIfNoFieldsExists == null) {
+    addLabelIfNoFieldsExists = true;
+  }
+  var viewFields = document.getElementById('view__fields');
+  if (MDSCommon.isBlank(fields)) {
+    viewFields.innerHTML =
+      addLabelIfNoFieldsExists ?
+      '<div class="view__no_fields_exists">' + STRINGS.NO_FIELDS + '</div>' :
+      '';
+  } else {
+    viewFields.innerHTML = '';
+    var numberOfChildren = 0;
+    if (comparer) {
+        fields.sort(comparer);
+    }
+    for (var i in fields) {
+      var field = fields[i];
+      if (ignoredFieldNames.indexOf(field.name) >= 0) {
+        continue;
+      }
+      numberOfChildren++;
+      var html = MDSCommon.textToHtml(field.value);
       var multiline = html.indexOf('\n') >= 0;
       var multilineClass = multiline ? 'view__field_value--multiline' : '';
       var multilineEnd = multiline ? '    <div class="view__field_value__end"></div>\n' : '';
-      var divFd = $('<div class="view__field">\n' +
+      var fieldClass = classResolver ? classResolver(field) : '';
+      var divFd = $('<div class="view__field ' + fieldClass + '">\n' +
                     '  <div class="view__field_name">\n' +
                     '    <div class="view__field_name_box">\n' +
                            field.name +
@@ -181,8 +240,41 @@ EntityForm.prototype.setTaskView = function(data) {
     document.getElementById('view__title').innerText =
       MDSCommon.getPathName(data.path);
 
-    var viewFields = this.setViewFields(data.fields, ['status', 'statusText', 'interval']);
-
+    var viewFields =
+        this.setViewFields(data.fields,
+                           ['status', 'statusText', 'interval'],
+                           true,
+                           function(x, y) {
+                             if (x.name === 'main.js') {
+                                 return 1;
+                             }
+                             if (y.name === 'main.js') {
+                               return -1;
+                             }
+                             var isScriptX = /.*\.js$/.test(x.name);
+                             var isScriptY = /.*\.js$/.test(y.name);
+                             if (isScriptX && isScriptY || !isScriptX && !isScriptY) {
+                                 if (x < y) {
+                                     return -1;
+                                 } else if (x.name > y.name) {
+                                     return 1;
+                                 } else {
+                                     return 0;
+                                 }
+                             } if (isScriptX) {
+                                 return 1;
+                             } else {
+                                 return -1;
+                             }
+                         }, function(x) {
+                           if (x.name === 'main.js') {
+                               return 'view__field--script view__field--script--main';
+                           }
+                           if (/.*\.js$/.test(x.name)) {
+                             return 'view__field--script';
+                           }
+                           return '';
+                         });
     var status = MDSCommon.findValueByName(data.fields, 'status');
     if (status != null) {
       var statusClass;
@@ -197,8 +289,19 @@ EntityForm.prototype.setTaskView = function(data) {
       if (statusClass) {
         document.getElementById('view__status').classList.add(statusClass);
       }
-      document.getElementById('view__status').innerText =
-        MDSCommon.findValueByName(data.fields, 'statusText');
+
+      var statusText = MDSCommon.findValueByName(data.fields, 'statusText');
+      if (!statusText) {
+          switch (status) {
+            case 'success':
+              statusText = 'Script executed successfully';
+              break;
+            case 'fail':
+              statusText = 'Script failed';
+              break;
+          }
+      }
+      document.getElementById('view__status').innerText = statusText;
     }
 
     var interval = MDSCommon.findValueByName(data.fields, 'interval') || 'paused';
@@ -248,12 +351,42 @@ EntityForm.prototype.setEntityView = function(data) {
   }.bind(this));
 };
 
+EntityForm.prototype.setLogView = function(data) {
+  $.ajax({ url: '/fragments/log-view.html', method: 'get' }).then(function(html) {
+    var view = document.getElementById('view');
+    view.innerHTML = html;
+    document.getElementById('view__overview_icon').className =
+      'view__overview_icon fa fa-' +
+      UIHelper.getIconByPath(data.path,
+                             data.numberOfChildren === 0,
+                             false);
+    document.getElementById('view__title').innerText =
+      MDSCommon.getPathName(data.path);
+    var viewFields = this.setLogRecords(data.fields);
+    $(viewFields).on('click', '.view__field', function() {
+      $(viewFields).find('.view__field--active').removeClass('view__field--active');
+      var value = $(this).data('value');
+      if (value != null) {
+        $$('edit_script_window__editor').setValue(value);
+        if (!$$('edit_script_window').isVisible()) {
+          $$('edit_script_window').show();
+        }
+      } else {
+        $$('edit_script_window').hide();
+      }
+      $(this).addClass('view__field--active');
+    });
+  }.bind(this));
+};
+
 EntityForm.prototype.setView = function(data) {
   $('#view').append('<div class="view__loading"></div>');
   if (MDSCommon.isBlank(data.path)) {
     this.setRootView(data);
-  } else if (data.path.startsWith('tasks/')) {
+  } else if (UIHelper.getEntityTypeByPath(data.path) === 'task') {
     this.setTaskView(data);
+  } else if (UIHelper.getEntityTypeByPath(data.path) === 'log') {
+    this.setLogView(data);
   } else {
     this.setEntityView(data);
   }

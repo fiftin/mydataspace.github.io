@@ -129,5 +129,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SIGN_OUT: 'Выход'
   }
 };
-var LANGUAGE = localStorage.getItem('language') || 'EN';
+
+
+var LANGUAGE = window.localStorage && window.localStorage.getItem('language') || 'EN';
 var STRINGS = STRINGS_ON_DIFFERENT_LANGUAGES[LANGUAGE];
