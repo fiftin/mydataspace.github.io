@@ -278,8 +278,19 @@ EntityForm.prototype.setTaskView = function(data) {
       if (statusClass) {
         document.getElementById('view__status').classList.add(statusClass);
       }
-      document.getElementById('view__status').innerText =
-        MDSCommon.findValueByName(data.fields, 'statusText');
+
+      var statusText = MDSCommon.findValueByName(data.fields, 'statusText');
+      if (!statusText) {
+          switch (status) {
+            case 'success':
+              statusText = 'Script executed successfully';
+              break;
+            case 'fail':
+              statusText = 'Script failed';
+              break;
+          }
+      }
+      document.getElementById('view__status').innerText = statusText;
     }
 
     var interval = MDSCommon.findValueByName(data.fields, 'interval') || 'paused';
