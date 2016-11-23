@@ -954,7 +954,4 @@ Myda.prototype.registerFormatter = function(eventName, formatter) {
   this.formatters[eventName].push(formatter);
 };
 
-var Mydataspace = new Myda({
-  clientId: 'de96bb70-29b2-454f-8813-ea6e4769414a',
-  permission: 'admin'
-});
+var Mydataspace = new Myda({ permission: 'admin' });
