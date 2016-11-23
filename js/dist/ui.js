@@ -913,9 +913,9 @@ EntityForm.prototype.setView = function(data) {
   $('#view').append('<div class="view__loading"></div>');
   if (MDSCommon.isBlank(data.path)) {
     this.setRootView(data);
-  } else if (UIHelper.getEntityTypeByPath(path) === 'task')) {
+  } else if (UIHelper.getEntityTypeByPath(path) === 'task') {
     this.setTaskView(data);
-  } else if (UIHelper.getEntityTypeByPath(path) === 'log')) {
+  } else if (UIHelper.getEntityTypeByPath(path) === 'log') {
     this.setLogView(data);
   } else {
     this.setEntityView(data);
