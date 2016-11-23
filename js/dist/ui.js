@@ -2208,22 +2208,11 @@ UILayout.header =
       { width: 20, css: 'menu__spacer' },
       { view: 'button',
         width: 90,
-        hidden: true,
         id: 'SIGN_IN_LABEL',
         css: 'menu__login_button',
         label: STRINGS.SIGN_IN,
         click: function() {
           $('#signin_modal').modal('show');
-        }
-      },
-      { view: 'button',
-        width: 90,
-        hidden: localStorage.getItem('authToken') == null || window.innerWidth <= UIHelper.SCREEN_XS,
-        id: 'SIGN_OUT_LABEL',
-        css: 'menu__login_button',
-        label: STRINGS.SIGN_OUT,
-        click: function() {
-          Mydataspace.logout();
         }
       },
       { view: 'icon',
@@ -2232,7 +2221,7 @@ UILayout.header =
         id: 'menu_button',
         css: 'menu_button',
         click: function() {
-          if( $$('menu').config.hidden) {
+          if($$('menu').config.hidden) {
             $$('menu').show();
           }
           else
@@ -2257,8 +2246,14 @@ UILayout.entityTree =
           placeholder: STRINGS.SEARCH_BY_ROOTS,
           on: {
             onKeyPress: function(code, e) {
-              if (code === 13 && !e.ctrlKey && !e.shiftKey && !e.altKey) {
-                window.location.href = '/#' + $$('entity_tree__search').getValue();
+              if (code === 13) {
+                var search = $$('entity_tree__search').getValue();
+                if (MDSCommon.isBlank(search)) {
+                  search = '*';
+                } else {
+                  search = '*' + search + '*';
+                }
+                window.location.href = '/#' + search;
                 UI.pages.refreshPage('data');
                 return false;
               }
@@ -2730,26 +2725,6 @@ UI = {
 
   pages: new Pages(),
 
-
-  // DISABLED_ON_VIEW_ONLY: [
-  //   'ADD_ROOT_LABEL',
-  //   'ADD_ENTITY_LABEL',
-  //   'SAVE_ENTITY_LABEL',
-  //   'ADD_FIELD_LABEL',
-  //   'RUN_SCRIPT_LABEL',
-  //   'DELETE_ENTITY_SHORT_LABEL',
-  //   'menu_button'
-  // ],
-
-  HIDDEN_ON_SMALL_SCREENS: [
-    'my_data_panel__left_panel',
-    'my_data_panel__resizer_1',
-    'GET_STARTED_LABEL',
-    'DEMOS_LABEL',
-    'DOCS_LABEL',
-    'menu_button'
-  ],
-
   VISIBLE_ON_SMALL_SCREENS: [
     'SIGN_OUT_LABEL'
   ],
@@ -3178,12 +3153,5 @@ UI = {
     $$('admin_panel').resize();
     $$('admin_panel').resize();
     $$('edit_script_window').resize();
-    if (window.innerWidth <= UIHelper.SCREEN_XS) {
-      UI.HIDDEN_ON_SMALL_SCREENS.forEach(function(x) { $$(x).hide(); });
-      UI.VISIBLE_ON_SMALL_SCREENS.forEach(function(x) { $$(x).show(); });
-    } else {
-      UI.HIDDEN_ON_SMALL_SCREENS.forEach(function(x) { $$(x).show(); });
-      UI.VISIBLE_ON_SMALL_SCREENS.forEach(function(x) { $$(x).hide(); });
-    }
   }
 };

@@ -60,20 +60,9 @@ UILayout.header =
           $('#signin_modal').modal('show');
         }
       },
-      { view: 'button',
-        width: 90,
-        hidden: window.innerWidth <= UIHelper.SCREEN_XS,
-        id: 'SIGN_OUT_LABEL',
-        css: 'menu__login_button',
-        label: STRINGS.SIGN_OUT,
-        click: function() {
-          Mydataspace.logout();
-        }
-      },
       { view: 'icon',
         icon: 'bars',
         hidden: true,
-        visible: false,
         id: 'menu_button',
         css: 'menu_button',
         click: function() {

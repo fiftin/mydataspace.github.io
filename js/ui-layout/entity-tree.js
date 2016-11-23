@@ -12,8 +12,14 @@ UILayout.entityTree =
           placeholder: STRINGS.SEARCH_BY_ROOTS,
           on: {
             onKeyPress: function(code, e) {
-              if (code === 13 && !e.ctrlKey && !e.shiftKey && !e.altKey) {
-                window.location.href = '/#' + $$('entity_tree__search').getValue();
+              if (code === 13) {
+                var search = $$('entity_tree__search').getValue();
+                if (MDSCommon.isBlank(search)) {
+                  search = '*';
+                } else {
+                  search = '*' + search + '*';
+                }
+                window.location.href = '/#' + search;
                 UI.pages.refreshPage('data');
                 return false;
               }
