@@ -61,7 +61,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SAVE_ENTITY: 'Save',
     REFRESH_ENTITY: 'Refresh',
     CANCEL_ENTITY: 'View',
-    SIGN_OUT: 'Log Out'
+    SIGN_OUT: 'Log Out',
+    SEARCH_BY_ROOTS: 'Search by all roots...'
   },
   RU: {
     YES: 'Да',
@@ -126,7 +127,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SAVE_ENTITY: 'Сохр.',
     REFRESH_ENTITY: 'Обнов.',
     CANCEL_ENTITY: 'Пр.',
-    SIGN_OUT: 'Выход'
+    SIGN_OUT: 'Выход',
+    SEARCH_BY_ROOTS: 'Поиск по всем...'
   }
 };
 

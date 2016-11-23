@@ -94,9 +94,6 @@ UIHelper = {
            UIHelper.getEntityDepthByPath(identity.path) === 2;
   },
 
-
-
-
   popupCenter: function(url, title, w, h) {
     // Fixes dual-screen position                         Most browsers      Firefox
     var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
@@ -114,5 +111,9 @@ UIHelper = {
         newWindow.focus();
     }
     return newWindow;
+  },
+
+  getRoute: function() {
+
   }
 };

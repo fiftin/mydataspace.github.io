@@ -75,11 +75,13 @@
       });
 
       $(window).on('hashchange', function() {
-        if (UIHelper.isViewOnly() && document.getElementById('webix').style.display == 'none') {
+        var isEmptyHash = window.location.hash == null ||
+                          window.location.hash === '' ||
+                          window.location.hash === '#';
+        if (!isEmptyHash && document.getElementById('webix').style.display == 'none') {
           document.getElementById('bootstrap').style.display = 'none';
           document.getElementById('webix').style.display = 'block';
         };
-        UI.updateViewOnlyState();
       });
 
       webix.codebase = "/vendor/";

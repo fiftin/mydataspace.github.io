@@ -50,7 +50,6 @@ UILayout.entityForm =
         type: 'icon',
         icon: 'trash-o',
         id: 'DELETE_ENTITY_SHORT_LABEL', label: STRINGS.DELETE_ENTITY_SHORT,
-        hidden: UIHelper.isViewOnly(),
         width: 80,
         click: function() {
           webix.confirm({
@@ -71,7 +70,6 @@ UILayout.entityForm =
         icon: 'pencil-square-o',
         id: 'EDIT_ENTITY_LABEL',
         label: STRINGS.EDIT_ENTITY,
-        hidden: UIHelper.isViewOnly(),
         width: 60,
         click: function() {
           UI.entityForm.setEditing(true);

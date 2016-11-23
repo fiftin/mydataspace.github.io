@@ -9,6 +9,14 @@ function EntityList() {
 
 }
 
+EntityList.prototype.setReadOnly = function(isReadOnly) {
+  if (isReadOnly) {
+    $$('ADD_ENTITY_LABEL').hide();
+  } else {
+    $$('ADD_ENTITY_LABEL').show();
+  }
+};
+
 EntityList.prototype.onCreate = function(data) {
   var parentId = Identity.parentId(Identity.idFromData(data));
   var entity = Identity.entityFromData(data);
@@ -94,6 +102,7 @@ EntityList.prototype.refreshData = function() {
       this.fill(entityId, children, data);
       $$('entity_list').addCss(showMoreChildId, 'entity_list__show_more_item');
     }
+    this.setReadOnly(!data.mine);
     $$('entity_list').enable();
   }.bind(this), function(err) { UI.error(err); });
 };

@@ -61,7 +61,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SAVE_ENTITY: 'Save',
     REFRESH_ENTITY: 'Refresh',
     CANCEL_ENTITY: 'View',
-    SIGN_OUT: 'Log Out'
+    SIGN_OUT: 'Log Out',
+    SEARCH_BY_ROOTS: 'Search by all roots...'
   },
   RU: {
     YES: 'Да',
@@ -126,7 +127,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SAVE_ENTITY: 'Сохр.',
     REFRESH_ENTITY: 'Обнов.',
     CANCEL_ENTITY: 'Пр.',
-    SIGN_OUT: 'Выход'
+    SIGN_OUT: 'Выход',
+    SEARCH_BY_ROOTS: 'Поиск по всем...'
   }
 };
 
@@ -204,6 +206,14 @@ webix.protoUI({
 	}
 
 }, webix.ui.view, webix.EventSystem);
+
+var Router = {
+  isEmpty: function() {
+    return window.location.hash == null ||
+           window.location.hash === '' ||
+           window.location.hash === '#';
+  }
+};
 
 UIHelper = {
   SCREEN_XS: 700,
@@ -301,9 +311,6 @@ UIHelper = {
            UIHelper.getEntityDepthByPath(identity.path) === 2;
   },
 
-
-
-
   popupCenter: function(url, title, w, h) {
     // Fixes dual-screen position                         Most browsers      Firefox
     var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
@@ -321,6 +328,10 @@ UIHelper = {
         newWindow.focus();
     }
     return newWindow;
+  },
+
+  getRoute: function() {
+
   }
 };
 
@@ -538,7 +549,6 @@ UIControls = {
       view: 'combo',
       label: STRINGS.OTHERS_CAN,
       name: 'othersCan',
-      hidden: UIHelper.isViewOnly(),
       value: 'view_children',
       options: [
         { id: 'nothing', value: STRINGS.NOTHING },
@@ -633,7 +643,18 @@ UIControls = {
 
 function EntityForm() {
   this.editing = false;
+  this.loadedListeners = [];
 }
+
+EntityForm.prototype.onLoaded = function(listener) {
+  this.loadedListeners.push(listener);
+};
+
+EntityForm.prototype.emitLoaded = function(data) {
+  this.loadedListeners.forEach(function(listener) {
+    listener(data);
+  });
+};
 
 /**
  * Switchs Entity Form to edit/view mode.
@@ -1045,24 +1066,31 @@ EntityForm.prototype.setData = function(data) {
 };
 
 EntityForm.prototype.refresh = function() {
-  var isWithMeta = this.isEditing();
-
-
+  var self = this;
+  var isWithMeta = self.isEditing();
   $$('entity_form').disable();
   var req = !isWithMeta ? 'entities.get' : 'entities.getWithMeta';
-  Mydataspace.request(req, Identity.dataFromId(this.selectedId), function(data) {
-    if (!isWithMeta) { // UIHelper.isViewOnly()) {
-      this.setView(data);
+  Mydataspace.request(req, Identity.dataFromId(self.selectedId), function(data) {
+    if (!isWithMeta) {
+      self.setView(data);
+      if (data.mine) {
+        $$('EDIT_ENTITY_LABEL').show();
+        $$('DELETE_ENTITY_SHORT_LABEL').show();
+      } else {
+        $$('EDIT_ENTITY_LABEL').hide();
+        $$('DELETE_ENTITY_SHORT_LABEL').hide();
+      }
     } else {
-      this.setData(data);
-      if (this.isProto()) {
+      self.setData(data);
+      if (self.isProto()) {
         $$('PROTO_IS_FIXED_LABEL').show();
       } else {
         $$('PROTO_IS_FIXED_LABEL').hide();
       }
       $$('entity_form').enable();
     }
-  }.bind(this), function(err) {
+    self.emitLoaded(data);
+  }, function(err) {
     UI.error(err);
     $$('entity_form').enable();
   });
@@ -1285,6 +1313,14 @@ function EntityList() {
 
 }
 
+EntityList.prototype.setReadOnly = function(isReadOnly) {
+  if (isReadOnly) {
+    $$('ADD_ENTITY_LABEL').hide();
+  } else {
+    $$('ADD_ENTITY_LABEL').show();
+  }
+};
+
 EntityList.prototype.onCreate = function(data) {
   var parentId = Identity.parentId(Identity.idFromData(data));
   var entity = Identity.entityFromData(data);
@@ -1370,6 +1406,7 @@ EntityList.prototype.refreshData = function() {
       this.fill(entityId, children, data);
       $$('entity_list').addCss(showMoreChildId, 'entity_list__show_more_item');
     }
+    this.setReadOnly(!data.mine);
     $$('entity_list').enable();
   }.bind(this), function(err) { UI.error(err); });
 };
@@ -1531,6 +1568,7 @@ EntityTree.prototype.requestMyRoots = function(selectedId) {
   var self = this;
   Mydataspace.request('entities.getMyRoots', {}, function(data) {
     $$('entity_tree').clearAll();
+    self.currentId = null;
     // convert received data to treeview format and load its to entity_tree.
     var formattedData = data['roots'].map(Identity.entityFromData);
     $$('entity_tree').parse(formattedData);
@@ -1547,12 +1585,13 @@ EntityTree.prototype.requestMyRoots = function(selectedId) {
 EntityTree.prototype.refresh = function() {
   var self = this;
   $$('entity_tree').disable();
-  if (UIHelper.isViewOnly()) {
+  if (!Router.isEmpty()) {
     Mydataspace.request('entities.get', { root: EntityTree.getViewOnlyRoot(), path: '' }, function(data) {
       if (data.mine) {
         self.requestMyRoots(data.root);
       } else {
         $$('entity_tree').clearAll();
+        self.currentId = null;
         // convert received data to treeview format and load its to entity_tree.
         var formattedData = Identity.entityFromData(data);
         $$('entity_tree').parse([formattedData]);
@@ -2191,11 +2230,35 @@ UILayout.entityTree =
   rows: [
     { view: 'toolbar',
       elements: [
+        { view: 'search',
+          id: 'entity_tree__search',
+          css: 'entity_list__search',
+          icon: 'close',
+          hidden: true,
+          placeholder: STRINGS.SEARCH_BY_ROOTS,
+          on: {
+            onKeyPress: function(code, e) {
+              if (code === 13 && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+                window.location.href = '/#' + $$('entity_tree__search').getValue();
+                UI.pages.refreshPage('data');
+                return false;
+              }
+            },
+            onSearchIconClick: function() {
+              window.location.href = '/#';
+              UI.pages.refreshPage('data');
+              $$('entity_tree__search').hide();
+              $$('ADD_ROOT_LABEL').show();
+              $$('REFRESH_LABEL').show();
+              $$('entity_tree__menu_sep').show();
+              $$('ROOT_SEARCH_LABEL').show();
+            }
+          }
+        },
         { view: 'button',
           type: 'icon',
           icon: 'plus',
           id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
-          hidden: UIHelper.isViewOnly(),
           width: 110,
           click: function() {
             $$('add_root_window').show();
@@ -2210,14 +2273,19 @@ UILayout.entityTree =
             UI.pages.refreshPage('data');
           }
         },
-        {},
+        { id: 'entity_tree__menu_sep'
+        },
         { view: 'button',
           type: 'icon',
           icon: 'search',
-          // id: 'ROOT_SEARCH_LABEL',
+          id: 'ROOT_SEARCH_LABEL',
           width: 30,
           click: function() {
-            // UI.pages.refreshPage('data');
+            $$('entity_tree__search').show();
+            $$('ADD_ROOT_LABEL').hide();
+            $$('REFRESH_LABEL').hide();
+            $$('entity_tree__menu_sep').hide();
+            $$('ROOT_SEARCH_LABEL').hide();
           }
         }
       ]
@@ -2278,7 +2346,6 @@ UILayout.entityList =
           type: 'icon',
           icon: 'plus',
           id: 'ADD_ENTITY_LABEL', label: STRINGS.ADD_ENTITY,
-          hidden: UIHelper.isViewOnly(),
           width: 110,
           click: function() {
             $$('add_entity_window').show();
@@ -2400,7 +2467,6 @@ UILayout.entityForm =
         type: 'icon',
         icon: 'trash-o',
         id: 'DELETE_ENTITY_SHORT_LABEL', label: STRINGS.DELETE_ENTITY_SHORT,
-        hidden: UIHelper.isViewOnly(),
         width: 80,
         click: function() {
           webix.confirm({
@@ -2421,7 +2487,6 @@ UILayout.entityForm =
         icon: 'pencil-square-o',
         id: 'EDIT_ENTITY_LABEL',
         label: STRINGS.EDIT_ENTITY,
-        hidden: UIHelper.isViewOnly(),
         width: 60,
         click: function() {
           UI.entityForm.setEditing(true);
@@ -2670,20 +2735,6 @@ UI = {
     'SIGN_OUT_LABEL'
   ],
 
-  updateViewOnlyState: function() {
-    if (UIHelper.isViewOnly()) {
-      UI.DISABLED_ON_VIEW_ONLY.forEach(function(item) {
-        $$(item).hide();
-      });
-    } else {
-      UI.DISABLED_ON_VIEW_ONLY.forEach(function(item) {
-        $$(item).show();
-      });
-    }
-    UI.entityTree.refresh();
-    UI.updateSizes();
-  },
-
   updateLanguage: function() {
 
     var currentLang = localStorage.getItem('language') || 'EN';
@@ -2745,8 +2796,6 @@ UI = {
     }
 
     // Comboboxes
-
-
 
     // Others
 
@@ -3078,7 +3127,7 @@ UI = {
     });
 
     UI.updateSizes();
-    
+
     webix.event(window, 'resize', function(e) {
       UI.updateSizes();
     });
@@ -3086,6 +3135,10 @@ UI = {
     window.addEventListener('error', function (e) {
       UI.error(e.error.message);
       return false;
+    });
+
+    $(window).on('hashchange', function() {
+      UI.pages.refreshPage('data', true);
     });
   },
 

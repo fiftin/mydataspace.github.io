@@ -32,20 +32,6 @@ UI = {
     'SIGN_OUT_LABEL'
   ],
 
-  updateViewOnlyState: function() {
-    if (UIHelper.isViewOnly()) {
-      UI.DISABLED_ON_VIEW_ONLY.forEach(function(item) {
-        $$(item).hide();
-      });
-    } else {
-      UI.DISABLED_ON_VIEW_ONLY.forEach(function(item) {
-        $$(item).show();
-      });
-    }
-    UI.entityTree.refresh();
-    UI.updateSizes();
-  },
-
   updateLanguage: function() {
 
     var currentLang = localStorage.getItem('language') || 'EN';
@@ -107,8 +93,6 @@ UI = {
     }
 
     // Comboboxes
-
-
 
     // Others
 
@@ -440,7 +424,7 @@ UI = {
     });
 
     UI.updateSizes();
-    
+
     webix.event(window, 'resize', function(e) {
       UI.updateSizes();
     });
@@ -448,6 +432,10 @@ UI = {
     window.addEventListener('error', function (e) {
       UI.error(e.error.message);
       return false;
+    });
+
+    $(window).on('hashchange', function() {
+      UI.pages.refreshPage('data', true);
     });
   },
 

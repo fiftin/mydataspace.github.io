@@ -8,7 +8,6 @@ UILayout.entityList =
           type: 'icon',
           icon: 'plus',
           id: 'ADD_ENTITY_LABEL', label: STRINGS.ADD_ENTITY,
-          hidden: UIHelper.isViewOnly(),
           width: 110,
           click: function() {
             $$('add_entity_window').show();

@@ -85,6 +85,7 @@ EntityTree.prototype.requestMyRoots = function(selectedId) {
   var self = this;
   Mydataspace.request('entities.getMyRoots', {}, function(data) {
     $$('entity_tree').clearAll();
+    self.currentId = null;
     // convert received data to treeview format and load its to entity_tree.
     var formattedData = data['roots'].map(Identity.entityFromData);
     $$('entity_tree').parse(formattedData);
@@ -101,12 +102,13 @@ EntityTree.prototype.requestMyRoots = function(selectedId) {
 EntityTree.prototype.refresh = function() {
   var self = this;
   $$('entity_tree').disable();
-  if (UIHelper.isViewOnly()) {
+  if (!Router.isEmpty()) {
     Mydataspace.request('entities.get', { root: EntityTree.getViewOnlyRoot(), path: '' }, function(data) {
       if (data.mine) {
         self.requestMyRoots(data.root);
       } else {
         $$('entity_tree').clearAll();
+        self.currentId = null;
         // convert received data to treeview format and load its to entity_tree.
         var formattedData = Identity.entityFromData(data);
         $$('entity_tree').parse([formattedData]);

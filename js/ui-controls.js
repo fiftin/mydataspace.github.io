@@ -20,7 +20,6 @@ UIControls = {
       view: 'combo',
       label: STRINGS.OTHERS_CAN,
       name: 'othersCan',
-      hidden: UIHelper.isViewOnly(),
       value: 'view_children',
       options: [
         { id: 'nothing', value: STRINGS.NOTHING },

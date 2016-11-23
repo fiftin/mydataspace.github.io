@@ -1,6 +1,17 @@
 function EntityForm() {
   this.editing = false;
+  this.loadedListeners = [];
 }
+
+EntityForm.prototype.onLoaded = function(listener) {
+  this.loadedListeners.push(listener);
+};
+
+EntityForm.prototype.emitLoaded = function(data) {
+  this.loadedListeners.forEach(function(listener) {
+    listener(data);
+  });
+};
 
 /**
  * Switchs Entity Form to edit/view mode.
@@ -412,24 +423,31 @@ EntityForm.prototype.setData = function(data) {
 };
 
 EntityForm.prototype.refresh = function() {
-  var isWithMeta = this.isEditing();
-
-
+  var self = this;
+  var isWithMeta = self.isEditing();
   $$('entity_form').disable();
   var req = !isWithMeta ? 'entities.get' : 'entities.getWithMeta';
-  Mydataspace.request(req, Identity.dataFromId(this.selectedId), function(data) {
-    if (!isWithMeta) { // UIHelper.isViewOnly()) {
-      this.setView(data);
+  Mydataspace.request(req, Identity.dataFromId(self.selectedId), function(data) {
+    if (!isWithMeta) {
+      self.setView(data);
+      if (data.mine) {
+        $$('EDIT_ENTITY_LABEL').show();
+        $$('DELETE_ENTITY_SHORT_LABEL').show();
+      } else {
+        $$('EDIT_ENTITY_LABEL').hide();
+        $$('DELETE_ENTITY_SHORT_LABEL').hide();
+      }
     } else {
-      this.setData(data);
-      if (this.isProto()) {
+      self.setData(data);
+      if (self.isProto()) {
         $$('PROTO_IS_FIXED_LABEL').show();
       } else {
         $$('PROTO_IS_FIXED_LABEL').hide();
       }
       $$('entity_form').enable();
     }
-  }.bind(this), function(err) {
+    self.emitLoaded(data);
+  }, function(err) {
     UI.error(err);
     $$('entity_form').enable();
   });
