@@ -9,15 +9,15 @@ UI = {
   pages: new Pages(),
 
 
-  DISABLED_ON_VIEW_ONLY: [
-    'ADD_ROOT_LABEL',
-    'ADD_ENTITY_LABEL',
-    'SAVE_ENTITY_LABEL',
-    'ADD_FIELD_LABEL',
-    'RUN_SCRIPT_LABEL',
-    'DELETE_ENTITY_SHORT_LABEL',
-    'menu_button'
-  ],
+  // DISABLED_ON_VIEW_ONLY: [
+  //   'ADD_ROOT_LABEL',
+  //   'ADD_ENTITY_LABEL',
+  //   'SAVE_ENTITY_LABEL',
+  //   'ADD_FIELD_LABEL',
+  //   'RUN_SCRIPT_LABEL',
+  //   'DELETE_ENTITY_SHORT_LABEL',
+  //   'menu_button'
+  // ],
 
   HIDDEN_ON_SMALL_SCREENS: [
     'my_data_panel__left_panel',

@@ -53,7 +53,6 @@ UILayout.header =
       { width: 20, css: 'menu__spacer' },
       { view: 'button',
         width: 90,
-        hidden: localStorage.getItem('authToken') != null,
         id: 'SIGN_IN_LABEL',
         css: 'menu__login_button',
         label: STRINGS.SIGN_IN,
@@ -63,7 +62,7 @@ UILayout.header =
       },
       { view: 'button',
         width: 90,
-        hidden: localStorage.getItem('authToken') == null || window.innerWidth <= UIHelper.SCREEN_XS,
+        hidden: window.innerWidth <= UIHelper.SCREEN_XS,
         id: 'SIGN_OUT_LABEL',
         css: 'menu__login_button',
         label: STRINGS.SIGN_OUT,
@@ -73,11 +72,12 @@ UILayout.header =
       },
       { view: 'icon',
         icon: 'bars',
-        hidden: localStorage.getItem('authToken') == null,
+        hidden: true,
+        visible: false,
         id: 'menu_button',
         css: 'menu_button',
         click: function() {
-          if( $$('menu').config.hidden) {
+          if($$('menu').config.hidden) {
             $$('menu').show();
           }
           else

@@ -1616,7 +1616,7 @@ EntityTree.prototype.refresh = function() {
         self.requestRoots(true, {}, data.root);
       } else {
         // convert received data to treeview format and load its to entity_tree.
-        self.handleFormattedData(Identity.entityFromData(data));
+        self.handleFormattedData([Identity.entityFromData(data)]);
       }
     }, function(err) {
       UI.error(err);
@@ -2208,7 +2208,7 @@ UILayout.header =
       { width: 20, css: 'menu__spacer' },
       { view: 'button',
         width: 90,
-        hidden: localStorage.getItem('authToken') != null,
+        hidden: true,
         id: 'SIGN_IN_LABEL',
         css: 'menu__login_button',
         label: STRINGS.SIGN_IN,
@@ -2228,7 +2228,7 @@ UILayout.header =
       },
       { view: 'icon',
         icon: 'bars',
-        hidden: localStorage.getItem('authToken') == null,
+        hidden: true,
         id: 'menu_button',
         css: 'menu_button',
         click: function() {
@@ -2731,15 +2731,15 @@ UI = {
   pages: new Pages(),
 
 
-  DISABLED_ON_VIEW_ONLY: [
-    'ADD_ROOT_LABEL',
-    'ADD_ENTITY_LABEL',
-    'SAVE_ENTITY_LABEL',
-    'ADD_FIELD_LABEL',
-    'RUN_SCRIPT_LABEL',
-    'DELETE_ENTITY_SHORT_LABEL',
-    'menu_button'
-  ],
+  // DISABLED_ON_VIEW_ONLY: [
+  //   'ADD_ROOT_LABEL',
+  //   'ADD_ENTITY_LABEL',
+  //   'SAVE_ENTITY_LABEL',
+  //   'ADD_FIELD_LABEL',
+  //   'RUN_SCRIPT_LABEL',
+  //   'DELETE_ENTITY_SHORT_LABEL',
+  //   'menu_button'
+  // ],
 
   HIDDEN_ON_SMALL_SCREENS: [
     'my_data_panel__left_panel',
