@@ -81,15 +81,19 @@ EntityTree.getViewOnlyRoot = function() {
   return window.location.hash.substring(1).split('/')[0];
 };
 
-EntityTree.prototype.requestMyRoots = function(selectedId) {
+EntityTree.prototype.handleFormattedData = function(formattedData) {
+  $$('entity_tree').clearAll();
+  this.currentId = null;
+  $$('entity_tree').parse(formattedData);
+  $$('entity_tree').enable();
+};
+
+EntityTree.prototype.requestRoots = function(onlyMine, reqData, selectedId) {
+  var req = onlyMine ? 'entities.getMyRoots' : 'entities.getRoots';
   var self = this;
-  Mydataspace.request('entities.getMyRoots', {}, function(data) {
-    $$('entity_tree').clearAll();
-    self.currentId = null;
+  Mydataspace.request(req, reqData, function(data) {
     // convert received data to treeview format and load its to entity_tree.
-    var formattedData = data['roots'].map(Identity.entityFromData);
-    $$('entity_tree').parse(formattedData);
-    $$('entity_tree').enable();
+    self.handleFormattedData(data['roots'].map(Identity.entityFromData));
     if (selectedId) {
       self.setCurrentId(selectedId);
     }
@@ -97,29 +101,32 @@ EntityTree.prototype.requestMyRoots = function(selectedId) {
     UI.error(err);
     $$('entity_tree').enable();
   });
-}
+};
 
 EntityTree.prototype.refresh = function() {
   var self = this;
   $$('entity_tree').disable();
-  if (!Router.isEmpty()) {
-    Mydataspace.request('entities.get', { root: EntityTree.getViewOnlyRoot(), path: '' }, function(data) {
+  if (Router.isEmpty()) {
+    self.requestRoots(true, {});
+  } else if (Router.isSearch()) {
+    self.requestRoots(false, {
+      search: Router.getSearch()
+    });
+  } else if (Router.isRoot()) {
+    Mydataspace.request('entities.get', {
+      root: Router.getRoot(),
+      path: ''
+    }, function(data) {
       if (data.mine) {
-        self.requestMyRoots(data.root);
+        self.requestRoots(true, {}, data.root);
       } else {
-        $$('entity_tree').clearAll();
-        self.currentId = null;
         // convert received data to treeview format and load its to entity_tree.
-        var formattedData = Identity.entityFromData(data);
-        $$('entity_tree').parse([formattedData]);
-        $$('entity_tree').enable();
+        self.handleFormattedData(Identity.entityFromData(data));
       }
     }, function(err) {
       UI.error(err);
       $$('entity_tree').enable();
     });
-  } else {
-    self.requestMyRoots();
   }
 };
 
