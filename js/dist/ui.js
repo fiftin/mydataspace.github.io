@@ -714,7 +714,18 @@ EntityForm.prototype.setLogRecords = function(fields, ignoredFieldNames, addLabe
       }
       numberOfChildren++;
       var html = MDSCommon.textToHtml(field.value);
-      var recordClass = 'view__log_record--' + field.name.split('_')[1];
+      var status = field.name.split('_')[1];
+      var recordClass = 'view__log_record--' + status;
+      if (common.isBlank(html)) {
+        switch (status) {
+          case 'success':
+            html = 'Script executed successfully';
+            break;
+          case 'fail':
+            html = 'Script failed';
+            break;
+        }
+      }
       var divFd = $('<div class="view__log_record ' + recordClass + '">' +
                         html +
                     '</div>').appendTo(viewFields);
@@ -911,8 +922,19 @@ EntityForm.prototype.setTaskView = function(data) {
       if (statusClass) {
         document.getElementById('view__status').classList.add(statusClass);
       }
-      document.getElementById('view__status').innerText =
-        MDSCommon.findValueByName(data.fields, 'statusText');
+
+      var statusText = MDSCommon.findValueByName(data.fields, 'statusText');
+      if (!statusText) {
+          switch (status) {
+            case 'success':
+              statusText = 'Script executed successfully';
+              break;
+            case 'fail':
+              statusText = 'Script failed';
+              break;
+          }
+      }
+      document.getElementById('view__status').innerText = statusText;
     }
 
     var interval = MDSCommon.findValueByName(data.fields, 'interval') || 'paused';
