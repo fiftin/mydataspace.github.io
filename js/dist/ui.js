@@ -730,7 +730,10 @@ EntityForm.prototype.setLogRecords = function(fields, ignoredFieldNames, addLabe
 };
 
 
-EntityForm.prototype.setViewFields = function(fields, ignoredFieldNames, addLabelIfNoFieldsExists) {
+EntityForm.prototype.setViewFields = function(fields,
+                                              ignoredFieldNames,
+                                              addLabelIfNoFieldsExists,
+                                              comparer) {
   if (!Array.isArray(ignoredFieldNames)) {
     ignoredFieldNames = [];
   }
@@ -746,6 +749,9 @@ EntityForm.prototype.setViewFields = function(fields, ignoredFieldNames, addLabe
   } else {
     viewFields.innerHTML = '';
     var numberOfChildren = 0;
+    if (comparer) {
+        fields.sort(comparer);
+    }
     for (var i in fields) {
       var field = fields[i];
       if (ignoredFieldNames.indexOf(field.name) >= 0) {
@@ -782,9 +788,6 @@ EntityForm.prototype.setViewFields = function(fields, ignoredFieldNames, addLabe
   }
   return viewFields;
 };
-
-
-
 
 EntityForm.prototype.setRootView = function(data) {
   $.ajax({ url: '/fragments/root-view.html', method: 'get' }).then(function(html) {
@@ -857,8 +860,33 @@ EntityForm.prototype.setTaskView = function(data) {
     document.getElementById('view__title').innerText =
       MDSCommon.getPathName(data.path);
 
-    var viewFields = this.setViewFields(data.fields, ['status', 'statusText', 'interval']);
-
+    var viewFields =
+        this.setViewFields(data.fields,
+                           ['status', 'statusText', 'interval'],
+                           true,
+                           function(x, y) {
+                             if (x.name === 'main.js') {
+                                 return 1;
+                             }
+                             if (y.name === 'main.js') {
+                               return -1;
+                             }
+                             var isScriptX = /.*\.js$/.test(x.name);
+                             var isScriptY = /.*\.js$/.test(y.name);
+                             if (isScriptX && isScriptY || !isScriptX && !isScriptY) {
+                                 if (x < y) {
+                                     return -1;
+                                 } else if (x.name > y.name) {
+                                     return 1;
+                                 } else {
+                                     return 0;
+                                 }
+                             } if (isScriptX) {
+                                 return 1;
+                             } else {
+                                 return -1;
+                             }
+                           });
     var status = MDSCommon.findValueByName(data.fields, 'status');
     if (status != null) {
       var statusClass;
