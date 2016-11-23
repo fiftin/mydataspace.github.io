@@ -190,6 +190,14 @@ $view-field-value-max-height: 170px;
   font-size: 18px;
 }
 
+.view__log_record--fail {
+  color: #ce5545;
+  transition: color 0.5s;
+  text-align: center;
+  padding: 7px;
+  font-size: 18px;
+}
+
 .view__field {
   display: table-row;
   &:hover {

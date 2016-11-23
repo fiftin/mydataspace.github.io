@@ -118,6 +118,14 @@ $run-script-bg: #85b4d4; // #3498db;
   font-size: 18px;
 }
 
+.run_script__console_record--fail {
+  color: #ce5545;
+  transition: color 0.5s;
+  text-align: center;
+  padding: 7px;
+  font-size: 18px;
+}
+
 .run_script__button {
   font-size: 28px;
   padding: 10px 15px 5px 15px;
