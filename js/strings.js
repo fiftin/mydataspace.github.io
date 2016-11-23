@@ -88,7 +88,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     INT: 'Целое число',
     DESCRIPTION: 'Описание',
     NO_ENTITY: 'Нет полей',
-    ADD_ROOT: 'Новый корень',
+    ADD_ROOT: 'Нов. корень',
     ADD_FIELD: 'Нов. поле',
     REFRESH: 'Обновить',
     SAVE: 'Сохр.',

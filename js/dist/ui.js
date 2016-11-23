@@ -88,7 +88,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     INT: 'Целое число',
     DESCRIPTION: 'Описание',
     NO_ENTITY: 'Нет полей',
-    ADD_ROOT: 'Новый корень',
+    ADD_ROOT: 'Нов. корень',
     ADD_FIELD: 'Нов. поле',
     REFRESH: 'Обновить',
     SAVE: 'Сохр.',
@@ -2196,7 +2196,7 @@ UILayout.entityTree =
           icon: 'plus',
           id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
           hidden: UIHelper.isViewOnly(),
-          width: 130,
+          width: 110,
           click: function() {
             $$('add_root_window').show();
           }
@@ -2210,7 +2210,16 @@ UILayout.entityTree =
             UI.pages.refreshPage('data');
           }
         },
-        {}
+        {},
+        { view: 'button',
+          type: 'icon',
+          icon: 'search',
+          // id: 'ROOT_SEARCH_LABEL',
+          width: 30,
+          click: function() {
+            // UI.pages.refreshPage('data');
+          }
+        }
       ]
     },
     { view: 'tree',
@@ -2234,6 +2243,7 @@ UILayout.entityTree =
             UI.entityTree.setCurrentIdToFirst();
           }
           $$('entity_tree').select(UI.entityTree.getCurrentId());
+          $$('entity_tree').open(UI.entityTree.getCurrentId());
         },
         onBeforeOpen: function(id) {
           UI.entityTree.resolveChildren(id);
