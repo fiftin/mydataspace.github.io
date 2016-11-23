@@ -78,33 +78,46 @@ EntityTree.prototype.listen = function() {
 };
 
 EntityTree.getViewOnlyRoot = function() {
-  return window.location.hash.substring(1);
+  return window.location.hash.substring(1).split('/')[0];
 };
 
+EntityTree.prototype.requestMyRoots = function(selectedId) {
+  var self = this;
+  Mydataspace.request('entities.getMyRoots', {}, function(data) {
+    $$('entity_tree').clearAll();
+    // convert received data to treeview format and load its to entity_tree.
+    var formattedData = data['roots'].map(Identity.entityFromData);
+    $$('entity_tree').parse(formattedData);
+    $$('entity_tree').enable();
+    if (selectedId) {
+      self.setCurrentId(selectedId);
+    }
+  }, function(err) {
+    UI.error(err);
+    $$('entity_tree').enable();
+  });
+}
+
 EntityTree.prototype.refresh = function() {
+  var self = this;
   $$('entity_tree').disable();
   if (UIHelper.isViewOnly()) {
     Mydataspace.request('entities.get', { root: EntityTree.getViewOnlyRoot(), path: '' }, function(data) {
-      $$('entity_tree').clearAll();
-      // convert received data to treeview format and load its to entity_tree.
-      var formattedData = Identity.entityFromData(data);
-      $$('entity_tree').parse([formattedData]);
-      $$('entity_tree').enable();
+      if (data.mine) {
+        self.requestMyRoots(data.root);
+      } else {
+        $$('entity_tree').clearAll();
+        // convert received data to treeview format and load its to entity_tree.
+        var formattedData = Identity.entityFromData(data);
+        $$('entity_tree').parse([formattedData]);
+        $$('entity_tree').enable();
+      }
     }, function(err) {
       UI.error(err);
       $$('entity_tree').enable();
     });
   } else {
-    Mydataspace.request('entities.getMyRoots', {}, function(data) {
-      $$('entity_tree').clearAll();
-      // convert received data to treeview format and load its to entity_tree.
-      var formattedData = data['roots'].map(Identity.entityFromData);
-      $$('entity_tree').parse(formattedData);
-      $$('entity_tree').enable();
-    }, function(err) {
-      UI.error(err);
-      $$('entity_tree').enable();
-    });
+    self.requestMyRoots();
   }
 };
 

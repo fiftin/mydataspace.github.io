@@ -13,7 +13,7 @@ UILayout.entityTree =
           click: function() {
             $$('add_root_window').show();
           }
-        }, 
+        },
         { view: 'button',
           type: 'icon',
           icon: 'refresh',
@@ -43,7 +43,10 @@ UILayout.entityTree =
       },
       on: {
         onAfterLoad: function() {
-          $$('entity_tree').select(UI.entityTree.setCurrentIdToFirst());
+          if (!UI.entityTree.getCurrentId()) {
+            UI.entityTree.setCurrentIdToFirst();
+          }
+          $$('entity_tree').select(UI.entityTree.getCurrentId());
         },
         onBeforeOpen: function(id) {
           UI.entityTree.resolveChildren(id);
