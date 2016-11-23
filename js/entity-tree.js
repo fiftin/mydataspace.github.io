@@ -121,7 +121,7 @@ EntityTree.prototype.refresh = function() {
         self.requestRoots(true, {}, data.root);
       } else {
         // convert received data to treeview format and load its to entity_tree.
-        self.handleFormattedData(Identity.entityFromData(data));
+        self.handleFormattedData([Identity.entityFromData(data)]);
       }
     }, function(err) {
       UI.error(err);
