@@ -4,11 +4,28 @@ UILayout.entityTree =
   rows: [
     { view: 'toolbar',
       elements: [
+        { view: 'button',
+          type: 'icon',
+          icon: 'plus',
+          id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
+          width: 110,
+          click: function() {
+            $$('add_root_window').show();
+          }
+        },
+        // { view: 'button',
+        //   type: 'icon',
+        //   icon: 'refresh',
+        //   id: 'REFRESH_LABEL', label: STRINGS.REFRESH,
+        //   width: 100,
+        //   click: function() {
+        //     UI.pages.refreshPage('data');
+        //   }
+        // },
         { view: 'search',
           id: 'entity_tree__search',
           css: 'entity_list__search',
-          icon: 'close',
-          hidden: true,
+          align: 'center',
           placeholder: STRINGS.SEARCH_BY_ROOTS,
           on: {
             onKeyPress: function(code, e) {
@@ -24,48 +41,15 @@ UILayout.entityTree =
                 return false;
               }
             },
-            onSearchIconClick: function() {
-              window.location.href = '/#';
-              UI.pages.refreshPage('data');
-              $$('entity_tree__search').hide();
-              $$('ADD_ROOT_LABEL').show();
-              $$('REFRESH_LABEL').show();
-              $$('entity_tree__menu_sep').show();
-              $$('ROOT_SEARCH_LABEL').show();
-            }
-          }
-        },
-        { view: 'button',
-          type: 'icon',
-          icon: 'plus',
-          id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
-          width: 110,
-          click: function() {
-            $$('add_root_window').show();
-          }
-        },
-        { view: 'button',
-          type: 'icon',
-          icon: 'refresh',
-          id: 'REFRESH_LABEL', label: STRINGS.REFRESH,
-          width: 100,
-          click: function() {
-            UI.pages.refreshPage('data');
-          }
-        },
-        { id: 'entity_tree__menu_sep'
-        },
-        { view: 'button',
-          type: 'icon',
-          icon: 'search',
-          id: 'ROOT_SEARCH_LABEL',
-          width: 30,
-          click: function() {
-            $$('entity_tree__search').show();
-            $$('ADD_ROOT_LABEL').hide();
-            $$('REFRESH_LABEL').hide();
-            $$('entity_tree__menu_sep').hide();
-            $$('ROOT_SEARCH_LABEL').hide();
+            // onSearchIconClick: function() {
+            //   window.location.href = '/#';
+            //   UI.pages.refreshPage('data');
+            //   $$('entity_tree__search').hide();
+            //   $$('ADD_ROOT_LABEL').show();
+            //   $$('REFRESH_LABEL').show();
+            //   $$('entity_tree__menu_sep').show();
+            //   $$('ROOT_SEARCH_LABEL').show();
+            // }
           }
         }
       ]

@@ -13,20 +13,40 @@ UILayout.entityList =
             $$('add_entity_window').show();
           }
         },
+        // { id: 'entity_list__menu_sep'
+        // },
         { view: 'search',
           id: 'entity_list__search',
           css: 'entity_list__search',
           align: 'center',
-          placeholder: STRINGS.SEARCH,
+          // hidden: true,
+          // icon: 'close',
+          placeholder: STRINGS.SEARCH_BY_ENTITIES,
           on: {
             onKeyPress: function(code, e) {
               if (code === 13 && !e.ctrlKey && !e.shiftKey && !e.altKey) {
                 UI.entityList.refreshData();
                 return false;
               }
-            }
+            },
+            // onSearchIconClick: function() {
+            //   $$('entity_list__search').hide();
+            //   $$('entity_list__menu_sep').show();
+            //   $$('ENTITY_SEARCH_LABEL').show();
+            // }
           }
-        }
+        },
+        // { view: 'button',
+        //   type: 'icon',
+        //   icon: 'search',
+        //   id: 'ENTITY_SEARCH_LABEL',
+        //   width: 30,
+        //   click: function() {
+        //     $$('entity_list__search').show();
+        //     $$('entity_list__menu_sep').hide();
+        //     $$('ENTITY_SEARCH_LABEL').hide();
+        //   }
+        // }
       ]
     },
     { view: 'list',

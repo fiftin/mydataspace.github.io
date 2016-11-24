@@ -62,7 +62,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     REFRESH_ENTITY: 'Refresh',
     CANCEL_ENTITY: 'View',
     SIGN_OUT: 'Log Out',
-    SEARCH_BY_ROOTS: 'Search by all roots...'
+    SEARCH_BY_ROOTS: 'Search by roots...',
+    SEARCH_BY_ENTITIES: 'Filter by name...'
   },
   RU: {
     YES: 'Да',
@@ -128,7 +129,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     REFRESH_ENTITY: 'Обнов.',
     CANCEL_ENTITY: 'Пр.',
     SIGN_OUT: 'Выход',
-    SEARCH_BY_ROOTS: 'Поиск по всем...'
+    SEARCH_BY_ROOTS: 'Поиск по корням...',
+    SEARCH_BY_ENTITIES: 'Фильтр по имени...'
   }
 };
 

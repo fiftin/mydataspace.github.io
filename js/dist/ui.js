@@ -62,7 +62,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     REFRESH_ENTITY: 'Refresh',
     CANCEL_ENTITY: 'View',
     SIGN_OUT: 'Log Out',
-    SEARCH_BY_ROOTS: 'Search by all roots...'
+    SEARCH_BY_ROOTS: 'Search by roots...',
+    SEARCH_BY_ENTITIES: 'Filter by name...'
   },
   RU: {
     YES: 'Да',
@@ -128,7 +129,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     REFRESH_ENTITY: 'Обнов.',
     CANCEL_ENTITY: 'Пр.',
     SIGN_OUT: 'Выход',
-    SEARCH_BY_ROOTS: 'Поиск по всем...'
+    SEARCH_BY_ROOTS: 'Поиск по корням...',
+    SEARCH_BY_ENTITIES: 'Фильтр по имени...'
   }
 };
 
@@ -2238,11 +2240,28 @@ UILayout.entityTree =
   rows: [
     { view: 'toolbar',
       elements: [
+        { view: 'button',
+          type: 'icon',
+          icon: 'plus',
+          id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
+          width: 110,
+          click: function() {
+            $$('add_root_window').show();
+          }
+        },
+        // { view: 'button',
+        //   type: 'icon',
+        //   icon: 'refresh',
+        //   id: 'REFRESH_LABEL', label: STRINGS.REFRESH,
+        //   width: 100,
+        //   click: function() {
+        //     UI.pages.refreshPage('data');
+        //   }
+        // },
         { view: 'search',
           id: 'entity_tree__search',
           css: 'entity_list__search',
-          icon: 'close',
-          hidden: true,
+          align: 'center',
           placeholder: STRINGS.SEARCH_BY_ROOTS,
           on: {
             onKeyPress: function(code, e) {
@@ -2258,48 +2277,15 @@ UILayout.entityTree =
                 return false;
               }
             },
-            onSearchIconClick: function() {
-              window.location.href = '/#';
-              UI.pages.refreshPage('data');
-              $$('entity_tree__search').hide();
-              $$('ADD_ROOT_LABEL').show();
-              $$('REFRESH_LABEL').show();
-              $$('entity_tree__menu_sep').show();
-              $$('ROOT_SEARCH_LABEL').show();
-            }
-          }
-        },
-        { view: 'button',
-          type: 'icon',
-          icon: 'plus',
-          id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
-          width: 110,
-          click: function() {
-            $$('add_root_window').show();
-          }
-        },
-        { view: 'button',
-          type: 'icon',
-          icon: 'refresh',
-          id: 'REFRESH_LABEL', label: STRINGS.REFRESH,
-          width: 100,
-          click: function() {
-            UI.pages.refreshPage('data');
-          }
-        },
-        { id: 'entity_tree__menu_sep'
-        },
-        { view: 'button',
-          type: 'icon',
-          icon: 'search',
-          id: 'ROOT_SEARCH_LABEL',
-          width: 30,
-          click: function() {
-            $$('entity_tree__search').show();
-            $$('ADD_ROOT_LABEL').hide();
-            $$('REFRESH_LABEL').hide();
-            $$('entity_tree__menu_sep').hide();
-            $$('ROOT_SEARCH_LABEL').hide();
+            // onSearchIconClick: function() {
+            //   window.location.href = '/#';
+            //   UI.pages.refreshPage('data');
+            //   $$('entity_tree__search').hide();
+            //   $$('ADD_ROOT_LABEL').show();
+            //   $$('REFRESH_LABEL').show();
+            //   $$('entity_tree__menu_sep').show();
+            //   $$('ROOT_SEARCH_LABEL').show();
+            // }
           }
         }
       ]
@@ -2365,20 +2351,40 @@ UILayout.entityList =
             $$('add_entity_window').show();
           }
         },
+        // { id: 'entity_list__menu_sep'
+        // },
         { view: 'search',
           id: 'entity_list__search',
           css: 'entity_list__search',
           align: 'center',
-          placeholder: STRINGS.SEARCH,
+          // hidden: true,
+          // icon: 'close',
+          placeholder: STRINGS.SEARCH_BY_ENTITIES,
           on: {
             onKeyPress: function(code, e) {
               if (code === 13 && !e.ctrlKey && !e.shiftKey && !e.altKey) {
                 UI.entityList.refreshData();
                 return false;
               }
-            }
+            },
+            // onSearchIconClick: function() {
+            //   $$('entity_list__search').hide();
+            //   $$('entity_list__menu_sep').show();
+            //   $$('ENTITY_SEARCH_LABEL').show();
+            // }
           }
-        }
+        },
+        // { view: 'button',
+        //   type: 'icon',
+        //   icon: 'search',
+        //   id: 'ENTITY_SEARCH_LABEL',
+        //   width: 30,
+        //   click: function() {
+        //     $$('entity_list__search').show();
+        //     $$('entity_list__menu_sep').hide();
+        //     $$('ENTITY_SEARCH_LABEL').hide();
+        //   }
+        // }
       ]
     },
     { view: 'list',
