@@ -216,7 +216,7 @@ EntityForm.prototype.setRootView = function(data) {
     }
 
     if (MDSCommon.isBlank(description)) {
-      if (MDSCommon.isBlank(data.fields) && MDSCommon.isBlank(readme)) {
+      if (MDSCommon.isBlank(readme)) {
         document.getElementById('view__description').innerHTML = '<i>No description or README provided.</i>';
       } else {
         document.getElementById('view__description').style.display = 'none';

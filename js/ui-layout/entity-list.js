@@ -13,14 +13,23 @@ UILayout.entityList =
             $$('add_entity_window').show();
           }
         },
-        // { id: 'entity_list__menu_sep'
-        // },
+        { view: 'button',
+          type: 'icon',
+          icon: 'refresh',
+          id: 'REFRESH_LABEL', label: STRINGS.REFRESH,
+          width: 100,
+          click: function() {
+            UI.entityList.refreshData();
+          }
+        },
+        { id: 'entity_list__menu_sep'
+        },
         { view: 'search',
           id: 'entity_list__search',
           css: 'entity_list__search',
           align: 'center',
-          // hidden: true,
-          // icon: 'close',
+          hidden: true,
+          icon: 'close',
           placeholder: STRINGS.SEARCH_BY_ENTITIES,
           on: {
             onKeyPress: function(code, e) {
@@ -29,24 +38,26 @@ UILayout.entityList =
                 return false;
               }
             },
-            // onSearchIconClick: function() {
-            //   $$('entity_list__search').hide();
-            //   $$('entity_list__menu_sep').show();
-            //   $$('ENTITY_SEARCH_LABEL').show();
-            // }
+            onSearchIconClick: function() {
+              $$('entity_list__search').setValue('');
+              $$('entity_list__search').hide();
+              $$('entity_list__menu_sep').show();
+              $$('ENTITY_SEARCH_LABEL').show();
+              UI.entityList.refreshData();
+            }
           }
         },
-        // { view: 'button',
-        //   type: 'icon',
-        //   icon: 'search',
-        //   id: 'ENTITY_SEARCH_LABEL',
-        //   width: 30,
-        //   click: function() {
-        //     $$('entity_list__search').show();
-        //     $$('entity_list__menu_sep').hide();
-        //     $$('ENTITY_SEARCH_LABEL').hide();
-        //   }
-        // }
+        { view: 'button',
+          type: 'icon',
+          icon: 'search',
+          id: 'ENTITY_SEARCH_LABEL',
+          width: 30,
+          click: function() {
+            $$('entity_list__search').show();
+            $$('entity_list__menu_sep').hide();
+            $$('ENTITY_SEARCH_LABEL').hide();
+          }
+        }
       ]
     },
     { view: 'list',
