@@ -103,7 +103,6 @@ input:read-only {
   border-color: #ccc !important;
   opacity: 0.6;
   transition: opacity 0.3s;
-  border-radius: 4px !important;
 }
 
 .menu__login_button button:hover,
@@ -508,8 +507,8 @@ label {
 .webix_el_textarea textarea {
   background-color: #fafafa;
   border: 1px solid #ddd;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
-  border-radius: 4px;
+  box-shadow: $input-box-shadow;
+  border-radius: $input-border-radius;
 }
 
 .webix_el_search input:focus,
@@ -518,7 +517,7 @@ label {
 .webix_el_colorpicker input:focus,
 .webix_el_datepicker input:focus,
 .webix_el_textarea textarea:focus {
-  border-radius: 4px;
+  border-radius: $input-border-radius;
 }
 
 .webix_el_combo span.webix_input_icon,
@@ -526,8 +525,8 @@ label {
 .webix_el_datepicker span.webix_input_icon,
 .webix_el_colorpicker span.webix_input_icon,
 .webix_el_dbldatepicker span.webix_input_icon {
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
+  border-top-right-radius: $input-border-radius;
+  border-bottom-right-radius: $input-border-radius;
 }
 
 .webix_button input, .webix_popup_button div {
