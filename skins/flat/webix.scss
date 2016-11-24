@@ -2887,8 +2887,7 @@ div.webix_modal_cover {
   font-size: $font-size;
   padding: auto 6px;
   font-family: $font-family;
-  border: 1px solid $brand-bg;
-  border-bottom: 1px solid $brand-bg;
+  border: 1px solid transparent;
   outline: none;
   -webkit-appearance: none;
 }
@@ -2919,8 +2918,7 @@ div.webix_modal_cover {
   font-size: $font-size;
   padding: auto 6px;
   font-family: $font-family;
-  border: 1px solid $brand-bg;
-  border-bottom: 1px solid $brand-bg;
+  border: 1px solid transparent;
   outline: none;
   padding: 0px;
   border: 0px;
@@ -2933,8 +2931,7 @@ div.webix_modal_cover {
   outline: none;
   background: #27ae60;
   color: #ffffff;
-  border-color: #27ae60;
-  border-bottom: 1px solid $brand-bg;
+  border-color: transparent;
   box-shadow: none;
 }
 .webix_el_button .webixtype_danger {
@@ -7564,7 +7561,7 @@ div.webix_item_tab.webix_selected {
 .webix_segment_0:hover,
 .webix_segment_1:hover,
 .webix_segment_N:hover {
-  background-color: #268fd5;
+  background-color: $webix-btn-defalut-bg-hover;
 }
 .webixbutton:active,
 .webixtype_base:active,

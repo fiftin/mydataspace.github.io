@@ -183,6 +183,11 @@ EntityForm.prototype.setViewFields = function(fields,
 EntityForm.prototype.setRootView = function(data) {
   $.ajax({ url: '/fragments/root-view.html', method: 'get' }).then(function(html) {
     var view = document.getElementById('view');
+    var websiteURL = MDSCommon.findValueByName(data.fields, 'websiteURL');
+    var description = MDSCommon.findValueByName(data.fields, 'description');
+    var tags = MDSCommon.findValueByName(data.fields, 'tags');
+    var readme = MDSCommon.findValueByName(data.fields, 'readme');
+
     view.innerHTML = html;
     document.getElementById('view__overview_image').src =
       MDSCommon.findValueByName(data.fields, 'avatar') || '/images/app.png';
@@ -190,10 +195,13 @@ EntityForm.prototype.setRootView = function(data) {
     document.getElementById('view__title').innerText =
       MDSCommon.findValueByName(data.fields, 'name') || MDSCommon.getPathName(data.root);
 
-    document.getElementById('view__tags').innerText =
-      MDSCommon.findValueByName(data.fields, 'tags') || '';
+    document.getElementById('view__tags').innerText = tags || '';
 
-    var websiteURL = MDSCommon.findValueByName(data.fields, 'websiteURL');
+    if (tags || websiteURL) {
+      document.getElementsByClassName('view__overview_image_wrap')[0].classList.add('view__overview_image_wrap--large');
+      document.getElementById('view__overview_image').classList.add('view__overview_image--large');
+    }
+
     if (MDSCommon.isBlank(websiteURL)) {
       document.getElementById('view__websiteURL').style.display = 'none';
     } else {
@@ -202,13 +210,16 @@ EntityForm.prototype.setRootView = function(data) {
       document.getElementById('view__websiteURL').href = websiteURL;
     }
 
-    var description = MDSCommon.findValueByName(data.fields, 'description');
     if (MDSCommon.isBlank(description)) {
-      document.getElementById('view__description').style.display = 'none';
+      if (MDSCommon.isBlank(data.fields) && MDSCommon.isBlank(readme)) {
+        document.getElementById('view__description').innerHTML = '<i>No description or README provided.</i>';
+      } else {
+        document.getElementById('view__description').style.display = 'none';
+      }
     } else {
       document.getElementById('view__description').innerText = description;
     }
-    var readme = MDSCommon.findValueByName(data.fields, 'readme');
+
     if (MDSCommon.isBlank(readme)) {
       document.getElementById('view__content').style.display = 'none';
     } else {

@@ -67,9 +67,12 @@ $view-field-value-max-height: 170px;
 }
 
 .view__overview_image {
+  width: 35px;
+  height: 35px;
+}
+.view__overview_image--large {
   width: 75px;
   height: 75px;
-  border-radius: 10px;
 }
 
 .view__overview_icon {
