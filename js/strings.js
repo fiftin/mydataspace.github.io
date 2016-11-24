@@ -56,7 +56,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     NOTHING: 'Nothing',
     READ_AND_VIEW_CHILDREN: 'Read and view children',
     PROTO_IS_FIXED: 'Is Fixed',
-    MAX_NUMBER_OF_CHILDREN: 'Children limit',
+    MAX_NUMBER_OF_CHILDREN: 'Children Limit',
     EDIT_ENTITY: 'Edit',
     SAVE_ENTITY: 'Save',
     REFRESH_ENTITY: 'Refresh',
@@ -65,6 +65,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SEARCH_BY_ROOTS: 'Search by roots...',
     SEARCH_BY_ENTITIES: 'Filter by name...',
     ROOT_FIELDS: {
+      avatar: 'Icon',
       name: 'Name',
       tags: 'Tags',
       description: 'Description',
@@ -72,6 +73,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       readme: 'README'
     },
     ROOT_FIELD_PLACEHOLDERS: {
+      avatar: 'Icon of your root',
       name: 'Human readable name of your root',
       tags: 'Keywords describing root',
       description: 'Main about root',

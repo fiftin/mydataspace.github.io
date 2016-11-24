@@ -621,7 +621,7 @@ EntityForm.prototype.addRootField = function(data) {
     throw new Error('Field with this name already exists');
   }
   $$('NO_FIELDS_LABEL').hide();
-  $$('entity_form').addView({
+  var view = {
     id: 'entity_form__' + data.name,
     css: 'entity_form__field',
     cols: [
@@ -635,24 +635,60 @@ EntityForm.prototype.addRootField = function(data) {
         id: 'entity_form__' + data.name + '_type',
         name: 'fields.' + data.name + '.type',
         hidden: true
-      },
-      { view: 'text',
-        label: '<div style="visibility: hidden">fake</div>' +
-               '<div class="entity_form__field_label">' +
-                STRINGS.ROOT_FIELDS[data.name] +
-               '</div>' +
-               '<div class="entity_form__field_label_ellipse_right"></div>' +
-               '<div class="entity_form__field_label_ellipse"></div>',
-        labelWidth: UIHelper.LABEL_WIDTH,
-        name: 'fields.' + data.name + '.value',
-        id: 'entity_form__' + data.name + '_value',
-        value: data.value,
-        height: 38,
-        css: 'entity_form__text_label',
-        placeholder: STRINGS.ROOT_FIELD_PLACEHOLDERS[data.name]
       }
     ]
-  });
+  };
+  if (data.name === 'avatar') {
+    // view.cols.push({
+    //   view: 'label',
+    //   label: STRINGS.ROOT_FIELDS[data.name],
+    //   width: UIHelper.LABEL_WIDTH,
+    //   align: 'left'
+    // });
+    // view.cols.push({
+    //   borderless: true,
+    //   css: 'entity_form__root_img_template',
+    //   template: '<img id="entity_form__root_img" class="entity_form__root_img" src="' + data.value + '" alt="Icon" />',
+    //   width: 50
+    // });
+    // view.cols.push({ width: 20 });
+    // view.cols.push({
+    //   view: 'button',
+    //   label: 'Upload',
+    //   width: 100,
+    //   on: {
+    //     onClick: function() {
+    //     }
+    //   }
+    // });
+    // view.cols.push({ width: 20 });
+    // view.cols.push({
+    //   view: 'button',
+    //   label: 'Remove',
+    //   width: 100,
+    //   on: {
+    //     onClick: function() {
+    //     }
+    //   }
+    // });
+  } else {
+    view.cols.push({ view: 'text',
+                     label: '<div style="visibility: hidden">fake</div>' +
+                            '<div class="entity_form__field_label">' +
+                             STRINGS.ROOT_FIELDS[data.name] +
+                            '</div>' +
+                            '<div class="entity_form__field_label_ellipse_right"></div>' +
+                            '<div class="entity_form__field_label_ellipse"></div>',
+                     labelWidth: UIHelper.LABEL_WIDTH,
+                     name: 'fields.' + data.name + '.value',
+                     id: 'entity_form__' + data.name + '_value',
+                     value: data.value,
+                     height: 38,
+                     css: 'entity_form__text_label',
+                     placeholder: STRINGS.ROOT_FIELD_PLACEHOLDERS[data.name]
+                  });
+  }
+  $$('entity_form').addView(view);
 };
 
 EntityForm.prototype.addField = function(data, setDirty) {
