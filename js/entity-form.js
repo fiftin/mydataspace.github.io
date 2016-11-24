@@ -197,10 +197,15 @@ EntityForm.prototype.setRootView = function(data) {
 
     document.getElementById('view__tags').innerText = tags || '';
 
-    if (tags || websiteURL) {
+
+    if (tags && websiteURL) {
       document.getElementsByClassName('view__overview_image_wrap')[0].classList.add('view__overview_image_wrap--large');
       document.getElementById('view__overview_image').classList.add('view__overview_image--large');
+    } else if (tags || websiteURL) {
+      document.getElementsByClassName('view__overview_image_wrap')[0].classList.add('view__overview_image_wrap--medium');
+      document.getElementById('view__overview_image').classList.add('view__overview_image--medium');
     }
+
 
     if (MDSCommon.isBlank(websiteURL)) {
       document.getElementById('view__websiteURL').style.display = 'none';
