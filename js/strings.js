@@ -56,14 +56,28 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     NOTHING: 'Nothing',
     READ_AND_VIEW_CHILDREN: 'Read and view children',
     PROTO_IS_FIXED: 'Is Fixed',
-    MAX_NUMBER_OF_CHILDREN: 'Childrens',
+    MAX_NUMBER_OF_CHILDREN: 'Children limit',
     EDIT_ENTITY: 'Edit',
     SAVE_ENTITY: 'Save',
     REFRESH_ENTITY: 'Refresh',
     CANCEL_ENTITY: 'View',
     SIGN_OUT: 'Log Out',
     SEARCH_BY_ROOTS: 'Search by roots...',
-    SEARCH_BY_ENTITIES: 'Filter by name...'
+    SEARCH_BY_ENTITIES: 'Filter by name...',
+    ROOT_FIELDS: {
+      name: 'Name',
+      tags: 'Tags',
+      description: 'Description',
+      websiteURL: 'Website URL',
+      readme: 'README'
+    },
+    ROOT_FIELD_PLACEHOLDERS: {
+      name: 'Human readable name of your root',
+      tags: 'Keywords describing root',
+      description: 'Main about root',
+      websiteURL: 'Website where data of root are used',
+      readme: 'Markdown-formatted text about the root'
+    }
   },
   RU: {
     YES: 'Да',

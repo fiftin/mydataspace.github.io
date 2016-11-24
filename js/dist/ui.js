@@ -56,14 +56,28 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     NOTHING: 'Nothing',
     READ_AND_VIEW_CHILDREN: 'Read and view children',
     PROTO_IS_FIXED: 'Is Fixed',
-    MAX_NUMBER_OF_CHILDREN: 'Childrens',
+    MAX_NUMBER_OF_CHILDREN: 'Children limit',
     EDIT_ENTITY: 'Edit',
     SAVE_ENTITY: 'Save',
     REFRESH_ENTITY: 'Refresh',
     CANCEL_ENTITY: 'View',
     SIGN_OUT: 'Log Out',
     SEARCH_BY_ROOTS: 'Search by roots...',
-    SEARCH_BY_ENTITIES: 'Filter by name...'
+    SEARCH_BY_ENTITIES: 'Filter by name...',
+    ROOT_FIELDS: {
+      name: 'Name',
+      tags: 'Tags',
+      description: 'Description',
+      websiteURL: 'Website URL',
+      readme: 'README'
+    },
+    ROOT_FIELD_PLACEHOLDERS: {
+      name: 'Human readable name of your root',
+      tags: 'Keywords describing root',
+      description: 'Main about root',
+      websiteURL: 'Website where data of root are used',
+      readme: 'Markdown-formatted text about the root'
+    }
   },
   RU: {
     YES: 'Да',
@@ -1089,7 +1103,11 @@ EntityForm.prototype.setData = function(data) {
   };
   this.clear();
   $$('entity_form').setValues(formData);
-  this.addFields(data.fields);
+  if (MDSCommon.isBlank(data.path)) { // root entity
+    this.addRootFields(data.fields);
+  } else {
+    this.addFields(data.fields);
+  }
   this.setClean();
   $$('entity_view').hide();
   $$('entity_form').show();
@@ -1221,6 +1239,91 @@ EntityForm.prototype.addFields = function(fields, setDirty) {
   for (var i in fields) {
     this.addField(fields[i], setDirty);
   }
+};
+
+EntityForm.prototype.addRootFields = function(fields, setDirty) {
+  var ROOT_FIELDS = [
+    'avatar',
+    'name',
+    'tags',
+    'websiteURL',
+    'description',
+    'readme'
+  ];
+
+  fields.sort(function(x, y) {
+    var xIndex = ROOT_FIELDS.indexOf(x.name);
+    var yIndex = ROOT_FIELDS.indexOf(y.name);
+    if (xIndex >= 0 && yIndex < 0) {
+      return -1;
+    }
+    if (xIndex < 0 && yIndex >= 0) {
+      return 1;
+    }
+    if (xIndex < 0 && yIndex < 0) {
+      if (x.name < y.name) {
+        return -1;
+      } else if (x.name > y.name) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+    if (xIndex < yIndex) {
+      return -1;
+    } else if (xIndex > yIndex) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+
+  for (var i in fields) {
+    if (ROOT_FIELDS.indexOf(fields[i].name) >= 0) {
+      this.addRootField(fields[i], setDirty);
+    } else {
+      this.addField(fields[i], setDirty);
+    }
+  }
+};
+
+EntityForm.prototype.addRootField = function(data) {
+  if (typeof $$('entity_form__' + data.name) !== 'undefined') {
+    throw new Error('Field with this name already exists');
+  }
+  $$('NO_FIELDS_LABEL').hide();
+  $$('entity_form').addView({
+    id: 'entity_form__' + data.name,
+    css: 'entity_form__field',
+    cols: [
+      { view: 'text',
+        value: data.name,
+        name: 'fields.' + data.name + '.name',
+        hidden: true
+      },
+      { view: 'text',
+        value: data.type,
+        id: 'entity_form__' + data.name + '_type',
+        name: 'fields.' + data.name + '.type',
+        hidden: true
+      },
+      { view: 'text',
+        label: '<div style="visibility: hidden">fake</div>' +
+               '<div class="entity_form__field_label">' +
+                STRINGS.ROOT_FIELDS[data.name] +
+               '</div>' +
+               '<div class="entity_form__field_label_ellipse_right"></div>' +
+               '<div class="entity_form__field_label_ellipse"></div>',
+        labelWidth: UIHelper.LABEL_WIDTH,
+        name: 'fields.' + data.name + '.value',
+        id: 'entity_form__' + data.name + '_value',
+        value: data.value,
+        height: 38,
+        css: 'entity_form__text_label',
+        placeholder: STRINGS.ROOT_FIELD_PLACEHOLDERS[data.name]
+      }
+    ]
+  });
 };
 
 EntityForm.prototype.addField = function(data, setDirty) {
