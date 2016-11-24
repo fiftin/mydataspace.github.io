@@ -26,10 +26,14 @@ $search-hover-color: $search-border-color;
 
 $border-radius: 0;
 
-$input-bg: white;
-$input-border-color: red;
+$webix-input-color: black;
+$input-bg: #fafafa;
+$input-border-color: #ddd;
+$input-border-focused-color: $input-border-color;
 $input-border-radius: $border-radius;
-$input-box-shadow: none; // inset 0 1px 2px rgba(0, 0, 0, 0.075);
+// $input-box-shadow: none; // inset 0 1px 2px rgba(0, 0, 0, 0.075);
+
+$webix-font-size-lg: 17px;
 
 @import "../skins/flat/webix.scss";
 @import "admin";

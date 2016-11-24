@@ -48,7 +48,7 @@ UILayout.entityForm =
       {},
       { view: 'button',
         type: 'icon',
-        icon: 'trash-o',
+        icon: 'remove',
         id: 'DELETE_ENTITY_SHORT_LABEL', label: STRINGS.DELETE_ENTITY_SHORT,
         width: 80,
         click: function() {

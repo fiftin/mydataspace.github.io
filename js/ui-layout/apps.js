@@ -90,7 +90,7 @@ UILayout.apps =
           {},
           { view: 'button',
             type: 'icon',
-            icon: 'trash-o',
+            icon: 'remove',
             id: 'DELETE_LABEL', label: STRINGS.DELETE,
             width: 80,
             click: function() {

@@ -1291,7 +1291,7 @@ EntityForm.prototype.addField = function(data, setDirty) {
       { view: 'button',
         type: 'icon',
         css: 'entity_form__field_delete',
-        icon: 'trash-o',
+        icon: 'remove',
         width: 25,
         click: function() {
           this.deleteField(data.name);
@@ -2485,7 +2485,7 @@ UILayout.entityForm =
       {},
       { view: 'button',
         type: 'icon',
-        icon: 'trash-o',
+        icon: 'remove',
         id: 'DELETE_ENTITY_SHORT_LABEL', label: STRINGS.DELETE_ENTITY_SHORT,
         width: 80,
         click: function() {
@@ -2680,7 +2680,7 @@ UILayout.apps =
           {},
           { view: 'button',
             type: 'icon',
-            icon: 'trash-o',
+            icon: 'remove',
             id: 'DELETE_LABEL', label: STRINGS.DELETE,
             width: 80,
             click: function() {
