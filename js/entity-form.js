@@ -621,6 +621,47 @@ EntityForm.prototype.addRootField = function(data) {
     throw new Error('Field with this name already exists');
   }
   $$('NO_FIELDS_LABEL').hide();
+  if (data.name === 'avatar') {
+    $$('entity_form').addView({
+      id: 'entity_form__' + data.name,
+      css: 'entity_form__field',
+      cols: [
+        { view: 'text',
+          value: data.name,
+          name: 'fields.' + data.name + '.name',
+          hidden: true
+        },
+        { view: 'text',
+          value: data.type,
+          id: 'entity_form__' + data.name + '_type',
+          name: 'fields.' + data.name + '.type',
+          hidden: true
+        },
+        { view: 'text',
+          value: data.type,
+          id: 'entity_form__' + data.name + '_type',
+          name: 'fields.' + data.name + '.type',
+          hidden: true
+        },
+        { view: 'text',
+          label: '<div style="visibility: hidden">fake</div>' +
+                 '<div class="entity_form__field_label">' +
+                  STRINGS.ROOT_FIELDS[data.name] +
+                 '</div>' +
+                 '<div class="entity_form__field_label_ellipse_right"></div>' +
+                 '<div class="entity_form__field_label_ellipse"></div>',
+          labelWidth: UIHelper.LABEL_WIDTH,
+          name: 'fields.' + data.name + '.value',
+          id: 'entity_form__' + data.name + '_value',
+          value: data.value,
+          height: 38,
+          css: 'entity_form__text_label',
+          placeholder: STRINGS.ROOT_FIELD_PLACEHOLDERS[data.name]
+        }
+      ]
+    });
+    return;
+  }
   $$('entity_form').addView({
     id: 'entity_form__' + data.name,
     css: 'entity_form__field',

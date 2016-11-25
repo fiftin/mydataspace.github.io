@@ -121,14 +121,6 @@ UILayout.entityForm =
         name: 'maxNumberOfChildren',
         labelWidth: UIHelper.LABEL_WIDTH
       },
-      // { view: 'textarea',
-      //   css: 'entity_form__description',
-      //   height: 100,
-      //   id: 'DESCRIPTION_LABEL_1',
-      //   label: STRINGS.DESCRIPTION,
-      //   name: 'description',
-      //   labelWidth: UIHelper.LABEL_WIDTH
-      // },
       { view: 'checkbox',
         id: 'PROTO_IS_FIXED_LABEL',
         label: STRINGS.PROTO_IS_FIXED,
