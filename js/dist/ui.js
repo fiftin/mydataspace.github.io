@@ -3185,9 +3185,9 @@ UI = {
         }
         var values = Object.keys(fields).map(function(key) { return fields[key]; });
         values.sort(function(a, b) {
-          if (a.type === 'j' && b.type === 'u') {
+          if (a.type === 'j' && b.type !== 'j') {
             return 1;
-          } else if (a.type === 'u' && b.type === 'j') {
+          } else if (a.type !== 'j' && b.type === 'j') {
             return -1;
           } else if (a.type === 'j' && b.type === 'j') {
             if (a.name === 'main.js') {
