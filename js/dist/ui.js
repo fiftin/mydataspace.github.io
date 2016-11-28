@@ -260,7 +260,6 @@ UIHelper = {
   ENTITY_TREE_DUMMY_ID: 'dummy_483__4734_47e4',
   ENTITY_LIST_SHOW_MORE_ID: 'show_more_47384_3338222',
 
-
   ENTITY_ICONS: {
       'root': 'database',
       'protos': 'cubes',
@@ -272,6 +271,7 @@ UIHelper = {
       'diamond': 'resources',
       'file-image-o': 'resource'
   },
+  
   /**
    * User can only view entities. All buttons for manipulations is hidden in
    * this mode.
@@ -305,7 +305,7 @@ UIHelper = {
             return 'proto';
           }
           if (path.startsWith('resources/')) {
-            return 'proto';
+            return 'resource';
           }
     }
     return 'none';
@@ -3190,9 +3190,9 @@ UI = {
           } else if (a.type === 'u' && b.type === 'j') {
             return -1;
           } else if (a.type === 'j' && b.type === 'j') {
-            if (a.name.toUpperCase() === '__MAIN__' || a.name === 'main.js') {
+            if (a.name === 'main.js') {
               return 1;
-            } else if (b.name.toUpperCase() === '__MAIN__' || a.name === 'main.js') {
+            } else if (b.name === 'main.js') {
               return -1;
             }
             return 0;
