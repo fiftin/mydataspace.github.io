@@ -290,7 +290,7 @@ UIHelper = {
       case 'protos':
       case 'resources':
       case 'tasks':
-        return 'path';
+        return path;
       default:
           if (/^tasks\/[^\/]+$/.test(path)) {
               return 'task';
