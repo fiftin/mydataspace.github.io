@@ -23,6 +23,8 @@ UIHelper = {
       'task': 'file-code-o',
       'logs': 'history',
       'log': 'file-movie-o',
+      'diamond': 'resources',
+      'file-image-o': 'resource'
   },
   /**
    * User can only view entities. All buttons for manipulations is hidden in
@@ -40,9 +42,9 @@ UIHelper = {
       case '':
         return 'root';
       case 'protos':
-        return 'protos';
+      case 'resources':
       case 'tasks':
-        return 'tasks';
+        return 'path';
       default:
           if (/^tasks\/[^\/]+$/.test(path)) {
               return 'task';
@@ -53,7 +55,10 @@ UIHelper = {
           if (/^tasks\/[^\/]+\/logs\/[^\/]+$/.test(path)) {
               return 'log';
           }
-          if (path.startsWith('protos') && depth === 2) {
+          if (path.startsWith('protos/') && depth === 2) {
+            return 'proto';
+          }
+          if (path.startsWith('resources/')) {
             return 'proto';
           }
     }

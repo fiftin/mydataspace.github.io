@@ -525,3 +525,18 @@ input {
   font-size: $webix-font-size-lg !important;
   border-bottom: 1px solid red;
 }
+
+.entity_form__root_img_template {
+  .webix_template {
+    padding: 3px 2px !important;
+  }
+}
+
+.entity_form__root_img {
+  width: 32px;
+  height: 32px;
+}
+
+.entity_form__field_label_avatar {
+  position: relative;
+}

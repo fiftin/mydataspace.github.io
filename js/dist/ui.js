@@ -65,6 +65,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SEARCH_BY_ROOTS: 'Search by roots...',
     SEARCH_BY_ENTITIES: 'Filter by name...',
     ROOT_FIELDS: {
+      avatar: 'Icon',
       name: 'Name',
       tags: 'Tags',
       description: 'Description',
@@ -268,6 +269,8 @@ UIHelper = {
       'task': 'file-code-o',
       'logs': 'history',
       'log': 'file-movie-o',
+      'diamond': 'resources',
+      'file-image-o': 'resource'
   },
   /**
    * User can only view entities. All buttons for manipulations is hidden in
@@ -285,9 +288,9 @@ UIHelper = {
       case '':
         return 'root';
       case 'protos':
-        return 'protos';
+      case 'resources':
       case 'tasks':
-        return 'tasks';
+        return 'path';
       default:
           if (/^tasks\/[^\/]+$/.test(path)) {
               return 'task';
@@ -298,7 +301,10 @@ UIHelper = {
           if (/^tasks\/[^\/]+\/logs\/[^\/]+$/.test(path)) {
               return 'log';
           }
-          if (path.startsWith('protos') && depth === 2) {
+          if (path.startsWith('protos/') && depth === 2) {
+            return 'proto';
+          }
+          if (path.startsWith('resources/')) {
             return 'proto';
           }
     }
@@ -1292,6 +1298,67 @@ EntityForm.prototype.addRootField = function(data) {
     throw new Error('Field with this name already exists');
   }
   $$('NO_FIELDS_LABEL').hide();
+
+  if (data.name === 'avatar') {
+    $$('entity_form').addView({
+      id: 'entity_form__' + data.name,
+      css: 'entity_form__field',
+      cols: [
+        { view: 'text',
+          value: data.name,
+          name: 'fields.' + data.name + '.name',
+          hidden: true
+        },
+        { view: 'text',
+          value: data.type,
+          id: 'entity_form__' + data.name + '_type',
+          name: 'fields.' + data.name + '.type',
+          hidden: true
+        },
+        {
+          view: 'label',
+          css: 'entity_form__field_label_avatar',
+          label: '<div style="visibility: hidden">fake</div>' +
+                 '<div class="entity_form__field_label">' +
+                  STRINGS.ROOT_FIELDS[data.name] +
+                 '</div>' +
+                 '<div class="entity_form__field_label_ellipse_right"></div>' +
+                 '<div class="entity_form__field_label_ellipse"></div>',
+          width: UIHelper.LABEL_WIDTH,
+          name: 'fields.' + data.name + '.value',
+          id: 'entity_form__' + data.name + '_value',
+          value: data.value,
+          height: 38,
+        },
+        {
+          borderless: true,
+          css: 'entity_form__root_img_template',
+          template: '<img id="entity_form__root_img" class="entity_form__root_img" src="' + data.value + '" alt="Icon" />',
+          width: 32
+        },
+        { width: 8 },
+        {
+          view: 'button',
+          label: 'Upload',
+          on: {
+            onClick: function() {
+            }
+          }
+        },
+        { width: 6 },
+        {
+          view: 'button',
+          label: 'Remove',
+          on: {
+            onClick: function() {
+            }
+          }
+        }
+      ]
+    });
+    return;
+  }
+
   $$('entity_form').addView({
     id: 'entity_form__' + data.name,
     css: 'entity_form__field',
@@ -2688,14 +2755,6 @@ UILayout.entityForm =
         name: 'maxNumberOfChildren',
         labelWidth: UIHelper.LABEL_WIDTH
       },
-      // { view: 'textarea',
-      //   css: 'entity_form__description',
-      //   height: 100,
-      //   id: 'DESCRIPTION_LABEL_1',
-      //   label: STRINGS.DESCRIPTION,
-      //   name: 'description',
-      //   labelWidth: UIHelper.LABEL_WIDTH
-      // },
       { view: 'checkbox',
         id: 'PROTO_IS_FIXED_LABEL',
         label: STRINGS.PROTO_IS_FIXED,

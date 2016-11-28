@@ -621,6 +621,7 @@ EntityForm.prototype.addRootField = function(data) {
     throw new Error('Field with this name already exists');
   }
   $$('NO_FIELDS_LABEL').hide();
+
   if (data.name === 'avatar') {
     $$('entity_form').addView({
       id: 'entity_form__' + data.name,
@@ -637,31 +638,50 @@ EntityForm.prototype.addRootField = function(data) {
           name: 'fields.' + data.name + '.type',
           hidden: true
         },
-        { view: 'text',
-          value: data.type,
-          id: 'entity_form__' + data.name + '_type',
-          name: 'fields.' + data.name + '.type',
-          hidden: true
-        },
-        { view: 'text',
+        {
+          view: 'label',
+          css: 'entity_form__field_label_avatar',
           label: '<div style="visibility: hidden">fake</div>' +
                  '<div class="entity_form__field_label">' +
                   STRINGS.ROOT_FIELDS[data.name] +
                  '</div>' +
                  '<div class="entity_form__field_label_ellipse_right"></div>' +
                  '<div class="entity_form__field_label_ellipse"></div>',
-          labelWidth: UIHelper.LABEL_WIDTH,
+          width: UIHelper.LABEL_WIDTH,
           name: 'fields.' + data.name + '.value',
           id: 'entity_form__' + data.name + '_value',
           value: data.value,
           height: 38,
-          css: 'entity_form__text_label',
-          placeholder: STRINGS.ROOT_FIELD_PLACEHOLDERS[data.name]
+        },
+        {
+          borderless: true,
+          css: 'entity_form__root_img_template',
+          template: '<img id="entity_form__root_img" class="entity_form__root_img" src="' + data.value + '" alt="Icon" />',
+          width: 32
+        },
+        { width: 8 },
+        {
+          view: 'button',
+          label: 'Upload',
+          on: {
+            onClick: function() {
+            }
+          }
+        },
+        { width: 6 },
+        {
+          view: 'button',
+          label: 'Remove',
+          on: {
+            onClick: function() {
+            }
+          }
         }
       ]
     });
     return;
   }
+
   $$('entity_form').addView({
     id: 'entity_form__' + data.name,
     css: 'entity_form__field',

@@ -65,6 +65,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SEARCH_BY_ROOTS: 'Search by roots...',
     SEARCH_BY_ENTITIES: 'Filter by name...',
     ROOT_FIELDS: {
+      avatar: 'Icon',
       name: 'Name',
       tags: 'Tags',
       description: 'Description',
