@@ -1,40 +1,7 @@
 ---
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
-$header-height: 53px;
-$brand-bg: #85b4d4; // #3498db;
-$brand-text-color: white; // #3498db;
-$text-color: #666666;
-$header-bg: rgb(62, 62, 62); // f2efea - light brown; // fdfdfd - light; // f1f9ff - light blue
-$header-text-color: rgba(255, 255, 255, 0.5); // #f2efea - light brown; //#fdfdfd - light;
-$toolbar-bg: #f0f3f5;
-$border-color: #dddddd;
-$border-color-light: #ebebeb;
-$tree-bg: $toolbar-bg;
-$shadow-color: white;
-$show-more-bg: #ffff9a;
-$disabled-bg: $toolbar-bg;
-$font-family: Ubuntu, Tahoma;
-$font-size: 14px;
-$button-border-bottom: #6b8ba0;
-$selected-bg: #27ae60;
-
-$search-border-color: #ccc;
-$search-bg: white;
-$search-border-radius: 20px;
-$search-hover-color: $search-border-color;
-
-$border-radius: 0;
-
-$webix-input-color: black;
-$input-bg: #fafafa;
-$input-border-color: #ddd;
-$input-border-focused-color: $input-border-color;
-$input-border-radius: $border-radius;
-// $input-box-shadow: none; // inset 0 1px 2px rgba(0, 0, 0, 0.075);
-$webix-btn-defalut-bg-hover: $brand-bg;
-$webix-font-size-lg: 17px;
-
+@import 'vars';
 @import "../skins/flat/webix.scss";
 @import "admin";
 @import "view";

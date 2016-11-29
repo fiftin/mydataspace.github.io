@@ -1,8 +1,8 @@
 webix.protoUI({
-	name:"ace-editor",
+	name: "ace-editor",
 	defaults:{
-		mode:"javascript",
-		theme:"monokai"
+		mode: "javascript",
+		theme: "chrome"
 	},
 	$init:function(config){
 		this.$ready.push(this._render_cm_editor);

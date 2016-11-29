@@ -82,6 +82,7 @@ body {
 
 @import "run_script";
 @import "../vendor/bootstrap/stylesheets/bootstrap";
+@import "vars";
 @import "bootstrap_overrides";
 @import "auth_buttons";
 @import "header";
@@ -91,6 +92,7 @@ body {
 @import "safari";
 @import "page";
 @import "spinner";
+@import "ace";
 
 .mission {
   text-align: center;

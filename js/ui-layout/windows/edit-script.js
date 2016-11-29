@@ -83,8 +83,8 @@ UILayout.windows.editScript = {
       },
       { view: 'ace-editor',
         id: 'edit_script_window__editor',
-        // theme: 'kr_theme',
         mode: 'javascript',
+        show_hidden: true,
         on: {
           onReady: function(editor) {
             editor.getSession().setTabSize(2);

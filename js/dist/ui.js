@@ -154,10 +154,10 @@ var LANGUAGE = window.localStorage && window.localStorage.getItem('language') ||
 var STRINGS = STRINGS_ON_DIFFERENT_LANGUAGES[LANGUAGE];
 
 webix.protoUI({
-	name:"ace-editor",
+	name: "ace-editor",
 	defaults:{
-		mode:"javascript",
-		theme:"monokai"
+		mode: "javascript",
+		theme: "chrome"
 	},
 	$init:function(config){
 		this.$ready.push(this._render_cm_editor);
@@ -2252,8 +2252,8 @@ UILayout.windows.editScript = {
       },
       { view: 'ace-editor',
         id: 'edit_script_window__editor',
-        // theme: 'kr_theme',
         mode: 'javascript',
+        show_hidden: true,
         on: {
           onReady: function(editor) {
             editor.getSession().setTabSize(2);
