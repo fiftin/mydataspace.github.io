@@ -22,10 +22,10 @@ UIHelper = {
       'task': 'file-code-o',
       'logs': 'history',
       'log': 'file-movie-o',
-      'diamond': 'resources',
-      'file-image-o': 'resource'
+      'resources': 'cloud-upload',
+      'resource': 'file-image-o'
   },
-  
+
   /**
    * User can only view entities. All buttons for manipulations is hidden in
    * this mode.
