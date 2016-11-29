@@ -742,6 +742,7 @@ EntityForm.prototype.setSelectedId = function(id) {
     return;
   }
   this.selectedId = id;
+  $$('edit_script_window').hide();
   this.refresh();
 };
 
@@ -1120,10 +1121,10 @@ EntityForm.prototype.setData = function(data) {
 };
 
 EntityForm.prototype.refresh = function() {
-  var self = this;
-  var isWithMeta = self.isEditing();
+  const self = this;
+  const isWithMeta = self.isEditing();
   $$('entity_form').disable();
-  var req = !isWithMeta ? 'entities.get' : 'entities.getWithMeta';
+  const req = !isWithMeta ? 'entities.get' : 'entities.getWithMeta';
   Mydataspace.request(req, Identity.dataFromId(self.selectedId), function(data) {
     if (!isWithMeta) {
       self.setView(data);
@@ -1144,6 +1145,15 @@ EntityForm.prototype.refresh = function() {
       $$('entity_form').enable();
     }
     self.emitLoaded(data);
+    if ($$('edit_script_window').isVisible() && UI.entityForm.editScriptFieldId != null) {
+      const editedField = $$(UI.entityForm.editScriptFieldId);
+      if (editedField != null) {
+        $$('edit_script_window__editor').setValue(editedField.getValue());
+        $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
+      } else {
+        UI.entityForm.editScriptFieldId = null;
+      }
+    }
   }, function(err) {
     UI.error(err);
     $$('entity_form').enable();
@@ -1218,7 +1228,6 @@ EntityForm.prototype.save = function() {
   if (typeof dirtyData.childPrototype !== 'undefined') {
     dirtyData.childPrototype = Identity.dataFromId(dirtyData.childPrototype);
   }
-  console.log(dirtyData);
   Mydataspace.request('entities.change', dirtyData, function(res) {
     this.refresh();
     $$('entity_form').enable();
@@ -1450,6 +1459,7 @@ EntityForm.prototype.addField = function(data, setDirty) {
             if (data.type === 'j') {
               this.editScriptFieldId = 'entity_form__' + data.name + '_value';
               $$('edit_script_window__editor').setValue($$(UI.entityForm.editScriptFieldId).getValue());
+              $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
               if (!$$('edit_script_window').isVisible()) {
                 $$('edit_script_window').show();
               }
@@ -2217,26 +2227,64 @@ UILayout.windows.editScript = {
             type: 'icon',
             icon: 'align-justify',
             width: 70,
-            label: 'Text'
+            label: 'Text',
+            id: 'edit_script_window__toolbar_text_button',
+            click: function() {
+              $$('edit_script_window__toolbar_text_button').getNode().classList.add('webix_el_button--active');
+              $$('edit_script_window__toolbar_md_button').getNode().classList.remove('webix_el_button--active');
+              $$('edit_script_window__toolbar_html_button').getNode().classList.remove('webix_el_button--active');
+              $$('edit_script_window__toolbar_js_button').getNode().classList.remove('webix_el_button--active');
+              const editor = $$('edit_script_window__editor').getEditor();
+              editor.getSession().setMode('ace/mode/text');
+            }
           },
           { view: 'button',
             type: 'icon',
             icon: 'bookmark',
             width: 110,
-            label: 'Markdown'
+            label: 'Markdown',
+            id: 'edit_script_window__toolbar_md_button',
+            click: function() {
+              $$('edit_script_window__toolbar_text_button').getNode().classList.remove('webix_el_button--active');
+              $$('edit_script_window__toolbar_md_button').getNode().classList.add('webix_el_button--active');
+              $$('edit_script_window__toolbar_html_button').getNode().classList.remove('webix_el_button--active');
+              $$('edit_script_window__toolbar_js_button').getNode().classList.remove('webix_el_button--active');
+              const editor = $$('edit_script_window__editor').getEditor();
+              editor.getSession().setMode('ace/mode/markdown');
+            }
           },
           { view: 'button',
             type: 'icon',
             icon: 'code',
             width: 80,
-            label: 'HTML'
+            label: 'HTML',
+            id: 'edit_script_window__toolbar_html_button',
+            click: function() {
+              $$('edit_script_window__toolbar_text_button').getNode().classList.remove('webix_el_button--active');
+              $$('edit_script_window__toolbar_md_button').getNode().classList.remove('webix_el_button--active');
+              $$('edit_script_window__toolbar_html_button').getNode().classList.add('webix_el_button--active');
+              $$('edit_script_window__toolbar_js_button').getNode().classList.remove('webix_el_button--active');
+              const editor = $$('edit_script_window__editor').getEditor();
+              editor.getSession().setMode('ace/mode/html');
+              editor.getValue();
+            }
           },
           { view: 'button',
             type: 'icon',
             icon: 'cog',
             width: 110,
             label: 'JavaScript',
-            css:   'webix_el_button--active'
+            css:   'webix_el_button--active',
+            id: 'edit_script_window__toolbar_js_button',
+            click: function() {
+              $$('edit_script_window__toolbar_text_button').getNode().classList.remove('webix_el_button--active');
+              $$('edit_script_window__toolbar_md_button').getNode().classList.remove('webix_el_button--active');
+              $$('edit_script_window__toolbar_html_button').getNode().classList.remove('webix_el_button--active');
+              $$('edit_script_window__toolbar_js_button').getNode().classList.add('webix_el_button--active');
+              const editor = $$('edit_script_window__editor').getEditor();
+              editor.getSession().setMode('ace/mode/javascript');
+              editor.getValue();
+            }
           },
           {},
           { view: 'button',
@@ -2259,9 +2307,7 @@ UILayout.windows.editScript = {
             editor.getSession().setTabSize(2);
             editor.getSession().setUseSoftTabs(true);
             editor.setReadOnly(true);
-            // editor.getSession().setUseWrapMode(true);
             editor.getSession().setUseWorker(false);
-            // editor.execCommand('find')
             editor.commands.addCommand({
               name: 'save',
               bindKey: { win: 'Ctrl-S' },

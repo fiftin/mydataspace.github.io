@@ -48,26 +48,64 @@ UILayout.windows.editScript = {
             type: 'icon',
             icon: 'align-justify',
             width: 70,
-            label: 'Text'
+            label: 'Text',
+            id: 'edit_script_window__toolbar_text_button',
+            click: function() {
+              $$('edit_script_window__toolbar_text_button').getNode().classList.add('webix_el_button--active');
+              $$('edit_script_window__toolbar_md_button').getNode().classList.remove('webix_el_button--active');
+              $$('edit_script_window__toolbar_html_button').getNode().classList.remove('webix_el_button--active');
+              $$('edit_script_window__toolbar_js_button').getNode().classList.remove('webix_el_button--active');
+              const editor = $$('edit_script_window__editor').getEditor();
+              editor.getSession().setMode('ace/mode/text');
+            }
           },
           { view: 'button',
             type: 'icon',
             icon: 'bookmark',
             width: 110,
-            label: 'Markdown'
+            label: 'Markdown',
+            id: 'edit_script_window__toolbar_md_button',
+            click: function() {
+              $$('edit_script_window__toolbar_text_button').getNode().classList.remove('webix_el_button--active');
+              $$('edit_script_window__toolbar_md_button').getNode().classList.add('webix_el_button--active');
+              $$('edit_script_window__toolbar_html_button').getNode().classList.remove('webix_el_button--active');
+              $$('edit_script_window__toolbar_js_button').getNode().classList.remove('webix_el_button--active');
+              const editor = $$('edit_script_window__editor').getEditor();
+              editor.getSession().setMode('ace/mode/markdown');
+            }
           },
           { view: 'button',
             type: 'icon',
             icon: 'code',
             width: 80,
-            label: 'HTML'
+            label: 'HTML',
+            id: 'edit_script_window__toolbar_html_button',
+            click: function() {
+              $$('edit_script_window__toolbar_text_button').getNode().classList.remove('webix_el_button--active');
+              $$('edit_script_window__toolbar_md_button').getNode().classList.remove('webix_el_button--active');
+              $$('edit_script_window__toolbar_html_button').getNode().classList.add('webix_el_button--active');
+              $$('edit_script_window__toolbar_js_button').getNode().classList.remove('webix_el_button--active');
+              const editor = $$('edit_script_window__editor').getEditor();
+              editor.getSession().setMode('ace/mode/html');
+              editor.getValue();
+            }
           },
           { view: 'button',
             type: 'icon',
             icon: 'cog',
             width: 110,
             label: 'JavaScript',
-            css:   'webix_el_button--active'
+            css:   'webix_el_button--active',
+            id: 'edit_script_window__toolbar_js_button',
+            click: function() {
+              $$('edit_script_window__toolbar_text_button').getNode().classList.remove('webix_el_button--active');
+              $$('edit_script_window__toolbar_md_button').getNode().classList.remove('webix_el_button--active');
+              $$('edit_script_window__toolbar_html_button').getNode().classList.remove('webix_el_button--active');
+              $$('edit_script_window__toolbar_js_button').getNode().classList.add('webix_el_button--active');
+              const editor = $$('edit_script_window__editor').getEditor();
+              editor.getSession().setMode('ace/mode/javascript');
+              editor.getValue();
+            }
           },
           {},
           { view: 'button',
@@ -90,9 +128,7 @@ UILayout.windows.editScript = {
             editor.getSession().setTabSize(2);
             editor.getSession().setUseSoftTabs(true);
             editor.setReadOnly(true);
-            // editor.getSession().setUseWrapMode(true);
             editor.getSession().setUseWorker(false);
-            // editor.execCommand('find')
             editor.commands.addCommand({
               name: 'save',
               bindKey: { win: 'Ctrl-S' },

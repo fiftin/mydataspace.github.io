@@ -65,6 +65,7 @@ EntityForm.prototype.setSelectedId = function(id) {
     return;
   }
   this.selectedId = id;
+  $$('edit_script_window').hide();
   this.refresh();
 };
 
@@ -443,10 +444,10 @@ EntityForm.prototype.setData = function(data) {
 };
 
 EntityForm.prototype.refresh = function() {
-  var self = this;
-  var isWithMeta = self.isEditing();
+  const self = this;
+  const isWithMeta = self.isEditing();
   $$('entity_form').disable();
-  var req = !isWithMeta ? 'entities.get' : 'entities.getWithMeta';
+  const req = !isWithMeta ? 'entities.get' : 'entities.getWithMeta';
   Mydataspace.request(req, Identity.dataFromId(self.selectedId), function(data) {
     if (!isWithMeta) {
       self.setView(data);
@@ -467,6 +468,15 @@ EntityForm.prototype.refresh = function() {
       $$('entity_form').enable();
     }
     self.emitLoaded(data);
+    if ($$('edit_script_window').isVisible() && UI.entityForm.editScriptFieldId != null) {
+      const editedField = $$(UI.entityForm.editScriptFieldId);
+      if (editedField != null) {
+        $$('edit_script_window__editor').setValue(editedField.getValue());
+        $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
+      } else {
+        UI.entityForm.editScriptFieldId = null;
+      }
+    }
   }, function(err) {
     UI.error(err);
     $$('entity_form').enable();
@@ -541,7 +551,6 @@ EntityForm.prototype.save = function() {
   if (typeof dirtyData.childPrototype !== 'undefined') {
     dirtyData.childPrototype = Identity.dataFromId(dirtyData.childPrototype);
   }
-  console.log(dirtyData);
   Mydataspace.request('entities.change', dirtyData, function(res) {
     this.refresh();
     $$('entity_form').enable();
@@ -773,6 +782,7 @@ EntityForm.prototype.addField = function(data, setDirty) {
             if (data.type === 'j') {
               this.editScriptFieldId = 'entity_form__' + data.name + '_value';
               $$('edit_script_window__editor').setValue($$(UI.entityForm.editScriptFieldId).getValue());
+              $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
               if (!$$('edit_script_window').isVisible()) {
                 $$('edit_script_window').show();
               }
