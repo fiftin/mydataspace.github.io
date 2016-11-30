@@ -245,7 +245,10 @@ var MDSCommon = {
   getPathName: function(path) {
     var i = path.lastIndexOf('/');
     if (i === -1) {
-      return path;
+      i = path.lastIndexOf('\\');
+      if (i === -1) {
+        return path;
+      }
       // throw new Error('Path has no child');
     }
     return path.substr(i + 1);
@@ -257,7 +260,10 @@ var MDSCommon = {
     }
     var i = path.lastIndexOf('/');
     if (i === -1) {
-      return '';
+      i = path.lastIndexOf('\\');
+      if (i === -1) {
+        return path;
+      }
     }
     return path.slice(0, i);
   },

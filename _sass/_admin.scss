@@ -537,3 +537,25 @@ input {
 .entity_form__field_label_avatar {
   position: relative;
 }
+
+.entity_form__root_img_upload_template {
+  .webix_template {
+    padding: 3px 2px !important;
+  }
+}
+
+.entity_form__root_img_upload_lbl {
+  margin: 0;
+  display: block;
+  height: 32px;
+  width: 100%;
+  background: $brand-bg;
+  color: white;
+  text-align: center;
+  padding-top: 6px;
+  cursor: pointer;
+  input[type="file"] {
+    position: fixed;
+    top: -1000px;
+  }
+}

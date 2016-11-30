@@ -190,9 +190,11 @@ EntityForm.prototype.setRootView = function(data) {
     var readme = MDSCommon.findValueByName(data.fields, 'readme');
 
     view.innerHTML = html;
-    document.getElementById('view__overview_image').src =
-      MDSCommon.findValueByName(data.fields, 'avatar') || '/images/app.png';
-
+    var ava = MDSCommon.findValueByName(data.fields, 'avatar');
+    if (MDSCommon.isPresent(ava)) {
+      ava = Mydataspace.options.apiURL + '/files/' + ava + '.png';
+    }
+    document.getElementById('view__overview_image').src = ava || '/images/app.png';
     document.getElementById('view__title').innerText =
       MDSCommon.findValueByName(data.fields, 'name') || MDSCommon.getPathName(data.root);
 
@@ -625,6 +627,35 @@ EntityForm.prototype.addRootFields = function(fields, setDirty) {
   }
 };
 
+EntityForm.prototype.onUploadAvatar = function(event) {
+  var formData = new FormData();
+  var file = event.target.files[0];
+  if (!file.type.match('image.*')) {
+    alert('Only images');
+    return;
+  }
+  formData.append('root', Identity.dataFromId(this.selectedId).root);
+  formData.append('type', 'avatar');
+  formData.append('file', file);
+  $.ajax({
+    url: Mydataspace.options.apiURL + '/v1/entities/upload',
+    type: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    cache: false,
+    headers: {
+      authorization: 'Bearer ' + localStorage.getItem('authToken')
+    }
+  }).done(function(res) {
+    var entityName = res.resources[0];
+    $$('entity_form__root_avatar_value').setValue(entityName);
+    $('#entity_form__root_img').prop('src', Mydataspace.options.apiURL + '/files/' + entityName + '.png');
+  }).fail(function(err) {
+    console.log(err);
+  });
+};
+
 EntityForm.prototype.addRootField = function(data) {
   if (typeof $$('entity_form__' + data.name) !== 'undefined') {
     throw new Error('Field with this name already exists');
@@ -647,6 +678,12 @@ EntityForm.prototype.addRootField = function(data) {
           name: 'fields.' + data.name + '.type',
           hidden: true
         },
+        { view: 'text',
+          value: data.value,
+          name: 'fields.' + data.name + '.value',
+          id: 'entity_form__root_avatar_value',
+          hidden: true
+        },
         {
           view: 'label',
           css: 'entity_form__field_label_avatar',
@@ -657,25 +694,26 @@ EntityForm.prototype.addRootField = function(data) {
                  '<div class="entity_form__field_label_ellipse_right"></div>' +
                  '<div class="entity_form__field_label_ellipse"></div>',
           width: UIHelper.LABEL_WIDTH,
-          name: 'fields.' + data.name + '.value',
-          id: 'entity_form__' + data.name + '_value',
-          value: data.value,
           height: 38,
         },
         {
           borderless: true,
           css: 'entity_form__root_img_template',
-          template: '<img id="entity_form__root_img" class="entity_form__root_img" src="' + data.value + '" alt="Icon" />',
+          template: '<img id="entity_form__root_img" class="entity_form__root_img" src="' +
+                      Mydataspace.options.apiURL + '/files/' + data.value + '.png' +
+                    '" alt="Icon" />',
           width: 32
         },
         { width: 8 },
         {
-          view: 'button',
-          label: 'Upload',
-          on: {
-            onClick: function() {
-            }
-          }
+          borderless: true,
+          css: 'entity_form__root_img_upload_template',
+          template: '<label class="entity_form__root_img_upload_lbl">' +
+                    ' <input type="file" ' +
+                    '        onchange="UI.entityForm.onUploadAvatar(event);"' +
+                    '        required />' +
+                    ' <span>Upload</span>' +
+                    '</label>',
         },
         { width: 6 },
         {
