@@ -7,8 +7,8 @@
 {% endif %}
 {% if jekyll.environment == "local" %}
   {% assign client_id = "my-data.space" %}
-  {% assign api_url = "http://localhost:8080" %}
-  {% assign api_websocket_url = "http://localhost:8080" %}
+  {% assign api_url = "https://localhost:8443" %}
+  {% assign api_websocket_url = "https://localhost:8443" %}
 {% else %}
   {% assign client_id = site.client_id %}
   {% assign api_url = site.api_url %}
@@ -32,10 +32,10 @@
   <script src="/vendor/tether/tether.js"></script>
 
   <meta name="theme-color" content="black" />
-  <meta property="og:url"                content="http://my-data.space" />
+  <meta property="og:url"                content="https://my-data.space" />
   <meta property="og:type"               content="article" />
   <meta property="og:title"              content="{{ site.title }}" />
   <meta property="og:description"        content="{{ site.data[page.language].slogan }}" />
-  <meta property="og:image"              content="http://my-data.space/images/logo_social.jpg" />
+  <meta property="og:image"              content="https://my-data.space/images/logo_social.jpg" />
 
 </head>

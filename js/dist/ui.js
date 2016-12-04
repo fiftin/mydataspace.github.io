@@ -869,7 +869,7 @@ EntityForm.prototype.setRootView = function(data) {
     view.innerHTML = html;
     var ava = MDSCommon.findValueByName(data.fields, 'avatar');
     if (MDSCommon.isPresent(ava)) {
-      ava = Mydataspace.options.apiURL + '/files/' + ava + '.png';
+      ava = Mydataspace.options.apiURL + '/avatars/sm/' + ava + '.png';
     }
     document.getElementById('view__overview_image').src = ava || '/images/app.png';
     document.getElementById('view__title').innerText =
@@ -1327,7 +1327,7 @@ EntityForm.prototype.onUploadAvatar = function(event) {
   }).done(function(res) {
     var entityName = res.resources[0];
     $$('entity_form__root_avatar_value').setValue(entityName);
-    $('#entity_form__root_img').prop('src', Mydataspace.options.apiURL + '/files/' + entityName + '.png');
+    $('#entity_form__root_img').prop('src', Mydataspace.options.apiURL + '/avatars/sm/' + entityName + '.png');
   }).fail(function(err) {
     console.log(err);
   });
@@ -1377,7 +1377,7 @@ EntityForm.prototype.addRootField = function(data) {
           borderless: true,
           css: 'entity_form__root_img_template',
           template: '<img id="entity_form__root_img" class="entity_form__root_img" src="' +
-                      Mydataspace.options.apiURL + '/files/' + data.value + '.png' +
+                      Mydataspace.options.apiURL + '/avatars/sm/' + data.value + '.png' +
                     '" alt="Icon" />',
           width: 32
         },
