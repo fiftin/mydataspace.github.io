@@ -6,7 +6,7 @@
   <body>
     <div id="bootstrap" class="landing landing--{{ page.language }}">
       <script type="text/javascript">
-        if (localStorage.getItem('authToken') != null ||
+        if (isValidJWT(localStorage.getItem('authToken')) ||
             window.location.hash != null && window.location.hash !== '' && window.location.hash !== '#') {
           document.getElementById('bootstrap').style.display = 'none';
         }
@@ -32,7 +32,7 @@
 
     <div id="webix">
       <script type="text/javascript">
-        if (localStorage.getItem('authToken') == null &&
+        if (!isValidJWT(localStorage.getItem('authToken')) &&
             !(window.location.hash != null && window.location.hash !== '' && window.location.hash !== '#')) {
           document.getElementById('webix').style.display = 'none';
         }
@@ -93,7 +93,9 @@
         simpleFormat: false,
         connected: function() {
           UI.initConnection();
-          UI.refresh();
+          if (isValidJWT(localStorage.getItem('authToken'))) {
+              UI.refresh();
+          }
         }
       });
       Mydataspace.authProviders.facebook.title = STRINGS.CONNECT_TO_FACEBOOK;

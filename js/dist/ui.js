@@ -364,8 +364,31 @@ UIHelper = {
     return newWindow;
   },
 
-  getRoute: function() {
+  isValidJWT: function(token) {
+    return isValidJWT(token);
+    // try {
+    //   var json = UIHelper.parseJWT(token);
+    // } catch(e) {
+    //   return false;
+    // }
+    // return json.exp < Date.now();
+  },
 
+  parseJWT: function(token) {
+    return parseJWT(token);
+    // if (MDSCommon.isBlank(token)) {
+    //     throw new Error('JWT can\t be empty');
+    // }
+    // var parts = token.split('.');
+    // var base64Url = parts[1];
+    // if (base64Url == null) {
+    //     throw new Error('JWT has Illegal format');
+    // }
+    // var base64 = base64Url.replace(/\-/g, '+').replace(/_/g, '/');
+    // // About niceties of window.btoa method.
+    // // https://developer.mozilla.org/ru/docs/Web/API/WindowBase64/btoa
+    // var json = decodeURIComponent(escape(window.atob(base64)));
+    // return JSON.parse(json);
   }
 };
 
@@ -2483,13 +2506,14 @@ UILayout.header =
         id: 'SIGN_IN_LABEL',
         css: 'menu__login_button',
         label: STRINGS.SIGN_IN,
+        hidden: UIHelper.isValidJWT(localStorage.getItem('authToken')),
         click: function() {
           $('#signin_modal').modal('show');
         }
       },
       { view: 'icon',
         icon: 'bars',
-        hidden: true,
+        hidden: !UIHelper.isValidJWT(localStorage.getItem('authToken')),
         id: 'menu_button',
         css: 'menu_button',
         click: function() {
