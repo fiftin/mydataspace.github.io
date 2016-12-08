@@ -93,7 +93,9 @@
         simpleFormat: false,
         connected: function() {
           UI.initConnection();
-          UI.refresh();
+          if (isValidJWT(localStorage.getItem('authToken'))) {
+              UI.refresh();
+          }
         }
       });
       Mydataspace.authProviders.facebook.title = STRINGS.CONNECT_TO_FACEBOOK;
