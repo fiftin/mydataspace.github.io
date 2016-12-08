@@ -40,7 +40,7 @@
 
   <script>
     function parseJWT(token) {
-      if (MDSCommon.isBlank(token)) {
+      if (token == null || token === '') {
           throw new Error('JWT can\t be empty');
       }
       var parts = token.split('.');
