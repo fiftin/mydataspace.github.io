@@ -2576,11 +2576,11 @@ UILayout.entityTree =
       template:function(obj, common) {
         var path = Identity.dataFromId(obj.id).path;
         if (path === '') { // root
-          var avatar = MDSCommon.findValueByName(obj.associatedData.fields, 'avatar');
+          var ava = MDSCommon.findValueByName(obj.associatedData.fields, 'avatar');
           var name = MDSCommon.findValueByName(obj.associatedData.fields, 'name') || obj.value;
           var description =
             MDSCommon.findValueByName(obj.associatedData.fields, 'description');
-          var avatarURL = avatar == null ? '/images/app.png' : '/avatars/' + avatar + '.png';
+          var avatarURL = ava == null ? '/images/app.png' :  Mydataspace.options.apiURL + '/avatars/sm/' + ava + '.png';
           var folder =
             '<div class="webix_tree_folder_open entity_tree__root_icon_wrap">' +
               '<img class="entity_tree__root_icon" src="' + avatarURL + '" />' +
