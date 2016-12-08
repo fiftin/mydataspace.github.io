@@ -13,15 +13,6 @@ UILayout.entityTree =
             $$('add_root_window').show();
           }
         },
-        // { view: 'button',
-        //   type: 'icon',
-        //   icon: 'refresh',
-        //   id: 'REFRESH_LABEL', label: STRINGS.REFRESH,
-        //   width: 100,
-        //   click: function() {
-        //     UI.pages.refreshPage('data');
-        //   }
-        // },
         { view: 'search',
           id: 'entity_tree__search',
           css: 'entity_list__search',
@@ -40,16 +31,7 @@ UILayout.entityTree =
                 UI.pages.refreshPage('data');
                 return false;
               }
-            },
-            // onSearchIconClick: function() {
-            //   window.location.href = '/#';
-            //   UI.pages.refreshPage('data');
-            //   $$('entity_tree__search').hide();
-            //   $$('ADD_ROOT_LABEL').show();
-            //   $$('REFRESH_LABEL').show();
-            //   $$('entity_tree__menu_sep').show();
-            //   $$('ROOT_SEARCH_LABEL').show();
-            // }
+            }
           }
         }
       ]
@@ -59,10 +41,22 @@ UILayout.entityTree =
       gravity: 0.4,
       select: true,
       template:function(obj, MDSCommon) {
-        var icon =
-          UIHelper.getIconByPath(Identity.dataFromId(obj.id).path,
-                                 obj.$count === 0,
-                                 obj.open);
+        var path = Identity.dataFromId(obj.id).path;
+        // if (path === '') { // root
+        //   var avatarURL = '/avatars/' + MDSCommon.findByName(obj.fields, 'avatar') + '.png';
+        //   folder =
+        //     '<div class="webix_tree_folder_open fa fa-' + icon + '">' +
+        //       '<img class="entity_tree__root_icon" src="' + avatarURL + '" />' +
+        //     '</div>';
+        //   return MDSCommon.icon(obj, MDSCommon) +
+        //          folder +
+        //          '<span>' + obj.value + '</span>' +
+        //          '<span>' + obj.value + '</span>';
+        // }
+        var icon = UIHelper.getIconByPath(path,
+                                          obj.$count === 0,
+                                          obj.open);
+        ;
         folder =
           '<div class="webix_tree_folder_open fa fa-' + icon + '"></div>';
         return MDSCommon.icon(obj, MDSCommon) +
