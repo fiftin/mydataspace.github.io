@@ -2590,7 +2590,7 @@ UILayout.entityTree =
                  '<div class="entity_tree__root_wrap">' +
                    '<span class="entity_tree__root">' +
                      '<div class="entity_tree__root_name">' + name + '</div>' +
-                     (description == null ? '' : '<div class="entity_tree__root_description">' + obj.value + '</div>') +
+                     (description == null ? '' : '<div class="entity_tree__root_description">' + description + '</div>') +
                    '</span>' +
                  '</div>';
         }
