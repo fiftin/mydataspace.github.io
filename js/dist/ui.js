@@ -529,6 +529,7 @@ var Identity = {
       id: entityId,
       value: Identity.nameFromData(data),
       count: data.numberOfChildren,
+      associatedData: data,
       data: children
     };
   },
@@ -1821,7 +1822,9 @@ EntityTree.prototype.listen = function() {
     }
 
     if (entityId === this.getCurrentId()) { // Select other item if selected item is deleted.
-      let nextId = $$('entity_tree').getPrevSiblingId(entityId) || $$('entity_tree').getNextSiblingId(entityId) || $$('entity_tree').getParentId(entityId);
+      let nextId = $$('entity_tree').getPrevSiblingId(entityId) ||
+                   $$('entity_tree').getNextSiblingId(entityId) ||
+                   $$('entity_tree').getParentId(entityId);
       $$('entity_tree').select(nextId);
     }
 
@@ -2543,15 +2546,6 @@ UILayout.entityTree =
             $$('add_root_window').show();
           }
         },
-        // { view: 'button',
-        //   type: 'icon',
-        //   icon: 'refresh',
-        //   id: 'REFRESH_LABEL', label: STRINGS.REFRESH,
-        //   width: 100,
-        //   click: function() {
-        //     UI.pages.refreshPage('data');
-        //   }
-        // },
         { view: 'search',
           id: 'entity_tree__search',
           css: 'entity_list__search',
@@ -2570,16 +2564,7 @@ UILayout.entityTree =
                 UI.pages.refreshPage('data');
                 return false;
               }
-            },
-            // onSearchIconClick: function() {
-            //   window.location.href = '/#';
-            //   UI.pages.refreshPage('data');
-            //   $$('entity_tree__search').hide();
-            //   $$('ADD_ROOT_LABEL').show();
-            //   $$('REFRESH_LABEL').show();
-            //   $$('entity_tree__menu_sep').show();
-            //   $$('ROOT_SEARCH_LABEL').show();
-            // }
+            }
           }
         }
       ]
@@ -2588,15 +2573,33 @@ UILayout.entityTree =
       id: 'entity_tree',
       gravity: 0.4,
       select: true,
-      template:function(obj, MDSCommon) {
-        var icon =
-          UIHelper.getIconByPath(Identity.dataFromId(obj.id).path,
-                                 obj.$count === 0,
-                                 obj.open);
-        folder =
-          '<div class="webix_tree_folder_open fa fa-' + icon + '"></div>';
-        return MDSCommon.icon(obj, MDSCommon) +
-               folder +
+      template:function(obj, common) {
+        var path = Identity.dataFromId(obj.id).path;
+        if (path === '') { // root
+          var avatar = MDSCommon.findValueByName(obj.associatedData.fields, 'avatar');
+          var name = MDSCommon.findValueByName(obj.associatedData.fields, 'name') || obj.value;
+          var description =
+            MDSCommon.findValueByName(obj.associatedData.fields, 'description');
+          var avatarURL = avatar == null ? '/images/app.png' : '/avatars/' + avatar + '.png';
+          var folder =
+            '<div class="webix_tree_folder_open entity_tree__root_icon_wrap">' +
+              '<img class="entity_tree__root_icon" src="' + avatarURL + '" />' +
+            '</div>';
+          return common.icon(obj, common) +
+                 folder +
+                 '<div class="entity_tree__root_wrap">' +
+                   '<span class="entity_tree__root">' +
+                     '<div class="entity_tree__root_name">' + name + '</div>' +
+                     (description == null ? '' : '<div class="entity_tree__root_description">' + obj.value + '</div>') +
+                   '</span>' +
+                 '</div>';
+        }
+
+        var icon = UIHelper.getIconByPath(path,
+                                          obj.$count === 0,
+                                          obj.open);
+        return common.icon(obj, common) +
+               '<div class="webix_tree_folder_open fa fa-' + icon + '"></div>' +
                '<span>' + obj.value + '</span>';
       },
       on: {

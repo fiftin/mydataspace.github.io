@@ -67,7 +67,9 @@ EntityTree.prototype.listen = function() {
     }
 
     if (entityId === this.getCurrentId()) { // Select other item if selected item is deleted.
-      let nextId = $$('entity_tree').getPrevSiblingId(entityId) || $$('entity_tree').getNextSiblingId(entityId) || $$('entity_tree').getParentId(entityId);
+      let nextId = $$('entity_tree').getPrevSiblingId(entityId) ||
+                   $$('entity_tree').getNextSiblingId(entityId) ||
+                   $$('entity_tree').getParentId(entityId);
       $$('entity_tree').select(nextId);
     }
 

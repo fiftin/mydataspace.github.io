@@ -40,27 +40,33 @@ UILayout.entityTree =
       id: 'entity_tree',
       gravity: 0.4,
       select: true,
-      template:function(obj, MDSCommon) {
+      template:function(obj, common) {
         var path = Identity.dataFromId(obj.id).path;
-        // if (path === '') { // root
-        //   var avatarURL = '/avatars/' + MDSCommon.findByName(obj.fields, 'avatar') + '.png';
-        //   folder =
-        //     '<div class="webix_tree_folder_open fa fa-' + icon + '">' +
-        //       '<img class="entity_tree__root_icon" src="' + avatarURL + '" />' +
-        //     '</div>';
-        //   return MDSCommon.icon(obj, MDSCommon) +
-        //          folder +
-        //          '<span>' + obj.value + '</span>' +
-        //          '<span>' + obj.value + '</span>';
-        // }
+        if (path === '') { // root
+          var avatar = MDSCommon.findValueByName(obj.associatedData.fields, 'avatar');
+          var name = MDSCommon.findValueByName(obj.associatedData.fields, 'name') || obj.value;
+          var description =
+            MDSCommon.findValueByName(obj.associatedData.fields, 'description');
+          var avatarURL = avatar == null ? '/images/app.png' : '/avatars/' + avatar + '.png';
+          var folder =
+            '<div class="webix_tree_folder_open entity_tree__root_icon_wrap">' +
+              '<img class="entity_tree__root_icon" src="' + avatarURL + '" />' +
+            '</div>';
+          return common.icon(obj, common) +
+                 folder +
+                 '<div class="entity_tree__root_wrap">' +
+                   '<span class="entity_tree__root">' +
+                     '<div class="entity_tree__root_name">' + name + '</div>' +
+                     (description == null ? '' : '<div class="entity_tree__root_description">' + obj.value + '</div>') +
+                   '</span>' +
+                 '</div>';
+        }
+
         var icon = UIHelper.getIconByPath(path,
                                           obj.$count === 0,
                                           obj.open);
-        ;
-        folder =
-          '<div class="webix_tree_folder_open fa fa-' + icon + '"></div>';
-        return MDSCommon.icon(obj, MDSCommon) +
-               folder +
+        return common.icon(obj, common) +
+               '<div class="webix_tree_folder_open fa fa-' + icon + '"></div>' +
                '<span>' + obj.value + '</span>';
       },
       on: {

@@ -15,6 +15,7 @@ var Identity = {
       id: entityId,
       value: Identity.nameFromData(data),
       count: data.numberOfChildren,
+      associatedData: data,
       data: children
     };
   },
