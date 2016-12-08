@@ -56,13 +56,14 @@ UILayout.header =
         id: 'SIGN_IN_LABEL',
         css: 'menu__login_button',
         label: STRINGS.SIGN_IN,
+        hidden: UIHelper.isValidJWT(localStorage.getItem('authToken')),
         click: function() {
           $('#signin_modal').modal('show');
         }
       },
       { view: 'icon',
         icon: 'bars',
-        hidden: true,
+        hidden: !UIHelper.isValidJWT(localStorage.getItem('authToken')),
         id: 'menu_button',
         css: 'menu_button',
         click: function() {
