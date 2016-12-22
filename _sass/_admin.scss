@@ -321,6 +321,7 @@ input:read-only {
 .entity_form__text_label .webix_inp_label {
   padding-top: 0 !important;
   line-height: 32px;
+  color: $labal-color;
 }
 
 .entity_form__text_label .webix_inp_textarea {
@@ -589,7 +590,7 @@ input {
   font-weight: bold;
 }
 .entity_tree__root_description {
-  color: #a7a7a7;
+  color: $labal-color;
 }
 
 .webix_tree_branch_1 > .webix_tree_item {
