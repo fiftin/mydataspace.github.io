@@ -1366,7 +1366,7 @@ EntityForm.prototype.addRootField = function(data) {
   if (data.name === 'avatar') {
     $$('entity_form').addView({
       id: 'entity_form__' + data.name,
-      css: 'entity_form__field',
+      css: 'entity_form__field entity_form__field--without-overflow',
       cols: [
         { view: 'text',
           value: data.name,
@@ -1415,6 +1415,15 @@ EntityForm.prototype.addRootField = function(data) {
                     '        required />' +
                     ' <span>Upload</span>' +
                     '</label>',
+        },
+        { width: 6 },
+        {
+          view: 'button',
+          label: 'Browse',
+          on: {
+            onClick: function() {
+            }
+          }
         },
         { width: 6 },
         {
