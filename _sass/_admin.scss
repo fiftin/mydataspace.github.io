@@ -595,6 +595,9 @@ input {
   opacity: 0.6;
   padding-top: 3px;
   font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .webix_tree_branch_1 > .webix_tree_item {
