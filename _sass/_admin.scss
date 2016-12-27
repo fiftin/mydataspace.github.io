@@ -525,6 +525,7 @@ input {
 }
 
 .entity_form__root_img_template {
+  overflow: inherit;
   .webix_template {
     padding: 3px 0 !important;
   }
@@ -533,6 +534,7 @@ input {
 .entity_form__root_img {
   width: 32px;
   height: 32px;
+  transform: scale(1.5) translate(-2px);
 }
 
 .entity_form__field_label_avatar {

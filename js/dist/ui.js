@@ -1405,7 +1405,7 @@ EntityForm.prototype.addRootField = function(data) {
                     '" alt="Icon" />',
           width: 32
         },
-        { width: 8 },
+        { width: 16 },
         {
           borderless: true,
           css: 'entity_form__root_img_upload_template',
