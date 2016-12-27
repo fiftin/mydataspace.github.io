@@ -382,7 +382,9 @@ label {
 .entity_form__field {
 
 }
-
+.entity_form__field--without-overflow {
+  overflow: initial;
+}
 .entity_form__field_type_button {
   transform: translateX(-4px);
 }
@@ -525,7 +527,7 @@ input {
 }
 
 .entity_form__root_img_template {
-  overflow: inherit;
+  overflow: initial;
   .webix_template {
     padding: 3px 0 !important;
   }
