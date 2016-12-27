@@ -572,6 +572,7 @@ input {
 
 .entity_tree__root_wrap {
   margin-left: 62px;
+  overflow: hidden;
 }
 
 .entity_tree__root {
@@ -587,10 +588,13 @@ input {
 }
 
 .entity_tree__root_name {
-  font-weight: bold;
+  font-size: 18px;
 }
+
 .entity_tree__root_description {
   color: $labal-color;
+  padding-top: 3px;
+  font-size: 12px;
 }
 
 .webix_tree_branch_1 > .webix_tree_item {
