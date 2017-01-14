@@ -598,6 +598,10 @@ input {
   // font-size: 14px;
 }
 
+.webix_selected .entity_tree__root_name {
+  color: white;
+}
+
 .entity_tree__root_description {
   opacity: 0.6;
   padding-top: 3px;
