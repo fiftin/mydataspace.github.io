@@ -55,7 +55,7 @@ UILayout.entityTree =
 
           var rootNameClass = 'entity_tree__root_name';
           if (description == null) {
-            rootNameClass += 'entity_tree__root_name--without-description';
+            rootNameClass += ' entity_tree__root_name--without-description';
           }
           return common.icon(obj, common) +
                  folder +
