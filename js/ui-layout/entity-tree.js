@@ -52,11 +52,16 @@ UILayout.entityTree =
             '<div class="webix_tree_folder_open entity_tree__root_icon_wrap">' +
               '<img class="entity_tree__root_icon" src="' + avatarURL + '" />' +
             '</div>';
+
+          var rootNameClass = 'entity_tree__root_name';
+          if (description == null) {
+            rootNameClass += 'entity_tree__root_name--without-description';
+          }
           return common.icon(obj, common) +
                  folder +
                  '<div class="entity_tree__root_wrap">' +
                    '<span class="entity_tree__root">' +
-                     '<div class="entity_tree__root_name">' + name + '</div>' +
+                     '<div class="' + rootNameClass + '">' + name + '</div>' +
                      (description == null ? '' : '<div class="entity_tree__root_description">' + description + '</div>') +
                    '</span>' +
                  '</div>';

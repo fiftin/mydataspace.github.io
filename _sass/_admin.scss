@@ -598,6 +598,11 @@ input {
   // font-size: 14px;
 }
 
+.entity_tree__root_name--without-description {
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
 .webix_selected .entity_tree__root_name {
   color: white;
 }
