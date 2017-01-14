@@ -364,7 +364,15 @@ EntityForm.prototype.setEntityView = function(data) {
                              false);
     document.getElementById('view__title').innerText =
       MDSCommon.getPathName(data.path);
-    var viewFields = this.setViewFields(data.fields);
+
+    var viewFields = this.setViewFields(data.fields, ['description']);
+    var description = data.fields.filter(function(x) { return x.name === 'description'; });
+    if (description != null) {
+      $('#view__description').text(description);
+    } else {
+      $('#view__description').remove();
+    }
+
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
       var value = $(this).data('value');
