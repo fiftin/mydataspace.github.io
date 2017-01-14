@@ -1065,7 +1065,15 @@ EntityForm.prototype.setEntityView = function(data) {
                              false);
     document.getElementById('view__title').innerText =
       MDSCommon.getPathName(data.path);
-    var viewFields = this.setViewFields(data.fields);
+
+    var viewFields = this.setViewFields(data.fields, ['description']);
+    var description = data.fields.filter(function(x) { return x.name === 'description'; });
+    if (description != null) {
+      $('#view__description').text(description);
+    } else {
+      $('#view__description').remove();
+    }
+
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
       var value = $(this).data('value');
@@ -1978,92 +1986,6 @@ EntityTree.prototype.lastChildId = function(id) {
   return prevChildId;
 };
 
-function Pages() {
-  this.currentPage = 'data';
-}
-
-Pages.prototype.setCurrentPage = function(page) {
-  if (this.currentPage === page) {
-    return;
-  }
-  this.currentPage = page;
-  switch (page) {
-    case 'data':
-      $$('my_data_panel').show();
-      $$('my_apps_panel').hide();
-      break;
-    case 'apps':
-      $$('my_data_panel').hide();
-      $$('my_apps_panel').show();
-      break;
-    default:
-      throw new Error('Illegal page: ' + this.currentPage);
-  }
-  if ($$('menu__item_list').getSelectedId() !== page) {
-    $$('menu__item_list').select(page);
-  }
-  this.updatePageState(page);
-};
-
-Pages.prototype.updatePageState = function(page) {
-  if (this.currentPage !== page) {
-    return;
-  }
-  switch (page) {
-    case 'apps':
-      if ($$('app_list').getFirstId() == null) {
-        document.getElementById('no_items').innerText = STRINGS.NO_APPS;
-        document.getElementById('no_items').style.display = 'block';
-        $$('my_apps_panel__right_panel').hide();
-        $$('my_apps_panel__resizer').hide();
-      } else {
-        document.getElementById('no_items').style.display = 'none';
-        $$('my_apps_panel__right_panel').show();
-        $$('my_apps_panel__resizer').show();
-      }
-      break;
-    case 'data':
-      if ($$('entity_tree').getFirstId() == null) {
-        document.getElementById('no_items').innerText = STRINGS.NO_DATA;
-        document.getElementById('no_items').style.display = 'block';
-        $$('my_data_panel__right_panel').hide();
-        $$('my_data_panel__resizer_2').hide();
-        $$('my_data_panel__central_panel').hide();
-        $$('my_data_panel__resizer_1').hide();
-      } else {
-        document.getElementById('no_items').style.display = 'none';
-        $$('my_data_panel__right_panel').show();
-        $$('my_data_panel__resizer_2').show();
-        $$('my_data_panel__central_panel').show();
-        $$('my_data_panel__resizer_1').show();
-      }
-      break;
-    default:
-      throw new Error('Illegal page: ' + this.currentPage);
-  }
-};
-
-Pages.prototype.refreshCurrentPage = function() {
-  this.refreshPage(this.currentPage);
-};
-
-Pages.prototype.refreshPage = function(page, selectOnlyCurrentPage) {
-  switch (page) {
-    case 'apps':
-      UI.refreshApps();
-      break;
-    case 'data':
-      UI.entityTree.refresh();
-      break;
-    default:
-      throw new Error('Illegal page: ' + page);
-  }
-  if ($$('menu__item_list').getSelectedId() !== page
-      && (selectOnlyCurrentPage && this.currentPage === page || !selectOnlyCurrentPage)) {
-    $$('menu__item_list').select(page);
-  }
-};
-
 var UILayout = {
   HEADER_HEIGHT: 55,
   windows: {}
@@ -2594,11 +2516,16 @@ UILayout.entityTree =
             '<div class="webix_tree_folder_open entity_tree__root_icon_wrap">' +
               '<img class="entity_tree__root_icon" src="' + avatarURL + '" />' +
             '</div>';
+
+          var rootNameClass = 'entity_tree__root_name';
+          if (description == null) {
+            rootNameClass += ' entity_tree__root_name--without-description';
+          }
           return common.icon(obj, common) +
                  folder +
                  '<div class="entity_tree__root_wrap">' +
                    '<span class="entity_tree__root">' +
-                     '<div class="entity_tree__root_name">' + name + '</div>' +
+                     '<div class="' + rootNameClass + '">' + name + '</div>' +
                      (description == null ? '' : '<div class="entity_tree__root_description">' + description + '</div>') +
                    '</span>' +
                  '</div>';
