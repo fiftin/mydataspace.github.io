@@ -592,17 +592,19 @@ input {
 }
 
 .entity_tree__root_name {
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: bold;
+  color: rgba(24, 81, 130, 0.63);
+  // font-size: 14px;
 }
 
 .entity_tree__root_description {
   opacity: 0.6;
   padding-top: 3px;
-  font-size: 10px;
+  font-size: 12px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: bold;
 }
 
 .webix_tree_branch_1 > .webix_tree_item {
