@@ -1069,7 +1069,7 @@ EntityForm.prototype.setEntityView = function(data) {
       MDSCommon.getPathName(data.path);
 
     const entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.selectedId).path);
-    const viewFields;
+    var viewFields;
     if (entityType === 'proto') {
       $('#view__description').remove();
       viewFields = this.setViewFields(data.fields);
