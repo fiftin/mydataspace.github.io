@@ -1162,19 +1162,19 @@ EntityForm.prototype.refresh = function() {
   $$('entity_form').disable();
   const req = !isWithMeta ? 'entities.get' : 'entities.getWithMeta';
   Mydataspace.request(req, Identity.dataFromId(self.selectedId), function(data) {
-    if (entityType === 'resource') {
-      $$('EDIT_ENTITY_LABEL').hide();
-    } else if (!self.isEditing()) {
-      $$('EDIT_ENTITY_LABEL').show();
-    }
     if (!isWithMeta) {
       self.setView(data);
+
       if (data.mine) {
-        $$('EDIT_ENTITY_LABEL').show();
         $$('DELETE_ENTITY_SHORT_LABEL').show();
       } else {
-        $$('EDIT_ENTITY_LABEL').hide();
         $$('DELETE_ENTITY_SHORT_LABEL').hide();
+      }
+
+      if (entityType === 'resource' || !data.mine) {
+        $$('EDIT_ENTITY_LABEL').hide();
+      } else {
+        $$('EDIT_ENTITY_LABEL').hide();
       }
     } else {
       self.setData(data);
