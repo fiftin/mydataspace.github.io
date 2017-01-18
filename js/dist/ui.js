@@ -1167,7 +1167,7 @@ EntityForm.prototype.refresh = function() {
   $$('entity_form').disable();
   const req = !isWithMeta ? 'entities.get' : 'entities.getWithMeta';
   Mydataspace.request(req, Identity.dataFromId(self.selectedId), function(data) {
-    if (!isWithMeta) {
+    if (!isWithMeta || entityType === 'resource') {
       self.setView(data);
 
       if (data.mine) {
