@@ -356,18 +356,36 @@ EntityForm.prototype.setTaskView = function(data) {
 
 EntityForm.prototype.setEntityView = function(data) {
   const self = this;
+  const entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.selectedId).path);
+
   $.ajax({ url: '/fragments/entity-view.html', method: 'get' }).then(function(html) {
     var view = document.getElementById('view');
     view.innerHTML = html;
-    document.getElementById('view__overview_icon').className =
-      'view__overview_icon fa fa-' +
-      UIHelper.getIconByPath(data.path,
-                             data.numberOfChildren === 0,
-                             false);
-    document.getElementById('view__title').innerText =
-      MDSCommon.getPathName(data.path);
+    if (entityType === 'resource') {
+      const resourceType = MDSCommon.findValueByName(data.fields, 'type');
+      const resourceName = MDSCommon.getPathName(data.path);
+      switch (resourceType) {
+        case 'avatar':
+          document.getElementById('view__overview_icon').parentNode.innerHTML =
+            '<img src="/avatars/sm/' + resourceName + '.png" class="view__overview_image" />';
+          break;
+        case 'image':
+          document.getElementById('view__overview_icon').parentNode.innerHTML =
+            '<img src="/previews/sm/' + resourceName + '.jpg" class="view__overview_image" />';
+          break;
+        default:
+          document.getElementById('view__overview_icon').className =
+            'view__overview_icon fa fa-' + UIHelper.getIconByPath(data.path, true, false);
+      }
+    } else {
+      document.getElementById('view__overview_icon').className =
+        'view__overview_icon fa fa-' +
+        UIHelper.getIconByPath(data.path,
+                               data.numberOfChildren === 0,
+                               false);
+    }
+    document.getElementById('view__title').innerText = MDSCommon.getPathName(data.path);
 
-    const entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.selectedId).path);
     var viewFields;
     if (entityType === 'proto') {
       $('#view__description').remove();
