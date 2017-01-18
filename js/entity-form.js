@@ -368,8 +368,9 @@ EntityForm.prototype.setEntityView = function(data) {
       MDSCommon.getPathName(data.path);
 
     const entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.selectedId).path);
+    const viewFields;
     if (entityType === 'proto') {
-      const viewFields = this.setViewFields(data.fields);
+      viewFields = this.setViewFields(data.fields);
     } else {
       const description = data.fields.filter(function(x) { return x.name === 'description'; })[0];
       if (description != null) {
@@ -377,7 +378,7 @@ EntityForm.prototype.setEntityView = function(data) {
       } else {
         $('#view__description').remove();
       }
-      const viewFields = this.setViewFields(data.fields, ['description'], description == null);
+      viewFields = this.setViewFields(data.fields, ['description'], description == null);
     }
 
     $(viewFields).on('click', '.view__field', function() {
