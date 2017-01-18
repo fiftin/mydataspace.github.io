@@ -370,6 +370,7 @@ EntityForm.prototype.setEntityView = function(data) {
     const entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.selectedId).path);
     const viewFields;
     if (entityType === 'proto') {
+      $('#view__description').remove();
       viewFields = this.setViewFields(data.fields);
     } else {
       const description = data.fields.filter(function(x) { return x.name === 'description'; })[0];
