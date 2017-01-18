@@ -24,7 +24,8 @@ EntityForm.prototype.setEditing = function(editing) {
     $$('SAVE_ENTITY_LABEL').show();
     $$('CANCEL_ENTITY_LABEL').show();
     // $$('REFRESH_ENTITY_LABEL').hide();
-    if (UIHelper.getEntityTypeByPath(Identity.dataFromId(this.selectedId).path) === 'task') {
+    const  entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(this.selectedId).path);
+    if (entityType === 'task') {
       $$('RUN_SCRIPT_LABEL').show();
     } else {
       $$('RUN_SCRIPT_LABEL').hide();
@@ -455,10 +456,16 @@ EntityForm.prototype.setData = function(data) {
 
 EntityForm.prototype.refresh = function() {
   const self = this;
+  const entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.selectedId).path);
   const isWithMeta = self.isEditing();
   $$('entity_form').disable();
   const req = !isWithMeta ? 'entities.get' : 'entities.getWithMeta';
   Mydataspace.request(req, Identity.dataFromId(self.selectedId), function(data) {
+    if (entityType === 'resource') {
+      $$('EDIT_ENTITY_LABEL').hide();
+    } else if (!self.isEditing()) {
+      $$('EDIT_ENTITY_LABEL').show();
+    }
     if (!isWithMeta) {
       self.setView(data);
       if (data.mine) {
