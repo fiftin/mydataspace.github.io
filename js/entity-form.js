@@ -355,6 +355,7 @@ EntityForm.prototype.setTaskView = function(data) {
 };
 
 EntityForm.prototype.setEntityView = function(data) {
+  const self = this;
   $.ajax({ url: '/fragments/entity-view.html', method: 'get' }).then(function(html) {
     var view = document.getElementById('view');
     view.innerHTML = html;
