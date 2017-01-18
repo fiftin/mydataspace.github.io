@@ -1174,7 +1174,7 @@ EntityForm.prototype.refresh = function() {
       if (entityType === 'resource' || !data.mine) {
         $$('EDIT_ENTITY_LABEL').hide();
       } else {
-        $$('EDIT_ENTITY_LABEL').hide();
+        $$('EDIT_ENTITY_LABEL').show();
       }
     } else {
       self.setData(data);
