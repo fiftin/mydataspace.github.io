@@ -895,7 +895,7 @@ EntityForm.prototype.setRootView = function(data) {
     if (MDSCommon.isPresent(ava)) {
       ava = Mydataspace.options.apiURL + '/avatars/sm/' + ava + '.png';
     }
-    document.getElementById('view__overview_image').src = ava || '/images/app.png';
+    document.getElementById('view__overview_image').src = ava || '/images/icons/root.png';
     document.getElementById('view__title').innerText =
       MDSCommon.findValueByName(data.fields, 'name') || MDSCommon.getPathName(data.root);
 
