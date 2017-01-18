@@ -1067,13 +1067,18 @@ EntityForm.prototype.setEntityView = function(data) {
     document.getElementById('view__title').innerText =
       MDSCommon.getPathName(data.path);
 
-    var description = data.fields.filter(function(x) { return x.name === 'description'; })[0];
-    if (description != null) {
-      $('#view__description').text(description.value);
+    const entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.selectedId).path);
+    if (entityType === 'proto') {
+      const viewFields = this.setViewFields(data.fields);
     } else {
-      $('#view__description').remove();
+      const description = data.fields.filter(function(x) { return x.name === 'description'; })[0];
+      if (description != null) {
+        $('#view__description').text(description.value);
+      } else {
+        $('#view__description').remove();
+      }
+      const viewFields = this.setViewFields(data.fields, ['description'], description == null);
     }
-    var viewFields = this.setViewFields(data.fields, ['description'], description == null);
 
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
