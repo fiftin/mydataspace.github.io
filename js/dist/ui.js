@@ -972,10 +972,16 @@ EntityForm.prototype.setTaskView = function(data) {
     document.getElementById('view__title').innerText =
       MDSCommon.getPathName(data.path);
 
+    const description = data.fields.filter(function(x) { return x.name === 'description'; })[0];
+    if (description != null) {
+      $('#view__description').text(description.value);
+    } else {
+      $('#view__description').remove();
+    }
     var viewFields =
         this.setViewFields(data.fields,
-                           ['status', 'statusText', 'interval'],
-                           true,
+                           ['status', 'statusText', 'interval', 'description'],
+                           description == null,
                            function(x, y) {
                              if (x.name === 'main.js') {
                                  return 1;
