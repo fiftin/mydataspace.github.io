@@ -1066,13 +1066,13 @@ EntityForm.prototype.setEntityView = function(data) {
     document.getElementById('view__title').innerText =
       MDSCommon.getPathName(data.path);
 
-    var description = data.fields.filter(function(x) { return x.name === 'description'; });
+    var description = data.fields.filter(function(x) { return x.name === 'description'; })[0];
     if (description != null) {
-      $('#view__description').text(description);
+      $('#view__description').text(description.value);
     } else {
       $('#view__description').remove();
     }
-    var viewFields = this.setViewFields(data.fields, ['description']);
+    var viewFields = this.setViewFields(data.fields, ['description'], description == null);
 
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');

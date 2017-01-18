@@ -311,10 +311,13 @@ $view-field-value-max-height: 170px;
 }
 
 .view__no_fields_exists {
-  padding: 10px 0 10px 10px;
+  padding: 20px 0 10px 10px;
   border-top: 1px solid $shadow-color;
   display: table-cell;
   width: 100%;
+  text-align: center;
+  font-style: italic;
+  font-size: 16px;
 }
 
 .view__status {
