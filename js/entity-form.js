@@ -748,7 +748,7 @@ EntityForm.prototype.addRootField = function(data) {
           borderless: true,
           css: 'entity_form__root_img_template',
           template: '<img id="entity_form__root_img" class="entity_form__root_img" src="' +
-                      Mydataspace.options.apiURL + '/avatars/sm/' + data.value + '.png' +
+                      (MDSCommon.isPresent(data.value) ? Mydataspace.options.apiURL + '/avatars/sm/' + data.value + '.png' : '/images/icons/root.svg') +
                     '" alt="Icon" />',
           width: 32
         },
@@ -776,9 +776,9 @@ EntityForm.prototype.addRootField = function(data) {
         {
           view: 'button',
           label: 'Remove',
-          on: {
-            onClick: function() {
-            }
+          click: function() {
+            $$('entity_form__root_avatar_value').setValue('');
+            document.getElementById('entity_form__root_img').setAttribute('src', '/images/icons/root.svg');
           }
         }
       ]
