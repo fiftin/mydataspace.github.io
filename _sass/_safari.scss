@@ -12,19 +12,23 @@
   height: 54px;
 }
 
-.safari__buttons_wrap {
-  display: table-cell;
-}
+//.safari__buttons_wrap {
+//  float: left;
+//  display: table-cell;
+//}
 
 .safari__buttons {
   width: 90px;
+  height: 20px;
   padding: 5px 0;
+  float: left;
 }
 
 .safari__address_bar {
   background: white;
-  display: table-cell;
-  width: 100%;
+  float: left;
+  //  display: table-cell;
+  width: calc(100% - 90px);
   padding: 0;
   border-radius: 3px;
   position: relative;
@@ -46,9 +50,11 @@
 }
 
 .safari__url {
-  position: absolute;
-  top: 0;
-  left: 10px;
+  // position: absolute;
+  // top: 0;
+  // left: 10px;
+  font-size: 16px;
+  padding: 2px 10px;
 }
 
 .safari__url__https {
