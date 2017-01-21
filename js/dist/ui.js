@@ -1937,6 +1937,7 @@ EntityTree.prototype.refresh = function() {
         // convert received data to treeview format and load its to entity_tree.
         self.handleFormattedData([Identity.entityFromData(data)]);
       }
+      UI.pages.updatePageState('data');
     }, function(err) {
       UI.error(err);
       $$('entity_tree').enable();
