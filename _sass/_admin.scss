@@ -161,7 +161,7 @@ input:read-only {
 }
 
 .logo__text_img {
-  margin-top: ($header-height - $logo-text-height) / 2 + 1;
+  margin-top: 9px; // ($header-height - $logo-text-height) / 2 + 1;
   display: block;
   float: left;
   color: white;
