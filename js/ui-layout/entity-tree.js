@@ -62,7 +62,7 @@ UILayout.entityTree =
                  '<div class="entity_tree__root_wrap">' +
                    '<span class="entity_tree__root">' +
                      '<div class="' + rootNameClass + '">' + name + '</div>' +
-                     (description == null ? '' : '<div class="entity_tree__root_description">' + description + '</div>') +
+                     (MDSCommon.isBlank(description) ? '' : '<div class="entity_tree__root_description">' + description + '</div>') +
                    '</span>' +
                  '</div>';
         }
