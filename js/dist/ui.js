@@ -2156,7 +2156,7 @@ UILayout.windows.addApp = {
 UILayout.windows.addRoot = {
     view: 'window',
     id: 'add_root_window',
-    width: 300,
+    width: 350,
     position: 'center',
     modal: true,
     head: STRINGS.ADD_ROOT,
@@ -2213,7 +2213,7 @@ UILayout.windows.addRoot = {
 UILayout.windows.addEntity = {
     view: 'window',
     id: 'add_entity_window',
-    width: 300,
+    width: 350,
     position: 'center',
     modal: true,
     head: STRINGS.ADD_ENTITY,
