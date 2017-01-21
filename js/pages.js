@@ -44,8 +44,8 @@ Pages.prototype.updatePageState = function(page) {
       break;
     case 'data':
       if ($$('entity_tree').getFirstId() == null) {
-        document.getElementById('no_items').innerText = STRINGS.NO_DATA;
         document.getElementById('no_items').style.display = 'block';
+        document.getElementById('no_items__new_root_input').focus();
         $$('my_data_panel__right_panel').hide();
         $$('my_data_panel__resizer_2').hide();
         $$('my_data_panel__central_panel').hide();

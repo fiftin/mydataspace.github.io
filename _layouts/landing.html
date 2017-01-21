@@ -45,7 +45,67 @@
         </div>
         <img src="/images/logo_text.svg" class="logo__text_img hidden-xs" />
       </div>
-      <div id="no_items" class="no_items"></div>
+      <div id="no_items" class="no_items">
+        <div class="no_items__content">
+          <div class="no_items__column">
+            <div class="no_items__desc">
+              You find many useful data here
+            </div>
+            <div class="no_items__center">
+              <a class="no_items__root clearfix" href="/#spreex">
+                <img class="no_items__root_img" src="https://api.my-data.space/avatars/sm/Bk5gM3XQx.png" />
+                <div class="no_items__root_info">
+                  <div class="no_items__root_title">Spreex</div>
+                  <div class="no_items__root_desc">Spree Commerce extensions catalogue</div>
+                </div>
+              </a>
+              <a class="no_items__root clearfix" href="/#hello-world">
+                <img class="no_items__root_img" src="https://api.my-data.space/avatars/sm/BksOWGzXl.png" />
+                <div class="no_items__root_info">
+                  <div class="no_items__root_title">Hello, World</div>
+                  <div class="no_items__root_desc">"Hello, World!" of the My Data Space</div>
+                </div>
+              </a>
+            </div>
+            <div class="no_items__buttons">
+              <a href="/#*" class="btn btn-success btn-lg">View All</a>
+            </div>
+          </div>
+          <div class="no_items__column no_items__column--right">
+            <div class="no_items__desc">
+              Create yourown data and share it with others
+            </div>
+            <div class="no_items__center no_items__center--right">
+              <input id="no_items__new_root_input" type="text" class="no_items__new_root_input form-control" placeholder="New Root Name" />
+              <div id="no_items__notice" class="no_items__notice">
+                Root name must be unique among all existing roots
+              </div>
+            </div>
+            <div class="no_items__buttons">
+              <button class="btn btn-success btn-lg" onclick="no_items__createNewRoot()">Create!</button>
+            </div>
+            <script>
+              function no_items__createNewRoot() {
+                document.getElementById('no_items__notice').classList.remove('no_items__notice--alert');
+                var root = document.getElementById('no_items__new_root_input').value;
+                Mydataspace.request('entities.create', {
+                  root: root,
+                  path: '',
+                  fields: []
+                }, function() {
+                }, function(err) {
+                  switch (err.name) {
+                    case 'SequelizeUniqueConstraintError':
+                      document.getElementById('no_items__notice').classList.add('no_items__notice--alert');
+                      break;
+                    default:
+                  }
+                });
+              }
+            </script>
+          </div>
+        </div>
+      </div>
       <div id="admin_panel" class="admin_panel"></div>
     </div>
 

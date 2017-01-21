@@ -1,3 +1,5 @@
+$no-items-width: 700px;
+
 .admin_panel {
   top: -1px;
   bottom: 0;
@@ -176,17 +178,125 @@ input:read-only {
   transition: opacity 0.3s;
 }
 
+
+
 .no_items {
   position: absolute;
-  margin: 200px auto 0 auto;
-  font-size: 20px;
-  color: gray;
+  margin: 0;
   z-index: 100;
   left: 0;
   right: 0;
-  text-align: center;
+  top: 53px;
+  bottom: 0;
   display: none;
-  font-family: "PT Sans", Tahoma;
+  background: white;
+}
+
+.no_items__content {
+  margin: 0 auto;
+  font-size: 20px;
+  color: #616161;
+  font-family: Ubuntu, Tahoma;
+  background: url("/images/no_items_bg.svg");
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: $no-items-width;
+  width: $no-items-width;
+  height: $no-items-width;
+}
+
+.no_items__center {
+  padding: 30px 0;
+}
+
+.no_items__center--right {
+  padding: 45px 0;
+}
+
+.no_items__buttons {
+  .btn {
+    padding-left: 30px;
+    padding-right: 30px;
+    border-radius: 0;
+    background: #27ae60;
+    border-color: #27ae60;
+  }
+}
+
+.no_items__desc {
+  font-size: 16px;
+}
+
+.no_items__new_root_input {
+  font-size: 16px;
+  border-radius: 0;
+  border: 0;
+  border-bottom: 2px solid gray;
+  padding-left: 0;
+  padding-bottom: 15px;
+}
+
+.no_items__notice {
+  font-size: 14px;
+  color: #949494;
+  padding-top: 15px;
+}
+
+.no_items__notice--alert {
+  color: red;
+}
+
+.no_items__column {
+  width: $no-items-width / 2;
+  margin-top: 210px;
+  float: left;
+  padding-left: 30px;
+  padding-right: 20px;
+}
+
+.no_items__column--right {
+  float: right;
+  padding-left: 55px;
+  padding-right: 20px;
+}
+
+.no_items__root_title {
+  color: #337ab7;
+}
+
+.no_items__root {
+  padding: 5px 0;
+  display: block;
+  &:hover {
+    .no_items__root_title {
+      text-decoration: underline;
+    }
+  }
+}
+
+.no_items__root:first-child {
+  padding-top: 0;
+}
+
+.no_items__root:last-child {
+  padding-bottom: 0;
+}
+
+.no_items__root_img {
+  width: 60px;
+  float: left;
+  margin-top: 5px;
+}
+
+.no_items__root_info {
+  width: calc(100% - 60px);
+  float: left;
+  padding-left: 10px;
+}
+
+.no_items__root_desc {
+  font-size: 14px;
+  color: #949494;
 }
 
 .no_items--active {
@@ -224,6 +334,7 @@ input:read-only {
 
 .menu__spacer {
   background: $header-bg;
+  height: $header-height - 1px !important;
 }
 
 .menu__language_button--get_started {
@@ -232,7 +343,7 @@ input:read-only {
 
 .menu__language_button {
   background: $header-bg;
-  height: $header-height !important;
+  height: $header-height - 1px !important;
   border: 1px solid $header-bg !important;
 }
 
