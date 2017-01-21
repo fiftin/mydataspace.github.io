@@ -2513,7 +2513,7 @@ UILayout.header =
     cols: [
       { type: 'header' },
       { view: 'button',
-        width: 120,
+        width: 90,
         css: 'menu__language_button menu__language_button--get_started',
         id: 'GET_STARTED_LABEL',
         label: STRINGS.GET_STARTED,
@@ -2522,7 +2522,7 @@ UILayout.header =
         }
       },
       { view: 'button',
-        width: 100,
+        width: 70,
         css: 'menu__language_button',
         id: 'DEMOS_LABEL',
         label: STRINGS.DEMOS,
@@ -2531,7 +2531,7 @@ UILayout.header =
         }
       },
       { view: 'button',
-        width: 140,
+        width: 110,
         css: 'menu__language_button',
         id: 'DOCS_LABEL',
         label: STRINGS.DOCS,
@@ -2539,9 +2539,9 @@ UILayout.header =
           location.href = 'docs';
         }
       },
-      { width: 20, css: 'menu__spacer' },
+      { width: 10, css: 'menu__spacer' },
       { view: 'button',
-        width: 40,
+        width: 30,
         id: 'menu__language_button_en',
         css: 'menu__language_button ' + (LANGUAGE === 'EN' ? 'menu__language_button--selected' : ''),
         label: 'EN',
@@ -2551,7 +2551,7 @@ UILayout.header =
         }
       },
       { view: 'button',
-        width: 40,
+        width: 30,
         id: 'menu__language_button_ru',
         css: 'menu__language_button ' + (LANGUAGE === 'RU' ? 'menu__language_button--selected' : ''),
         label: 'RU',
@@ -2560,7 +2560,7 @@ UILayout.header =
           UI.updateLanguage();
         }
       },
-      { width: 20, css: 'menu__spacer' },
+      { width: 10, css: 'menu__spacer' },
       { view: 'button',
         width: 90,
         id: 'SIGN_IN_LABEL',

@@ -23,7 +23,8 @@ label {
     a {
       opacity: 0.5;
       transition: opacity 0.3s;
-    }
+      font-size: 14px;
+  }
     a:hover {
       opacity: 1;
       transition: opacity 0.3s;
