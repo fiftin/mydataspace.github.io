@@ -2644,7 +2644,7 @@ UILayout.entityTree =
             '</div>';
 
           var rootNameClass = 'entity_tree__root_name';
-          if (description == null) {
+          if (MDSCommon.isBlank(description)) {
             rootNameClass += ' entity_tree__root_name--without-description';
           }
           return common.icon(obj, common) +
