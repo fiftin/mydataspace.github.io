@@ -99,6 +99,7 @@ EntityTree.prototype.requestRoots = function(onlyMine, reqData, selectedId) {
     if (selectedId) {
       self.setCurrentId(selectedId);
     }
+    UI.pages.updatePageState('data');
   }, function(err) {
     UI.error(err);
     $$('entity_tree').enable();
