@@ -18,6 +18,7 @@
   &:hover, &:active {
     text-shadow: 1px 1px #3a843a;
   }
+  transition: background 200ms, border 200ms;
 }
 
 .intro__special_offer--popover {
