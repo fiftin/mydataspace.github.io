@@ -62,7 +62,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     REFRESH_ENTITY: 'Refresh',
     CANCEL_ENTITY: 'View',
     SIGN_OUT: 'Log Out',
-    SEARCH_BY_ROOTS: 'Search by roots...',
+    SEARCH_BY_ROOTS: 'All yours',
     SEARCH_BY_ENTITIES: 'Filter by name...',
     ROOT_FIELDS: {
       avatar: 'Icon',

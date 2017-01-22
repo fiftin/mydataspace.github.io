@@ -35,12 +35,55 @@ $no-items-width: 700px;
     background-color: $search-bg !important;
     border-color: $search-border-color !important;
     border-radius: $search-border-radius !important;
+    padding-left: 20px;
   }
   .webix_input_icon {
+    right: $search-border-radius / 2 - 2px !important;
+    padding-top: 7px !important;
+    font-size: 16px !important;
+    color: $search-hover-color !important;
+  }
+}
+
+.entity_tree__search {
+  input {
+    background-color: $search-bg !important;
+    border-color: $search-border-color !important;
+    border-radius: 0 !important;
+    border-top-right-radius: $search-border-radius !important;
+    border-bottom-right-radius: $search-border-radius !important;
+    border-left: 0 !important;
+    padding-left: 15px;
+    // text-align: center !important;
+    text-align: left !important;
+    &:focus {
+      // text-align: left !important;
+      // padding-left: 35px;
+    }
+  }
+  .webix_input_icon {
+    display: none;
     right: $search-border-radius / 2 !important;
     padding-top: 7px !important;
     font-size: 16px !important;
     color: $search-hover-color !important;
+  }
+  // .webix_input_icon--right {
+  //   left: $search-border-radius / 2 - 4px !important;
+  //   right: initial;
+  // }
+}
+
+.entity_tree__search_button {
+  transform: translateX(8px);
+  button {
+    border-top-left-radius: 100px !important;
+    border-bottom-left-radius: 100px !important;
+    background: $brand-bg !important;
+    border-color: $brand-bg !important;
+    .webix_icon {
+      color: white !important;
+    }
   }
 }
 
