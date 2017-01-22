@@ -77,6 +77,32 @@
   margin-left: 15px;
 }
 
+.header__search_wrap {
+  width: calc(100% - 800px);
+  margin-left: 120px;
+  .form-group {
+    width: 100%;
+  }
+  .popover {
+    width: 600px;
+  }
+}
+
+.header__search_input {
+  border: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 100px;
+  color: white;
+  padding-left: 20px !important;
+  width: 100% !important;
+  // font-size: 16px;
+  transition: background 200ms;
+  &:focus {
+    background: white;
+    color: black;
+  }
+}
+
 .intro__slogan {
   font-size: 80px;
   line-height: 1.01;

@@ -132,6 +132,15 @@
             return $("#signin_popover").html();
           }
         });
+
+        $("#header__search_input").popover({
+          placement: 'bottom',
+          html : true,
+          trigger: 'focus',
+          content: function() {
+            return $("#header__search_input__popover").html();
+          }
+        });
       });
 
       $(window).on('hashchange', function() {

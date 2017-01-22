@@ -45,6 +45,16 @@
         document.getElementById('login_button_menu_item').style.display = 'block';
         document.getElementById('profile_button_menu_item').style.display = 'none';
       });
+      $(function() {
+        $("#header__search_input").popover({
+          placement: 'bottom',
+          html : true,
+          trigger: 'focus',
+          content: function() {
+            return $("#header__search_input__popover").html();
+          }
+        });
+      });
     </script>
   </body>
 </html>
