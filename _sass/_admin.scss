@@ -772,6 +772,9 @@ input {
   text-overflow: ellipsis;
 }
 
-.webix_tree_branch_1 > .webix_tree_item {
-  height: 40px;
+.webix_tree_branch_1 {
+  margin-bottom: 10px;
+  & > .webix_tree_item {
+    height: 40px;
+  }
 }
