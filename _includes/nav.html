@@ -11,7 +11,7 @@
             </a>
         </div>
 
-        <form class="navbar-form navbar-left header__search_wrap hidden-xs hidden-sm" method="get">
+        <form class="navbar-form navbar-left header__search_wrap hidden-xs hidden-sm" id="header__search">
           <div class="form-group">
             <input id="header__search_input"
                    type="text"
@@ -37,6 +37,17 @@
 
             </div>
           </div>
+          <script type="text/javascript">
+            document.getElementById('header__search').addEventListener('submit', function(e) {
+              var val = document.getElementById('header__search_input').value.trim();
+              if (val != '') {
+                val += '*';
+              }
+              document.location.href = '/#*' + val;
+              e.preventDefault();
+              return false;
+            }, false);
+          </script>
         </form>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
