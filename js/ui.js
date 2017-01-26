@@ -385,47 +385,13 @@ UI = {
     		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
     		autoheight: true,
     		select: true,
-            on: {
-              onItemClick: function(newv) {
-                // var fieldName = UI.entityForm.currentFieldName;
-                // var fieldId = 'entity_form__' + fieldName;
-                // var fieldValue = $$(fieldId + '_value').getValue();
-                // $$(fieldId + '_type_button').define('icon', Fields.FIELD_TYPE_ICONS[newv]);
-                // $$(fieldId + '_type_button').refresh();
-                // var oldv = $$(fieldId + '_type').getValue();
-                // $$(fieldId + '_type').setValue(newv);
-                $$('entity_tree__root_scope_popup').hide();
-                $$('entity_tree__root_scope').define('icon', newv);
-                $$('entity_tree__root_scope').refresh();
-
-                // var oldValues = webix.copy($$('entity_form')._values);
-                // delete oldValues['fields.' + UI.entityForm.currentFieldName + '.value'];
-                // if (newv === 'j' || oldv === 'j') {
-                //   webix.ui(
-                //     { view: newv === 'j' ? 'textarea' : 'text',
-                //       label: fieldName,
-                //       name: 'fields.' + fieldName + '.value',
-                //       id: 'entity_form__' + fieldName + '_value',
-                //       value: fieldValue,
-                //       labelWidth: UIHelper.LABEL_WIDTH,
-                //       height: 32,
-                //       css: 'entity_form__text_label',
-                //       on: {
-                //         onFocus: function() {
-                //           if (newv === 'j') {
-                //             this.editScriptFieldId = 'entity_form__' + fieldName + '_value';
-                //             $$('edit_script_window').show();
-                //           }
-                //         }
-                //       }
-                //     },
-                //     $$('entity_form__' + fieldName),
-                //     $$('entity_form__' + fieldName + '_value')
-                //   );
-                // }
-                // $$('entity_form')._values = oldValues;
-              }
-            }
+        on: {
+          onItemClick: function(newv) {
+            $$('entity_tree__root_scope_popup').hide();
+            $$('entity_tree__root_scope').define('icon', newv);
+            $$('entity_tree__root_scope').refresh();
+          }
+        }
     	}
     });
 
@@ -480,8 +446,25 @@ UI = {
       return false;
     });
 
+    function updateTreeSearchScope() {
+      if (Router.isEmpty() || Router.isMe()) {
+        $$('entity_tree__root_scope').define('icon', 'user');
+        $$('entity_tree__search').setValue(Router.getSearch());
+      } else if (Router.isRoot()) {
+        $$('entity_tree__root_scope').define('icon', 'edit');
+        $$('entity_tree__search').setValue(Router.getRoot());
+      } else if (Router.isSearch()) {
+        $$('entity_tree__root_scope').define('icon', 'globe');
+        $$('entity_tree__search').setValue(Router.getSearch());
+      }
+      $$('entity_tree__root_scope').refresh();
+    }
+
+    updateTreeSearchScope();
+    
     $(window).on('hashchange', function() {
       UI.pages.refreshPage('data', true);
+      updateTreeSearchScope();
     });
   },
 

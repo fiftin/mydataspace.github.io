@@ -112,7 +112,7 @@ EntityTree.prototype.refresh = function() {
   if (Router.isEmpty()) {
     self.requestRoots(true, {});
   } else if (Router.isSearch()) {
-    self.requestRoots(false, {
+    self.requestRoots(Router.isMe(), {
       search: Router.getSearch()
     });
   } else if (Router.isRoot()) {

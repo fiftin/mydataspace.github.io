@@ -230,17 +230,27 @@ var Router = {
            window.location.hash === '' ||
            window.location.hash === '#';
   },
+  /**
+   * Route links to single root.
+   */
   isRoot: function() {
-    return window.location.hash.indexOf('*') < 0;
+    return !Router.isEmpty() && window.location.hash.indexOf('*') < 0;
   },
   getRoot: function() {
     return window.location.hash.substring(1);
   },
   isSearch: function() {
-    return !Router.isRoot();
+    return !Router.isEmpty() && !Router.isRoot();
   },
   getSearch: function() {
-    return window.location.hash.substring(1).replace(/\*/g, '');
+    var s = window.location.hash.substring(1);
+    if (Router.isMe()) {
+      s = s.substring(3);
+    }
+    return s.replace(/\*/g, '');
+  },
+  isMe: function() {
+    return window.location.hash.indexOf('#me:') === 0;
   }
 };
 
@@ -1924,7 +1934,7 @@ EntityTree.prototype.refresh = function() {
   if (Router.isEmpty()) {
     self.requestRoots(true, {});
   } else if (Router.isSearch()) {
-    self.requestRoots(false, {
+    self.requestRoots(Router.isMe(), {
       search: Router.getSearch()
     });
   } else if (Router.isRoot()) {
@@ -2627,14 +2637,32 @@ UILayout.entityTree =
           icon: 'close',
           placeholder: STRINGS.SEARCH_BY_ROOTS,
           on: {
+            onAfterRender: function() {
+
+            },
             onKeyPress: function(code, e) {
               if (code === 13) {
                 var search = $$('entity_tree__search').getValue();
-                if (MDSCommon.isBlank(search)) {
-                  search = '*';
-                } else {
-                  search = '*' + search + '*';
+
+                switch ($$('entity_tree__root_scope')._settings['icon']) {
+                  case 'user':
+                    if (MDSCommon.isBlank(search)) {
+                      search = 'me:*';
+                    } else {
+                      search = 'me:*' + search + '*';
+                    }
+                    break;
+                  case 'globe':
+                    if (MDSCommon.isBlank(search)) {
+                      search = '*';
+                    } else {
+                      search = '*' + search + '*';
+                    }
+                    break;
+                  case 'edit':
+                    break;
                 }
+
                 window.location.href = '/#' + search;
                 UI.pages.refreshPage('data');
                 return false;
@@ -3488,47 +3516,13 @@ UI = {
     		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
     		autoheight: true,
     		select: true,
-            on: {
-              onItemClick: function(newv) {
-                // var fieldName = UI.entityForm.currentFieldName;
-                // var fieldId = 'entity_form__' + fieldName;
-                // var fieldValue = $$(fieldId + '_value').getValue();
-                // $$(fieldId + '_type_button').define('icon', Fields.FIELD_TYPE_ICONS[newv]);
-                // $$(fieldId + '_type_button').refresh();
-                // var oldv = $$(fieldId + '_type').getValue();
-                // $$(fieldId + '_type').setValue(newv);
-                $$('entity_tree__root_scope_popup').hide();
-                $$('entity_tree__root_scope').define('icon', newv);
-                $$('entity_tree__root_scope').refresh();
-
-                // var oldValues = webix.copy($$('entity_form')._values);
-                // delete oldValues['fields.' + UI.entityForm.currentFieldName + '.value'];
-                // if (newv === 'j' || oldv === 'j') {
-                //   webix.ui(
-                //     { view: newv === 'j' ? 'textarea' : 'text',
-                //       label: fieldName,
-                //       name: 'fields.' + fieldName + '.value',
-                //       id: 'entity_form__' + fieldName + '_value',
-                //       value: fieldValue,
-                //       labelWidth: UIHelper.LABEL_WIDTH,
-                //       height: 32,
-                //       css: 'entity_form__text_label',
-                //       on: {
-                //         onFocus: function() {
-                //           if (newv === 'j') {
-                //             this.editScriptFieldId = 'entity_form__' + fieldName + '_value';
-                //             $$('edit_script_window').show();
-                //           }
-                //         }
-                //       }
-                //     },
-                //     $$('entity_form__' + fieldName),
-                //     $$('entity_form__' + fieldName + '_value')
-                //   );
-                // }
-                // $$('entity_form')._values = oldValues;
-              }
-            }
+        on: {
+          onItemClick: function(newv) {
+            $$('entity_tree__root_scope_popup').hide();
+            $$('entity_tree__root_scope').define('icon', newv);
+            $$('entity_tree__root_scope').refresh();
+          }
+        }
     	}
     });
 
@@ -3583,8 +3577,25 @@ UI = {
       return false;
     });
 
+    function updateTreeSearchScope() {
+      if (Router.isEmpty() || Router.isMe()) {
+        $$('entity_tree__root_scope').define('icon', 'user');
+        $$('entity_tree__search').setValue(Router.getSearch());
+      } else if (Router.isRoot()) {
+        $$('entity_tree__root_scope').define('icon', 'edit');
+        $$('entity_tree__search').setValue(Router.getRoot());
+      } else if (Router.isSearch()) {
+        $$('entity_tree__root_scope').define('icon', 'globe');
+        $$('entity_tree__search').setValue(Router.getSearch());
+      }
+      $$('entity_tree__root_scope').refresh();
+    }
+
+    updateTreeSearchScope();
+    
     $(window).on('hashchange', function() {
       UI.pages.refreshPage('data', true);
+      updateTreeSearchScope();
     });
   },
 
