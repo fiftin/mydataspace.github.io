@@ -9,7 +9,13 @@ Myda.prototype.loginByToken = function(token) {
         json += chunk;
       });
       res.on('end', function() {
-        resolve(JSON.parse(json));
+        var obj = JSON.parse(json);
+        function loginListener() {
+          self.off('login', loginListener);
+          resolve();
+        }
+        self.on('login', loginListener);
+        self.emit('authenticate', { token: obj.jwt });
       });
     });
   });

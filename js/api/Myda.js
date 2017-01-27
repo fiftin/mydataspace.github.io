@@ -223,6 +223,9 @@ Myda.prototype.emit = function(eventName, data) {
   this.socket.emit(eventName, data);
 };
 
+Myda.prototype.off = function(eventName, callback) {
+};
+
 Myda.prototype.on = function(eventName, callback, ignoreRequestErrors) {
   if (typeof this.listeners[eventName] !== 'undefined') {
     this.listeners[eventName].push(this.formatAndCallIgnoreRequestErrors.bind(this, eventName, callback, ignoreRequestErrors));

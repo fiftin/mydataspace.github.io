@@ -893,6 +893,9 @@ Myda.prototype.emit = function(eventName, data) {
   this.socket.emit(eventName, data);
 };
 
+Myda.prototype.off = function(eventName, callback) {
+};
+
 Myda.prototype.on = function(eventName, callback, ignoreRequestErrors) {
   if (typeof this.listeners[eventName] !== 'undefined') {
     this.listeners[eventName].push(this.formatAndCallIgnoreRequestErrors.bind(this, eventName, callback, ignoreRequestErrors));
@@ -994,7 +997,13 @@ Myda.prototype.loginByToken = function(token) {
         json += chunk;
       });
       res.on('end', function() {
-        resolve(JSON.parse(json));
+        var obj = JSON.parse(json);
+        function loginListener() {
+          self.off('login', loginListener);
+          resolve();
+        }
+        self.on('login', loginListener);
+        self.emit('authenticate', { token: obj.jwt });
       });
     });
   });

@@ -7927,6 +7927,10 @@ function Myda(options) {
     connected: []
   };
   this.authProviders = {
+    accessToken: {
+      url: '/auth?authProvider=access-token' +
+           '&state=permission%3d{{permission}}%26clientId%3d{{client_id}}%26resultFormat=json'
+    },
     github: {
       title: 'Connect through GitHub',
       icon: 'github',
@@ -7967,18 +7971,15 @@ function Myda(options) {
   this.entities = new Entities(this);
   this.on('connected', this.options.connected);
 
-  if (window != null) {
-      window.addEventListener('message', function(e) {
-        if (e.data.message === 'authResult') {
-          if (this.options.useLocalStorage) {
-            localStorage.setItem('authToken', e.data.result);
-          }
-          this.emit('authenticate', { token: e.data.result });
-          e.source.close();
-        }
-      }.bind(this));
-  }
-
+  window.addEventListener('message', function(e) {
+    if (e.data.message === 'authResult') {
+      if (this.options.useLocalStorage) {
+        localStorage.setItem('authToken', e.data.result);
+      }
+      this.emit('authenticate', { token: e.data.result });
+      e.source.close();
+    }
+  }.bind(this));
 }
 
 Myda.prototype.getAuthProviders = function() {
@@ -8010,6 +8011,7 @@ Myda.prototype.connect = function() {
   return new Promise(function(resolve, reject) {
     this.socket = io(this.options.websocketURL, {
       secure: true,
+      'forceNew' : true,
       'force new connection' : true,
       'reconnectionAttempts': 'Infinity', //avoid having user reconnect manually in order to prevent dead clients after a server restart
       'timeout' : 10000, //before connect_error and connect_timeout are emitted.
@@ -8123,6 +8125,9 @@ Myda.prototype.emit = function(eventName, data) {
   this.socket.emit(eventName, data);
 };
 
+Myda.prototype.off = function(eventName, callback) {
+};
+
 Myda.prototype.on = function(eventName, callback, ignoreRequestErrors) {
   if (typeof this.listeners[eventName] !== 'undefined') {
     this.listeners[eventName].push(this.formatAndCallIgnoreRequestErrors.bind(this, eventName, callback, ignoreRequestErrors));
@@ -8212,7 +8217,3 @@ Myda.prototype.registerFormatter = function(eventName, formatter) {
   }
   this.formatters[eventName].push(formatter);
 };
-
-if (module != null && module.exports != null) {
-    module.exports.Myda = Myda;
-}
