@@ -12,7 +12,7 @@ function Myda(options) {
       // console.log('Maybe you forgot to specify connected-event handler');
     }
   }, options);
-  this.root = options.root;
+  this.root = this.options.root;
   this.connected = false;
   this.loggedIn = false;
   this.requests = {};
@@ -59,11 +59,12 @@ function Myda(options) {
       }
     }
   };
-  if (options.simpleFormat !== false) {
+  if (this.options.simpleFormat !== false) {
     this.registerFormatter('entities.get.res', new EntitySimplifier());
   }
   this.entities = new Entities(this);
   this.on('connected', this.options.connected);
+
   window.addEventListener('message', function(e) {
     if (e.data.message === 'authResult') {
       if (this.options.useLocalStorage) {

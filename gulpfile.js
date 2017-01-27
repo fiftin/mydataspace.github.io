@@ -8,6 +8,19 @@ var concat = require('gulp-concat');
 var fs = require('fs');
 var uglify = require('gulp-uglifyjs');
 
+gulp.task('nodejs', function() {
+  return gulp.src([
+      './js/api/node.js',
+      './js/common.js',
+      './js/formatters.js',
+      './js/api/entities.js',
+      './js/api/myda.js',
+      './js/api/node-end.js'
+    ])
+    .pipe(concat('mydataspace.js'))
+    .pipe(gulp.dest('./js/dist/'));
+});
+
 gulp.task('api', function() {
   return gulp.src([
       './vendor/socket.io.js',
