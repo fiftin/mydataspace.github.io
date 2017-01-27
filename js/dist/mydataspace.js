@@ -1,9 +1,18 @@
-var io = require('socket.io-client');
+const io = require('socket.io-client');
+const http = require('https');
+const url = require('url');
 
 if (global.window == null) {
-    global.window = {
-        addEventListener: function() {}
-    };
+  global.window = {
+    addEventListener: function() {}
+  };
+}
+
+if (global.localStorage == null) {
+  global.localStorage = {
+    getItem: function() {},
+    setItem: function() {}
+  };
 }
 
 'use strict';
@@ -686,6 +695,10 @@ function Myda(options) {
     connected: []
   };
   this.authProviders = {
+    accessToken: {
+      url: '/auth?authProvider=access-token' +
+           '&state=permission%3d{{permission}}%26clientId%3d{{client_id}}%26resultFormat=json'
+    },
     github: {
       title: 'Connect through GitHub',
       icon: 'github',
@@ -766,10 +779,10 @@ Myda.prototype.connect = function() {
   return new Promise(function(resolve, reject) {
     this.socket = io(this.options.websocketURL, {
       secure: true,
-      'force new connection' : true,
-      'reconnectionAttempts': 'Infinity', //avoid having user reconnect manually in order to prevent dead clients after a server restart
-      'timeout' : 10000, //before connect_error and connect_timeout are emitted.
-      'transports' : ['websocket']
+      // 'force new connection' : true,
+      // 'reconnectionAttempts': 'Infinity', //avoid having user reconnect manually in order to prevent dead clients after a server restart
+      // 'timeout' : 10000, //before connect_error and connect_timeout are emitted.
+      // 'transports' : ['websocket']
     });
 
     this.on('connect', function () {
@@ -969,6 +982,21 @@ Myda.prototype.registerFormatter = function(eventName, formatter) {
   this.formatters[eventName].push(formatter);
 };
 
-if (module != null && module.exports != null) {
-    module.exports.Myda = Myda;
-}
+Myda.prototype.loginByToken = function(token) {
+  var self = this;
+  var url = self.options.apiURL + self.getAuthProvider('accessToken').url + '&accessToken=' + token;
+  console.log(url);
+  return new Promise(function(resolve, reject) {
+    http.get(url, function(res) {
+      var json = '';
+      res.on('data', function(chunk) {
+        json += chunk;
+      });
+      res.on('end', function() {
+        resolve(JSON.parse(json));
+      });
+    });
+  });
+};
+
+module.exports.Myda = Myda;

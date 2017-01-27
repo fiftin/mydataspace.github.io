@@ -25,6 +25,10 @@ function Myda(options) {
     connected: []
   };
   this.authProviders = {
+    accessToken: {
+      url: '/auth?authProvider=access-token' +
+           '&state=permission%3d{{permission}}%26clientId%3d{{client_id}}%26resultFormat=json'
+    },
     github: {
       title: 'Connect through GitHub',
       icon: 'github',
@@ -105,10 +109,10 @@ Myda.prototype.connect = function() {
   return new Promise(function(resolve, reject) {
     this.socket = io(this.options.websocketURL, {
       secure: true,
-      'force new connection' : true,
-      'reconnectionAttempts': 'Infinity', //avoid having user reconnect manually in order to prevent dead clients after a server restart
-      'timeout' : 10000, //before connect_error and connect_timeout are emitted.
-      'transports' : ['websocket']
+      // 'force new connection' : true,
+      // 'reconnectionAttempts': 'Infinity', //avoid having user reconnect manually in order to prevent dead clients after a server restart
+      // 'timeout' : 10000, //before connect_error and connect_timeout are emitted.
+      // 'transports' : ['websocket']
     });
 
     this.on('connect', function () {
