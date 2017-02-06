@@ -405,19 +405,10 @@ UIHelper = {
 var Fields = {
   MAX_STRING_FIELD_LENGTH: 1000,
   MAX_TEXT_FIELD_LENGTH: 1000000,
-  FIELD_INDEXED: {
-    'true': {
-      icon: 'sort-alpha',
-      value: 'Indexed'
-    },
-    'fulltext': {
-      icon: 'text',
-      value: 'Fulltext'
-    },
-    '': {
-      icon: 'soft',
-      value: 'Non-indexed'
-    }
+  FIELD_INDEXED_ICONS: {
+    'true': 'sort-amount-asc', // 'sort-alpha-asc',
+    'fulltext': 'text-height',
+    'none': 'ban'
   },
 
   FIELD_TYPES: {
@@ -511,7 +502,7 @@ var Fields = {
     for (var key in Fields.FIELD_INDEXED) {
       ret.push({
         id: key,
-        value: Fields.FIELD_INDEXED[key].title
+        value: Fields.FIELD_INDEXED[key].value
       });
     }
     return ret;
@@ -1626,7 +1617,7 @@ EntityForm.prototype.addField = function(data, setDirty) {
         }
       },
       { view: 'button',
-        width: 25,
+        width: 30,
         type: 'iconButton',
         icon: Fields.FIELD_TYPE_ICONS[data.type],
         css: 'entity_form__field_type_button',
@@ -1644,22 +1635,22 @@ EntityForm.prototype.addField = function(data, setDirty) {
         type: 'icon',
         css: 'entity_form__field_delete',
         icon: 'remove',
-        width: 20,
+        width: 10,
         click: function() {
           this.deleteField(data.name);
         }.bind(this)
       },
       { view: 'button',
-        width: 20,
+        width: 10,
         type: 'iconButton',
-        icon: Fields.FIELD_INDEXED[(data.indexed || '').toString()].icon,
+        icon: Fields.FIELD_INDEXED_ICONS[(data.indexed || 'none').toString()],
         css: 'entity_form__field_indexed_button',
         popup: 'entity_form__field_indexed_popup',
         id: 'entity_form__' + data.name + '_indexed_button',
         on: {
           onItemClick: function() {
             this.currentFieldName = data.name;
-            $$('entity_form__field_indexed_list').select(data.type);
+            // $$('entity_form__field_indexed_list').select(data.type);
           }.bind(this)
         }
       }
@@ -3546,7 +3537,11 @@ UI = {
             id: 'entity_tree__root_scope_popup_list',
             class: 'entity_tree__root_scope_popup_list',
             borderless: true,
-    		data: Fields.FIELD_INDEXED,
+    		data:[
+              { id: 'user', value: 'Yours', icon: 'user' },
+              { id: 'globe', value: 'All', icon: 'globe' },
+              { id: 'edit', value: 'Custom', icon: 'edit' },
+    		],
     		datatype: 'json',
     		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
     		autoheight: true,
@@ -3572,9 +3567,9 @@ UI = {
             class: 'entity_form__field_indexed_list',
             borderless: true,
     		data:[
-              { id: 'user', value: 'Yours', icon: 'user' },
-              { id: 'globe', value: 'All', icon: 'globe' },
-              { id: 'edit', value: 'Custom', icon: 'edit' },
+              { id: 'true', value: 'Index', icon: Fields.FIELD_INDEXED_ICONS['true'] },
+              { id: 'fulltext', value: 'Fulltext', icon: Fields.FIELD_INDEXED_ICONS['fulltext'] },
+              { id: 'none', value: 'None', icon: Fields.FIELD_INDEXED_ICONS['none'] },
     		],
     		datatype: 'json',
     		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
@@ -3583,8 +3578,9 @@ UI = {
         on: {
           onItemClick: function(newv) {
             $$('entity_form__field_indexed_popup').hide();
-            $$('entity_form__' + data.name + '_type_button').define('icon', newv);
-            $$('entity_tree__root_scope').refresh();
+            $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS[newv]);
+            $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').refresh();
+            
           }
         }
     	}

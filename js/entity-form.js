@@ -889,7 +889,7 @@ EntityForm.prototype.addField = function(data, setDirty) {
         }
       },
       { view: 'button',
-        width: 25,
+        width: 30,
         type: 'iconButton',
         icon: Fields.FIELD_TYPE_ICONS[data.type],
         css: 'entity_form__field_type_button',
@@ -907,22 +907,22 @@ EntityForm.prototype.addField = function(data, setDirty) {
         type: 'icon',
         css: 'entity_form__field_delete',
         icon: 'remove',
-        width: 20,
+        width: 10,
         click: function() {
           this.deleteField(data.name);
         }.bind(this)
       },
       { view: 'button',
-        width: 20,
+        width: 10,
         type: 'iconButton',
-        icon: Fields.FIELD_INDEXED[(data.indexed || '').toString()].icon,
+        icon: Fields.FIELD_INDEXED_ICONS[(data.indexed || 'none').toString()],
         css: 'entity_form__field_indexed_button',
         popup: 'entity_form__field_indexed_popup',
         id: 'entity_form__' + data.name + '_indexed_button',
         on: {
           onItemClick: function() {
             this.currentFieldName = data.name;
-            $$('entity_form__field_indexed_list').select(data.type);
+            // $$('entity_form__field_indexed_list').select(data.type);
           }.bind(this)
         }
       }

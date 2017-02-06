@@ -410,15 +410,51 @@ label {
   border-bottom-right-radius: 0 !important;
 }
 
+$entity-form-field-delete-button-width: 25px;
 .entity_form__field_delete {
-  transform: scale(1.2) translateX(26px);
   opacity: 0;
   transition: opacity 0.3s;
+  transform: translateX(10px);
+  width: $entity-form-field-delete-button-width !important;
+  .webix_el_box {
+    width: $entity-form-field-delete-button-width !important;
+  }
+  .webix_icon_btn {
+    margin-left: 2px;
+    font-size: 20px;
+  }
+  button {
+    width: $entity-form-field-delete-button-width !important;
+  }
+}
+
+$entity-form-field-indexed-button-width: 20px;
+
+.entity_form__field_indexed_button {
+  position: absolute;
+  left: 140px;
+  width: $entity-form-field-indexed-button-width !important;
+  .webix_el_box {
+    width: $entity-form-field-indexed-button-width !important;
+  }
+  .webix_icon {
+    margin-left: 2px;
+    color: #b5b5b5;
+    font-size: 13px;
+  }
+  button {
+    &, &:hover, &:focus, &:active {
+      width: $entity-form-field-indexed-button-width !important;
+      background: $input-bg;
+      border: 1px solid $input-border-color;
+      border-right: 0;
+    }
+  }
 }
 
 .entity_form__field {
   input {
-    transform: translateX(36px);
+    transform: translateX($entity-form-field-indexed-button-width);
     padding-left: 1px;
     border-left: 0;
     &:focus {
@@ -439,35 +475,24 @@ label {
   }
 }
 
-$entity-form-field-indexed-button-width: 34px;
-
-.entity_form__field_indexed_button {
-  position: absolute;
-  left: 140px;
-  width: $entity-form-field-indexed-button-width !important;
-  .webix_el_box {
-    width: $entity-form-field-indexed-button-width !important;
-  }
-  button {
-    &, &:hover, &:focus, &:active {
-      width: $entity-form-field-indexed-button-width !important;
-      background: $input-bg;
-      border: 1px solid $input-border-color;
-      border-right: 0;
-    }
-  }
-}
-
 .entity_form__field--without-overflow {
   overflow: initial;
 }
 
+$entity-form-field-type-button-width: 29px;
 .entity_form__field_type_button {
-  transform: translateX(34px) scaleX(1.2);
+  transform: translateX(15px);
+  width: $entity-form-field-type-button-width !important;
+  .webix_el_box {
+    width: $entity-form-field-type-button-width !important;
+  }
+  button {
+    width: $entity-form-field-type-button-width !important;
+  }
 }
 
 .entity_form__field_type_button .webix_icon {
-  margin-left: 3px !important;
+  margin-left: 5px !important;
 }
 
 .entity_form__field_type_popup {

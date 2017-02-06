@@ -1,19 +1,10 @@
 var Fields = {
   MAX_STRING_FIELD_LENGTH: 1000,
   MAX_TEXT_FIELD_LENGTH: 1000000,
-  FIELD_INDEXED: {
-    'true': {
-      icon: 'sort-alpha',
-      value: 'Indexed'
-    },
-    'fulltext': {
-      icon: 'text',
-      value: 'Fulltext'
-    },
-    '': {
-      icon: 'soft',
-      value: 'Non-indexed'
-    }
+  FIELD_INDEXED_ICONS: {
+    'true': 'sort-amount-asc', // 'sort-alpha-asc',
+    'fulltext': 'text-height',
+    'none': 'ban'
   },
 
   FIELD_TYPES: {
@@ -107,7 +98,7 @@ var Fields = {
     for (var key in Fields.FIELD_INDEXED) {
       ret.push({
         id: key,
-        value: Fields.FIELD_INDEXED[key].title
+        value: Fields.FIELD_INDEXED[key].value
       });
     }
     return ret;

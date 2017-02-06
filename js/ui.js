@@ -374,7 +374,11 @@ UI = {
             id: 'entity_tree__root_scope_popup_list',
             class: 'entity_tree__root_scope_popup_list',
             borderless: true,
-    		data: Fields.FIELD_INDEXED,
+    		data:[
+              { id: 'user', value: 'Yours', icon: 'user' },
+              { id: 'globe', value: 'All', icon: 'globe' },
+              { id: 'edit', value: 'Custom', icon: 'edit' },
+    		],
     		datatype: 'json',
     		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
     		autoheight: true,
@@ -400,9 +404,9 @@ UI = {
             class: 'entity_form__field_indexed_list',
             borderless: true,
     		data:[
-              { id: 'user', value: 'Yours', icon: 'user' },
-              { id: 'globe', value: 'All', icon: 'globe' },
-              { id: 'edit', value: 'Custom', icon: 'edit' },
+              { id: 'true', value: 'Index', icon: Fields.FIELD_INDEXED_ICONS['true'] },
+              { id: 'fulltext', value: 'Fulltext', icon: Fields.FIELD_INDEXED_ICONS['fulltext'] },
+              { id: 'none', value: 'None', icon: Fields.FIELD_INDEXED_ICONS['none'] },
     		],
     		datatype: 'json',
     		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
@@ -411,8 +415,9 @@ UI = {
         on: {
           onItemClick: function(newv) {
             $$('entity_form__field_indexed_popup').hide();
-            $$('entity_form__' + data.name + '_type_button').define('icon', newv);
-            $$('entity_tree__root_scope').refresh();
+            $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS[newv]);
+            $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').refresh();
+            
           }
         }
     	}
