@@ -1,6 +1,21 @@
 var Fields = {
   MAX_STRING_FIELD_LENGTH: 1000,
   MAX_TEXT_FIELD_LENGTH: 1000000,
+  FIELD_INDEXED: {
+    'true': {
+      icon: 'sort-alpha',
+      value: 'Indexed'
+    },
+    'fulltext': {
+      icon: 'text',
+      value: 'Fulltext'
+    },
+    '': {
+      icon: 'soft',
+      value: 'Non-indexed'
+    }
+  },
+
   FIELD_TYPES: {
     s: {
       title: STRINGS.STRING,
@@ -85,6 +100,17 @@ var Fields = {
     }
 
     return field;
+  },
+
+  getFieldIndexedAsArrayOfIdValue: function() {
+    var ret = [];
+    for (var key in Fields.FIELD_INDEXED) {
+      ret.push({
+        id: key,
+        value: Fields.FIELD_INDEXED[key].title
+      });
+    }
+    return ret;
   },
 
   getFieldTypesAsArrayOfIdValue: function() {

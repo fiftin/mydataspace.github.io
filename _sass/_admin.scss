@@ -410,26 +410,68 @@ label {
   border-bottom-right-radius: 0 !important;
 }
 
-.entity_form__field {
-
+.entity_form__field_delete {
+  transform: scale(1.2) translateX(26px);
+  opacity: 0;
+  transition: opacity 0.3s;
 }
+
+.entity_form__field {
+  input {
+    transform: translateX(36px);
+    padding-left: 1px;
+    border-left: 0;
+    &:focus {
+      border-left: 0;
+    }
+  }
+  overflow: initial;
+  .entity_form__text_label {
+    overflow: initial;
+  }
+  .webix_el_box {
+    overflow: initial;
+  }
+  &:hover {
+    .entity_form__field_delete {
+      opacity: 1;
+    }
+  }
+}
+
+$entity-form-field-indexed-button-width: 34px;
+
+.entity_form__field_indexed_button {
+  position: absolute;
+  left: 140px;
+  width: $entity-form-field-indexed-button-width !important;
+  .webix_el_box {
+    width: $entity-form-field-indexed-button-width !important;
+  }
+  button {
+    &, &:hover, &:focus, &:active {
+      width: $entity-form-field-indexed-button-width !important;
+      background: $input-bg;
+      border: 1px solid $input-border-color;
+      border-right: 0;
+    }
+  }
+}
+
 .entity_form__field--without-overflow {
   overflow: initial;
 }
+
 .entity_form__field_type_button {
-  transform: translateX(-4px);
+  transform: translateX(34px) scaleX(1.2);
 }
 
 .entity_form__field_type_button .webix_icon {
-  margin-left: 5px !important;
+  margin-left: 3px !important;
 }
 
 .entity_form__field_type_popup {
   transform: translateX(-30px);
-}
-
-.entity_form__field_delete {
-  transform: scale(1.2);
 }
 
 .entity_form__field_type_button button {

@@ -847,11 +847,12 @@ EntityForm.prototype.addField = function(data, setDirty) {
         name: 'fields.' + data.name + '.type',
         hidden: true
       },
-      // {
-      //   view: 'label',
-      //   label: data.name,
-      //   inputWidth: UIHelper.LABEL_WIDTH,
-      // },
+      { view: 'text',
+        value: data.indexed,
+        id: 'entity_form__' + data.name + '_indexed',
+        name: 'fields.' + data.name + '.indexed',
+        hidden: true
+      },
       { view: data.type === 'j' ? 'textarea' : 'text',
         label: '<div style="visibility: hidden">fake</div>' +
                '<div class="entity_form__field_label">' +
@@ -888,7 +889,7 @@ EntityForm.prototype.addField = function(data, setDirty) {
         }
       },
       { view: 'button',
-        width: 30,
+        width: 25,
         type: 'iconButton',
         icon: Fields.FIELD_TYPE_ICONS[data.type],
         css: 'entity_form__field_type_button',
@@ -906,10 +907,24 @@ EntityForm.prototype.addField = function(data, setDirty) {
         type: 'icon',
         css: 'entity_form__field_delete',
         icon: 'remove',
-        width: 25,
+        width: 20,
         click: function() {
           this.deleteField(data.name);
         }.bind(this)
+      },
+      { view: 'button',
+        width: 20,
+        type: 'iconButton',
+        icon: Fields.FIELD_INDEXED[(data.indexed || '').toString()].icon,
+        css: 'entity_form__field_indexed_button',
+        popup: 'entity_form__field_indexed_popup',
+        id: 'entity_form__' + data.name + '_indexed_button',
+        on: {
+          onItemClick: function() {
+            this.currentFieldName = data.name;
+            $$('entity_form__field_indexed_list').select(data.type);
+          }.bind(this)
+        }
       }
     ]
   });

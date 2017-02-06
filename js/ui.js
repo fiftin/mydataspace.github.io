@@ -311,13 +311,11 @@ UI = {
 
               // { id: 'b', value: 'Boolean', icon: 'check-square-o' },
               // { id: 'd', value: 'Date', icon: 'calendar-o' },
-
-              // { id: 'x', value: 'Non-indexed', icon: 'low-vision' },
               // { id: 'm', value: 'Money', icon: 'dollar' },
               // { id: 'e', value: 'Email', icon: 'envelope' },
               // { id: 'p', value: 'Phone', icon: 'phone' },
-              // { id: 'c', value: 'Custom', icon: 'pencil' },
 
+              // { id: 'c', value: 'Custom', icon: 'pencil' },
               // { value: 'More...', icon: '' },
     		],
     		datatype: 'json',
@@ -376,11 +374,7 @@ UI = {
             id: 'entity_tree__root_scope_popup_list',
             class: 'entity_tree__root_scope_popup_list',
             borderless: true,
-    		data:[
-              { id: 'user', value: 'Yours', icon: 'user' },
-              { id: 'globe', value: 'All', icon: 'globe' },
-              { id: 'edit', value: 'Custom', icon: 'edit' },
-    		],
+    		data: Fields.FIELD_INDEXED,
     		datatype: 'json',
     		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
     		autoheight: true,
@@ -395,7 +389,34 @@ UI = {
     	}
     });
 
-
+    webix.ui({
+    	view: 'popup',
+    	id: 'entity_form__field_indexed_popup',
+        css: 'entity_form__field_indexed_popup',
+    	width: 130,
+    	body:{
+    		view: 'list',
+            id: 'entity_form__field_indexed_list',
+            class: 'entity_form__field_indexed_list',
+            borderless: true,
+    		data:[
+              { id: 'user', value: 'Yours', icon: 'user' },
+              { id: 'globe', value: 'All', icon: 'globe' },
+              { id: 'edit', value: 'Custom', icon: 'edit' },
+    		],
+    		datatype: 'json',
+    		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
+    		autoheight: true,
+    		select: true,
+        on: {
+          onItemClick: function(newv) {
+            $$('entity_form__field_indexed_popup').hide();
+            $$('entity_form__' + data.name + '_type_button').define('icon', newv);
+            $$('entity_tree__root_scope').refresh();
+          }
+        }
+    	}
+    });
 
     webix.ui(UILayout.windows.editScript);
     webix.ui(UILayout.windows.addRoot);
@@ -461,7 +482,7 @@ UI = {
     }
 
     updateTreeSearchScope();
-    
+
     $(window).on('hashchange', function() {
       UI.pages.refreshPage('data', true);
       updateTreeSearchScope();
