@@ -406,7 +406,7 @@ var Fields = {
   MAX_STRING_FIELD_LENGTH: 1000,
   MAX_TEXT_FIELD_LENGTH: 1000000,
   FIELD_INDEXED_ICONS: {
-    'true': 'sort-amount-asc', // 'sort-alpha-asc',
+    'true': 'sort-alpha-asc', // 'sort-alpha-asc', 'sort-amount-asc',
     'fulltext': 'text-height',
     'none': 'ban'
   },
@@ -1627,7 +1627,7 @@ EntityForm.prototype.addField = function(data, setDirty) {
         on: {
           onItemClick: function() {
             this.currentFieldName = data.name;
-            $$('entity_form__field_type_popup_list').select(data.type);
+            $$('entity_form__field_type_popup_list').unselectAll();
           }.bind(this)
         }
       },
@@ -1643,14 +1643,15 @@ EntityForm.prototype.addField = function(data, setDirty) {
       { view: 'button',
         width: 10,
         type: 'iconButton',
-        icon: Fields.FIELD_INDEXED_ICONS[(data.indexed || 'none').toString()],
+        icon: Fields.FIELD_INDEXED_ICONS[data.type === 'j' ? 'fulltext' : (data.indexed || 'none').toString()],
         css: 'entity_form__field_indexed_button',
         popup: 'entity_form__field_indexed_popup',
+        disabled: data.type === 'j',
         id: 'entity_form__' + data.name + '_indexed_button',
         on: {
           onItemClick: function() {
             this.currentFieldName = data.name;
-            // $$('entity_form__field_indexed_list').select(data.type);
+            $$('entity_form__field_indexed_list').unselectAll();
           }.bind(this)
         }
       }
@@ -3519,6 +3520,16 @@ UI = {
                     $$('entity_form__' + fieldName),
                     $$('entity_form__' + fieldName + '_value')
                   );
+                  if (newv === 'j') {
+                    $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').disable();
+                    var fieldIndexed = $$(fieldId + '_indexed').getValue();
+                    $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS[fieldIndexed]);
+                    $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').refresh();
+                  } else {
+                    $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').enable();
+                    $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS['fulltext']);
+                    $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').refresh();
+                  }
                 }
                 $$('entity_form')._values = oldValues;
               }
@@ -3560,15 +3571,15 @@ UI = {
     	view: 'popup',
     	id: 'entity_form__field_indexed_popup',
         css: 'entity_form__field_indexed_popup',
-    	width: 130,
+    	width: 180,
     	body:{
     		view: 'list',
             id: 'entity_form__field_indexed_list',
             class: 'entity_form__field_indexed_list',
             borderless: true,
     		data:[
-              { id: 'true', value: 'Index', icon: Fields.FIELD_INDEXED_ICONS['true'] },
-              { id: 'fulltext', value: 'Fulltext', icon: Fields.FIELD_INDEXED_ICONS['fulltext'] },
+              { id: 'true', value: 'Search &amp; Order', icon: Fields.FIELD_INDEXED_ICONS['true'] },
+              { id: 'fulltext', value: 'Fulltext Search', icon: Fields.FIELD_INDEXED_ICONS['fulltext'] },
               { id: 'none', value: 'None', icon: Fields.FIELD_INDEXED_ICONS['none'] },
     		],
     		datatype: 'json',
@@ -3580,7 +3591,7 @@ UI = {
             $$('entity_form__field_indexed_popup').hide();
             $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS[newv]);
             $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').refresh();
-            
+
           }
         }
     	}

@@ -2,7 +2,7 @@ var Fields = {
   MAX_STRING_FIELD_LENGTH: 1000,
   MAX_TEXT_FIELD_LENGTH: 1000000,
   FIELD_INDEXED_ICONS: {
-    'true': 'sort-amount-asc', // 'sort-alpha-asc',
+    'true': 'sort-alpha-asc', // 'sort-alpha-asc', 'sort-amount-asc',
     'fulltext': 'text-height',
     'none': 'ban'
   },

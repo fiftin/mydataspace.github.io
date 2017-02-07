@@ -411,6 +411,9 @@ label {
 }
 
 $entity-form-field-delete-button-width: 25px;
+$entity-form-field-indexed-button-width: 20px;
+$entity-form-field-type-button-width: 29px;
+
 .entity_form__field_delete {
   opacity: 0;
   transition: opacity 0.3s;
@@ -422,17 +425,24 @@ $entity-form-field-delete-button-width: 25px;
   .webix_icon_btn {
     margin-left: 2px;
     font-size: 20px;
+    color: #b5b5b5;
+    transition: color 0.3s;
   }
   button {
+    background: transparent !important;
     width: $entity-form-field-delete-button-width !important;
+    &:hover {
+      .webix_icon_btn {
+        color: black;
+      }
+    }
   }
 }
 
-$entity-form-field-indexed-button-width: 20px;
 
 .entity_form__field_indexed_button {
-  position: absolute;
-  left: 140px;
+  position: absolute !important;
+  left: 136px;
   width: $entity-form-field-indexed-button-width !important;
   .webix_el_box {
     width: $entity-form-field-indexed-button-width !important;
@@ -441,20 +451,30 @@ $entity-form-field-indexed-button-width: 20px;
     margin-left: 2px;
     color: #b5b5b5;
     font-size: 13px;
+    width: 10px;
+    transition: color 0.3s;
   }
   button {
     &, &:hover, &:focus, &:active {
       width: $entity-form-field-indexed-button-width !important;
-      background: $input-bg;
-      border: 1px solid $input-border-color;
-      border-right: 0;
+      background: $input-bg !important;
+      border: 1px solid $input-border-color !important;
+      border-right: 0 !important;
+    }
+    &:hover {
+      .webix_icon {
+        margin-left: 2px;
+        color: black;
+        font-size: 13px;
+        width: 10px;
+      }
     }
   }
 }
 
 .entity_form__field--text {
   input, textarea {
-    transform: translateX($entity-form-field-indexed-button-width);
+    transform: translateX(18px);
     padding-left: 1px !important;
     border-left: 0 !important;
     &:focus {
@@ -479,7 +499,6 @@ $entity-form-field-indexed-button-width: 20px;
   overflow: initial;
 }
 
-$entity-form-field-type-button-width: 29px;
 .entity_form__field_type_button {
   transform: translateX(15px);
   width: $entity-form-field-type-button-width !important;
