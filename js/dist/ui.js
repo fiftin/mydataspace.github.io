@@ -2524,10 +2524,15 @@ UILayout.popups.fieldIndexed = {
       onItemClick: function(newv) {
         var fieldName = UI.entityForm.currentFieldName;
         var fieldId = 'entity_form__' + fieldName;
+        $$(fieldId + '_indexed').setValue(newv);
         $$('entity_form__field_indexed_popup').hide();
+				var oldValues = webix.copy($$('entity_form')._values);
+				delete oldValues['fields.' + fieldName + '.value'];
+
         $$('entity_form__' + fieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS[newv]);
         $$('entity_form__' + fieldName + '_indexed_button').refresh();
-        $$(fieldId + '_indexed').setValue(newv);
+
+				$$('entity_form')._values = oldValues;
       }
     }
 	}
