@@ -2528,10 +2528,8 @@ UILayout.popups.fieldIndexed = {
         $$('entity_form__field_indexed_popup').hide();
 				var oldValues = webix.copy($$('entity_form')._values);
 				delete oldValues['fields.' + fieldName + '.value'];
-
         $$('entity_form__' + fieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS[newv]);
         $$('entity_form__' + fieldName + '_indexed_button').refresh();
-
 				$$('entity_form')._values = oldValues;
       }
     }

@@ -162,8 +162,9 @@
         simpleFormat: false,
         connected: function() {
           UI.initConnection();
-          if (isValidJWT(localStorage.getItem('authToken'))) {
-              UI.refresh();
+          if (!isValidJWT(localStorage.getItem('authToken'))) {
+              // UI.refresh();
+              UI.pages.refreshPage('data', true);
           }
         }
       });
