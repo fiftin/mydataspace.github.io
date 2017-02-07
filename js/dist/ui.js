@@ -3523,11 +3523,11 @@ UI = {
                   if (newv === 'j') {
                     $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').disable();
                     var fieldIndexed = $$(fieldId + '_indexed').getValue();
-                    $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS[fieldIndexed]);
+                    $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS['fulltext']);
                     $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').refresh();
                   } else {
                     $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').enable();
-                    $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS['fulltext']);
+                    $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS[fieldIndexed || 'none']);
                     $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').refresh();
                   }
                 }

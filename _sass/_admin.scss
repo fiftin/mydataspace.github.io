@@ -454,6 +454,10 @@ $entity-form-field-type-button-width: 29px;
     width: 10px;
     transition: color 0.3s;
   }
+  .fa-ban {
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
   button {
     &, &:hover, &:focus, &:active {
       width: $entity-form-field-indexed-button-width !important;
@@ -461,6 +465,13 @@ $entity-form-field-type-button-width: 29px;
       border: 1px solid $input-border-color !important;
       border-right: 0 !important;
     }
+
+    &:hover, &:focus, &:active {
+      .fa-ban {
+        opacity: 1;
+      }
+    }
+
     &:hover {
       .webix_icon {
         margin-left: 2px;
@@ -491,6 +502,11 @@ $entity-form-field-type-button-width: 29px;
   &:hover {
     .entity_form__field_delete {
       opacity: 1;
+    }
+    .entity_form__field_indexed_button {
+      .fa-ban {
+        opacity: 1;
+      }
     }
   }
 }
