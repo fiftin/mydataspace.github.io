@@ -343,16 +343,20 @@ UIHelper = {
    return depth;
   },
 
+  isProtoPath: function(path) {
+    if (path == null) {
+      return false;
+    }
+    return path.startsWith('protos/') &&
+           UIHelper.getEntityDepthByPath(path) === 2;
+  },
+
   isProto: function(id) {
     if (id == null) {
       return false;
     }
     var identity = Identity.dataFromId(id);
-    if (identity.path == null) {
-      return false;
-    }
-    return identity.path.startsWith('protos/') &&
-           UIHelper.getEntityDepthByPath(identity.path) === 2;
+    return UIHelper.isProtoPath(identity.path);
   },
 
   popupCenter: function(url, title, w, h) {
@@ -406,9 +410,9 @@ var Fields = {
   MAX_STRING_FIELD_LENGTH: 1000,
   MAX_TEXT_FIELD_LENGTH: 1000000,
   FIELD_INDEXED_ICONS: {
-    'true': 'sort-alpha-asc', // 'sort-alpha-asc', 'sort-amount-asc',
+    'on': 'sort-alpha-asc', // 'sort-alpha-asc', 'sort-amount-asc',
     'fulltext': 'text-height',
-    'none': 'ban'
+    'off': 'ban'
   },
 
   FIELD_TYPES: {
@@ -1208,7 +1212,7 @@ EntityForm.prototype.setData = function(data) {
   if (MDSCommon.isBlank(data.path)) { // root entity
     this.addRootFields(data.fields);
   } else {
-    this.addFields(data.fields);
+    this.addFields(data.fields, false, UIHelper.isProtoPath(data.path));
   }
   this.setClean();
   $$('entity_view').hide();
@@ -1351,9 +1355,9 @@ EntityForm.prototype.clear = function() {
   }
 };
 
-EntityForm.prototype.addFields = function(fields, setDirty) {
+EntityForm.prototype.addFields = function(fields, setDirty, isProto) {
   for (var i in fields) {
-    this.addField(fields[i], setDirty);
+    this.addField(fields[i], setDirty, isProto);
   }
 };
 
@@ -1398,7 +1402,7 @@ EntityForm.prototype.addRootFields = function(fields, setDirty) {
     if (ROOT_FIELDS.indexOf(fields[i].name) >= 0) {
       this.addRootField(fields[i], setDirty);
     } else {
-      this.addField(fields[i], setDirty);
+      this.addField(fields[i], setDirty, false);
     }
   }
 };
@@ -1548,7 +1552,7 @@ EntityForm.prototype.addRootField = function(data) {
   });
 };
 
-EntityForm.prototype.addField = function(data, setDirty) {
+EntityForm.prototype.addField = function(data, setDirty, isProto) {
   if (typeof $$('entity_form__' + data.name) !== 'undefined') {
     throw new Error('Field with this name already exists');
   }
@@ -1643,10 +1647,10 @@ EntityForm.prototype.addField = function(data, setDirty) {
       { view: 'button',
         width: 10,
         type: 'iconButton',
-        icon: Fields.FIELD_INDEXED_ICONS[data.type === 'j' ? 'fulltext' : (data.indexed || 'none').toString()],
+        icon: !isProto ? null : Fields.FIELD_INDEXED_ICONS[data.type === 'j' ? 'fulltext' : (data.indexed || 'off').toString()],
         css: 'entity_form__field_indexed_button',
         popup: 'entity_form__field_indexed_popup',
-        disabled: data.type === 'j',
+        disabled: !isProto || data.type === 'j',
         id: 'entity_form__' + data.name + '_indexed_button',
         on: {
           onItemClick: function() {
@@ -3527,7 +3531,7 @@ UI = {
                     $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').refresh();
                   } else {
                     $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').enable();
-                    $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS[fieldIndexed || 'none']);
+                    $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS[fieldIndexed || 'off']);
                     $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').refresh();
                   }
                 }
@@ -3578,9 +3582,9 @@ UI = {
             class: 'entity_form__field_indexed_list',
             borderless: true,
     		data:[
-              { id: 'true', value: 'Search &amp; Order', icon: Fields.FIELD_INDEXED_ICONS['true'] },
+              { id: 'on', value: 'Search &amp; Order', icon: Fields.FIELD_INDEXED_ICONS['on'] },
               { id: 'fulltext', value: 'Fulltext Search', icon: Fields.FIELD_INDEXED_ICONS['fulltext'] },
-              { id: 'none', value: 'None', icon: Fields.FIELD_INDEXED_ICONS['none'] },
+              { id: 'off', value: 'None', icon: Fields.FIELD_INDEXED_ICONS['off'] },
     		],
     		datatype: 'json',
     		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
@@ -3588,10 +3592,12 @@ UI = {
     		select: true,
         on: {
           onItemClick: function(newv) {
+            var fieldName = UI.entityForm.currentFieldName;
+            var fieldId = 'entity_form__' + fieldName;
             $$('entity_form__field_indexed_popup').hide();
-            $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS[newv]);
-            $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').refresh();
-
+            $$('entity_form__' + fieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS[newv]);
+            $$('entity_form__' + fieldName + '_indexed_button').refresh();
+            $$(fieldId + '_indexed').setValue(newv);
           }
         }
     	}

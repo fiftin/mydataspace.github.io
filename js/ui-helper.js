@@ -87,16 +87,20 @@ UIHelper = {
    return depth;
   },
 
+  isProtoPath: function(path) {
+    if (path == null) {
+      return false;
+    }
+    return path.startsWith('protos/') &&
+           UIHelper.getEntityDepthByPath(path) === 2;
+  },
+
   isProto: function(id) {
     if (id == null) {
       return false;
     }
     var identity = Identity.dataFromId(id);
-    if (identity.path == null) {
-      return false;
-    }
-    return identity.path.startsWith('protos/') &&
-           UIHelper.getEntityDepthByPath(identity.path) === 2;
+    return UIHelper.isProtoPath(identity.path);
   },
 
   popupCenter: function(url, title, w, h) {
