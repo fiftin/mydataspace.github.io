@@ -834,7 +834,7 @@ EntityForm.prototype.addField = function(data, setDirty) {
 
   $$('entity_form').addView({
     id: 'entity_form__' + data.name,
-    css: 'entity_form__field',
+    css: 'entity_form__field entity_form__field--text',
     cols: [
       { view: 'text',
         value: data.name,

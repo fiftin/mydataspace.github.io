@@ -452,11 +452,11 @@ $entity-form-field-indexed-button-width: 20px;
   }
 }
 
-.entity_form__field {
-  input {
+.entity_form__field--text {
+  input, textarea {
     transform: translateX($entity-form-field-indexed-button-width);
-    padding-left: 1px;
-    border-left: 0;
+    padding-left: 1px !important;
+    border-left: 0 !important;
     &:focus {
       border-left: 0;
     }
