@@ -635,11 +635,10 @@ EntityForm.prototype.addRootFields = function(fields, setDirty) {
     'name',
     'tags',
     'websiteURL',
-    'description',
-    // 'readme'
+    'description'
   ];
 
-  fields.sort(function(x, y) {
+  fields.sort (function(x, y) {
     var xIndex = ROOT_FIELDS.indexOf(x.name);
     var yIndex = ROOT_FIELDS.indexOf(y.name);
     if (xIndex >= 0 && yIndex < 0) {
