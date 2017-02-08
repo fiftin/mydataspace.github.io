@@ -636,7 +636,7 @@ EntityForm.prototype.addRootFields = function(fields, setDirty) {
     'tags',
     'websiteURL',
     'description',
-    'readme'
+    // 'readme'
   ];
 
   fields.sort(function(x, y) {
