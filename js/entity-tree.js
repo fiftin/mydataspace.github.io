@@ -110,7 +110,9 @@ EntityTree.prototype.refresh = function() {
   var self = this;
   $$('entity_tree').disable();
   if (Router.isEmpty()) {
-    self.requestRoots(true, {});
+    if (Mydataspace.isLoggedIn()) {
+      self.requestRoots(true, {});
+    }
   } else if (Router.isSearch()) {
     self.requestRoots(Router.isMe(), {
       search: Router.getSearch()
