@@ -93,6 +93,7 @@ UI = {
   error: function(err) {
     switch (err.name) {
       case 'NotAuthorizedErr':
+      case 'NotAuthorized':
         break;
       default:
         webix.message({ type: 'error', text: err.message || err.name });
