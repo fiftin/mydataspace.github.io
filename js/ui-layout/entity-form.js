@@ -36,10 +36,10 @@ UILayout.entityForm =
       },
       { view: 'button',
         type: 'icon',
-        icon: 'play',
+        icon: 'bug',
         id: 'RUN_SCRIPT_LABEL', label: STRINGS.RUN_SCRIPT,
         hidden: true,
-        width: 60,
+        width: 80,
         hidden: true,
         click: function() {
           UIHelper.popupCenter('/run-script.html', 'Run Script', 600, 400);

@@ -6,7 +6,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SHOW_MORE: 'Show more...',
     EDIT_SCRIPT: 'Edit Script:',
     SAVE_ENTITY: 'Save Entity',
-    RUN_SCRIPT: 'Run',
+    RUN_SCRIPT: 'Debug',
     ONLY_READ: 'Only Read',
     ADD_ENTITY: 'New Entity',
     SEARCH: 'Search...',
@@ -87,7 +87,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SHOW_MORE: 'Показать ещё...',
     EDIT_SCRIPT: 'Ред. скрипта:',
     SAVE_ENTITY: 'Сохранить элемент',
-    RUN_SCRIPT: 'Вып.',
+    RUN_SCRIPT: 'Отл.',
     ONLY_READ: 'Только читать',
     ADD_ENTITY: 'Новый эл-т',
     SEARCH: 'Поиск...',
@@ -2715,7 +2715,8 @@ UILayout.header =
         id: 'GET_STARTED_LABEL',
         label: STRINGS.GET_STARTED,
         click: function() {
-          location.href = 'get-started';
+          window.open('/get-started', '_blank');
+          // location.href = 'get-started';
         }
       },
       { view: 'button',
@@ -2724,7 +2725,8 @@ UILayout.header =
         id: 'DEMOS_LABEL',
         label: STRINGS.DEMOS,
         click: function() {
-          location.href = 'demos';
+          window.open('/demos', '_blank');
+          // location.href = 'demos';
         }
       },
       { view: 'button',
@@ -2733,7 +2735,8 @@ UILayout.header =
         id: 'DOCS_LABEL',
         label: STRINGS.DOCS,
         click: function() {
-          location.href = 'docs';
+          window.open('/docs', '_blank');
+          // location.href = 'docs';
         }
       },
       { width: 10, css: 'menu__spacer' },
@@ -3074,10 +3077,10 @@ UILayout.entityForm =
       },
       { view: 'button',
         type: 'icon',
-        icon: 'play',
+        icon: 'bug',
         id: 'RUN_SCRIPT_LABEL', label: STRINGS.RUN_SCRIPT,
         hidden: true,
-        width: 60,
+        width: 80,
         hidden: true,
         click: function() {
           UIHelper.popupCenter('/run-script.html', 'Run Script', 600, 400);
@@ -3409,6 +3412,7 @@ UI = {
   error: function(err) {
     switch (err.name) {
       case 'NotAuthorizedErr':
+      case 'NotAuthorized':
         break;
       default:
         webix.message({ type: 'error', text: err.message || err.name });

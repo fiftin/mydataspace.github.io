@@ -8,7 +8,8 @@ UILayout.header =
         id: 'GET_STARTED_LABEL',
         label: STRINGS.GET_STARTED,
         click: function() {
-          location.href = 'get-started';
+          window.open('/get-started', '_blank');
+          // location.href = 'get-started';
         }
       },
       { view: 'button',
@@ -17,7 +18,8 @@ UILayout.header =
         id: 'DEMOS_LABEL',
         label: STRINGS.DEMOS,
         click: function() {
-          location.href = 'demos';
+          window.open('/demos', '_blank');
+          // location.href = 'demos';
         }
       },
       { view: 'button',
@@ -26,7 +28,8 @@ UILayout.header =
         id: 'DOCS_LABEL',
         label: STRINGS.DOCS,
         click: function() {
-          location.href = 'docs';
+          window.open('/docs', '_blank');
+          // location.href = 'docs';
         }
       },
       { width: 10, css: 'menu__spacer' },
