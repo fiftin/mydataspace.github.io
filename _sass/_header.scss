@@ -90,18 +90,54 @@
 
 .header__search_input {
   border: 0;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.3);
   border-radius: 100px;
-  color: white;
+  color: transparent;
   padding-left: 20px !important;
   padding-right: 20px !important;
   width: 100% !important;
   text-align: center;
-  transition: background 200ms;
+  transition: background-color 200ms;
+  background-image: url('/images/icons/search.svg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 25px 25px;
+  opacity: 0.3;
+
   &:focus {
     background: white;
     color: black;
     text-align: left;
+    opacity: 1;
+    // padding-left: 40px !important;
+    background-size: 25px 25px;
+    background-position: 10px center;
+    // background-image: url('/images/icons/search-black.svg');
+
+    &::-webkit-input-placeholder {
+      color: gray;
+    }
+    &:-ms-input-placeholder {
+      color: gray;
+    }
+
+    &::-moz-placeholder {
+      color: gray;
+      opacity: 1;
+    }
+
+  }
+
+  &::-webkit-input-placeholder {
+    color: transparent;
+  }
+
+  &:-ms-input-placeholder {
+    color: transparent;
+  }
+
+  &::-moz-placeholder {
+    color: transparent;
   }
 }
 
