@@ -20,7 +20,8 @@ module.exports = function(config) {
       'js/strings.js',
       'js/fields.js',
       'js/identity.js',
-      'js/ui-helper.js'
+      'js/ui-helper.js',
+      'js/router.js'
     ],
 
 
@@ -60,7 +61,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['jsdom'],
+    browsers: ['Chrome'],
 
 
     // Continuous Integration mode

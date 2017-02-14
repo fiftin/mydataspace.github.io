@@ -354,12 +354,12 @@ UI = {
       if (Router.isEmpty() || Router.isMe()) {
         $$('entity_tree__root_scope').define('icon', 'user');
         $$('entity_tree__search').setValue(Router.getSearch());
-      } else if (Router.isRoot()) {
-        $$('entity_tree__root_scope').define('icon', 'edit');
-        $$('entity_tree__search').setValue(Router.getRoot());
       } else if (Router.isSearch()) {
         $$('entity_tree__root_scope').define('icon', 'globe');
         $$('entity_tree__search').setValue(Router.getSearch());
+      } else if (Router.isRoot() || Router.isFilterByName()) {
+        $$('entity_tree__root_scope').define('icon', 'edit');
+        $$('entity_tree__search').setValue(Router.getRoot());
       }
       $$('entity_tree__root_scope').refresh();
     }

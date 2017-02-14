@@ -117,6 +117,10 @@ EntityTree.prototype.refresh = function() {
     self.requestRoots(Router.isMe(), {
       search: Router.getSearch()
     });
+  } else if (Router.isFilterByName()) {
+    self.requestRoots(Router.isMe(), {
+      filterByName: Router.getSearch()
+    });
   } else if (Router.isRoot()) {
     Mydataspace.request('entities.get', {
       root: Router.getRoot(),

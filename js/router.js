@@ -4,26 +4,63 @@ var Router = {
            window.location.hash === '' ||
            window.location.hash === '#';
   },
+
+  getCommonSearchParts: function() {
+    if (Router.isEmpty()) {
+      return null;
+    }
+    var parts = window.location.hash.substring(1).split(':');
+    var ret = {};
+    if (parts.length === 1) {
+      ret.search = parts[0];
+    } else if (parts.length === 2) {
+      ret.user = parts[0];
+      ret.search = parts[1];
+    } else {
+      throw new Error('Illegal route');
+    }
+    return ret;
+  },
+
+  isSearch: function() {
+    var parts = Router.getCommonSearchParts();
+    if (parts == null || MDSCommon.isBlank(parts.search) || parts.search === '*') {
+      return false;
+    }
+    var s = parts.search;
+    return s.indexOf('*') === 0 && s.lastIndexOf('*') === s.length - 1;
+  },
+
   /**
    * Route links to single root.
    */
   isRoot: function() {
-    return !Router.isEmpty() && window.location.hash.indexOf('*') < 0;
+    var parts = Router.getCommonSearchParts();
+    return parts != null && MDSCommon.isPresent(parts.search) && parts.search.indexOf('*') < 0;
   },
+
   getRoot: function() {
     return window.location.hash.substring(1);
   },
-  isSearch: function() {
-    return !Router.isEmpty() && !Router.isRoot();
-  },
-  getSearch: function() {
-    var s = window.location.hash.substring(1);
-    if (Router.isMe()) {
-      s = s.substring(3);
+
+  isFilterByName: function() {
+    var parts = Router.getCommonSearchParts();
+    if (parts == null || MDSCommon.isBlank(parts.search)) {
+      return false;
     }
-    return s.replace(/\*/g, '');
+    return parts.search.indexOf('*') === parts.search.length - 1;
   },
+
+  getSearch: function() {
+    var parts = Router.getCommonSearchParts();
+    if (parts == null) {
+      return '';
+    }
+    return parts.search.replace(/\*/g, '');
+  },
+
   isMe: function() {
-    return window.location.hash.indexOf('#me:') === 0;
+    var parts = Router.getCommonSearchParts();
+    return parts != null && parts.user === 'me';
   }
 };
