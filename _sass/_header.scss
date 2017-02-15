@@ -76,12 +76,12 @@
 .header__logo_text {
   float: left;
   margin-top: 9px;
-  margin-left: 15px;
+  // margin-left: 15px;
 }
 
 .header__search_wrap {
-  width: calc(100% - 800px);
-  margin-left: 120px;
+  width: calc(100% - 750px);
+  margin-left: 50px;
   .form-group {
     width: 100%;
   }
@@ -210,11 +210,9 @@
     margin-bottom: 15px;
     font-size: $font-size-base
   }
-}
 
-@media (max-width: $screen-xs-min) {
   .header__logo_text {
-    display: none;
+    margin-left: 0;
   }
 }
 
@@ -234,5 +232,11 @@
 
   .intro {
     margin-top: 120px;
+  }
+}
+
+@media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+  .header__search_input {
+    width: 220px !important;
   }
 }

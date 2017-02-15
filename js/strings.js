@@ -133,7 +133,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     REALLY_DELETE_APP: 'Вы действительно хотите удалить это приложение?',
     DOCS: 'Документация',
     DEMOS: 'Примеры',
-    GET_STARTED: 'С чего начать',
+    GET_STARTED: 'Для начала',
     SIGN_IN: 'Войти',
     NOTHING: 'Ничего',
     READ_AND_VIEW_CHILDREN: 'Чтение и просм. доч. эл.',
