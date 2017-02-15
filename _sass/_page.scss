@@ -1,3 +1,9 @@
+@media (min-width: $screen-md-min) {
+  .default_main {
+    min-height: calc(100% - 288px);
+  }
+}
+
 .page__section:not(:first-child) {
   margin-top: 70px;
 }
