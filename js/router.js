@@ -40,7 +40,8 @@ var Router = {
   },
 
   getRoot: function() {
-    return window.location.hash.substring(1);
+    var parts = Router.getCommonSearchParts();
+    return parts.search;
   },
 
   isFilterByName: function() {
