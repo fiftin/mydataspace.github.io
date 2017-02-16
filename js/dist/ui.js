@@ -1161,7 +1161,7 @@ EntityForm.prototype.setEntityView = function(data) {
           break;
         case 'image':
           document.getElementById('view__overview_icon').parentNode.innerHTML =
-            '<img src="' + resoucesHost + '/previews/sm/' + resourceName + '.jpg" class="view__overview_image" />';
+            '<img src="' + resoucesHost + '/images/sm/' + resourceName + '.jpg" class="view__overview_image" />';
           break;
         default:
           document.getElementById('view__overview_icon').className =
