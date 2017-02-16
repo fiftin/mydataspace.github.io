@@ -675,32 +675,44 @@ EntityForm.prototype.addRootFields = function(fields, setDirty) {
 };
 
 EntityForm.prototype.onUploadAvatar = function(event) {
-  var formData = new FormData();
-  var file = event.target.files[0];
-  if (!file.type.match('image.*')) {
-    alert('Only images');
-    return;
-  }
-  formData.append('root', Identity.dataFromId(this.selectedId).root);
-  formData.append('type', 'avatar');
-  formData.append('file', file);
-  $.ajax({
-    url: Mydataspace.options.apiURL + '/v1/entities/upload',
-    type: 'POST',
-    data: formData,
-    processData: false,
-    contentType: false,
-    cache: false,
-    headers: {
-      authorization: 'Bearer ' + localStorage.getItem('authToken')
+  UI.onUploadFile(
+    event.target.files[0],
+    Identity.dataFromId(this.selectedId).root,
+    'avatar',
+    function(res) {
+      var entityName = res.resources[0];
+      $$('entity_form__root_avatar_value').setValue(entityName);
+      $('#entity_form__root_img').prop('src', Mydataspace.options.apiURL + '/avatars/sm/' + entityName + '.png');    },
+    function(err) {
+      console.log(err);
     }
-  }).done(function(res) {
-    var entityName = res.resources[0];
-    $$('entity_form__root_avatar_value').setValue(entityName);
-    $('#entity_form__root_img').prop('src', Mydataspace.options.apiURL + '/avatars/sm/' + entityName + '.png');
-  }).fail(function(err) {
-    console.log(err);
-  });
+  );
+  // var formData = new FormData();
+  // var file = event.target.files[0];
+  // if (!file.type.match('image.*')) {
+  //   alert('Only images');
+  //   return;
+  // }
+  // formData.append('root', Identity.dataFromId(this.selectedId).root);
+  // formData.append('type', 'avatar');
+  // formData.append('file', file);
+  // $.ajax({
+  //   url: Mydataspace.options.apiURL + '/v1/entities/upload',
+  //   type: 'POST',
+  //   data: formData,
+  //   processData: false,
+  //   contentType: false,
+  //   cache: false,
+  //   headers: {
+  //     authorization: 'Bearer ' + localStorage.getItem('authToken')
+  //   }
+  // }).done(function(res) {
+  //   var entityName = res.resources[0];
+  //   $$('entity_form__root_avatar_value').setValue(entityName);
+  //   $('#entity_form__root_img').prop('src', Mydataspace.options.apiURL + '/avatars/sm/' + entityName + '.png');
+  // }).fail(function(err) {
+  //   console.log(err);
+  // });
 };
 
 EntityForm.prototype.addRootField = function(data) {

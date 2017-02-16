@@ -8,7 +8,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SAVE_ENTITY: 'Save Entity',
     RUN_SCRIPT: 'Debug',
     ONLY_READ: 'Only Read',
-    ADD_ENTITY: 'New Entity',
+    ADD_ENTITY: 'New',
     SEARCH: 'Search...',
     DELETE_ENTITY: 'Delete Entity',
     DELETE_ENTITY_SHORT: 'Delete',
@@ -63,7 +63,13 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     CANCEL_ENTITY: 'View',
     SIGN_OUT: 'Log Out',
     SEARCH_BY_ROOTS: 'All yours',
-    SEARCH_BY_ENTITIES: 'Filter by name...',
+    SEARCH_BY_ENTITIES: 'Search',
+    ADD_RESOURCE_WINDOW: 'New Resource',
+    ADD_RESOURCE_FILE: 'File',
+    ADD_RESOURCE_TYPE: 'Type',
+    AVATAR: 'Avatar',
+    IMAGE: 'Image',
+    FILE: 'File',
     ROOT_FIELDS: {
       avatar: 'Icon',
       name: 'Name',
@@ -89,7 +95,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SAVE_ENTITY: 'Сохранить элемент',
     RUN_SCRIPT: 'Отл.',
     ONLY_READ: 'Только читать',
-    ADD_ENTITY: 'Новый эл-т',
+    ADD_ENTITY: 'Новый',
     SEARCH: 'Поиск...',
     DELETE_ENTITY: 'Удалить элемент',
     DELETE_ENTITY_SHORT: 'Удал.',
@@ -145,7 +151,13 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     CANCEL_ENTITY: 'Пр.',
     SIGN_OUT: 'Выход',
     SEARCH_BY_ROOTS: 'Поиск по корням...',
-    SEARCH_BY_ENTITIES: 'Фильтр по имени...'
+    SEARCH_BY_ENTITIES: 'Фильтр по имени...',
+    ADD_RESOURCE_WINDOW: 'Добавить ресурс',
+    ADD_RESOURCE_FILE: 'Файл',
+    ADD_RESOURCE_TYPE: 'Тип',
+    AVATAR: 'Аватар',
+    IMAGE: 'Картинка',
+    FILE: 'Файл'
   }
 };
 

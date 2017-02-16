@@ -107,6 +107,36 @@ UI = {
     UI.pages.refreshPage('data', true);
   },
 
+  /**
+   * Handler of upload resouce-file event for file input.
+   * @param fileInput Input file
+   * @param root Root for resurce
+   * @param type Type of resource - avatar, image or file
+   * @param done Success upload feedback
+   * @param fial Unsuccess upload feedback
+   */
+  uploadResource: function(fileInput, root, type, done, fail) {
+    var formData = new FormData();
+    if ((type === 'avatar' || type === 'image') && !fileInput.type.match('image.*')) {
+      alert('Only images');
+      return;
+    }
+    formData.append('root', root);
+    formData.append('type', type);
+    formData.append('file', fileInput);
+    $.ajax({
+      url: Mydataspace.options.apiURL + '/v1/entities/upload',
+      type: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      cache: false,
+      headers: {
+        authorization: 'Bearer ' + localStorage.getItem('authToken')
+      }
+    }).done(done).fail(fail);
+  },
+
   //
   // Apps
   //
@@ -306,6 +336,7 @@ UI = {
     webix.ui(UILayout.windows.addEntity);
     webix.ui(UILayout.windows.addField);
     webix.ui(UILayout.windows.addApp);
+    webix.ui(UILayout.windows.addResource);
 		webix.ui(UILayout.sideMenu);
 
     //

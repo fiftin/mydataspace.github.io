@@ -8,9 +8,16 @@ UILayout.entityList =
           type: 'icon',
           icon: 'plus',
           id: 'ADD_ENTITY_LABEL', label: STRINGS.ADD_ENTITY,
-          width: 110,
+          width: 80,
           click: function() {
-            $$('add_entity_window').show();
+            switch (UIHelper.getEntityTypeByPath(Identity.dataFromId(UI.entityTree.getCurrentId()).path)) {
+              case 'resources':
+                $$('add_resource_window').show();
+                break;
+              default:
+                $$('add_entity_window').show();
+                break;
+            }
           }
         },
         { view: 'button',

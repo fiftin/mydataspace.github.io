@@ -8,7 +8,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SAVE_ENTITY: 'Save Entity',
     RUN_SCRIPT: 'Debug',
     ONLY_READ: 'Only Read',
-    ADD_ENTITY: 'New Entity',
+    ADD_ENTITY: 'New',
     SEARCH: 'Search...',
     DELETE_ENTITY: 'Delete Entity',
     DELETE_ENTITY_SHORT: 'Delete',
@@ -63,7 +63,13 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     CANCEL_ENTITY: 'View',
     SIGN_OUT: 'Log Out',
     SEARCH_BY_ROOTS: 'All yours',
-    SEARCH_BY_ENTITIES: 'Filter by name...',
+    SEARCH_BY_ENTITIES: 'Search',
+    ADD_RESOURCE_WINDOW: 'New Resource',
+    ADD_RESOURCE_FILE: 'File',
+    ADD_RESOURCE_TYPE: 'Type',
+    AVATAR: 'Avatar',
+    IMAGE: 'Image',
+    FILE: 'File',
     ROOT_FIELDS: {
       avatar: 'Icon',
       name: 'Name',
@@ -89,7 +95,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SAVE_ENTITY: 'Сохранить элемент',
     RUN_SCRIPT: 'Отл.',
     ONLY_READ: 'Только читать',
-    ADD_ENTITY: 'Новый эл-т',
+    ADD_ENTITY: 'Новый',
     SEARCH: 'Поиск...',
     DELETE_ENTITY: 'Удалить элемент',
     DELETE_ENTITY_SHORT: 'Удал.',
@@ -145,7 +151,13 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     CANCEL_ENTITY: 'Пр.',
     SIGN_OUT: 'Выход',
     SEARCH_BY_ROOTS: 'Поиск по корням...',
-    SEARCH_BY_ENTITIES: 'Фильтр по имени...'
+    SEARCH_BY_ENTITIES: 'Фильтр по имени...',
+    ADD_RESOURCE_WINDOW: 'Добавить ресурс',
+    ADD_RESOURCE_FILE: 'Файл',
+    ADD_RESOURCE_TYPE: 'Тип',
+    AVATAR: 'Аватар',
+    IMAGE: 'Картинка',
+    FILE: 'Файл'
   }
 };
 
@@ -686,7 +698,9 @@ UIControls = {
       labelWidth: UIHelper.LABEL_WIDTH
     };
   },
-
+  /**
+   * Returns object with initialized event handlers for typical modal dialog.
+   */
   getOnForFormWindow: function(id) {
     var formId = id + '_form';
     var windowId = id + '_window';
@@ -1444,32 +1458,44 @@ EntityForm.prototype.addRootFields = function(fields, setDirty) {
 };
 
 EntityForm.prototype.onUploadAvatar = function(event) {
-  var formData = new FormData();
-  var file = event.target.files[0];
-  if (!file.type.match('image.*')) {
-    alert('Only images');
-    return;
-  }
-  formData.append('root', Identity.dataFromId(this.selectedId).root);
-  formData.append('type', 'avatar');
-  formData.append('file', file);
-  $.ajax({
-    url: Mydataspace.options.apiURL + '/v1/entities/upload',
-    type: 'POST',
-    data: formData,
-    processData: false,
-    contentType: false,
-    cache: false,
-    headers: {
-      authorization: 'Bearer ' + localStorage.getItem('authToken')
+  UI.onUploadFile(
+    event.target.files[0],
+    Identity.dataFromId(this.selectedId).root,
+    'avatar',
+    function(res) {
+      var entityName = res.resources[0];
+      $$('entity_form__root_avatar_value').setValue(entityName);
+      $('#entity_form__root_img').prop('src', Mydataspace.options.apiURL + '/avatars/sm/' + entityName + '.png');    },
+    function(err) {
+      console.log(err);
     }
-  }).done(function(res) {
-    var entityName = res.resources[0];
-    $$('entity_form__root_avatar_value').setValue(entityName);
-    $('#entity_form__root_img').prop('src', Mydataspace.options.apiURL + '/avatars/sm/' + entityName + '.png');
-  }).fail(function(err) {
-    console.log(err);
-  });
+  );
+  // var formData = new FormData();
+  // var file = event.target.files[0];
+  // if (!file.type.match('image.*')) {
+  //   alert('Only images');
+  //   return;
+  // }
+  // formData.append('root', Identity.dataFromId(this.selectedId).root);
+  // formData.append('type', 'avatar');
+  // formData.append('file', file);
+  // $.ajax({
+  //   url: Mydataspace.options.apiURL + '/v1/entities/upload',
+  //   type: 'POST',
+  //   data: formData,
+  //   processData: false,
+  //   contentType: false,
+  //   cache: false,
+  //   headers: {
+  //     authorization: 'Bearer ' + localStorage.getItem('authToken')
+  //   }
+  // }).done(function(res) {
+  //   var entityName = res.resources[0];
+  //   $$('entity_form__root_avatar_value').setValue(entityName);
+  //   $('#entity_form__root_img').prop('src', Mydataspace.options.apiURL + '/avatars/sm/' + entityName + '.png');
+  // }).fail(function(err) {
+  //   console.log(err);
+  // });
 };
 
 EntityForm.prototype.addRootField = function(data) {
@@ -2543,6 +2569,73 @@ UILayout.windows.editScript = {
   }
 };
 
+UILayout.windows.addResource = {
+    view: 'window',
+    id: 'add_resource_window',
+    width: 350,
+    position: 'center',
+    modal: true,
+    head: STRINGS.ADD_RESOURCE_WINDOW,
+    on: UIControls.getOnForFormWindow('add_resource'),
+    body: {
+      view: 'form',
+      id: 'add_resource_form',
+      borderless: true,
+      on: {
+        onSubmit: function() {
+          if ($$('add_resource_form').validate()) {
+            var formData = $$('add_resource_form').getValues();
+            var newEntityId = Identity.childId(UI.entityList.getRootId(), 'test');
+            var data = Identity.dataFromId(newEntityId);
+            UI.uploadResource(
+              document.getElementById('add_resource_form__file').files[0],
+              data.root,
+              formData.type,
+              function(res) {
+                console.log(res);
+              },
+              function(err) {
+                console.error(err);
+              });
+          }
+        }
+      },
+
+      elements: [
+        {
+          cols: [
+            { view: 'label',
+              id: 'ADD_RESOURCE_FILE',
+              required: true,
+              label: STRINGS.ADD_RESOURCE_FILE,
+              width: UIHelper.LABEL_WIDTH
+            },
+            {
+              template: ' <input type="file" ' +
+                        '        id="add_resource_form__file" ' +
+                        '        required />',
+              css: 'add_resource_form__file_wrap'
+            }
+          ]
+        },
+        {
+          view: 'combo',
+          label: STRINGS.ADD_RESOURCE_TYPE,
+          name: 'type',
+          value: 'file',
+          options: [
+            { id: 'avatar', value: STRINGS.AVATAR },
+            { id: 'image', value: STRINGS.IMAGE },
+            { id: 'file', value: STRINGS.FILE }
+          ],
+          labelWidth: UIHelper.LABEL_WIDTH
+        },
+        UIControls.getEntityTypeSelectTemplate(),
+        UIControls.getSubmitCancelForFormWindow('add_resource')
+      ]
+    }
+};
+
 UILayout.popups.fieldIndexed = {
 	view: 'popup',
 	id: 'entity_form__field_indexed_popup',
@@ -2980,9 +3073,16 @@ UILayout.entityList =
           type: 'icon',
           icon: 'plus',
           id: 'ADD_ENTITY_LABEL', label: STRINGS.ADD_ENTITY,
-          width: 110,
+          width: 80,
           click: function() {
-            $$('add_entity_window').show();
+            switch (UIHelper.getEntityTypeByPath(Identity.dataFromId(UI.entityTree.getCurrentId()).path)) {
+              case 'resources':
+                $$('add_resource_window').show();
+                break;
+              default:
+                $$('add_entity_window').show();
+                break;
+            }
           }
         },
         { view: 'button',
@@ -3467,6 +3567,36 @@ UI = {
     UI.pages.refreshPage('data', true);
   },
 
+  /**
+   * Handler of upload resouce-file event for file input.
+   * @param fileInput Input file
+   * @param root Root for resurce
+   * @param type Type of resource - avatar, image or file
+   * @param done Success upload feedback
+   * @param fial Unsuccess upload feedback
+   */
+  uploadResource: function(fileInput, root, type, done, fail) {
+    var formData = new FormData();
+    if ((type === 'avatar' || type === 'image') && !fileInput.type.match('image.*')) {
+      alert('Only images');
+      return;
+    }
+    formData.append('root', root);
+    formData.append('type', type);
+    formData.append('file', fileInput);
+    $.ajax({
+      url: Mydataspace.options.apiURL + '/v1/entities/upload',
+      type: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      cache: false,
+      headers: {
+        authorization: 'Bearer ' + localStorage.getItem('authToken')
+      }
+    }).done(done).fail(fail);
+  },
+
   //
   // Apps
   //
@@ -3666,6 +3796,7 @@ UI = {
     webix.ui(UILayout.windows.addEntity);
     webix.ui(UILayout.windows.addField);
     webix.ui(UILayout.windows.addApp);
+    webix.ui(UILayout.windows.addResource);
 		webix.ui(UILayout.sideMenu);
 
     //

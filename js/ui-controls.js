@@ -31,7 +31,9 @@ UIControls = {
       labelWidth: UIHelper.LABEL_WIDTH
     };
   },
-
+  /**
+   * Returns object with initialized event handlers for typical modal dialog.
+   */
   getOnForFormWindow: function(id) {
     var formId = id + '_form';
     var windowId = id + '_window';
