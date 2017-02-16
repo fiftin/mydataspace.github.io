@@ -73,6 +73,7 @@ $view-field-value-max-height: 170px;
 .view__overview_image {
   width: 35px;
   height: 35px;
+  object-fit: cover;
 }
 
 .view__overview_image--medium {

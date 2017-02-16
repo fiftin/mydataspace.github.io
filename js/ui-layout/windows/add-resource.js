@@ -21,10 +21,22 @@ UILayout.windows.addResource = {
               data.root,
               formData.type,
               function(res) {
-                console.log(res);
+                $$('add_resource_window').hide();
+                UIControls.removeSpinnerFromWindow('add_resource_window');
               },
               function(err) {
-                console.error(err);
+                UIControls.removeSpinnerFromWindow('add_resource_window');
+                for (var i in err.errors) {
+                  var e = err.errors[i];
+                  // switch (e.type) {
+                  //   case 'unique violation':
+                  //     if (e.path === 'entities_root_path') {
+                  //       $$('add_resource_form').elements.name.define('invalidMessage', 'Name already exists');
+                  //       $$('add_resource_form').markInvalid('name', true);
+                  //     }
+                  //     break;
+                  // }
+                }
               });
           }
         }
