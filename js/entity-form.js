@@ -675,7 +675,7 @@ EntityForm.prototype.addRootFields = function(fields, setDirty) {
 };
 
 EntityForm.prototype.onUploadAvatar = function(event) {
-  UI.onUploadFile(
+  UI.uploadResource(
     event.target.files[0],
     Identity.dataFromId(this.selectedId).root,
     'avatar',
