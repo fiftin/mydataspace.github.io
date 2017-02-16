@@ -29,7 +29,7 @@ gulp.task('api', function() {
       './js/api/entities.js',
       './js/api/myda.js'
     ])
-    .pipe(concat('api.js'))
+    .pipe(concat('api-v2.js'))
     .pipe(gulp.dest('./js/dist/'));
 });
 
