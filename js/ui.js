@@ -382,15 +382,15 @@ UI = {
     });
 
     function updateTreeSearchScope() {
-      if (Router.isEmpty() || Router.isMe()) {
+      if (Router.isRoot() || Router.isFilterByName()) {
+        $$('entity_tree__root_scope').define('icon', 'edit');
+        $$('entity_tree__search').setValue(Router.getSearch(true));
+      } else if ((Router.isEmpty() || Router.isMe())) {
         $$('entity_tree__root_scope').define('icon', 'user');
         $$('entity_tree__search').setValue(Router.getSearch());
-      } else if (Router.isSearch()) {
+      } else {
         $$('entity_tree__root_scope').define('icon', 'globe');
         $$('entity_tree__search').setValue(Router.getSearch());
-      } else if (Router.isRoot() || Router.isFilterByName()) {
-        $$('entity_tree__root_scope').define('icon', 'edit');
-        $$('entity_tree__search').setValue(Router.getRoot());
       }
       $$('entity_tree__root_scope').refresh();
     }

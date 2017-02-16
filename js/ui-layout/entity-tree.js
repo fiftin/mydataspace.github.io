@@ -19,7 +19,6 @@ UILayout.entityTree =
           icon: 'user',
           css: 'entity_tree__search_button',
           popup: 'entity_tree__root_scope_popup',
-          // options: Fields.getFieldTypesAsArrayOfIdValue(),
           id: 'entity_tree__root_scope',
           on: {
             onItemClick: function() {

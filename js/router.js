@@ -24,7 +24,7 @@ var Router = {
 
   isSearch: function() {
     var parts = Router.getCommonSearchParts();
-    if (parts == null || MDSCommon.isBlank(parts.search) || parts.search === '*') {
+    if (parts == null || MDSCommon.isBlank(parts.search)) {
       return false;
     }
     var s = parts.search;
@@ -39,20 +39,19 @@ var Router = {
     return parts != null && MDSCommon.isPresent(parts.search) && parts.search.indexOf('*') < 0;
   },
 
-  getRoot: function() {
-    var parts = Router.getCommonSearchParts();
-    return parts.search;
-  },
-
   isFilterByName: function() {
     var parts = Router.getCommonSearchParts();
-    if (parts == null || MDSCommon.isBlank(parts.search)) {
+    if (parts == null || MDSCommon.isBlank(parts.search) || parts.search === '*') {
       return false;
     }
     return parts.search.indexOf('*') === parts.search.length - 1;
   },
 
-  getSearch: function() {
+  getSearch: function(raw) {
+    if (raw) {
+      return window.location.hash.substring(1);
+    }
+
     var parts = Router.getCommonSearchParts();
     if (parts == null) {
       return '';

@@ -123,7 +123,7 @@ EntityTree.prototype.refresh = function() {
     });
   } else if (Router.isRoot()) {
     Mydataspace.request('entities.get', {
-      root: Router.getRoot(),
+      root: Router.getSearch(),
       path: ''
     }, function(data) {
       if (data.mine) {

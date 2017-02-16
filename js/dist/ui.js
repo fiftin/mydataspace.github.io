@@ -262,7 +262,7 @@ var Router = {
 
   isSearch: function() {
     var parts = Router.getCommonSearchParts();
-    if (parts == null || MDSCommon.isBlank(parts.search) || parts.search === '*') {
+    if (parts == null || MDSCommon.isBlank(parts.search)) {
       return false;
     }
     var s = parts.search;
@@ -277,20 +277,19 @@ var Router = {
     return parts != null && MDSCommon.isPresent(parts.search) && parts.search.indexOf('*') < 0;
   },
 
-  getRoot: function() {
-    var parts = Router.getCommonSearchParts();
-    return parts.search;
-  },
-
   isFilterByName: function() {
     var parts = Router.getCommonSearchParts();
-    if (parts == null || MDSCommon.isBlank(parts.search)) {
+    if (parts == null || MDSCommon.isBlank(parts.search) || parts.search === '*') {
       return false;
     }
     return parts.search.indexOf('*') === parts.search.length - 1;
   },
 
-  getSearch: function() {
+  getSearch: function(raw) {
+    if (raw) {
+      return window.location.hash.substring(1);
+    }
+
     var parts = Router.getCommonSearchParts();
     if (parts == null) {
       return '';
@@ -2045,7 +2044,7 @@ EntityTree.prototype.refresh = function() {
     });
   } else if (Router.isRoot()) {
     Mydataspace.request('entities.get', {
-      root: Router.getRoot(),
+      root: Router.getSearch(),
       path: ''
     }, function(data) {
       if (data.mine) {
@@ -2956,7 +2955,6 @@ UILayout.entityTree =
           icon: 'user',
           css: 'entity_tree__search_button',
           popup: 'entity_tree__root_scope_popup',
-          // options: Fields.getFieldTypesAsArrayOfIdValue(),
           id: 'entity_tree__root_scope',
           on: {
             onItemClick: function() {
@@ -3855,15 +3853,15 @@ UI = {
     });
 
     function updateTreeSearchScope() {
-      if (Router.isEmpty() || Router.isMe()) {
+      if (Router.isRoot() || Router.isFilterByName()) {
+        $$('entity_tree__root_scope').define('icon', 'edit');
+        $$('entity_tree__search').setValue(Router.getSearch(true));
+      } else if ((Router.isEmpty() || Router.isMe())) {
         $$('entity_tree__root_scope').define('icon', 'user');
         $$('entity_tree__search').setValue(Router.getSearch());
-      } else if (Router.isSearch()) {
+      } else {
         $$('entity_tree__root_scope').define('icon', 'globe');
         $$('entity_tree__search').setValue(Router.getSearch());
-      } else if (Router.isRoot() || Router.isFilterByName()) {
-        $$('entity_tree__root_scope').define('icon', 'edit');
-        $$('entity_tree__search').setValue(Router.getRoot());
       }
       $$('entity_tree__root_scope').refresh();
     }
