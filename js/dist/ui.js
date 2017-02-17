@@ -1153,15 +1153,15 @@ EntityForm.prototype.setEntityView = function(data) {
     if (entityType === 'resource') {
       const resourceType = MDSCommon.findValueByName(data.fields, 'type');
       const resourceName = MDSCommon.getPathName(data.path);
-      const resoucesHost = Mydataspace.options.apiURL;
+      const resourcesHost = Mydataspace.options.apiURL;
       switch (resourceType) {
         case 'avatar':
           document.getElementById('view__overview_icon').parentNode.innerHTML =
-            '<img src="' + resoucesHost + '/avatars/sm/' + resourceName + '.png" class="view__overview_image" />';
+            '<img src="' + resourcesHost + '/avatars/sm/' + resourceName + '.png" class="view__overview_image" />';
           break;
         case 'image':
           document.getElementById('view__overview_icon').parentNode.innerHTML =
-            '<img src="' + resoucesHost + '/images/sm/' + resourceName + '.jpg" class="view__overview_image" />';
+            '<img src="' + resourcesHost + '/images/sm/' + resourceName + '.jpg" class="view__overview_image" />';
           break;
         default:
           document.getElementById('view__overview_icon').className =
@@ -1781,7 +1781,7 @@ EntityList.prototype.listen = function() {
     }
 
     if (entityId === this.getCurrentId()) { // Select other item if selected item is deleted.
-      let nextId = $$('entity_list').getPrevId(entityId) || $$('entity_list').getNextId(entityId);
+      var nextId = $$('entity_list').getPrevId(entityId) || $$('entity_list').getNextId(entityId);
       $$('entity_list').select(nextId);
     }
 
@@ -1826,14 +1826,14 @@ EntityList.prototype.refreshData = function() {
   var identity = Identity.dataFromId(this.getRootId());
   var search = $$('entity_list__search').getValue();
   if (MDSCommon.isPresent(search)) {
-    identity['filterByName'] = search;
+    identity['search'] = search;
   }
   $$('entity_list').disable();
   Mydataspace.request('entities.getChildren', identity, function(data) {
     var showMoreChildId =
       Identity.childId(this.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
     var entityId = Identity.idFromData(data);
-    var children = data.children.filter(x => x.root !== 'root' || x.path !== '').map(Identity.entityFromData);
+    var children = data.children.filter(function(x) { return x.root !== 'root' || x.path !== ''; }).map(Identity.entityFromData);
     if (this.getRootId() === entityId) {
       if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
         children[children.length - 1] = {
