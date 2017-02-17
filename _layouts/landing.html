@@ -73,16 +73,22 @@
           </div>
           <div class="no_items__column no_items__column--right">
             <div class="no_items__desc">
-              Create yourown data and share it with others
+              Create your own data and share it with others
             </div>
             <div class="no_items__center no_items__center--right">
-              <input id="no_items__new_root_input" type="text" class="no_items__new_root_input form-control" placeholder="New Root Name" />
+              <input id="no_items__new_root_input"
+                     type="text"
+                     class="no_items__new_root_input form-control"
+                     onkeypress="no_items__new_root_input__onKeyPress(event)"
+                     placeholder="New Root Name" />
+
               <div id="no_items__notice" class="no_items__notice">
                 Root name must be unique among all existing roots
               </div>
             </div>
             <div class="no_items__buttons">
-              <button class="btn btn-success btn-lg" onclick="no_items__createNewRoot()">Create!</button>
+              <button class="btn btn-success btn-lg"
+                      onclick="no_items__createNewRoot()">Create!</button>
             </div>
             <script>
               function no_items__createNewRoot() {
@@ -93,14 +99,23 @@
                   path: '',
                   fields: []
                 }, function() {
+                  document.getElementById('no_items__new_root_input').value = '';
                 }, function(err) {
                   switch (err.name) {
                     case 'SequelizeUniqueConstraintError':
                       document.getElementById('no_items__notice').classList.add('no_items__notice--alert');
+                      document.getElementById('no_items__new_root_input').focus();
                       break;
                     default:
                   }
                 });
+              }
+
+              function no_items__new_root_input__onKeyPress(e) {
+                if (e.keyCode == 13) {
+                  no_items__createNewRoot();
+                  return false;
+                }
               }
             </script>
           </div>
