@@ -38,7 +38,6 @@
 
 .header {
   color: white;
-  overflow: hidden;
 }
 
 .header__languages {
@@ -188,7 +187,7 @@ $slogan-animation-offset: 350px;
   }
 }
 
-$slogan-animation-offset-mobile: 300px;
+$slogan-animation-offset-mobile: 400px;
 
 @keyframes slogan1Animation--mobile {
   0% {
@@ -259,7 +258,7 @@ $slogan-animation-offset-mobile: 300px;
   animation-name: slogan2Animation;
 }
 
-@media (max-width: $screen-md-max) {
+@media (max-width: $screen-sm-max) {
   .intro__slogan_wrap--1 {
     animation-name: slogan1Animation--mobile;
   }
@@ -301,6 +300,7 @@ $slogan-animation-offset-mobile: 300px;
   background-size: cover;
   background-position: bottom;
   background-attachment: fixed;
+  overflow: hidden;
 }
 
 @media (max-width: $screen-md-max) {
@@ -340,6 +340,12 @@ $slogan-animation-offset-mobile: 300px;
 
   .header__logo_text {
     margin-left: 0;
+  }
+}
+
+@media (min-width: $screen-sm-min) {
+  .intro__slogans {
+    min-height: 300px;
   }
 }
 
