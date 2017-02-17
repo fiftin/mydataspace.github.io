@@ -678,9 +678,6 @@ function Myda(options) {
     useLocalStorage: true,
 		apiURL: 'https://api.my-data.space',
 		websocketURL: 'https://api.my-data.space',
-    connected: function() {
-      // console.log('Maybe you forgot to specify connected-event handler');
-    }
   }, options);
   this.root = this.options.root;
   this.connected = false;
@@ -733,11 +730,18 @@ function Myda(options) {
       }
     }
   };
+
+  this.registerFormatter = function(eventName, formatter) {
+    if (!(eventName in this.formatters)) {
+      this.formatters[eventName] = [];
+    }
+    this.formatters[eventName].push(formatter);
+  };
+
   if (this.options.simpleFormat !== false) {
     this.registerFormatter('entities.get.res', new EntitySimplifier());
   }
   this.entities = new Entities(this);
-  this.on('connected', this.options.connected);
 
   window.addEventListener('message', function(e) {
     if (e.data.message === 'authResult') {
@@ -977,13 +981,6 @@ Myda.prototype.handleResponse = function(data, callbackName) {
     var callback = req.options[callbackName];
     this.formatAndCall(req.eventName, callback, data);
   }
-};
-
-Myda.prototype.registerFormatter = function(eventName, formatter) {
-  if (!(eventName in this.formatters)) {
-    this.formatters[eventName] = [];
-  }
-  this.formatters[eventName].push(formatter);
 };
 
 Myda.prototype.loginByToken = function(token) {
