@@ -198,6 +198,11 @@ $slogan-animation-offset: 350px;
   //animation-timing-function: linear;
   animation-iteration-count: infinite;
   position: absolute;
+  top: 50%;
+}
+
+.intro__slogan_offset {
+  transform: translateY(-50%);
 }
 
 .intro__slogan_wrap--1 {
