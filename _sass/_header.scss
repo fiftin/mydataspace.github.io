@@ -188,8 +188,53 @@ $slogan-animation-offset: 350px;
   }
 }
 
+$slogan-animation-offset-mobile: 300px;
+
+@keyframes slogan1Animation--mobile {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+  10% {
+    transform: translate3d($slogan-animation-offset-mobile, 0, 0) scale(0.8);
+    opacity: 0;
+  }
+  11% {
+    transform: translate3d(-$slogan-animation-offset-mobile, 0, 0) scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: translate3d(-$slogan-animation-offset-mobile, 0, 0) scale(0.8);
+    opacity: 0;
+  }
+  60% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slogan2Animation--mobile {
+  0% {
+    transform: translate3d(-$slogan-animation-offset-mobile, 0, 0) scale(0.8);
+    opacity: 0;
+  }
+  10% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+  60% {
+    transform: translate3d($slogan-animation-offset-mobile, 0, 0) scale(0.8);
+    opacity: 0;
+  }
+}
+
+
 .intro__slogans {
-  min-height: 200px;
+  min-height: 220px;
 }
 
 .intro__slogan_wrap {
@@ -214,9 +259,20 @@ $slogan-animation-offset: 350px;
   animation-name: slogan2Animation;
 }
 
+@media (max-width: $screen-md-max) {
+  .intro__slogan_wrap--1 {
+    animation-name: slogan1Animation--mobile;
+  }
+  .intro__slogan_wrap--2 {
+    animation-name: slogan2Animation--mobile;
+  }
+}
+
+
 .intro__slogan {
   font-size: 80px;
   line-height: 1.01;
+  margin-top: 0;
 }
 
 .intro__description {
