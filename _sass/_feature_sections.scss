@@ -28,6 +28,8 @@
   margin-top: 0;
   text-align: center;
   font-size: $font-size-h1;
+  //word-break: break-all;
+  word-wrap: break-word;
 }
 
 .section__title--speed {
@@ -77,6 +79,7 @@ a.feature {
 .feature__title {
   font-size: $font-size-h2;
   line-height: 1.05;
+  word-wrap: break-word;
 }
 
 .feature__description {
