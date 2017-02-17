@@ -143,6 +143,67 @@
   }
 }
 
+$slogan-animation-offset: 300px;
+
+@keyframes slogan1Animation {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+  10% {
+    transform: translate3d(0, -$slogan-animation-offset, 0);
+    opacity: 0;
+  }
+  11% {
+    transform: translate3d(0, $slogan-animation-offset, 0);
+    opacity: 0;
+  }
+  50% {
+    transform: translate3d(0, $slogan-animation-offset, 0);
+    opacity: 0;
+  }
+  60% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes slogan2Animation {
+  0% {
+    transform: translate3d(0, $slogan-animation-offset, 0);
+    opacity: 0;
+  }
+  10% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+  50% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+  60% {
+    transform: translate3d(0, -$slogan-animation-offset, 0);
+    opacity: 0;
+  }
+}
+
+.intro__slogan_wrap {
+  animation-delay: 3s;
+  animation-duration: 15s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  position: absolute;
+}
+
+.intro__slogan_wrap--1 {
+  animation-name: slogan1Animation;
+}
+
+.intro__slogan_wrap--2 {
+  opacity: 0;
+  animation-name: slogan2Animation;
+}
+
 .intro__slogan {
   font-size: 80px;
   line-height: 1.01;
