@@ -187,10 +187,14 @@ $slogan-animation-offset: 350px;
   }
 }
 
+.intro__slogans {
+  min-height: 200px;
+}
+
 .intro__slogan_wrap {
   animation-delay: 3s;
   animation-duration: 15s;
-  animation-timing-function: linear;
+  //animation-timing-function: linear;
   animation-iteration-count: infinite;
   position: absolute;
 }
