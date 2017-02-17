@@ -1,5 +1,7 @@
 $control-panel-height: 70px;
 $no-items-width: 700px;
+$no-items-height: 530px;
+$no-items-col-height: 210px;
 
 $modal-sm: 350px;
 
@@ -126,13 +128,13 @@ body {
   margin: 0 auto;
   font-size: 20px;
   color: #616161;
-  font-family: Ubuntu, Tahoma;
+  font-family: Ubuntu, Tahoma, serif;
   background: url("/images/no_items_bg.svg");
   background-repeat: no-repeat;
   background-position: top center;
   background-size: $no-items-width;
   width: $no-items-width;
-  height: 530px;
+  height: $no-items-height;
   margin-top: 40px;
 }
 
@@ -151,6 +153,8 @@ body {
     border-radius: 0;
     background: #27ae60;
     border-color: #27ae60;
+    position: absolute;
+    bottom: 0;
   }
 }
 
@@ -179,10 +183,12 @@ body {
 
 .no_items__column {
   width: $no-items-width / 2;
-  margin-top: 210px;
+  margin-top: $no-items-col-height;
+  height: $no-items-height - $no-items-col-height;
   float: left;
   padding-left: 30px;
   padding-right: 20px;
+  position: relative;
 }
 
 .no_items__column--right {
@@ -237,4 +243,5 @@ body {
 
 .no_items__root_img--small {
   width: 45px;
+  height: 45px;
 }
