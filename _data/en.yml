@@ -79,7 +79,7 @@ demos:
     screenshot_height: 663
   - id: ui
     title: My Data Space
-    website: https://my-data.space
+    website: https://my-data.space/#*
     source_code_url: https://github.com/mydataspace/mydataspace.github.io
     description: My Data Space administrative panel.
     screenshot_width: 1105
