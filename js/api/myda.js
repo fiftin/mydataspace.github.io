@@ -291,7 +291,7 @@ Myda.prototype.formatAndCall = function(eventName, callback, data) {
     data = data.datas;
   }
   if (formatterArr != null) {
-    for (let i in formatterArr) {
+    for (var i in formatterArr) {
       formatterArr[i].format(data);
     }
   }
