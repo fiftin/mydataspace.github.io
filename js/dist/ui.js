@@ -125,7 +125,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SITE_URL: 'Сайт',
     CLIENT_ID: 'Ключ API',
     VALUE: 'Значение',
-    CHILD_PROTO: 'Прот. доч. эл-та',
+    CHILD_PROTO: 'Прототип',
     FIELDS: 'Поля',
     NO_FIELDS: 'Нет ни одного поля',
     MY_APPS: 'Мои приложения',
@@ -157,10 +157,24 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     ADD_RESOURCE_TYPE: 'Тип',
     AVATAR: 'Аватар',
     IMAGE: 'Картинка',
-    FILE: 'Файл'
+    FILE: 'Файл',
+    ROOT_FIELDS: {
+      avatar: 'Иконка',
+      name: 'Имя',
+      tags: 'Теги',
+      description: 'Описание',
+      websiteURL: 'Вебсайт',
+      readme: 'README'
+    },
+    ROOT_FIELD_PLACEHOLDERS: {
+      name: 'Наименование вашего репозитория',
+      tags: 'Ключевые слова описывающие реп',
+      description: 'Коротко главное',
+      websiteURL: 'Сайт на котором используются данные',
+      readme: 'Подробное описание в Markdown формате'
+    }
   }
 };
-
 
 var LANGUAGE = window.localStorage && window.localStorage.getItem('language') || 'EN';
 var STRINGS = STRINGS_ON_DIFFERENT_LANGUAGES[LANGUAGE];
@@ -1951,7 +1965,7 @@ EntityTree.prototype.resolveChildren = function(id) {
     // Load children to first time opened node.
     Mydataspace.request('entities.getChildren', Identity.dataFromId(id), function(data) {
       var entityId = Identity.idFromData(data);
-      var children = data.children.filter(x => x.root !== 'root' || x.path !== '').map(Identity.entityFromData);
+      var children = data.children.filter(function(x) { return x.root !== 'root' || x.path !== ''; }).map(Identity.entityFromData);
       UI.entityTree.setChildren(entityId, children);
       resolve();
     }, function(err) {
@@ -1981,11 +1995,9 @@ EntityTree.prototype.onCreate = function(data) {
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
       this.setChildren(entity.id, entity.data);
     }
-
     this.resolveChildren(parentId).then(function() {
       $$('entity_tree').open(entity.id);
     });
-
   }
 };
 
@@ -1998,7 +2010,7 @@ EntityTree.prototype.listen = function() {
     }
 
     if (entityId === this.getCurrentId()) { // Select other item if selected item is deleted.
-      let nextId = $$('entity_tree').getPrevSiblingId(entityId) ||
+      var nextId = $$('entity_tree').getPrevSiblingId(entityId) ||
                    $$('entity_tree').getNextSiblingId(entityId) ||
                    $$('entity_tree').getParentId(entityId);
       $$('entity_tree').select(nextId);
@@ -2807,6 +2819,7 @@ UILayout.popups.searchScope = {
         $$('entity_tree__root_scope_popup').hide();
         $$('entity_tree__root_scope').define('icon', newv);
         $$('entity_tree__root_scope').refresh();
+        $('.entity_tree__search input').focus();
       }
     }
   }

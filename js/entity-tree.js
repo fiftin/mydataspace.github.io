@@ -20,7 +20,7 @@ EntityTree.prototype.resolveChildren = function(id) {
     // Load children to first time opened node.
     Mydataspace.request('entities.getChildren', Identity.dataFromId(id), function(data) {
       var entityId = Identity.idFromData(data);
-      var children = data.children.filter(x => x.root !== 'root' || x.path !== '').map(Identity.entityFromData);
+      var children = data.children.filter(function(x) { return x.root !== 'root' || x.path !== ''; }).map(Identity.entityFromData);
       UI.entityTree.setChildren(entityId, children);
       resolve();
     }, function(err) {
@@ -50,11 +50,9 @@ EntityTree.prototype.onCreate = function(data) {
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
       this.setChildren(entity.id, entity.data);
     }
-
     this.resolveChildren(parentId).then(function() {
       $$('entity_tree').open(entity.id);
     });
-
   }
 };
 
@@ -67,7 +65,7 @@ EntityTree.prototype.listen = function() {
     }
 
     if (entityId === this.getCurrentId()) { // Select other item if selected item is deleted.
-      let nextId = $$('entity_tree').getPrevSiblingId(entityId) ||
+      var nextId = $$('entity_tree').getPrevSiblingId(entityId) ||
                    $$('entity_tree').getNextSiblingId(entityId) ||
                    $$('entity_tree').getParentId(entityId);
       $$('entity_tree').select(nextId);

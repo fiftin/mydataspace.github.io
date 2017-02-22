@@ -125,7 +125,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SITE_URL: 'Сайт',
     CLIENT_ID: 'Ключ API',
     VALUE: 'Значение',
-    CHILD_PROTO: 'Прот. доч. эл-та',
+    CHILD_PROTO: 'Прототип',
     FIELDS: 'Поля',
     NO_FIELDS: 'Нет ни одного поля',
     MY_APPS: 'Мои приложения',
@@ -157,10 +157,24 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     ADD_RESOURCE_TYPE: 'Тип',
     AVATAR: 'Аватар',
     IMAGE: 'Картинка',
-    FILE: 'Файл'
+    FILE: 'Файл',
+    ROOT_FIELDS: {
+      avatar: 'Иконка',
+      name: 'Имя',
+      tags: 'Теги',
+      description: 'Описание',
+      websiteURL: 'Вебсайт',
+      readme: 'README'
+    },
+    ROOT_FIELD_PLACEHOLDERS: {
+      name: 'Наименование вашего репозитория',
+      tags: 'Ключевые слова описывающие реп',
+      description: 'Коротко главное',
+      websiteURL: 'Сайт на котором используются данные',
+      readme: 'Подробное описание в Markdown формате'
+    }
   }
 };
-
 
 var LANGUAGE = window.localStorage && window.localStorage.getItem('language') || 'EN';
 var STRINGS = STRINGS_ON_DIFFERENT_LANGUAGES[LANGUAGE];
