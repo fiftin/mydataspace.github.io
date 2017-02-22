@@ -14,7 +14,7 @@ EntityForm.prototype.emitLoaded = function(data) {
 };
 
 /**
- * Switchs Entity Form to edit/view mode.
+ * Switch Entity Form to edit/view mode.
  */
 EntityForm.prototype.setEditing = function(editing) {
   this.editing = editing;

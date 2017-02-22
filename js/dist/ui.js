@@ -150,8 +150,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     REFRESH_ENTITY: 'Обнов.',
     CANCEL_ENTITY: 'Пр.',
     SIGN_OUT: 'Выход',
-    SEARCH_BY_ROOTS: 'Поиск по корням...',
-    SEARCH_BY_ENTITIES: 'Фильтр по имени...',
+    SEARCH_BY_ROOTS: 'Поиск по корням',
+    SEARCH_BY_ENTITIES: 'Поиск по элементам',
     ADD_RESOURCE_WINDOW: 'Добавить ресурс',
     ADD_RESOURCE_FILE: 'Файл',
     ADD_RESOURCE_TYPE: 'Тип',
@@ -811,7 +811,7 @@ EntityForm.prototype.emitLoaded = function(data) {
 };
 
 /**
- * Switchs Entity Form to edit/view mode.
+ * Switch Entity Form to edit/view mode.
  */
 EntityForm.prototype.setEditing = function(editing) {
   this.editing = editing;
