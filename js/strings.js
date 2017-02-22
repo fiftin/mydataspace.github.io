@@ -169,9 +169,9 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       readme: 'README'
     },
     ROOT_FIELD_PLACEHOLDERS: {
-      name: 'Наименование вашего репозитория',
-      tags: 'Ключевые слова описывающие реп',
-      description: 'Коротко главное',
+      name: 'Наименование проекта',
+      tags: 'Ключевые слова описывающие проект',
+      description: 'Коротко о проекте',
       websiteURL: 'Сайт на котором используются данные',
       readme: 'Подробное описание в Markdown формате'
     }
