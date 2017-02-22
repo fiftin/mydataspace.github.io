@@ -41,6 +41,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     CHILD_PROTO: 'Child Proto',
     FIELDS: 'Fields',
     NO_FIELDS: 'No fields exists',
+    NO_README: 'No description or README provided.',
     MY_APPS: 'My Apps',
     MY_DATA: 'My Data',
     SIGN_OUT: 'Sign out',
@@ -128,6 +129,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     CHILD_PROTO: 'Прототип',
     FIELDS: 'Поля',
     NO_FIELDS: 'Нет ни одного поля',
+    NO_README: 'Нет ни описания ни README.',
     MY_APPS: 'Мои приложения',
     MY_DATA: 'Мои данные',
     SIGN_OUT: 'Выход',
@@ -1022,7 +1024,7 @@ EntityForm.prototype.setRootView = function(data) {
 
     if (MDSCommon.isBlank(description)) {
       if (MDSCommon.isBlank(readme)) {
-        document.getElementById('view__description').innerHTML = '<i>No description or README provided.</i>';
+        document.getElementById('view__description').innerHTML = '<center><i>' + STRINGS.NO_README + '</i></center>';
       } else {
         document.getElementById('view__description').style.display = 'none';
       }
