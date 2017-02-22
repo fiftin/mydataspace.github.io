@@ -15,18 +15,25 @@ UILayout.windows.addField = {
         if (!$$('add_field_form').validate()) {
           return;
         }
-        UI.entityForm.addField($$('add_field_form').getValues(), true);
+
+        UI.entityForm.addField(
+          MDSCommon.extend($$('add_field_form').getValues(), { indexed: 'off' }),
+          true,
+          UIHelper.isProto(UI.entityForm.getSelectedId()));
+
         setTimeout(function() {
           $$('add_field_window').hide();
         }, 100);
       }
     },
+
     elements: [
       { view: 'text', required: true, id: 'NAME_LABEL_2', label: STRINGS.NAME, name: 'name' },
       UIControls.getFieldTypeSelectTemplate(),
       { view: 'text', id: 'VALUE_LABEL', label: STRINGS.VALUE, name: 'value' },
       UIControls.getSubmitCancelForFormWindow('add_field', false)
     ],
+
     rules: {
       name: function(value) { return typeof $$('entity_form__' + value) === 'undefined' },
       value: function(value) {

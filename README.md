@@ -4,6 +4,6 @@
 
 Open Source continues to capture the world. With the ability to use the code freely, developers save time and effort, which allowed for the implementation of new ideas.
 
-The difference from the code, the data remains private. No one wants to share extracted with such difficulty.
+The difference from the code, a data remains private. No one wants to share data extracted with such difficulty.
 
 MyDataSpace helps to make the step to the open data by connecting people over the world.

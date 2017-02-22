@@ -61,6 +61,10 @@ EntityForm.prototype.isProto = function() {
   return UIHelper.isProto(this.selectedId);
 };
 
+EntityForm.prototype.getSelectedId = function () {
+  return this.selectedId;
+};
+
 EntityForm.prototype.setSelectedId = function(id) {
   if (this.selectedId === id) {
     return;
@@ -831,6 +835,12 @@ EntityForm.prototype.addRootField = function(data) {
   });
 };
 
+/**
+ * Add new field to form.
+ * @param {object} data       Data of field
+ * @param {boolean} setDirty  Mark form as modified after field added.
+ * @param {boolean} isProto   Is field of prototype-entity.
+ */
 EntityForm.prototype.addField = function(data, setDirty, isProto) {
   if (typeof $$('entity_form__' + data.name) !== 'undefined') {
     throw new Error('Field with this name already exists');

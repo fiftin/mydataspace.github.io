@@ -8,8 +8,8 @@ menu:
 slogan: GitHub for Data
 slogan_description: Love Open Source? Let's create Open Data together!
 
-slogan_2: Incredibly fast backend of your web site
-slogan_description_2: You will be surprised how fast and responsive web site can be
+slogan_2: Incredibly fast backend of your website
+slogan_description_2: You will be surprised how fast and responsive website can be
 
 mission: From the outset we wanted to create a simple, reliable and fast product.
 special_offer: Free now and <b>forever</b> for registered users
@@ -32,7 +32,7 @@ sections:
     features:
       - id: websocket
         title: WebSockets
-        description: What makes a web site reactive
+        description: What makes a website reactive
       - id: scalability
         title: Scalability
         description: It allows to handle any load
@@ -44,7 +44,7 @@ sections:
     features:
       - id: coding
         title: HTML/CSS/JS
-        description: All you need to know to create amazing web site
+        description: All you need to know to create amazing website
       - id: open_data
         title: Open Data
         description: Use data of others and share data with others
@@ -52,7 +52,7 @@ sections:
         title: Easy maintenance
         description: Unified data and code management tool
     additional_features:
-      - Create UI of your web site
+      - Create UI of your website
       - Upload data to backend
       - Connect your UI to backend
     code_simple_description: >

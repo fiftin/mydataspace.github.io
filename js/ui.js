@@ -1,5 +1,8 @@
 UI = {
 
+  /**
+   * @type {EntityForm}
+   */
   entityForm: new EntityForm(),
 
   entityList: new EntityList(),
