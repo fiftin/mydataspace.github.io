@@ -50,6 +50,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     REALLY_DELETE: 'You really want delete this entity?',
     NO_DATA: 'You have no data',
     NO_APPS: 'You have no apps',
+    NO_APPS_DESCRIPTION: '',
+    NO_APPS_CREATE: 'Create!',
     DOCS: 'Documentation',
     DEMOS: 'Demos',
     GET_STARTED: 'Get Started',
@@ -88,7 +90,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     },
     ROOT_AVATAR_UPLOAD: 'Upload',
     ROOT_AVATAR_BROWSE: 'Browse',
-    ROOT_AVATAR_REMOVE: 'Remove'
+    ROOT_AVATAR_REMOVE: 'Remove',
+    SHOW_ACCESS_KEY: 'Show access key'
   },
   RU: {
     YES: 'Да',
@@ -141,6 +144,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     REALLY_DELETE: 'Вы действительно хотите удалить этот элемент?',
     NO_DATA: 'У вас нет данных',
     NO_APPS: 'У вас нет приложений',
+    NO_APPS_DESCRIPTION: '',
+    NO_APPS_CREATE: 'Создать!',
     REALLY_DELETE_APP: 'Вы действительно хотите удалить это приложение?',
     DOCS: 'Документация',
     DEMOS: 'Примеры',
@@ -180,7 +185,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     },
     ROOT_AVATAR_UPLOAD: 'Загрузить',
     ROOT_AVATAR_BROWSE: 'Обзор',
-    ROOT_AVATAR_REMOVE: 'Удалить'
+    ROOT_AVATAR_REMOVE: 'Удалить',
+    SHOW_ACCESS_KEY: 'Показать ключ доступа'
   }
 };
 
@@ -2358,7 +2364,10 @@ Pages.prototype.updatePageState = function(page) {
   switch (page) {
     case 'apps':
       if ($$('app_list').getFirstId() == null) {
-        document.getElementById('no_items').innerText = STRINGS.NO_APPS;
+        document.getElementById('no_items').innerHTML =
+          '<div class="no_items__no_apps">' + STRINGS.NO_APPS + '</div>' +
+          '<div class="no_items__no_apps_description">' + STRINGS.NO_APPS_DESCRIPTION + '</div>' +
+          '<div class="no_items__no_apps_create"><button>' + STRINGS.NO_APPS_CREATE + '</button></div>';
         document.getElementById('no_items').style.display = 'block';
         $$('my_apps_panel__right_panel').hide();
         $$('my_apps_panel__resizer').hide();
@@ -3000,7 +3009,13 @@ UILayout.sideMenu =
           borderless: true,
           id: 'profile',
           css: 'profile',
-          template: '<div class="profile__img_wrap"><img class="profile__img" src="#avatar#" /></div><div class="profile__name">#name#</div>',
+          template: '<div class="profile__img_wrap"><img class="profile__img" src="#avatar#" /></div>' +
+                    '<div class="profile__name">#name#</div>' +
+                    '<div class="profile__access_key_wrap" id="profile__access_key_wrap">' +
+                      '<a class="profile__access_key_link" href="javascript: void(0)" onclick="return UI.showAccessToken()">' +
+                        STRINGS.SHOW_ACCESS_KEY +
+                      '</a>' +
+                    '</div>',
           data: {
             avatar: '/images/no_avatar.png',
             name: 'No name'
@@ -4085,5 +4100,13 @@ UI = {
     $$('admin_panel').resize();
     $$('admin_panel').resize();
     $$('edit_script_window').resize();
+  },
+
+  showAccessToken: function() {
+    Mydataspace.request('users.getMyAccessToken', {}, function(data) {
+      document.getElementById('profile__access_key_wrap').innerHTML = '<div class="profile__access_key">' + data.accessToken + '</div>';
+    }, function(err) {
+
+    });
   }
 };

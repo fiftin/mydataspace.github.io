@@ -301,7 +301,7 @@ input:read-only {
 }
 
 .profile {
-  height: 240px !important;
+  height: 260px !important;
 }
 
 .profile__img_wrap {
@@ -759,7 +759,23 @@ input {
   }
 }
 
-
 .add_resource_form__file_wrap {
   border: 0 !important;
+}
+
+
+.profile__access_key_wrap {
+  padding-top: 4px;
+  text-align: center;
+}
+
+.profile__access_key_link {
+  font-size: 12px;
+  text-transform: lowercase;
+}
+
+.profile__access_key {
+  font-size: 9px;
+  margin-top: 3px;
+  font-weight: bold;
 }

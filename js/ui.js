@@ -423,5 +423,13 @@ UI = {
     $$('admin_panel').resize();
     $$('admin_panel').resize();
     $$('edit_script_window').resize();
+  },
+
+  showAccessToken: function() {
+    Mydataspace.request('users.getMyAccessToken', {}, function(data) {
+      document.getElementById('profile__access_key_wrap').innerHTML = '<div class="profile__access_key">' + data.accessToken + '</div>';
+    }, function(err) {
+
+    });
   }
 };

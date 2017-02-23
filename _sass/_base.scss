@@ -110,8 +110,6 @@ body {
 }
 
 
-
-
 .no_items {
   position: absolute;
   margin: 0;
@@ -122,6 +120,20 @@ body {
   bottom: 0;
   display: none;
   background: white;
+}
+
+.no_items__no_apps {
+  text-align: center;
+  font-size: 30px;
+  margin-top: 50px;
+  color: $text-color;
+}
+
+.no_items__no_apps_description {
+  color: $text-color;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 15px;
 }
 
 .no_items__content {

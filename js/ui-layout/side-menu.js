@@ -14,7 +14,13 @@ UILayout.sideMenu =
           borderless: true,
           id: 'profile',
           css: 'profile',
-          template: '<div class="profile__img_wrap"><img class="profile__img" src="#avatar#" /></div><div class="profile__name">#name#</div>',
+          template: '<div class="profile__img_wrap"><img class="profile__img" src="#avatar#" /></div>' +
+                    '<div class="profile__name">#name#</div>' +
+                    '<div class="profile__access_key_wrap" id="profile__access_key_wrap">' +
+                      '<a class="profile__access_key_link" href="javascript: void(0)" onclick="return UI.showAccessToken()">' +
+                        STRINGS.SHOW_ACCESS_KEY +
+                      '</a>' +
+                    '</div>',
           data: {
             avatar: '/images/no_avatar.png',
             name: 'No name'

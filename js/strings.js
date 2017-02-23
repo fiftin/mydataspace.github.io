@@ -50,6 +50,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     REALLY_DELETE: 'You really want delete this entity?',
     NO_DATA: 'You have no data',
     NO_APPS: 'You have no apps',
+    NO_APPS_DESCRIPTION: '',
+    NO_APPS_CREATE: 'Create!',
     DOCS: 'Documentation',
     DEMOS: 'Demos',
     GET_STARTED: 'Get Started',
@@ -88,7 +90,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     },
     ROOT_AVATAR_UPLOAD: 'Upload',
     ROOT_AVATAR_BROWSE: 'Browse',
-    ROOT_AVATAR_REMOVE: 'Remove'
+    ROOT_AVATAR_REMOVE: 'Remove',
+    SHOW_ACCESS_KEY: 'Show access key'
   },
   RU: {
     YES: 'Да',
@@ -141,6 +144,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     REALLY_DELETE: 'Вы действительно хотите удалить этот элемент?',
     NO_DATA: 'У вас нет данных',
     NO_APPS: 'У вас нет приложений',
+    NO_APPS_DESCRIPTION: '',
+    NO_APPS_CREATE: 'Создать!',
     REALLY_DELETE_APP: 'Вы действительно хотите удалить это приложение?',
     DOCS: 'Документация',
     DEMOS: 'Примеры',
@@ -180,7 +185,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     },
     ROOT_AVATAR_UPLOAD: 'Загрузить',
     ROOT_AVATAR_BROWSE: 'Обзор',
-    ROOT_AVATAR_REMOVE: 'Удалить'
+    ROOT_AVATAR_REMOVE: 'Удалить',
+    SHOW_ACCESS_KEY: 'Показать ключ доступа'
   }
 };
 
