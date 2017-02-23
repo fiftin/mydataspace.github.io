@@ -85,7 +85,10 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       description: 'Main about root',
       websiteURL: 'Website where data of root are used',
       readme: 'Markdown-formatted text about the root'
-    }
+    },
+    ROOT_AVATAR_UPLOAD: 'Upload',
+    ROOT_AVATAR_BROWSE: 'Browse',
+    ROOT_AVATAR_REMOVE: 'Remove'
   },
   RU: {
     YES: 'Да',
@@ -174,7 +177,10 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       description: 'Коротко о проекте',
       websiteURL: 'Сайт на котором используются данные',
       readme: 'Подробное описание в Markdown формате'
-    }
+    },
+    ROOT_AVATAR_UPLOAD: 'Загрузить',
+    ROOT_AVATAR_BROWSE: 'Обзор',
+    ROOT_AVATAR_REMOVE: 'Удалить'
   }
 };
 
@@ -1578,7 +1584,7 @@ EntityForm.prototype.addRootField = function(data) {
                  '<div class="entity_form__field_label_ellipse_right"></div>' +
                  '<div class="entity_form__field_label_ellipse"></div>',
           width: UIHelper.LABEL_WIDTH,
-          height: 38,
+          height: 38
         },
         {
           borderless: true,
@@ -1596,22 +1602,23 @@ EntityForm.prototype.addRootField = function(data) {
                     ' <input type="file" ' +
                     '        onchange="UI.entityForm.onUploadAvatar(event);"' +
                     '        required />' +
-                    ' <span>Upload</span>' +
-                    '</label>',
+                    ' <span>' + STRINGS.ROOT_AVATAR_UPLOAD + '</span>' +
+                    '</label>'
         },
+        // { width: 6 },
+        // {
+        //   view: 'button',
+        //   label: 'Browse',
+        //   on: {
+        //     onClick: function() {
+        //     }
+        //   }
+        // },
         { width: 6 },
         {
           view: 'button',
-          label: 'Browse',
-          on: {
-            onClick: function() {
-            }
-          }
-        },
-        { width: 6 },
-        {
-          view: 'button',
-          label: 'Remove',
+          label: STRINGS.ROOT_AVATAR_REMOVE,
+          id: 'ROOT_AVATAR_REMOVE_LABEL',
           click: function() {
             $$('entity_form__root_avatar_value').setValue('');
             document.getElementById('entity_form__root_img').setAttribute('src', '/images/icons/root.svg');

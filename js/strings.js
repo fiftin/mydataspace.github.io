@@ -85,7 +85,10 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       description: 'Main about root',
       websiteURL: 'Website where data of root are used',
       readme: 'Markdown-formatted text about the root'
-    }
+    },
+    ROOT_AVATAR_UPLOAD: 'Upload',
+    ROOT_AVATAR_BROWSE: 'Browse',
+    ROOT_AVATAR_REMOVE: 'Remove'
   },
   RU: {
     YES: 'Да',
@@ -174,7 +177,10 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       description: 'Коротко о проекте',
       websiteURL: 'Сайт на котором используются данные',
       readme: 'Подробное описание в Markdown формате'
-    }
+    },
+    ROOT_AVATAR_UPLOAD: 'Загрузить',
+    ROOT_AVATAR_BROWSE: 'Обзор',
+    ROOT_AVATAR_REMOVE: 'Удалить'
   }
 };
 
