@@ -1,7 +1,7 @@
 UIControls = {
   getFieldTypeSelectTemplate: function() {
     var options = [];
-    for (let id in Fields.FIELD_TYPES) {
+    for (var id in Fields.FIELD_TYPES) {
       options.push({ id: id, value: Fields.FIELD_TYPES[id].title });
     }
     return {
@@ -22,7 +22,7 @@ UIControls = {
       name: 'othersCan',
       value: 'view_children',
       options: [
-        { id: 'nothing', value: STRINGS.NOTHING },
+        // { id: 'nothing', value: STRINGS.NOTHING },
         { id: 'read', value: STRINGS.ONLY_READ },
         { id: 'view_children', value: STRINGS.READ_AND_VIEW_CHILDREN },
         { id: 'create_child', value: STRINGS.CREATE_ONE_CHILD },
