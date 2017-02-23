@@ -129,6 +129,7 @@ UILayout.entityTree =
           }
         },
         onBeforeSelect: function(id, selection) {
+          // Request and add more items if "Show More" clicked
           if (id.endsWith(UIHelper.ENTITY_TREE_SHOW_MORE_ID)) {
             UI.entityTree.showMore(Identity.parentId(id));
           }

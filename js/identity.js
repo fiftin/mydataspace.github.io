@@ -69,4 +69,22 @@ var Identity = {
     }
     return entityId.slice(0, i);
   },
+
+  renameData: function(renameData, itemData) {
+    var newItemData = MDSCommon.copy(itemData);
+    if (MDSCommon.isBlank(renameData.path)) {
+      newItemData.root = renameData.name;
+    } else {
+      var path = MDSCommon.getParentPath(renameData.path) + '/' + renameData.name;
+      if (newItemData.path === renameData.path) {
+        newItemData.path = path;
+      } else {
+        if (newItemData.path.indexOf(path + '/') !== 0) {
+          throw new Error('Illegal path of destination item');
+        }
+        newItemData.path = path + newItemData.path.substr(renameData.path.length);
+      }
+    }
+    return newItemData;
+  }
 };

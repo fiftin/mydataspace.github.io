@@ -169,9 +169,9 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       readme: 'README'
     },
     ROOT_FIELD_PLACEHOLDERS: {
-      name: 'Наименование вашего репозитория',
-      tags: 'Ключевые слова описывающие реп',
-      description: 'Коротко главное',
+      name: 'Наименование проекта',
+      tags: 'Ключевые слова описывающие проект',
+      description: 'Коротко о проекте',
       websiteURL: 'Сайт на котором используются данные',
       readme: 'Подробное описание в Markdown формате'
     }
@@ -679,6 +679,24 @@ var Identity = {
     }
     return entityId.slice(0, i);
   },
+
+  renameData: function(renameData, itemData) {
+    var newItemData = MDSCommon.copy(itemData);
+    if (MDSCommon.isBlank(renameData.path)) {
+      newItemData.root = renameData.name;
+    } else {
+      var path = MDSCommon.getParentPath(renameData.path) + '/' + renameData.name;
+      if (newItemData.path === renameData.path) {
+        newItemData.path = path;
+      } else {
+        if (newItemData.path.indexOf(path + '/') !== 0) {
+          throw new Error('Illegal path of destination item');
+        }
+        newItemData.path = path + newItemData.path.substr(renameData.path.length);
+      }
+    }
+    return newItemData;
+  }
 };
 
 UIControls = {
@@ -851,6 +869,7 @@ EntityForm.prototype.isEditing = function() {
 };
 
 EntityForm.prototype.listen = function() {
+  var self = this;
   Mydataspace.on('entities.delete.res', function() {
     $$('entity_form').disable();
   });
@@ -1405,6 +1424,9 @@ EntityForm.prototype.save = function() {
     dirtyData.childPrototype = Identity.dataFromId(dirtyData.childPrototype);
   }
   Mydataspace.request('entities.change', dirtyData, function(res) {
+    if (dirtyData.name != null) {
+      this.selectedId = Identity.idFromData(res);
+    }
     this.refresh();
     $$('entity_form').enable();
   }.bind(this), function(err) {
@@ -1794,7 +1816,25 @@ EntityList.prototype.onCreate = function(data) {
   }
 };
 
+EntityList.prototype.changeItems = function(applyForData) {
+  var nextId;
+  var id = $$('entity_list').getFirstId();
+  while (id) {
+    var index = $$('entity_list').getIndexById(id);
+    $$('entity_list').copy(id, index, null, {
+      newId: id === UIHelper.ENTITY_LIST_SHOW_MORE_ID
+                    ? UIHelper.ENTITY_LIST_SHOW_MORE_ID
+                    : Identity.idFromData(applyForData(Identity.dataFromId(id)))
+    });
+    nextId = $$('entity_list').getNextId(id);
+    $$('entity_list').remove(id);
+    id = nextId;
+  }
+};
+
 EntityList.prototype.listen = function() {
+  var self = this;
+
   Mydataspace.on('entities.delete.res', function(data) {
     var entityId = Identity.idFromData(data);
 
@@ -1806,23 +1846,36 @@ EntityList.prototype.listen = function() {
       return;
     }
 
-    if (entityId === this.getCurrentId()) { // Select other item if selected item is deleted.
+    if (entityId === self.getCurrentId()) { // Select other item if selected item is deleted.
       var nextId = $$('entity_list').getPrevId(entityId) || $$('entity_list').getNextId(entityId);
       $$('entity_list').select(nextId);
     }
 
     $$('entity_list').remove(entityId);
-  }.bind(this));
+  });
 
-  Mydataspace.on('entities.create.res', this.onCreate.bind(this));
+  Mydataspace.on('entities.create.res', self.onCreate.bind(this));
+  Mydataspace.on('entities.rename.res', function(data) {
+    self.changeItems(Identity.renameData.bind(null, data));
+  });
 };
 
 EntityList.prototype.setRootId = function(id) {
   if (this.rootId === id) {
     return;
   }
+
+  if (this.rootId != null) {
+    Mydataspace.emit('entities.unsubscribe', MDSCommon.extend(Identity.dataFromId(this.rootId), {
+      events: ['entities.rename.res']
+    }));
+  }
+
   this.rootId = id;
 
+  Mydataspace.emit('entities.subscribe', MDSCommon.extend(Identity.dataFromId(id), {
+    events: ['entities.rename.res']
+  }));
   // var subscription = Identity.dataFromId(id);
   // var childrenSubscription = Identity.dataFromId(id);
   // childrenSubscription.path += '/*';
@@ -1837,7 +1890,7 @@ EntityList.prototype.getRootId = function() {
 };
 
 EntityList.prototype.setCurrentId = function(id) {
-   this.currentId = id;
+  this.currentId = id;
 };
 
 EntityList.prototype.getCurrentId = function() {
@@ -1954,7 +2007,17 @@ EntityTree.prototype.getCurrentId = function() {
 };
 
 EntityTree.prototype.setCurrentId = function(id) {
+  if (this.currentId != null) {
+    Mydataspace.emit('entities.unsubscribe', MDSCommon.extend(Identity.dataFromId(this.currentId), {
+      events: ['entities.changes.res', 'entities.rename.res']
+    }));
+  }
+
   this.currentId = id;
+
+  Mydataspace.emit('entities.subscribe', MDSCommon.extend(Identity.dataFromId(id), {
+    events: ['entities.changes.res', 'entities.rename.res']
+  }));
 };
 
 EntityTree.prototype.resolveChildren = function(id) {
@@ -2003,7 +2066,11 @@ EntityTree.prototype.onCreate = function(data) {
   }
 };
 
+/**
+ * Initializes event listeners.
+ */
 EntityTree.prototype.listen = function() {
+  var self = this;
   Mydataspace.on('entities.delete.res', function(data) {
     var entityId = Identity.idFromData(data);
 
@@ -2011,7 +2078,7 @@ EntityTree.prototype.listen = function() {
       return;
     }
 
-    if (entityId === this.getCurrentId()) { // Select other item if selected item is deleted.
+    if (entityId === self.getCurrentId()) { // Select other item if selected item is deleted.
       var nextId = $$('entity_tree').getPrevSiblingId(entityId) ||
                    $$('entity_tree').getNextSiblingId(entityId) ||
                    $$('entity_tree').getParentId(entityId);
@@ -2019,9 +2086,80 @@ EntityTree.prototype.listen = function() {
     }
 
     $$('entity_tree').remove(entityId);
-  }.bind(this));
+  });
 
   Mydataspace.on('entities.create.res', this.onCreate.bind(this));
+  Mydataspace.on('entities.change.res', function(data) {
+    var id = Identity.idFromData(data);
+    if (id !== self.currentId) {
+      return;
+    }
+    if ($$('entity_tree').getItem(id) == null) {
+      return;
+    }
+    $$('entity_tree').updateItem(id, Identity.entityFromData(data));
+  });
+
+  Mydataspace.on('entities.rename.res', function(data) {
+    var id = Identity.idFromData(data);
+    if (id !== self.currentId) {
+      return;
+    }
+
+    if ($$('entity_tree').getItem(id) == null) {
+      return;
+    }
+
+    var parentId = $$('entity_tree').getParentId(id);
+
+    var newId = self.cloneItem(id, parentId, Identity.renameData.bind(null, data));
+
+    self.setCurrentId(newId);
+    $$('entity_tree').remove(id);
+  });
+};
+
+/**
+ * Create a copy of entity with all children.
+ * @param id            Id of entity for clone.
+ * @param parentId      Id of entity witch must be parent of created copy.
+ * @param applyForData
+ */
+EntityTree.prototype.cloneItem = function(id, parentId, applyForData) {
+  var currentParentId = $$('entity_tree').getParentId(id);
+  var index = $$('entity_tree').getIndexById(id);
+
+  if (MDSCommon.isPresent(currentParentId) && currentParentId !== 0) {
+    var dummyId = Identity.childId(currentParentId, UIHelper.ENTITY_TREE_DUMMY_ID);
+    var showMoreId = Identity.childId(currentParentId, UIHelper.ENTITY_TREE_SHOW_MORE_ID);
+    var newSyntheticId;
+    switch (id) {
+      case dummyId:
+        newSyntheticId = Identity.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID);
+        break;
+      case showMoreId:
+        newSyntheticId = Identity.childId(parentId, UIHelper.ENTITY_TREE_SHOW_MORE_ID);
+        break;
+    }
+  }
+
+  if (newSyntheticId != null) {
+    $$('entity_tree').copy(id, index, null, {
+      newId: newSyntheticId,
+      parent: parentId
+    });
+    return;
+  }
+
+  var item = $$('entity_tree').getItem(id);
+  var data = applyForData(item.associatedData);
+  var newId = $$('entity_tree').add(Identity.entityFromData(data), index, parentId);
+  var childId = $$('entity_tree').getFirstChildId(id);
+  while (childId) {
+    this.cloneItem(childId, newId, applyForData);
+    childId = $$('entity_tree').getNextSiblingId(childId);
+  }
+  return newId;
 };
 
 EntityTree.getViewOnlyRoot = function() {
@@ -2086,9 +2224,10 @@ EntityTree.prototype.refresh = function() {
 };
 
 /**
- * Override entity's children of nodes recursively.
+ * Override entity's children recursively.
  */
 EntityTree.prototype.setChildren = function(entityId, children) {
+  var self = this;
   var dummyChildId = Identity.childId(entityId, UIHelper.ENTITY_TREE_DUMMY_ID);
   var showMoreChildId = Identity.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID);
   var firstChildId = $$('entity_tree').getFirstChildId(entityId);
@@ -2104,16 +2243,22 @@ EntityTree.prototype.setChildren = function(entityId, children) {
   children.reverse().forEach(function(entity) {
     $$('entity_tree').add(entity, 0, entityId);
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-      this.setChildren(entity.id, entity.data);
+      self.setChildren(entity.id, entity.data);
     }
-  }.bind(this));
+  });
   if (firstChildId !== null) {
     $$('entity_tree').remove(firstChildId);
   }
   $$('entity_tree').addCss(showMoreChildId, 'entity_tree__show_more_item');
 };
 
+/**
+ *
+ * @param entityId
+ * @param children
+ */
 EntityTree.prototype.addChildren = function(entityId, children) {
+  var self = this;
   var showMoreChildId = Identity.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID);
   if (!$$('entity_tree').exists(showMoreChildId)) {
     return;
@@ -2127,22 +2272,27 @@ EntityTree.prototype.addChildren = function(entityId, children) {
     offset = 0;
   }
   children.forEach(function(entity) {
-    var nChildren = this.numberOfChildren(entityId);
+    var nChildren = self.numberOfChildren(entityId);
     $$('entity_tree').add(entity, nChildren - offset, entityId);
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-      this.setChildren(entity.id, entity.data);
+      self.setChildren(entity.id, entity.data);
     }
-  }.bind(this));
+  });
 };
 
+/**
+ * Request and and add more items to entity.
+ * @param id Id of parent entity.
+ */
 EntityTree.prototype.showMore = function(id) {
+  var self = this;
   var req = Identity.dataFromId(id);
-  req.offset = this.numberOfChildren(id);
+  req.offset = self.numberOfChildren(id);
   Mydataspace.request('entities.getChildren', req, function(data) {
     var entityId = Identity.idFromData(data);
     var children = data.children.map(Identity.entityFromData);
-    this.addChildren(entityId, children);
-  }.bind(this));
+    self.addChildren(entityId, children);
+  });
 };
 
 EntityTree.prototype.numberOfChildren = function(id) {
@@ -3098,6 +3248,7 @@ UILayout.entityTree =
           }
         },
         onBeforeSelect: function(id, selection) {
+          // Request and add more items if "Show More" clicked
           if (id.endsWith(UIHelper.ENTITY_TREE_SHOW_MORE_ID)) {
             UI.entityTree.showMore(Identity.parentId(id));
           }

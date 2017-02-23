@@ -26,7 +26,25 @@ EntityList.prototype.onCreate = function(data) {
   }
 };
 
+EntityList.prototype.changeItems = function(applyForData) {
+  var nextId;
+  var id = $$('entity_list').getFirstId();
+  while (id) {
+    var index = $$('entity_list').getIndexById(id);
+    $$('entity_list').copy(id, index, null, {
+      newId: id === UIHelper.ENTITY_LIST_SHOW_MORE_ID
+                    ? UIHelper.ENTITY_LIST_SHOW_MORE_ID
+                    : Identity.idFromData(applyForData(Identity.dataFromId(id)))
+    });
+    nextId = $$('entity_list').getNextId(id);
+    $$('entity_list').remove(id);
+    id = nextId;
+  }
+};
+
 EntityList.prototype.listen = function() {
+  var self = this;
+
   Mydataspace.on('entities.delete.res', function(data) {
     var entityId = Identity.idFromData(data);
 
@@ -38,23 +56,36 @@ EntityList.prototype.listen = function() {
       return;
     }
 
-    if (entityId === this.getCurrentId()) { // Select other item if selected item is deleted.
+    if (entityId === self.getCurrentId()) { // Select other item if selected item is deleted.
       var nextId = $$('entity_list').getPrevId(entityId) || $$('entity_list').getNextId(entityId);
       $$('entity_list').select(nextId);
     }
 
     $$('entity_list').remove(entityId);
-  }.bind(this));
+  });
 
-  Mydataspace.on('entities.create.res', this.onCreate.bind(this));
+  Mydataspace.on('entities.create.res', self.onCreate.bind(this));
+  Mydataspace.on('entities.rename.res', function(data) {
+    self.changeItems(Identity.renameData.bind(null, data));
+  });
 };
 
 EntityList.prototype.setRootId = function(id) {
   if (this.rootId === id) {
     return;
   }
+
+  if (this.rootId != null) {
+    Mydataspace.emit('entities.unsubscribe', MDSCommon.extend(Identity.dataFromId(this.rootId), {
+      events: ['entities.rename.res']
+    }));
+  }
+
   this.rootId = id;
 
+  Mydataspace.emit('entities.subscribe', MDSCommon.extend(Identity.dataFromId(id), {
+    events: ['entities.rename.res']
+  }));
   // var subscription = Identity.dataFromId(id);
   // var childrenSubscription = Identity.dataFromId(id);
   // childrenSubscription.path += '/*';
@@ -69,7 +100,7 @@ EntityList.prototype.getRootId = function() {
 };
 
 EntityList.prototype.setCurrentId = function(id) {
-   this.currentId = id;
+  this.currentId = id;
 };
 
 EntityList.prototype.getCurrentId = function() {

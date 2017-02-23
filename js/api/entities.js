@@ -55,7 +55,7 @@ Entities.prototype.change = function(path, fields) {
 };
 
 Entities.prototype.subscribe = function(filter, events) {
-  return this.request('entities.unsubscribe', {
+  return this.request('entities.subscribe', {
     root: this.myda.root,
     path: filter,
     events: events

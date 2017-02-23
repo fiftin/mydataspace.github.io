@@ -52,6 +52,7 @@ EntityForm.prototype.isEditing = function() {
 };
 
 EntityForm.prototype.listen = function() {
+  var self = this;
   Mydataspace.on('entities.delete.res', function() {
     $$('entity_form').disable();
   });
@@ -606,6 +607,9 @@ EntityForm.prototype.save = function() {
     dirtyData.childPrototype = Identity.dataFromId(dirtyData.childPrototype);
   }
   Mydataspace.request('entities.change', dirtyData, function(res) {
+    if (dirtyData.name != null) {
+      this.selectedId = Identity.idFromData(res);
+    }
     this.refresh();
     $$('entity_form').enable();
   }.bind(this), function(err) {

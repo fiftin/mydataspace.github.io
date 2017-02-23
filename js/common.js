@@ -136,12 +136,12 @@ var MDSCommon = {
     }
 
     if (Array.isArray(dest) && Array.isArray(source)) {
-      for (let i in source) {
-        let item = source[i];
+      for (var i in source) {
+        var item = source[i];
         dest.push(MDSCommon.copy(item));
       }
     } else { // object
-      for (let i in dest) {
+      for (var i in dest) {
         if (typeof source[i] === 'undefined') {
           continue;
         }
@@ -151,7 +151,7 @@ var MDSCommon = {
           MDSCommon.extendOf(dest[i], source[i]);
         }
       }
-      for (let i in source) {
+      for (var i in source) {
         if (typeof dest[i] === 'undefined') {
           dest[i] = MDSCommon.copy(source[i]);
         }
@@ -216,8 +216,8 @@ var MDSCommon = {
     if (caseInsensitive) {
       name = name.toUpperCase();
     }
-    for (let i in arr) {
-      let itemName = arr[i].name;
+    for (var i in arr) {
+      var itemName = arr[i].name;
       if (caseInsensitive) itemName = itemName.toUpperCase();
       if (itemName === name) {
         return i;
@@ -311,7 +311,7 @@ var MDSCommon = {
     var ret = '';
     var state = '';
     var lastArgIndex = 0;
-    for (let i = 0; i < format.length; i++) {
+    for (var i = 0; i < format.length; i++) {
       switch (format[i]) {
         case '%':
           state = '%';
@@ -344,7 +344,7 @@ var MDSCommon = {
       ret += '%';
     }
 
-    for (let i = lastArgIndex + 1; i < arguments.length; i++) {
+    for (var i = lastArgIndex + 1; i < arguments.length; i++) {
       ret += ' ' + arguments[i];
     }
 
@@ -429,7 +429,7 @@ var MDSCommon = {
     }
     if (arguments.length > 2) {
       keys = [];
-      for (let i = 1; i < arguments.length; i++) {
+      for (var i = 1; i < arguments.length; i++) {
         keys.push(arguments[i]);
       }
     }
@@ -438,17 +438,17 @@ var MDSCommon = {
     } else {
       var ret = {};
       if (Array.isArray(keys)) {
-        for (let i in keys) {
-          let k = keys[i];
-          let val = data[k];
+        for (var i in keys) {
+          var k = keys[i];
+          var val = data[k];
           if (typeof val !== 'undefined') {
             ret[k] = val;
           }
         }
       } else {
-        for (let k in keys) {
-          let type = keys[k];
-          let val = data[k];
+        for (var k in keys) {
+          var type = keys[k];
+          var val = data[k];
           if (typeof val !== 'undefined') {
             var ok = false;
             if (MDSCommon.isPrimitive(type)) {
@@ -468,8 +468,8 @@ var MDSCommon = {
 
   permitArray: function(arr, keys) {
     var ret = [];
-    for (let i in arr) {
-      let data = arr[i];
+    for (var i in arr) {
+      var data = arr[i];
       ret[i] = MDSCommon.permit(data, keys);
     }
     return ret;
