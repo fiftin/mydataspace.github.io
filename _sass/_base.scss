@@ -124,8 +124,8 @@ body {
 
 .no_items__no_apps {
   text-align: center;
-  font-size: 30px;
-  margin-top: 50px;
+  font-size: 35px;
+  margin-top: 40px;
   color: $text-color;
 }
 
@@ -133,7 +133,13 @@ body {
   color: $text-color;
   font-size: 16px;
   text-align: center;
-  margin-top: 15px;
+  margin: 15px auto 0 auto;
+  max-width: 700px;
+  padding: 0 20px;
+}
+
+.no_items__no_apps_create {
+  text-align: center;
 }
 
 .no_items__content {
@@ -159,15 +165,27 @@ body {
 }
 
 .no_items__buttons {
-  .btn {
-    padding-left: 30px;
-    padding-right: 30px;
-    border-radius: 0;
-    background: #27ae60;
-    border-color: #27ae60;
-    position: absolute;
-    bottom: 0;
-  }
+
+}
+
+.no_items__btn {
+  padding-left: 30px;
+  padding-right: 30px;
+  border-radius: 0;
+  background: #27ae60;
+  border-color: #27ae60;
+}
+
+.no_items__btn--bottom {
+  position: absolute;
+  bottom: 0;
+}
+
+.no_items__btn--center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .no_items__desc {

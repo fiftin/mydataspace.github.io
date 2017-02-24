@@ -35,7 +35,11 @@ Pages.prototype.updatePageState = function(page) {
         document.getElementById('no_items').innerHTML =
           '<div class="no_items__no_apps">' + STRINGS.NO_APPS + '</div>' +
           '<div class="no_items__no_apps_description">' + STRINGS.NO_APPS_DESCRIPTION + '</div>' +
-          '<div class="no_items__no_apps_create"><button>' + STRINGS.NO_APPS_CREATE + '</button></div>';
+          '<div class="no_items__no_apps_create">' +
+            '<button onclick="$$(\'add_app_window\').show()" class="btn btn-success btn-lg no_items__btn no_items__btn--center">' +
+              STRINGS.NO_APPS_CREATE +
+            '</button>' +
+          '</div>';
         document.getElementById('no_items').style.display = 'block';
         $$('my_apps_panel__right_panel').hide();
         $$('my_apps_panel__resizer').hide();

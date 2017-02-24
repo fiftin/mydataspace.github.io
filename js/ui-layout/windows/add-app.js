@@ -4,7 +4,7 @@ UILayout.windows.addApp = {
     width: 300,
     position: 'center',
     modal: true,
-    head: STRINGS.NEW_APP,
+    head: STRINGS.NEW_APP_WINDOW,
     on: UIControls.getOnForFormWindow('add_app'),
     body: {
       view: 'form',
@@ -19,10 +19,11 @@ UILayout.windows.addApp = {
           var data = $$('add_app_form').getValues();
           data.path = '';
           data.fields = [];
-          Mydataspace.request('apps.create', data, function() {
+          Mydataspace.request('apps.create', data, function(res) {
             UIControls.removeSpinnerFromWindow('add_app_window');
-          }, function() {
-            ;
+          }, function(err) {
+            UIControls.removeSpinnerFromWindow('add_app_window');
+
           });
         }
       },

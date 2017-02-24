@@ -33,6 +33,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     DELETE: 'Delete',
     DELETE_APP: 'Delete App',
     NEW_APP: 'New App',
+    NEW_APP_WINDOW: 'New App',
     NAME: 'Name',
     LOGO_URL: 'Logo URL',
     SITE_URL: 'Site URL',
@@ -51,7 +52,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     NO_DATA: 'You have no data',
     NO_APPS: 'You have no apps',
     NO_APPS_DESCRIPTION: '',
-    NO_APPS_CREATE: 'Create!',
+    NO_APPS_CREATE: 'Create first app!',
     DOCS: 'Documentation',
     DEMOS: 'Demos',
     GET_STARTED: 'Get Started',
@@ -127,6 +128,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     DELETE: 'Удал.',
     DELETE_APP: 'Удалить прил.',
     NEW_APP: 'Новое прил.',
+    NEW_APP_WINDOW: 'Новое приложение',
     NAME: 'Имя',
     LOGO_URL: 'Лого',
     SITE_URL: 'Сайт',
@@ -144,8 +146,10 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     REALLY_DELETE: 'Вы действительно хотите удалить этот элемент?',
     NO_DATA: 'У вас нет данных',
     NO_APPS: 'У вас нет приложений',
-    NO_APPS_DESCRIPTION: '',
-    NO_APPS_CREATE: 'Создать!',
+    NO_APPS_DESCRIPTION: 'Если вам нужно чтобы ваш сайт имел доступ на запись к данным, ' +
+                         'вам необходимо создать приложение. В настройках приложения вы ' +
+                         'можете настроить права доступа к данным.',
+    NO_APPS_CREATE: 'Создать приложение!',
     REALLY_DELETE_APP: 'Вы действительно хотите удалить это приложение?',
     DOCS: 'Документация',
     DEMOS: 'Примеры',
@@ -1886,9 +1890,11 @@ EntityList.prototype.setRootId = function(id) {
 
   this.rootId = id;
 
-  Mydataspace.emit('entities.subscribe', MDSCommon.extend(Identity.dataFromId(id), {
-    events: ['entities.rename.res']
-  }));
+  if (id != null) {
+    Mydataspace.emit('entities.subscribe', MDSCommon.extend(Identity.dataFromId(id), {
+      events: ['entities.rename.res']
+    }));
+  }
   // var subscription = Identity.dataFromId(id);
   // var childrenSubscription = Identity.dataFromId(id);
   // childrenSubscription.path += '/*';
@@ -2028,9 +2034,11 @@ EntityTree.prototype.setCurrentId = function(id) {
 
   this.currentId = id;
 
-  Mydataspace.emit('entities.subscribe', MDSCommon.extend(Identity.dataFromId(id), {
-    events: ['entities.changes.res', 'entities.rename.res']
-  }));
+  if (id != null) {
+    Mydataspace.emit('entities.subscribe', MDSCommon.extend(Identity.dataFromId(id), {
+      events: ['entities.changes.res', 'entities.rename.res']
+    }));
+  }
 };
 
 EntityTree.prototype.resolveChildren = function(id) {
@@ -2367,7 +2375,11 @@ Pages.prototype.updatePageState = function(page) {
         document.getElementById('no_items').innerHTML =
           '<div class="no_items__no_apps">' + STRINGS.NO_APPS + '</div>' +
           '<div class="no_items__no_apps_description">' + STRINGS.NO_APPS_DESCRIPTION + '</div>' +
-          '<div class="no_items__no_apps_create"><button>' + STRINGS.NO_APPS_CREATE + '</button></div>';
+          '<div class="no_items__no_apps_create">' +
+            '<button onclick="$$(\'add_app_window\').show()" class="btn btn-success btn-lg no_items__btn no_items__btn--center">' +
+              STRINGS.NO_APPS_CREATE +
+            '</button>' +
+          '</div>';
         document.getElementById('no_items').style.display = 'block';
         $$('my_apps_panel__right_panel').hide();
         $$('my_apps_panel__resizer').hide();
@@ -2431,7 +2443,7 @@ UILayout.windows.addApp = {
     width: 300,
     position: 'center',
     modal: true,
-    head: STRINGS.NEW_APP,
+    head: STRINGS.NEW_APP_WINDOW,
     on: UIControls.getOnForFormWindow('add_app'),
     body: {
       view: 'form',
@@ -2446,10 +2458,11 @@ UILayout.windows.addApp = {
           var data = $$('add_app_form').getValues();
           data.path = '';
           data.fields = [];
-          Mydataspace.request('apps.create', data, function() {
+          Mydataspace.request('apps.create', data, function(res) {
             UIControls.removeSpinnerFromWindow('add_app_window');
-          }, function() {
-            ;
+          }, function(err) {
+            UIControls.removeSpinnerFromWindow('add_app_window');
+
           });
         }
       },
@@ -3663,7 +3676,7 @@ UILayout.apps =
         elements: [
           { view: 'text', id: 'NAME_LABEL_4', label: STRINGS.NAME, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
           { view: 'textarea', id: 'DESCRIPTION_LABEL', label: STRINGS.DESCRIPTION, height: 100, name: 'description', labelWidth: UIHelper.LABEL_WIDTH },
-          { view: 'text', id: 'LOGO_URL_LABEL', label: STRINGS.LOGO_URL, name: 'logoURL', labelWidth: UIHelper.LABEL_WIDTH },
+          // { view: 'text', id: 'LOGO_URL_LABEL', label: STRINGS.LOGO_URL, name: 'logoURL', labelWidth: UIHelper.LABEL_WIDTH },
           { view: 'text', id: 'SITE_URL_LABEL_1', label: STRINGS.SITE_URL, name: 'url', labelWidth: UIHelper.LABEL_WIDTH },
           { view: 'text', id: 'CLIENT_ID_LABEL', label: STRINGS.CLIENT_ID, name: 'clientId', readonly:true, labelWidth: UIHelper.LABEL_WIDTH }
         ],

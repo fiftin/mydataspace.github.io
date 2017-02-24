@@ -83,9 +83,11 @@ EntityList.prototype.setRootId = function(id) {
 
   this.rootId = id;
 
-  Mydataspace.emit('entities.subscribe', MDSCommon.extend(Identity.dataFromId(id), {
-    events: ['entities.rename.res']
-  }));
+  if (id != null) {
+    Mydataspace.emit('entities.subscribe', MDSCommon.extend(Identity.dataFromId(id), {
+      events: ['entities.rename.res']
+    }));
+  }
   // var subscription = Identity.dataFromId(id);
   // var childrenSubscription = Identity.dataFromId(id);
   // childrenSubscription.path += '/*';
