@@ -32,7 +32,7 @@ Pages.prototype.updatePageState = function(page) {
   switch (page) {
     case 'apps':
       if ($$('app_list').getFirstId() == null) {
-        document.getElementById('no_items').innerHTML =
+        document.getElementById('no_items__no_apps').innerHTML =
           '<div class="no_items__no_apps">' + STRINGS.NO_APPS + '</div>' +
           '<div class="no_items__no_apps_description">' + STRINGS.NO_APPS_DESCRIPTION + '</div>' +
           '<div class="no_items__no_apps_create">' +
@@ -40,6 +40,8 @@ Pages.prototype.updatePageState = function(page) {
               STRINGS.NO_APPS_CREATE +
             '</button>' +
           '</div>';
+        document.getElementById('no_items__no_apps').style.display = 'block';
+        document.getElementById('no_items__no_data').style.display = 'none';
         document.getElementById('no_items').style.display = 'block';
         $$('my_apps_panel__right_panel').hide();
         $$('my_apps_panel__resizer').hide();
@@ -51,6 +53,8 @@ Pages.prototype.updatePageState = function(page) {
       break;
     case 'data':
       if ($$('entity_tree').getFirstId() == null) {
+        document.getElementById('no_items__no_apps').style.display = 'none';
+        document.getElementById('no_items__no_data').style.display = 'block';
         document.getElementById('no_items').style.display = 'block';
         document.getElementById('no_items__new_root_input').focus();
         $$('my_data_panel__right_panel').hide();

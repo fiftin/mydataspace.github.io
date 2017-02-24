@@ -29,7 +29,7 @@ UILayout.windows.addApp = {
       },
       elements: [
         { view: 'text', id: 'NAME_LABEL_3', label: STRINGS.NAME, required: true, name: 'name', labelWidth: UIHelper.APP_LABEL_WIDTH },
-        { view: 'text', id: 'SITE_URL_LABEL', label: STRINGS.SITE_URL, required: true, name: 'url', labelWidth: UIHelper.APP_LABEL_WIDTH },
+        { view: 'text', id: 'SITE_URL_LABEL', label: STRINGS.SITE_URL, tooltip:"Hello World Hello WOrld!!", required: true, name: 'url', labelWidth: UIHelper.APP_LABEL_WIDTH },
         UIControls.getSubmitCancelForFormWindow('add_app')
       ]
     }

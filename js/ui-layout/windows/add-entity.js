@@ -23,8 +23,8 @@ UILayout.windows.addEntity = {
               UIControls.removeSpinnerFromWindow('add_entity_window');
             }, function(err) {
               UIControls.removeSpinnerFromWindow('add_entity_window');
-              for (let i in err.errors) {
-                let e = err.errors[i];
+              for (var i in err.errors) {
+                var e = err.errors[i];
                 switch (e.type) {
                   case 'unique violation':
                     if (e.path === 'entities_root_path') {
