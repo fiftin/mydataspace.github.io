@@ -6,12 +6,13 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Ubuntu", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 input {
   font-family: "Ubuntu", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .header {
@@ -87,6 +88,7 @@ input {
 .deny_button {
   background: #f5f5f5;
   border: 1px solid rgba(0,0,0,0.1);
+  color: #404040;
 }
 
 .form_wrap {
@@ -104,7 +106,7 @@ input {
 }
 
 .prompt {
-  font-size: 20px;
+  font-size: 28px;
   margin-bottom: 20px;
   text-align: center;
 }
@@ -117,4 +119,5 @@ input {
   padding: 20px 0;
   border-top: 1px solid lightgray;
   border-bottom: 1px solid lightgray;
+  font-size: 18px;
 }
