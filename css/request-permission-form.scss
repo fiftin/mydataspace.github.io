@@ -12,7 +12,7 @@ body {
 
 input {
   font-family: "Ubuntu", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: bold;
   color: #404040;
 }
@@ -75,7 +75,7 @@ input {
 }
 
 .allow_button, .deny_button {
-  padding: 10px 20px;
+  padding: 10px 25px;
   cursor: pointer;
   border-radius: 4px;
 }
@@ -102,9 +102,10 @@ input {
 }
 
 .message {
-  margin-bottom: 50px;
+  margin-bottom: 40px;
   font-size: 13px;
   text-align: center;
+  color: gray;
 }
 
 .prompt {
