@@ -7,6 +7,7 @@ body {
   padding: 0;
   font-family: "Ubuntu", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 16px;
+  color: #404040;
 }
 
 input {
@@ -19,7 +20,7 @@ input {
   background: black;
   height: 50px;
   padding: 5px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .header__logo_text {
@@ -60,7 +61,7 @@ input {
 
 .logos {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .logo {
@@ -74,7 +75,7 @@ input {
 }
 
 .allow_button, .deny_button {
-  padding: 8px 20px;
+  padding: 10px 20px;
   cursor: pointer;
   border-radius: 4px;
 }
@@ -88,7 +89,6 @@ input {
 .deny_button {
   background: #f5f5f5;
   border: 1px solid rgba(0,0,0,0.1);
-  color: #404040;
   margin-right: 5px;
 }
 
@@ -112,13 +112,19 @@ input {
   text-align: center;
 }
 
+.prompt__app_name {
+  font-weight: bold;
+}
+
 .permission_list {
   margin-bottom: 20px;
 }
 
 .permission {
   padding: 20px 0;
-  border-top: 1px solid lightgray;
-  border-bottom: 1px solid lightgray;
-  font-size: 18px;
+  border-top: 1px solid #e6e6e6;
+  border-bottom: 1px solid #e6e6e6;
+  font-size: 20px;
+  text-align: center;
+  font-weight: bold;
 }

@@ -36,7 +36,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     NEW_APP_WINDOW: 'New App',
     NAME: 'Name',
     LOGO_URL: 'Logo URL',
-    SITE_URL: 'Site URL',
+    SITE_URL: 'client URLs and IPs',
     CLIENT_ID: 'API Key',
     VALUE: 'Value',
     CHILD_PROTO: 'Child Proto',
@@ -131,7 +131,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     NEW_APP_WINDOW: 'Новое приложение',
     NAME: 'Имя',
     LOGO_URL: 'Лого',
-    SITE_URL: 'Сайт',
+    SITE_URL: 'URLы и IP адресв',
     CLIENT_ID: 'Ключ API',
     VALUE: 'Значение',
     CHILD_PROTO: 'Прототип',
@@ -345,6 +345,7 @@ UIHelper = {
    * Width of label of field in form.
    */
   LABEL_WIDTH: 120,
+  APP_LABEL_WIDTH: 160,
   NUMBER_OF_FIXED_INPUTS_IN_FIELDS_FORM: 7,
 
   ENTITY_TREE_SHOW_MORE_ID: 'show_more_23478_3832ee',
@@ -2440,7 +2441,7 @@ var UILayout = {
 UILayout.windows.addApp = {
     view: 'window',
     id: 'add_app_window',
-    width: 300,
+    width: 400,
     position: 'center',
     modal: true,
     head: STRINGS.NEW_APP_WINDOW,
@@ -2467,8 +2468,8 @@ UILayout.windows.addApp = {
         }
       },
       elements: [
-        { view: 'text', id: 'NAME_LABEL_3', label: STRINGS.NAME, required: true, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
-        { view: 'text', id: 'SITE_URL_LABEL', label: STRINGS.SITE_URL, required: true, name: 'url', labelWidth: UIHelper.LABEL_WIDTH },
+        { view: 'text', id: 'NAME_LABEL_3', label: STRINGS.NAME, required: true, name: 'name', labelWidth: UIHelper.APP_LABEL_WIDTH },
+        { view: 'text', id: 'SITE_URL_LABEL', label: STRINGS.SITE_URL, required: true, name: 'url', labelWidth: UIHelper.APP_LABEL_WIDTH },
         UIControls.getSubmitCancelForFormWindow('add_app')
       ]
     }
@@ -3674,11 +3675,11 @@ UILayout.apps =
         complexData: true,
         scroll: true,
         elements: [
-          { view: 'text', id: 'NAME_LABEL_4', label: STRINGS.NAME, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
-          { view: 'textarea', id: 'DESCRIPTION_LABEL', label: STRINGS.DESCRIPTION, height: 100, name: 'description', labelWidth: UIHelper.LABEL_WIDTH },
+          { view: 'text', id: 'NAME_LABEL_4', label: STRINGS.NAME, name: 'name', labelWidth: UIHelper.APP_LABEL_WIDTH },
+          { view: 'textarea', id: 'DESCRIPTION_LABEL', label: STRINGS.DESCRIPTION, height: 100, name: 'description', labelWidth: UIHelper.APP_LABEL_WIDTH },
           // { view: 'text', id: 'LOGO_URL_LABEL', label: STRINGS.LOGO_URL, name: 'logoURL', labelWidth: UIHelper.LABEL_WIDTH },
-          { view: 'text', id: 'SITE_URL_LABEL_1', label: STRINGS.SITE_URL, name: 'url', labelWidth: UIHelper.LABEL_WIDTH },
-          { view: 'text', id: 'CLIENT_ID_LABEL', label: STRINGS.CLIENT_ID, name: 'clientId', readonly:true, labelWidth: UIHelper.LABEL_WIDTH }
+          { view: 'text', id: 'SITE_URL_LABEL_1', label: STRINGS.SITE_URL, name: 'url', labelWidth: UIHelper.APP_LABEL_WIDTH },
+          { view: 'text', id: 'CLIENT_ID_LABEL', label: STRINGS.CLIENT_ID, name: 'clientId', readonly:true, labelWidth: UIHelper.APP_LABEL_WIDTH }
         ],
         on: {
           onChange: function() { UI.appForm_updateToolbar() }

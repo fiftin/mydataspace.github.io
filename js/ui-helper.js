@@ -8,6 +8,7 @@ UIHelper = {
    * Width of label of field in form.
    */
   LABEL_WIDTH: 120,
+  APP_LABEL_WIDTH: 160,
   NUMBER_OF_FIXED_INPUTS_IN_FIELDS_FORM: 7,
 
   ENTITY_TREE_SHOW_MORE_ID: 'show_more_23478_3832ee',
