@@ -8,8 +8,9 @@ UILayout.header =
         id: 'GET_STARTED_LABEL',
         label: STRINGS.GET_STARTED,
         click: function() {
-          window.open('/get-started', '_blank');
-          // location.href = 'get-started';
+          var currentLang = (localStorage.getItem('language') || 'en').toLowerCase();
+          currentLang = currentLang === 'en' ? '' : '/' + currentLang;
+          window.open(currentLang + '/get-started', '_blank');
         }
       },
       { view: 'button',
@@ -18,8 +19,9 @@ UILayout.header =
         id: 'DEMOS_LABEL',
         label: STRINGS.DEMOS,
         click: function() {
-          window.open('/demos', '_blank');
-          // location.href = 'demos';
+          var currentLang = (localStorage.getItem('language') || 'en').toLowerCase();
+          currentLang = currentLang === 'en' ? '' : '/' + currentLang;
+          window.open(currentLang + '/demos', '_blank');
         }
       },
       { view: 'button',
@@ -28,8 +30,9 @@ UILayout.header =
         id: 'DOCS_LABEL',
         label: STRINGS.DOCS,
         click: function() {
-          window.open('/docs', '_blank');
-          // location.href = 'docs';
+          var currentLang = (localStorage.getItem('language') || 'en').toLowerCase();
+          currentLang = currentLang === 'en' ? '' : '/' + currentLang;
+          window.open(currentLang + '/docs', '_blank');
         }
       },
       { width: 10, css: 'menu__spacer' },
