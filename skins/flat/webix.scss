@@ -3435,7 +3435,7 @@ body:not(:-moz-handler-blocked) .webix_el_select select {
 .webix_el_datepicker .webix_inp_static,
 .webix_el_colorpicker .webix_inp_static,
 .webix_el_search .webix_inp_static {
-  color: #666666;
+  color: $webix-input-color;
   padding-right: 24px;
   background: $input-bg;
   font-family: $font-family;
