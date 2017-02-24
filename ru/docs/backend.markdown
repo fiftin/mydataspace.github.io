@@ -1,5 +1,5 @@
 ---
 layout: page
-title: Бэкенд
+title: Бекенд
 language: ru
 ---

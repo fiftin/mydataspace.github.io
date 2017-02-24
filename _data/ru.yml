@@ -6,7 +6,7 @@ menu:
   login: Войти
 slogan: GitHub для данных
 slogan_description: Любишь Open Source? Давай создадим Open Data вместе!
-slogan_2: Невероятно быстрый бэкенд вашего сайта
+slogan_2: Невероятно быстрый бекенд вашего сайта
 slogan_description_2: Вы поразитесь насколько быстрым и отзывчивым может быть веб-сайт
 mission: С самого начала мы создавали быстрый, простой и надежный продукт.
 special_offer: Бесплатно <b>навсегда</b> для зарегистрированных пользователей
@@ -50,7 +50,7 @@ sections:
         description: Единый инструмент управления данными и кодом
     additional_features:
       - Создайте интерфейс вашего сайта
-      - Загрузите данные на бэкенд
+      - Загрузите данные на бекенд
       - Подключите интерфейс к бэкенду
     code_simple_description: Пример использования данных сайта <a target="_blank" href="https://spreex.github.io">spreex.github.io</a>
   - id: reliability
@@ -86,8 +86,8 @@ get_started:
     title: Здравствуй, мир!
     sections:
       - id: backend
-        title: Бэкенд
-        description: Добавляем данные
+        title: Бекенд
+        description: Добавляем необходимые данные через административную панель
         type: demo
         height: 612
         width: 1045
@@ -97,13 +97,10 @@ get_started:
         data_url: https://my-data.space/#hello-world
       - id: client
         title: Клиент
-        description: Выводим на экран JSON полученный с бэкенда
+        description: Просто выводим на экран JSON полученный с бекенда
         type: code
         height: 350
         id: jrPQwR
-  # - id: goods-catalog
-  #   title: Каталог товаров
-    # description: Бэкенд простого каталога товаров.
   - id: chat
     title: Простой чат
     # description:
@@ -111,6 +108,6 @@ docs:
   - id: overview
     title: Обзор
   - id: backend
-    title: Бэкенд
+    title: Бекенд
   - id: client-api
     title: Клиентский API
