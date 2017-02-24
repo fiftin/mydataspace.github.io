@@ -7,7 +7,7 @@
     <div id="bootstrap" class="landing landing--{{ page.language }}">
       <script type="text/javascript">
         if (isValidJWT(localStorage.getItem('authToken')) ||
-            window.location.hash != null && window.location.hash !== '' && window.location.hash !== '#') {
+            window.location.hash && window.location.hash !== '' && window.location.hash !== '#') {
           document.getElementById('bootstrap').style.display = 'none';
         }
       </script>
@@ -33,13 +33,13 @@
     <div id="webix">
       <script type="text/javascript">
         if (!isValidJWT(localStorage.getItem('authToken')) &&
-            !(window.location.hash != null && window.location.hash !== '' && window.location.hash !== '#')) {
+            !(window.location.hash && window.location.hash !== '' && window.location.hash !== '#')) {
           document.getElementById('webix').style.display = 'none';
         }
       </script>
       <div class="webix_preloaded_header"></div>
       <div id="admin_panel__loading"><i class="fa fa-cog fa-spin fa-5x fa-fw"></i></div>
-      <a class="logo" href="/">
+      <a class="logo" href="/" id="logo_link">
         <div class="logo__img_wrap">
           <img src="/images/logo_128.png" class="logo__img" />
         </div>
@@ -166,7 +166,7 @@
         if (!isEmptyHash && document.getElementById('webix').style.display == 'none') {
           document.getElementById('bootstrap').style.display = 'none';
           document.getElementById('webix').style.display = 'block';
-        };
+        }
       });
 
       webix.codebase = "/vendor/";

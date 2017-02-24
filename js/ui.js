@@ -16,11 +16,10 @@ UI = {
   ],
 
   updateLanguage: function() {
-
     var currentLang = localStorage.getItem('language') || 'EN';
     var strings = STRINGS_ON_DIFFERENT_LANGUAGES[currentLang];
 
-    // Language swithcer
+    // Language switcher
 
     for (var lang in STRINGS_ON_DIFFERENT_LANGUAGES) {
       var langButton = $$('menu__language_button_' + lang.toLowerCase());
@@ -84,6 +83,34 @@ UI = {
 
     $$('entity_list__search').define('placeholder', strings.SEARCH);
     $$('entity_list__search').refresh();
+
+    // Override URL
+
+    var a = document.createElement('a');
+    a.href = window.location.href;
+    var pathname = a.pathname.indexOf('/') === 0 ? a.pathname.substring(1) : a.pathname;
+    var index = pathname.indexOf('/');
+    if (index < 0) {
+      index = pathname.length;
+    }
+    var firstPart = pathname.substring(0, index);
+    if (!(firstPart.toUpperCase() in STRINGS_ON_DIFFERENT_LANGUAGES)) {
+      index = 0;
+    }
+
+    var newLang = currentLang.toLowerCase() === 'en' ? '' : currentLang.toLowerCase();
+    var pathWithoutLanguage = pathname.substring(index);
+    a.pathname = newLang === '' ? pathWithoutLanguage : '/' + newLang + pathWithoutLanguage;
+    if (a.pathname[a.pathname.length - 1] !== '/') {
+      a.pathname += '/';
+    }
+    history.replaceState(
+      {},
+      document.getElementsByTagName("title")[0].innerHTML,
+      a.href);
+
+    // Change logo link
+    document.getElementById('logo_link').href = '/' + newLang;
   },
 
   /**
@@ -404,6 +431,8 @@ UI = {
       UI.pages.refreshPage('data', true);
       updateTreeSearchScope();
     });
+
+    UI.updateLanguage();
   },
 
   updateSizes: function() {

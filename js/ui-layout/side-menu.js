@@ -52,7 +52,7 @@ UILayout.sideMenu =
                   Mydataspace.logout();
                   break;
                 default:
-                  throw new Error('Illegal menu item id');
+                  // throw new Error('Illegal menu item id');
               }
             }
           }
