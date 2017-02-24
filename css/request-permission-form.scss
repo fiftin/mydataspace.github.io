@@ -81,9 +81,15 @@ input {
 }
 
 .allow_button {
-  background: #3498db;
+  background: #5cb85c;
   color: white;
-  border: 1px solid #3498db;
+  border: 1px solid #4cae4c;
+  text-shadow: 1px 1px #43a043;
+  &:hover {
+    text-shadow: 1px 1px #3a843a;
+    background-color: #449d44;
+    border-color: #398439;
+  }
 }
 
 .deny_button {
