@@ -775,6 +775,17 @@ input {
 
 .profile__access_key {
   font-size: 9px;
-  margin-top: 3px;
+  margin-top: 4px;
   font-weight: bold;
+}
+
+.webix_text_description {
+  margin-top: 0 !important;
+  .webix_template {
+    color: #9a9a9a;
+  }
+}
+
+.webix_text_readonly input {
+  background: $input-border-color !important;
 }

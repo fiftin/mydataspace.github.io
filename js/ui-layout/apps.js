@@ -121,7 +121,27 @@ UILayout.apps =
           { view: 'textarea', id: 'DESCRIPTION_LABEL', label: STRINGS.DESCRIPTION, height: 100, name: 'description', labelWidth: UIHelper.APP_LABEL_WIDTH },
           // { view: 'text', id: 'LOGO_URL_LABEL', label: STRINGS.LOGO_URL, name: 'logoURL', labelWidth: UIHelper.LABEL_WIDTH },
           { view: 'text', id: 'SITE_URL_LABEL_1', label: STRINGS.SITE_URL, name: 'url', labelWidth: UIHelper.APP_LABEL_WIDTH },
-          { view: 'text', id: 'CLIENT_ID_LABEL', label: STRINGS.CLIENT_ID, name: 'clientId', readonly:true, labelWidth: UIHelper.APP_LABEL_WIDTH }
+          { cols: [
+              { width: UIHelper.APP_LABEL_WIDTH },
+              {
+                template: STRINGS.SITE_URL_DESCRIPTION,
+                borderless: true,
+                autoheight: true
+              }
+            ],
+            css: 'webix_text_description'
+          },
+          { view: 'text', id: 'CLIENT_ID_LABEL', css: 'webix_text_readonly', label: STRINGS.CLIENT_ID, name: 'clientId', readonly: true, labelWidth: UIHelper.APP_LABEL_WIDTH },
+          { cols: [
+            { width: UIHelper.APP_LABEL_WIDTH },
+            {
+              template: STRINGS.CLIENT_ID_DESCRIPTION,
+              borderless: true,
+              autoheight: true
+            }
+          ],
+            css: 'webix_text_description'
+          },
         ],
         on: {
           onChange: function() { UI.appForm_updateToolbar() }

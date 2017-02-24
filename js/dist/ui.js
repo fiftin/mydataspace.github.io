@@ -37,7 +37,9 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     NAME: 'Name',
     LOGO_URL: 'Logo URL',
     SITE_URL: 'client URLs & IPs',
+    SITE_URL_DESCRIPTION: 'IP and URL addresses of sites or apps witch should can access to data for write.',
     CLIENT_ID: 'API Key',
+    CLIENT_ID_DESCRIPTION: 'Unique ID used on client side.',
     VALUE: 'Value',
     CHILD_PROTO: 'Child Proto',
     FIELDS: 'Fields',
@@ -134,6 +136,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SITE_URL: 'IP и URL адреса',
     SITE_URL_DESCRIPTION: 'Разделенные знаком «;» IP и URL адреса с которых разрешен доступ',
     CLIENT_ID: 'Ключ API',
+    CLIENT_ID_DESCRIPTION: '',
     VALUE: 'Значение',
     CHILD_PROTO: 'Прототип',
     FIELDS: 'Поля',
@@ -2474,7 +2477,14 @@ UILayout.windows.addApp = {
       },
       elements: [
         { view: 'text', id: 'NAME_LABEL_3', label: STRINGS.NAME, required: true, name: 'name', labelWidth: UIHelper.APP_LABEL_WIDTH },
-        { view: 'text', id: 'SITE_URL_LABEL', label: STRINGS.SITE_URL, required: true, name: 'url', labelWidth: UIHelper.APP_LABEL_WIDTH },
+        { view: 'text',
+          id: 'SITE_URL_LABEL',
+          label: STRINGS.SITE_URL,
+          required: true,
+          name: 'url',
+          labelWidth: UIHelper.APP_LABEL_WIDTH,
+          attributes:{ title: STRINGS.SITE_URL_DESCRIPTION }
+        },
         UIControls.getSubmitCancelForFormWindow('add_app')
       ]
     }
@@ -2562,8 +2572,8 @@ UILayout.windows.addEntity = {
               UIControls.removeSpinnerFromWindow('add_entity_window');
             }, function(err) {
               UIControls.removeSpinnerFromWindow('add_entity_window');
-              for (let i in err.errors) {
-                let e = err.errors[i];
+              for (var i in err.errors) {
+                var e = err.errors[i];
                 switch (e.type) {
                   case 'unique violation':
                     if (e.path === 'entities_root_path') {
@@ -3160,7 +3170,7 @@ UILayout.header =
 
 UILayout.entityTree =
 { id: 'my_data_panel__left_panel',
-  gravity: 0.5,
+  // gravity: 0.5,
   rows: [
     { view: 'toolbar',
       elements: [
@@ -3301,7 +3311,7 @@ UILayout.entityTree =
 
 UILayout.entityList =
 { id: 'my_data_panel__central_panel',
-  gravity: 0.8,
+  // gravity: 0.8,
   rows: [
     { view: 'toolbar',
       cols: [
@@ -3684,7 +3694,27 @@ UILayout.apps =
           { view: 'textarea', id: 'DESCRIPTION_LABEL', label: STRINGS.DESCRIPTION, height: 100, name: 'description', labelWidth: UIHelper.APP_LABEL_WIDTH },
           // { view: 'text', id: 'LOGO_URL_LABEL', label: STRINGS.LOGO_URL, name: 'logoURL', labelWidth: UIHelper.LABEL_WIDTH },
           { view: 'text', id: 'SITE_URL_LABEL_1', label: STRINGS.SITE_URL, name: 'url', labelWidth: UIHelper.APP_LABEL_WIDTH },
-          { view: 'text', id: 'CLIENT_ID_LABEL', label: STRINGS.CLIENT_ID, name: 'clientId', readonly:true, labelWidth: UIHelper.APP_LABEL_WIDTH }
+          { cols: [
+              { width: UIHelper.APP_LABEL_WIDTH },
+              {
+                template: STRINGS.SITE_URL_DESCRIPTION,
+                borderless: true,
+                autoheight: true
+              }
+            ],
+            css: 'webix_text_description'
+          },
+          { view: 'text', id: 'CLIENT_ID_LABEL', css: 'webix_text_readonly', label: STRINGS.CLIENT_ID, name: 'clientId', readonly: true, labelWidth: UIHelper.APP_LABEL_WIDTH },
+          { cols: [
+            { width: UIHelper.APP_LABEL_WIDTH },
+            {
+              template: STRINGS.CLIENT_ID_DESCRIPTION,
+              borderless: true,
+              autoheight: true
+            }
+          ],
+            css: 'webix_text_description'
+          },
         ],
         on: {
           onChange: function() { UI.appForm_updateToolbar() }
