@@ -105,8 +105,6 @@ get_started:
 #    title: Простой чат
     # description:
 docs:
-  - id: overview
-    title: Обзор
   - id: backend
     title: Бекенд
   - id: import-of-data
