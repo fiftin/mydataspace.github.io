@@ -3,7 +3,7 @@ layout: page
 title: Бекенд
 language: ru
 ---
-**Бекенд** -- это серверная часть системы, предоставляющяю API для чтения, поиска, загрузки и изменения данных.
+**Бекенд** -- это серверная часть системы, предоставляющаю API для чтения, поиска, загрузки и изменения данных.
 
 ![Backend schema](/images/docs/backend/backend-schema-ru.svg){:style="width: 800px; display: block; margin: 20px 0"}
 
@@ -48,10 +48,39 @@ language: ru
 
 ### Задачи
 
-MyDataSpace позволяет выполнять JavaScript-скрипты (**задачи** в терминологии MyDataSpace) на сервере по
+MyDataSpace позволяет выполнять JS-скрипты (**задачи** в терминологии MyDataSpace) на сервере по
 расписанию -- раз в час/сутки/неделю/месяц.
+
+<div class="safari" style="width: 900px; max-width: 100%">
+  <div class="safari__header">
+      <div class="safari__buttons">
+        <div class="safari__button safari__button--red"></div>
+        <div class="safari__button safari__button--orange"></div>
+        <div class="safari__button safari__button--green"></div>
+      </div>
+    <div class="safari__address_bar">
+      <div class="safari__url">{{ 'https://myda.space' | replace: "https://","<span class='safari__url__https'>https://</span>" }}</div>
+    </div>
+  </div>
+  <img class="safari__img" src="/images/docs/backend/tasks-ru.png" />
+</div>
+
 Задачи предназначены для синхронизация данных и для выполнения другой рутинная работа с данными. Они
-непредназначены для сложных вычислений.
+не предназначены для сложных вычислений.
 
 Код задачи выполняется в песочнице на сервере точно также как клиентской код в браузере. Благодаря этому
 задачи можно отлаживать непосредственно в браузере из административной панели.
+
+<div class="safari" style="width: 900px; max-width: 100%">
+  <div class="safari__header">
+      <div class="safari__buttons">
+        <div class="safari__button safari__button--red"></div>
+        <div class="safari__button safari__button--orange"></div>
+        <div class="safari__button safari__button--green"></div>
+      </div>
+    <div class="safari__address_bar">
+      <div class="safari__url">{{ 'https://myda.space' | replace: "https://","<span class='safari__url__https'>https://</span>" }}</div>
+    </div>
+  </div>
+  <img class="safari__img" src="/images/docs/backend/tasks-debug-ru.png" />
+</div>
