@@ -113,9 +113,9 @@ get_started:
   # - id: goods-catalog
   #   title: Goods Catalog
   #   description: Backend for simple goods catalog.
-
-  - id: chat
-    title: Simple Chat
+#
+#  - id: chat
+#    title: Simple Chat
     # description: Backend for simple goods catalog.
 
 docs:

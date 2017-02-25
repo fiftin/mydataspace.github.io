@@ -101,13 +101,15 @@ get_started:
         type: code
         height: 350
         id: jrPQwR
-  - id: chat
-    title: Простой чат
+#  - id: chat
+#    title: Простой чат
     # description:
 docs:
   - id: overview
     title: Обзор
   - id: backend
     title: Бекенд
+  - id: import-of-data
+    title: Импорт данных
   - id: client-api
     title: Клиентский API
