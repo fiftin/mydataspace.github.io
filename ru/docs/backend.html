@@ -5,14 +5,15 @@ language: ru
 ---
 <section class="page__section">
     <b>Бекенд</b> &mdash; это серверная часть системы, предоставляющаю API для чтения, поиска, загрузки и изменения данных.
-    <img src="/images/docs/backend/backend-schema-ru.svg" style="width: 800px; display: block;" />
+    <img src="/images/docs/backend/backend-schema-ru.svg" style="width: 800px; max-width: 100%; display: block; margin: 20px auto 0 auto;" />
 </section>
 
 <section class="page__section">
     <div class="row">
         <div class="col-md-4">
             <h2 class="margin-top-0">Админ панель</h2>
-            С помощью неё администратор создает скрипты, загружает необходимые данные и настраивает доступ к ним.
+            <p>С помощью неё администратор создает скрипты, загружает файлы и данные, настраивает доступ к ним.</p>
+            <!--<p>После этого можно подключаться к бекенду с сайта или из приложения.</p>-->
         </div>
         <div class="col-md-8">
             <div class="safari">
@@ -36,11 +37,13 @@ language: ru
     <div class="row">
         <div class="col-md-4">
             <h2 class="margin-top-0">Приложения</h2>
-            <p>Настройка доступа к данным осуществляется через механизм <i>приложений</i>.
-
+            <p>Настройка доступа к данным осуществляется через <i>приложения</i>.</p>
+            <p>Чтобы разрешить <i>сайту</i> добавлять и изменять данные,
+                необходимо создать приложение и указать в нем его URL.</p>
+            <p>В клиентском коде при подключению к бекенду необходимо использовать ключ этого приложения.</p>
         </div>
         <div class="col-md-8">
-            <div class="safari" style="width: 900px; max-width: 100%">
+            <div class="safari">
                 <div class="safari__header">
                     <div class="safari__buttons">
                         <div class="safari__button safari__button--red"></div>
@@ -61,13 +64,11 @@ language: ru
     <div class="row">
         <div class="col-md-4">
             <h2 class="margin-top-0">Задачи</h2>
-            <p>MyDataSpace позволяет выполнять JS-скрипты (<i>задачи</i>) на сервере по
-                расписанию &mdash; раз в час/сутки/неделю/месяц.</p>
-            <p>Задачи предназначены для выполнения рутинной работа с данными, например синхронизации.
-                Они не предназначены для сложных вычислений.</p>
+            <p>MyDataSpace позволяет выполнять скрипты JavaScript (<i>задачи</i>) на сервере по
+                расписанию &mdash; раз в час, сутки, неделю или месяц.</p>
         </div>
         <div class="col-md-8">
-            <div class="safari" style="width: 900px; max-width: 100%">
+            <div class="safari">
                 <div class="safari__header">
                     <div class="safari__buttons">
                         <div class="safari__button safari__button--red"></div>
@@ -84,12 +85,12 @@ language: ru
     </div>
     <div class="row" style="margin-top: 20px;">
         <div class="col-md-4">
-            <p>Код задачи выполняется в песочнице на сервере точно также как клиентской код в браузере. </p>
+            <p>Код задачи выполняется в песочнице на сервере точно также как в браузере.</p>
             <p>Благодаря этому задачи можно отлаживать непосредственно в браузере из административной
                 панели.</p>
         </div>
         <div class="col-md-8">
-            <div class="safari" style="width: 900px; max-width: 100%">
+            <div class="safari">
                 <div class="safari__header">
                     <div class="safari__buttons">
                         <div class="safari__button safari__button--red"></div>
@@ -110,10 +111,12 @@ language: ru
     <div class="row">
         <div class="col-md-4">
             <h2 class="margin-top-0">Ресурсы</h2>
-            На MyDataSpace можно хранить файлы.
+            <p>На MyDataSpace можно хранить файлы (<i>ресурсы</i>).</p>
+            <p>Для картинок создаются превьюшки нескольких размеров.</p>
+            <p>Загружать файлы можно как через административную панель, так и с помощью API.</p>
         </div>
         <div class="col-md-8">
-            <div class="safari" style="width: 900px; max-width: 100%">
+            <div class="safari">
                 <div class="safari__header">
                     <div class="safari__buttons">
                         <div class="safari__button safari__button--red"></div>
