@@ -1,0 +1,194 @@
+---
+layout: page
+title: Импорт данных
+language: ru
+---
+<section class="page__section">
+    <p>Для импорта данных существует <a href="https://www.npmjs.com/package/mydataspace">библиотека</a> для NodeJS.</p>
+    <p>На данный момент это единственный способ импорта больших объемов данных в MyDataSpace.
+        В дальнейшем будет возможность импорта данных из файлов с помощью Административной панели.</p>
+    <p>Ниже шаг за шагом описан процесс импорта данных на примере данных <a href="https://my-data.space/#geonames">Geonames</a>.</p>
+</section>
+
+<section class="page__section">
+    <div class="row">
+        <div class="col-md-4">
+            <h2 class="margin-top-0">1. Создаем рут и элемент для данных</h2>
+            <p>Рут &mdash; корневой элемент девева данных.</p>
+            <p>Данные можно загружать в корневой элемент,
+                но для удобства создадим дочерний элемент <i>postal-codes</i>
+                в котовый и поместим данные из файла.</p>
+        </div>
+        <div class="col-md-8">
+            <div class="safari">
+                <div class="safari__header">
+                    <div class="safari__buttons">
+                        <div class="safari__button safari__button--red"></div>
+                        <div class="safari__button safari__button--orange"></div>
+                        <div class="safari__button safari__button--green"></div>
+                    </div>
+                    <div class="safari__address_bar">
+                        <div class="safari__url">{{ 'https://myda.space' | replace: "https://","<span class='safari__url__https'>https://</span>" }}</div>
+                    </div>
+                </div>
+                <div style="margin-right: -2px; margin-bottom: -2px">
+                    <img class="safari__img" src="/images/docs/import-of-data/create-root.gif" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="page__section">
+    <div class="row">
+        <div class="col-md-4">
+            <h2 class="margin-top-0">2. Создаем приложение</h2>
+            <p>Чтобы наша NodeJS-программа могло сохранить данных в MyDataSpace, необходимо
+                разрешить ему это через <a href="/ru/docs/backend#docs__apps">приложение</a>.</p>
+            <p>Создадим новое приложение и разрешим доступ с любого IP адреса
+                (для поля <i>URLs & IPs/IP и URL адреса</i> установить значение <b>0.0.0.0</b>).</p>
+        </div>
+        <div class="col-md-8">
+            <div class="safari">
+                <div class="safari__header">
+                    <div class="safari__buttons">
+                        <div class="safari__button safari__button--red"></div>
+                        <div class="safari__button safari__button--orange"></div>
+                        <div class="safari__button safari__button--green"></div>
+                    </div>
+                    <div class="safari__address_bar">
+                        <div class="safari__url">{{ 'https://myda.space' | replace: "https://","<span class='safari__url__https'>https://</span>" }}</div>
+                    </div>
+                </div>
+                <div style="margin-right: -2px; margin-bottom: -2px">
+                    <img class="safari__img" src="/images/docs/import-of-data/create-app.gif" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="page__section">
+    <h2 class="margin-top-0">3. Скачиваем данные</h2>
+    <p><a href="http://download.geonames.org/export/zip/RU.zip">Скачиваем</a> и распаковываем файлы с данными по почтовым индексам РФ.</p>
+</section>
+
+<section class="page__section">
+    <h2 class="margin-top-0">4. Создаем NodeJS приложение</h2>
+    <div>
+{% highlight bash %}
+mkdir import-geonames-data
+cd import-geonames-data
+npm init
+touch app.js
+{% endhighlight %}
+    </div>
+    <p><b>app.js</b>:</p>
+    <div>
+{% highlight javascript %}
+const crypto = require('crypto');
+const mds = require('mydataspace');
+
+const myda = new mds.Myda({
+  root: 'geonames',
+  permission: 'geonames',
+  clientId: '138d9162-6bd9-52a3-21d2-97280d18054a'
+});
+
+//
+// TODO: Укажите путь к файлу с данными и
+//
+const fileName = '/path/to/RU.txt';
+const accessKey = '***';
+
+var block = [];
+var linesRead = 0;
+
+/**
+ * Connect to MyDataSpace and start importing data.
+ */
+myda.connect().then(() => myda.loginByToken(accessKey)).then(function() {
+  const lineReader = require('readline').createInterface({
+    input: require('fs').createReadStream(fileName)
+  });
+  lineReader.on('line', parseLineAndAddToBlock);
+  lineReader.on('pause', sendBlockToServer);
+  lineReader.on('end', sendBlockToServer.bind(null, true));
+}).catch(function(err) {
+    console.log(err);
+});
+
+function parseLineAndAddToBlock(line) {
+  linesRead++;
+  console.log(linesRead + ' ' + block.length);
+  const parts = line.split('\t');
+  const suffix = crypto.createHash('md5').update(line).digest('hex').substring(0, 7);
+  block.push({
+    root: 'geonames',
+    path: 'zips/' + parts[0] + '-' + parts[1] + '-' + suffix,
+    fields: [
+        { name: 'code',       value: parts[1],  type: 's' },
+        { name: 'placeName',  value: parts[2],  type: 's' },
+        { name: 'adminName1', value: parts[3],  type: 's' },
+        { name: 'adminCode1', value: parts[4],  type: 's' },
+        { name: 'adminName2', value: parts[5],  type: 's' },
+        { name: 'adminCode2', value: parts[6],  type: 's' },
+        { name: 'adminName3', value: parts[7],  type: 's' },
+        { name: 'adminCode3', value: parts[8],  type: 's' },
+        { name: 'latitude',   value: parts[9],  type: 's' },
+        { name: 'longitude',  value: parts[10], type: 's' },
+        { name: 'accuracy',   value: parts[11], type: 's' }
+    ]
+  });
+  if (block.length >= 1000) {
+    lineReader.pause();
+  }
+}
+
+function nextLineOrExit(lineReader, isLastBlock, isError) {
+  if (isError) {
+    if (isLastBlock) {
+      console.log('Importing finished!');
+      process.exit();
+    } else {
+      console.log('Block sent successful. Reading new block...');
+      lineReader.resume();
+    }
+  } else {
+    if (isLastBlock) {
+      console.log('Importing finished with error!');
+      process.exit();
+    } else {
+      console.log('Block sent with errors. Reading new block...');
+      lineReader.resume();
+    }
+  }
+}
+
+function sendBlockToServer(isLastBlock) {
+  console.log('Now block of ' + block.length + ' records received. Sending it to server...');
+  var blockForSend = block;
+  block = [];
+  myda.request('entities.create', blockForSend, function() {
+    nextLineOrExit(lineReader, isLastBlock);
+  }, function(err) {
+    console.log('ERROR:');
+    console.log(err);
+    console.log('INNER ERRORS:');
+    (Array.isArray(err) ? err : []).forEach(x => console.log(x.errors));
+    nextLineOrExit(lineReader, isLastBlock, true);
+  });
+}
+{% endhighlight %}
+    </div>
+</section>
+
+<section class="page__section">
+    <h2 class="margin-top-0">5. Запускаем приложение</h2>
+{% highlight bash %}
+node app
+{% endhighlight %}
+    <p>Импорт больших объемов данных длительный процесс.
+        Наберитесь терпения <i class="fa fa-smile-o" aria-hidden="true"></i></p>
+</section>
+
