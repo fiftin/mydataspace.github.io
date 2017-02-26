@@ -118,7 +118,6 @@ myda.connect().then(() => myda.loginByToken(ACCESS_KEY)).then(function() {
   console.log('--- Logged in ---');
   lineReader.on('line', parseLineAndAddToBlock);
   lineReader.on('pause', sendBlockToServer);
-  // lineReader.on('resume', () => console.log('Resume'));
   lineReader.on('end', sendBlockToServer.bind(null, true));
 }).catch(function(err) {
 	console.log(err);
