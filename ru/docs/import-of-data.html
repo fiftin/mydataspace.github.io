@@ -7,7 +7,8 @@ language: ru
     <p>Для импорта данных существует <a href="https://www.npmjs.com/package/mydataspace">библиотека</a> для NodeJS.</p>
     <p>На данный момент это единственный способ импорта больших объемов данных в MyDataSpace.
         В дальнейшем будет возможность импорта данных из файлов с помощью Административной панели.</p>
-    <p>Ниже шаг за шагом описан процесс импорта данных на примере данных <a href="https://my-data.space/#geonames">Geonames</a>.</p>
+    <p>Ниже шаг за шагом описан процесс импорта данных на примере данных
+        <a href="https://my-data.space/#geonames">Geonames</a> по почтовым индексам РФ.</p>
 </section>
 
 <section class="page__section">
@@ -15,8 +16,7 @@ language: ru
         <div class="col-md-4">
             <h2 class="margin-top-0">1. Создаем рут и элемент для данных</h2>
             <p>Рут &mdash; корневой элемент девева данных.</p>
-            <p>Данные можно загружать в корневой элемент,
-                но для удобства создадим дочерний элемент <i>postal-codes</i>
+            <p>Для удобства создадим дочерний элемент <i>postal-codes</i>
                 в котовый и поместим данные из файла.</p>
         </div>
         <div class="col-md-8">
@@ -44,7 +44,7 @@ language: ru
         <div class="col-md-4">
             <h2 class="margin-top-0">2. Создаем приложение</h2>
             <p>Чтобы наша NodeJS-программа могло сохранить данных в MyDataSpace, необходимо
-                разрешить ему это через <a href="/ru/docs/backend#docs__apps">приложение</a>.</p>
+                разрешить ей это через <a href="/ru/docs/backend#docs__apps">приложение</a>.</p>
             <p>Создадим новое приложение и разрешим доступ с любого IP адреса
                 (для поля <i>URLs & IPs/IP и URL адреса</i> установить значение <b>0.0.0.0</b>).</p>
         </div>
@@ -70,7 +70,7 @@ language: ru
 
 <section class="page__section">
     <h2 class="margin-top-0">3. Скачиваем данные</h2>
-    <p><a href="http://download.geonames.org/export/zip/RU.zip">Скачиваем</a> и распаковываем файлы с данными по почтовым индексам РФ.</p>
+    <p><a href="http://download.geonames.org/export/zip/RU.zip">Скачиваем</a> и распаковываем файлы с данными.</p>
 </section>
 
 <section class="page__section">
