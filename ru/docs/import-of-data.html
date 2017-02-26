@@ -96,7 +96,6 @@ const ACCESS_KEY = '***********';
 // Корень в котором вы хотите сохранить данные
 const ROOT = 'geonames-demo';
 
-
 const crypto = require('crypto');
 const mds = require('mydataspace');
 const myda = new mds.Myda({
@@ -132,7 +131,7 @@ function parseLineAndAddToBlock(line) {
   const suffix = crypto.createHash('md5').update(line).digest('hex').substring(0, 7);
   block.push({
     root: 'geonames',
-    path: 'zips/' + parts[0] + '-' + parts[1] + '-' + suffix,
+    path: 'postal-codes/' + parts[0] + '-' + parts[1] + '-' + suffix,
     fields: [
         { name: 'code',       value: parts[1],  type: 's' },
         { name: 'placeName',  value: parts[2],  type: 's' },
