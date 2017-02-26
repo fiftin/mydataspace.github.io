@@ -84,18 +84,18 @@ npm install mydataspace --save
 touch app.js
 {% endhighlight %}
     </div>
-    <p><b>app.js</b> (не забудьте указать <i>FILE_NAME</i>,
-        <i>ACCESS_TOKEN</i>, <i>APP_API_KEY</i>, <i>ROOT</i>):</p>
+    <img src="/images/docs/import-of-data/access-token.png" style="margin-bottom: 15px; max-width: 100%; border-radius: 5px; box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.3);" />
+    <p><b>app.js</b> (не забудьте указать <i>ACCESS_TOKEN</i>, <i>APP_API_KEY</i>, <i>FILE_NAME</i>, <i>ROOT</i>):</p>
     <div>
 {% highlight javascript %}
-// Путь к файлу с данными
-const FILE_NAME = '/path/to/RU.txt';
-
-// Ваш токен доступа
+// Ваш ключ доступа
 const ACCESS_TOKEN = '***********';
 
 // Ключ API вашего приложение
 const APP_API_KEY = '***********';
+
+// Путь к файлу с данными
+const FILE_NAME = '/path/to/RU.txt';
 
 // Корень в котором вы хотите сохранить данные
 const ROOT = 'geonames-demo';
