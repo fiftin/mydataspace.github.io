@@ -84,14 +84,18 @@ npm install mydataspace --save
 touch app.js
 {% endhighlight %}
     </div>
-    <p><b>app.js</b> (не забудьте указать <i>ACCESS_KEY</i>, <i>ACCESS_KEY</i>, <i>ROOT</i>):</p>
+    <p><b>app.js</b> (не забудьте указать <i>FILE_NAME</i>,
+        <i>ACCESS_TOKEN</i>, <i>APP_API_KEY</i>, <i>ROOT</i>):</p>
     <div>
 {% highlight javascript %}
 // Путь к файлу с данными
 const FILE_NAME = '/path/to/RU.txt';
 
+// Ваш токен доступа
+const ACCESS_TOKEN = '***********';
+
 // Ключ API вашего приложение
-const ACCESS_KEY = '***********';
+const APP_API_KEY = '***********';
 
 // Корень в котором вы хотите сохранить данные
 const ROOT = 'geonames-demo';
@@ -101,7 +105,7 @@ const mds = require('mydataspace');
 const myda = new mds.Myda({
   root: ROOT,
   permission: ROOT,
-  clientId: ACCESS_KEY
+  clientId: APP_API_KEY
 });
 
 const lineReader = require('readline').createInterface({
@@ -114,7 +118,7 @@ var linesRead = 0;
 /**
  * Connect to MyDataSpace and start importing data.
  */
-myda.connect().then(() => myda.loginByToken(ACCESS_KEY)).then(function() {
+myda.connect().then(() => myda.loginByToken(ACCESS_TOKEN)).then(function() {
   console.log('--- Logged in ---');
   lineReader.on('line', parseLineAndAddToBlock);
   lineReader.on('pause', sendBlockToServer);
