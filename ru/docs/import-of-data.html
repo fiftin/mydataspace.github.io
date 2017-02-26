@@ -86,20 +86,21 @@ touch app.js
     <p><b>app.js</b>:</p>
     <div>
 {% highlight javascript %}
+const FILE_NAME = '/path/to/RU.txt';
+const ACCESS_KEY = '***********';
+const START_LINE = 0;
+
 const crypto = require('crypto');
 const mds = require('mydataspace');
-
 const myda = new mds.Myda({
   root: 'geonames',
   permission: 'geonames',
   clientId: '138d9162-6bd9-52a3-21d2-97280d18054a'
 });
 
-//
-// TODO: Укажите путь к файлу с данными и
-//
-const fileName = '/path/to/RU.txt';
-const accessKey = '***';
+const lineReader = require('readline').createInterface({
+  input: require('fs').createReadStream(FILE_NAME)
+});
 
 var block = [];
 var linesRead = 0;
@@ -107,20 +108,26 @@ var linesRead = 0;
 /**
  * Connect to MyDataSpace and start importing data.
  */
-myda.connect().then(() => myda.loginByToken(accessKey)).then(function() {
-  const lineReader = require('readline').createInterface({
-    input: require('fs').createReadStream(fileName)
-  });
+myda.connect().then(() => myda.loginByToken(ACCESS_KEY)).then(function() {
+  console.log('--- Logged in ---');
   lineReader.on('line', parseLineAndAddToBlock);
   lineReader.on('pause', sendBlockToServer);
+  // lineReader.on('resume', () => console.log('Resume'));
   lineReader.on('end', sendBlockToServer.bind(null, true));
 }).catch(function(err) {
-    console.log(err);
+	console.log(err);
 });
 
 function parseLineAndAddToBlock(line) {
   linesRead++;
-  console.log(linesRead + ' ' + block.length);
+  if (linesRead < START_LINE) {
+    if (linesRead % 1000)
+      console.log('    skip ' + linesRead);
+    return;
+  } else {
+    if (linesRead % 100)
+      console.log('    parse ' + linesRead);
+  }
   const parts = line.split('\t');
   const suffix = crypto.createHash('md5').update(line).digest('hex').substring(0, 7);
   block.push({
@@ -145,38 +152,38 @@ function parseLineAndAddToBlock(line) {
   }
 }
 
-function nextLineOrExit(lineReader, isLastBlock, isError) {
+function nextLineOrExit(isLastBlock, isError) {
   if (isError) {
     if (isLastBlock) {
-      console.log('Importing finished!');
+      console.log('*** Importing finished with error! ***');
       process.exit();
     } else {
-      console.log('Block sent successful. Reading new block...');
+      console.log('--- Block sent with errors. Reading new block... ---');
       lineReader.resume();
     }
   } else {
     if (isLastBlock) {
-      console.log('Importing finished with error!');
+      console.log('*** Importing finished! ***');
       process.exit();
     } else {
-      console.log('Block sent with errors. Reading new block...');
+      console.log('---Block sent successful. Reading new block... ---');
       lineReader.resume();
     }
   }
 }
 
 function sendBlockToServer(isLastBlock) {
-  console.log('Now block of ' + block.length + ' records received. Sending it to server...');
+  console.log('New block of ' + block.length + ' recoreds received. Sending it to server...');
   var blockForSend = block;
   block = [];
   myda.request('entities.create', blockForSend, function() {
-    nextLineOrExit(lineReader, isLastBlock);
+    nextLineOrExit(isLastBlock, false);
   }, function(err) {
     console.log('ERROR:');
-    console.log(err);
+  	console.log(err);
     console.log('INNER ERRORS:');
     (Array.isArray(err) ? err : []).forEach(x => console.log(x.errors));
-    nextLineOrExit(lineReader, isLastBlock, true);
+    nextLineOrExit(isLastBlock, true);
   });
 }
 {% endhighlight %}
@@ -191,4 +198,3 @@ node app
     <p>Импорт больших объемов данных длительный процесс.
         Наберитесь терпения <i class="fa fa-smile-o" aria-hidden="true"></i></p>
 </section>
-
