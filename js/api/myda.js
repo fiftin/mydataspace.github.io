@@ -288,7 +288,11 @@ Myda.prototype.formatAndCallIgnoreRequestErrors = function(eventName, callback, 
 Myda.prototype.formatAndCall = function(eventName, callback, data) {
   var formatterArr = this.formatters[eventName];
   if (data != null && data.datas != null) {
+    var requestId = data.requestId;
     data = data.datas;
+    if (requestId != null) {
+      data.requestId = requestId;
+    }
   }
   if (formatterArr != null) {
     for (var i in formatterArr) {
