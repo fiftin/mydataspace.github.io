@@ -102,38 +102,44 @@ const ROOT = 'geonames-demo';
 
 const crypto = require('crypto');
 const mds = require('mydataspace');
+
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
+
 const myda = new mds.Myda({
   root: ROOT,
   permission: ROOT,
   clientId: APP_API_KEY
 });
 
-const lineReader = require('readline').createInterface({
-  input: require('fs').createReadStream(FILE_NAME)
-});
+var lineReader;
 
 var block = [];
 var linesRead = 0;
+
 
 /**
  * Connect to MyDataSpace and start importing data.
  */
 myda.connect().then(() => myda.loginByToken(ACCESS_TOKEN)).then(function() {
   console.log('--- Logged in ---');
+  lineReader = require('readline').createInterface({
+    input: require('fs').createReadStream(FILE_NAME)
+  });
   lineReader.on('line', parseLineAndAddToBlock);
   lineReader.on('pause', sendBlockToServer);
   lineReader.on('end', sendBlockToServer.bind(null, true));
 }).catch(function(err) {
+	console.log('LOGIN ERROR:');
 	console.log(err);
 });
 
 function parseLineAndAddToBlock(line) {
   linesRead++;
-  console.log('    parse ' + linesRead);
+  if (linesRead % 100 === 0) console.log('    parse ' + linesRead);
   const parts = line.split('\t');
   const suffix = crypto.createHash('md5').update(line).digest('hex').substring(0, 7);
   block.push({
-    root: 'geonames',
+    root: ROOT,
     path: 'postal-codes/' + parts[0] + '-' + parts[1] + '-' + suffix,
     fields: [
         { name: 'code',       value: parts[1],  type: 's' },
@@ -178,7 +184,7 @@ function sendBlockToServer(isLastBlock) {
   console.log('New block of ' + block.length + ' recoreds received. Sending it to server...');
   var blockForSend = block;
   block = [];
-  myda.request('entities.create', blockForSend, function() {
+  myda.request('entities.create', blockForSend, function(data) {
     nextLineOrExit(isLastBlock, false);
   }, function(err) {
     console.log('ERROR:');
