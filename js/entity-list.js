@@ -114,13 +114,13 @@ EntityList.prototype.getCurrentId = function() {
  * Uses entityList_fill internally.
  */
 EntityList.prototype.refreshData = function() {
-  var identity = Identity.dataFromId(this.getRootId());
+  var req = Identity.dataFromId(this.getRootId());
   var search = $$('entity_list__search').getValue();
   if (MDSCommon.isPresent(search)) {
-    identity['search'] = search;
+    req['search'] = search;
   }
   $$('entity_list').disable();
-  Mydataspace.request('entities.getChildren', identity, function(data) {
+  Mydataspace.request('entities.getChildren', req, function(data) {
     var showMoreChildId =
       Identity.childId(this.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
     var entityId = Identity.idFromData(data);
@@ -189,12 +189,19 @@ EntityList.prototype.addChildren = function(children) {
 };
 
 EntityList.prototype.showMore = function() {
+  var self = this;
   var req = Identity.dataFromId(this.getRootId());
-  req.offset = this.count();
+  var search = $$('entity_list__search').getValue();
+  if (MDSCommon.isPresent(search)) {
+    req['search'] = search;
+  }
+  req.offset = self.count();
+  $$('entity_list').disable();
   Mydataspace.request('entities.getChildren', req, function(data) {
     var children = data.children.map(Identity.entityFromData);
-    this.addChildren(children);
-  }.bind(this));
+    self.addChildren(children);
+    $$('entity_list').enable();
+  });
 };
 
 /**
