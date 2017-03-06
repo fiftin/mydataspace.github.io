@@ -3353,11 +3353,15 @@ UILayout.entityList =
           icon: 'close',
           placeholder: STRINGS.SEARCH_BY_ENTITIES,
           on: {
+            onChange: function() {
+              UI.entityList.refreshData();
+            },
             onKeyPress: function(code, e) {
-              if (code === 13 && !e.ctrlKey && !e.shiftKey && !e.altKey) {
-                UI.entityList.refreshData();
-                return false;
-              }
+              UI.entityList.refreshData();
+              // if (code === 13 && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+              //   UI.entityList.refreshData();
+              //   return false;
+              // }
             },
             onSearchIconClick: function() {
               $$('entity_list__search').setValue('');
