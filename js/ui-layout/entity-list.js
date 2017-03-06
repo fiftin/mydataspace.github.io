@@ -33,31 +33,18 @@ UILayout.entityList =
           id: 'entity_list__search',
           css: 'entity_list__search',
           align: 'center',
-          // hidden: true,
-          icon: 'close',
+          icon: 'search',
           placeholder: STRINGS.SEARCH_BY_ENTITIES,
           on: {
             onTimedKeyPress: function(code, e) {
               UI.entityList.refreshData();
             },
             onSearchIconClick: function() {
-              $$('entity_list__search').setValue('');
-              // $$('ENTITY_SEARCH_LABEL').show();
-              UI.entityList.refreshData();
+              // $$('entity_list__search').setValue('');
+              // UI.entityList.refreshData();
             }
           }
-        },
-        // { view: 'button',
-        //   type: 'icon',
-        //   icon: 'search',
-        //   id: 'ENTITY_SEARCH_LABEL',
-        //   width: 30,
-        //   click: function() {
-        //     $$('entity_list__search').show();
-        //     $$('entity_list__menu_sep').hide();
-        //     $$('ENTITY_SEARCH_LABEL').hide();
-        //   }
-        // }
+        }
       ]
     },
     { view: 'list',
