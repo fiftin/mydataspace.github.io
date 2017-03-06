@@ -29,13 +29,11 @@ UILayout.entityList =
             UI.entityList.refreshData();
           }
         },
-        { id: 'entity_list__menu_sep'
-        },
         { view: 'search',
           id: 'entity_list__search',
           css: 'entity_list__search',
           align: 'center',
-          hidden: true,
+          // hidden: true,
           icon: 'close',
           placeholder: STRINGS.SEARCH_BY_ENTITIES,
           on: {
@@ -44,24 +42,22 @@ UILayout.entityList =
             },
             onSearchIconClick: function() {
               $$('entity_list__search').setValue('');
-              $$('entity_list__search').hide();
-              $$('entity_list__menu_sep').show();
-              $$('ENTITY_SEARCH_LABEL').show();
+              // $$('ENTITY_SEARCH_LABEL').show();
               UI.entityList.refreshData();
             }
           }
         },
-        { view: 'button',
-          type: 'icon',
-          icon: 'search',
-          id: 'ENTITY_SEARCH_LABEL',
-          width: 30,
-          click: function() {
-            $$('entity_list__search').show();
-            $$('entity_list__menu_sep').hide();
-            $$('ENTITY_SEARCH_LABEL').hide();
-          }
-        }
+        // { view: 'button',
+        //   type: 'icon',
+        //   icon: 'search',
+        //   id: 'ENTITY_SEARCH_LABEL',
+        //   width: 30,
+        //   click: function() {
+        //     $$('entity_list__search').show();
+        //     $$('entity_list__menu_sep').hide();
+        //     $$('ENTITY_SEARCH_LABEL').hide();
+        //   }
+        // }
       ]
     },
     { view: 'list',
