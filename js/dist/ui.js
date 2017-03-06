@@ -2517,8 +2517,8 @@ UILayout.windows.addRoot = {
           }, function(err) {
             UIControls.removeSpinnerFromWindow('add_root_window');
             if (err.errors != null) {
-              for (let i in err.errors) {
-                let e = err.errors[i];
+              for (var i in err.errors) {
+                var e = err.errors[i];
                 switch (e.type) {
                   case 'unique violation':
                     if (e.path === 'entities_root_path') {
