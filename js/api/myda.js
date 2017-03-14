@@ -6,8 +6,8 @@ function Myda(options) {
   }
   this.options = MDSCommon.extend({
     useLocalStorage: true,
-		apiURL: 'https://api.my-data.space',
-		websocketURL: 'https://api.my-data.space',
+		apiURL: 'https://api.mydataspace.net',
+		websocketURL: 'https://api.mydataspace.net'
   }, options);
   this.root = this.options.root;
   this.connected = false;
