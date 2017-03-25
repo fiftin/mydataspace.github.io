@@ -74,7 +74,7 @@ gulp.task('ui', function() {
       './js/ui-layout/entity-list.js',
       './js/ui-layout/entity-form.js',
       './js/ui-layout/apps.js',
-      './js/ui.js',
+      './js/ui.js'
     ])
     .pipe(concat('ui.js'))
     .pipe(gulp.dest('./js/dist'));
@@ -83,7 +83,7 @@ gulp.task('ui', function() {
 gulp.task('test', function (done) {
   new Server({
     configFile: __dirname + '/karma.conf.js',
-    singleRun: true,
+    singleRun: true
   }, done).start();
 });
 
