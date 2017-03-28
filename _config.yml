@@ -10,8 +10,8 @@ title: My Data Space
 email: support@my-data.space
 baseurl: ""
 
-url: "https://my-data.space"
-enforce_ssl: my-data.space
+url: "https://myda.space"
+enforce_ssl: myda.space
 
 facebook_url: "https://www.facebook.com/mydataspace"
 google_plus_url: "https://plus.google.com/communities/107145683419072073269"
@@ -20,11 +20,18 @@ codepen_url: "https://codepen.io/mydataspace"
 angellist_url: "https://angel.co/my-data-space"
 vk_url: "https://vk.com/mydataspace"
 
-local_api_url: "https://api.mydataspace.net"
-local_api_websocket_url: "https://api.mydataspace.net"
+#local_api_url: "https://api.mydataspace.net"
+#local_api_websocket_url: "https://api.mydataspace.net"
 
-api_url: "https://api.my-data.space"
-api_websocket_url: "https://api.my-data.space"
+local_api_url: "https://localhost:8443"
+local_api_websocket_url: "https://localhost:8443"
+
+#api_url: "https://api.my-data.space"
+#api_websocket_url: "https://api.my-data.space"
+
+api_url: "https://api.mydataspace.net"
+api_websocket_url: "https://api.mydataspace.net"
+
 client_id: "a56e6a0c-06ab-bca7-bb97-18c8898c68f9"
 github_username:  fiftin
 
