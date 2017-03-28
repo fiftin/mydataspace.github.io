@@ -1929,7 +1929,11 @@ EntityList.prototype.refreshData = function() {
   var req = Identity.dataFromId(this.getRootId());
   var search = $$('entity_list__search').getValue();
   if (MDSCommon.isPresent(search)) {
-    req['search'] = search;
+    if (search.indexOf('*') === search.length - 1) {
+      req['filterByName'] = search.substring(0, search.length - 1);
+    } else {
+      req['search'] = search;
+    }
   }
   $$('entity_list').disable();
   Mydataspace.request('entities.getChildren', req, function(data) {
