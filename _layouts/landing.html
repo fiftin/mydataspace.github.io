@@ -19,8 +19,10 @@
         </div>
       </div>
 
+      {% include favorite_snippets.html %}
+
       <div class="mission">
-        <div class="container">{{ site.data[page.language].mission }}</div>
+          <div class="container">{{ site.data[page.language].mission }}</div>
       </div>
 
       {% include feature_sections.html %}

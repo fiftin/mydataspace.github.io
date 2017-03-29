@@ -1,0 +1,24 @@
+---
+layout: default
+title: Root
+language: en
+---
+<div class="view__overview">
+
+</div>
+
+<div class="">
+    <ul class="nav nav-pills">
+        <li role="presentation" class="active"><a href="">README</a></li>
+        <li role="presentation"><a href="#codepen">Codepen</a></li>
+        <li role="presentation"><a href="#comments">Comments</a></li>
+    </ul>
+</div>
+
+<script>
+  (function() {
+    Mydataspace.entities.get({ root: '', path: '' }).then(function(root) {
+      // load data for root
+    });
+  })();
+</script>

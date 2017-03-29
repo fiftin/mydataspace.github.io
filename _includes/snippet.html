@@ -1,0 +1,10 @@
+<a class="snippet" href="{{ include.url }}">
+    <div class="snippet__overview">
+        <img class="snippet__image" src=" {{ include.imageURL | default:"/images/icons/root.svg" }}" />
+        <div class="snippet_info">
+            <div class="snippet__title">{{ include.title }}</div>
+            <div class="snippet__tags">{{ include.tags }}</div>
+        </div>
+    </div>
+    <div class="snippet__description">{{ include.description }}</div>
+</a>
