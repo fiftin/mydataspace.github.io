@@ -24,7 +24,10 @@
             function closeSearch() {
               document.getElementsByTagName('body')[0].classList.remove('body_fixed');
               document.getElementById('search').style.display = 'none';
-              document.getElementById('header').style.display = 'block';
+              var header = document.getElementById('header');
+              if (header) {
+                header.style.display = 'block';
+              }
               document.getElementsByClassName('smoke')[0].classList.remove('smoke--fullscreen');
               document.getElementsByClassName('navbar')[0].classList.remove('navbar--fixed');
             }
@@ -55,7 +58,7 @@
                     '</a></div>';
                 });
                 document.getElementById("search").innerHTML =
-                  rootsHtml.length > 0 ? '<div class="container search__content">' + rootsHtml.join('\n') + '</div>' : "WTF????";
+                  rootsHtml.length > 0 ? '<div class="container search__content"><div class="row">' + rootsHtml.join('\n') + '</div></div>' : "WTF????";
               }, function(err) {
                 console.log(err);
               });
@@ -64,7 +67,10 @@
             document.getElementById('header__search_input').addEventListener('focus', function() {
               document.getElementsByTagName('body')[0].classList.add('body_fixed');
               document.getElementById('search').style.display = 'block';
-              document.getElementById('header').style.display = 'none';
+              var header = document.getElementById('header');
+              if (header) {
+                header.style.display = 'none';
+              }
               document.getElementsByClassName('smoke')[0].classList.add('smoke--fullscreen');
               document.getElementsByClassName('navbar')[0].classList.add('navbar--fixed');
               startSearch('');

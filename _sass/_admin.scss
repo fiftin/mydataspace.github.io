@@ -789,3 +789,7 @@ input {
 .webix_text_readonly input {
   background: $input-border-color !important;
 }
+
+.view__container {
+  width: 100%;
+}
