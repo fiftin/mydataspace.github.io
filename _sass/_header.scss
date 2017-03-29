@@ -409,6 +409,7 @@ $slogan-animation-offset-mobile: 400px;
   position: fixed;
   width: calc(100% - 17px);
   background: black;
+  z-index: 10;
 }
 
 .search__content {
