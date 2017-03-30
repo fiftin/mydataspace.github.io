@@ -137,6 +137,7 @@ $view-field-value-max-height: 170px;
   padding: 3px 7px;
   background: #d2dee8;
   border-radius: 3px;
+  font-size: 12px;
 }
 
 .view__websiteURL {
@@ -150,7 +151,8 @@ $view-field-value-max-height: 170px;
 }
 
 .view__tabs {
-  margin-bottom: 18px;
+  margin-bottom: 0;
+  margin-top: 30px;
 }
 
 .view__tab {
