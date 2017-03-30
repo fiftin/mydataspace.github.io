@@ -101,6 +101,13 @@ $view-field-value-max-height: 170px;
   padding: 0;
   font-size: 30px;
   font-weight: bold;
+  display: inline;
+}
+
+.view__title_link {
+  display: inline-block !important;
+  float: none !important;
+  transform: translateY(-2px);
 }
 
 .view__stats {

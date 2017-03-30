@@ -32,6 +32,12 @@
               document.getElementsByClassName('navbar')[0].classList.remove('navbar--fixed');
             }
 
+            function openSearch(search) {
+              document.getElementById('header__search_input').value = search;
+              document.getElementById('header__search_input').focus();
+              startSearch(search);
+            }
+
             function startSearch(search) {
               // Try to get roots from server
               Mydataspace.request('entities.getRoots', {

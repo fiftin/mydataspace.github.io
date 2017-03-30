@@ -27,7 +27,7 @@
   text-align: center;
 }
 
-.page__descripiton {
+.page__description {
   text-align: center;
   font-size: $font-size-h3;
 }
@@ -47,4 +47,16 @@
 .links__link_text {
   margin-left: 5px;
   font-weight: bold;
+}
+
+.root_page {
+  padding-bottom: 30px;
+
+  .view__description {
+    font-size: 18px !important;
+  }
+
+  .view__content {
+    font-size: 14px;
+  }
 }

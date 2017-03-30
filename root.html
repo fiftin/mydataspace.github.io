@@ -2,7 +2,7 @@
 layout: default
 language: en
 ---
-<div id="view" style="padding-bottom: 30px">
+<div id="view" class="root_page" style="padding-bottom: 30px">
 </div>
 
 <script src="/vendor/remarkable.js"></script>
@@ -46,7 +46,6 @@ language: en
         var view = document.getElementById('view');
         var websiteURL = data.fields.websiteURL;
         var description = data.fields.description;
-        var tags = data.fields.tags;
         var readme = data.fields.readme;
         var ava = data.fields.avatar;
 
@@ -59,8 +58,14 @@ language: en
         document.getElementById('view__title').innerText =
           data.fields.name || MDSCommon.getPathName(data.root);
 
-        document.getElementById('view__tags').innerText = tags || '';
+        var tags = (data.fields.tags || '').split(' ').filter(function(tag) {
+          return tag != null && tag != '';
+        }).map(function(tag) {
+          return '<a class="view_tag" href="/?q=' + tag + '" onclick="openSearch(\'' + tag + '\'); return false;">' + tag + '</a>';
+        }).join(' ');
 
+//        var tags = data.fields.tags;
+        document.getElementById('view__tags').innerHTML = tags || '';
 
         if (tags && websiteURL) {
           document.getElementsByClassName('view__overview_image_wrap')[0].classList.add('view__overview_image_wrap--large');
@@ -69,7 +74,6 @@ language: en
           document.getElementsByClassName('view__overview_image_wrap')[0].classList.add('view__overview_image_wrap--medium');
           document.getElementById('view__overview_image').classList.add('view__overview_image--medium');
         }
-
 
         if (MDSCommon.isBlank(websiteURL)) {
           document.getElementById('view__websiteURL').style.display = 'none';
