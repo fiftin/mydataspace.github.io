@@ -108,6 +108,7 @@ $view-field-value-max-height: 170px;
   display: inline-block !important;
   float: none !important;
   transform: translateY(-2px);
+  padding: 0 10px !important;
 }
 
 .view__stats {
@@ -129,6 +130,13 @@ $view-field-value-max-height: 170px;
 .view__tags {
   color: gray;
   font-size: 14px;
+  margin: 5px 0;
+}
+
+.view__tag {
+  padding: 3px 7px;
+  background: #d2dee8;
+  border-radius: 3px;
 }
 
 .view__websiteURL {
