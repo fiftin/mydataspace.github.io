@@ -1,23 +1,22 @@
 ---
 layout: page
-title: Импорт данных
-language: ru
+title: Import of data
+language: en
 ---
 <section class="page__section">
-    <p>Для импорта данных существует <a href="https://www.npmjs.com/package/mydataspace">библиотека</a> для NodeJS.</p>
-    <p>На данный момент это единственный способ импорта больших объемов данных в MyDataSpace.
-        В дальнейшем будет возможность импорта данных из файлов с помощью Административной панели.</p>
-    <p>Ниже шаг за шагом описан процесс импорта данных на примере данных
-        <a href="https://my-data.space/#geonames">Geonames</a> по почтовым индексам РФ.</p>
+    <p>There is NodeJS <a href="https://www.npmjs.com/package/mydataspace">library</a> for importing data to MyDataSpace.</p>
+    <p>At the moment this is the only way to import large amounts of data into MyDataSpace.
+        In the future, it will be possible to import data from files using the Administrative Panel.</p>
+    <p>Below is a step-by-step description of the process of importing <a href="https://my-data.space/#geonames">Geonames</a> postal codes.</p>
 </section>
 
 <section class="page__section">
     <div class="row">
         <div class="col-md-4">
-            <h2 class="margin-top-0">1. Создаем рут и элемент для данных</h2>
-            <p>Рут &mdash; корневой элемент дерева данных.</p>
-            <p>Для удобства создадим дочерний элемент <i>postal-codes</i>
-                в котовый и поместим данные из файла.</p>
+            <h2 class="margin-top-0">1. Create root and element for the data</h2>
+            <p>Root &mdash; is a root element of the data tree.</p>
+            <p>For convenience, create a child element <i>postal-codes</i>
+                and put the data from the file.</p>
         </div>
         <div class="col-md-8">
             <div class="safari">
@@ -42,11 +41,13 @@ language: ru
 <section class="page__section">
     <div class="row">
         <div class="col-md-4">
-            <h2 class="margin-top-0">2. Создаем приложение</h2>
-            <p>Чтобы наша NodeJS-программа могло сохранить данных в MyDataSpace, необходимо
-                разрешить ей это через <a href="/ru/docs/backend#docs__apps">приложение</a>.</p>
-            <p>Создадим новое приложение и разрешим доступ с любого IP адреса
-                (для поля <i>URLs & IPs/IP и URL адреса</i> установить значение <b>0.0.0.0</b>).</p>
+            <h2 class="margin-top-0">2. Create app</h2>
+
+            <p>To allow our NodeJS-app save data to MyDataSpace, we should
+                grant permissions to it over <a href="/ru/docs/backend#docs__apps">app</a>.</p>
+
+            <p>Create new app and allow access from any IP addresses
+                (<i>URLs & IPs</i> should be <b>0.0.0.0</b>).</p>
         </div>
         <div class="col-md-8">
             <div class="safari">
@@ -69,12 +70,12 @@ language: ru
 </section>
 
 <section class="page__section">
-    <h2 class="margin-top-0">3. Скачиваем данные</h2>
-    <p><a href="http://download.geonames.org/export/zip/RU.zip">Скачиваем</a> и распаковываем файлы с данными.</p>
+    <h2 class="margin-top-0">3. Download data</h2>
+    <p><a href="http://download.geonames.org/export/zip/RU.zip">Download</a> and extract files with data.</p>
 </section>
 
 <section class="page__section">
-    <h2 class="margin-top-0">4. Создаем NodeJS приложение</h2>
+    <h2 class="margin-top-0">4. Create NodeJS app</h2>
     <div>
 {% highlight bash %}
 mkdir import-geonames-data
@@ -85,19 +86,18 @@ touch app.js
 {% endhighlight %}
     </div>
     <img src="/images/docs/import-of-data/access-token.png" style="margin-bottom: 15px; max-width: 100%; border-radius: 5px; box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.3);" />
-    <p><b>app.js</b> (не забудьте указать <i>ACCESS_TOKEN</i>, <i>APP_API_KEY</i>, <i>FILE_NAME</i>, <i>ROOT</i>):</p>
+    <p><b>app.js</b> (Do not forget to specify <i>ACCESS_TOKEN</i>, <i>APP_API_KEY</i>, <i>FILE_NAME</i>, <i>ROOT</i>):</p>
     <div>
 {% highlight javascript %}
-// Ваш ключ доступа
+// Your access key
 const ACCESS_TOKEN = '***********';
 
-// Ключ API вашего приложение
+// Your app API key
 const APP_API_KEY = '***********';
 
-// Путь к файлу с данными
+// Path to the file with data
 const FILE_NAME = '/path/to/RU.txt';
 
-// Корень в котором вы хотите сохранить данные
 const ROOT = 'geonames-demo';
 
 const crypto = require('crypto');
@@ -196,15 +196,15 @@ function sendBlockToServer(isLastBlock) {
 }
 {% endhighlight %}
     </div>
-    <p>Готовый исходный код примера можно взять на <a href="https://github.com/mydataspace/import-geonames-data">GitHub</a>.</p>
+    <p>You can take the source code of the example on <a href="https://github.com/mydataspace/import-geonames-data">GitHub</a>.</p>
 </section>
 
 <section class="page__section">
-    <h2 class="margin-top-0">5. Запускаем приложение</h2>
+    <h2 class="margin-top-0">5. Run app</h2>
 {% highlight bash %}
 node app
 {% endhighlight %}
-    <p>Импорт больших объемов данных длительный процесс.
-        Наберитесь терпения <i class="fa fa-smile-o" aria-hidden="true"></i></p>
-    <p><a href="https://my-data.space/ru/#geonames-demo">Тут</a> можно посмотреть результат выполнения программы.</p>
+    <p>Importing large amounts of data is a long process.
+        Be patient <i class="fa fa-smile-o" aria-hidden="true"></i></p>
+    <p><a href="https://my-data.space/ru/#geonames-demo">Here</a> you can see the result of the program.</p>
 </section>

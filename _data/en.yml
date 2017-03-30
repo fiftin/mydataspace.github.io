@@ -110,18 +110,10 @@ get_started:
         height: 350
         id: jrPQwR
 
-  # - id: goods-catalog
-  #   title: Goods Catalog
-  #   description: Backend for simple goods catalog.
-#
-#  - id: chat
-#    title: Simple Chat
-    # description: Backend for simple goods catalog.
-
 docs:
-  - id: overview
-    title: Overview
   - id: backend
     title: Backend
+  - id: import-of-data
+    title: Import of data
   - id: client-api
     title: Client API

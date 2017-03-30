@@ -19,8 +19,10 @@
         </div>
       </div>
 
+      {% include favorite_snippets.html %}
+
       <div class="mission">
-        <div class="container">{{ site.data[page.language].mission }}</div>
+          <div class="container">{{ site.data[page.language].mission }}</div>
       </div>
 
       {% include feature_sections.html %}
@@ -111,7 +113,6 @@
                   }
                 });
               }
-
               function no_items__new_root_input__onKeyPress(e) {
                 if (e.keyCode == 13) {
                   no_items__createNewRoot();
@@ -140,7 +141,7 @@
     <script src="/js/dist/ui.js"></script>
     <script>
       $(function() {
-        $("#sub_footer__botton").popover({
+        $("#sub_footer__button").popover({
           placement: 'top',
           html : true,
           trigger: 'focus',
@@ -207,7 +208,6 @@
         // or '' if the source string is not changed
         highlight: function (/*str, lang*/) { return ''; }
       });
-
     </script>
   </body>
 </html>

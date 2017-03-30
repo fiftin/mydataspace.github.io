@@ -1044,6 +1044,8 @@ EntityForm.prototype.setRootView = function(data) {
 
     document.getElementById('view__tags').innerText = tags || '';
 
+    document.getElementById('view__page_link').href = '/' + data.root;
+    document.getElementById('view__page_link').classList.remove('hidden');
 
     if (tags && websiteURL) {
       document.getElementsByClassName('view__overview_image_wrap')[0].classList.add('view__overview_image_wrap--large');
@@ -1929,7 +1931,11 @@ EntityList.prototype.refreshData = function() {
   var req = Identity.dataFromId(this.getRootId());
   var search = $$('entity_list__search').getValue();
   if (MDSCommon.isPresent(search)) {
-    req['search'] = search;
+    if (search.indexOf('*') === search.length - 1) {
+      req['filterByName'] = search.substring(0, search.length - 1);
+    } else {
+      req['search'] = search;
+    }
   }
   $$('entity_list').disable();
   Mydataspace.request('entities.getChildren', req, function(data) {
