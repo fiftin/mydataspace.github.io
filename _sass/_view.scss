@@ -145,7 +145,7 @@ $view-field-value-max-height: 170px;
 }
 
 .view__description {
-  padding: 20px 10px;
+  padding: 20px 0;
   font-size: 16px;
   border-top: 1px solid $shadow-color;
 }
@@ -164,8 +164,8 @@ $view-field-value-max-height: 170px;
 }
 
 .view__content {
-  padding-left: 10px;
-  padding-right: 10px;
+  //padding-left: 10px;
+  //padding-right: 10px;
   padding-top: 20px;
   border-top: 1px solid #ebebeb;
 }
