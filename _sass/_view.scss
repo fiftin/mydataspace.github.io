@@ -130,7 +130,7 @@ $view-field-value-max-height: 170px;
 .view__tags {
   color: gray;
   font-size: 14px;
-  margin: 7px 0 5px 0;
+  margin: 7px 0 2px 0;
 }
 
 .view__tag {
@@ -138,6 +138,8 @@ $view-field-value-max-height: 170px;
   background: #d2dee8;
   border-radius: 3px;
   font-size: 12px;
+  margin-bottom: 3px;
+  display: inline-block;
 }
 
 .view__websiteURL {
