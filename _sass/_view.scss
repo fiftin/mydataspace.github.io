@@ -98,17 +98,17 @@ $view-field-value-max-height: 170px;
 
 .view__title {
   margin: 0;
-  padding: 0;
+  padding: 0 10px 0 0;
   font-size: 30px;
   font-weight: bold;
   display: inline;
 }
 
 .view__title_link {
-  display: inline-block !important;
+  display: inline-block;
   float: none !important;
   transform: translateY(-2px);
-  padding: 0 10px !important;
+  padding: 0 !important;
 }
 
 .view__stats {
@@ -130,7 +130,7 @@ $view-field-value-max-height: 170px;
 .view__tags {
   color: gray;
   font-size: 14px;
-  margin: 5px 0;
+  margin: 7px 0 5px 0;
 }
 
 .view__tag {

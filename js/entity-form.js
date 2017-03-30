@@ -206,6 +206,8 @@ EntityForm.prototype.setRootView = function(data) {
 
     document.getElementById('view__tags').innerText = tags || '';
 
+    document.getElementById('view__page_link').href = '/' + data.root;
+    document.getElementById('view__page_link').classList.remove('hidden');
 
     if (tags && websiteURL) {
       document.getElementsByClassName('view__overview_image_wrap')[0].classList.add('view__overview_image_wrap--large');
