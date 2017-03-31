@@ -3257,6 +3257,7 @@ UILayout.entityTree =
     },
     { view: 'tree',
       id: 'entity_tree',
+      css: 'entity_tree',
       gravity: 0.4,
       select: true,
       template:function(obj, common) {
