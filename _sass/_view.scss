@@ -165,25 +165,22 @@ $view-field-value-max-height: 170px;
 }
 
 .view__tab--active {
-   //border-top: 2px solid black;
-   //border-radius: 10px;
-   //padding: 3px 10px 0 10px;
   font-weight: bold;
 }
 
 .view__tab {
   float: left;
   margin-right: 30px;
-}
-
-.view__content {
-  //padding-left: 10px;
-  //padding-right: 10px;
-  padding-top: 20px;
-  border-top: 1px solid #ebebeb;
+  color: black;
+  &:hover, &:active, &:link, &:visited {
+    color: black;
+  }
+  display: block;
 }
 
 .view__readme {
+  padding-top: 20px;
+  border-top: 1px solid #ebebeb;
   clear: both;
   line-height: 1.4;
   word-wrap: break-word;

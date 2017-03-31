@@ -237,9 +237,9 @@ EntityForm.prototype.setRootView = function(data) {
     }
 
     if (MDSCommon.isBlank(readme)) {
-      document.getElementById('view__content').style.display = 'none';
+      document.getElementById('view__readme').style.display = 'none';
     } else {
-      document.getElementById('view__content').style.display = 'block';
+      document.getElementById('view__readme').style.display = 'block';
     }
     document.getElementById('view__readme').innerHTML = md.render(readme);
     var viewFields = this.setViewFields(data.fields,

@@ -41,6 +41,29 @@ language: en
       path: ''
     };
 
+    var TABS = {
+      VIEW_TAB_README_LABEL: 'view__about',
+      VIEW_TAB_VIEW_LABEL: 'view__view',
+      VIEW_TAB_COMMENTS_LABEL: 'view__comments'
+    };
+
+    function initTabs() {
+      for (var tabID in TABS) {
+        (function(tabID) {
+          var tab = document.getElementById(tabID);
+          tab.addEventListener('click', function(event) {
+            for (var tid in TABS) {
+              document.getElementById(tid).classList.remove('view__tab--active');
+              document.getElementById(TABS[tid]).style.display = 'none';
+            }
+            tab.classList.add('view__tab--active');
+            document.getElementById(TABS[tabID]).style.display = 'block';
+            event.preventDefault();
+          });
+        })(tabID);
+      }
+    }
+
     function setRootView(data) {
       $.ajax({ url: '/fragments/root-view.html', method: 'get' }).then(function(html) {
         var view = document.getElementById('view');
@@ -95,11 +118,13 @@ language: en
         }
 
         if (MDSCommon.isBlank(readme)) {
-          document.getElementById('view__content').style.display = 'none';
+          document.getElementById('view__readme').style.display = 'none';
         } else {
-          document.getElementById('view__content').style.display = 'block';
+          document.getElementById('view__readme').style.display = 'block';
         }
         document.getElementById('view__readme').innerHTML = md.render(readme);
+
+        initTabs();
       });
     }
 

@@ -1,5 +1,6 @@
 UILayout.entityForm =
 { id: 'my_data_panel__right_panel',
+  gravity: 0.4,
   rows: [
   { view: 'toolbar',
     id: 'entity_form__toolbar',
