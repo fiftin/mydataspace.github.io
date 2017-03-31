@@ -6,9 +6,6 @@
     <div class="view__info">
       <div>
         <h1 class="view__title" id="view__title"></h1>
-        <a href="/" class="hidden hidden-xs hidden-sm links__link view__title_link" target="_blank" id="view__data_link">
-          <i class="fa fa-database" aria-hidden="true"></i><span class="links__link_text">View Data</span>
-        </a>
 
         <a href="/" class="hidden links__link view__title_link" target="_blank" id="view__page_link">
           <i class="fa fa-photo" aria-hidden="true"></i><span class="links__link_text">View Page</span>
@@ -21,8 +18,19 @@
 </div>
 <div class="container view__container">
   <div class="view__tabs cf">
-    <div class="view__tab" id="VIEW_TAB_README_LABEL">
+    <div class="view__tab view__tab--active" id="VIEW_TAB_README_LABEL">
       ABOUT
+    </div>
+    <div class="view__tab" id="VIEW_TAB_VIEW_LABEL">
+      VIEW
+    </div>
+    <div class="view__tab" id="VIEW_TAB_COMMENTS_LABEL">
+      COMMENTS
+    </div>
+    <div class="view__tab" id="VIEW_TAB_DATA_LABEL">
+      <a href="/" class="hidden hidden-xs hidden-sm links__link view__title_link" target="_blank" id="view__data_link">
+        <i class="fa fa-database" aria-hidden="true"></i><span class="links__link_text">Explore Data</span>
+      </a>
     </div>
   </div>
 
