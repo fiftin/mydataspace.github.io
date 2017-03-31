@@ -1065,11 +1065,7 @@ EntityForm.prototype.setRootView = function(data) {
     }
 
     if (MDSCommon.isBlank(description)) {
-      if (MDSCommon.isBlank(readme)) {
-        document.getElementById('view__description').innerHTML = '<center><i>' + STRINGS.NO_README + '</i></center>';
-      } else {
-        document.getElementById('view__description').style.display = 'none';
-      }
+      document.getElementById('view__description').innerHTML = '<center><i>' + STRINGS.NO_README + '</i></center>';
     } else {
       document.getElementById('view__description').innerText = description;
     }

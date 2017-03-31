@@ -37,8 +37,9 @@ language: en
     }
 
     var data = {
-      root: results[1],
-      path: ''
+      root: results[1] === 'root' ? 'spreex' : results[1],
+      path: '',
+      children: true
     };
 
     var TABS = {
@@ -52,13 +53,27 @@ language: en
         (function(tabID) {
           var tab = document.getElementById(tabID);
           tab.addEventListener('click', function(event) {
+            event.preventDefault();
             for (var tid in TABS) {
               document.getElementById(tid).classList.remove('view__tab--active');
               document.getElementById(TABS[tid]).style.display = 'none';
             }
             tab.classList.add('view__tab--active');
             document.getElementById(TABS[tabID]).style.display = 'block';
-            event.preventDefault();
+
+            switch (tabID) {
+              case 'VIEW_TAB_VIEW_LABEL':
+                var codepen = document.getElementById('view__view').getAttribute('data-codepen');
+                document.getElementById('view__view').innerHTML =
+                  '<p data-height="560" data-theme-id="0" data-slug-hash="' + codepen + '" data-default-tab="js,result" data-user="mydataspace" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/mydataspace/pen/' + codepen + '/">' + codepen + '</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p>' +
+                  '';
+
+                var codepenScript = document.createElement('script');
+                codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
+                document.getElementById('view__view').appendChild(codepenScript);
+                break;
+            }
+
           });
         })(tabID);
       }
@@ -84,7 +99,7 @@ language: en
         var tags = (data.fields.tags || '').split(' ').filter(function(tag) {
           return tag != null && tag != '';
         }).map(function(tag) {
-          return '<a class="view__tag" href="/?q=' + tag + '" onclick="openSearch(\'' + tag + '\'); return false;">' + tag + '</a>';
+          return '<a class="view__tag" href="/?q=%23' + tag + '" onclick="openSearch(\'' + tag + '\'); return false;">' + tag + '</a>';
         }).join(' ');
 
         document.getElementById('view__tags').innerHTML = tags || '';
@@ -108,11 +123,7 @@ language: en
         }
 
         if (MDSCommon.isBlank(description)) {
-          if (MDSCommon.isBlank(readme)) {
-            document.getElementById('view__description').innerHTML = '<center><i>' + STRINGS.NO_README + '</i></center>';
-          } else {
-            document.getElementById('view__description').style.display = 'none';
-          }
+          document.getElementById('view__description').innerHTML = '<i>No description or README provided.</i>';
         } else {
           document.getElementById('view__description').innerText = description;
         }
@@ -123,6 +134,16 @@ language: en
           document.getElementById('view__readme').style.display = 'block';
         }
         document.getElementById('view__readme').innerHTML = md.render(readme);
+
+        document.getElementById('view__tabs').classList.remove('hidden');
+
+        if (MDSCommon.isBlank(data.fields.codepen)) {
+          document.getElementById('VIEW_TAB_VIEW_LABEL').style.display = 'none';
+        } else {
+          document.getElementById('view__view').setAttribute('data-codepen', data.fields.codepen);
+        }
+
+        document.getElementById('VIEW_TAB_COMMENTS_LABEL').style.display = 'none';
 
         initTabs();
       });
