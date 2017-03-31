@@ -16,6 +16,9 @@ prompt: "Войти через:"
 strings:
   view_source_code: См. код
   view_data: См. данные
+  search: Поиск
+  top_roots: Популярые данные
+
 buttons:
   - id: facebook
     title: Facebook
@@ -23,6 +26,8 @@ buttons:
     title: Google
   - id: github
     title: GitHub
+
+
 sections:
   - id: speed
     title: Скорость
