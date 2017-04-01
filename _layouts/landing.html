@@ -52,7 +52,7 @@
 
       <div id="admin_panel__loading"><i class="fa fa-cog fa-spin fa-fw"></i></div>
 
-      <div id="no_items" class="no_items">
+      <div id="no_items" class="no_items opacity0">
         <div id="no_items__no_apps"></div>
         <div class="no_items__content" id="no_items__no_data">
           <div class="no_items__column">
@@ -139,6 +139,7 @@
         $('#admin_panel__loading').remove();
         $('#webix_preloaded_header').removeClass('opacity0');
         $('#logo_link').removeClass('opacity0');
+        $('#no_items').removeClass('opacity0');
         $('#admin_panel').removeClass('opacity0');
       }, 2500);
     </script>
