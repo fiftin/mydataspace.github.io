@@ -8,6 +8,10 @@
 
 }
 
+.opacity0 {
+  opacity: 0;
+}
+
 .admin_panel__header {
   button {
     font-size: 14px !important;
@@ -157,11 +161,14 @@ input:read-only {
 
 #admin_panel__loading {
   text-align: center;
-  margin-top: 150px;
   color: $brand-bg;
   position: absolute;
   width: 100%;
   z-index: 100;
+  top: calc(50% - 100px);
+  i {
+    font-size: 150px;
+  }
 }
 
 .image-for-social-medias {

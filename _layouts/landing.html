@@ -39,14 +39,19 @@
           document.getElementById('webix').style.display = 'none';
         }
       </script>
-      <div class="webix_preloaded_header"></div>
-      <div id="admin_panel__loading"><i class="fa fa-cog fa-spin fa-5x fa-fw"></i></div>
-      <a class="logo" href="/" id="logo_link">
+
+
+      <div class="webix_preloaded_header opacity0" id="webix_preloaded_header"></div>
+
+      <a class="logo opacity0" href="/" id="logo_link">
         <div class="logo__img_wrap">
           <img src="/images/logo_128.png" class="logo__img" />
         </div>
         <img src="/images/logo_text.svg" class="logo__text_img hidden-xs" />
       </a>
+
+      <div id="admin_panel__loading"><i class="fa fa-cog fa-spin fa-fw"></i></div>
+
       <div id="no_items" class="no_items">
         <div id="no_items__no_apps"></div>
         <div class="no_items__content" id="no_items__no_data">
@@ -123,17 +128,22 @@
           </div>
         </div>
       </div>
-      <div id="admin_panel" class="admin_panel"></div>
+
+      <div id="admin_panel" class="admin_panel opacity0"></div>
     </div>
 
     <script src="/vendor/jquery.min.js"></script>
+
     <script type="text/javascript">
       setTimeout(function() {
         $('#admin_panel__loading').remove();
-      }, 1500);
+        $('#webix_preloaded_header').removeClass('opacity0');
+        $('#logo_link').removeClass('opacity0');
+        $('#admin_panel').removeClass('opacity0');
+      }, 2500);
     </script>
-    <script src="/js/dist/api.js" type="text/javascript"></script>
 
+    <script src="/js/dist/api.js" type="text/javascript"></script>
     <script src="/vendor/bootstrap/bootstrap.min.js"></script>
     <script src="/vendor/webix/webix_debug.js"></script>
     <script src="/skins/flat/skin.js"></script>
@@ -141,6 +151,7 @@
     <script src="/js/dist/ui.js"></script>
     <script>
       $(function() {
+        // Get Started large button
         $("#sub_footer__button").popover({
           placement: 'top',
           html : true,
@@ -149,26 +160,21 @@
             return $("#signin_popover").html();
           }
         });
-
-        $("#header__search_input").popover({
-          placement: 'bottom',
-          html : true,
-          trigger: 'focus',
-          content: function() {
-            return $("#header__search_input__popover").html();
-          }
-        });
       });
 
       $(window).on('hashchange', function() {
         var isEmptyHash = window.location.hash == null ||
                           window.location.hash === '' ||
                           window.location.hash === '#';
-        if (!isEmptyHash && document.getElementById('webix').style.display == 'none') {
+        if (!isEmptyHash && document.getElementById('webix').style.display === 'none') {
           document.getElementById('bootstrap').style.display = 'none';
           document.getElementById('webix').style.display = 'block';
         }
       });
+
+      //
+      // Init MyDataSpace
+      //
 
       webix.codebase = "/vendor/";
       Mydataspace = new Myda({
@@ -190,6 +196,9 @@
       UI.render('admin_panel');
       Mydataspace.connect();
 
+      //
+      // Init Markdown renderer
+      //
       var md = new Remarkable({
         html:         true,        // Enable HTML tags in source
         xhtmlOut:     false,        // Use '/' to close single tags (<br />)
