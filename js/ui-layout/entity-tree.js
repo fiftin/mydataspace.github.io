@@ -1,6 +1,6 @@
 UILayout.entityTree =
 { id: 'my_data_panel__left_panel',
-  // gravity: 0.5,
+  gravity: 0.2,
   rows: [
     { view: 'toolbar',
       elements: [
@@ -71,6 +71,7 @@ UILayout.entityTree =
     },
     { view: 'tree',
       id: 'entity_tree',
+      css: 'entity_tree',
       gravity: 0.4,
       select: true,
       template:function(obj, common) {

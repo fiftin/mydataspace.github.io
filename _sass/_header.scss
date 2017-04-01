@@ -425,9 +425,9 @@ $slogan-animation-offset-mobile: 400px;
 
 .navbar--fixed {
   position: fixed;
-  width: calc(100% - 17px);
   background: black;
   z-index: 10;
+  width: calc(100% - 17px);
 }
 
 .search__content {
@@ -437,5 +437,9 @@ $slogan-animation-offset-mobile: 400px;
 @media (max-width: $screen-xs-max) {
   .search__content {
     margin-top: 150px;
+  }
+
+  .navbar--fixed {
+    width: 100%;
   }
 }

@@ -43,6 +43,10 @@
   }
 }
 
+.entity_tree {
+  background: $toolbar-bg;
+}
+
 .entity_tree__search {
   input {
     background-color: $search-bg !important;
@@ -755,7 +759,8 @@ input {
   & > .webix_tree_item {
     height: 40px;
   }
-  & > div > .webix_tree_close {
+  & > div > .webix_tree_close,
+  & > div > .webix_tree_open {
     padding-top: 5px;
   }
 }

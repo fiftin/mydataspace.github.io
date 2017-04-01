@@ -16,9 +16,14 @@ special_offer: Free now and <b>forever</b> for registered users
 final_prompt: ""
 get_started_now: Get Started!
 prompt: "Sign in with:"
+
+
 strings:
   view_source_code: View Code
   view_data: View Data
+  top_roots: Featured Roots
+  search: Search
+
 buttons:
   - id: facebook
     title: Facebook
@@ -26,6 +31,7 @@ buttons:
     title: Google
   - id: github
     title: GitHub
+
 sections:
   - id: speed
     title: Speed

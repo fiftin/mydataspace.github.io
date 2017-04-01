@@ -13,7 +13,7 @@
 
 .snippet__overview {
   position: relative;
-  height: 80px;
+  min-height: 80px;
 }
 
 .snippet__image {
@@ -32,6 +32,7 @@
   font-size: 22px;
   font-weight: bold;
   color: black;
+  line-height: 1.1;
 }
 
 .snippet__tags {

@@ -7119,14 +7119,18 @@ label.webix_required:after {
   font-family: FontAwesome;
   font-size: 14px;
   text-align: center;
-  color: #666666;
+  color: #85b4d4;
+  //color: #989898;
 }
+
 .webix_view .webix_tree_open:before {
-  content: "\f147";
+  content: "\f0d7";
 }
+
 .webix_view .webix_tree_close:before {
-  content: "\f196";
+  content: "\f0da";
 }
+
 .webix_menu-x .webix_submenu_icon,
 .webix_view.webix_menu .webix_submenu_icon {
   width: 6px;

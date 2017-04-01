@@ -1065,19 +1065,15 @@ EntityForm.prototype.setRootView = function(data) {
     }
 
     if (MDSCommon.isBlank(description)) {
-      if (MDSCommon.isBlank(readme)) {
-        document.getElementById('view__description').innerHTML = '<center><i>' + STRINGS.NO_README + '</i></center>';
-      } else {
-        document.getElementById('view__description').style.display = 'none';
-      }
+      document.getElementById('view__description').innerHTML = '<center><i>' + STRINGS.NO_README + '</i></center>';
     } else {
       document.getElementById('view__description').innerText = description;
     }
 
     if (MDSCommon.isBlank(readme)) {
-      document.getElementById('view__content').style.display = 'none';
+      document.getElementById('view__readme').style.display = 'none';
     } else {
-      document.getElementById('view__content').style.display = 'block';
+      document.getElementById('view__readme').style.display = 'block';
     }
     document.getElementById('view__readme').innerHTML = md.render(readme);
     var viewFields = this.setViewFields(data.fields,
@@ -3186,7 +3182,7 @@ UILayout.header =
 
 UILayout.entityTree =
 { id: 'my_data_panel__left_panel',
-  // gravity: 0.5,
+  gravity: 0.2,
   rows: [
     { view: 'toolbar',
       elements: [
@@ -3257,6 +3253,7 @@ UILayout.entityTree =
     },
     { view: 'tree',
       id: 'entity_tree',
+      css: 'entity_tree',
       gravity: 0.4,
       select: true,
       template:function(obj, common) {
@@ -3327,7 +3324,7 @@ UILayout.entityTree =
 
 UILayout.entityList =
 { id: 'my_data_panel__central_panel',
-  // gravity: 0.8,
+  gravity: 0.4,
   rows: [
     { view: 'toolbar',
       cols: [
@@ -3424,6 +3421,7 @@ UILayout.entityList =
 
 UILayout.entityForm =
 { id: 'my_data_panel__right_panel',
+  gravity: 0.4,
   rows: [
   { view: 'toolbar',
     id: 'entity_form__toolbar',

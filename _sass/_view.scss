@@ -51,6 +51,7 @@ $view-field-value-max-height: 170px;
   width: 100%;
   table-layout: fixed;
   border-bottom: 1px solid lightgray;
+  overflow: hidden;
 }
 
 .view__overview_image_wrap, .view__info {
@@ -107,7 +108,7 @@ $view-field-value-max-height: 170px;
 .view__title_link {
   display: inline-block;
   float: none !important;
-  transform: translateY(-2px);
+  //transform: translateY(-2px);
   padding: 0 !important;
 }
 
@@ -163,27 +164,31 @@ $view-field-value-max-height: 170px;
   margin-top: 30px;
 }
 
-.view__tab {
-  // border-top: 2px solid black;
-  // border-radius: 10px;
-  // padding: 3px 10px 0 10px;
+.view__tab--active {
   font-weight: bold;
-  float: left;
 }
 
-.view__content {
-  //padding-left: 10px;
-  //padding-right: 10px;
-  padding-top: 20px;
-  border-top: 1px solid #ebebeb;
+.view__tab {
+  float: left;
+  margin-right: 30px;
+  color: black;
+  &:hover, &:active, &:link, &:visited {
+    color: black;
+  }
+  display: block;
 }
 
 .view__readme {
+  padding-top: 20px;
+  border-top: 1px solid #ebebeb;
   clear: both;
   line-height: 1.4;
   word-wrap: break-word;
   img {
     max-width: 100%;
+  }
+  table {
+    border-collapse: collapse !important;
   }
   td, th {
     border: 1px solid lightgrey;
@@ -400,4 +405,8 @@ $view-field-value-max-height: 170px;
 
 .view__check--fail.view__check--checked {
   background: #ce5545;
+}
+
+.view__page--view {
+  padding-top: 20px;
 }
