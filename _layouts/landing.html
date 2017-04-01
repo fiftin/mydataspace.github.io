@@ -135,13 +135,29 @@
     <script src="/vendor/jquery.min.js"></script>
 
     <script type="text/javascript">
-      setTimeout(function() {
-        $('#admin_panel__loading').remove();
-        $('#webix_preloaded_header').removeClass('opacity0');
-        $('#logo_link').removeClass('opacity0');
-        $('#no_items').removeClass('opacity0');
-        $('#admin_panel').removeClass('opacity0');
-      }, 2500);
+      var adminPanel_waiting  = false;
+      function adminPanel_startWaiting(duration) {
+        if (adminPanel_waiting) {
+          return;
+        }
+        adminPanel_waiting = true;
+        $('#admin_panel__loading').show();
+        $('#webix_preloaded_header').addClass('opacity0');
+        $('#logo_link').addClass('opacity0');
+        $('#no_items').addClass('opacity0');
+        $('#admin_panel').addClass('opacity0');
+
+        setTimeout(function() {
+          adminPanel_waiting = false;
+          $('#admin_panel__loading').hide();
+          $('#webix_preloaded_header').removeClass('opacity0');
+          $('#logo_link').removeClass('opacity0');
+          $('#no_items').removeClass('opacity0');
+          $('#admin_panel').removeClass('opacity0');
+        }, duration);
+      }
+
+      adminPanel_startWaiting(2500);
     </script>
 
     <script src="/js/dist/api.js" type="text/javascript"></script>
