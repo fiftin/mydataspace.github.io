@@ -397,6 +397,7 @@ UIHelper = {
       case 'likes':
       case 'comments':
       case 'processes':
+      case 'views':
         return path;
       default:
           if (/^tasks\/[^\/]+$/.test(path)) {
@@ -410,6 +411,15 @@ UIHelper = {
           }
           if (path.startsWith('protos/') && depth === 2) {
             return 'proto';
+          }
+          if (path.startsWith('likes/') && depth === 2) {
+            return 'like';
+          }
+          if (path.startsWith('comments/') && depth === 2) {
+            return 'comment';
+          }
+          if (path.startsWith('views/') && depth === 2) {
+            return 'view';
           }
           if (path.startsWith('resources/')) {
             return 'resource';
