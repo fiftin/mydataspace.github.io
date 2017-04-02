@@ -1080,13 +1080,15 @@ EntityForm.prototype.setRootView = function(data) {
     if (MDSCommon.isBlank(websiteURL)) {
       document.getElementById('view__websiteURL').style.display = 'none';
     } else {
-      document.getElementById('view__websiteURL').style.display = 'block';
+      document.getElementById('view__websiteURL').style.display = 'inline';
       document.getElementById('view__websiteURL').innerText = websiteURL;
       document.getElementById('view__websiteURL').href = websiteURL;
     }
 
     if (MDSCommon.isBlank(description)) {
-      document.getElementById('view__description').innerHTML = '<center><i>' + STRINGS.NO_README + '</i></center>';
+      if (MDSCommon.isBlank(websiteURL)) {
+        document.getElementById('view__description').innerHTML = '<center><i>' + STRINGS.NO_README + '</i></center>';
+      }
     } else {
       document.getElementById('view__description').innerText = description;
     }
