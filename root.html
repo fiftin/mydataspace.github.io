@@ -123,7 +123,9 @@ language: en
         }
 
         if (MDSCommon.isBlank(description)) {
-          document.getElementById('view__description').innerHTML = '<i>No description or README provided.</i>';
+          if (MDSCommon.isBlank(websiteURL)) {
+            document.getElementById('view__description').innerHTML = '<i>No description or README provided.</i>';
+          }
         } else {
           document.getElementById('view__description').innerText = description;
         }
