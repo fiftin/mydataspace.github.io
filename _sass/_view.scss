@@ -166,17 +166,22 @@ $view-field-value-max-height: 170px;
 .view__tab--active {
   font-weight: bold;
   background: #f0f3f5;
+  border-bottom-color: lightgrey !important;
+  border-left-color: lightgrey !important;
+  border-right-color: lightgrey !important;
 }
 
 .view__tab {
   padding: 5px 15px;
   float: left;
-  margin-right: 30px;
+  margin-right: 10px;
   color: black;
   &:hover, &:active, &:link, &:visited {
     color: black;
   }
   display: block;
+  transform: translateY(-1px);
+  border: 1px solid transparent;
 }
 
 .view__readme {
