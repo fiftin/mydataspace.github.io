@@ -16,15 +16,23 @@ UIHelper = {
   ENTITY_LIST_SHOW_MORE_ID: 'show_more_47384_3338222',
 
   ENTITY_ICONS: {
-      'root': 'database',
-      'protos': 'cubes',
-      'proto': 'cube',
-      'tasks': 'code',
-      'task': 'file-code-o',
-      'logs': 'history',
-      'log': 'file-movie-o',
-      'resources': 'cloud-upload',
-      'resource': 'file-image-o'
+    'root': 'database',
+    'protos': 'cubes',
+    'proto': 'cube',
+    'tasks': 'code',
+    'task': 'file-code-o',
+    'logs': 'history',
+    'log': 'file-movie-o',
+    'resources': 'diamond',
+    'resource': 'file-image-o',
+    'processes': 'cogs',
+    'process': 'cog',
+    'likes': 'heart',
+    'like': 'heart-o',
+    'comments': 'comments',
+    'comment': 'comment',
+    'views': 'photo',
+    'view': 'file-image-o'
   },
 
   /**

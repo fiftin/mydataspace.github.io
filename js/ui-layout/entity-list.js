@@ -61,7 +61,7 @@ UILayout.entityList =
                '<div class="entity_list__item_name">' + obj.value + '</div>' +
                (obj.count == null ? '' :
                  '<div class="entity_list__item_count">' + obj.count + '</div>' +
-                 '<div class="entity_list__item_count_prefix fa fa-child"></div>') +
+                 '<div class="entity_list__item_count_prefix fa fa-copy"></div>') +
                '</div>';
       },
       on: {

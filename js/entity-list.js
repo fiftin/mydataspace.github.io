@@ -150,6 +150,7 @@ EntityList.prototype.refreshData = function() {
  * @param parentEntityId Root entity (selected in entity tree).
  *                       Displays as '.' in entity list.
  * @param children Items of entity list.
+ * @param data
  */
 EntityList.prototype.fill = function(parentEntityId, children, data) {
   $$('entity_list').clearAll();

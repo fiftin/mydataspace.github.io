@@ -357,15 +357,23 @@ UIHelper = {
   ENTITY_LIST_SHOW_MORE_ID: 'show_more_47384_3338222',
 
   ENTITY_ICONS: {
-      'root': 'database',
-      'protos': 'cubes',
-      'proto': 'cube',
-      'tasks': 'code',
-      'task': 'file-code-o',
-      'logs': 'history',
-      'log': 'file-movie-o',
-      'resources': 'cloud-upload',
-      'resource': 'file-image-o'
+    'root': 'database',
+    'protos': 'cubes',
+    'proto': 'cube',
+    'tasks': 'code',
+    'task': 'file-code-o',
+    'logs': 'history',
+    'log': 'file-movie-o',
+    'resources': 'diamond',
+    'resource': 'file-image-o',
+    'processes': 'cogs',
+    'process': 'cog',
+    'likes': 'heart',
+    'like': 'heart-o',
+    'comments': 'comments',
+    'comment': 'comment',
+    'views': 'photo',
+    'view': 'file-image-o'
   },
 
   /**
@@ -1960,6 +1968,7 @@ EntityList.prototype.refreshData = function() {
  * @param parentEntityId Root entity (selected in entity tree).
  *                       Displays as '.' in entity list.
  * @param children Items of entity list.
+ * @param data
  */
 EntityList.prototype.fill = function(parentEntityId, children, data) {
   $$('entity_list').clearAll();
@@ -3385,7 +3394,7 @@ UILayout.entityList =
                '<div class="entity_list__item_name">' + obj.value + '</div>' +
                (obj.count == null ? '' :
                  '<div class="entity_list__item_count">' + obj.count + '</div>' +
-                 '<div class="entity_list__item_count_prefix fa fa-child"></div>') +
+                 '<div class="entity_list__item_count_prefix fa fa-copy"></div>') +
                '</div>';
       },
       on: {
