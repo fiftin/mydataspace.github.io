@@ -394,6 +394,9 @@ UIHelper = {
       case 'protos':
       case 'resources':
       case 'tasks':
+      case 'likes':
+      case 'comments':
+      case 'processes':
         return path;
       default:
           if (/^tasks\/[^\/]+$/.test(path)) {
