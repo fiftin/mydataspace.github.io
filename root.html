@@ -160,8 +160,8 @@ language: en
         }).map(function(tag) {
           return '<a class="view__tag" href="/?q=%23' + tag + '" onclick="openSearch(\'' + tag + '\'); return false;">' + tag + '</a>';
         }).join(' ');
-
         document.getElementById('view__tags').innerHTML = tags || '';
+
         document.getElementById('view__data_link').href = '/#' + data.root;
         document.getElementById('view__data_link').classList.remove('hidden');
 
