@@ -8,7 +8,8 @@ function Myda(options) {
   this.options = MDSCommon.extend({
     useLocalStorage: true,
 		apiURL:  apiURL,
-		websocketURL: apiURL
+		websocketURL: apiURL,
+    connected: function() { }
   }, options);
   this.root = this.options.root;
   this.connected = false;
@@ -73,6 +74,8 @@ function Myda(options) {
     this.registerFormatter('entities.get.res', new EntitySimplifier());
   }
   this.entities = new Entities(this);
+  this.on('connected', this.options.connected);
+
 
   window.addEventListener('message', function(e) {
     if (e.data.message === 'authResult') {
