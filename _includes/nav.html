@@ -57,19 +57,8 @@
                     return '<span class="view__tag" onclick="openSearch(\'' + tag + '\'); return false;">' + tag + '</span>';
                   }).join(' ');
 
-                  var nLikes = 0;
-                  var nComments = 0;
-                  for (var i in root.children) {
-                    var child = root.children[i];
-                    switch (child.path) {
-                      case 'likes':
-                        nLikes = child.numberOfChildren;
-                        break;
-                      case 'comments':
-                        nComments = child.numberOfChildren;
-                        break;
-                    }
-                  }
+                  var nLikes = MDSCommon.findValueByName(root.fields, 'likes') || 0;
+                  var nComments = MDSCommon.findValueByName(root.fields, 'comments') || 0;
 
                   return '<div class="col-md-4"><a class="snippet clearfix" href="/' + root.root + '">\n' +
                     '  <div class="snippet__overview">\n' +
@@ -90,10 +79,10 @@
                     '  created <span class="view__date" id="view__date">' + MDSCommon.humanizeDate(root.createdAt) + '</span> ago' +
                     '</div>' +
 
-//                    '<div class="snippet__counters">' +
-//                      '<span class="root_counter" id="view__counters_likes"><i class="fa fa-heart" aria-hidden="true"></i><span class="root_counter__count root_counter__count--likes" id="view__counters_likes_count">' + nLikes + '</span></span>' +
-//                      '<span class="root_counter" id="view__counters_comments"><i class="fa fa-comments" aria-hidden="true"></i><span class="root_counter__count" id="view__counters_comments_count">' + nComments + '</span></span>' +
-//                    '</div>' +
+                    '<div class="snippet__counters">' +
+                      '<span class="root_counter" id="view__counters_likes"><i class="fa fa-heart" aria-hidden="true"></i><span class="root_counter__count root_counter__count--likes" id="view__counters_likes_count">' + nLikes + '</span></span>' +
+                      '<span class="root_counter" id="view__counters_comments"><i class="fa fa-comments" aria-hidden="true"></i><span class="root_counter__count" id="view__counters_comments_count">' + nComments + '</span></span>' +
+                    '</div>' +
 
                     '</div>' + // footer
 
