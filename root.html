@@ -36,7 +36,7 @@ language: en
       return;
     }
 
-    var data = {
+    var DATA = {
       root: results[1] === 'root' ? 'fiftin' : results[1],
       path: '',
       children: true
@@ -47,6 +47,14 @@ language: en
       VIEW_TAB_VIEW_LABEL: 'view__view',
       VIEW_TAB_COMMENTS_LABEL: 'view__comments'
     };
+
+    function getCommentHTML(commentData) {
+      return '<div class="view__comment" data-id="' + commentData.path + '">' +
+        '<div class="view__comment__header"><div class="view__comment__date">' + commentData.createdAt + '</div></div>' +
+        '<div class="view__comment__text">' + commentData.fields.text + '</div>' +
+        '<div class="view__comment__footer"></div>' +
+      '</div>';
+    }
 
     function initTabs() {
       for (var tabID in TABS) {
@@ -71,6 +79,17 @@ language: en
                 var codepenScript = document.createElement('script');
                 codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
                 document.getElementById('view__view').appendChild(codepenScript);
+                break;
+              case 'VIEW_TAB_COMMENTS_LABEL':
+                Mydataspace.entities.request('entities.get', { root: DATA.root, children: true, path: 'comments' }).then(function(data) {
+                  var comments = document.getElementById('view__comments__list');
+                  comments.innerHTML = '';
+                  var html = '';
+                  for (var i in data.children) {
+                    html += getCommentHTML(data.children[i]);
+                  }
+                  comments.innerHTML = html;
+                });
                 break;
             }
 
@@ -172,8 +191,8 @@ language: en
     }
 
     return Promise.all([
-      Mydataspace.entities.request('entities.get', data),
-      Mydataspace.isLoggedIn() ? Mydataspace.entities.request('entities.getMyChildren', { root: data.root, path: '/likes' }) : null
+      Mydataspace.entities.request('entities.get', DATA),
+      Mydataspace.isLoggedIn() ? Mydataspace.entities.request('entities.getMyChildren', { root: DATA.root, path: '/likes' }) : null
     ]).then(function(results) {
       setRootView(results[0], results[1]);
     });
