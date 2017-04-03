@@ -37,7 +37,7 @@ language: en
     }
 
     var data = {
-      root: results[1] === 'root' ? 'spreex' : results[1],
+      root: results[1] === 'root' ? 'fiftin' : results[1],
       path: '',
       children: true
     };
@@ -79,7 +79,7 @@ language: en
       }
     }
 
-    function setRootView(data) {
+    function setRootView(data, yourownLikes) {
       $.ajax({ url: '/fragments/root-view.html', method: 'get' }).then(function(html) {
         var view = document.getElementById('view');
         var websiteURL = data.fields.websiteURL;
@@ -145,14 +145,37 @@ language: en
           document.getElementById('view__view').setAttribute('data-codepen', data.fields.codepen);
         }
 
-        document.getElementById('VIEW_TAB_COMMENTS_LABEL').style.display = 'none';
+        for (var i in data.children) {
+          var child = data.children[i];
+          switch (child.path) {
+            case 'likes':
+              document.getElementById('view__counters__likes_count').innerText = child.numberOfChildren;
+              break;
+            case 'comments':
+              document.getElementById('view__counters__comments_count').innerText = child.numberOfChildren;
+              document.getElementById('view__tabs_comments_count').innerText = child.numberOfChildren;
+              break;
+            case 'views':
+              document.getElementById('view__tabs_views_count').innerText = child.numberOfChildren;
+              break;
+          }
+        }
+
+        if (yourownLikes != null && yourownLikes.children.length > 0) {
+          document.getElementById('view__counters__likes')
+                  .setAttribute('data-like-id', yourownLikes.children[0].path);
+
+        }
 
         initTabs();
       });
     }
 
-    return Mydataspace.entities.request('entities.get', data).then(function(root) {
-      setRootView(root);
+    return Promise.all([
+      Mydataspace.entities.request('entities.get', data),
+      Mydataspace.isLoggedIn() ? Mydataspace.entities.request('entities.getMyChildren', { root: data.root, path: '/likes' }) : null
+    ]).then(function(results) {
+      setRootView(results[0], results[1]);
     });
   })();
 </script>
