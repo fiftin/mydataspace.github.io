@@ -464,6 +464,12 @@ $view-field-value-max-height: 170px;
 .root_counter {
 }
 
+.root_counter--active {
+  .fa {
+    color: red;
+  }
+}
+
 .counters_count {
   padding-left: 7px;
   font-weight: bold;

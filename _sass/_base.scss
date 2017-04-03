@@ -278,3 +278,12 @@ body {
   width: 45px;
   height: 45px;
 }
+
+
+
+@media (max-width: $screen-xs-max) {
+  .root_counters {
+    top: initial;
+    bottom: -3px;
+  }
+}

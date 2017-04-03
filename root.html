@@ -63,9 +63,10 @@ language: en
           Mydataspace.entities.request('entities.delete', {
             root: DATA.root,
             path: elem.getAttribute('data-like-path')
-          }).then(function() {
+          }).then(function(result) {
             document.getElementById('view__counters_likes_count').innerText =
               parseInt(document.getElementById('view__counters_likes_count').innerText) - 1;
+            updateMyLike(result);
           }, function(err) {
             alert(err);
           });
@@ -76,6 +77,7 @@ language: en
           }).then(function() {
             document.getElementById('view__counters_likes_count').innerText =
               parseInt(document.getElementById('view__counters_likes_count').innerText) + 1;
+            updateMyLike(null);
           }, function(err) {
             alert(err);
           });
@@ -125,7 +127,7 @@ language: en
       }
     }
 
-    function setRootView(data, yourownLikes) {
+    function setRootView(data) {
       $.ajax({ url: '/fragments/root-view.html', method: 'get' }).then(function(html) {
         var view = document.getElementById('view');
         var websiteURL = data.fields.websiteURL;
@@ -209,23 +211,43 @@ language: en
 
         document.getElementById('view__date').innerText = MDSCommon.humanizeDate(data.createdAt);
 
-        if (yourownLikes != null && yourownLikes.children.length > 0) {
-          document.getElementById('view__counters_likes')
-                  .setAttribute('data-like-path', yourownLikes.children[0].path);
-
-        }
-
         initCounters();
 
         initTabs();
       });
     }
 
-    return Promise.all([
-      Mydataspace.entities.request('entities.get', DATA),
-      Mydataspace.isLoggedIn() ? Mydataspace.entities.request('entities.getMyChildren', { root: DATA.root, path: 'likes' }) : null
-    ]).then(function(results) {
-      setRootView(results[0], results[1]);
+    Mydataspace.entities.request('entities.get', DATA).then(function(result) {
+      setRootView(result);
     });
+
+    function updateMyLike(likeData) {
+      if (MDSCommon.isPresent(likeData)) {
+        document.getElementById('view__counters_likes').setAttribute('data-like-path', likeData.path);
+        document.getElementById('view__counters_likes').classList.add('root_counter--active');
+      } else {
+        document.getElementById('view__counters_likes').removeAttribute('data-like-path');
+        document.getElementById('view__counters_likes').classList.remove('root_counter--active');
+      }
+    }
+
+    function requestMyLike() {
+      Mydataspace.entities.request('entities.getMyChildren', { root: DATA.root, path: 'likes' }).then(function(result) {
+        var children = result.children;
+        if (children.length > 0) {
+          updateMyLike(children[0]);
+        } else {
+          updateMyLike(null);
+        }
+      });
+    }
+
+    Mydataspace.on('login', function() {
+      requestMyLike();
+    });
+
+    if (Mydataspace.isLoggedIn()) {
+      requestMyLike();
+    }
   })();
 </script>
