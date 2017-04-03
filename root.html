@@ -209,7 +209,7 @@ language: en
 
     return Promise.all([
       Mydataspace.entities.request('entities.get', DATA),
-      Mydataspace.isLoggedIn() ? Mydataspace.entities.request('entities.getMyChildren', { root: DATA.root, path: '/likes' }) : null
+      Mydataspace.isLoggedIn() ? Mydataspace.entities.request('entities.getMyChildren', { root: DATA.root, path: 'likes' }) : null
     ]).then(function(results) {
       setRootView(results[0], results[1]);
     });
