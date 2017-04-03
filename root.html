@@ -66,7 +66,7 @@ language: en
           }).then(function(result) {
             document.getElementById('view__counters_likes_count').innerText =
               parseInt(document.getElementById('view__counters_likes_count').innerText) - 1;
-            updateMyLike(result);
+            updateMyLike(null);
           }, function(err) {
             alert(err);
           });
@@ -77,7 +77,7 @@ language: en
           }).then(function() {
             document.getElementById('view__counters_likes_count').innerText =
               parseInt(document.getElementById('view__counters_likes_count').innerText) + 1;
-            updateMyLike(null);
+            updateMyLike(result);
           }, function(err) {
             alert(err);
           });
