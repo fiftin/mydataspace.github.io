@@ -141,6 +141,12 @@ $view-field-value-max-height: 170px;
   font-size: 12px;
   margin-bottom: 3px;
   display: inline-block;
+  color: #337ab7;
+  &:hover {
+    color: #23527c;
+    text-decoration: underline;
+  }
+  cursor: pointer;
 }
 
 .view__websiteURL {
