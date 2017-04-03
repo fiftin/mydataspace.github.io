@@ -428,26 +428,6 @@ $view-field-value-max-height: 170px;
   padding-top: 20px;
 }
 
-.view__counters {
-  position: absolute;
-  right: 15px;
-  top: 6px;
-}
-
-.view__counters_count {
-  padding-left: 7px;
-  font-weight: bold;
-}
-
-.view__container {
-  position: relative;
-}
-
-.view__counters_count--likes {
-  padding-right: 20px;
-}
-
-
 .view__tab__counter {
   padding: 2px 5px;
   background: #f0f3f5;
@@ -468,4 +448,27 @@ $view-field-value-max-height: 170px;
 .view__comment__date {
   color: lightgray;
   font-size: 14px;
+}
+
+.view__container {
+  position: relative;
+}
+
+
+.root_counters {
+  position: absolute;
+  right: 15px;
+  top: 6px;
+}
+
+.root_counter {
+}
+
+.counters_count {
+  padding-left: 7px;
+  font-weight: bold;
+}
+
+.root_counter__count--likes {
+  padding-right: 20px;
 }

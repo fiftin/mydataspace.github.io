@@ -63,11 +63,19 @@ language: en
           Mydataspace.entities.request('entities.delete', {
             root: DATA.root,
             path: elem.getAttribute('data-like-path')
+          }).then(function(result) {
+
+          }, function(err) {
+            alert(err);
           });
         } else {
           Mydataspace.entities.request('entities.create', {
             root: DATA.root,
             path: 'likes/' + MDSCommon.guid()
+          }).then(function(result) {
+
+          }, function(err) {
+            alert(err);
           });
         }
       });
@@ -185,10 +193,10 @@ language: en
           var child = data.children[i];
           switch (child.path) {
             case 'likes':
-              document.getElementById('view__counters__likes_count').innerText = child.numberOfChildren;
+              document.getElementById('view__counters_likes_count').innerText = child.numberOfChildren;
               break;
             case 'comments':
-              document.getElementById('view__counters__comments_count').innerText = child.numberOfChildren;
+              document.getElementById('view__counters_comments_count').innerText = child.numberOfChildren;
               document.getElementById('view__tabs_comments_count').innerText = child.numberOfChildren;
               break;
             case 'views':
@@ -198,10 +206,12 @@ language: en
         }
 
         if (yourownLikes != null && yourownLikes.children.length > 0) {
-          document.getElementById('view__counters__likes')
+          document.getElementById('view__counters_likes')
                   .setAttribute('data-like-path', yourownLikes.children[0].path);
 
         }
+
+        initCounters();
 
         initTabs();
       });
