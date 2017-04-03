@@ -50,10 +50,27 @@ language: en
 
     function getCommentHTML(commentData) {
       return '<div class="view__comment" data-id="' + commentData.path + '">' +
-        '<div class="view__comment__header"><div class="view__comment__date">' + commentData.createdAt + '</div></div>' +
+        '<div class="view__comment__header"><div class="view__comment__date">' + MDSCommon.humanizeDate(commentData.createdAt) + ' ago</div></div>' +
         '<div class="view__comment__text">' + commentData.fields.text + '</div>' +
         '<div class="view__comment__footer"></div>' +
       '</div>';
+    }
+
+    function initCounters() {
+      var elem = document.getElementById('view__counters_likes');
+      elem.addEventListener('click', function() {
+        if (MDSCommon.isPresent(elem.getAttribute('data-like-path'))) {
+          Mydataspace.entities.request('entities.delete', {
+            root: DATA.root,
+            path: elem.getAttribute('data-like-path')
+          });
+        } else {
+          Mydataspace.entities.request('entities.create', {
+            root: DATA.root,
+            path: 'likes/' + MDSCommon.guid()
+          });
+        }
+      });
     }
 
     function initTabs() {
@@ -182,7 +199,7 @@ language: en
 
         if (yourownLikes != null && yourownLikes.children.length > 0) {
           document.getElementById('view__counters__likes')
-                  .setAttribute('data-like-id', yourownLikes.children[0].path);
+                  .setAttribute('data-like-path', yourownLikes.children[0].path);
 
         }
 
