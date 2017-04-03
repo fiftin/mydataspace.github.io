@@ -63,7 +63,7 @@ language: en
           Mydataspace.entities.request('entities.delete', {
             root: DATA.root,
             path: elem.getAttribute('data-like-path')
-          }).then(function(result) {
+          }).then(function() {
             document.getElementById('view__counters_likes_count').innerText =
               parseInt(document.getElementById('view__counters_likes_count').innerText) - 1;
             updateMyLike(null);
@@ -74,7 +74,7 @@ language: en
           Mydataspace.entities.request('entities.create', {
             root: DATA.root,
             path: 'likes/' + MDSCommon.guid()
-          }).then(function() {
+          }).then(function(result) {
             document.getElementById('view__counters_likes_count').innerText =
               parseInt(document.getElementById('view__counters_likes_count').innerText) + 1;
             updateMyLike(result);
