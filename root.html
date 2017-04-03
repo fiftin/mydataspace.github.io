@@ -207,6 +207,8 @@ language: en
           }
         }
 
+        document.getElementById('view__date').innerText = MDSCommon.humanizeDate(data.createdAt);
+
         if (yourownLikes != null && yourownLikes.children.length > 0) {
           document.getElementById('view__counters_likes')
                   .setAttribute('data-like-path', yourownLikes.children[0].path);
