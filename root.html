@@ -85,6 +85,17 @@ language: en
       });
     }
 
+    function requestMyLike() {
+      Mydataspace.entities.request('entities.getMyChildren', { root: DATA.root, path: 'likes' }).then(function(result) {
+        var children = result.children;
+        if (children.length > 0) {
+          updateMyLike(children[0]);
+        } else {
+          updateMyLike(null);
+        }
+      });
+    }
+
     function initTabs() {
       for (var tabID in TABS) {
         (function(tabID) {
@@ -214,6 +225,14 @@ language: en
         initCounters();
 
         initTabs();
+
+        if (Mydataspace.isLoggedIn()) {
+          requestMyLike();
+        }
+
+        Mydataspace.on('login', function() {
+          requestMyLike();
+        });
       });
     }
 
@@ -231,23 +250,5 @@ language: en
       }
     }
 
-    function requestMyLike() {
-      Mydataspace.entities.request('entities.getMyChildren', { root: DATA.root, path: 'likes' }).then(function(result) {
-        var children = result.children;
-        if (children.length > 0) {
-          updateMyLike(children[0]);
-        } else {
-          updateMyLike(null);
-        }
-      });
-    }
-
-    Mydataspace.on('login', function() {
-      requestMyLike();
-    });
-
-    if (Mydataspace.isLoggedIn()) {
-      requestMyLike();
-    }
   })();
 </script>
