@@ -175,7 +175,7 @@ $view-field-value-max-height: 170px;
 }
 
 .view__tab {
-  padding: 5px 15px;
+  padding: 7px 15px 5px 15px;
   float: left;
   margin-right: 10px;
   color: black;
@@ -185,6 +185,7 @@ $view-field-value-max-height: 170px;
   display: block;
   transform: translateY(-1px);
   border: 1px solid transparent;
+  border-top: 0;
   text-decoration: none !important;
 }
 
