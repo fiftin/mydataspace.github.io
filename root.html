@@ -320,7 +320,7 @@ language: en
     }
 
     function resetMyLike(data) {
-      var path = document.getElementById('view__counters_likes').get('data-like-path');
+      var path = document.getElementById('view__counters_likes').getAttribute('data-like-path');
       if (MDSCommon.isPresent(path) && (MDSCommon.isBlank(data) || data.path === path)) {
         document.getElementById('view__counters_likes').removeAttribute('data-like-path');
         document.getElementById('view__counters_likes').classList.remove('root_counter--active');
