@@ -59,6 +59,10 @@ language: en
     function initCounters() {
       var elem = document.getElementById('view__counters_likes');
       elem.addEventListener('click', function() {
+        if (Mydataspace.isLoggedIn()) {
+          $('#signin_modal').modal('show');
+          return;
+        }
         if (MDSCommon.isPresent(elem.getAttribute('data-like-path'))) {
           Mydataspace.entities.request('entities.delete', {
             root: DATA.root,
