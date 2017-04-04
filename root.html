@@ -68,7 +68,12 @@ language: en
           }
         ]
       }, function(result) {
-        var commentHTML = getCommentHTML(result);
+        var commentHTML = getCommentHTML({
+          path: result.path,
+          fields: {
+            text: MDSCommon.findValueByName(result.fields, 'text')
+          }
+        });
         $('#view__comments__list').append(commentHTML);
         $textarea.val('');
       }, function(err) {
