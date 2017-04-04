@@ -65,12 +65,10 @@ language: en
             type: 's'
           }
         ]
-      }, function(result) {
-        var commentHTML = getCommentHTML(result);
-        $('#view__comments__list').append(commentHTML);
+      }, function() {
         $textarea.val('');
       }, function(err) {
-        alert(err);
+        console.log(err);
       });
     }
 
@@ -296,6 +294,12 @@ language: en
           parseInt(document.getElementById('view__tabs_comments_count').innerText) + 1;
         document.getElementById('view__counters_comments_count').innerText =
           parseInt(document.getElementById('view__counters_comments_count').innerText) + 1;
+
+        
+        if (document.getElementById('view__comments').style.display === 'block') {
+          var commentHTML = getCommentHTML(data);
+          $('#view__comments__list').append(commentHTML);
+        }
       }
     });
 
