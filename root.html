@@ -146,7 +146,7 @@ language: en
                   comments.innerHTML = '';
                   var html = '';
                   for (var i in data.children) {
-                    html += getCommentHTML(data.children[i]);
+                    html = getCommentHTML(data.children[i]) + html;
                   }
                   comments.innerHTML = html;
                 });
