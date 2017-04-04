@@ -50,8 +50,9 @@ language: en
 
     function getCommentHTML(commentData) {
       return '<div class="view__comment" data-id="' + commentData.path + '">' +
-        '<div class="view__comment__header"><div class="view__comment__date">' + MDSCommon.humanizeDate(commentData.createdAt) + ' ago</div></div>' +
-        '<div class="view__comment__text">' + commentData.fields.text + '</div>' +
+        '<div class="view__comment__header"><div class="view__comment__date">' +
+          MDSCommon.humanizeDate(commentData.createdAt) + ' ago</div></div>' +
+        '<div class="view__comment__text">' + MDSCommon.findValueByName(commentData.fields, 'text') + '</div>' +
         '<div class="view__comment__footer"></div>' +
       '</div>';
     }
@@ -68,12 +69,7 @@ language: en
           }
         ]
       }, function(result) {
-        var commentHTML = getCommentHTML({
-          path: result.path,
-          fields: {
-            text: MDSCommon.findValueByName(result.fields, 'text')
-          }
-        });
+        var commentHTML = getCommentHTML(result);
         $('#view__comments__list').append(commentHTML);
         $textarea.val('');
       }, function(err) {

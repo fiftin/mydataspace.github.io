@@ -7537,11 +7537,15 @@ var MDSCommon = {
   },
 
   findValueByName: function(arr, name, caseInsensitive) {
-    var item = MDSCommon.findByName(arr, name, caseInsensitive);
-    if (item == null) {
-      return item;
+    if (Array.isArray(arr)) {
+      var item = MDSCommon.findByName(arr, name, caseInsensitive);
+      if (item == null) {
+        return item;
+      }
+      return item.value;
+    } else {
+      return arr[name];
     }
-    return item.value;
   },
 
   getPathName: function(path) {
