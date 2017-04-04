@@ -485,3 +485,36 @@ $view-field-value-max-height: 170px;
   padding-right: 20px;
   cursor: pointer;
 }
+
+.new_comment {
+  padding-top: 30px;
+}
+
+.new_comment__button {
+  padding-left: 20px;
+  padding-right: 20px;
+  display: none;
+  border-radius: 0;
+  width: 100%;
+}
+
+.new_comment__textarea_wrap {
+  margin-bottom: 0 !important;
+}
+
+.new_comment__textarea {
+  padding: 12px 20px !important;
+  overflow: hidden !important;
+  margin-bottom: 0 !important;
+  resize: none;
+  border-radius: 0;
+  border: 1px solid lightgray;
+  box-shadow: none !important;
+}
+
+.new_comment__textarea--extended {
+  height: auto;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: 0;
+}

@@ -56,6 +56,28 @@ language: en
       '</div>';
     }
 
+    function initNewCommentForm() {
+      $('#view__new_comment .new_comment__textarea').on('focus', function() {
+        $(this).parent().parent().find('.new_comment__button').show();
+        $(this).addClass('new_comment__textarea--extended');
+      });
+      $('#view__new_comment .new_comment__textarea').on('keydown', function() {
+        var self = this;
+        setTimeout(function(){
+          self.style.cssText = 'height: auto; padding: 0';
+          self.style.cssText = 'height: ' + self.scrollHeight + 'px';
+        }, 0);
+      });
+      $('#view__new_comment .new_comment__button').on('click', function() {
+        if (Mydataspace.isLoggedIn()) {
+          // post comment
+          alert('Post comment');
+        } else {
+          $('#signin_modal').modal('show');
+        }
+      });
+    }
+
     function initCounters() {
       var elem = document.getElementById('view__counters_likes');
       elem.addEventListener('click', function() {
@@ -229,6 +251,8 @@ language: en
         initCounters();
 
         initTabs();
+
+        initNewCommentForm();
 
         if (Mydataspace.isLoggedIn()) {
           requestMyLike();
