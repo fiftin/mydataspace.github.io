@@ -108,24 +108,12 @@ language: en
           Mydataspace.entities.request('entities.delete', {
             root: DATA.root,
             path: elem.getAttribute('data-like-path')
-          }).then(function() {
-//            document.getElementById('view__counters_likes_count').innerText =
-//              parseInt(document.getElementById('view__counters_likes_count').innerText) - 1;
-//            resetMyLike();
-          }, function(err) {
-            alert(err);
-          });
+          }).then(function() {}, function(err) { console.log(err); });
         } else {
           Mydataspace.entities.request('entities.create', {
             root: DATA.root,
             path: 'likes/' + MDSCommon.guid()
-          }).then(function() {
-//            document.getElementById('view__counters_likes_count').innerText =
-//              parseInt(document.getElementById('view__counters_likes_count').innerText) + 1;
-//            setMyLike(result);
-          }, function(err) {
-            alert(err);
-          });
+          }).then(function() {}, function(err) { console.log(err); });
         }
       });
     }
@@ -303,6 +291,11 @@ language: en
         if (data.mine) {
           setMyLike(data);
         }
+      } else if (/^likes\//.test(data.path)) {
+        document.getElementById('view__tabs_comments_count').innerText =
+          parseInt(document.getElementById('view__tabs_comments_count').innerText) + 1;
+        document.getElementById('view__counters_comments_count').innerText =
+          parseInt(document.getElementById('view__counters_comments_count').innerText) + 1;
       }
     });
 
@@ -311,6 +304,11 @@ language: en
         document.getElementById('view__counters_likes_count').innerText =
           parseInt(document.getElementById('view__counters_likes_count').innerText) - 1;
         resetMyLike(data);
+      } else if (/^likes\//.test(data.path)) {
+        document.getElementById('view__tabs_comments_count').innerText =
+          parseInt(document.getElementById('view__tabs_comments_count').innerText) - 1;
+        document.getElementById('view__counters_comments_count').innerText =
+          parseInt(document.getElementById('view__counters_comments_count').innerText) - 1;
       }
     });
 
