@@ -109,9 +109,9 @@ language: en
             root: DATA.root,
             path: elem.getAttribute('data-like-path')
           }).then(function() {
-            document.getElementById('view__counters_likes_count').innerText =
-              parseInt(document.getElementById('view__counters_likes_count').innerText) - 1;
-            resetMyLike();
+//            document.getElementById('view__counters_likes_count').innerText =
+//              parseInt(document.getElementById('view__counters_likes_count').innerText) - 1;
+//            resetMyLike();
           }, function(err) {
             alert(err);
           });
@@ -120,9 +120,9 @@ language: en
             root: DATA.root,
             path: 'likes/' + MDSCommon.guid()
           }).then(function() {
-            document.getElementById('view__counters_likes_count').innerText =
-              parseInt(document.getElementById('view__counters_likes_count').innerText) + 1;
-            setMyLike(result);
+//            document.getElementById('view__counters_likes_count').innerText =
+//              parseInt(document.getElementById('view__counters_likes_count').innerText) + 1;
+//            setMyLike(result);
           }, function(err) {
             alert(err);
           });
