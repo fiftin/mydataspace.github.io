@@ -112,9 +112,9 @@ language: en
             root: DATA.root,
             path: elem.getAttribute('data-like-path')
           }).then(function() {
-            document.getElementById('view__counters_likes_count').innerText =
-              parseInt(document.getElementById('view__counters_likes_count').innerText) - 1;
-            updateMyLike(null);
+//            document.getElementById('view__counters_likes_count').innerText =
+//              parseInt(document.getElementById('view__counters_likes_count').innerText) - 1;
+//            updateMyLike(null);
           }, function(err) {
             alert(err);
           });
@@ -123,9 +123,9 @@ language: en
             root: DATA.root,
             path: 'likes/' + MDSCommon.guid()
           }).then(function(result) {
-            document.getElementById('view__counters_likes_count').innerText =
-              parseInt(document.getElementById('view__counters_likes_count').innerText) + 1;
-            updateMyLike(result);
+//            document.getElementById('view__counters_likes_count').innerText =
+//              parseInt(document.getElementById('view__counters_likes_count').innerText) + 1;
+//            updateMyLike(result);
           }, function(err) {
             alert(err);
           });
@@ -288,6 +288,33 @@ language: en
 
     Mydataspace.entities.request('entities.get', DATA).then(function(result) {
       setRootView(result);
+    });
+
+    Mydataspace.emit('entities.subscribe', {
+      root: DATA.root,
+      path: 'comments/*'
+    });
+
+    Mydataspace.emit('entities.subscribe', {
+      root: DATA.root,
+      path: 'likes/*'
+    });
+
+    Mydataspace.on('entities.create.res', function(data) {
+      if (/^likes\//.test(data.path)) {
+        document.getElementById('view__counters_likes_count').innerText =
+          parseInt(document.getElementById('view__counters_likes_count').innerText) + 1;
+        if (data.mine) {
+          updateMyLike(result);
+        }
+      }
+    });
+
+    Mydataspace.on('entities.delete.res', function(data) {
+      if (/^likes\//.test(data.path)) {
+        document.getElementById('view__counters_likes_count').innerText =
+          parseInt(document.getElementById('view__counters_likes_count').innerText) - 1;
+      }
     });
 
     function updateMyLike(likeData) {
