@@ -169,7 +169,7 @@ language: en
                 document.getElementById('view__view').appendChild(codepenScript);
                 break;
               case 'VIEW_TAB_COMMENTS_LABEL':
-                Mydataspace.entities.request('entities.get', { root: DATA.root, children: true, path: 'comments' }).then(function(data) {
+                Mydataspace.entities.request('entities.get', { root: DATA.root, children: true, path: 'comments', limit: 7 }).then(function(data) {
                   var comments = document.getElementById('view__comments__list');
                   comments.innerHTML = '';
                   var html = '';
