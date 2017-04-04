@@ -9,7 +9,6 @@ language: en
 
 <script>
   (function() {
-
     var md = new Remarkable({
       html:         true,        // Enable HTML tags in source
       xhtmlOut:     false,        // Use '/' to close single tags (<br />)
@@ -29,9 +28,7 @@ language: en
       highlight: function (/*str, lang*/) { return ''; }
     });
 
-
-    var regex = new RegExp(".*/([^?#]+)"),
-      results = regex.exec(location.href);
+    var results = new RegExp(".*/([^?#]+)").exec(location.href);
     if (!results) {
       return;
     }
@@ -112,9 +109,9 @@ language: en
             root: DATA.root,
             path: elem.getAttribute('data-like-path')
           }).then(function() {
-//            document.getElementById('view__counters_likes_count').innerText =
-//              parseInt(document.getElementById('view__counters_likes_count').innerText) - 1;
-//            updateMyLike(null);
+            document.getElementById('view__counters_likes_count').innerText =
+              parseInt(document.getElementById('view__counters_likes_count').innerText) - 1;
+            resetMyLike();
           }, function(err) {
             alert(err);
           });
@@ -122,24 +119,13 @@ language: en
           Mydataspace.entities.request('entities.create', {
             root: DATA.root,
             path: 'likes/' + MDSCommon.guid()
-          }).then(function(result) {
-//            document.getElementById('view__counters_likes_count').innerText =
-//              parseInt(document.getElementById('view__counters_likes_count').innerText) + 1;
-//            updateMyLike(result);
+          }).then(function() {
+            document.getElementById('view__counters_likes_count').innerText =
+              parseInt(document.getElementById('view__counters_likes_count').innerText) + 1;
+            setMyLike(result);
           }, function(err) {
             alert(err);
           });
-        }
-      });
-    }
-
-    function requestMyLike() {
-      Mydataspace.entities.request('entities.getMyChildren', { root: DATA.root, path: 'likes' }).then(function(result) {
-        var children = result.children;
-        if (children.length > 0) {
-          updateMyLike(children[0]);
-        } else {
-          updateMyLike(null);
         }
       });
     }
@@ -186,6 +172,10 @@ language: en
       }
     }
 
+    /**
+     * Render root page for received data.
+     * @param data root's data.
+     */
     function setRootView(data) {
       $.ajax({ url: '/fragments/root-view.html', method: 'get' }).then(function(html) {
         var view = document.getElementById('view');
@@ -286,9 +276,15 @@ language: en
       });
     }
 
+    // Load data for root and render it on the page
     Mydataspace.entities.request('entities.get', DATA).then(function(result) {
       setRootView(result);
     });
+
+
+    //
+    // Likes & comments
+    //
 
     Mydataspace.emit('entities.subscribe', {
       root: DATA.root,
@@ -305,7 +301,7 @@ language: en
         document.getElementById('view__counters_likes_count').innerText =
           parseInt(document.getElementById('view__counters_likes_count').innerText) + 1;
         if (data.mine) {
-          updateMyLike(result);
+          setMyLike(data);
         }
       }
     });
@@ -314,18 +310,32 @@ language: en
       if (/^likes\//.test(data.path)) {
         document.getElementById('view__counters_likes_count').innerText =
           parseInt(document.getElementById('view__counters_likes_count').innerText) - 1;
+        resetMyLike(data);
       }
     });
 
-    function updateMyLike(likeData) {
-      if (MDSCommon.isPresent(likeData)) {
-        document.getElementById('view__counters_likes').setAttribute('data-like-path', likeData.path);
-        document.getElementById('view__counters_likes').classList.add('root_counter--active');
-      } else {
+    function setMyLike(data) {
+      document.getElementById('view__counters_likes').setAttribute('data-like-path', data.path);
+      document.getElementById('view__counters_likes').classList.add('root_counter--active');
+    }
+
+    function resetMyLike(data) {
+      var path = document.getElementById('view__counters_likes').get('data-like-path');
+      if (MDSCommon.isPresent(path) && (MDSCommon.isBlank(data) || data.path === path)) {
         document.getElementById('view__counters_likes').removeAttribute('data-like-path');
         document.getElementById('view__counters_likes').classList.remove('root_counter--active');
       }
     }
 
+    function requestMyLike() {
+      Mydataspace.entities.request('entities.getMyChildren', { root: DATA.root, path: 'likes' }).then(function(result) {
+        var children = result.children;
+        if (children.length > 0) {
+          setMyLike(children[0]);
+        } else {
+          resetMyLike();
+        }
+      });
+    }
   })();
 </script>
