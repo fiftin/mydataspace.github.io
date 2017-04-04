@@ -291,7 +291,7 @@ language: en
         if (data.mine) {
           setMyLike(data);
         }
-      } else if (/^likes\//.test(data.path)) {
+      } else if (/^comments\//.test(data.path)) {
         document.getElementById('view__tabs_comments_count').innerText =
           parseInt(document.getElementById('view__tabs_comments_count').innerText) + 1;
         document.getElementById('view__counters_comments_count').innerText =
@@ -304,7 +304,7 @@ language: en
         document.getElementById('view__counters_likes_count').innerText =
           parseInt(document.getElementById('view__counters_likes_count').innerText) - 1;
         resetMyLike(data);
-      } else if (/^likes\//.test(data.path)) {
+      } else if (/^comments\//.test(data.path)) {
         document.getElementById('view__tabs_comments_count').innerText =
           parseInt(document.getElementById('view__tabs_comments_count').innerText) - 1;
         document.getElementById('view__counters_comments_count').innerText =
