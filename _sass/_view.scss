@@ -137,7 +137,7 @@ $view-field-value-max-height: 170px;
 .view__tag {
   padding: 3px 7px;
   background: #d2dee8;
-  border-radius: 3px;
+  border-radius: 2px;
   font-size: 12px;
   margin-bottom: 3px;
   display: inline-block;
@@ -510,6 +510,7 @@ $view-field-value-max-height: 170px;
   border-radius: 0;
   border: 1px solid lightgray;
   box-shadow: none !important;
+  background: #f0f3f5;
 }
 
 .new_comment__textarea--extended {
@@ -517,4 +518,5 @@ $view-field-value-max-height: 170px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   border-bottom: 0;
+  background: white;
 }
