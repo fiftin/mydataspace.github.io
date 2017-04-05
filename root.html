@@ -64,11 +64,19 @@ language: en
       '</div>';
     }
 
-    function postComment($textarea) {
+    function postComment() {
       if (!Mydataspace.isLoggedIn()) {
         $('#signin_modal').modal('show');
         return;
       }
+
+      var $newComment = $('#view__new_comment');
+      var $textarea = $newComment.find('.new_comment__textarea');
+      var $button = $newComment.find('.new_comment__button');
+
+      $button.prop('disabled', true);
+      $textarea.prop('disabled', true);
+
       if ($textarea.val().trim() === '') {
         $textarea.addClass('new_comment__textarea--error');
         $textarea.focus();
@@ -87,17 +95,21 @@ language: en
       }, function() {
         $textarea.val('');
         $textarea.focus();
+        $button.prop('disabled', false);
+        $textarea.prop('disabled', false);
         updateCommentFormTextareaHeight();
       }, function(err) {
+        $button.prop('disabled', false);
+        $textarea.prop('disabled', false);
         console.log(err);
       });
     }
 
     function updateCommentFormTextareaHeight() {
-      var self = this;
+      var textarea = document.getElementById('view__comments__new_comment_textarea');
       setTimeout(function(){
-        self.style.cssText = 'height: auto; padding: 0';
-        self.style.cssText = 'height: ' + self.scrollHeight + 'px';
+        textarea.style.cssText = 'height: auto; padding: 0';
+        textarea.style.cssText = 'height: ' + self.scrollHeight + 'px';
       }, 0);
     }
 
@@ -114,14 +126,13 @@ language: en
         }
       });
       $textarea.on('keydown', function(event) {
-        var self = this;
         if (event.ctrlKey && event.keyCode === 13) {
-          postComment($textarea);
+          postComment();
         }
         updateCommentFormTextareaHeight();
       });
       $newComment.find('.new_comment__button').on('click', function() {
-        postComment($textarea);
+        postComment();
       });
     }
 
