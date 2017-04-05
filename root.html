@@ -74,14 +74,15 @@ language: en
       var $textarea = $newComment.find('.new_comment__textarea');
       var $button = $newComment.find('.new_comment__button');
 
-      $button.prop('disabled', true);
-      $textarea.prop('disabled', true);
-
       if ($textarea.val().trim() === '') {
         $textarea.addClass('new_comment__textarea--error');
         $textarea.focus();
         return;
       }
+
+      $button.prop('disabled', true);
+      $textarea.prop('disabled', true);
+
       Mydataspace.request('entities.create', {
         root: DATA.root,
         path: 'comments/' + MDSCommon.guid(),
@@ -94,9 +95,9 @@ language: en
         ]
       }, function() {
         $textarea.val('');
-        $textarea.focus();
         $button.prop('disabled', false);
         $textarea.prop('disabled', false);
+        $textarea.focus();
         updateCommentFormTextareaHeight();
       }, function(err) {
         $button.prop('disabled', false);
