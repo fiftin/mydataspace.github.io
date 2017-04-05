@@ -45,13 +45,6 @@ language: en
       VIEW_TAB_COMMENTS_LABEL: 'view__comments'
     };
 
-    function deleteComment(commentPath) {
-      Mydataspace.request('entities.delete', {
-        root: DATA.root,
-        path: commentPath
-      }, function() {}, function(err) { console.log(err); });
-    }
-
     function getCommentHTML(commentData) {
       var commentText =  (MDSCommon.findValueByName(commentData.fields, 'text') || '').replace(/(?:\r\n|\r|\n)/g, '<br />');
       return '<div class="view__comment" id="' + commentData.path + '" data-comment-path="' + commentData.path + '">' +
@@ -242,7 +235,7 @@ language: en
           data.fields.name || MDSCommon.getPathName(data.root);
 
         var tags = (data.fields.tags || '').split(' ').filter(function(tag) {
-          return tag != null && tag != '';
+          return tag != null && tag !== '';
         }).map(function(tag) {
           return '<a class="view__tag" href="/?q=%23' + tag + '" onclick="openSearch(\'' + tag + '\'); return false;">' + tag + '</a>';
         }).join(' ');
@@ -323,7 +316,24 @@ language: en
         });
 
         $('#view__comments__list').on('click', '.view__comment__delete', function() {
-          deleteComment(this.parentNode.getAttribute('data-comment-path'));
+          var commentPath = this.parentNode.getAttribute('data-comment-path');
+          $(this).find('i').removeClass('fa-remove');
+          $(this).find('i').addClass('fa-cog');
+          $(this).find('i').addClass('fa-spin');
+
+          Mydataspace.request('entities.delete', {
+            root: DATA.root,
+            path: commentPath
+          }, function() {
+            $(this).find('i').addClass('fa-remove');
+            $(this).find('i').removeClass('fa-cog');
+            $(this).find('i').removeClass('fa-spin');
+          }, function(err) {
+            $(this).find('i').addClass('fa-remove');
+            $(this).find('i').removeClass('fa-cog');
+            $(this).find('i').removeClass('fa-spin');
+            console.log(err);
+          });
         });
       });
     }
