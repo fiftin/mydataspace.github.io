@@ -452,7 +452,7 @@ $view-field-value-max-height: 170px;
   position: absolute;
   height: 40px;
   width: 30px;
-  top: calc(50% - 20px);
+  top: 5px;
   right: 0;
   cursor: pointer;
   opacity: 0;
@@ -466,16 +466,14 @@ $view-field-value-max-height: 170px;
   word-wrap: break-word;
 }
 
+.view__comments__list {
+  margin: 10px 0;
+}
+
 .view__comment {
   padding: 10px 0;
   position: relative;
 
-  &:first-child {
-    padding-top: 0;
-  }
-  &:last-child {
-    padding-bottom: 0;
-  }
   &:hover {
     .view__comment__delete {
       opacity: 0.7;
@@ -502,7 +500,6 @@ $view-field-value-max-height: 170px;
 .view__container {
   position: relative;
 }
-
 
 .root_counters {
   position: absolute;
