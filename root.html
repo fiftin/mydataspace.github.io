@@ -46,7 +46,7 @@ language: en
     };
 
     function getCommentHTML(commentData) {
-      return '<div class="view__comment" data-id="' + commentData.path + '">' +
+      return '<div class="view__comment" id="' + commentData.path + '">' +
         '<div class="view__comment__header"><div class="view__comment__date">' +
           MDSCommon.humanizeDate(commentData.createdAt) + ' ago</div></div>' +
         '<div class="view__comment__text">' + MDSCommon.findValueByName(commentData.fields, 'text') + '</div>' +
@@ -149,6 +149,9 @@ language: en
                     html = getCommentHTML(data.children[i]) + html;
                   }
                   comments.innerHTML = html;
+                  if(html === '') {
+                    document.getElementById('view__comments__empty').style.display = 'none';
+                  }
                 });
                 break;
             }
@@ -295,9 +298,13 @@ language: en
         document.getElementById('view__counters_comments_count').innerText =
           parseInt(document.getElementById('view__counters_comments_count').innerText) + 1;
 
-        if (document.getElementById('view__comments').style.display === 'block') {
-          var commentHTML = getCommentHTML(data);
-          $('#view__comments__list').append(commentHTML);
+        // if comment is not exists already
+        if (document.getElementById(data.path) == null) {
+          if (document.getElementById('view__comments').style.display === 'block') {
+            var commentHTML = getCommentHTML(data);
+            $('#view__comments__list').append(commentHTML);
+            document.getElementById('view__comments__empty').style.display = 'none';
+          }
         }
       }
     });
@@ -312,6 +319,14 @@ language: en
           parseInt(document.getElementById('view__tabs_comments_count').innerText) - 1;
         document.getElementById('view__counters_comments_count').innerText =
           parseInt(document.getElementById('view__counters_comments_count').innerText) - 1;
+
+        var comment = document.getElementById(data.path);
+        if (comment != null) {
+          comment.parentNode.removeChild(comment);
+          if (document.getElementById('view__comments__list').children.length === 0) {
+            document.getElementById('view__comments__empty').style.display = 'block';
+          }
+        }
       }
     });
 
