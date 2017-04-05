@@ -64,18 +64,28 @@ language: en
     }
 
     function postComment($textarea) {
+      if (!Mydataspace.isLoggedIn()) {
+        $('#signin_modal').modal('show');
+        return;
+      }
+      if ($textarea.val().trim() === '') {
+        $textarea.addClass('new_comment__textarea--error');
+        $textarea.focus();
+        return;
+      }
       Mydataspace.request('entities.create', {
         root: DATA.root,
         path: 'comments/' + MDSCommon.guid(),
         fields: [
           {
             name: 'text',
-            value: $textarea.val(),
+            value: $textarea.val().trim(),
             type: 's'
           }
         ]
       }, function() {
         $textarea.val('');
+        $textarea.focus();
       }, function(err) {
         console.log(err);
       });
@@ -83,24 +93,28 @@ language: en
 
     function initNewCommentForm() {
       var $newComment = $('#view__new_comment');
-
-      $newComment.find('.new_comment__textarea').on('focus', function() {
+      var $textarea = $newComment.find('.new_comment__textarea');
+      $textarea.on('focus', function() {
         $(this).parent().parent().find('.new_comment__button').show();
         $(this).addClass('new_comment__textarea--extended');
+        if ($textarea.hasClass('new_comment__textarea--error')) {
+          setTimeout(function() {
+            $textarea.removeClass('new_comment__textarea--error')
+          }, 200);
+        }
       });
-      $newComment.find('.new_comment__textarea').on('keydown', function() {
+      $textarea.on('keydown', function(event) {
         var self = this;
+        if (event.ctrlKey && event.keyCode === 13) {
+          postComment($textarea);
+        }
         setTimeout(function(){
           self.style.cssText = 'height: auto; padding: 0';
           self.style.cssText = 'height: ' + self.scrollHeight + 'px';
         }, 0);
       });
       $newComment.find('.new_comment__button').on('click', function() {
-        if (Mydataspace.isLoggedIn()) {
-          postComment($newComment.find('.new_comment__textarea'));
-        } else {
-          $('#signin_modal').modal('show');
-        }
+        postComment($textarea);
       });
     }
 

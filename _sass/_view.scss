@@ -558,3 +558,7 @@ $view-field-value-max-height: 170px;
   background: white;
 }
 
+.new_comment__textarea--error {
+  border-color: red !important;
+  transition: border-color 300ms;
+}
