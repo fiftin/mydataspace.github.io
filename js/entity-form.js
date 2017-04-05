@@ -234,6 +234,23 @@ EntityForm.prototype.setRootView = function(data) {
       document.getElementById('view__description').innerText = description;
     }
 
+    for (var i in data.children) {
+      var child = data.children[i];
+      switch (child.path) {
+        case 'likes':
+          document.getElementById('view__counters_likes_count').innerText = child.numberOfChildren;
+          break;
+        case 'comments':
+          document.getElementById('view__counters_comments_count').innerText = child.numberOfChildren;
+          document.getElementById('view__tabs_comments_count').innerText = child.numberOfChildren;
+          break;
+        case 'views':
+          document.getElementById('view__tabs_views_count').innerText = child.numberOfChildren;
+          break;
+      }
+    }
+
+
     if (MDSCommon.isBlank(readme)) {
       document.getElementById('view__readme').style.display = 'none';
     } else {
