@@ -7271,6 +7271,9 @@ var MDSCommon = {
   millisecondsToStr: function(milliseconds) {
     // TIP: to find current time in milliseconds, use:
     // var  current_time_milliseconds = new Date().getTime();
+    if (milliseconds <= 0) {
+      return 'just now';
+    }
 
     function numberEnding (number) {
       return (number > 1) ? 's' : '';
