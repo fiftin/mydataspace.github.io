@@ -448,8 +448,35 @@ $view-field-value-max-height: 170px;
   padding-top: 20px;
 }
 
+.view__comment__delete {
+  position: absolute;
+  height: 40px;
+  width: 30px;
+  top: calc(50% - 20px);
+  right: 0;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 200ms;
+  &:hover {
+    opacity: 1 !important;
+  }
+}
+
 .view__comment {
   padding: 10px 0;
+  position: relative;
+
+  &:first-child {
+    padding-top: 0;
+  }
+  &:last-child {
+    padding-bottom: 0;
+  }
+  &:hover {
+    .view__comment__delete {
+      opacity: 0.7;
+    }
+  }
 }
 
 .view__comment__date {
@@ -520,3 +547,4 @@ $view-field-value-max-height: 170px;
   border-bottom: 0;
   background: white;
 }
+
