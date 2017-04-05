@@ -145,11 +145,11 @@ language: en
           return;
         }
 
-        if (document.getElementById('view__counters_likes_icon').className === 'fa fa-refresh fa-spin') {
+        if (document.getElementById('view__counters_likes_icon').className === 'fa fa-cog fa-spin') {
           return;
         }
-
-        document.getElementById('view__counters_likes_icon').className = 'fa fa-refresh fa-spin';
+        
+        document.getElementById('view__counters_likes_icon').className = 'fa fa-cog fa-spin';
 
         if (MDSCommon.isPresent(elem.getAttribute('data-like-path'))) {
           Mydataspace.entities.request('entities.delete', {
