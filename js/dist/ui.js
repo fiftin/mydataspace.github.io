@@ -1351,7 +1351,7 @@ EntityForm.prototype.refresh = function() {
   const isWithMeta = self.isEditing();
   $$('entity_form').disable();
   const req = !isWithMeta ? 'entities.get' : 'entities.getWithMeta';
-  Mydataspace.request(req, Identity.dataFromId(self.selectedId), function(data) {
+  Mydataspace.request(req, MDSCommon.extend(Identity.dataFromId(self.selectedId), { children: true }), function(data) {
     if (!isWithMeta || entityType === 'resource') {
       self.setView(data);
 
