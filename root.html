@@ -55,7 +55,7 @@ language: en
     function getCommentHTML(commentData) {
       return '<div class="view__comment" id="' + commentData.path + '" data-comment-path="' + commentData.path + '">' +
         '<div class="view__comment__header">'+
-          (commentData.mine ? '<span class="view__comment__author">you</span>' : '') +
+          (commentData.mine ? '<span class="view__comment__author">you</span><span class="view__comment__author_bull">&bull;</span>' : '') +
           '<span class="view__comment__date">' + MDSCommon.humanizeDate(commentData.createdAt) + ' ago</span></div>' +
         '<div class="view__comment__text">' + MDSCommon.findValueByName(commentData.fields, 'text') + '</div>' +
         '<div class="view__comment__footer"></div>' +

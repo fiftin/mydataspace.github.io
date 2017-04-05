@@ -479,10 +479,19 @@ $view-field-value-max-height: 170px;
   }
 }
 
-.view__comment__date {
+.view__comment__date, .view__comment__author_bull {
   color: #b9b9b9;
   font-size: 14px;
-  padding-top: 0;
+}
+
+.view__comment__author {
+  font-size: 14px;
+  font-weight: bold;
+  padding-right: 10px;
+}
+
+.view__comment__author_bull {
+  padding-right: 10px;
 }
 
 .view__container {
