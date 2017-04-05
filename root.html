@@ -144,16 +144,33 @@ language: en
           $('#signin_modal').modal('show');
           return;
         }
+
+        if (document.getElementById('view__counters_likes_icon').className === 'fa fa-refresh fa-spin') {
+          return;
+        }
+
+        document.getElementById('view__counters_likes_icon').className = 'fa fa-refresh fa-spin';
+
         if (MDSCommon.isPresent(elem.getAttribute('data-like-path'))) {
           Mydataspace.entities.request('entities.delete', {
             root: DATA.root,
             path: elem.getAttribute('data-like-path')
-          }).then(function() {}, function(err) { console.log(err); });
+          }).then(function() {
+            document.getElementById('view__counters_likes_icon').className = 'fa fa-heart';
+          }, function(err) {
+            document.getElementById('view__counters_likes_icon').className = 'fa fa-heart';
+            console.log(err);
+          });
         } else {
           Mydataspace.entities.request('entities.create', {
             root: DATA.root,
             path: 'likes/' + MDSCommon.guid()
-          }).then(function() {}, function(err) { console.log(err); });
+          }).then(function() {
+            document.getElementById('view__counters_likes_icon').className = 'fa fa-heart';
+          }, function(err) {
+            document.getElementById('view__counters_likes_icon').className = 'fa fa-heart';
+            console.log(err);
+          });
         }
       });
     }
