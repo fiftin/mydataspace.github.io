@@ -7272,7 +7272,7 @@ var MDSCommon = {
     // TIP: to find current time in milliseconds, use:
     // var  current_time_milliseconds = new Date().getTime();
     if (milliseconds <= 0) {
-      return 'just now';
+      return 'less than a second'; //'just now' //or other string you like;
     }
 
     function numberEnding (number) {
