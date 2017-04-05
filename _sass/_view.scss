@@ -462,6 +462,10 @@ $view-field-value-max-height: 170px;
   }
 }
 
+.view__comment__text {
+  word-wrap: break-word;
+}
+
 .view__comment {
   padding: 10px 0;
   position: relative;
