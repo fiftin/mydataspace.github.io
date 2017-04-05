@@ -110,7 +110,7 @@ language: en
       var textarea = document.getElementById('view__comments__new_comment_textarea');
       setTimeout(function(){
         textarea.style.cssText = 'height: auto; padding: 0';
-        textarea.style.cssText = 'height: ' + self.scrollHeight + 'px';
+        textarea.style.cssText = 'height: ' + textarea.scrollHeight + 'px';
       }, 0);
     }
 
