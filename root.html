@@ -41,7 +41,7 @@ language: en
 
     var TABS = {
       VIEW_TAB_README_LABEL: 'view__about',
-      VIEW_TAB_VIEW_LABEL: 'view__view',
+      VIEW_TAB_VIEW_LABEL: 'view__views',
       VIEW_TAB_COMMENTS_LABEL: 'view__comments'
     };
 
@@ -183,14 +183,14 @@ language: en
 
             switch (tabID) {
               case 'VIEW_TAB_VIEW_LABEL':
-                var codepen = document.getElementById('view__view').getAttribute('data-codepen');
-                document.getElementById('view__view__codepen').innerHTML =
+                var codepen = document.getElementById('view__views').getAttribute('data-codepen');
+                document.getElementById('view__views__content').innerHTML =
                   '<p data-height="560" data-theme-id="0" data-slug-hash="' + codepen + '" data-default-tab="result" data-user="mydataspace" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/mydataspace/pen/' + codepen + '/">' + codepen + '</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p>' +
                   '';
 
                 var codepenScript = document.createElement('script');
                 codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
-                document.getElementById('view__view__codepen').appendChild(codepenScript);
+                document.getElementById('view__views__content').appendChild(codepenScript);
                 break;
               case 'VIEW_TAB_COMMENTS_LABEL':
                 Mydataspace.entities.request('entities.get', { root: DATA.root, children: true, path: 'comments', limit: 7, orderChildrenBy: '$createdAt DESC' }).then(function(data) {
@@ -280,7 +280,7 @@ language: en
         if (MDSCommon.isBlank(data.fields.codepen)) {
 //          document.getElementById('VIEW_TAB_VIEW_LABEL').style.display = 'none';
         } else {
-          document.getElementById('view__view').setAttribute('data-codepen', data.fields.codepen);
+          document.getElementById('view__views').setAttribute('data-codepen', data.fields.codepen);
         }
 
         for (var i in data.children) {
