@@ -432,7 +432,25 @@ $view-field-value-max-height: 170px;
 }
 
 .view__page--view {
-  padding-top: 20px;
+  padding-top: 40px;
+}
+
+.view__pills {
+  li > a {
+    border-radius: 2px !important;
+  }
+
+  li.active > a {
+    font-weight: bold;
+  }
+
+  .nav-pills > li + li {
+    margin-left: 5px;
+  }
+}
+
+.view__pills--view {
+  margin-bottom: 20px;
 }
 
 .view__tab__counter {

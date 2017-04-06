@@ -52,14 +52,15 @@ language: en
       }, function() {}, function(err) { console.log(err); });
     }
 
+    // <span class="view__comment__author_bull">&bull;</span>
     function getCommentHTML(commentData) {
       var commentText =  (MDSCommon.findValueByName(commentData.fields, 'text') || '').replace(/(?:\r\n|\r|\n)/g, '<br />');
       return '<div class="view__comment" id="' + commentData.path + '" data-comment-path="' + commentData.path + '">' +
-        '<div class="view__comment__header">'+
-          (commentData.mine ? '<span class="view__comment__author">you</span><span class="view__comment__author_bull">&bull;</span>' : '') +
-          '<span class="view__comment__date">' + MDSCommon.humanizeDate(commentData.createdAt) + ' ago</span></div>' +
+        (commentData.mine ? '<span class="view__comment__author">you</span>' : '') +
         '<div class="view__comment__text">' + commentText + '</div>' +
-        '<div class="view__comment__footer"></div>' +
+        '<div class="view__comment__footer">' +
+          '<span class="view__comment__date">' + MDSCommon.humanizeDate(commentData.createdAt) + ' ago</span>' +
+        '</div>' +
         (commentData.mine ? '<div class="view__comment__delete"><i class="fa fa-remove fa-2x"></i></div>' : '') +
       '</div>';
     }
@@ -191,13 +192,13 @@ language: en
             switch (tabID) {
               case 'VIEW_TAB_VIEW_LABEL':
                 var codepen = document.getElementById('view__view').getAttribute('data-codepen');
-                document.getElementById('view__view').innerHTML =
+                document.getElementById('view__view__codepen').innerHTML =
                   '<p data-height="560" data-theme-id="0" data-slug-hash="' + codepen + '" data-default-tab="result" data-user="mydataspace" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/mydataspace/pen/' + codepen + '/">' + codepen + '</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p>' +
                   '';
 
                 var codepenScript = document.createElement('script');
                 codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
-                document.getElementById('view__view').appendChild(codepenScript);
+                document.getElementById('view__view__codepen').appendChild(codepenScript);
                 break;
               case 'VIEW_TAB_COMMENTS_LABEL':
                 Mydataspace.entities.request('entities.get', { root: DATA.root, children: true, path: 'comments', limit: 7, orderChildrenBy: '$createdAt DESC' }).then(function(data) {
@@ -285,7 +286,7 @@ language: en
         document.getElementById('view__tabs').classList.remove('hidden');
 
         if (MDSCommon.isBlank(data.fields.codepen)) {
-          document.getElementById('VIEW_TAB_VIEW_LABEL').style.display = 'none';
+//          document.getElementById('VIEW_TAB_VIEW_LABEL').style.display = 'none';
         } else {
           document.getElementById('view__view').setAttribute('data-codepen', data.fields.codepen);
         }
