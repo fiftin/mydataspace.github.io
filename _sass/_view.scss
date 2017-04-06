@@ -437,11 +437,12 @@ $view-field-value-max-height: 170px;
 
 .view__pills {
   li > a {
-    border-radius: 2px !important;
+    border-radius: 0px !important;
   }
 
   li.active > a {
     font-weight: bold;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.41);
   }
 
   li + li {
