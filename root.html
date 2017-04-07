@@ -171,13 +171,14 @@ language: en
     }
 
     function updateViews(newIndex) {
-      if (viewData.length === 0) {
+      if (viewsData.length === 0) {
         document.getElementById('view__looks__empty').style.display = 'block';
-        document.getElementById('view__looks__pills').style.display = 'none';
+//        document.getElementById('view__looks__pills').style.display = 'none';
         document.getElementById('view__looks__content_wrap').style.display = 'none';
+        return;
       } else {
         document.getElementById('view__looks__empty').style.display = 'none';
-        document.getElementById('view__looks__pills').style.display = 'block';
+//        document.getElementById('view__looks__pills').style.display = 'block';
         document.getElementById('view__looks__content_wrap').style.display = 'block';
       }
       var content = document.getElementById('view__looks__content');
@@ -192,7 +193,7 @@ language: en
       if (viewData == null) {
         throw new Error('Illegal view index: ' + index + '. Must be less ' + viewsData.length);
       }
-      switch (viewData.type) {
+      switch (viewData.fields.type) {
         case 'codepen':
           var codepen = MDSCommon.findValueByName(viewData.fields, 'id');
           document.getElementById('view__looks__content').innerHTML =
@@ -222,7 +223,16 @@ language: en
 
             switch (tabID) {
               case 'VIEW_TAB_VIEW_LABEL':
-                Mydataspace.entities.request('entities.get', { root: DATA.root, children: true, path: 'comments' }).then(function(data) {
+                if (document.getElementById('view__tabs_views_count').innerText === '0') {
+                  document.getElementById('view__looks__empty').style.display = 'block';
+//                  document.getElementById('view__looks__pills').style.display = 'none';
+                  document.getElementById('view__looks__content_wrap').style.display = 'none';
+                } else {
+                  document.getElementById('view__looks__empty').style.display = 'none';
+//                  document.getElementById('view__looks__pills').style.display = 'block';
+                  document.getElementById('view__looks__content_wrap').style.display = 'block';
+                }
+                Mydataspace.entities.request('entities.get', { root: DATA.root, children: true, path: 'views' }).then(function(data) {
                   viewsData = data.children;
                   updateViews();
                 });
