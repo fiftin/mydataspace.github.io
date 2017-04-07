@@ -41,9 +41,11 @@ language: en
 
     var TABS = {
       VIEW_TAB_README_LABEL: 'view__about',
-      VIEW_TAB_VIEW_LABEL: 'view__views',
+      VIEW_TAB_VIEW_LABEL: 'view__looks',
       VIEW_TAB_COMMENTS_LABEL: 'view__comments'
     };
+
+    var viewsData = [];
 
     function getCommentHTML(commentData) {
       var commentText =  (MDSCommon.findValueByName(commentData.fields, 'text') || '').replace(/(?:\r\n|\r|\n)/g, '<br />');
@@ -168,6 +170,43 @@ language: en
       });
     }
 
+    function updateViews(newIndex) {
+      if (viewData.length === 0) {
+        document.getElementById('view__looks__empty').style.display = 'block';
+        document.getElementById('view__looks__pills').style.display = 'none';
+        document.getElementById('view__looks__content_wrap').style.display = 'none';
+      } else {
+        document.getElementById('view__looks__empty').style.display = 'none';
+        document.getElementById('view__looks__pills').style.display = 'block';
+        document.getElementById('view__looks__content_wrap').style.display = 'block';
+      }
+      var content = document.getElementById('view__looks__content');
+      var index = content.getAttribute('data-view-index');
+      if (index == null || newIndex != null) {
+        index = newIndex || 0;
+        content.setAttribute('data-view-index', index);
+      } else {
+        index = parseInt(index);
+      }
+      var viewData = viewsData[index];
+      if (viewData == null) {
+        throw new Error('Illegal view index: ' + index + '. Must be less ' + viewsData.length);
+      }
+      switch (viewData.type) {
+        case 'codepen':
+          var codepen = MDSCommon.findValueByName(viewData.fields, 'id');
+          document.getElementById('view__looks__content').innerHTML =
+            '<p data-height="560" data-theme-id="0" data-slug-hash="' + codepen + '" data-default-tab="result" data-user="mydataspace" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/mydataspace/pen/' + codepen + '/">' + codepen + '</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p>' +
+            '';
+          var codepenScript = document.createElement('script');
+          codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
+          document.getElementById('view__looks__content').appendChild(codepenScript);
+          break;
+        default:
+          throw new Error('Unknown view type: ' + viewData.type);
+      }
+    }
+
     function initTabs() {
       for (var tabID in TABS) {
         (function(tabID) {
@@ -183,14 +222,10 @@ language: en
 
             switch (tabID) {
               case 'VIEW_TAB_VIEW_LABEL':
-                var codepen = document.getElementById('view__views').getAttribute('data-codepen');
-                document.getElementById('view__views__content').innerHTML =
-                  '<p data-height="560" data-theme-id="0" data-slug-hash="' + codepen + '" data-default-tab="result" data-user="mydataspace" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/mydataspace/pen/' + codepen + '/">' + codepen + '</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p>' +
-                  '';
-
-                var codepenScript = document.createElement('script');
-                codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
-                document.getElementById('view__views__content').appendChild(codepenScript);
+                Mydataspace.entities.request('entities.get', { root: DATA.root, children: true, path: 'comments' }).then(function(data) {
+                  viewsData = data.children;
+                  updateViews();
+                });
                 break;
               case 'VIEW_TAB_COMMENTS_LABEL':
                 Mydataspace.entities.request('entities.get', { root: DATA.root, children: true, path: 'comments', limit: 7, orderChildrenBy: '$createdAt DESC' }).then(function(data) {
@@ -276,12 +311,6 @@ language: en
         document.getElementById('view__readme').innerHTML = md.render(readme);
 
         document.getElementById('view__tabs').classList.remove('hidden');
-
-        if (MDSCommon.isBlank(data.fields.codepen)) {
-//          document.getElementById('VIEW_TAB_VIEW_LABEL').style.display = 'none';
-        } else {
-          document.getElementById('view__views').setAttribute('data-codepen', data.fields.codepen);
-        }
 
         for (var i in data.children) {
           var child = data.children[i];
