@@ -431,8 +431,8 @@ $view-field-value-max-height: 170px;
   background: #ce5545;
 }
 
-.view__page--looks {
-  padding-top: 30px;
+.view__page {
+  padding-top: 20px;
 }
 
 .view__pills {
@@ -580,4 +580,8 @@ $view-field-value-max-height: 170px;
 .new_comment__textarea--error {
   border-color: red !important;
   transition: border-color 300ms;
+}
+
+.look__footer {
+  position: relative;
 }

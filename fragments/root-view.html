@@ -60,10 +60,8 @@
     <div class="view__readme" id="view__readme"></div>
   </div>
 
-  <div id="view__looks" class="view__page view__page--looks" style="display: none;">
-    <div class="looks__empty" id="view__looks__empty">
-      <div>There are no views.</div>
-    </div>
+  <div id="view__looks" class="view__page" style="display: none;">
+    <div class="" id="view__looks__empty" style="display: none;"><i>There are no views.</i></div>
 
     <!--<ul class="nav nav-pills view__pills view__pills&#45;&#45;looks" id="view__looks__pills">-->
       <!--<li role="presentation"><a href="#">All</a></li>-->
@@ -79,9 +77,22 @@
         <div></div>
       </div>
       <div id="view__looks__content"></div>
+
       <div class="look__footer">
-        <div></div>
-        <div></div>
+        <div class="view__comment__date view__date_wrap">
+          created <span class="view__date" id="view__looks__date"></span> ago
+        </div>
+        <div class="root_counters">
+          <span class="root_counter" id="view__looks__likes">
+            <i class="fa fa-heart" id="view__looks__likes_icon" aria-hidden="true"></i>
+            <span class="root_counter__count root_counter__count--likes" id="view__looks__likes_count">0</span>
+          </span>
+
+          <span class="root_counter" id="view__looks__comments">
+            <i class="fa fa-comments" aria-hidden="true"></i>
+            <span class="root_counter__count" id="view__looks__comments_count">0</span>
+          </span>
+        </div>
       </div>
 
       <div id="view__looks__empty_comment" style="display: none;"><i>There are no comments.</i></div>
@@ -103,7 +114,7 @@
 
   </div>
 
-  <div id="view__comments" class="view__comments" style="display: none;">
+  <div id="view__comments" class="view__page" style="display: none;">
     <div id="view__comments__empty" style="display: none;"><i>There are no comments.</i></div>
     <div class="view__comments__list" id="view__comments__list"></div>
     <div id="view__new_comment" class="new_comment">
