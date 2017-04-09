@@ -530,7 +530,8 @@ $view-field-value-max-height: 170px;
   top: 0;
 }
 
-.root_counter {
+.root_counter:first-child {
+  padding-right: 20px;
 }
 
 .root_counter--active {
@@ -543,7 +544,6 @@ $view-field-value-max-height: 170px;
 }
 
 #view__counters_likes {
-  padding-right: 20px;
   cursor: pointer;
 }
 
