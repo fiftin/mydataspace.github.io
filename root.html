@@ -196,7 +196,7 @@ language: en
 //      document.getElementById('view__looks__likes_count').innerText = MDSCommon.findValueByName(viewData.children, 'likes');
       document.getElementById('view__looks__date').innerText = MDSCommon.humanizeDate(viewData.createdAt);
       document.getElementById('view__looks__title').innerText = MDSCommon.findValueByName(viewData.fields, 'title');
-      
+
       switch (viewData.fields.type) {
         case 'codepen':
           var codepen = MDSCommon.findValueByName(viewData.fields, 'id');
