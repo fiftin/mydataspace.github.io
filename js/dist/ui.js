@@ -8,7 +8,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SAVE_ENTITY: 'Save Entity',
     RUN_SCRIPT: 'Debug',
     ONLY_READ: 'Only Read',
-    ADD_ENTITY: 'New Element',
+    ADD_ENTITY: 'New Object',
     SEARCH: 'Search...',
     DELETE_ENTITY: 'Delete Entity',
     DELETE_ENTITY_SHORT: 'Delete',
@@ -105,7 +105,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SAVE_ENTITY: 'Сохранить элемент',
     RUN_SCRIPT: 'Отл.',
     ONLY_READ: 'Только читать',
-    ADD_ENTITY: 'Новый элемент',
+    ADD_ENTITY: 'Новый объект',
     SEARCH: 'Поиск...',
     DELETE_ENTITY: 'Удалить элемент',
     DELETE_ENTITY_SHORT: 'Удал.',
@@ -3379,7 +3379,7 @@ UILayout.entityList =
           type: 'icon',
           icon: 'plus',
           id: 'ADD_ENTITY_LABEL', label: STRINGS.ADD_ENTITY,
-          width: 160,
+          width: 130,
           click: function() {
             switch (UIHelper.getEntityTypeByPath(Identity.dataFromId(UI.entityTree.getCurrentId()).path)) {
               case 'resources':
