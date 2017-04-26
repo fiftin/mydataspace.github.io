@@ -3213,60 +3213,62 @@ UILayout.entityTree =
             $$('add_root_window').show();
           }
         },
-        // { view: 'button',
-        //   width: 35,
-        //   type: 'iconButton',
-        //   icon: 'user',
-        //   css: 'entity_tree__search_button',
-        //   popup: 'entity_tree__root_scope_popup',
-        //   id: 'entity_tree__root_scope',
-        //   on: {
-        //     onItemClick: function() {
-        //       // this.currentFieldName = data.name;
-        //       // $$('entity_form__field_type_popup_list').select(data.type);
-        //     }.bind(this)
-        //   }
-        // },
-        // { view: 'search',
-        //   id: 'entity_tree__search',
-        //   css: 'entity_tree__search',
-        //   align: 'center',
-        //   icon: 'close',
-        //   placeholder: STRINGS.SEARCH_BY_ROOTS,
-        //   on: {
-        //     onAfterRender: function() {
-        //
-        //     },
-        //     onKeyPress: function(code, e) {
-        //       if (code === 13) {
-        //         var search = $$('entity_tree__search').getValue();
-        //
-        //         switch ($$('entity_tree__root_scope')._settings['icon']) {
-        //           case 'user':
-        //             if (MDSCommon.isBlank(search)) {
-        //               search = 'me:*';
-        //             } else {
-        //               search = 'me:*' + search + '*';
-        //             }
-        //             break;
-        //           case 'globe':
-        //             if (MDSCommon.isBlank(search)) {
-        //               search = '*';
-        //             } else {
-        //               search = '*' + search + '*';
-        //             }
-        //             break;
-        //           case 'edit':
-        //             break;
-        //         }
-        //
-        //         window.location.href = '/#' + search;
-        //         UI.pages.refreshPage('data');
-        //         return false;
-        //       }
-        //     }
-        //   }
-        // }
+        { view: 'button',
+          width: 35,
+          type: 'iconButton',
+          icon: 'user',
+          css: 'entity_tree__search_button',
+          popup: 'entity_tree__root_scope_popup',
+          id: 'entity_tree__root_scope',
+          hidden: true,
+          on: {
+            onItemClick: function() {
+              // this.currentFieldName = data.name;
+              // $$('entity_form__field_type_popup_list').select(data.type);
+            }.bind(this)
+          }
+        },
+        { view: 'search',
+          id: 'entity_tree__search',
+          css: 'entity_tree__search',
+          align: 'center',
+          icon: 'close',
+          hidden: true,
+          placeholder: STRINGS.SEARCH_BY_ROOTS,
+          on: {
+            onAfterRender: function() {
+
+            },
+            onKeyPress: function(code, e) {
+              if (code === 13) {
+                var search = $$('entity_tree__search').getValue();
+
+                switch ($$('entity_tree__root_scope')._settings['icon']) {
+                  case 'user':
+                    if (MDSCommon.isBlank(search)) {
+                      search = 'me:*';
+                    } else {
+                      search = 'me:*' + search + '*';
+                    }
+                    break;
+                  case 'globe':
+                    if (MDSCommon.isBlank(search)) {
+                      search = '*';
+                    } else {
+                      search = '*' + search + '*';
+                    }
+                    break;
+                  case 'edit':
+                    break;
+                }
+
+                window.location.href = '/#' + search;
+                UI.pages.refreshPage('data');
+                return false;
+              }
+            }
+          }
+        }
       ]
     },
     { view: 'tree',
