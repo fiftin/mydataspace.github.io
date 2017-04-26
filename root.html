@@ -227,6 +227,9 @@ language: en
 
             switch (tabID) {
               case 'VIEW_TAB_VIEW_LABEL':
+                document.getElementById('view__data_link').classList.add('hidden');
+                document.getElementById('view__new_look').classList.remove('hidden');
+
                 if (document.getElementById('view__tabs_views_count').innerText === '0') {
                   document.getElementById('view__looks__empty').style.display = 'block';
 //                  document.getElementById('view__looks__pills').style.display = 'none';
@@ -242,6 +245,8 @@ language: en
                 });
                 break;
               case 'VIEW_TAB_COMMENTS_LABEL':
+                document.getElementById('view__data_link').classList.add('hidden');
+                document.getElementById('view__new_look').classList.add('hidden');
                 Mydataspace.entities.request('entities.get', { root: DATA.root, children: true, path: 'comments', limit: 7, orderChildrenBy: '$createdAt DESC' }).then(function(data) {
                   var comments = document.getElementById('view__comments__list');
                   comments.innerHTML = '';
@@ -254,6 +259,10 @@ language: en
                     document.getElementById('view__comments__empty').style.display = 'block';
                   }
                 });
+                break;
+              case 'VIEW_TAB_README_LABEL':
+                document.getElementById('view__data_link').classList.remove('hidden');
+                document.getElementById('view__new_look').classList.add('hidden');
                 break;
             }
 
