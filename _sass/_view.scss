@@ -202,6 +202,7 @@ $view-field-value-max-height: 170px;
   float: right;
   margin-right: 0;
   padding-right: 0;
+  padding-bottom: 0;
 }
 
 .view__readme {
@@ -590,7 +591,7 @@ $view-field-value-max-height: 170px;
 }
 
 .look__footer {
-  position: relative;
+  pqosition: relative;
 }
 
 .look__title {
@@ -600,5 +601,8 @@ $view-field-value-max-height: 170px;
 }
 
 .view__new_look {
-
+  padding: 3px 25px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 2px;
 }
