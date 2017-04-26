@@ -108,8 +108,10 @@ $view-field-value-max-height: 170px;
 .view__title_link {
   display: inline-block;
   float: none !important;
-  //transform: translateY(-2px);
   padding: 0 !important;
+  .links__link_text {
+    font-size: 16px;
+  }
 }
 
 .view__stats {
