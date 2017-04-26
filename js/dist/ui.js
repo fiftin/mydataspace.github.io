@@ -3207,7 +3207,7 @@ UILayout.entityTree =
         { view: 'button',
           type: 'icon',
           icon: 'refresh',
-          id: 'REFRESH_LABEL', label: STRINGS.REFRESH,
+          id: 'REFRESH_LABEL_2', label: STRINGS.REFRESH,
           width: 100,
           click: function() {
             UI.entityTree.refresh();
