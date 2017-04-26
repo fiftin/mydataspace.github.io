@@ -2,6 +2,14 @@ function EntityTree() {
 
 }
 
+EntityTree.prototype.setReadOnly = function(isReadOnly) {
+  if (isReadOnly) {
+    $$('ADD_ROOT_LABEL').hide();
+  } else {
+    $$('ADD_ROOT_LABEL').show();
+  }
+};
+
 EntityTree.prototype.getCurrentId = function() {
   return this.currentId;
 };

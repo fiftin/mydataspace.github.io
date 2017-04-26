@@ -2053,6 +2053,14 @@ function EntityTree() {
 
 }
 
+EntityTree.prototype.setReadOnly = function(isReadOnly) {
+  if (isReadOnly) {
+    $$('ADD_ROOT_LABEL').hide();
+  } else {
+    $$('ADD_ROOT_LABEL').show();
+  }
+};
+
 EntityTree.prototype.getCurrentId = function() {
   return this.currentId;
 };
@@ -3217,6 +3225,7 @@ UILayout.entityTree =
           type: 'icon',
           icon: 'plus',
           id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
+          hidden: true,
           width: 110,
           click: function() {
             $$('add_root_window').show();
@@ -3968,6 +3977,7 @@ UI = {
       $$('SIGN_IN_LABEL').hide();
       $$('menu_button').show();
       $('#signin_modal').modal('hide');
+      UI.entityTree.setReadOnly(false);
     });
 
     Mydataspace.on('logout', function() {
@@ -3979,6 +3989,7 @@ UI = {
       document.getElementById('no_items').style.display = 'none';
       $$('SIGN_IN_LABEL').show();
       $$('menu_button').hide();
+      UI.entityTree.setReadOnly(true);
     });
 
     UI.entityForm.listen();

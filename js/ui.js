@@ -219,6 +219,7 @@ UI = {
       $$('SIGN_IN_LABEL').hide();
       $$('menu_button').show();
       $('#signin_modal').modal('hide');
+      UI.entityTree.setReadOnly(false);
     });
 
     Mydataspace.on('logout', function() {
@@ -230,6 +231,7 @@ UI = {
       document.getElementById('no_items').style.display = 'none';
       $$('SIGN_IN_LABEL').show();
       $$('menu_button').hide();
+      UI.entityTree.setReadOnly(true);
     });
 
     UI.entityForm.listen();

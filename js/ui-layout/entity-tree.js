@@ -17,6 +17,7 @@ UILayout.entityTree =
           type: 'icon',
           icon: 'plus',
           id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
+          hidden: true,
           width: 110,
           click: function() {
             $$('add_root_window').show();
