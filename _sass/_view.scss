@@ -596,10 +596,15 @@ $view-field-value-max-height: 170px;
   pqosition: relative;
 }
 
+.look__content {
+  height: 566px;
+}
+
 .look__title {
   font-weight: bold;
   text-align: center;
   padding-bottom: 5px;
+  height: 30px;
 }
 
 .view__new_look {
@@ -646,4 +651,53 @@ $view-field-value-max-height: 170px;
   position: absolute;
   bottom: 0;
   width: 100%;
+}
+
+.new_look_modal__header {
+  border-bottom-color: lightgray;
+}
+
+.new_look_modal__footer {
+  border-top-color: lightgray;
+  padding: 15px 25px;
+}
+
+.new_look_modal__body {
+  background: #f0f3f5;
+  padding: 15px 25px;
+  textarea {
+    resize: none;
+  }
+}
+
+
+.look__actions {
+  position: absolute;
+  right: -5px;
+  bottom: 0;
+}
+
+.look__action {
+  float: right;
+  padding: 5px;
+  margin-left: 15px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 300ms;
+  &:hover {
+    opacity: 0.8 !important;
+  }
+}
+
+.look__header {
+  position: relative;
+}
+
+
+.look{
+  &:hover {
+    .look__action {
+      opacity: 0.4;
+    }
+  }
 }

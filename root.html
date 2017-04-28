@@ -5,6 +5,8 @@ language: en
 <div id="view" class="root_page" style="padding-bottom: 30px">
 </div>
 
+
+
 <div id="new_look_modal"
      class="modal fade"
      tabindex="-1"
@@ -12,17 +14,18 @@ language: en
      aria-labelledby="New View">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header new_look_modal__header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <div class="modal-title">New View</div>
+        <div class="modal-title" id="new_look_modal_header">New View</div>
       </div>
-      <div class="modal-body">
+      <div class="modal-body new_look_modal__body">
         <form class="bootstrap-form">
           <div class="form-group">
             <input type="text"
                    id="new_look_modal_title"
                    class="form-control"
-                   placeholder="Title" />
+                   placeholder="Title"
+                   autofocus />
           </div>
           <div class="form-group">
             <input type="text"
@@ -38,12 +41,14 @@ language: en
           </div>
         </form>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer new_look_modal__footer">
         <button class="btn btn-success" id="new_look_modal_button">Create View</button>
       </div>
     </div>
   </div>
 </div>
+
+
 
 <script src="/vendor/remarkable.js"></script>
 
@@ -107,11 +112,61 @@ language: en
 
     var looksData = [];
 
+    function openLookEditModal(isEdit) {
+      if (isEdit) {
+        var lookData;
+        for (var lookIndex in looksData) {
+          var look = looksData[lookIndex];
+          if (look.path === document.getElementById('view__looks__content').getAttribute('data-look-path')) {
+            lookData = look;
+            break;
+          }
+        }
+        document.getElementById('new_look_modal_header').innerText = 'Edit View';
+        document.getElementById('new_look_modal_button').innerText = 'Save View';
+        document.getElementById('new_look_modal_title').value = MDSCommon.findValueByName(lookData.fields, 'title');
+        document.getElementById('new_look_modal_codepen').value =  MDSCommon.findValueByName(lookData.fields, 'id');
+        document.getElementById('new_look_modal_description').value = MDSCommon.findValueByName(lookData.fields, 'description') || '';
+      } else {
+        document.getElementById('new_look_modal_header').innerText = 'New View';
+        document.getElementById('new_look_modal_button').innerText = 'Create View';
+        document.getElementById('new_look_modal_title').value = '';
+        document.getElementById('new_look_modal_codepen').value = '';
+        document.getElementById('new_look_modal_description').value = '';
+      }
+      $('#new_look_modal').modal('show');
+    }
+
+    function setLook(lookData) {
+//      document.getElementById('view__looks__likes_count').innerText = MDSCommon.findValueByName(viewData.children, 'likes');
+      document.getElementById('view__looks__date').innerText = MDSCommon.humanizeDate(lookData.createdAt);
+      document.getElementById('view__looks__title').innerText = MDSCommon.findValueByName(lookData.fields, 'title');
+      document.getElementById('view__looks__content').setAttribute('data-look-path', lookData.path);
+      switch (lookData.fields.type) {
+        case 'codepen':
+          var codepen = MDSCommon.findValueByName(lookData.fields, 'id');
+          document.getElementById('view__looks__content').innerHTML =
+            '<p data-height="560" data-theme-id="0" data-slug-hash="' + codepen + '" data-default-tab="result" data-user="mydataspace" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/mydataspace/pen/' + codepen + '/">' + codepen + '</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p>' +
+            '';
+          var codepenScript = document.createElement('script');
+          codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
+          document.getElementById('view__looks__content').appendChild(codepenScript);
+          break;
+        default:
+          throw new Error('Unknown view type: ' + lookData.type);
+      }
+    }
+
     function selectLook(lookPath) {
-      for (var lookIndex in lookData) {
-        var look = lookData[lookIndex];
+      var previews = $('#view__looks__previews');
+      previews.find('.look_preview--active').removeClass('look_preview--active');
+      for (var lookIndex in looksData) {
+        var look = looksData[lookIndex];
         if (look.path === lookPath) {
-          ;
+          setLook(look);
+          var preview = previews.find('.look_preview')[lookIndex];
+          preview.classList.add('look_preview--active');
+          break;
         }
       }
     }
@@ -269,27 +324,12 @@ language: en
       } else {
         index = parseInt(index);
       }
-      var viewData = looksData[index];
-      if (viewData == null) {
+      var lookData = looksData[index];
+      if (lookData == null) {
         throw new Error('Illegal view index: ' + index + '. Must be less ' + looksData.length);
       }
-//      document.getElementById('view__looks__likes_count').innerText = MDSCommon.findValueByName(viewData.children, 'likes');
-      document.getElementById('view__looks__date').innerText = MDSCommon.humanizeDate(viewData.createdAt);
-//      document.getElementById('view__looks__title').innerText = MDSCommon.findValueByName(viewData.fields, 'title');
 
-      switch (viewData.fields.type) {
-        case 'codepen':
-          var codepen = MDSCommon.findValueByName(viewData.fields, 'id');
-          document.getElementById('view__looks__content').innerHTML =
-            '<p data-height="560" data-theme-id="0" data-slug-hash="' + codepen + '" data-default-tab="result" data-user="mydataspace" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/mydataspace/pen/' + codepen + '/">' + codepen + '</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p>' +
-            '';
-          var codepenScript = document.createElement('script');
-          codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
-          document.getElementById('view__looks__content').appendChild(codepenScript);
-          break;
-        default:
-          throw new Error('Unknown view type: ' + viewData.type);
-      }
+      setLook(lookData);
 
       var previewsHTML = '';
       for (var lookIndex in looksData) {
@@ -474,9 +514,28 @@ language: en
           });
         });
 
-        $('view__looks__previews').on('click', '.look_preview', function() {
+        $('#view__looks__previews').on('click', '.look_preview', function() {
           selectLook($(this).data('look-path'));
         });
+
+
+        document.getElementById('view__looks__delete').addEventListener('click', function() {
+          Mydataspace.entities.request('entities.delete', {
+            root: DATA.root,
+            path: document.getElementById('view__looks__content').getAttribute('data-look-path')
+          }).then(function() {
+            alert('deleted');
+          }, function(err) {});
+        });
+
+        document.getElementById('view__looks__edit').addEventListener('click', function() {
+          openLookEditModal(true);
+        });
+
+        document.getElementById('view__new_look').addEventListener('click', function() {
+          openLookEditModal(false);
+        });
+
       });
     }
 
