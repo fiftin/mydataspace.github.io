@@ -77,3 +77,17 @@ label {
     color: white !important;
   }
 }
+
+.modal-header {
+  padding: 10px $modal-title-padding;
+}
+
+.form-control {
+  box-shadow: none !important;
+}
+
+.bootstrap-form {
+  .form-group:last-child {
+    margin-bottom: 0 !important;
+  }
+}

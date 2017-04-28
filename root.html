@@ -14,16 +14,26 @@ language: en
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">New View</h4>
+        <div class="modal-title">New View</div>
       </div>
       <div class="modal-body">
-        <div class="form-group">
-          <label for="new_look_modal_codepen">Codepen</label>
-          <input type="text" id="new_look_modal_codepen" class="form-control" placeholder="Pen URL" />
-        </div>
+        <form class="bootstrap-form">
+          <div class="form-group">
+            <input type="text"
+                   id="new_look_modal_title"
+                   class="form-control"
+                   placeholder="Title" />
+          </div>
+          <div class="form-group">
+            <input type="text"
+                   id="new_look_modal_codepen"
+                   class="form-control"
+                   placeholder="Codepen URL" />
+          </div>
+        </form>
       </div>
       <div class="modal-footer">
-        <button class="btn primary">Create</button>
+        <button class="btn btn-success" id="new_look_modal_button">Create View</button>
       </div>
     </div>
   </div>
@@ -410,6 +420,18 @@ language: en
             $(this).find('i').removeClass('fa-spin');
             console.log(err);
           });
+        });
+
+        document.getElementById('new_look_modal_button').addEventListener('click', function() {
+          Mydataspace.entities.request('entities.create', {
+            root: data.root,
+            path: 'views/' + MDSCommon.guid(),
+            fields: [
+              { name: 'type', value: 'codepen' },
+              { name: 'id', value: document.getElementById('') },
+              { name: 'title', value: document.getElementById('') }
+            ]
+          }).then(function() {}, function(err) {});
         });
       });
     }
