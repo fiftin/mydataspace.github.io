@@ -91,6 +91,8 @@ language: en
       }).then(function(data) {
         $('#new_look_modal').modal('hide');
         $('#view__looks__previews').append(getLookPreviewHTML(data));
+        looksData.push(data);
+        document.getElementById('view__tabs_views_count').innerText = looksData.length;
         selectLook(data.path);
       }, function(err) {});
     });
