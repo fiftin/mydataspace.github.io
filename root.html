@@ -30,6 +30,12 @@ language: en
                    class="form-control"
                    placeholder="Codepen URL" />
           </div>
+          <div class="form-group">
+            <textarea id="new_look_modal_description"
+                      class="form-control"
+                      rows="3"
+                      placeholder="Description"></textarea>
+          </div>
         </form>
       </div>
       <div class="modal-footer">
@@ -56,8 +62,10 @@ language: en
           { name: 'id', value: document.getElementById('new_look_modal_title').value, type: 's' },
           { name: 'title', value: document.getElementById('new_look_modal_codepen').value, type: 's' }
         ]
-      }).then(function() {
-        alert('ok');
+      }).then(function(data) {
+        $('#new_look_modal').modal('hide');
+        $('#view__looks__previews').append(getLookPreviewHTML(data));
+        selectLook(data.path);
       }, function(err) {});
     });
 
@@ -97,7 +105,26 @@ language: en
       VIEW_TAB_COMMENTS_LABEL: 'view__comments'
     };
 
-    var viewsData = [];
+    var looksData = [];
+
+    function selectLook(lookPath) {
+      for (var lookIndex in lookData) {
+        var look = lookData[lookIndex];
+        if (look.path === lookPath) {
+          ;
+        }
+      }
+    }
+
+    function getLookPreviewHTML(lookData, isActive) {
+      return '<div class="look_preview' + (isActive ? ' look_preview--active' : '') + '" data-look-path="'+ lookData.path + '">' +
+        '<div class="look_preview__header"><i class="fa fa-codepen"></i><span class="look_preview__title">' + MDSCommon.findValueByName(lookData.fields, 'title') + '</span></div>' +
+          '<div class="look_preview__description">' + (MDSCommon.findValueByName(lookData.fields, 'description') || '') + '</div>' +
+          '<div class="look_preview__footer">' +
+            '<span class="view__comment__date">' + MDSCommon.humanizeDate(lookData.createdAt) + '</span>' +
+          '</div>' +
+        '</div>';
+    }
 
     function getCommentHTML(commentData) {
       var commentText =  (MDSCommon.findValueByName(commentData.fields, 'text') || '').replace(/(?:\r\n|\r|\n)/g, '<br />');
@@ -222,8 +249,8 @@ language: en
       });
     }
 
-    function updateViews(newIndex) {
-      if (viewsData.length === 0) {
+    function updateLooks(newIndex) {
+      if (looksData.length === 0) {
         document.getElementById('view__looks__empty').style.display = 'block';
 //        document.getElementById('view__looks__pills').style.display = 'none';
         document.getElementById('view__looks__content_wrap').style.display = 'none';
@@ -233,6 +260,7 @@ language: en
 //        document.getElementById('view__looks__pills').style.display = 'block';
         document.getElementById('view__looks__content_wrap').style.display = 'block';
       }
+
       var content = document.getElementById('view__looks__content');
       var index = content.getAttribute('data-view-index');
       if (index == null || newIndex != null) {
@@ -241,9 +269,9 @@ language: en
       } else {
         index = parseInt(index);
       }
-      var viewData = viewsData[index];
+      var viewData = looksData[index];
       if (viewData == null) {
-        throw new Error('Illegal view index: ' + index + '. Must be less ' + viewsData.length);
+        throw new Error('Illegal view index: ' + index + '. Must be less ' + looksData.length);
       }
 //      document.getElementById('view__looks__likes_count').innerText = MDSCommon.findValueByName(viewData.children, 'likes');
       document.getElementById('view__looks__date').innerText = MDSCommon.humanizeDate(viewData.createdAt);
@@ -262,6 +290,12 @@ language: en
         default:
           throw new Error('Unknown view type: ' + viewData.type);
       }
+
+      var previewsHTML = '';
+      for (var lookIndex in looksData) {
+        previewsHTML += getLookPreviewHTML(looksData[lookIndex], lookIndex.toString() === '0');
+      }
+      document.getElementById('view__looks__previews').innerHTML = previewsHTML;
     }
 
     function initTabs() {
@@ -292,8 +326,8 @@ language: en
                   document.getElementById('view__looks__content_wrap').style.display = 'block';
                 }
                 Mydataspace.entities.request('entities.get', { root: DATA.root, children: true, path: 'views' }).then(function(data) {
-                  viewsData = data.children;
-                  updateViews();
+                  looksData = data.children;
+                  updateLooks();
                 });
                 break;
               case 'VIEW_TAB_COMMENTS_LABEL':
@@ -438,6 +472,10 @@ language: en
             $(this).find('i').removeClass('fa-spin');
             console.log(err);
           });
+        });
+
+        $('view__looks__previews').on('click', '.look_preview', function() {
+          selectLook($(this).data('look-path'));
         });
       });
     }

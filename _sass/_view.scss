@@ -610,3 +610,40 @@ $view-field-value-max-height: 170px;
   position: absolute;
   right: 0;
 }
+.look_previews {
+  margin-top: 20px;
+}
+.look_preview {
+  width: 200px;
+  height: 130px;
+  float: left;
+  position: relative;
+  padding: 5px 10px;
+  margin-right: 10px;
+  border: 1px solid #ababab;
+  cursor: pointer;
+}
+
+.look_preview--active {
+  border-color: black;
+}
+
+.look_preview__title {
+  font-weight: bold;
+  padding-left: 7px;
+}
+
+.look_preview__header {
+  padding-bottom: 5px;
+  line-height: 1.2;
+}
+
+.look_preview__description {
+  font-size: 14px;
+}
+
+.look_preview__footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
