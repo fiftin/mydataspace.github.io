@@ -107,6 +107,7 @@ language: en
           var preview = previews[i];
           if (preview.getAttribute('data-look-path') === lookPath) {
             previewsElem.removeChild(preview);
+            break;
           }
         }
         selectLook();
