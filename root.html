@@ -5,6 +5,27 @@ language: en
 <div id="view" class="root_page" style="padding-bottom: 30px">
 </div>
 
+<div id="delete_look_modal"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="Delete View">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header new_look_modal__header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="modal-title">Delete View</div>
+      </div>
+      <div class="modal-body new_look_modal__body">
+        You really want to delete this view?
+      </div>
+      <div class="modal-footer new_look_modal__footer">
+        <button class="btn btn-danger" id="delete_look_modal_button">Yes</button>
+        <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <div id="new_look_modal"
@@ -71,6 +92,15 @@ language: en
         $('#new_look_modal').modal('hide');
         $('#view__looks__previews').append(getLookPreviewHTML(data));
         selectLook(data.path);
+      }, function(err) {});
+    });
+
+    document.getElementById('delete_look_modal_button').addEventListener('click', function() {
+      Mydataspace.entities.request('entities.delete', {
+        root: DATA.root,
+        path: document.getElementById('view__looks__content').getAttribute('data-look-path')
+      }).then(function() {
+        updateLooks();
       }, function(err) {});
     });
 
@@ -518,21 +548,15 @@ language: en
           selectLook($(this).data('look-path'));
         });
 
-
-        document.getElementById('view__looks__delete').addEventListener('click', function() {
-          Mydataspace.entities.request('entities.delete', {
-            root: DATA.root,
-            path: document.getElementById('view__looks__content').getAttribute('data-look-path')
-          }).then(function() {
-            alert('deleted');
-          }, function(err) {});
-        });
-
         document.getElementById('view__looks__edit').addEventListener('click', function() {
           openLookEditModal(true);
         });
 
         document.getElementById('view__new_look').addEventListener('click', function() {
+          if (!Mydataspace.isLoggedIn()) {
+            $('#signin_modal').modal('show');
+            return;
+          }
           openLookEditModal(false);
         });
 
