@@ -52,9 +52,9 @@ language: en
         root: DATA.root,
         path: 'views/' + MDSCommon.guid(),
         fields: [
-          { name: 'type', value: 'codepen' },
-          { name: 'id', value: document.getElementById('new_look_modal_title').value },
-          { name: 'title', value: document.getElementById('new_look_modal_codepen').value }
+          { name: 'type', value: 'codepen', type: 's' },
+          { name: 'id', value: document.getElementById('new_look_modal_title').value, type: 's' },
+          { name: 'title', value: document.getElementById('new_look_modal_codepen').value, type: 's' }
         ]
       }).then(function() {
         alert('ok');
