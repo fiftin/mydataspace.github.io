@@ -75,14 +75,12 @@ language: en
 
 <script>
   (function() {
-//    $('#new_look_modal').on('show.bs.modal', function (event) {
-//      document.getElementById('new_look_modal_title').focus();
-//    });
-
     document.getElementById('new_look_modal_button').addEventListener('click', function() {
-      Mydataspace.entities.request('entities.create', {
+      var lookPath = document.getElementById('new_look_modal_button').getAttribute('data-look-path');
+
+      Mydataspace.entities.request(lookPath ? 'entities.change' : 'entities.create', {
         root: DATA.root,
-        path: 'views/' + MDSCommon.guid(),
+        path: lookPath || 'views/' + MDSCommon.guid(),
         fields: [
           { name: 'type', value: 'codepen', type: 's' },
           { name: 'id', value: document.getElementById('new_look_modal_title').value, type: 's' },
@@ -90,10 +88,19 @@ language: en
         ]
       }).then(function(data) {
         $('#new_look_modal').modal('hide');
-        $('#view__looks__previews').append(getLookPreviewHTML(data));
-        looksData.push(data);
-        document.getElementById('view__tabs_views_count').innerText = looksData.length;
-        selectLook(data.path);
+        if (lookPath) {
+          var lookIndex = getLookIndex(lookPath);
+          if (lookIndex >= 0) {
+            looksData[lookIndex] = data;
+            $(document.getElementById('view__looks__previews').childNodes[lookIndex]).replaceWith(
+              getLookPreviewHTML(data, true));
+          }
+        } else {
+          $('#view__looks__previews').append(getLookPreviewHTML(data));
+          looksData.push(data);
+          document.getElementById('view__tabs_views_count').innerText = looksData.length;
+          selectLook(data.path);
+        }
       }, function(err) {});
     });
 
@@ -156,23 +163,32 @@ language: en
 
     var looksData = [];
 
+    function getLookIndex(path) {
+      for (var lookIndex in looksData) {
+        var look = looksData[lookIndex];
+        if (look.path === path) {
+          return lookIndex;
+        }
+      }
+      return -1;
+    }
+
     function openLookEditModal(isEdit) {
       if (isEdit) {
         var lookData;
-        for (var lookIndex in looksData) {
-          var look = looksData[lookIndex];
-          if (look.path === document.getElementById('view__looks__content').getAttribute('data-look-path')) {
-            lookData = look;
-            break;
-          }
+        var lookIndex = getLookIndex(document.getElementById('view__looks__content').getAttribute('data-look-path'));
+        if (lookIndex >= 0) {
+          lookData = looksData[lookIndex];
         }
         document.getElementById('new_look_modal_header').innerText = 'Edit View';
+        document.getElementById('new_look_modal_button').setAttribute('data-look-path', lookData.path);
         document.getElementById('new_look_modal_button').innerText = 'Save View';
         document.getElementById('new_look_modal_title').value = MDSCommon.findValueByName(lookData.fields, 'title');
         document.getElementById('new_look_modal_codepen').value =  MDSCommon.findValueByName(lookData.fields, 'id');
         document.getElementById('new_look_modal_description').value = MDSCommon.findValueByName(lookData.fields, 'description') || '';
       } else {
         document.getElementById('new_look_modal_header').innerText = 'New View';
+        document.getElementById('new_look_modal_button').removeAttribute('data-look-path');
         document.getElementById('new_look_modal_button').innerText = 'Create View';
         document.getElementById('new_look_modal_title').value = '';
         document.getElementById('new_look_modal_codepen').value = '';
