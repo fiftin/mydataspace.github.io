@@ -110,6 +110,8 @@ language: en
           }
         }
         selectLook();
+        looksData.splice(i, 1);
+        document.getElementById('view__tabs_views_count').innerText = looksData.length;
       }, function(err) {});
     });
 
