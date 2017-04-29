@@ -30,7 +30,6 @@ UILayout.entityTree =
           css: 'entity_tree__search_button',
           popup: 'entity_tree__root_scope_popup',
           id: 'entity_tree__root_scope',
-          // hidden: true,
           on: {
             onItemClick: function() {
               // this.currentFieldName = data.name;
@@ -43,13 +42,12 @@ UILayout.entityTree =
           css: 'entity_tree__search',
           align: 'center',
           icon: 'close',
-          // hidden: true,
           placeholder: STRINGS.SEARCH_BY_ROOTS,
           on: {
             onAfterRender: function() {
 
             },
-            onTimedKeyPress: function(code, e) {
+            onTimedKeyPress: function() {
               var search = $$('entity_tree__search').getValue();
 
               switch ($$('entity_tree__root_scope')._settings['icon']) {
