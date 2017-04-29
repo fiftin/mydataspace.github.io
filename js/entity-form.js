@@ -211,8 +211,10 @@ EntityForm.prototype.setRootView = function(data) {
 
     document.getElementById('view__tags').innerHTML = tags || '';
 
-    document.getElementById('view__page_link').href = '/' + data.root;
-    document.getElementById('view__page_link').classList.remove('hidden');
+    if (data.root !== 'nothing' && data.root !== 'notfound') {
+      document.getElementById('view__page_link').href = '/' + data.root;
+      document.getElementById('view__page_link').classList.remove('hidden');
+    }
 
     if (tags && websiteURL) {
       document.getElementsByClassName('view__overview_image_wrap')[0].classList.add('view__overview_image_wrap--large');
@@ -255,6 +257,9 @@ EntityForm.prototype.setRootView = function(data) {
       }
     }
 
+    if (data.root !== 'nothing' && data.root !== 'notfound') {
+      document.getElementById('view__counters').style.display = 'none';
+    }
 
     if (MDSCommon.isBlank(readme)) {
       document.getElementById('view__readme').style.display = 'none';
