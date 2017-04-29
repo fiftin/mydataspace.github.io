@@ -3044,7 +3044,7 @@ UILayout.popups.searchScope = {
   view: 'popup',
   id: 'entity_tree__root_scope_popup',
     css: 'entity_tree__root_scope_popup',
-  width: 130,
+  width: 160,
   body:{
     view: 'list',
         id: 'entity_tree__root_scope_popup_list',
@@ -3061,8 +3061,16 @@ UILayout.popups.searchScope = {
     select: true,
     on: {
       onItemClick: function(newv) {
+        var icon;
+        switch (newv) {
+          case 'edit':
+            icon = 'database';
+            break;
+          default:
+            icon = newv;
+        }
         $$('entity_tree__root_scope_popup').hide();
-        $$('entity_tree__root_scope').define('icon', newv);
+        $$('entity_tree__root_scope').define('icon', icon);
         $$('entity_tree__root_scope').refresh();
         $('.entity_tree__search input').focus();
       }
