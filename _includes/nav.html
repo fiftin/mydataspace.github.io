@@ -64,7 +64,7 @@
                     '  <div class="snippet__overview">\n' +
 
                     '  <img class="snippet__image" src="' + avatar + '" />\n' +
-                    '  <div class="snippet__info">\n' +
+                    '  <div class="snippet__info' + (MDSCommon.isBlank(tags) ? ' snippet__info--small' : '') + '">\n' +
                     '    <div class="snippet__title">' + (MDSCommon.findValueByName(root.fields, 'name') || root.root) + '</div>\n' +
                     '    <div class="snippet__tags">' +
                           (tags || '') +

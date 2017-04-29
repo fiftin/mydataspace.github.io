@@ -1,7 +1,11 @@
+$snippet-image-size: 52px;
+$small-padding: 10px;
+$snippet-height: 190px;
+
 .snippet {
   margin-bottom: 30px;
-  padding: 10px;
-  height: 210px;
+  padding: $small-padding;
+  height: $snippet-height;
   display: block;
   text-decoration: none !important;
   background: white;
@@ -15,19 +19,24 @@
 
 .snippet__overview {
   position: relative;
-  min-height: 80px;
+  min-height: $snippet-image-size + $small-padding / 2;
+  margin-bottom: $small-padding / 2;
 }
 
 .snippet__image {
   position: absolute;
-  top: 5px;
+  top: 0;
   left: 0;
-  width: 60px;
-  height: 60px;
+  width: $snippet-image-size;
+  height: $snippet-image-size;
 }
 
 .snippet__info {
-  padding-left: 70px;
+  padding-left: $snippet-image-size + $small-padding;
+}
+
+.snippet__info--small {
+  padding-top: 15px;
 }
 
 .snippet__title {
@@ -38,27 +47,28 @@
 }
 
 .snippet__tags {
-  margin-top: 5px;
+  margin-top: $small-padding / 2;
   font-size: 13px;
   color: gray;
 }
 
 .snippet__description {
-  font-size: 15px;
+  font-size: 14px;
   color: #424242;
 }
 
 .snippet__footer {
   position: absolute;
   bottom: 0;
-  left: 10px;
-  right: 10px;
+  left: $small-padding;
+  right: $small-padding;
   background: white;
-  padding-bottom: 5px;
+  padding-bottom: $small-padding / 2;
 }
 
 .snippet__date {
   float: left;
+  margin-top: 5px;
 }
 
 .snippet__counters {
