@@ -75,9 +75,11 @@ language: en
 
 <script>
   (function() {
+
+    //
+    // Save view button
     document.getElementById('new_look_modal_button').addEventListener('click', function() {
       var lookPath = document.getElementById('new_look_modal_button').getAttribute('data-look-path');
-
       Mydataspace.entities.request(lookPath ? 'entities.change' : 'entities.create', {
         root: DATA.root,
         path: lookPath || 'views/' + MDSCommon.guid(),
@@ -89,42 +91,54 @@ language: en
         ]
       }).then(function(data) {
         $('#new_look_modal').modal('hide');
-        if (lookPath) {
-          var lookIndex = getLookIndex(lookPath);
-          if (lookIndex >= 0) {
-            looksData[lookIndex] = data;
-            $(document.getElementById('view__looks__previews').childNodes[lookIndex]).replaceWith(
-              getLookPreviewHTML(data, true));
-            document.getElementById('view__looks__title').innerText = MDSCommon.findValueByName(data.fields, 'title') || '';
-          }
-        } else {
-          $('#view__looks__previews').append(getLookPreviewHTML(data));
-          looksData.push(data);
-          document.getElementById('view__tabs_views_count').innerText = looksData.length;
-          selectLook(data.path);
+        if (!lookPath) {
+          setTimeout(function() { selectLook(data.path); }, 500);
         }
       }, function(err) {});
     });
 
+
+    //
+    // Delete view button
     document.getElementById('delete_look_modal_button').addEventListener('click', function() {
       var lookPath = document.getElementById('view__looks__content').getAttribute('data-look-path');
       Mydataspace.entities.request('entities.delete', {
         root: DATA.root,
         path: lookPath
-      }).then(function(data) {
-        var previewsElem = document.getElementById('view__looks__previews');
-        var previews = previewsElem.childNodes;
-        for (var i = 0; i < previews.length; i++) {
-          var preview = previews[i];
-          if (preview.getAttribute('data-look-path') === lookPath) {
-            previewsElem.removeChild(preview);
-            break;
-          }
+      }).then(function(data) { }, function(err) {});
+    });
+
+    Mydataspace.entities.on('entities.delete.res', function(data) {
+      var previewsElem = document.getElementById('view__looks__previews');
+      var previews = previewsElem.childNodes;
+      for (var i = 0; i < previews.length; i++) {
+        var preview = previews[i];
+        if (preview.getAttribute('data-look-path') === lookPath) {
+          previewsElem.removeChild(preview);
+          break;
         }
+      }
+      document.getElementById('view__tabs_views_count').innerText = parseInt(document.getElementById('view__tabs_views_count').innerText) - 1;
+      if (lookData.path === data.path) {
         selectLook();
-        looksData.splice(i, 1);
-        document.getElementById('view__tabs_views_count').innerText = looksData.length;
-      }, function(err) {});
+      }
+    });
+
+    Mydataspace.entities.on('entities.create.res', function(data) {
+      $('#view__looks__previews').append(getLookPreviewHTML(data));
+      document.getElementById('view__tabs_views_count').innerText =
+        parseInt(document.getElementById('view__tabs_views_count').innerText) + 1;
+    });
+
+    Mydataspace.entities.on('entities.change.res', function(data) {
+      var preview = getLookPreviewNode(data.path);
+      if (!preview) {
+        throw new Error('Changed look is not exists');
+      }
+      preview.replaceWith(getLookPreviewHTML(data, true));
+      if (lookData.path === data.path) {
+        document.getElementById('view__looks__title').innerText = MDSCommon.findValueByName(data.fields, 'title') || '';
+      }
     });
 
     var md = new Remarkable({
@@ -163,25 +177,21 @@ language: en
       VIEW_TAB_COMMENTS_LABEL: 'view__comments'
     };
 
-    var looksData = [];
+    var lookData;
 
-    function getLookIndex(path) {
-      for (var lookIndex in looksData) {
-        var look = looksData[lookIndex];
-        if (look.path === path) {
-          return lookIndex;
+    function getLookPreviewNode(path) {
+      var lookPreviews = document.getElementById('view__looks__previews').childNodes;
+      for (var i = 0; i < lookPreviews.length; i++) {
+        var lookPath = lookPreviews[i].getAttribute('data-look-path');
+        if (lookPath === path) {
+          return lookPreviews[i];
         }
       }
-      return -1;
+      return null;
     }
 
     function openLookEditModal(isEdit) {
       if (isEdit) {
-        var lookData;
-        var lookIndex = getLookIndex(document.getElementById('view__looks__content').getAttribute('data-look-path'));
-        if (lookIndex >= 0) {
-          lookData = looksData[lookIndex];
-        }
         document.getElementById('new_look_modal_header').innerText = 'Edit View';
         document.getElementById('new_look_modal_button').setAttribute('data-look-path', lookData.path);
         document.getElementById('new_look_modal_button').innerText = 'Save View';
@@ -219,18 +229,19 @@ language: en
       }
     }
 
-    function selectLook(lookPath) {
+    function selectLook(path) {
       var previews = $('#view__looks__previews');
       previews.find('.look_preview--active').removeClass('look_preview--active');
-      for (var lookIndex in looksData) {
-        var look = looksData[lookIndex];
-        if (lookPath == null || look.path === lookPath) {
-          setLook(look);
-          var preview = previews.find('.look_preview')[lookIndex];
-          preview.classList.add('look_preview--active');
-          break;
-        }
+      var preview = getLookPreviewNode(path);
+      if (!preview) {
+        return;
       }
+      preview.classList.add('look_preview--active');
+      Mydataspace.entities.request('entities.get', {
+        root: DATA.root,
+        children: true,
+        path: path
+      }).then(setLook, function(err) {});
     }
 
     function getLookPreviewHTML(lookData, isActive) {
@@ -366,7 +377,7 @@ language: en
       });
     }
 
-    function updateLooks(newIndex) {
+    function updateLooks(looksData, newIndex) {
       if (looksData.length === 0) {
         document.getElementById('view__looks__empty').style.display = 'block';
 //        document.getElementById('view__looks__pills').style.display = 'none';
@@ -428,8 +439,7 @@ language: en
                   document.getElementById('view__looks__content_wrap').style.display = 'block';
                 }
                 Mydataspace.entities.request('entities.get', { root: DATA.root, children: true, path: 'views' }).then(function(data) {
-                  looksData = data.children;
-                  updateLooks();
+                  updateLooks(data.children);
                 });
                 break;
               case 'VIEW_TAB_COMMENTS_LABEL':
