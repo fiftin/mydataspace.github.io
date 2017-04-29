@@ -164,19 +164,19 @@ language: en
     var currentLook;
 
     function validateLookForm() {
-      document.getElementById('new_look_modal_title_err').value = '';
-      document.getElementById('new_look_modal_codepen_err').value = '';
+      document.getElementById('new_look_modal_title_err').innerText = '';
+      document.getElementById('new_look_modal_codepen_err').innerText = '';
 
       var title = document.getElementById('new_look_modal_title').value;
       var codepen = document.getElementById('new_look_modal_codepen').value;
 
       if (MDSCommon.isBlank(title)) {
-        document.getElementById('new_look_modal_title_err').value = 'Title can\'t be blank';
+        document.getElementById('new_look_modal_title_err').innerText = 'Title can\'t be blank';
         return false;
       }
 
       if (title.length > 250) {
-        document.getElementById('new_look_modal_title_err').value = 'Too long title';
+        document.getElementById('new_look_modal_title_err').innerText = 'Too long title';
         return false;
       }
 
@@ -200,8 +200,8 @@ language: en
     }
 
     function openLookEditModal(isEdit) {
-      document.getElementById('new_look_modal_title_err').value = '';
-      document.getElementById('new_look_modal_codepen_err').value = '';
+      document.getElementById('new_look_modal_title_err').innerText = '';
+      document.getElementById('new_look_modal_codepen_err').innerText = '';
       if (isEdit) {
         document.getElementById('new_look_modal_header').innerText = 'Edit View';
         document.getElementById('new_look_modal_button').setAttribute('data-look-path', currentLook.path);
