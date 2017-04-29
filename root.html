@@ -535,7 +535,7 @@ language: en
         var tags = (data.fields.tags || '').split(' ').filter(function(tag) {
           return tag != null && tag !== '';
         }).map(function(tag) {
-          return '<a class="view__tag" href="/?q=%23' + tag + '" onclick="openSearch(\'' + tag + '\'); return false;">' + tag + '</a>';
+          return '<a class="view__tag" href="/?q=%23' + tag + '" onclick="openSearch_header__search(\'' + tag + '\'); return false;">' + tag + '</a>';
         }).join(' ');
         document.getElementById('view__tags').innerHTML = tags || '';
 
