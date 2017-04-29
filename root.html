@@ -92,7 +92,11 @@ language: en
         fields: [
           { name: 'type', value: 'codepen', type: 's' },
           { name: 'title', value: document.getElementById('new_look_modal_title').value, type: 's' },
-          { name: 'id', value: document.getElementById('new_look_modal_codepen').value, type: 's' },
+          {
+            name: 'id',
+            value: getCodepenIDByURL(document.getElementById('new_look_modal_codepen').value),
+            type: 's'
+          },
           { name: 'description', value: document.getElementById('new_look_modal_description').value, type: 's' }
         ]
       }).then(function(data) {
@@ -181,11 +185,46 @@ language: en
       }
 
       if (MDSCommon.isBlank(codepen)) {
-        document.getElementById('new_look_modal_codepen_err').value = 'Codepen URL can\'t be blank';
+        document.getElementById('new_look_modal_codepen_err').innerText = 'Codepen URL can\'t be blank';
+        return false;
+      }
+
+      var codepenID = getCodepenIDByURL(codepen);
+      if (!codepenID) {
+        document.getElementById('new_look_modal_codepen_err').innerText = 'Invalid CodePen pen URL';
         return false;
       }
 
       return true;
+    }
+
+    function getCodepenIDByURL(url) {
+      var regex = /^https?:\/\/codepen.io\/(\w+)\/pen\/(\w+)/;
+      var m = regex.exec(url);
+      if (!m) {
+        return null;
+      }
+      var user = m[1];
+      var pen = m[2];
+      if (user === 'mydataspace') {
+        return pen;
+      }
+
+      return user + '/' + pen;
+    }
+
+    function getCodepenURL(id) {
+      var parts = id.split('/');
+      var user;
+      var pen;
+      if (parts.length === 1) {
+        user = 'mydataspace';
+        pen = parts[0];
+      } else {
+        user = parts[0];
+        pen = parts[1];
+      }
+      return 'https://codepen.io/' + user + '/pen/' + pen;
     }
 
     function getLookPreviewNode(path) {
@@ -207,7 +246,7 @@ language: en
         document.getElementById('new_look_modal_button').setAttribute('data-look-path', currentLook.path);
         document.getElementById('new_look_modal_button').innerText = 'Save View';
         document.getElementById('new_look_modal_title').value = MDSCommon.findValueByName(currentLook.fields, 'title');
-        document.getElementById('new_look_modal_codepen').value =  MDSCommon.findValueByName(currentLook.fields, 'id');
+        document.getElementById('new_look_modal_codepen').value =  getCodepenURL(MDSCommon.findValueByName(currentLook.fields, 'id'));
         document.getElementById('new_look_modal_description').value = MDSCommon.findValueByName(currentLook.fields, 'description') || '';
       } else {
         document.getElementById('new_look_modal_header').innerText = 'New View';
