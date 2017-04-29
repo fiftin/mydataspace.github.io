@@ -119,9 +119,9 @@
       }, false);
 
       if (isAdmin) {
-        $(window).on('hashchange', function() {
+        window.addEventListener('hashchange', function() {
           closeSearch();
-        });
+        }, false);
       }
     })();
   </script>
