@@ -247,7 +247,7 @@ input:read-only {
  }
 
 .webix_preloaded_header--top {
-  z-index: 10;
+  z-index: 15;
   right: 17px;
 }
 
@@ -849,6 +849,7 @@ input {
   overflow: auto;
   display: none;
   background: #f0f3f5;
+  z-index: 10;
 }
 
 #webix__header__search {
