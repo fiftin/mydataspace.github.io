@@ -117,6 +117,12 @@
         }
         startSearch(document.getElementById('{{include.id}}_input').value);
       }, false);
+
+      if (isAdmin) {
+        $(window).on('hashchange', function() {
+          closeSearch();
+        });
+      }
     })();
   </script>
 </form>
