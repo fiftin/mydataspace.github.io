@@ -108,12 +108,6 @@ language: en
       }).then(function(data) { }, function(err) {});
     });
 
-    Mydataspace.on('entities.create.res', function(data) {
-      $('#view__looks__previews').append(getLookPreviewHTML(data));
-      document.getElementById('view__tabs_views_count').innerText =
-        parseInt(document.getElementById('view__tabs_views_count').innerText) + 1;
-    });
-
     Mydataspace.on('entities.change.res', function(data) {
       var preview = getLookPreviewNode(data.path);
       if (!preview) {
@@ -614,6 +608,11 @@ language: en
       path: 'likes/*'
     });
 
+    Mydataspace.emit('entities.subscribe', {
+      root: DATA.root,
+      path: 'views/*'
+    });
+
     Mydataspace.on('entities.create.res', function(data) {
       if (/^likes\//.test(data.path)) {
         document.getElementById('view__counters_likes_count').innerText =
@@ -634,6 +633,16 @@ language: en
             $('#view__comments__list').append(commentHTML);
             document.getElementById('view__comments__empty').style.display = 'none';
           }
+        }
+      } else if (/^views\//.test(data.path)) {
+        $('#view__looks__previews').append(getLookPreviewHTML(data));
+        var viewsCount = parseInt(document.getElementById('view__tabs_views_count').innerText);
+        document.getElementById('view__tabs_views_count').innerText = viewsCount + 1;
+        if (viewsCount === 0) {
+          document.getElementById('view__looks__empty').style.display = 'none';
+//        document.getElementById('view__looks__pills').style.display = 'block';
+          document.getElementById('view__looks__content_wrap').style.display = 'block';
+          selectLook();
         }
       }
     });
@@ -660,9 +669,16 @@ language: en
         var previewsElem = document.getElementById('view__looks__previews');
         var preview = getLookPreviewNode(data.path);
         previewsElem.removeChild(preview);
-        document.getElementById('view__tabs_views_count').innerText = parseInt(document.getElementById('view__tabs_views_count').innerText) - 1;
-        if (currentLook.path === data.path) {
-          selectLook();
+        var viewsCount = parseInt(document.getElementById('view__tabs_views_count').innerText);
+        document.getElementById('view__tabs_views_count').innerText = viewsCount - 1;
+        if (viewsCount <= 1) {
+          document.getElementById('view__looks__empty').style.display = 'block';
+//        document.getElementById('view__looks__pills').style.display = 'none';
+          document.getElementById('view__looks__content_wrap').style.display = 'none';
+        } else {
+          if (currentLook.path === data.path) {
+            selectLook();
+          }
         }
       }
     });
