@@ -1,6 +1,5 @@
 <nav class="navbar navbar-inverse navbar-custom">
     <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
             <a class="navbar-brand header__logo" href="{{ baseurl }}/">
               <img class="header__logo_img" src="/images/transparent_logo_128.png" />
@@ -11,112 +10,7 @@
             </button>
         </div>
 
-        <form class="navbar-form navbar-left header__search_wrap hidden-sm" id="header__search">
-          <div class="form-group">
-            <input id="header__search_input"
-                   type="text"
-                   class="form-control header__search_input"
-                   placeholder="{{ site.data[page.language].strings.search }}"
-                   />
-          </div>
-
-          <script type="text/javascript">
-            function closeSearch() {
-              document.getElementsByTagName('body')[0].classList.remove('body_fixed');
-              document.getElementById('search').style.display = 'none';
-              var header = document.getElementById('header');
-              if (header) {
-                header.style.display = 'block';
-              }
-              document.getElementsByClassName('smoke')[0].classList.remove('smoke--fullscreen');
-              document.getElementsByClassName('navbar')[0].classList.remove('navbar--fixed');
-            }
-
-            function openSearch(search) {
-              document.getElementById('header__search_input').value = search;
-              document.getElementById('header__search_input').focus();
-              startSearch(search);
-            }
-
-            function startSearch(search) {
-              // Try to get roots from server
-              Mydataspace.request('entities.getRoots', {
-                search: search
-              }, function(data) {
-                var rootsHtml = data.roots.map(function(root) {
-                  var avatar = MDSCommon.findValueByName(root.fields, 'avatar');
-                  if (MDSCommon.isBlank(avatar)) {
-                    avatar = '/images/icons/root.svg';
-                  } else {
-                    avatar = 'https://cdn.mydataspace.net/avatars/sm/' + avatar + '.png';
-                  }
-
-                  var tags = (MDSCommon.findValueByName(root.fields, 'tags') || '').split(' ').filter(function(tag) {
-                    return tag != null && tag != '';
-                  }).map(function(tag) {
-                    return '<span class="view__tag" onclick="openSearch(\'' + tag + '\'); return false;">' + tag + '</span>';
-                  }).join(' ');
-
-                  var nLikes = MDSCommon.findValueByName(root.fields, 'likes') || 0;
-                  var nComments = MDSCommon.findValueByName(root.fields, 'comments') || 0;
-
-                  return '<div class="col-md-4"><a class="snippet clearfix" href="/' + root.root + '">\n' +
-                    '  <div class="snippet__overview">\n' +
-
-                    '  <img class="snippet__image" src="' + avatar + '" />\n' +
-                    '  <div class="snippet__info' + (MDSCommon.isBlank(tags) ? ' snippet__info--small' : '') + '">\n' +
-                    '    <div class="snippet__title">' + (MDSCommon.findValueByName(root.fields, 'name') || root.root) + '</div>\n' +
-                    '    <div class="snippet__tags">' +
-                          (tags || '') +
-                    '    </div>\n' +
-                    '</div>\n' + // info
-
-                    '</div>\n' + // overview
-                    '  <div class="snippet__description">' + (MDSCommon.findValueByName(root.fields, 'description') || '') + '</div>\n' +
-
-                    '<div class="snippet__footer">' +
-                    '<div class="snippet__date view__comment__date view__date_wrap">' +
-                    '  created <span class="view__date" id="view__date">' + MDSCommon.humanizeDate(root.createdAt) + '</span> ago' +
-                    '</div>' +
-
-                    '<div class="snippet__counters">' +
-                      '<span class="root_counter" id="view__counters_likes"><i class="fa fa-heart" aria-hidden="true"></i><span class="root_counter__count root_counter__count--likes" id="view__counters_likes_count">' + nLikes + '</span></span>' +
-                      '<span class="root_counter" id="view__counters_comments"><i class="fa fa-comments" aria-hidden="true"></i><span class="root_counter__count" id="view__counters_comments_count">' + nComments + '</span></span>' +
-                    '</div>' +
-
-                    '</div>' + // footer
-
-                    '</a></div>';
-                });
-                document.getElementById("search").innerHTML =
-                  rootsHtml.length > 0 ? '<div class="container search__content"><div class="row">' + rootsHtml.join('\n') + '</div></div>' : "WTF????";
-              }, function(err) {
-                console.log(err);
-              });
-            }
-
-            document.getElementById('header__search_input').addEventListener('focus', function() {
-              document.getElementsByTagName('body')[0].classList.add('body_fixed');
-              document.getElementById('search').style.display = 'block';
-              var header = document.getElementById('header');
-              if (header) {
-                header.style.display = 'none';
-              }
-              document.getElementsByClassName('smoke')[0].classList.add('smoke--fullscreen');
-              document.getElementsByClassName('navbar')[0].classList.add('navbar--fixed');
-              startSearch('');
-            });
-
-            document.getElementById('header__search_input').addEventListener('keyup', function(event) {
-              if (event.keyCode === 27) {
-                closeSearch();
-                document.getElementById('header__search_input').blur();
-                return;
-              }
-              startSearch(document.getElementById('header__search_input').value);
-            }, false);
-          </script>
-        </form>
+        {% include search.html id="header__search" admin=false resultContainer="search" %}
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

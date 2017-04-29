@@ -246,6 +246,11 @@ input:read-only {
    height: $header-height;
  }
 
+.webix_preloaded_header--top {
+  z-index: 1;
+  right: 17px;
+}
+
 .webix_header {
   border-bottom: 0;
 }
@@ -833,4 +838,22 @@ input {
 
 .view__description {
   padding-top: 20px;
+}
+
+#webix_search {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow: auto;
+  display: none;
+  background: #f0f3f5;
+}
+
+#webix__header__search {
+  position: absolute;
+  left: 200px;
+  width: 400px;
+  z-index: 2;
 }
