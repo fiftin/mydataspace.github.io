@@ -546,6 +546,9 @@ language: en
 
         Mydataspace.on('login', function() {
           requestMyLike();
+          if (currentLook) {
+            selectLook(currentLook);
+          }
         });
 
         $('#view__comments__list').on('click', '.view__comment__delete', function() {
