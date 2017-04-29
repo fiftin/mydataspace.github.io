@@ -47,12 +47,14 @@ language: en
                    class="form-control"
                    placeholder="Title"
                    autofocus />
+            <div class="bootstrap-form-error" id="new_look_modal_title_err"></div>
           </div>
           <div class="form-group">
             <input type="text"
                    id="new_look_modal_codepen"
                    class="form-control"
                    placeholder="Codepen URL" />
+            <div class="bootstrap-form-error" id="new_look_modal_codepen_err"></div>
           </div>
           <div class="form-group">
             <textarea id="new_look_modal_description"
@@ -79,6 +81,10 @@ language: en
     //
     // Save view button
     document.getElementById('new_look_modal_button').addEventListener('click', function() {
+      if (!validateLookForm()) {
+        return;
+      }
+
       var lookPath = document.getElementById('new_look_modal_button').getAttribute('data-look-path');
       Mydataspace.entities.request(lookPath ? 'entities.change' : 'entities.create', {
         root: DATA.root,
@@ -157,6 +163,31 @@ language: en
 
     var currentLook;
 
+    function validateLookForm() {
+      document.getElementById('new_look_modal_title_err').value = '';
+      document.getElementById('new_look_modal_codepen_err').value = '';
+
+      var title = document.getElementById('new_look_modal_title').value;
+      var codepen = document.getElementById('new_look_modal_codepen').value;
+
+      if (MDSCommon.isBlank(title)) {
+        document.getElementById('new_look_modal_title_err').value = 'Title can\'t be blank';
+        return false;
+      }
+
+      if (title.length > 250) {
+        document.getElementById('new_look_modal_title_err').value = 'Too long title';
+        return false;
+      }
+
+      if (MDSCommon.isBlank(codepen)) {
+        document.getElementById('new_look_modal_codepen_err').value = 'Codepen URL can\'t be blank';
+        return false;
+      }
+
+      return true;
+    }
+
     function getLookPreviewNode(path) {
       var lookPreviews = document.getElementById('view__looks__previews').childNodes;
       for (var i = 0; i < lookPreviews.length; i++) {
@@ -169,6 +200,8 @@ language: en
     }
 
     function openLookEditModal(isEdit) {
+      document.getElementById('new_look_modal_title_err').value = '';
+      document.getElementById('new_look_modal_codepen_err').value = '';
       if (isEdit) {
         document.getElementById('new_look_modal_header').innerText = 'Edit View';
         document.getElementById('new_look_modal_button').setAttribute('data-look-path', currentLook.path);
