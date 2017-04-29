@@ -257,7 +257,7 @@ EntityForm.prototype.setRootView = function(data) {
       }
     }
 
-    if (data.root !== 'nothing' && data.root !== 'notfound') {
+    if (data.root === 'nothing' || data.root === 'notfound') {
       document.getElementById('view__counters').style.display = 'none';
     }
 
