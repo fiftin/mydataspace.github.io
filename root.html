@@ -547,7 +547,7 @@ language: en
         Mydataspace.on('login', function() {
           requestMyLike();
           if (currentLook) {
-            selectLook(currentLook);
+            selectLook(currentLook.path);
           }
         });
 
