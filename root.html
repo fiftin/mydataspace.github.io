@@ -120,7 +120,7 @@ language: en
         throw new Error('Changed look is not exists');
       }
       preview.replaceWith(getLookPreviewHTML(data, true));
-      if (lookData.path === data.path) {
+      if (currentLook.path === data.path) {
         document.getElementById('view__looks__title').innerText = MDSCommon.findValueByName(data.fields, 'title') || '';
       }
     });
@@ -161,7 +161,7 @@ language: en
       VIEW_TAB_COMMENTS_LABEL: 'view__comments'
     };
 
-    var lookData;
+    var currentLook;
 
     function getLookPreviewNode(path) {
       var lookPreviews = document.getElementById('view__looks__previews').childNodes;
@@ -177,11 +177,11 @@ language: en
     function openLookEditModal(isEdit) {
       if (isEdit) {
         document.getElementById('new_look_modal_header').innerText = 'Edit View';
-        document.getElementById('new_look_modal_button').setAttribute('data-look-path', lookData.path);
+        document.getElementById('new_look_modal_button').setAttribute('data-look-path', currentLook.path);
         document.getElementById('new_look_modal_button').innerText = 'Save View';
-        document.getElementById('new_look_modal_title').value = MDSCommon.findValueByName(lookData.fields, 'title');
-        document.getElementById('new_look_modal_codepen').value =  MDSCommon.findValueByName(lookData.fields, 'id');
-        document.getElementById('new_look_modal_description').value = MDSCommon.findValueByName(lookData.fields, 'description') || '';
+        document.getElementById('new_look_modal_title').value = MDSCommon.findValueByName(currentLook.fields, 'title');
+        document.getElementById('new_look_modal_codepen').value =  MDSCommon.findValueByName(currentLook.fields, 'id');
+        document.getElementById('new_look_modal_description').value = MDSCommon.findValueByName(currentLook.fields, 'description') || '';
       } else {
         document.getElementById('new_look_modal_header').innerText = 'New View';
         document.getElementById('new_look_modal_button').removeAttribute('data-look-path');
@@ -193,14 +193,14 @@ language: en
       $('#new_look_modal').modal('show');
     }
 
-    function setLook(lookData) {
+    function setLook(data) {
 //      document.getElementById('view__looks__likes_count').innerText = MDSCommon.findValueByName(viewData.children, 'likes');
-      document.getElementById('view__looks__date').innerText = MDSCommon.humanizeDate(lookData.createdAt);
-      document.getElementById('view__looks__title').innerText = MDSCommon.findValueByName(lookData.fields, 'title');
-      document.getElementById('view__looks__content').setAttribute('data-look-path', lookData.path);
-      switch (MDSCommon.findValueByName(lookData.fields, 'type')) {
+      document.getElementById('view__looks__date').innerText = MDSCommon.humanizeDate(data.createdAt);
+      document.getElementById('view__looks__title').innerText = MDSCommon.findValueByName(data.fields, 'title');
+      document.getElementById('view__looks__content').setAttribute('data-look-path', data.path);
+      switch (MDSCommon.findValueByName(data.fields, 'type')) {
         case 'codepen':
-          var codepen = MDSCommon.findValueByName(lookData.fields, 'id');
+          var codepen = MDSCommon.findValueByName(data.fields, 'id');
           document.getElementById('view__looks__content').innerHTML =
             '<p data-height="560" data-theme-id="0" data-slug-hash="' + codepen + '" data-default-tab="result" data-user="mydataspace" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/mydataspace/pen/' + codepen + '/">' + codepen + '</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p>' +
             '';
@@ -209,8 +209,9 @@ language: en
           document.getElementById('view__looks__content').appendChild(codepenScript);
           break;
         default:
-          throw new Error('Unknown view type: ' + lookData.type);
+          throw new Error('Unknown view type: ' + data.type);
       }
+      currentLook = data;
     }
 
     function selectLook(path) {
@@ -228,12 +229,12 @@ language: en
       }).then(setLook, function(err) {});
     }
 
-    function getLookPreviewHTML(lookData, isActive) {
-      return '<div class="look_preview' + (isActive ? ' look_preview--active' : '') + '" data-look-path="'+ lookData.path + '">' +
-        '<div class="look_preview__header"><i class="fa fa-codepen"></i><span class="look_preview__title">' + MDSCommon.findValueByName(lookData.fields, 'title') + '</span></div>' +
-          '<div class="look_preview__description">' + (MDSCommon.findValueByName(lookData.fields, 'description') || '') + '</div>' +
+    function getLookPreviewHTML(data, isActive) {
+      return '<div class="look_preview' + (isActive ? ' look_preview--active' : '') + '" data-look-path="'+ data.path + '">' +
+        '<div class="look_preview__header"><i class="fa fa-codepen"></i><span class="look_preview__title">' + MDSCommon.findValueByName(data.fields, 'title') + '</span></div>' +
+          '<div class="look_preview__description">' + (MDSCommon.findValueByName(data.fields, 'description') || '') + '</div>' +
           '<div class="look_preview__footer">' +
-            '<span class="view__comment__date">' + MDSCommon.humanizeDate(lookData.createdAt) + '</span>' +
+            '<span class="view__comment__date">' + MDSCommon.humanizeDate(data.createdAt) + '</span>' +
           '</div>' +
         '</div>';
     }
@@ -657,7 +658,7 @@ language: en
         var preview = getLookPreviewNode(data.path);
         previewsElem.removeChild(preview);
         document.getElementById('view__tabs_views_count').innerText = parseInt(document.getElementById('view__tabs_views_count').innerText) - 1;
-        if (lookData.path === data.path) {
+        if (currentLook.path === data.path) {
           selectLook();
         }
       }
