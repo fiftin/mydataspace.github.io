@@ -124,13 +124,13 @@ language: en
       }
     });
 
-    Mydataspace.entities.on('entities.create.res', function(data) {
+    Mydataspace.on('entities.create.res', function(data) {
       $('#view__looks__previews').append(getLookPreviewHTML(data));
       document.getElementById('view__tabs_views_count').innerText =
         parseInt(document.getElementById('view__tabs_views_count').innerText) + 1;
     });
 
-    Mydataspace.entities.on('entities.change.res', function(data) {
+    Mydataspace.on('entities.change.res', function(data) {
       var preview = getLookPreviewNode(data.path);
       if (!preview) {
         throw new Error('Changed look is not exists');
