@@ -215,11 +215,11 @@ language: en
     }
 
     function selectLook(path) {
-      var previews = $('#view__looks__previews');
+      var previews = document.getElementById('view__looks__previews');
       if (path == null) {
         path = previews.childNodes[0].getAttribute('data-look-path');
       }
-      previews.find('.look_preview--active').removeClass('look_preview--active');
+      $(previews).find('.look_preview--active').removeClass('look_preview--active');
       var preview = getLookPreviewNode(path);
       if (!preview) {
         return;
