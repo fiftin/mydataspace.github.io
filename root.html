@@ -188,6 +188,7 @@ language: en
     }
 
     function setLook(data) {
+      document.getElementById('view__looks__actions').style.display = data.mine ? 'block' : 'none';
 //      document.getElementById('view__looks__likes_count').innerText = MDSCommon.findValueByName(viewData.children, 'likes');
       document.getElementById('view__looks__date').innerText = MDSCommon.humanizeDate(data.createdAt);
       document.getElementById('view__looks__title').innerText = MDSCommon.findValueByName(data.fields, 'title');
@@ -584,7 +585,6 @@ language: en
           openLookEditModal(false);
         });
 
-        document.getElementById('view__looks__actions').style.display = data.mine ? 'block' : 'none';
       });
     }
 
