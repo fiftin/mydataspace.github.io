@@ -68,7 +68,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     REFRESH_ENTITY: 'Refresh',
     CANCEL_ENTITY: 'View',
     SIGN_OUT: 'Log Out',
-    SEARCH_BY_ROOTS: 'All yours',
+    SEARCH_BY_ROOTS: 'Search roots',
     SEARCH_BY_ENTITIES: 'Search',
     ADD_RESOURCE_WINDOW: 'New Resource',
     ADD_RESOURCE_FILE: 'File',
