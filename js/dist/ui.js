@@ -2272,12 +2272,12 @@ EntityTree.prototype.refresh = function(root) {
       root: requiredRoot,
       path: ''
     }, function(data) {
-      if (data.mine) {
-        self.requestRoots(true, {}, data.root);
-      } else {
+      // if (data.mine) {
+      //   self.requestRoots(true, {}, data.root);
+      // } else {
         // convert received data to treeview format and load its to entity_tree.
         self.handleFormattedData([Identity.entityFromData(data)]);
-      }
+      // }
       UI.pages.updatePageState('data');
     }, function(err) {
       if (err.message === "Cannot read property 'Entity' of undefined") {
