@@ -95,7 +95,7 @@ language: en
             looksData[lookIndex] = data;
             $(document.getElementById('view__looks__previews').childNodes[lookIndex]).replaceWith(
               getLookPreviewHTML(data, true));
-            document.getElementById('view__title').innerText = MDSCommon.findValueByName(data.fields, 'title') || '';
+            document.getElementById('view__looks__title').innerText = MDSCommon.findValueByName(data.fields, 'title') || '';
           }
         } else {
           $('#view__looks__previews').append(getLookPreviewHTML(data));
