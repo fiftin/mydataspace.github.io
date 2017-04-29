@@ -203,7 +203,7 @@ language: en
       document.getElementById('view__looks__date').innerText = MDSCommon.humanizeDate(lookData.createdAt);
       document.getElementById('view__looks__title').innerText = MDSCommon.findValueByName(lookData.fields, 'title');
       document.getElementById('view__looks__content').setAttribute('data-look-path', lookData.path);
-      switch (lookData.fields.type) {
+      switch (MDSCommon.findValueByName(lookData.fields, 'type')) {
         case 'codepen':
           var codepen = MDSCommon.findValueByName(lookData.fields, 'id');
           document.getElementById('view__looks__content').innerHTML =
