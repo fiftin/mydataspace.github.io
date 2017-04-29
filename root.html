@@ -204,27 +204,12 @@ language: en
       if (!m) {
         return null;
       }
-      var user = m[1];
-      var pen = m[2];
-      if (user === 'mydataspace') {
-        return pen;
-      }
-
-      return user + '/' + pen;
+      return m[1] + '/' + m[2];
     }
 
     function getCodepenURL(id) {
       var parts = id.split('/');
-      var user;
-      var pen;
-      if (parts.length === 1) {
-        user = 'mydataspace';
-        pen = parts[0];
-      } else {
-        user = parts[0];
-        pen = parts[1];
-      }
-      return 'https://codepen.io/' + user + '/pen/' + pen;
+      return 'https://codepen.io/' + parts[0] + '/pen/' + parts[1];
     }
 
     function getLookPreviewNode(path) {
@@ -267,9 +252,9 @@ language: en
       document.getElementById('view__looks__content').setAttribute('data-look-path', data.path);
       switch (MDSCommon.findValueByName(data.fields, 'type')) {
         case 'codepen':
-          var codepen = MDSCommon.findValueByName(data.fields, 'id');
+          var codepenParts = MDSCommon.findValueByName(data.fields, 'id').split('/');
           document.getElementById('view__looks__content').innerHTML =
-            '<p data-height="560" data-theme-id="0" data-slug-hash="' + codepen + '" data-default-tab="result" data-user="mydataspace" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/mydataspace/pen/' + codepen + '/">' + codepen + '</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p>' +
+            '<p data-height="560" data-theme-id="0" data-slug-hash="' + codepen + '" data-default-tab="result" data-user="mydataspace" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/' +  codepenParts[0] + '/pen/' + codepenParts[1] + '/">' + codepenParts[1] + '</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p>' +
             '';
           var codepenScript = document.createElement('script');
           codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
