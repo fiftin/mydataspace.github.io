@@ -3053,7 +3053,7 @@ UILayout.popups.searchScope = {
     data:[
           { id: 'user', value: 'Search in Yours', icon: 'user' },
           { id: 'globe', value: 'Search of All', icon: 'globe' },
-          { id: 'edit', value: 'Root', icon: 'database' },
+          { id: 'database', value: 'Root', icon: 'database' }
     ],
     datatype: 'json',
     template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
@@ -3061,16 +3061,8 @@ UILayout.popups.searchScope = {
     select: true,
     on: {
       onItemClick: function(newv) {
-        var icon;
-        switch (newv) {
-          case 'edit':
-            icon = 'database';
-            break;
-          default:
-            icon = newv;
-        }
         $$('entity_tree__root_scope_popup').hide();
-        $$('entity_tree__root_scope').define('icon', icon);
+        $$('entity_tree__root_scope').define('icon', newv);
         $$('entity_tree__root_scope').refresh();
         $('.entity_tree__search input').focus();
       }
@@ -3296,7 +3288,7 @@ UILayout.entityTree =
                     search = '*' + search + '*';
                   }
                   break;
-                case 'edit':
+                case 'database':
                   break;
               }
 
@@ -4192,7 +4184,7 @@ UI = {
 
     function updateTreeSearchScope() {
       if (Router.isRoot() || Router.isFilterByName()) {
-        $$('entity_tree__root_scope').define('icon', 'edit');
+        $$('entity_tree__root_scope').define('icon', 'database');
         $$('entity_tree__search').setValue(Router.getSearch(true));
       } else if ((Router.isEmpty() || Router.isMe())) {
         $$('entity_tree__root_scope').define('icon', 'user');

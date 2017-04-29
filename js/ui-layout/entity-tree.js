@@ -67,7 +67,7 @@ UILayout.entityTree =
                     search = '*' + search + '*';
                   }
                   break;
-                case 'edit':
+                case 'database':
                   break;
               }
 
