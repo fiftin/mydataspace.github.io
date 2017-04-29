@@ -2252,8 +2252,11 @@ EntityTree.prototype.requestRoots = function(onlyMine, reqData, selectedId) {
 
 EntityTree.prototype.updateRouteBySearch = function() {
   var search = $$('entity_tree__search').getValue();
-
-  switch ($$('entity_tree__root_scope')._settings['icon']) {
+  var icon = $$('entity_tree__root_scope')._settings['icon'];
+  if (icon === 'database' && search === '') {
+    return;
+  }
+  switch (icon) {
     case 'user':
       if (MDSCommon.isBlank(search)) {
         search = 'me:*';
