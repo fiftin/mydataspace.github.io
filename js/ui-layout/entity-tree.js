@@ -8,7 +8,7 @@ UILayout.entityTree =
           type: 'icon',
           icon: 'refresh',
           id: 'REFRESH_LABEL_2', label: STRINGS.REFRESH,
-          width: 100,
+          width: 35,
           click: function() {
             UI.entityTree.refresh();
           }
@@ -18,7 +18,7 @@ UILayout.entityTree =
           icon: 'plus',
           id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
           hidden: true,
-          width: 110,
+          width: 35,
           click: function() {
             $$('add_root_window').show();
           }
@@ -30,7 +30,7 @@ UILayout.entityTree =
           css: 'entity_tree__search_button',
           popup: 'entity_tree__root_scope_popup',
           id: 'entity_tree__root_scope',
-          hidden: true,
+          // hidden: true,
           on: {
             onItemClick: function() {
               // this.currentFieldName = data.name;
@@ -43,39 +43,36 @@ UILayout.entityTree =
           css: 'entity_tree__search',
           align: 'center',
           icon: 'close',
-          hidden: true,
+          // hidden: true,
           placeholder: STRINGS.SEARCH_BY_ROOTS,
           on: {
             onAfterRender: function() {
 
             },
-            onKeyPress: function(code, e) {
-              if (code === 13) {
-                var search = $$('entity_tree__search').getValue();
+            onTimedKeyPress: function(code, e) {
+              var search = $$('entity_tree__search').getValue();
 
-                switch ($$('entity_tree__root_scope')._settings['icon']) {
-                  case 'user':
-                    if (MDSCommon.isBlank(search)) {
-                      search = 'me:*';
-                    } else {
-                      search = 'me:*' + search + '*';
-                    }
-                    break;
-                  case 'globe':
-                    if (MDSCommon.isBlank(search)) {
-                      search = '*';
-                    } else {
-                      search = '*' + search + '*';
-                    }
-                    break;
-                  case 'edit':
-                    break;
-                }
-
-                window.location.href = '/#' + search;
-                UI.pages.refreshPage('data');
-                return false;
+              switch ($$('entity_tree__root_scope')._settings['icon']) {
+                case 'user':
+                  if (MDSCommon.isBlank(search)) {
+                    search = 'me:*';
+                  } else {
+                    search = 'me:*' + search + '*';
+                  }
+                  break;
+                case 'globe':
+                  if (MDSCommon.isBlank(search)) {
+                    search = '*';
+                  } else {
+                    search = '*' + search + '*';
+                  }
+                  break;
+                case 'edit':
+                  break;
               }
+
+              window.location.href = '/#' + search;
+              UI.pages.refreshPage('data');
             }
           }
         }

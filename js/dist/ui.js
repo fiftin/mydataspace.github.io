@@ -9,7 +9,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     RUN_SCRIPT: 'Debug',
     ONLY_READ: 'Only Read',
     ADD_ENTITY: 'New Object',
-    SEARCH: 'Search...',
+    SEARCH: 'Filter...',
     DELETE_ENTITY: 'Delete Entity',
     DELETE_ENTITY_SHORT: 'Delete',
     CREATE_CHILDREN: 'Create Children',
@@ -106,7 +106,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     RUN_SCRIPT: 'Отл.',
     ONLY_READ: 'Только читать',
     ADD_ENTITY: 'Новый объект',
-    SEARCH: 'Поиск...',
+    SEARCH: 'Фильтр...',
     DELETE_ENTITY: 'Удалить элемент',
     DELETE_ENTITY_SHORT: 'Удал.',
     CREATE_CHILDREN: 'Создавать дочерние элементы',
@@ -2250,24 +2250,26 @@ EntityTree.prototype.requestRoots = function(onlyMine, reqData, selectedId) {
   });
 };
 
-EntityTree.prototype.refresh = function() {
+EntityTree.prototype.refresh = function(root) {
   var self = this;
   $$('entity_tree').disable();
-  if (Router.isEmpty()) {
+
+  if (MDSCommon.isBlank(root) && Router.isEmpty()) {
     if (Mydataspace.isLoggedIn()) {
       self.requestRoots(true, {});
     }
-  } else if (Router.isSearch()) {
+  } else if (MDSCommon.isBlank(root) && Router.isSearch()) {
     self.requestRoots(Router.isMe(), {
       search: Router.getSearch()
     });
-  } else if (Router.isFilterByName()) {
+  } else if (MDSCommon.isBlank(root)  && Router.isFilterByName()) {
     self.requestRoots(Router.isMe(), {
       filterByName: Router.getSearch()
     });
-  } else if (Router.isRoot()) {
+  } else if (MDSCommon.isPresent(root)  || Router.isRoot()) {
+    var requiredRoot = root || Router.getSearch();
     Mydataspace.request('entities.get', {
-      root: Router.getSearch(),
+      root: requiredRoot,
       path: ''
     }, function(data) {
       if (data.mine) {
@@ -2278,6 +2280,10 @@ EntityTree.prototype.refresh = function() {
       }
       UI.pages.updatePageState('data');
     }, function(err) {
+      if (err.message === "Cannot read property 'Entity' of undefined") {
+        UI.entityTree.refresh('nothing');
+        return;
+      }
       UI.error(err);
       $$('entity_tree').enable();
     });
@@ -2432,7 +2438,7 @@ Pages.prototype.updatePageState = function(page) {
       }
       break;
     case 'data':
-      if ($$('entity_tree').getFirstId() == null) {
+      if ($$('entity_tree').getFirstId() == null && Router.isMe() && !Router.isSearch()) {
         document.getElementById('no_items__no_apps').style.display = 'none';
         document.getElementById('no_items__no_data').style.display = 'block';
         document.getElementById('no_items').style.display = 'block';
@@ -2447,6 +2453,13 @@ Pages.prototype.updatePageState = function(page) {
         $$('my_data_panel__resizer_2').show();
         $$('my_data_panel__central_panel').show();
         $$('my_data_panel__resizer_1').show();
+        if ($$('entity_tree').getFirstId() == null) {
+          if (Router.isRoot()) { // root not found
+            UI.entityTree.refresh('nothing');
+          } else { // nothing found
+            UI.entityTree.refresh('nothing');
+          }
+        }
       }
       break;
     default:
@@ -3216,7 +3229,7 @@ UILayout.entityTree =
           type: 'icon',
           icon: 'refresh',
           id: 'REFRESH_LABEL_2', label: STRINGS.REFRESH,
-          width: 100,
+          width: 35,
           click: function() {
             UI.entityTree.refresh();
           }
@@ -3226,7 +3239,7 @@ UILayout.entityTree =
           icon: 'plus',
           id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
           hidden: true,
-          width: 110,
+          width: 35,
           click: function() {
             $$('add_root_window').show();
           }
@@ -3238,7 +3251,7 @@ UILayout.entityTree =
           css: 'entity_tree__search_button',
           popup: 'entity_tree__root_scope_popup',
           id: 'entity_tree__root_scope',
-          hidden: true,
+          // hidden: true,
           on: {
             onItemClick: function() {
               // this.currentFieldName = data.name;
@@ -3251,39 +3264,36 @@ UILayout.entityTree =
           css: 'entity_tree__search',
           align: 'center',
           icon: 'close',
-          hidden: true,
+          // hidden: true,
           placeholder: STRINGS.SEARCH_BY_ROOTS,
           on: {
             onAfterRender: function() {
 
             },
-            onKeyPress: function(code, e) {
-              if (code === 13) {
-                var search = $$('entity_tree__search').getValue();
+            onTimedKeyPress: function(code, e) {
+              var search = $$('entity_tree__search').getValue();
 
-                switch ($$('entity_tree__root_scope')._settings['icon']) {
-                  case 'user':
-                    if (MDSCommon.isBlank(search)) {
-                      search = 'me:*';
-                    } else {
-                      search = 'me:*' + search + '*';
-                    }
-                    break;
-                  case 'globe':
-                    if (MDSCommon.isBlank(search)) {
-                      search = '*';
-                    } else {
-                      search = '*' + search + '*';
-                    }
-                    break;
-                  case 'edit':
-                    break;
-                }
-
-                window.location.href = '/#' + search;
-                UI.pages.refreshPage('data');
-                return false;
+              switch ($$('entity_tree__root_scope')._settings['icon']) {
+                case 'user':
+                  if (MDSCommon.isBlank(search)) {
+                    search = 'me:*';
+                  } else {
+                    search = 'me:*' + search + '*';
+                  }
+                  break;
+                case 'globe':
+                  if (MDSCommon.isBlank(search)) {
+                    search = '*';
+                  } else {
+                    search = '*' + search + '*';
+                  }
+                  break;
+                case 'edit':
+                  break;
               }
+
+              window.location.href = '/#' + search;
+              UI.pages.refreshPage('data');
             }
           }
         }

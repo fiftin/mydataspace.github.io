@@ -199,24 +199,26 @@ EntityTree.prototype.requestRoots = function(onlyMine, reqData, selectedId) {
   });
 };
 
-EntityTree.prototype.refresh = function() {
+EntityTree.prototype.refresh = function(root) {
   var self = this;
   $$('entity_tree').disable();
-  if (Router.isEmpty()) {
+
+  if (MDSCommon.isBlank(root) && Router.isEmpty()) {
     if (Mydataspace.isLoggedIn()) {
       self.requestRoots(true, {});
     }
-  } else if (Router.isSearch()) {
+  } else if (MDSCommon.isBlank(root) && Router.isSearch()) {
     self.requestRoots(Router.isMe(), {
       search: Router.getSearch()
     });
-  } else if (Router.isFilterByName()) {
+  } else if (MDSCommon.isBlank(root)  && Router.isFilterByName()) {
     self.requestRoots(Router.isMe(), {
       filterByName: Router.getSearch()
     });
-  } else if (Router.isRoot()) {
+  } else if (MDSCommon.isPresent(root)  || Router.isRoot()) {
+    var requiredRoot = root || Router.getSearch();
     Mydataspace.request('entities.get', {
-      root: Router.getSearch(),
+      root: requiredRoot,
       path: ''
     }, function(data) {
       if (data.mine) {
@@ -227,6 +229,10 @@ EntityTree.prototype.refresh = function() {
       }
       UI.pages.updatePageState('data');
     }, function(err) {
+      if (err.message === "Cannot read property 'Entity' of undefined") {
+        UI.entityTree.refresh('nothing');
+        return;
+      }
       UI.error(err);
       $$('entity_tree').enable();
     });
