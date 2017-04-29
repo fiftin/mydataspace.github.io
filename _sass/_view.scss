@@ -510,6 +510,10 @@ $view-field-value-max-height: 170px;
   font-size: 14px;
 }
 
+.view__comment__date--small {
+  font-size: 12px;
+}
+
 .view__comment__author {
   font-weight: bold;
   padding-right: 10px;
@@ -635,6 +639,7 @@ $view-field-value-max-height: 170px;
 .look_preview__title {
   font-weight: bold;
   padding-left: 7px;
+  font-size: 14px;
 }
 
 .look_preview__header {

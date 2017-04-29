@@ -291,7 +291,7 @@ language: en
         '<div class="look_preview__header"><i class="fa fa-codepen"></i><span class="look_preview__title">' + MDSCommon.findValueByName(data.fields, 'title') + '</span></div>' +
           '<div class="look_preview__description">' + (MDSCommon.findValueByName(data.fields, 'description') || '') + '</div>' +
           '<div class="look_preview__footer">' +
-            '<span class="view__comment__date">' + MDSCommon.humanizeDate(data.createdAt) + '</span>' +
+            '<span class="view__comment__date view__comment__date--small">created ' + MDSCommon.humanizeDate(data.createdAt) + ' ago</span>' +
           '</div>' +
         '</div>';
     }
