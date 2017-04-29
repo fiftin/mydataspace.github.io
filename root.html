@@ -113,7 +113,7 @@ language: en
       if (!preview) {
         throw new Error('Changed look is not exists');
       }
-      preview.replaceWith(getLookPreviewHTML(data, true));
+      preview.replaceWith($(getLookPreviewHTML(data, true)));
       if (currentLook.path === data.path) {
         document.getElementById('view__looks__title').innerText = MDSCommon.findValueByName(data.fields, 'title') || '';
       }
