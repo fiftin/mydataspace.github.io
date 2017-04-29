@@ -2,7 +2,7 @@ UILayout.popups.searchScope = {
   view: 'popup',
   id: 'entity_tree__root_scope_popup',
     css: 'entity_tree__root_scope_popup',
-  width: 160,
+  width: 180,
   body:{
     view: 'list',
         id: 'entity_tree__root_scope_popup_list',
@@ -19,10 +19,15 @@ UILayout.popups.searchScope = {
     select: true,
     on: {
       onItemClick: function(newv) {
+        if (newv === 'user' && !Mydataspace.isLoggedIn()) {
+          $('#signin_modal').modal('show');
+          return;
+        }
         $$('entity_tree__root_scope_popup').hide();
         $$('entity_tree__root_scope').define('icon', newv);
         $$('entity_tree__root_scope').refresh();
         $('.entity_tree__search input').focus();
+        UI.entityTree.updateRouteBySearch();
       }
     }
   }

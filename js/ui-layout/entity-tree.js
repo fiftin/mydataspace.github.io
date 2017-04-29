@@ -48,29 +48,7 @@ UILayout.entityTree =
 
             },
             onTimedKeyPress: function() {
-              var search = $$('entity_tree__search').getValue();
-
-              switch ($$('entity_tree__root_scope')._settings['icon']) {
-                case 'user':
-                  if (MDSCommon.isBlank(search)) {
-                    search = 'me:*';
-                  } else {
-                    search = 'me:*' + search + '*';
-                  }
-                  break;
-                case 'globe':
-                  if (MDSCommon.isBlank(search)) {
-                    search = '*';
-                  } else {
-                    search = '*' + search + '*';
-                  }
-                  break;
-                case 'database':
-                  break;
-              }
-
-              window.location.href = '/#' + search;
-              UI.pages.refreshPage('data');
+              UI.entityTree.updateRouteBySearch();
             }
           }
         }
