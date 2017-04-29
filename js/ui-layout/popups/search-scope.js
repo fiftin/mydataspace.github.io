@@ -11,7 +11,7 @@ UILayout.popups.searchScope = {
     data:[
           { id: 'user', value: 'Search in Yours', icon: 'user' },
           { id: 'globe', value: 'Search of All', icon: 'globe' },
-          { id: 'database', value: 'Root', icon: 'database' }
+          { id: 'database', value: 'Root Name', icon: 'database' }
     ],
     datatype: 'json',
     template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
