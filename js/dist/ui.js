@@ -2281,7 +2281,7 @@ EntityTree.prototype.refresh = function(root) {
       UI.pages.updatePageState('data');
     }, function(err) {
       if (err.message === "Cannot read property 'Entity' of undefined") {
-        UI.entityTree.refresh('nothing');
+        UI.entityTree.refresh('notfound');
         return;
       }
       UI.error(err);
