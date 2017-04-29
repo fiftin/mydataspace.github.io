@@ -9,9 +9,9 @@ UILayout.popups.searchScope = {
         class: 'entity_tree__root_scope_popup_list',
         borderless: true,
     data:[
-          { id: 'user', value: 'Yours', icon: 'user' },
-          { id: 'globe', value: 'All', icon: 'globe' },
-          { id: 'edit', value: 'Custom', icon: 'edit' },
+          { id: 'user', value: 'Search in Yours', icon: 'user' },
+          { id: 'globe', value: 'Search of All', icon: 'globe' },
+          { id: 'edit', value: 'Root', icon: 'database' },
     ],
     datatype: 'json',
     template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
