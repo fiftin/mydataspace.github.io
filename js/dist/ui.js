@@ -1028,8 +1028,13 @@ EntityForm.prototype.setRootView = function(data) {
     var view = document.getElementById('view');
     var websiteURL = MDSCommon.findValueByName(data.fields, 'websiteURL');
     var description = MDSCommon.findValueByName(data.fields, 'description');
-    var tags = MDSCommon.findValueByName(data.fields, 'tags');
     var readme = MDSCommon.findValueByName(data.fields, 'readme');
+    var tags = (MDSCommon.findValueByName(data.fields, 'tags') || '').split(' ').filter(function(tag) {
+      return tag != null && tag !== '';
+    }).map(function(tag) {
+      return '<a class="view__tag" href="/?q=%23' + tag + '" onclick="openSearch_webix__header__search(\'' + tag + '\'); return false;">' + tag + '</a>';
+    }).join(' ');
+
 
     view.innerHTML = html;
     var ava = MDSCommon.findValueByName(data.fields, 'avatar');
@@ -1040,7 +1045,7 @@ EntityForm.prototype.setRootView = function(data) {
     document.getElementById('view__title').innerText =
       MDSCommon.findValueByName(data.fields, 'name') || MDSCommon.getPathName(data.root);
 
-    document.getElementById('view__tags').innerText = tags || '';
+    document.getElementById('view__tags').innerHTML = tags || '';
 
     document.getElementById('view__page_link').href = '/' + data.root;
     document.getElementById('view__page_link').classList.remove('hidden');
