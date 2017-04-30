@@ -2284,8 +2284,12 @@ EntityTree.prototype.updateRouteBySearch = function() {
     case 'database':
       break;
   }
-
-  window.location.href = '/#' + search;
+  var prefix = '';
+  var lang = localStorage.getItem('language');
+  if (MDSCommon.isPresent(lang) && lang.toLowerCase() !== 'en') {
+    prefix = '/' + lang.toLowerCase();
+  }
+  window.location.href = prefix + '/#' + search;
 };
 
 EntityTree.prototype.refresh = function(root) {
