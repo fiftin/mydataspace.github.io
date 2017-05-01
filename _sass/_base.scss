@@ -3,45 +3,6 @@ $no-items-width: 700px;
 $no-items-height: 530px;
 $no-items-col-height: 210px;
 
-$modal-sm: 350px;
-
-$input-border-radius: 0;
-
-$font-size-base: 18px;
-$font-size-large: 25px;
-$font-size-small: 16px;
-
-$font-size-h1: 60px;
-$font-size-h2: 40px;
-$font-size-h3: 35px;
-$font-size-h4: 25px;
-$popover-max-width: 350px;
-
-$navbar-margin-bottom: 0;
-$navbar-border-radius: 0;
-$navbar-inverse-bg: transparent;
-$navbar-inverse-border: transparent;
-$navbar-inverse-toggle-border-color: transparent;
-$navbar-inverse-toggle-hover-bg: transparent;
-$navbar-inverse-toggle-icon-bar-bg: transparent;
-$navbar-inverse-link-color:                 white;
-$navbar-inverse-link-hover-color:           #fff !default;
-$navbar-inverse-link-hover-bg:              transparent;
-$navbar-inverse-link-active-color:          white;
-$navbar-inverse-link-active-bg:             transparent;
-$navbar-inverse-link-disabled-color:        #444 !default;
-$navbar-inverse-link-disabled-bg:           transparent !default;
-
-$font-family-sans-serif:  "Ubuntu", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$font-family-serif:       Georgia, "Times New Roman", Times, serif !default;
-//** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
-$font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !default;
-$font-family-base:        $font-family-sans-serif !default;
-
-$btn-border-radius-base: 2px;
-
-$padding-base-horizontal: 18px;
-
 body {
   margin: 0;
 }
@@ -88,6 +49,8 @@ body {
 %vertical-rhythm {
     margin-bottom: $spacing-unit / 2;
 }
+
+@import "bootstrap_vars";
 
 @import "run_script";
 @import "../vendor/bootstrap/stylesheets/bootstrap";
@@ -155,7 +118,7 @@ body {
   margin: 0 auto;
   font-size: 20px;
   color: #616161;
-  font-family: Ubuntu, Tahoma, serif;
+  font-family: $font-family-sans-serif;
   background: url("/images/no_items_bg.svg");
   background-repeat: no-repeat;
   background-position: top center;

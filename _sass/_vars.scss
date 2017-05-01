@@ -1,3 +1,5 @@
+@import "bootstrap_vars";
+
 $logo-size: 50px;
 $logo-text-height: 32px;
 $header-height: 53px;
@@ -14,7 +16,7 @@ $tree-bg: $toolbar-bg;
 $shadow-color: white;
 $show-more-bg: #ffff9a;
 $disabled-bg: $toolbar-bg;
-$font-family: Ubuntu, Tahoma;
+$font-family: $font-family-sans-serif;
 $font-size: 14px;
 $button-border-bottom: #6b8ba0;
 $selected-bg: #27ae60;

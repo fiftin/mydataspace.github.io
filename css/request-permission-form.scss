@@ -2,16 +2,18 @@
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
 
+@import "../_sass/bootstrap_vars";
+
 body {
   margin: 0;
   padding: 0;
-  font-family: "Ubuntu", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: $font-family-sans-serif;
   font-size: 16px;
   color: #404040;
 }
 
 input {
-  font-family: "Ubuntu", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: $font-family-sans-serif;
   font-size: 16px;
   font-weight: bold;
   color: #404040;
