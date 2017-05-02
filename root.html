@@ -389,11 +389,11 @@ language: en
           return;
         }
 
-        if (document.getElementById('view__counters_likes_icon').className === 'fa fa-spin fa-heart') {
+        if (document.getElementById('view__counters_likes_icon').className === 'fa like_icon_animation fa-heart') {
           return;
         }
         
-        document.getElementById('view__counters_likes_icon').className = 'fa fa-spin fa-heart';
+        document.getElementById('view__counters_likes_icon').className = 'fa like_icon_animation fa-heart';
 
         if (MDSCommon.isPresent(elem.getAttribute('data-like-path'))) {
           Mydataspace.entities.request('entities.delete', {
