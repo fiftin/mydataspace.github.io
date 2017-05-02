@@ -393,7 +393,7 @@ language: en
           return;
         }
         
-        document.getElementById('view__counters_likes_icon').className = 'fa fa-heart';
+        document.getElementById('view__counters_likes_icon').className = 'fa fa-spin fa-heart';
 
         if (MDSCommon.isPresent(elem.getAttribute('data-like-path'))) {
           Mydataspace.entities.request('entities.delete', {
