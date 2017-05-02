@@ -389,11 +389,11 @@ language: en
           return;
         }
 
-        if (document.getElementById('view__counters_likes_icon').className === 'fa fa-cog fa-spin') {
+        if (document.getElementById('view__counters_likes_icon').className === 'fa fa-heartbeat') {
           return;
         }
         
-        document.getElementById('view__counters_likes_icon').className = 'fa fa-cog fa-spin';
+        document.getElementById('view__counters_likes_icon').className = 'fa fa-heartbeat';
 
         if (MDSCommon.isPresent(elem.getAttribute('data-like-path'))) {
           Mydataspace.entities.request('entities.delete', {
@@ -613,7 +613,7 @@ language: en
         $('#view__comments__list').on('click', '.view__comment__delete', function() {
           var commentPath = this.parentNode.getAttribute('data-comment-path');
           $(this).find('i').removeClass('fa-remove');
-          $(this).find('i').addClass('fa-cog');
+//          $(this).find('i').addClass('fa-cog');
           $(this).find('i').addClass('fa-spin');
 
           Mydataspace.request('entities.delete', {
@@ -621,11 +621,11 @@ language: en
             path: commentPath
           }, function() {
             $(this).find('i').addClass('fa-remove');
-            $(this).find('i').removeClass('fa-cog');
+//            $(this).find('i').removeClass('fa-cog');
             $(this).find('i').removeClass('fa-spin');
           }, function(err) {
             $(this).find('i').addClass('fa-remove');
-            $(this).find('i').removeClass('fa-cog');
+//            $(this).find('i').removeClass('fa-cog');
             $(this).find('i').removeClass('fa-spin');
             console.log(err);
           });
