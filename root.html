@@ -614,7 +614,7 @@ language: en
           var commentPath = this.parentNode.getAttribute('data-comment-path');
 //          $(this).find('i').removeClass('fa-remove');
 //          $(this).find('i').addClass('fa-cog');
-          $(this).find('i').addClass('fa-spin');
+          $(this).find('i').addClass('fa-pulse');
 
           Mydataspace.request('entities.delete', {
             root: DATA.root,
@@ -622,11 +622,11 @@ language: en
           }, function() {
 //            $(this).find('i').addClass('fa-remove');
 //            $(this).find('i').removeClass('fa-cog');
-            $(this).find('i').removeClass('fa-spin');
+            $(this).find('i').removeClass('fa-pulse');
           }, function(err) {
 //            $(this).find('i').addClass('fa-remove');
 //            $(this).find('i').removeClass('fa-cog');
-            $(this).find('i').removeClass('fa-spin');
+            $(this).find('i').removeClass('fa-pulse');
             console.log(err);
           });
         });
