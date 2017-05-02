@@ -389,7 +389,7 @@ language: en
           return;
         }
 
-        if (document.getElementById('view__counters_likes_icon').className === 'fa fa-heartbeat') {
+        if (document.getElementById('view__counters_likes_icon').className === 'fa fa-spin fa-heart') {
           return;
         }
         
@@ -612,7 +612,7 @@ language: en
 
         $('#view__comments__list').on('click', '.view__comment__delete', function() {
           var commentPath = this.parentNode.getAttribute('data-comment-path');
-          $(this).find('i').removeClass('fa-remove');
+//          $(this).find('i').removeClass('fa-remove');
 //          $(this).find('i').addClass('fa-cog');
           $(this).find('i').addClass('fa-spin');
 
@@ -620,11 +620,11 @@ language: en
             root: DATA.root,
             path: commentPath
           }, function() {
-            $(this).find('i').addClass('fa-remove');
+//            $(this).find('i').addClass('fa-remove');
 //            $(this).find('i').removeClass('fa-cog');
             $(this).find('i').removeClass('fa-spin');
           }, function(err) {
-            $(this).find('i').addClass('fa-remove');
+//            $(this).find('i').addClass('fa-remove');
 //            $(this).find('i').removeClass('fa-cog');
             $(this).find('i').removeClass('fa-spin');
             console.log(err);
