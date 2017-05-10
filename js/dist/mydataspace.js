@@ -26,6 +26,62 @@ var MDSCommon = {
     'function'
   ],
 
+  guid: function() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+      s4() + '-' + s4() + s4() + s4();
+  },
+
+  millisecondsToStr: function(milliseconds) {
+    // TIP: to find current time in milliseconds, use:
+    // var  current_time_milliseconds = new Date().getTime();
+    if (milliseconds <= 0) {
+      return 'less than a second'; //'just now' //or other string you like;
+    }
+
+    function numberEnding (number) {
+      return (number > 1) ? 's' : '';
+    }
+
+    var temp = Math.floor(milliseconds / 1000);
+    var years = Math.floor(temp / 31536000);
+    if (years) {
+      return years + ' year' + numberEnding(years);
+    }
+    //TODO: Months! Maybe weeks?
+    var days = Math.floor((temp %= 31536000) / 86400);
+    if (days) {
+      return days + ' day' + numberEnding(days);
+    }
+    var hours = Math.floor((temp %= 86400) / 3600);
+    if (hours) {
+      return hours + ' hour' + numberEnding(hours);
+    }
+    var minutes = Math.floor((temp %= 3600) / 60);
+    if (minutes) {
+      return minutes + ' minute' + numberEnding(minutes);
+    }
+    var seconds = temp % 60;
+    if (seconds) {
+      return seconds + ' second' + numberEnding(seconds);
+    }
+    return 'less than a second'; //'just now' //or other string you like;
+  },
+
+  humanizeDate: function(date, language) {
+    if (typeof date === 'string') {
+      date = new Date(date);
+    }
+    var currentDateMillis = new Date().getTime();
+    var dateMillis = date.getTime();
+    var deltaMillis = currentDateMillis - dateMillis;
+    return MDSCommon.millisecondsToStr(deltaMillis);
+  },
+
   escapeHtml: function(string) {
     var str = '' + string;
     var match = /["'&<> ]/.exec(str);
@@ -252,11 +308,15 @@ var MDSCommon = {
   },
 
   findValueByName: function(arr, name, caseInsensitive) {
-    var item = MDSCommon.findByName(arr, name, caseInsensitive);
-    if (item == null) {
-      return item;
+    if (Array.isArray(arr)) {
+      var item = MDSCommon.findByName(arr, name, caseInsensitive);
+      if (item == null) {
+        return item;
+      }
+      return item.value;
+    } else {
+      return arr[name];
     }
-    return item.value;
   },
 
   getPathName: function(path) {
@@ -674,10 +734,12 @@ function Myda(options) {
   if (typeof options === 'string') {
     options = { root: options };
   }
+  var apiURL = options.import === true ? 'https://import.mydataspace.net' : 'https://api.mydataspace.net';
   this.options = MDSCommon.extend({
     useLocalStorage: true,
-		apiURL: 'https://api.my-data.space',
-		websocketURL: 'https://api.my-data.space',
+		apiURL:  apiURL,
+		websocketURL: apiURL,
+    connected: function() { }
   }, options);
   this.root = this.options.root;
   this.connected = false;
@@ -742,6 +804,8 @@ function Myda(options) {
     this.registerFormatter('entities.get.res', new EntitySimplifier());
   }
   this.entities = new Entities(this);
+  this.on('connected', this.options.connected);
+
 
   window.addEventListener('message', function(e) {
     if (e.data.message === 'authResult') {
@@ -1010,4 +1074,5 @@ Myda.prototype.loginByToken = function(token) {
   });
 };
 
+module.exports.MDSCommon = MDSCommon;
 module.exports.Myda = Myda;

@@ -61,6 +61,6 @@ var Router = {
 
   isMe: function() {
     var parts = Router.getCommonSearchParts();
-    return parts != null && parts.user === 'me';
+    return parts == null || parts != null && parts.user === 'me';
   }
 };

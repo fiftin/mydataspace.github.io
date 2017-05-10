@@ -21,4 +21,5 @@ Myda.prototype.loginByToken = function(token) {
   });
 };
 
+module.exports.MDSCommon = MDSCommon;
 module.exports.Myda = Myda;

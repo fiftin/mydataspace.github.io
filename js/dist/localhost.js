@@ -9,6 +9,62 @@ var MDSCommon = {
     'function'
   ],
 
+  guid: function() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+      s4() + '-' + s4() + s4() + s4();
+  },
+
+  millisecondsToStr: function(milliseconds) {
+    // TIP: to find current time in milliseconds, use:
+    // var  current_time_milliseconds = new Date().getTime();
+    if (milliseconds <= 0) {
+      return 'less than a second'; //'just now' //or other string you like;
+    }
+
+    function numberEnding (number) {
+      return (number > 1) ? 's' : '';
+    }
+
+    var temp = Math.floor(milliseconds / 1000);
+    var years = Math.floor(temp / 31536000);
+    if (years) {
+      return years + ' year' + numberEnding(years);
+    }
+    //TODO: Months! Maybe weeks?
+    var days = Math.floor((temp %= 31536000) / 86400);
+    if (days) {
+      return days + ' day' + numberEnding(days);
+    }
+    var hours = Math.floor((temp %= 86400) / 3600);
+    if (hours) {
+      return hours + ' hour' + numberEnding(hours);
+    }
+    var minutes = Math.floor((temp %= 3600) / 60);
+    if (minutes) {
+      return minutes + ' minute' + numberEnding(minutes);
+    }
+    var seconds = temp % 60;
+    if (seconds) {
+      return seconds + ' second' + numberEnding(seconds);
+    }
+    return 'less than a second'; //'just now' //or other string you like;
+  },
+
+  humanizeDate: function(date, language) {
+    if (typeof date === 'string') {
+      date = new Date(date);
+    }
+    var currentDateMillis = new Date().getTime();
+    var dateMillis = date.getTime();
+    var deltaMillis = currentDateMillis - dateMillis;
+    return MDSCommon.millisecondsToStr(deltaMillis);
+  },
+
   escapeHtml: function(string) {
     var str = '' + string;
     var match = /["'&<> ]/.exec(str);
@@ -136,12 +192,12 @@ var MDSCommon = {
     }
 
     if (Array.isArray(dest) && Array.isArray(source)) {
-      for (let i in source) {
-        let item = source[i];
+      for (var i in source) {
+        var item = source[i];
         dest.push(MDSCommon.copy(item));
       }
     } else { // object
-      for (let i in dest) {
+      for (var i in dest) {
         if (typeof source[i] === 'undefined') {
           continue;
         }
@@ -151,7 +207,7 @@ var MDSCommon = {
           MDSCommon.extendOf(dest[i], source[i]);
         }
       }
-      for (let i in source) {
+      for (var i in source) {
         if (typeof dest[i] === 'undefined') {
           dest[i] = MDSCommon.copy(source[i]);
         }
@@ -216,8 +272,8 @@ var MDSCommon = {
     if (caseInsensitive) {
       name = name.toUpperCase();
     }
-    for (let i in arr) {
-      let itemName = arr[i].name;
+    for (var i in arr) {
+      var itemName = arr[i].name;
       if (caseInsensitive) itemName = itemName.toUpperCase();
       if (itemName === name) {
         return i;
@@ -235,17 +291,24 @@ var MDSCommon = {
   },
 
   findValueByName: function(arr, name, caseInsensitive) {
-    var item = MDSCommon.findByName(arr, name, caseInsensitive);
-    if (item == null) {
-      return item;
+    if (Array.isArray(arr)) {
+      var item = MDSCommon.findByName(arr, name, caseInsensitive);
+      if (item == null) {
+        return item;
+      }
+      return item.value;
+    } else {
+      return arr[name];
     }
-    return item.value;
   },
 
   getPathName: function(path) {
     var i = path.lastIndexOf('/');
     if (i === -1) {
-      return path;
+      i = path.lastIndexOf('\\');
+      if (i === -1) {
+        return path;
+      }
       // throw new Error('Path has no child');
     }
     return path.substr(i + 1);
@@ -257,7 +320,10 @@ var MDSCommon = {
     }
     var i = path.lastIndexOf('/');
     if (i === -1) {
-      return '';
+      i = path.lastIndexOf('\\');
+      if (i === -1) {
+        return path;
+      }
     }
     return path.slice(0, i);
   },
@@ -305,7 +371,7 @@ var MDSCommon = {
     var ret = '';
     var state = '';
     var lastArgIndex = 0;
-    for (let i = 0; i < format.length; i++) {
+    for (var i = 0; i < format.length; i++) {
       switch (format[i]) {
         case '%':
           state = '%';
@@ -338,7 +404,7 @@ var MDSCommon = {
       ret += '%';
     }
 
-    for (let i = lastArgIndex + 1; i < arguments.length; i++) {
+    for (var i = lastArgIndex + 1; i < arguments.length; i++) {
       ret += ' ' + arguments[i];
     }
 
@@ -423,7 +489,7 @@ var MDSCommon = {
     }
     if (arguments.length > 2) {
       keys = [];
-      for (let i = 1; i < arguments.length; i++) {
+      for (var i = 1; i < arguments.length; i++) {
         keys.push(arguments[i]);
       }
     }
@@ -432,17 +498,17 @@ var MDSCommon = {
     } else {
       var ret = {};
       if (Array.isArray(keys)) {
-        for (let i in keys) {
-          let k = keys[i];
-          let val = data[k];
+        for (var i in keys) {
+          var k = keys[i];
+          var val = data[k];
           if (typeof val !== 'undefined') {
             ret[k] = val;
           }
         }
       } else {
-        for (let k in keys) {
-          let type = keys[k];
-          let val = data[k];
+        for (var k in keys) {
+          var type = keys[k];
+          var val = data[k];
           if (typeof val !== 'undefined') {
             var ok = false;
             if (MDSCommon.isPrimitive(type)) {
@@ -462,8 +528,8 @@ var MDSCommon = {
 
   permitArray: function(arr, keys) {
     var ret = [];
-    for (let i in arr) {
-      let data = arr[i];
+    for (var i in arr) {
+      var data = arr[i];
       ret[i] = MDSCommon.permit(data, keys);
     }
     return ret;
@@ -627,7 +693,7 @@ Entities.prototype.change = function(path, fields) {
 };
 
 Entities.prototype.subscribe = function(filter, events) {
-  return this.request('entities.unsubscribe', {
+  return this.request('entities.subscribe', {
     root: this.myda.root,
     path: filter,
     events: events
@@ -651,15 +717,14 @@ function Myda(options) {
   if (typeof options === 'string') {
     options = { root: options };
   }
+  var apiURL = options.import === true ? 'https://import.mydataspace.net' : 'https://api.mydataspace.net';
   this.options = MDSCommon.extend({
     useLocalStorage: true,
-		apiURL: 'https://api.my-data.space',
-		websocketURL: 'https://api.my-data.space',
-    connected: function() {
-      // console.log('Maybe you forgot to specify connected-event handler');
-    }
+		apiURL:  apiURL,
+		websocketURL: apiURL,
+    connected: function() { }
   }, options);
-  this.root = options.root;
+  this.root = this.options.root;
   this.connected = false;
   this.loggedIn = false;
   this.requests = {};
@@ -672,6 +737,10 @@ function Myda(options) {
     connected: []
   };
   this.authProviders = {
+    accessToken: {
+      url: '/auth?authProvider=access-token' +
+           '&state=permission%3d{{permission}}%26clientId%3d{{client_id}}%26resultFormat=json'
+    },
     github: {
       title: 'Connect through GitHub',
       icon: 'github',
@@ -706,11 +775,21 @@ function Myda(options) {
       }
     }
   };
-  if (options.simpleFormat !== false) {
+
+  this.registerFormatter = function(eventName, formatter) {
+    if (!(eventName in this.formatters)) {
+      this.formatters[eventName] = [];
+    }
+    this.formatters[eventName].push(formatter);
+  };
+
+  if (this.options.simpleFormat !== false) {
     this.registerFormatter('entities.get.res', new EntitySimplifier());
   }
   this.entities = new Entities(this);
   this.on('connected', this.options.connected);
+
+
   window.addEventListener('message', function(e) {
     if (e.data.message === 'authResult') {
       if (this.options.useLocalStorage) {
@@ -751,6 +830,7 @@ Myda.prototype.connect = function() {
   return new Promise(function(resolve, reject) {
     this.socket = io(this.options.websocketURL, {
       secure: true,
+      'forceNew' : true,
       'force new connection' : true,
       'reconnectionAttempts': 'Infinity', //avoid having user reconnect manually in order to prevent dead clients after a server restart
       'timeout' : 10000, //before connect_error and connect_timeout are emitted.
@@ -864,6 +944,9 @@ Myda.prototype.emit = function(eventName, data) {
   this.socket.emit(eventName, data);
 };
 
+Myda.prototype.off = function(eventName, callback) {
+};
+
 Myda.prototype.on = function(eventName, callback, ignoreRequestErrors) {
   if (typeof this.listeners[eventName] !== 'undefined') {
     this.listeners[eventName].push(this.formatAndCallIgnoreRequestErrors.bind(this, eventName, callback, ignoreRequestErrors));
@@ -922,10 +1005,14 @@ Myda.prototype.formatAndCallIgnoreRequestErrors = function(eventName, callback, 
 Myda.prototype.formatAndCall = function(eventName, callback, data) {
   var formatterArr = this.formatters[eventName];
   if (data != null && data.datas != null) {
+    var requestId = data.requestId;
     data = data.datas;
+    if (requestId != null) {
+      data.requestId = requestId;
+    }
   }
   if (formatterArr != null) {
-    for (let i in formatterArr) {
+    for (var i in formatterArr) {
       formatterArr[i].format(data);
     }
   }
@@ -947,11 +1034,7 @@ Myda.prototype.handleResponse = function(data, callbackName) {
   }
 };
 
-Myda.prototype.registerFormatter = function(eventName, formatter) {
-  if (!(eventName in this.formatters)) {
-    this.formatters[eventName] = [];
-  }
-  this.formatters[eventName].push(formatter);
-};
-
-var Mydataspace = new Myda({ permission: 'admin' });
+var Mydataspace = new Myda({
+  clientId: 'de96bb70-29b2-454f-8813-ea6e4769414a',
+  permission: 'admin'
+});

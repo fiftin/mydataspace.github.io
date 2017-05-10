@@ -20,14 +20,8 @@ codepen_url: "https://codepen.io/mydataspace"
 angellist_url: "https://angel.co/my-data-space"
 vk_url: "https://vk.com/mydataspace"
 
-local_api_url: "https://api.mydataspace.net"
-local_api_websocket_url: "https://api.mydataspace.net"
-
-#local_api_url: "https://localhost:8443"
-#local_api_websocket_url: "https://localhost:8443"
-
-#api_url: "https://api.my-data.space"
-#api_websocket_url: "https://api.my-data.space"
+local_api_url: "https://localhost:8443"
+local_api_websocket_url: "https://localhost:8443"
 
 api_url: "https://api.mydataspace.net"
 api_websocket_url: "https://api.mydataspace.net"
