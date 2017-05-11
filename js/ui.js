@@ -15,8 +15,22 @@ UI = {
     'SIGN_OUT_LABEL'
   ],
 
-  updateLanguage: function() {
-    var currentLang = localStorage.getItem('language') || 'EN';
+  updateLanguage: function(newLanguage) {
+    var currentLang;
+    if (newLanguage) {
+      currentLang = newLanguage.toUpperCase();
+      if (window.localStorage) {
+        window.localStorage.setItem('language', currentLang);
+      }
+    } else {
+      var languageMatch = window.location.pathname.match(/^\/(\w\w)(\/.*)?$/);
+      if (languageMatch) {
+        currentLang = languageMatch[1].toUpperCase();
+      } else {
+        currentLang = (window.localStorage && window.localStorage.getItem('language')) || 'EN';
+      }
+    }
+
     var strings = STRINGS_ON_DIFFERENT_LANGUAGES[currentLang];
 
     // Language switcher

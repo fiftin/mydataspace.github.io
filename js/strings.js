@@ -228,21 +228,29 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
 var LANGUAGE;
 
 (function() {
-  if (location.pathname) {
-    var languageMatch = location.pathname.match(/^\/(\w\w)(\/.*)?$/);
-    var languageFromURL;
-    if (languageMatch) {
-      languageFromURL = languageMatch[1];
-    }
-    var languageFromLocalStorage = window.localStorage && window.localStorage.getItem('language');
+  var languageFromLocalStorage = window.localStorage && window.localStorage.getItem('language');
+  if (window.location && window.location.pathname) {
+    var languageMatch = location.pathname.match(/^\/(\w\w)(\/.*)?/);
+    var languageFromURL = languageMatch ? languageMatch[1].toUpperCase() : null;
     if (!languageFromURL && !languageFromLocalStorage) {
       LANGUAGE = 'EN';
-    } else if (languageFromURL) {
-      LANGUAGE = languageFromURL.toUpperCase();
     } else {
-      LANGUAGE = languageFromLocalStorage;
+      LANGUAGE = languageFromURL || languageFromLocalStorage;
     }
+  } else {
+    LANGUAGE = languageFromLocalStorage || 'EN';
   }
 })();
 
 var STRINGS = STRINGS_ON_DIFFERENT_LANGUAGES[LANGUAGE];
+
+function tr$(key) {
+  var lang;
+  var languageMatch = location.pathname.match(/^\/(\w\w)(\/.*)?/);
+  if (languageMatch) {
+    lang = languageMatch[1];
+  } else {
+    lang = 'EN';
+  }
+  return STRINGS_ON_DIFFERENT_LANGUAGES[lang][key];
+}

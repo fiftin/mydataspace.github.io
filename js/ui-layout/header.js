@@ -42,8 +42,8 @@ UILayout.header =
         css: 'menu__language_button ' + (LANGUAGE === 'EN' ? 'menu__language_button--selected' : ''),
         label: 'EN',
         click: function() {
-          localStorage.setItem('language', 'EN');
-          UI.updateLanguage();
+          // localStorage.setItem('language', 'EN');
+          UI.updateLanguage('EN');
         }
       },
       { view: 'button',
@@ -52,8 +52,8 @@ UILayout.header =
         css: 'menu__language_button ' + (LANGUAGE === 'RU' ? 'menu__language_button--selected' : ''),
         label: 'RU',
         click: function() {
-          localStorage.setItem('language', 'RU');
-          UI.updateLanguage();
+          // localStorage.setItem('language', 'RU');
+          UI.updateLanguage('RU');
         }
       },
       { width: 10, css: 'menu__spacer' },
