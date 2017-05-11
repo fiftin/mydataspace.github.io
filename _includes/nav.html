@@ -99,7 +99,7 @@
     <script>
         (function() {
             if (/^(\/\w+)?\/root.html$/.test('{{ url }}')) {
-              var m = location.pathname.match(/^(\/\w+)\/(\w+)/);
+              var m = location.pathname.match(/^(\/\w+)?\/(\w+)$/);
               if (m) {
                 document.getElementById('header_language_button_ru').href = '/ru/' + m[2];
                 document.getElementById('header_language_button_').href = '/' + m[2];
