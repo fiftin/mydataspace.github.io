@@ -94,7 +94,20 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     ROOT_AVATAR_UPLOAD: 'Upload',
     ROOT_AVATAR_BROWSE: 'Browse',
     ROOT_AVATAR_REMOVE: 'Remove',
-    SHOW_ACCESS_KEY: 'Show access key'
+    SHOW_ACCESS_KEY: 'Show access key',
+
+
+    created: 'created',
+    ago: 'ago',
+    title_cant_be_blank: 'Title can\'t be blank',
+    too_long_title: 'Too long title',
+    codepen_url_cant_be_blank: 'Codepen URL can\'t be blank',
+    invalid_codepen_pen_url: 'Invalid CodePen pen URL',
+    edit_view: 'Edit View',
+    save_view: 'Save View',
+    new_view: 'New View',
+    create_view: 'Create View'
+
   },
   RU: {
     YES: 'Да',
@@ -194,7 +207,21 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     ROOT_AVATAR_UPLOAD: 'Загрузить',
     ROOT_AVATAR_BROWSE: 'Обзор',
     ROOT_AVATAR_REMOVE: 'Удалить',
-    SHOW_ACCESS_KEY: 'Показать ключ доступа'
+    SHOW_ACCESS_KEY: 'Показать ключ доступа',
+
+
+
+
+    created: 'создан',
+    ago: 'назад',
+    title_cant_be_blank: 'Заголовол не может быть пустым',
+    too_long_title: 'Слишком длинный заголовок',
+    codepen_url_cant_be_blank: 'Codepen URL не может быть пустым',
+    invalid_codepen_pen_url: 'Invalid CodePen pen URL',
+    edit_view: 'Изменить',
+    save_view: 'Сохранить',
+    new_view: 'Новое представление',
+    create_view: 'Создать представление'
   }
 };
 

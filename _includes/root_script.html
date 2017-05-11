@@ -2,6 +2,7 @@
 
 <script>
   (function() {
+    var language = '{{ include.language }}';
 
     //
     // Save view button
@@ -102,23 +103,23 @@
       var codepen = document.getElementById('new_look_modal_codepen').value;
 
       if (MDSCommon.isBlank(title)) {
-        document.getElementById('new_look_modal_title_err').innerText = 'Title can\'t be blank';
+        document.getElementById('new_look_modal_title_err').innerText = STRINGS.title_cant_be_blank;
         return false;
       }
 
       if (title.length > 250) {
-        document.getElementById('new_look_modal_title_err').innerText = 'Too long title';
+        document.getElementById('new_look_modal_title_err').innerText = STRINGS.too_long_title;
         return false;
       }
 
       if (MDSCommon.isBlank(codepen)) {
-        document.getElementById('new_look_modal_codepen_err').innerText = 'Codepen URL can\'t be blank';
+        document.getElementById('new_look_modal_codepen_err').innerText = STRINGS.codepen_url_cant_be_blank;
         return false;
       }
 
       var codepenID = getCodepenIDByURL(codepen);
       if (!codepenID) {
-        document.getElementById('new_look_modal_codepen_err').innerText = 'Invalid CodePen pen URL';
+        document.getElementById('new_look_modal_codepen_err').innerText = STRINGS.invalid_codepen_pen_url;
         return false;
       }
 
@@ -154,16 +155,16 @@
       document.getElementById('new_look_modal_title_err').innerText = '';
       document.getElementById('new_look_modal_codepen_err').innerText = '';
       if (isEdit) {
-        document.getElementById('new_look_modal_header').innerText = 'Edit View';
+        document.getElementById('new_look_modal_header').innerText = STRINGS.edit_view;
         document.getElementById('new_look_modal_button').setAttribute('data-look-path', currentLook.path);
-        document.getElementById('new_look_modal_button').innerText = 'Save View';
+        document.getElementById('new_look_modal_button').innerText = STRINGS.save_view;
         document.getElementById('new_look_modal_title').value = MDSCommon.findValueByName(currentLook.fields, 'title');
         document.getElementById('new_look_modal_codepen').value =  getCodepenURL(MDSCommon.findValueByName(currentLook.fields, 'id'));
         document.getElementById('new_look_modal_description').value = MDSCommon.findValueByName(currentLook.fields, 'description') || '';
       } else {
-        document.getElementById('new_look_modal_header').innerText = 'New View';
+        document.getElementById('new_look_modal_header').innerText = STRINGS.new_view;
         document.getElementById('new_look_modal_button').removeAttribute('data-look-path');
-        document.getElementById('new_look_modal_button').innerText = 'Create View';
+        document.getElementById('new_look_modal_button').innerText = STRINGS.create_view;
         document.getElementById('new_look_modal_title').value = '';
         document.getElementById('new_look_modal_codepen').value = '';
         document.getElementById('new_look_modal_description').value = '';
@@ -216,7 +217,7 @@
         '<div class="look_preview__header"><i class="fa fa-codepen"></i><span class="look_preview__title">' + MDSCommon.findValueByName(data.fields, 'title') + '</span></div>' +
         '<div class="look_preview__description">' + (MDSCommon.findValueByName(data.fields, 'description') || '') + '</div>' +
         '<div class="look_preview__footer">' +
-        '<span class="view__comment__date view__comment__date--small">created ' + MDSCommon.humanizeDate(data.createdAt) + ' ago</span>' +
+        '<span class="view__comment__date view__comment__date--small">' + STRINGS.created + ' ' + MDSCommon.humanizeDate(data.createdAt) + ' ' + STRINGS.ago + '</span>' +
         '</div>' +
         '</div>';
     }
@@ -441,11 +442,11 @@
      * @param data root's data.
      */
     function setRootView(data) {
-      var lang = '{{ include.language }}';
-      if (MDSCommon.isBlank(lang) || lang === 'en') {
+      var lang;
+      if (MDSCommon.isBlank(language) || language === 'en') {
         lang = '';
       } else {
-        lang = '/' + lang;
+        lang = '/' + language;
       }
       $.ajax({ url: lang + '/fragments/root-view.html', method: 'get' }).then(function(html) {
         var view = document.getElementById('view');

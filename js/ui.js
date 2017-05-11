@@ -33,6 +33,17 @@ UI = {
     // Labels
 
     for (var key in strings) {
+
+      // Must me in upper case
+      if (key !== key.toUpperCase()) {
+        continue;
+      }
+
+      // Value must be string
+      if (typeof strings[key] !== 'string') {
+        continue;
+      }
+
       var label = $$(key + '_LABEL');
       if (label == null) {
         continue;
