@@ -38,9 +38,9 @@
                       {% assign url = page.url | replace_first:page_lang,"/" %}
                     {% endif %}
                     {% if site.default_language == page.language %}
-                    <a class="header__language_button header__language_button--active" href="{{ url }}">{{ site.default_language | upcase }}</a>
+                    <a id="header_language_button_en" class="header__language_button header__language_button--active" href="{{ url }}">{{ site.default_language | upcase }}</a>
                     {% else %}
-                    <a class="header__language_button" href="{{ url }}">{{ site.default_language | upcase }}</a>
+                    <a id="header_language_button_en" class="header__language_button" href="{{ url }}">{{ site.default_language | upcase }}</a>
                     {% endif %}
                   </li>
                   {% for lang in site.languages %}
@@ -102,7 +102,7 @@
               var m = location.pathname.match(/^(\/\w+)?\/(\w+)$/);
               if (m) {
                 document.getElementById('header_language_button_ru').href = '/ru/' + m[2];
-                document.getElementById('header_language_button_').href = '/' + m[2];
+                document.getElementById('header_language_button_en').href = '/' + m[2];
               }
             }
         })();
