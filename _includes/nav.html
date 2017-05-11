@@ -57,11 +57,11 @@
                       {% endif %}
 
                       {% if lang == page.language %}
-                        <a class="header__language_button header__language_button--active" href="{{ url }}">
+                        <a id="header_language_button_{{lang}}" class="header__language_button header__language_button--active" href="{{ url }}">
                           {{ lang | upcase }}
                         </a>
                       {% else %}
-                        <a class="header__language_button" href="{{ url }}">
+                        <a id="header_language_button_{{lang}}" class="header__language_button" href="{{ url }}">
                           {{ lang | upcase }}
                         </a>
                       {% endif %}
@@ -96,6 +96,17 @@
             </ul>
         </div>
     </div>
+    <script>
+        (function() {
+            if (/^(\/\w+)?\/root.html$/.test('{{ url }}')) {
+              var m = location.pathname.match(/^(\/\w+)\/(\w+)/);
+              if (m) {
+                document.getElementById('header_language_button_ru').href = '/ru/' + m[2];
+                document.getElementById('header_language_button_').href = '/' + m[2];
+              }
+            }
+        })();
+    </script>
 </nav>
 
 <div id="search" class="search">
