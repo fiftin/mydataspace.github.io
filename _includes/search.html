@@ -53,7 +53,14 @@
           var nLikes = MDSCommon.findValueByName(root.fields, 'likes') || 0;
           var nComments = MDSCommon.findValueByName(root.fields, 'comments') || 0;
 
-          return '<div class="col-md-4"><a class="snippet clearfix" href="/' + root.root + '">\n' +
+          var lang = '{{ page.language }}';
+          if (MDSCommon.isBlank(lang) || lang === 'en') {
+            lang = '';
+          } else {
+            lang += '/';
+          }
+
+          return '<div class="col-md-4"><a class="snippet clearfix" href="/' + lang + root.root + '">\n' +
             '  <div class="snippet__overview">\n' +
             '  <img class="snippet__image" src="' + avatar + '" />\n' +
             '  <div class="snippet__info' + (MDSCommon.isBlank(tags) ? ' snippet__info--small' : '') + '">\n' +
