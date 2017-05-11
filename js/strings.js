@@ -229,7 +229,7 @@ var LANGUAGE;
 
 (function() {
   if (location.pathname) {
-    var languageMatch = location.pathname.match(/^\/(\w\w)(\/.*)?/);
+    var languageMatch = location.pathname.match(/^\/(\w\w)(\/.*)?$/);
     var languageFromURL;
     if (languageMatch) {
       languageFromURL = languageMatch[1];

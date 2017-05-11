@@ -53,7 +53,7 @@
           var nLikes = MDSCommon.findValueByName(root.fields, 'likes') || 0;
           var nComments = MDSCommon.findValueByName(root.fields, 'comments') || 0;
 
-          var languageMatch = location.pathname.match(/^\/(\w\w)(\/.*)?/);
+          var languageMatch = location.pathname.match(/^\/(\w\w)(\/.*)?$/);
 
           var lang = languageMatch ? languageMatch[1] + '/' : '';
 
