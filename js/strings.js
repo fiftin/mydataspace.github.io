@@ -229,7 +229,7 @@ var LANGUAGE;
 
 (function() {
   if (location.pathname) {
-    var languageMatch = location.pathname.match(/^\/\w\w(\/.*)?/);
+    var languageMatch = location.pathname.match(/^\/(\w\w)(\/.*)?/);
     var languageFromURL;
     if (languageMatch) {
       languageFromURL = languageMatch[1];
@@ -245,5 +245,4 @@ var LANGUAGE;
   }
 })();
 
-// var LANGUAGE = window.localStorage && window.localStorage.getItem('language') || 'EN';
 var STRINGS = STRINGS_ON_DIFFERENT_LANGUAGES[LANGUAGE];
