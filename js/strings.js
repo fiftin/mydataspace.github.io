@@ -246,7 +246,7 @@ var STRINGS = STRINGS_ON_DIFFERENT_LANGUAGES[LANGUAGE];
 
 function tr$(key) {
   var lang;
-  var languageMatch = location.pathname.match(/^\/(\w\w)(\/.*)$?/);
+  var languageMatch = location.pathname.match(/^\/(\w\w)(\/.*)?$/);
   if (languageMatch) {
     lang = languageMatch[1];
   } else {
