@@ -1,0 +1,697 @@
+<script src="/vendor/remarkable.js"></script>
+
+<script>
+  (function() {
+
+    //
+    // Save view button
+    document.getElementById('new_look_modal_button').addEventListener('click', function() {
+      if (!validateLookForm()) {
+        return;
+      }
+
+      var lookPath = document.getElementById('new_look_modal_button').getAttribute('data-look-path');
+      Mydataspace.entities.request(lookPath ? 'entities.change' : 'entities.create', {
+        root: DATA.root,
+        path: lookPath || 'views/' + MDSCommon.guid(),
+        fields: [
+          { name: 'type', value: 'codepen', type: 's' },
+          { name: 'title', value: document.getElementById('new_look_modal_title').value, type: 's' },
+          {
+            name: 'id',
+            value: getCodepenIDByURL(document.getElementById('new_look_modal_codepen').value),
+            type: 's'
+          },
+          { name: 'description', value: document.getElementById('new_look_modal_description').value, type: 's' }
+        ]
+      }).then(function(data) {
+        $('#new_look_modal').modal('hide');
+        if (!lookPath) {
+          setTimeout(function() { selectLook(data.path); }, 500);
+        }
+      }, function(err) {});
+    });
+
+
+    //
+    // Delete view button
+    document.getElementById('delete_look_modal_button').addEventListener('click', function() {
+      var lookPath = document.getElementById('view__looks__content').getAttribute('data-look-path');
+      Mydataspace.entities.request('entities.delete', {
+        root: DATA.root,
+        path: lookPath
+      }).then(function(data) { }, function(err) {});
+    });
+
+    Mydataspace.on('entities.change.res', function(data) {
+      if (/^views\//.test(data.path)) {
+        var preview = getLookPreviewNode(data.path);
+        if (!preview) {
+          throw new Error('Changed look is not exists');
+        }
+        $(preview).replaceWith(getLookPreviewHTML(data, true));
+        if (currentLook.path === data.path) {
+          setLook(data);
+        }
+      }
+    });
+
+    var md = new Remarkable({
+      html:         true,        // Enable HTML tags in source
+      xhtmlOut:     false,        // Use '/' to close single tags (<br />)
+      breaks:       false,        // Convert '\n' in paragraphs into <br>
+      langPrefix:   'language-',  // CSS language prefix for fenced blocks
+      linkify:      false,        // Autoconvert URL-like text to links
+
+      // Enable some language-neutral replacement + quotes beautification
+      typographer:  false,
+
+      // Double + single quotes replacement pairs, when typographer enabled,
+      // and smartquotes on. Set doubles to '«»' for Russian, '„“' for German.
+      quotes: '“”‘’',
+
+      // Highlighter function. Should return escaped HTML,
+      // or '' if the source string is not changed
+      highlight: function (/*str, lang*/) { return ''; }
+    });
+
+    var results = new RegExp(".*/([^?#]+)").exec(location.href);
+    if (!results) {
+      return;
+    }
+
+    var DATA = {
+      root: results[1] === 'root' ? 'fiftin' : results[1],
+      path: '',
+      children: true
+    };
+
+    var TABS = {
+      VIEW_TAB_README_LABEL: 'view__about',
+      VIEW_TAB_VIEW_LABEL: 'view__looks',
+      VIEW_TAB_COMMENTS_LABEL: 'view__comments'
+    };
+
+    var currentLook;
+
+    function validateLookForm() {
+      document.getElementById('new_look_modal_title_err').innerText = '';
+      document.getElementById('new_look_modal_codepen_err').innerText = '';
+
+      var title = document.getElementById('new_look_modal_title').value;
+      var codepen = document.getElementById('new_look_modal_codepen').value;
+
+      if (MDSCommon.isBlank(title)) {
+        document.getElementById('new_look_modal_title_err').innerText = 'Title can\'t be blank';
+        return false;
+      }
+
+      if (title.length > 250) {
+        document.getElementById('new_look_modal_title_err').innerText = 'Too long title';
+        return false;
+      }
+
+      if (MDSCommon.isBlank(codepen)) {
+        document.getElementById('new_look_modal_codepen_err').innerText = 'Codepen URL can\'t be blank';
+        return false;
+      }
+
+      var codepenID = getCodepenIDByURL(codepen);
+      if (!codepenID) {
+        document.getElementById('new_look_modal_codepen_err').innerText = 'Invalid CodePen pen URL';
+        return false;
+      }
+
+      return true;
+    }
+
+    function getCodepenIDByURL(url) {
+      var regex = /^https?:\/\/codepen.io\/(\w+)\/pen\/(\w+)/;
+      var m = regex.exec(url);
+      if (!m) {
+        return null;
+      }
+      return m[1] + '/' + m[2];
+    }
+
+    function getCodepenURL(id) {
+      var parts = id.split('/');
+      return 'https://codepen.io/' + parts[0] + '/pen/' + parts[1];
+    }
+
+    function getLookPreviewNode(path) {
+      var lookPreviews = document.getElementById('view__looks__previews').childNodes;
+      for (var i = 0; i < lookPreviews.length; i++) {
+        var lookPath = lookPreviews[i].getAttribute('data-look-path');
+        if (lookPath === path) {
+          return lookPreviews[i];
+        }
+      }
+      return null;
+    }
+
+    function openLookEditModal(isEdit) {
+      document.getElementById('new_look_modal_title_err').innerText = '';
+      document.getElementById('new_look_modal_codepen_err').innerText = '';
+      if (isEdit) {
+        document.getElementById('new_look_modal_header').innerText = 'Edit View';
+        document.getElementById('new_look_modal_button').setAttribute('data-look-path', currentLook.path);
+        document.getElementById('new_look_modal_button').innerText = 'Save View';
+        document.getElementById('new_look_modal_title').value = MDSCommon.findValueByName(currentLook.fields, 'title');
+        document.getElementById('new_look_modal_codepen').value =  getCodepenURL(MDSCommon.findValueByName(currentLook.fields, 'id'));
+        document.getElementById('new_look_modal_description').value = MDSCommon.findValueByName(currentLook.fields, 'description') || '';
+      } else {
+        document.getElementById('new_look_modal_header').innerText = 'New View';
+        document.getElementById('new_look_modal_button').removeAttribute('data-look-path');
+        document.getElementById('new_look_modal_button').innerText = 'Create View';
+        document.getElementById('new_look_modal_title').value = '';
+        document.getElementById('new_look_modal_codepen').value = '';
+        document.getElementById('new_look_modal_description').value = '';
+      }
+      $('#new_look_modal').modal('show');
+    }
+
+    function setLook(data) {
+      document.getElementById('view__looks__actions').style.display = data.mine ? 'block' : 'none';
+//      document.getElementById('view__looks__likes_count').innerText = MDSCommon.findValueByName(viewData.children, 'likes');
+      document.getElementById('view__looks__date').innerText = MDSCommon.humanizeDate(data.createdAt);
+      document.getElementById('view__looks__title').innerText = MDSCommon.findValueByName(data.fields, 'title');
+      document.getElementById('view__looks__content').setAttribute('data-look-path', data.path);
+      switch (MDSCommon.findValueByName(data.fields, 'type')) {
+        case 'codepen':
+          var codepenParts = MDSCommon.findValueByName(data.fields, 'id').split('/');
+          document.getElementById('view__looks__content').innerHTML =
+            '<p data-height="560" data-theme-id="0" data-slug-hash="' + codepenParts[1] + '" data-default-tab="result" data-user="+ codepenParts[0] +" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/' +  codepenParts[0] + '/pen/' + codepenParts[1] + '/">' + codepenParts[1] + '</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p>' +
+            '';
+          var codepenScript = document.createElement('script');
+          codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
+          document.getElementById('view__looks__content').appendChild(codepenScript);
+          break;
+        default:
+          throw new Error('Unknown view type: ' + data.type);
+      }
+      currentLook = data;
+    }
+
+    function selectLook(path) {
+      var previews = document.getElementById('view__looks__previews');
+      if (path == null) {
+        path = previews.childNodes[0].getAttribute('data-look-path');
+      }
+      $(previews).find('.look_preview--active').removeClass('look_preview--active');
+      var preview = getLookPreviewNode(path);
+      if (!preview) {
+        return;
+      }
+      preview.classList.add('look_preview--active');
+      Mydataspace.entities.request('entities.get', {
+        root: DATA.root,
+        children: true,
+        path: path
+      }).then(setLook, function(err) {});
+    }
+
+    function getLookPreviewHTML(data, isActive) {
+      return '<div class="look_preview' + (isActive ? ' look_preview--active' : '') + '" data-look-path="'+ data.path + '">' +
+        '<div class="look_preview__header"><i class="fa fa-codepen"></i><span class="look_preview__title">' + MDSCommon.findValueByName(data.fields, 'title') + '</span></div>' +
+        '<div class="look_preview__description">' + (MDSCommon.findValueByName(data.fields, 'description') || '') + '</div>' +
+        '<div class="look_preview__footer">' +
+        '<span class="view__comment__date view__comment__date--small">created ' + MDSCommon.humanizeDate(data.createdAt) + ' ago</span>' +
+        '</div>' +
+        '</div>';
+    }
+
+    function getCommentHTML(commentData) {
+      var commentText =  (MDSCommon.findValueByName(commentData.fields, 'text') || '').replace(/(?:\r\n|\r|\n)/g, '<br />');
+      return '<div class="view__comment" id="' + commentData.path + '" data-comment-path="' + commentData.path + '">' +
+        (commentData.mine ? '<span class="view__comment__author">you</span>' : '') +
+        '<span class="view__comment__text">' + commentText + '</span>' +
+        '<div class="view__comment__footer">' +
+        '<span class="view__comment__date">' + MDSCommon.humanizeDate(commentData.createdAt) + ' ago</span>' +
+        '</div>' +
+        (commentData.mine ? '<div class="view__comment__delete"><i class="fa fa-remove fa-2x"></i></div>' : '') +
+        '</div>';
+    }
+
+    function postComment() {
+      if (!Mydataspace.isLoggedIn()) {
+        $('#signin_modal').modal('show');
+        return;
+      }
+
+      var $newComment = $('#view__new_comment');
+      var $textarea = $newComment.find('.new_comment__textarea');
+      var $button = $newComment.find('.new_comment__button');
+
+      if ($textarea.val().trim() === '') {
+        $textarea.addClass('new_comment__textarea--error');
+        $textarea.focus();
+        return;
+      }
+
+      $button.prop('disabled', true);
+      $textarea.prop('disabled', true);
+
+      Mydataspace.request('entities.create', {
+        root: DATA.root,
+        path: 'comments/' + MDSCommon.guid(),
+        fields: [
+          {
+            name: 'text',
+            value: $textarea.val().trim(),
+            type: 's'
+          }
+        ]
+      }, function() {
+        $textarea.val('');
+        $button.prop('disabled', false);
+        $textarea.prop('disabled', false);
+        $textarea.focus();
+        updateCommentFormTextareaHeight();
+      }, function(err) {
+        $button.prop('disabled', false);
+        $textarea.prop('disabled', false);
+        console.log(err);
+      });
+    }
+
+    function updateCommentFormTextareaHeight() {
+      var textarea = document.getElementById('view__comments__new_comment_textarea');
+      setTimeout(function(){
+        textarea.style.cssText = 'height: auto; padding: 0';
+        textarea.style.cssText = 'height: ' + textarea.scrollHeight + 'px';
+      }, 0);
+    }
+
+    function initNewCommentForm() {
+      var $newComment = $('#view__new_comment');
+      var $textarea = $newComment.find('.new_comment__textarea');
+      $textarea.on('focus', function() {
+        $(this).parent().parent().find('.new_comment__button').show();
+        $(this).addClass('new_comment__textarea--extended');
+        if ($textarea.hasClass('new_comment__textarea--error')) {
+          setTimeout(function() {
+            $textarea.removeClass('new_comment__textarea--error')
+          }, 200);
+        }
+      });
+      $textarea.on('keydown', function(event) {
+        if (event.ctrlKey && event.keyCode === 13) {
+          postComment();
+        }
+        updateCommentFormTextareaHeight();
+      });
+      $newComment.find('.new_comment__button').on('click', function() {
+        postComment();
+      });
+    }
+
+    function initCounters() {
+      var elem = document.getElementById('view__counters_likes');
+      elem.addEventListener('click', function() {
+        if (!Mydataspace.isLoggedIn()) {
+          $('#signin_modal').modal('show');
+          return;
+        }
+
+        if (document.getElementById('view__counters_likes_icon').className === 'fa like_icon_animation fa-heart') {
+          return;
+        }
+
+        document.getElementById('view__counters_likes_icon').className = 'fa like_icon_animation fa-heart';
+
+        if (MDSCommon.isPresent(elem.getAttribute('data-like-path'))) {
+          Mydataspace.entities.request('entities.delete', {
+            root: DATA.root,
+            path: elem.getAttribute('data-like-path')
+          }).then(function() {
+            document.getElementById('view__counters_likes_icon').className = 'fa fa-heart';
+          }, function(err) {
+            document.getElementById('view__counters_likes_icon').className = 'fa fa-heart';
+            console.log(err);
+          });
+        } else {
+          Mydataspace.entities.request('entities.create', {
+            root: DATA.root,
+            path: 'likes/' + MDSCommon.guid()
+          }).then(function() {
+            document.getElementById('view__counters_likes_icon').className = 'fa fa-heart';
+          }, function(err) {
+            document.getElementById('view__counters_likes_icon').className = 'fa fa-heart';
+            console.log(err);
+          });
+        }
+      });
+    }
+
+    function updateLooks(looksData, newIndex) {
+      if (looksData.length === 0) {
+        document.getElementById('view__looks__empty').style.display = 'block';
+//        document.getElementById('view__looks__pills').style.display = 'none';
+        document.getElementById('view__looks__content_wrap').style.display = 'none';
+        return;
+      } else {
+        document.getElementById('view__looks__empty').style.display = 'none';
+//        document.getElementById('view__looks__pills').style.display = 'block';
+        document.getElementById('view__looks__content_wrap').style.display = 'block';
+      }
+
+      var content = document.getElementById('view__looks__content');
+      var index = content.getAttribute('data-view-index');
+      if (index == null || newIndex != null) {
+        index = newIndex || 0;
+        content.setAttribute('data-view-index', index);
+      } else {
+        index = parseInt(index);
+      }
+      var lookData = looksData[index];
+      if (lookData == null) {
+        throw new Error('Illegal view index: ' + index + '. Must be less ' + looksData.length);
+      }
+
+      setLook(lookData);
+
+      var previewsHTML = '';
+      for (var lookIndex in looksData) {
+        previewsHTML += getLookPreviewHTML(looksData[lookIndex], lookIndex.toString() === '0');
+      }
+      document.getElementById('view__looks__previews').innerHTML = previewsHTML;
+    }
+
+    function initTabs() {
+      for (var tabID in TABS) {
+        (function(tabID) {
+          var tab = document.getElementById(tabID);
+          tab.addEventListener('click', function(event) {
+            event.preventDefault();
+            for (var tid in TABS) {
+              document.getElementById(tid).classList.remove('view__tab--active');
+              document.getElementById(TABS[tid]).style.display = 'none';
+            }
+            tab.classList.add('view__tab--active');
+            document.getElementById(TABS[tabID]).style.display = 'block';
+
+            switch (tabID) {
+              case 'VIEW_TAB_VIEW_LABEL':
+                document.getElementById('view__data_link').classList.add('hidden');
+                document.getElementById('view__new_look').classList.remove('hidden');
+
+                if (document.getElementById('view__tabs_views_count').innerText === '0') {
+                  document.getElementById('view__looks__empty').style.display = 'block';
+//                  document.getElementById('view__looks__pills').style.display = 'none';
+                  document.getElementById('view__looks__content_wrap').style.display = 'none';
+                } else {
+                  document.getElementById('view__looks__empty').style.display = 'none';
+//                  document.getElementById('view__looks__pills').style.display = 'block';
+                  document.getElementById('view__looks__content_wrap').style.display = 'block';
+                }
+                Mydataspace.entities.request('entities.get', { root: DATA.root, children: true, path: 'views' }).then(function(data) {
+                  updateLooks(data.children);
+                });
+                break;
+              case 'VIEW_TAB_COMMENTS_LABEL':
+                document.getElementById('view__data_link').classList.add('hidden');
+                document.getElementById('view__new_look').classList.add('hidden');
+                Mydataspace.entities.request('entities.get', { root: DATA.root, children: true, path: 'comments', limit: 7, orderChildrenBy: '$createdAt DESC' }).then(function(data) {
+                  var comments = document.getElementById('view__comments__list');
+                  comments.innerHTML = '';
+                  var html = '';
+                  for (var i in data.children) {
+                    html = getCommentHTML(data.children[i]) + html;
+                  }
+                  comments.innerHTML = html;
+                  if(html === '') {
+                    document.getElementById('view__comments__empty').style.display = 'block';
+                  }
+                });
+                break;
+              case 'VIEW_TAB_README_LABEL':
+                document.getElementById('view__data_link').classList.remove('hidden');
+                document.getElementById('view__new_look').classList.add('hidden');
+                break;
+            }
+
+          });
+        })(tabID);
+      }
+    }
+
+    /**
+     * Render root page for received data.
+     * @param data root's data.
+     */
+    function setRootView(data) {
+      $.ajax({ url: '/fragments/root-view.html', method: 'get' }).then(function(html) {
+        var view = document.getElementById('view');
+        var websiteURL = data.fields.websiteURL;
+        var description = data.fields.description;
+        var readme = data.fields.readme;
+        var ava = data.fields.avatar;
+
+        view.innerHTML = html;
+
+        if (MDSCommon.isPresent(ava)) {
+          ava = Mydataspace.options.apiURL + '/avatars/sm/' + ava + '.png';
+        }
+        document.getElementById('view__overview_image').src = ava || '/images/icons/root.svg';
+        document.getElementById('view__title').innerText =
+          data.fields.name || MDSCommon.getPathName(data.root);
+
+        var tags = (data.fields.tags || '').split(' ').filter(function(tag) {
+          return tag != null && tag !== '';
+        }).map(function(tag) {
+          return '<a class="view__tag" href="/?q=%23' + tag + '" onclick="openSearch_header__search(\'' + tag + '\'); return false;">' + tag + '</a>';
+        }).join(' ');
+        document.getElementById('view__tags').innerHTML = tags || '';
+
+        document.getElementById('view__data_link').href = '/#' + data.root;
+        document.getElementById('view__data_link').classList.remove('hidden');
+
+        if (tags && websiteURL) {
+          document.getElementsByClassName('view__overview_image_wrap')[0].classList.add('view__overview_image_wrap--large');
+          document.getElementById('view__overview_image').classList.add('view__overview_image--large');
+        } else if (tags || websiteURL) {
+          document.getElementsByClassName('view__overview_image_wrap')[0].classList.add('view__overview_image_wrap--medium');
+          document.getElementById('view__overview_image').classList.add('view__overview_image--medium');
+        }
+
+        if (MDSCommon.isBlank(websiteURL)) {
+          document.getElementById('view__websiteURL').style.display = 'none';
+        } else {
+          document.getElementById('view__websiteURL').style.display = 'inline';
+          document.getElementById('view__websiteURL').innerText = websiteURL;
+          document.getElementById('view__websiteURL').href = websiteURL;
+        }
+
+        if (MDSCommon.isBlank(description)) {
+          if (MDSCommon.isBlank(websiteURL)) {
+            document.getElementById('view__description').innerHTML = '<i>No description or README provided.</i>';
+          }
+        } else {
+          document.getElementById('view__description').innerText = description;
+        }
+
+        if (MDSCommon.isBlank(readme)) {
+          document.getElementById('view__readme').style.display = 'none';
+        } else {
+          document.getElementById('view__readme').style.display = 'block';
+        }
+        document.getElementById('view__readme').innerHTML = md.render(readme);
+
+        document.getElementById('view__tabs').classList.remove('hidden');
+
+        for (var i in data.children) {
+          var child = data.children[i];
+          switch (child.path) {
+            case 'likes':
+              document.getElementById('view__counters_likes_count').innerText = child.numberOfChildren;
+              break;
+            case 'comments':
+              document.getElementById('view__counters_comments_count').innerText = child.numberOfChildren;
+              document.getElementById('view__tabs_comments_count').innerText = child.numberOfChildren;
+              break;
+            case 'views':
+              document.getElementById('view__tabs_views_count').innerText = child.numberOfChildren;
+              break;
+          }
+        }
+
+//        document.getElementById('view__date').innerText = MDSCommon.humanizeDate(data.createdAt);
+
+        initCounters();
+
+        initTabs();
+
+        initNewCommentForm();
+
+        if (Mydataspace.isLoggedIn()) {
+          requestMyLike();
+        }
+
+        Mydataspace.on('login', function() {
+          requestMyLike();
+          if (currentLook) {
+            selectLook(currentLook.path);
+          }
+        });
+
+        $('#view__comments__list').on('click', '.view__comment__delete', function() {
+          var commentPath = this.parentNode.getAttribute('data-comment-path');
+//          $(this).find('i').removeClass('fa-remove');
+//          $(this).find('i').addClass('fa-cog');
+          $(this).find('i').addClass('fa-pulse');
+
+          Mydataspace.request('entities.delete', {
+            root: DATA.root,
+            path: commentPath
+          }, function() {
+//            $(this).find('i').addClass('fa-remove');
+//            $(this).find('i').removeClass('fa-cog');
+            $(this).find('i').removeClass('fa-pulse');
+          }, function(err) {
+//            $(this).find('i').addClass('fa-remove');
+//            $(this).find('i').removeClass('fa-cog');
+            $(this).find('i').removeClass('fa-pulse');
+            console.log(err);
+          });
+        });
+
+        $('#view__looks__previews').on('click', '.look_preview', function() {
+          selectLook($(this).data('look-path'));
+        });
+
+        document.getElementById('view__looks__edit').addEventListener('click', function() {
+          openLookEditModal(true);
+        });
+
+        document.getElementById('view__new_look').addEventListener('click', function() {
+          if (!Mydataspace.isLoggedIn()) {
+            $('#signin_modal').modal('show');
+            return;
+          }
+          openLookEditModal(false);
+        });
+
+      });
+    }
+
+    // Load data for root and render it on the page
+    Mydataspace.entities.request('entities.get', DATA).then(function(result) {
+      setRootView(result);
+    });
+
+
+    //
+    // Likes & comments
+    //
+
+    Mydataspace.emit('entities.subscribe', {
+      root: DATA.root,
+      path: 'comments/*'
+    });
+
+    Mydataspace.emit('entities.subscribe', {
+      root: DATA.root,
+      path: 'likes/*'
+    });
+
+    Mydataspace.emit('entities.subscribe', {
+      root: DATA.root,
+      path: 'views/*'
+    });
+
+    Mydataspace.on('entities.create.res', function(data) {
+      if (/^likes\//.test(data.path)) {
+        document.getElementById('view__counters_likes_count').innerText =
+          parseInt(document.getElementById('view__counters_likes_count').innerText) + 1;
+        if (data.mine) {
+          setMyLike(data);
+        }
+      } else if (/^comments\//.test(data.path)) {
+        document.getElementById('view__tabs_comments_count').innerText =
+          parseInt(document.getElementById('view__tabs_comments_count').innerText) + 1;
+        document.getElementById('view__counters_comments_count').innerText =
+          parseInt(document.getElementById('view__counters_comments_count').innerText) + 1;
+
+        // if comment is not exists already
+        if (document.getElementById(data.path) == null) {
+          if (document.getElementById('view__comments').style.display === 'block') {
+            var commentHTML = getCommentHTML(data);
+            $('#view__comments__list').append(commentHTML);
+            document.getElementById('view__comments__empty').style.display = 'none';
+          }
+        }
+      } else if (/^views\//.test(data.path)) {
+        $('#view__looks__previews').append(getLookPreviewHTML(data));
+        var viewsCount = parseInt(document.getElementById('view__tabs_views_count').innerText);
+        document.getElementById('view__tabs_views_count').innerText = viewsCount + 1;
+        if (viewsCount === 0) {
+          document.getElementById('view__looks__empty').style.display = 'none';
+//        document.getElementById('view__looks__pills').style.display = 'block';
+          document.getElementById('view__looks__content_wrap').style.display = 'block';
+          selectLook();
+        }
+      }
+    });
+
+    Mydataspace.on('entities.delete.res', function(data) {
+      if (/^likes\//.test(data.path)) {
+        document.getElementById('view__counters_likes_count').innerText =
+          parseInt(document.getElementById('view__counters_likes_count').innerText) - 1;
+        resetMyLike(data);
+      } else if (/^comments\//.test(data.path)) {
+        document.getElementById('view__tabs_comments_count').innerText =
+          parseInt(document.getElementById('view__tabs_comments_count').innerText) - 1;
+        document.getElementById('view__counters_comments_count').innerText =
+          parseInt(document.getElementById('view__counters_comments_count').innerText) - 1;
+
+        var comment = document.getElementById(data.path);
+        if (comment != null) {
+          comment.parentNode.removeChild(comment);
+          if (document.getElementById('view__comments__list').children.length === 0) {
+            document.getElementById('view__comments__empty').style.display = 'block';
+          }
+        }
+      } else if (/^views\//.test(data.path)) {
+        var previewsElem = document.getElementById('view__looks__previews');
+        var preview = getLookPreviewNode(data.path);
+        previewsElem.removeChild(preview);
+        var viewsCount = parseInt(document.getElementById('view__tabs_views_count').innerText);
+        document.getElementById('view__tabs_views_count').innerText = viewsCount - 1;
+        if (viewsCount <= 1) {
+          document.getElementById('view__looks__empty').style.display = 'block';
+//        document.getElementById('view__looks__pills').style.display = 'none';
+          document.getElementById('view__looks__content_wrap').style.display = 'none';
+        } else {
+          if (currentLook.path === data.path) {
+            selectLook();
+          }
+        }
+      }
+    });
+
+    function setMyLike(data) {
+      document.getElementById('view__counters_likes').setAttribute('data-like-path', data.path);
+      document.getElementById('view__counters_likes').classList.add('root_counter--active');
+    }
+
+    function resetMyLike(data) {
+      var path = document.getElementById('view__counters_likes').getAttribute('data-like-path');
+      if (MDSCommon.isPresent(path) && (MDSCommon.isBlank(data) || data.path === path)) {
+        document.getElementById('view__counters_likes').removeAttribute('data-like-path');
+        document.getElementById('view__counters_likes').classList.remove('root_counter--active');
+      }
+    }
+
+    function requestMyLike() {
+      Mydataspace.entities.request('entities.getMyChildren', { root: DATA.root, path: 'likes' }).then(function(result) {
+        var children = result.children;
+        if (children.length > 0) {
+          setMyLike(children[0]);
+        } else {
+          resetMyLike();
+        }
+      });
+    }
+  })();
+</script>
