@@ -248,7 +248,7 @@ function tr$(key) {
   var lang;
   var languageMatch = location.pathname.match(/^\/(\w\w)(\/.*)?$/);
   if (languageMatch) {
-    lang = languageMatch[1];
+    lang = languageMatch[1].toUpperCase();
   } else {
     lang = 'EN';
   }
