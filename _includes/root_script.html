@@ -441,7 +441,13 @@
      * @param data root's data.
      */
     function setRootView(data) {
-      $.ajax({ url: '/fragments/root-view.html', method: 'get' }).then(function(html) {
+      var lang = '{{ include.language }}';
+      if (MDSCommon.isBlank(lang) || lang === 'en') {
+        lang = '';
+      } else {
+        lang = '/' + lang;
+      }
+      $.ajax({ url: lang + '/fragments/root-view.html', method: 'get' }).then(function(html) {
         var view = document.getElementById('view');
         var websiteURL = data.fields.websiteURL;
         var description = data.fields.description;
