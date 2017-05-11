@@ -77,7 +77,11 @@
                       document.getElementById('profile_button_menu_item').style.display = 'block';
                     }
                   </script>
+                  {% page.language == 'en' %}
+                  <a id="profile_button" class="profile_button" href="{{ baseurl }}/en"></a>
+                  {% else %}
                   <a id="profile_button" class="profile_button" href="{{ baseurl }}/"></a>
+                  {% endif %}
                 </li>
                 <li id="login_button_menu_item">
                   <script>
