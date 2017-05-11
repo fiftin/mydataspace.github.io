@@ -225,5 +225,25 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
   }
 };
 
-var LANGUAGE = window.localStorage && window.localStorage.getItem('language') || 'EN';
+var LANGUAGE;
+
+(function() {
+  if (location.pathname) {
+    var languageMatch = location.pathname.match(/^\/\w\w(\/.*)?/);
+    var languageFromURL;
+    if (languageMatch) {
+      languageFromURL = languageMatch[1];
+    }
+    var languageFromLocalStorage = window.localStorage && window.localStorage.getItem('language');
+    if (!languageFromURL && !languageFromLocalStorage) {
+      LANGUAGE = 'EN';
+    } else if (languageFromURL) {
+      LANGUAGE = languageFromURL.toUpperCase();
+    } else {
+      LANGUAGE = languageFromLocalStorage;
+    }
+  }
+})();
+
+// var LANGUAGE = window.localStorage && window.localStorage.getItem('language') || 'EN';
 var STRINGS = STRINGS_ON_DIFFERENT_LANGUAGES[LANGUAGE];
