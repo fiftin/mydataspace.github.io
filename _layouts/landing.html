@@ -55,79 +55,104 @@
 
       <div id="no_items" class="no_items invisible">
         <div id="no_items__no_apps"></div>
-        <div class="no_items__content" id="no_items__no_data">
-          <div class="no_items__column">
-            <div class="no_items__desc">
-              You find many useful data here
-            </div>
-            <div class="no_items__center">
-              <a class="no_items__root clearfix" href="/#geonames">
-                <img class="no_items__root_img" src="https://cdn.mydataspace.net/avatars/sm/BkxggfLvl.png" />
-                <div class="no_items__root_info">
-                  <div class="no_items__root_title">Geonames</div>
-                  <div class="no_items__root_desc">The GeoNames geographical database covers all countries and contains over eleven million placenames</div>
-                </div>
-              </a>
-              <a class="no_items__root clearfix" href="/#hello-world">
-                <img class="no_items__root_img" src="https://cdn.mydataspace.net/avatars/sm/BksOWGzXl.png" />
-                <div class="no_items__root_info">
-                  <div class="no_items__root_title">Hello, World</div>
-                  <div class="no_items__root_desc">"Hello, World!" of the My Data Space</div>
-                </div>
-              </a>
-            </div>
-            <div class="no_items__buttons">
-              <a href="/#*" class="btn btn-success btn-lg no_items__btn no_items__btn--bottom">View All</a>
-            </div>
-          </div>
-          <div class="no_items__column no_items__column--right">
-            <div class="no_items__desc">
-              Create your own data and share it with others
-            </div>
-            <div class="no_items__center no_items__center--right">
-              <input id="no_items__new_root_input"
-                     type="text"
-                     class="no_items__new_root_input form-control"
-                     onkeypress="no_items__new_root_input__onKeyPress(event)"
-                     placeholder="New Root Name" />
 
-              <div id="no_items__notice" class="no_items__notice">
-                Root name must be unique among all existing roots
+        <div class="no_items__content" id="no_items__no_data">
+          <div class="container">
+            <div class="no_items__no_apps">You have ho any data yet</div>
+            <!--<div class="no_items__no_apps_description">-->
+              <!--Create empty root, import data from file or explore existing roots with using-->
+              <!--useful search-->
+            <!--</div>-->
+            <div class="row">
+
+              <!-- Explore -->
+              <div class="col-xs-4 no_items__column">
+                <div class="no_items__desc">
+                  Найдите нужные данные среди огромного количества уже существующих данных
+                </div>
+                <div class="no_items__roots clearfix">
+                  <img src="https://api.mydataspace.net/avatars/sm/Hk3L6-itg.png" class="no_items__root" />
+                  <img src="https://api.mydataspace.net/avatars/sm/B1VWVnOnl.png" class="no_items__root" />
+                  <img src="https://api.mydataspace.net/avatars/sm/HkuFL3o2x.png" class="no_items__root" />
+                  <img src="https://cdn.mydataspace.net/avatars/sm/BJMK_ni2e.png" class="no_items__root" />
+                  <img src="https://api.mydataspace.net/avatars/sm/Sy2jU2jhg.png" class="no_items__root" />
+                  <img src="https://api.mydataspace.net/avatars/sm/Skblwho3x.png" class="no_items__root" />
+                  <img src="https://api.mydataspace.net/avatars/sm/rymJD3o3e.png" class="no_items__root" />
+                  <img src="https://api.mydataspace.net/avatars/sm/SyNT83jhg.png" class="no_items__root" />
+                </div>
+                <a href="/#*" class="btn btn-default btn-lg no_items__btn no_items__btn--bottom">Explore</a>
+              </div>
+
+              <!-- Import -->
+              <div class="col-xs-4 no_items__column">
+                <div class="no_items__desc">
+                  Импортируейте данные из файлов XLS, XML, CSV, JSON и множесва других форматов
+                </div>
+
+                <img class="no_items__refine_img" src="/images/openrefine.png" />
+
+                <div class="no_items__import">
+                  OpenRefine is a free, open source power tool for working with messy data and improving it
+                </div>
+
+                <button class="btn btn-primary btn-lg no_items__btn no_items__btn--bottom"
+                        data-toggle="modal"
+                        data-target="#import_data_modal">Import</button>
+
+
+
+              </div>
+
+              <!-- Create -->
+              <div class="col-xs-4 no_items__column">
+                <div class="no_items__desc">
+                  Начните с нуля &mdash; создайте пустой корень
+                </div>
+                <div class="no_items__center no_items__center--right">
+                  <input id="no_items__new_root_input"
+                         type="text"
+                         class="no_items__new_root_input form-control"
+                         onkeypress="no_items__new_root_input__onKeyPress(event)"
+                         placeholder="New Root Name" />
+
+                  <div id="no_items__notice" class="no_items__notice">
+                    Root name must be unique among all existing roots
+                  </div>
+                </div>
+
+                <button class="btn btn-success btn-lg no_items__btn no_items__btn--bottom"
+                        onclick="no_items__createNewRoot()">Create</button>
+
+                <script>
+                  function no_items__createNewRoot() {
+                    document.getElementById('no_items__notice').classList.remove('no_items__notice--alert');
+                    var root = document.getElementById('no_items__new_root_input').value;
+                    Mydataspace.request('entities.create', {
+                      root: root,
+                      path: '',
+                      fields: []
+                    }, function() {
+                      document.getElementById('no_items__new_root_input').value = '';
+                    }, function(err) {
+                      switch (err.name) {
+                        case 'SequelizeUniqueConstraintError':
+                          document.getElementById('no_items__notice').classList.add('no_items__notice--alert');
+                          document.getElementById('no_items__new_root_input').focus();
+                          break;
+                        default:
+                      }
+                    });
+                  }
+
+                  function no_items__new_root_input__onKeyPress(e) {
+                    if (e.keyCode === 13) {
+                      no_items__createNewRoot();
+                      return false;
+                    }
+                  }
+                </script>
               </div>
             </div>
-            <div class="no_items__buttons">
-              <button class="btn btn-success btn-lg no_items__btn no_items__btn--bottom"
-                      onclick="no_items__createNewRoot()">Create</button>
-              <button class="btn btn-success btn-lg no_items__btn no_items__btn--bottom"
-                      onclick="no_items__createNewRoot()">Create</button>
-            </div>
-            <script>
-              function no_items__createNewRoot() {
-                document.getElementById('no_items__notice').classList.remove('no_items__notice--alert');
-                var root = document.getElementById('no_items__new_root_input').value;
-                Mydataspace.request('entities.create', {
-                  root: root,
-                  path: '',
-                  fields: []
-                }, function() {
-                  document.getElementById('no_items__new_root_input').value = '';
-                }, function(err) {
-                  switch (err.name) {
-                    case 'SequelizeUniqueConstraintError':
-                      document.getElementById('no_items__notice').classList.add('no_items__notice--alert');
-                      document.getElementById('no_items__new_root_input').focus();
-                      break;
-                    default:
-                  }
-                });
-              }
-              function no_items__new_root_input__onKeyPress(e) {
-                if (e.keyCode === 13) {
-                  no_items__createNewRoot();
-                  return false;
-                }
-              }
-            </script>
           </div>
         </div>
       </div>
@@ -176,15 +201,34 @@
     <script>
       $(function() {
         // Get Started large button
-        $("#sub_footer__button").popover({
+        $('#sub_footer__button').popover({
           placement: 'top',
           html : true,
           trigger: 'focus',
           content: function() {
-            return $("#signin_popover").html();
+            return $('#signin_popover').html();
           }
         });
+        $('#import_data_modal').on('show.bs.modal', function () {
+          document.getElementById('import_data_modal__refine').src = 'http://localhost:3333/';
+        });
+
       });
+
+      window.addEventListener('message', function(e) {
+        if (e.data.message === 'openRefineImport') {
+          switch (e.data.stage) {
+            case 'finished':
+              $('#import_data_modal').modal('hide');
+              break;
+            case 'created':
+              document.getElementById('import_data_modal__refine').src = '/finish-import.html?id=' + e.data.id;
+              break;
+          }
+        }
+      });
+
+
 
       $(window).on('hashchange', function() {
         var isEmptyHash = window.location.hash == null ||
@@ -242,5 +286,26 @@
         highlight: function (/*str, lang*/) { return ''; }
       });
     </script>
+
+    <div id="finish_import_data_modal"
+         class="modal"
+         role="dialog"
+         aria-labelledby="Importing Data">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <div class="modal-title">Importing Data</div>
+          </div>
+          <div class="modal-body">
+            ;
+          </div>
+          <div class="modal-footer new_look_modal__footer">
+          <button class="btn btn-danger" data-dismiss="modal" id="finish_import_data_modal_btn">Ok</button>
+          <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

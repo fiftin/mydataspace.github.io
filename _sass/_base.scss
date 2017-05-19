@@ -1,7 +1,8 @@
 $control-panel-height: 70px;
 $no-items-width: 700px;
-$no-items-height: 530px;
-$no-items-col-height: 210px;
+$no-items-height: 500px;
+$no-items-col-top-spacing: 70px;
+$no-items-col-gap: 60px;
 
 body {
   margin: 0;
@@ -101,6 +102,16 @@ body {
   color: $text-color;
 }
 
+.no_items__roots {
+  margin-top: 40px;
+}
+
+.no_items__root {
+  width: calc(25% - 10px);
+  float: left;
+  margin: 5px;
+}
+
 .no_items__no_apps_description {
   color: $text-color;
   font-size: 16px;
@@ -115,17 +126,6 @@ body {
 }
 
 .no_items__content {
-  margin: 0 auto;
-  font-size: 20px;
-  color: #616161;
-  font-family: $font-family-sans-serif;
-  background: url("/images/no_items_bg.svg");
-  background-repeat: no-repeat;
-  background-position: top center;
-  background-size: $no-items-width;
-  width: $no-items-width;
-  height: $no-items-height;
-  margin-top: 40px;
 }
 
 .no_items__center {
@@ -136,32 +136,29 @@ body {
   padding: 45px 0;
 }
 
-.no_items__buttons {
-
-}
-
 .no_items__btn {
   padding-left: 30px;
   padding-right: 30px;
   border-radius: 0;
-  background: #27ae60;
-  border-color: #27ae60;
-}
-
-.no_items__btn--bottom {
-  position: absolute;
   bottom: 0;
+  position: absolute;
+  left: $no-items-col-gap / 2;
+  width: calc(100% - #{$no-items-col-gap});
 }
 
-.no_items__btn--center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.no_items__import {
+  padding-top: 20px;
+  color: gray;
+  font-size: 14px;
 }
 
 .no_items__desc {
   font-size: 16px;
+}
+
+.no_items__refine_img {
+  margin-top: 30px;
+  width: 100%;
 }
 
 .no_items__new_root_input {
@@ -184,13 +181,12 @@ body {
 }
 
 .no_items__column {
-  width: $no-items-width / 2;
-  margin-top: $no-items-col-height;
-  height: $no-items-height - $no-items-col-height;
-  float: left;
-  padding-left: 30px;
-  padding-right: 20px;
+  margin-top: $no-items-col-top-spacing;
+  height: $no-items-height - $no-items-col-top-spacing;
   position: relative;
+
+  padding-left: $no-items-col-gap / 2;
+  padding-right: $no-items-col-gap / 2;
 }
 
 .no_items__column--right {
@@ -268,4 +264,27 @@ body {
     padding-left: 5px;
     padding-right: 5px;
   }
+}
+
+#import_data_modal {
+  .modal-dialog {
+    width: calc(100% - 40px);
+  }
+  .modal-body {
+    height: calc(100vh - 110px);
+    padding: 0;
+  }
+  .modal-header {
+    border-bottom: 0;
+    text-align: center;
+    font-weight: bold;
+  }
+}
+
+.import_data_model__refine {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
 }

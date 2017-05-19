@@ -45,7 +45,7 @@ title: Run Script
             addScript(options);
           });
           scriptTag.addEventListener('error', function() {
-            lastScriptIndex = 10000000; // Stop loading
+            options.lastScriptIndex = 10000000; // Stop loading
             MDSConsole.fail();
             MDSConsole.error('Remote script failed: ' + this.getAttribute('data-script-name') + '. Running aborted');
           });
@@ -58,11 +58,11 @@ title: Run Script
 
       window.addEventListener('message', function(e) {
         if (e.data.message === 'fields') {
-          var scripts = e.data.fields.filter(value => value.type === 'j' || value.type === 'u');
+          var scripts = e.data.fields.filter(function(value) { return value.type === 'j' || value.type === 'u'; });
 
           MDSConsole.fields =
             MDSCommon.convertNameValueArrayToMap(
-              e.data.fields.filter(value => value.type !== 'j' && value.type !== 'u'));
+              e.data.fields.filter(function(value) { return value.type !== 'j' && value.type !== 'u'; }));
 
           var options = {
             scripts: scripts,
