@@ -2,12 +2,58 @@
 layout: default
 language: en
 ---
-<div>
+<div id="finish_import__create_root">
   <form>
     <div class="form-group">
-      <label>Root Name</label>
-      <input class="form-control" placeholder="Root Name" />
-
+      <input class="form-control" placeholder="Root Name" id="finish_import__root_name" />
+    </div>
+    <div class="form-group">
+      <input class="form-control" placeholder="Data Path" id="finish_import__data_path" />
+    </div>
+    <div>
+      <button class="btn btn-success" id="finish_import__create">Create</button>
+      <button class="btn btn-default" id="finish_import__cancel">Cancel</button>
     </div>
   </form>
 </div>
+<div id="finish_import__progress" style="display: none;">
+</div>
+<div id="finish_import__complete" style="display: none;">
+</div>
+
+<script>
+  (function() {
+    var m = location.search.match(/^\?id=([\w\d\-]+)$/);
+    var importId = m[1];
+    var importingProcessPath;
+
+    Mydataspace.on('entities.change.res', function(data) {
+      if (data.path !== importingProcessPath) {
+        return;
+      }
+      // update import progress
+
+    });
+
+    document.getElementById('finish_import__create').addEventListener('click', function() {
+      Mydataspace.entities.request('entities.create', {
+        root: document.getElementById('finish_import__root_name'),
+        path: ''
+      }).then(function() {
+        importingProcessPath = 'processes/' + MDSCommon.guid();
+        return Mydataspace.entities.request('entities.create', {
+          root: document.getElementById('finish_import__root_name'),
+          path: importingProcessPath,
+          fields: [
+            { name: 'type', value: 'import', type: 's' },
+            { name: 'path', value: document.getElementById('finish_import__data_path'), type: 's' }
+            { name: 'id', value: importId, type: 's' }
+          ]
+        });
+      })
+    });
+    document.getElementById('finish_import__cancel').addEventListener('click', function() {
+      ;
+    });
+  })();
+</script>

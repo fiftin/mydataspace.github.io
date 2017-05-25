@@ -1,9 +1,18 @@
 'use strict';
 
-function Myda(options) {
-  if (typeof options === 'string') {
-    options = { root: options };
-  }
+/**
+ * Client for MyDataSpace service.
+ * Version 2.1
+ * @param optionsOrRoot
+ * @param {boolean} [optionsOrRoot.import] Must be true if you want import large amount of data.
+ *                                   If this option is true:
+ *                                   - Subscribers will not receive messages
+ *                                   - More requests per second can be send
+ * @param {string} [optionsOrRoot.root]
+ * @constructor
+ */
+function Myda(optionsOrRoot) {
+  var options = typeof optionsOrRoot === 'string' ? { root: optionsOrRoot } : optionsOrRoot;
   var apiURL = options.import === true ? 'https://import.mydataspace.net' : 'https://api.mydataspace.net';
   this.options = MDSCommon.extend({
     useLocalStorage: true,
@@ -11,7 +20,6 @@ function Myda(options) {
 		websocketURL: apiURL,
     connected: function() { }
   }, options);
-  this.root = this.options.root;
   this.connected = false;
   this.loggedIn = false;
   this.requests = {};
@@ -72,8 +80,15 @@ function Myda(options) {
 
   if (this.options.simpleFormat !== false) {
     this.registerFormatter('entities.get.res', new EntitySimplifier());
+    this.registerFormatter('entities.change.res', new EntitySimplifier());
+    this.registerFormatter('entities.create.res', new EntitySimplifier());
+    this.registerFormatter('entities.getRoots.res', new EntitySimplifier());
+    this.registerFormatter('entities.getMyRoots.res', new EntitySimplifier());
+
+    this.registerFormatter('entities.change', new EntitySimplifier());
+    this.registerFormatter('entities.create', new EntitySimplifier());
   }
-  this.entities = new Entities(this);
+  this.entities = new Entities(this, options.root);
   this.on('connected', this.options.connected);
 
 
@@ -114,8 +129,9 @@ Myda.prototype.getAuthProvider = function(providerName) {
 };
 
 Myda.prototype.connect = function() {
+  var self = this;
   return new Promise(function(resolve, reject) {
-    this.socket = io(this.options.websocketURL, {
+    self.socket = io(self.options.websocketURL, {
       secure: true,
       'forceNew' : true,
       'force new connection' : true,
@@ -124,38 +140,38 @@ Myda.prototype.connect = function() {
       'transports' : ['websocket']
     });
 
-    this.on('connect', function () {
-      this.connected = true;
-      if (this.options.useLocalStorage && MDSCommon.isPresent(localStorage.getItem('authToken'))) {
-        this.emit('authenticate', { token: localStorage.getItem('authToken') });
+    self.on('connect', function () {
+      self.connected = true;
+      if (self.options.useLocalStorage && MDSCommon.isPresent(localStorage.getItem('authToken'))) {
+        self.emit('authenticate', { token: localStorage.getItem('authToken') });
       }
-      this.callListeners('connected');
+      self.callListeners('connected');
       resolve();
-    }.bind(this));
+    });
 
-    this.on('authenticated', function() {
-      this.loggedIn = true;
-      this.callListeners('login');
-    }.bind(this));
+    self.on('authenticated', function() {
+      self.loggedIn = true;
+      self.callListeners('login');
+    });
 
-    this.on('disconnect', function() {
-      this.connected = false;
-      this.loggedIn = false;
-      this.subscriptions = [];
-      this.lastRequestId = 10000;
-      this.requests = {};
-    }.bind(this));
+    self.on('disconnect', function() {
+      self.connected = false;
+      self.loggedIn = false;
+      self.subscriptions = [];
+      self.lastRequestId = 10000;
+      self.requests = {};
+    });
 
-    this.on('entities.err', function(data) {
-      this.handleResponse(data, 'fail');
-    }.bind(this), false);
-    this.on('apps.err', function(data) {
-      this.handleResponse(data, 'fail');
-    }.bind(this), false);
-    this.on('users.err', function(data) {
-      this.handleResponse(data, 'fail');
-    }.bind(this), false);
-  }.bind(this));
+    self.on('entities.err', function(data) {
+      self.handleResponse(data, 'fail');
+    }, false);
+    self.on('apps.err', function(data) {
+      self.handleResponse(data, 'fail');
+    }, false);
+    self.on('users.err', function(data) {
+      self.handleResponse(data, 'fail');
+    }, false);
+  });
 };
 
 Myda.prototype.callListeners = function(eventName, args) {
@@ -245,38 +261,61 @@ Myda.prototype.on = function(eventName, callback, ignoreRequestErrors) {
   this.socket.on(eventName, this.formatAndCallIgnoreRequestErrors.bind(this, eventName, callback, ignoreRequestErrors));
 };
 
-Myda.prototype.request = function(eventName, data, successCallback, failCallback) {
+/**
+ * Content dependent function to make request to the server over instance of Myda class.
+ * Content must be instance of Myda class!
+ * This function extracted from Myda.request method to implement 2 behaviors - callback or Promise.
+ */
+function request(eventName, data, resolve, reject) {
+  var self = this;
   var options = {
-    success: successCallback || function() {},
-    fail: failCallback || function() {}
+    success: resolve || function() {},
+    fail: reject || function() {}
   };
   if (Array.isArray(data)) {
     if (data.length > 0) {
       data = { datas: data };
     } else {
-      successCallback();
+      resolve();
       return;
     }
   }
   var responseEventName = eventName + '.res';
   // Store request information to array
-  this.lastRequestId++;
+  self.lastRequestId++;
   data.requestId = this.lastRequestId;
-  this.requests[data.requestId] = {
+  self.requests[data.requestId] = {
     options: options,
     eventName: responseEventName
   };
 
   // Init response handler
-  if (this.subscriptions.indexOf(responseEventName) === -1) {
-    this.subscriptions.push(responseEventName);
-    this.socket.on(responseEventName, function(data) {
-      this.handleResponse(data, 'success');
-    }.bind(this));
+  if (self.subscriptions.indexOf(responseEventName) === -1) {
+    self.subscriptions.push(responseEventName);
+    self.socket.on(responseEventName, function(data) {
+      self.handleResponse(data, 'success');
+    });
   }
 
   // Send request
-  this.emit(eventName, data);
+  self.emit(eventName, data);
+}
+
+/**
+ * Emit message to the server with field requestId and wait until message with the same requestId
+ * received.
+ * @param {String} eventName
+ * @param data Request data
+ * @param {function} [successCallback]
+ * @param {function} [failCallback]
+ * @return Nothing if successCallback or failCallback passed. Promise if not callback functions passed.
+ */
+Myda.prototype.request = function(eventName, data, successCallback, failCallback) {
+  if (successCallback || failCallback) {
+    request.call(this, eventName, data, successCallback, failCallback);
+  } else {
+    return new Promise(request.bind(this, eventName, data));
+  }
 };
 
 Myda.prototype.formatAndCallIgnoreRequestErrors = function(eventName, callback, ignoreRequestErrors, data) {

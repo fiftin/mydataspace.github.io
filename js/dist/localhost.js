@@ -655,36 +655,37 @@ function EntitySimplifier() {
 }
 
 function EntityFieldsSimplifier() {}
-// function EntityChildrenSimplifier() {}
+//function EntityChildrenSimplifier() {}
 
 EntityFieldsSimplifier.prototype.format = function(data) {
   var res = {};
   if (data != null && data.fields != null) {
-    if (!Array.isArray(data.fields)) {
-      throw new Error('fields field must be array, ' + (typeof data.fields) + ' received.');
-    }
-    for (let i in data.fields) {
-      let field = data.fields[i];
-      res[field.name] = field.value;
+    if (Array.isArray(data.fields)) {
+      for (var i in data.fields) {
+        var field = data.fields[i];
+        res[field.name] = field.value;
+      }
+    } else {
+      MDSCommon.extend(res, data.fields);
     }
   }
   data.fields = res;
 };
-//
-// EntityChildrenSimplifier.prototype.format = function(data) {
-//   var res = {};
-//   if (data != null && data.children != null) {
-//     if (!Array.isArray(data.children)) {
-//       throw new Error('children field must be array');
-//     }
-//     for (let i in data.children) {
-//       let child = data.children[i];
-//       let childName = MDSCommon.getPathName(child.path)
-//       res[childName] = child;
-//     }
-//   }
-//   data.children = res;
-// };
+
+//EntityChildrenSimplifier.prototype.format = function(data) {
+//  var res = {};
+//  if (data != null && data.children != null) {
+//    if (!Array.isArray(data.children)) {
+//      throw new Error('children field must be array');
+//    }
+//    for (let i in data.children) {
+//      let child = data.children[i];
+//      let childName = MDSCommon.getPathName(child.path)
+//      res[childName] = child;
+//    }
+//  }
+//  data.children = res;
+//};
 
 EntitySimplifier.prototype.format = function(data) {
   var datas;
@@ -695,7 +696,7 @@ EntitySimplifier.prototype.format = function(data) {
   } else {
     datas = data.datas;
   }
-  for (let i in datas) {
+  for (var i in datas) {
     this.formatEntity(datas[i]);
   }
 };
@@ -705,95 +706,146 @@ EntitySimplifier.prototype.formatEntity = function(entity) {
     if (!Array.isArray(entity.children)) {
       throw new Error('children field must be array');
     }
-    for (let i in entity.children) {
+    for (var i in entity.children) {
       this.formatEntity(entity.children[i]);
     }
   }
   this.fieldsSimplifier.format(entity);
-  // this.childrenSimplifier.format(entity);
+  //this.childrenSimplifier.format(entity);
 };
 
-function Entities(myda) {
-  this.myda = myda;
+/**
+ * Wrapper for Myda requests for work with entities.
+ * Version 2.1
+ * @param parent Instance of Myda class.
+ * @param {string} [root] Root name if you want to work only with one root.
+ * @constructor
+ */
+function Entities(parent, root) {
+  this.parent = parent;
+  this.root = root;
 }
 
-Entities.prototype.request = function(eventName, data) {
-  return new Promise(function(resolve, reject) {
-    this.myda.request(eventName, data, resolve, reject);
-  }.bind(this));
+/**
+ *
+ * @param pathOrData
+ * @param options
+ * @return {*}
+ */
+Entities.prototype.getRootPathData = function(pathOrData, options) {
+  var data;
+  if (typeof pathOrData === 'string') {
+    data = MDSCommon.extend({
+      root: this.root,
+      path: pathOrData
+    }, options);
+  } else {
+    data = pathOrData.root !== undefined ? pathOrData : MDSCommon.extend(pathOrData, { root: this.root })
+  }
+  return data;
 };
 
-Entities.prototype.create = function(path, fields) {
-  return this.request('entities.create', {
-    root: this.myda.root,
-    path: path,
-    fields: fields
+/**
+ * @deprecated Now this method equals to Myda.request.
+ */
+Entities.prototype.request = function(eventName, data) {
+  var self = this;
+  return new Promise(function(resolve, reject) {
+    self.parent.request(eventName, data, resolve, reject);
   });
 };
 
-Entities.prototype.get = function(path, fields) {
-  var data = {
-    root: this.myda.root,
-    path: path,
-    fields: fields
-  };
-  return this.request('entities.get', data);
+/**
+ *
+ * @param pathOrData Path to entity or data of request.
+ * @param fields Fields of new entity. It is only relevant if the pathOrData is string.
+ */
+Entities.prototype.create = function(pathOrData, fields) {
+  return this.request('entities.create', this.getRootPathData(pathOrData, { fields: fields }));
 };
 
-Entities.prototype.getChildren = function(path, options, limit) {
+/**
+ *
+ * @param pathOrOptions
+ * @param [fields]
+ */
+Entities.prototype.get = function(pathOrOptions, fields) {
+  return this.request('entities.get', this.getRootPathData(pathOrOptions, { fields: fields }));
+};
+
+/**
+ * @deprecated Use get method with option children:true. This method returns incomplete information
+ *             if you use search string.
+ *
+ * @param {string} path Path to entity children of that you want to get.
+ * @param [optionsOrSearch] Search string or options for request.
+ * @param {number} [limit] Max number of children in result.
+ */
+Entities.prototype.getChildren = function(path, optionsOrSearch, limit) {
   var data = {
-    root: this.myda.root,
+    root: this.root,
     path: path,
     children: [],
     limit: limit
   };
-  if (typeof options === 'string') {
-    options = { search: options }
-  }
-  return this.request('entities.get', MDSCommon.extend(data, options))
-         .then(function(data) { return data.children });
+  var options = typeof options === 'string' ? { search: optionsOrSearch } : optionsOrSearch;
+  return this.request('entities.get', MDSCommon.extend(data, options)).then(function(data) { return data.children; });
 };
 
 Entities.prototype.delete = function(path) {
-  return this.request('entities.delete', {
-    root: this.myda.root,
-    path: path
-  });
+  return this.request('entities.delete', this.getRootPathData(path));
 };
 
-Entities.prototype.change = function(path, fields) {
-  return this.request('entities.change', {
-    root: this.myda.root,
-    path: path,
-    fields: fields
-  });
+Entities.prototype.change = function(pathOrData, fields) {
+  return this.request('entities.change', this.getRootPathData(pathOrData, { fields: fields }));
 };
 
-Entities.prototype.subscribe = function(filter, events) {
-  return this.request('entities.subscribe', {
-    root: this.myda.root,
-    path: filter,
-    events: events
-  });
+Entities.prototype.subscribe = function(filterOrOptions, events) {
+  return this.request('entities.subscribe', this.getRootPathData(filterOrOptions, { events: events }));
 };
 
-Entities.prototype.unsubscribe = function(filter) {
-  return this.request('entities.unsubscribe', {
-    root: this.myda.root,
-    path: filter
-  });
+Entities.prototype.unsubscribe = function(filterOrOptions) {
+  return this.request('entities.unsubscribe', this.getRootPathData(filterOrOptions));
 };
 
+/**
+ * @deprecated Use onChange, onDelete, onRename or onCreate.
+ */
 Entities.prototype.on = function(eventName, callback) {
-  this.myda.on('entities.' + eventName + '.res', callback);
+  this.parent.on('entities.' + eventName + '.res', callback);
+};
+
+Entities.prototype.onChange = function(callback) {
+  this.parent.on('entities.change.res', callback);
+};
+
+Entities.prototype.onDelete = function(callback) {
+  this.parent.on('entities.delete.res', callback);
+};
+
+Entities.prototype.onRename = function(callback) {
+  this.parent.on('entities.rename.res', callback);
+};
+
+Entities.prototype.onCreate = function(callback) {
+  this.parent.on('entities.create.res', callback);
 };
 
 'use strict';
 
-function Myda(options) {
-  if (typeof options === 'string') {
-    options = { root: options };
-  }
+/**
+ * Client for MyDataSpace service.
+ * Version 2.1
+ * @param optionsOrRoot
+ * @param {boolean} [optionsOrRoot.import] Must be true if you want import large amount of data.
+ *                                   If this option is true:
+ *                                   - Subscribers will not receive messages
+ *                                   - More requests per second can be send
+ * @param {string} [optionsOrRoot.root]
+ * @constructor
+ */
+function Myda(optionsOrRoot) {
+  var options = typeof optionsOrRoot === 'string' ? { root: optionsOrRoot } : optionsOrRoot;
   var apiURL = options.import === true ? 'https://import.mydataspace.net' : 'https://api.mydataspace.net';
   this.options = MDSCommon.extend({
     useLocalStorage: true,
@@ -801,7 +853,6 @@ function Myda(options) {
 		websocketURL: apiURL,
     connected: function() { }
   }, options);
-  this.root = this.options.root;
   this.connected = false;
   this.loggedIn = false;
   this.requests = {};
@@ -862,8 +913,15 @@ function Myda(options) {
 
   if (this.options.simpleFormat !== false) {
     this.registerFormatter('entities.get.res', new EntitySimplifier());
+    this.registerFormatter('entities.change.res', new EntitySimplifier());
+    this.registerFormatter('entities.create.res', new EntitySimplifier());
+    this.registerFormatter('entities.getRoots.res', new EntitySimplifier());
+    this.registerFormatter('entities.getMyRoots.res', new EntitySimplifier());
+
+    this.registerFormatter('entities.change', new EntitySimplifier());
+    this.registerFormatter('entities.create', new EntitySimplifier());
   }
-  this.entities = new Entities(this);
+  this.entities = new Entities(this, options.root);
   this.on('connected', this.options.connected);
 
 
@@ -904,8 +962,9 @@ Myda.prototype.getAuthProvider = function(providerName) {
 };
 
 Myda.prototype.connect = function() {
+  var self = this;
   return new Promise(function(resolve, reject) {
-    this.socket = io(this.options.websocketURL, {
+    self.socket = io(self.options.websocketURL, {
       secure: true,
       'forceNew' : true,
       'force new connection' : true,
@@ -914,38 +973,38 @@ Myda.prototype.connect = function() {
       'transports' : ['websocket']
     });
 
-    this.on('connect', function () {
-      this.connected = true;
-      if (this.options.useLocalStorage && MDSCommon.isPresent(localStorage.getItem('authToken'))) {
-        this.emit('authenticate', { token: localStorage.getItem('authToken') });
+    self.on('connect', function () {
+      self.connected = true;
+      if (self.options.useLocalStorage && MDSCommon.isPresent(localStorage.getItem('authToken'))) {
+        self.emit('authenticate', { token: localStorage.getItem('authToken') });
       }
-      this.callListeners('connected');
+      self.callListeners('connected');
       resolve();
-    }.bind(this));
+    });
 
-    this.on('authenticated', function() {
-      this.loggedIn = true;
-      this.callListeners('login');
-    }.bind(this));
+    self.on('authenticated', function() {
+      self.loggedIn = true;
+      self.callListeners('login');
+    });
 
-    this.on('disconnect', function() {
-      this.connected = false;
-      this.loggedIn = false;
-      this.subscriptions = [];
-      this.lastRequestId = 10000;
-      this.requests = {};
-    }.bind(this));
+    self.on('disconnect', function() {
+      self.connected = false;
+      self.loggedIn = false;
+      self.subscriptions = [];
+      self.lastRequestId = 10000;
+      self.requests = {};
+    });
 
-    this.on('entities.err', function(data) {
-      this.handleResponse(data, 'fail');
-    }.bind(this), false);
-    this.on('apps.err', function(data) {
-      this.handleResponse(data, 'fail');
-    }.bind(this), false);
-    this.on('users.err', function(data) {
-      this.handleResponse(data, 'fail');
-    }.bind(this), false);
-  }.bind(this));
+    self.on('entities.err', function(data) {
+      self.handleResponse(data, 'fail');
+    }, false);
+    self.on('apps.err', function(data) {
+      self.handleResponse(data, 'fail');
+    }, false);
+    self.on('users.err', function(data) {
+      self.handleResponse(data, 'fail');
+    }, false);
+  });
 };
 
 Myda.prototype.callListeners = function(eventName, args) {
@@ -1035,38 +1094,61 @@ Myda.prototype.on = function(eventName, callback, ignoreRequestErrors) {
   this.socket.on(eventName, this.formatAndCallIgnoreRequestErrors.bind(this, eventName, callback, ignoreRequestErrors));
 };
 
-Myda.prototype.request = function(eventName, data, successCallback, failCallback) {
+/**
+ * Content dependent function to make request to the server over instance of Myda class.
+ * Content must be instance of Myda class!
+ * This function extracted from Myda.request method to implement 2 behaviors - callback or Promise.
+ */
+function request(eventName, data, resolve, reject) {
+  var self = this;
   var options = {
-    success: successCallback || function() {},
-    fail: failCallback || function() {}
+    success: resolve || function() {},
+    fail: reject || function() {}
   };
   if (Array.isArray(data)) {
     if (data.length > 0) {
       data = { datas: data };
     } else {
-      successCallback();
+      resolve();
       return;
     }
   }
   var responseEventName = eventName + '.res';
   // Store request information to array
-  this.lastRequestId++;
+  self.lastRequestId++;
   data.requestId = this.lastRequestId;
-  this.requests[data.requestId] = {
+  self.requests[data.requestId] = {
     options: options,
     eventName: responseEventName
   };
 
   // Init response handler
-  if (this.subscriptions.indexOf(responseEventName) === -1) {
-    this.subscriptions.push(responseEventName);
-    this.socket.on(responseEventName, function(data) {
-      this.handleResponse(data, 'success');
-    }.bind(this));
+  if (self.subscriptions.indexOf(responseEventName) === -1) {
+    self.subscriptions.push(responseEventName);
+    self.socket.on(responseEventName, function(data) {
+      self.handleResponse(data, 'success');
+    });
   }
 
   // Send request
-  this.emit(eventName, data);
+  self.emit(eventName, data);
+}
+
+/**
+ * Emit message to the server with field requestId and wait until message with the same requestId
+ * received.
+ * @param {String} eventName
+ * @param data Request data
+ * @param {function} [successCallback]
+ * @param {function} [failCallback]
+ * @return Nothing if successCallback or failCallback passed. Promise if not callback functions passed.
+ */
+Myda.prototype.request = function(eventName, data, successCallback, failCallback) {
+  if (successCallback || failCallback) {
+    request.call(this, eventName, data, successCallback, failCallback);
+  } else {
+    return new Promise(request.bind(this, eventName, data));
+  }
 };
 
 Myda.prototype.formatAndCallIgnoreRequestErrors = function(eventName, callback, ignoreRequestErrors, data) {

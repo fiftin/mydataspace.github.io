@@ -58,7 +58,7 @@
 
         <div class="no_items__content" id="no_items__no_data">
           <div class="container">
-            <div class="no_items__no_apps">You have ho any data yet</div>
+            <div id="no_items__title" class="no_items__no_apps"></div>
             <!--<div class="no_items__no_apps_description">-->
               <!--Create empty root, import data from file or explore existing roots with using-->
               <!--useful search-->
@@ -67,9 +67,7 @@
 
               <!-- Explore -->
               <div class="col-xs-4 no_items__column">
-                <div class="no_items__desc">
-                  Найдите нужные данные среди огромного количества уже существующих данных
-                </div>
+                <div id="no_items__explore__desc" class="no_items__desc"></div>
                 <div class="no_items__roots clearfix">
                   <img src="https://api.mydataspace.net/avatars/sm/Hk3L6-itg.png" class="no_items__root" />
                   <img src="https://api.mydataspace.net/avatars/sm/B1VWVnOnl.png" class="no_items__root" />
@@ -80,48 +78,42 @@
                   <img src="https://api.mydataspace.net/avatars/sm/rymJD3o3e.png" class="no_items__root" />
                   <img src="https://api.mydataspace.net/avatars/sm/SyNT83jhg.png" class="no_items__root" />
                 </div>
-                <a href="/#*" class="btn btn-default btn-lg no_items__btn no_items__btn--bottom">Explore</a>
+                <a href="/#*"
+                   class="btn btn-default btn-lg no_items__btn no_items__btn--bottom"
+                   id="no_items__explore__button"></a>
               </div>
 
               <!-- Import -->
               <div class="col-xs-4 no_items__column">
-                <div class="no_items__desc">
-                  Импортируейте данные из файлов XLS, XML, CSV, JSON и множесва других форматов
-                </div>
+                <div id="no_items__import__desc" class="no_items__desc"></div>
 
                 <img class="no_items__refine_img" src="/images/openrefine.png" />
 
-                <div class="no_items__import">
-                  OpenRefine is a free, open source power tool for working with messy data and improving it
-                </div>
+                <div class="no_items__import" id="no_items__import__refine_desc"></div>
 
                 <button class="btn btn-primary btn-lg no_items__btn no_items__btn--bottom"
                         data-toggle="modal"
-                        data-target="#import_data_modal">Import</button>
-
-
+                        data-target="#import_data_modal" id="no_items__import__button"></button>
 
               </div>
 
               <!-- Create -->
               <div class="col-xs-4 no_items__column">
-                <div class="no_items__desc">
-                  Начните с нуля &mdash; создайте пустой корень
-                </div>
+                <div id="no_items__create__desc" class="no_items__desc"></div>
                 <div class="no_items__center no_items__center--right">
                   <input id="no_items__new_root_input"
                          type="text"
                          class="no_items__new_root_input form-control"
                          onkeypress="no_items__new_root_input__onKeyPress(event)"
-                         placeholder="New Root Name" />
+                         placeholder="New Root Name"
+                         id="no_items__create__input" />
 
-                  <div id="no_items__notice" class="no_items__notice">
-                    Root name must be unique among all existing roots
-                  </div>
+                  <div id="no_items__notice" class="no_items__notice"></div>
                 </div>
 
                 <button class="btn btn-success btn-lg no_items__btn no_items__btn--bottom"
-                        onclick="no_items__createNewRoot()">Create</button>
+                        onclick="no_items__createNewRoot()"
+                        id="no_items__create__button"></button>
 
                 <script>
                   function no_items__createNewRoot() {
@@ -287,7 +279,8 @@
       });
     </script>
 
-    <div id="finish_import_data_modal"
+
+    <div id="import_data_modal"
          class="modal"
          role="dialog"
          aria-labelledby="Importing Data">
@@ -298,11 +291,7 @@
             <div class="modal-title">Importing Data</div>
           </div>
           <div class="modal-body">
-            ;
-          </div>
-          <div class="modal-footer new_look_modal__footer">
-          <button class="btn btn-danger" data-dismiss="modal" id="finish_import_data_modal_btn">Ok</button>
-          <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <iframe id="import_data_modal__refine" class="import_data_model__refine"></iframe>
           </div>
         </div>
       </div>

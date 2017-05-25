@@ -136,6 +136,11 @@ UI = {
 
     // Change logo link
     document.getElementById('logo_link').href = '/' + newLang;
+
+    // No items
+    for (var no_item_id in strings.no_items) {
+      document.getElementById(no_item_id).innerHTML = strings.no_items[no_item_id];
+    }
   },
 
   /**

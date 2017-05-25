@@ -106,7 +106,19 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     edit_view: 'Edit View',
     save_view: 'Save View',
     new_view: 'New View',
-    create_view: 'Create View'
+    create_view: 'Create View',
+
+    no_items: {
+      no_items__title: 'You have ho any data yet',
+      no_items__explore__desc: 'Find data you need among a huge amount of existing data',
+      no_items__explore__button: 'Explore',
+      no_items__import__desc: 'Import data from XLS, XML, CSV, JSON and many other formats',
+      no_items__import__refine_desc: 'OpenRefine is a free, open source power tool for working with messy data and improving it',
+      no_items__import__button: 'Import',
+      no_items__create__desc: 'Start from scratch &mdash; create an empty root',
+      no_items__notice: 'Root name must be unique among all existing roots',
+      no_items__create__button: 'Create'
+    }
 
   },
   RU: {
@@ -217,11 +229,23 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     title_cant_be_blank: 'Заголовол не может быть пустым',
     too_long_title: 'Слишком длинный заголовок',
     codepen_url_cant_be_blank: 'Codepen URL не может быть пустым',
-    invalid_codepen_pen_url: 'Invalid CodePen pen URL',
+    invalid_codepen_pen_url: 'Некорректный URL CodePen приложения',
     edit_view: 'Изменить',
     save_view: 'Сохранить',
     new_view: 'Новое представление',
-    create_view: 'Создать представление'
+    create_view: 'Создать представление',
+
+    no_items: {
+      no_items__title: 'У вас еще нет никаких данных',
+      no_items__explore__desc: 'Найдите нужные данные среди огромного количества уже существующих данных',
+      no_items__explore__button: 'Смотреть',
+      no_items__import__desc: 'Импортируйте данные из файлов XLS, XML, CSV, JSON и множества других форматов',
+      no_items__import__refine_desc: 'OpenRefine &mdash; свободный инструмент для работы с наборами данных',
+      no_items__import__button: 'Импортировать',
+      no_items__create__desc: 'Начните с нуля &mdash; создайте пустой корень',
+      no_items__notice: 'Имя корня должно быть уникальным среди всех существующих корней. В имени допускаются только латинские бувы, цифры, знак тере и подчеркивания',
+      no_items__create__button: 'Создать'
+    }
   }
 };
 
