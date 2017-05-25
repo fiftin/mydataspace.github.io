@@ -766,10 +766,7 @@ Entities.prototype.getRootPathData = function(pathOrData, options) {
  * @deprecated Now this method equals to Myda.request.
  */
 Entities.prototype.request = function(eventName, data) {
-  var self = this;
-  return new Promise(function(resolve, reject) {
-    self.parent.request(eventName, data, resolve, reject);
-  });
+  return this.parent.request(eventName, data);
 };
 
 /**
