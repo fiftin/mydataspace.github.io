@@ -104,11 +104,13 @@ var MDSCommon = {
         for (var i in minuend) {
           if (looseEquality) {
             if (minuend[i][key] != subtrahend[i][key]) {
-              ret[key] = MDSCommon.copy(minuend[key]);
+              return minuend;
+              // ret[key] = MDSCommon.copy(minuend[key]);
             }
           } else {
             if (minuend[key] !== subtrahend[key]) {
-              ret[key] = MDSCommon.copy(minuend[key]);
+              return minuend;
+              // ret[key] = MDSCommon.copy(minuend[key]);
             }
           }
         }
