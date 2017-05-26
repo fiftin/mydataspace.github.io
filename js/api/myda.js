@@ -85,8 +85,8 @@ function Myda(optionsOrRoot) {
     this.registerFormatter('entities.getRoots.res', new EntitySimplifier());
     this.registerFormatter('entities.getMyRoots.res', new EntitySimplifier());
 
-    this.registerFormatter('entities.change', new EntitySimplifier());
-    this.registerFormatter('entities.create', new EntitySimplifier());
+    this.registerFormatter('entities.change', new EntityUnsimplifier());
+    this.registerFormatter('entities.create', new EntityUnsimplifier());
   }
   this.entities = new Entities(this, options.root);
   this.on('connected', this.options.connected);

@@ -1,44 +1,10 @@
 'use strict';
 
-function EntitySimplifier() {
-  this.fieldsSimplifier = new EntityFieldsSimplifier();
-  // this.childrenSimplifier = new EntityChildrenSimplifier();
-}
-
-function EntityFieldsSimplifier() {}
-//function EntityChildrenSimplifier() {}
-
-EntityFieldsSimplifier.prototype.format = function(data) {
-  var res = {};
-  if (data != null && data.fields != null) {
-    if (Array.isArray(data.fields)) {
-      for (var i in data.fields) {
-        var field = data.fields[i];
-        res[field.name] = field.value;
-      }
-    } else {
-      MDSCommon.extend(res, data.fields);
-    }
-  }
-  data.fields = res;
+function EntityRecursiveFormatter(fieldsFormatter) {
+  this.fieldsFormatter = fieldsFormatter;
 };
 
-//EntityChildrenSimplifier.prototype.format = function(data) {
-//  var res = {};
-//  if (data != null && data.children != null) {
-//    if (!Array.isArray(data.children)) {
-//      throw new Error('children field must be array');
-//    }
-//    for (let i in data.children) {
-//      let child = data.children[i];
-//      let childName = MDSCommon.getPathName(child.path)
-//      res[childName] = child;
-//    }
-//  }
-//  data.children = res;
-//};
-
-EntitySimplifier.prototype.format = function(data) {
+EntityRecursiveFormatter.prototype.format = function(data) {
   var datas;
   if (Array.isArray(data)) {
     datas = data;
@@ -52,7 +18,7 @@ EntitySimplifier.prototype.format = function(data) {
   }
 };
 
-EntitySimplifier.prototype.formatEntity = function(entity) {
+EntityRecursiveFormatter.prototype.formatEntity = function(entity) {
   if (entity != null && entity.children != null) {
     if (!Array.isArray(entity.children)) {
       throw new Error('children field must be array');
@@ -61,6 +27,67 @@ EntitySimplifier.prototype.formatEntity = function(entity) {
       this.formatEntity(entity.children[i]);
     }
   }
-  this.fieldsSimplifier.format(entity);
-  //this.childrenSimplifier.format(entity);
+  this.fieldsFormatter.format(entity);
+  if (this.childrenFormatter) {
+    this.childrenFormatter.format(entity);
+  }
 };
+
+function EntityFieldsSimplifier() {}
+function EntityChildrenSimplifier() {}
+function EntityFieldsUnsimplifier() {}
+
+EntityFieldsSimplifier.prototype.format = function(data) {
+  var res = {};
+  if (data != null && data.fields != null) {
+    if (!Array.isArray(data.fields)) {
+      throw new Error('fields must be array');
+    }
+    for (var i in data.fields) {
+      var field = data.fields[i];
+      res[field.name] = field.value;
+    }
+  }
+  data.fields = res;
+};
+
+EntityChildrenSimplifier.prototype.format = function(data) {
+  var res = {};
+  if (data != null && data.children != null) {
+    if (!Array.isArray(data.children)) {
+      throw new Error('children field must be array');
+    }
+    for (var i in data.children) {
+      var child = data.children[i];
+      var childName = MDSCommon.getPathName(child.path)
+      res[childName] = child;
+    }
+  }
+  data.children = res;
+};
+
+EntityFieldsUnsimplifier.prototype.format = function(data) {
+  var res = [];
+  if (data != null && data.fields != null) {
+    if (Array.isArray(data.fields)) {
+      res.push(...data.fields);
+    } else {
+      for (var key in data.fields) {
+        res.push({
+          name: key,
+          value: data.fields[key],
+          type: 's'
+        });
+      }
+    }
+  }
+  data.fields = res;
+};
+
+function EntitySimplifier() {
+  EntityRecursiveFormatter.call(this, new EntityFieldsSimplifier());
+}
+
+EntitySimplifier.prototype = Object.create(EntityRecursiveFormatter.prototype);
+
+
