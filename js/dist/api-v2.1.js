@@ -7345,6 +7345,47 @@ var MDSCommon = {
       s4() + '-' + s4() + s4() + s4();
   },
 
+  diff: function(minuend, subtrahend, looseEquality) {
+    if (Array.isArray(minuend)) {
+      if (!Array.isArray(subtrahend) || minuend.length !== subtrahend.length) {
+        return MDSCommon.copy(minuend);
+      } else {
+        for (var i in minuend) {
+          if (looseEquality) {
+            if (minuend[i][key] != subtrahend[i][key]) {
+              ret[key] = MDSCommon.copy(minuend[key]);
+            }
+          } else {
+            if (minuend[key] !== subtrahend[key]) {
+              ret[key] = MDSCommon.copy(minuend[key]);
+            }
+          }
+        }
+        return minuend;
+      }
+    }
+
+
+    var ret = {};
+    for (var key in minuend) {
+      if (MDSCommon.isObject(minuend[key]) || Array.isArray(minuend[key])) {
+        ret[key] = MDSCommon.diff(minuend[key], subtrahend[key]);
+      } else {
+        if (looseEquality) {
+          if (minuend[key] != subtrahend[key]) {
+            ret[key] = minuend[key];
+          }
+        } else {
+          if (minuend[key] !== subtrahend[key]) {
+            ret[key] = minuend[key];
+          }
+        }
+      }
+    }
+
+    return ret;
+  },
+
   millisecondsToStr: function(milliseconds) {
     // TIP: to find current time in milliseconds, use:
     // var  current_time_milliseconds = new Date().getTime();
@@ -7473,7 +7514,7 @@ var MDSCommon = {
   },
 
   isObject: function(value) {
-    return typeof value === 'object';
+    return typeof value === 'object' && value !== null;
   },
 
   isNull: function(value) {
