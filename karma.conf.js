@@ -15,6 +15,7 @@ module.exports = function(config) {
     files: [
       'test/**/*Spec.js',
       'js/common.js',
+      'js/formatters.js',
       'js/api/myda.js',
       'js/api/entities.js',
       'js/strings.js',

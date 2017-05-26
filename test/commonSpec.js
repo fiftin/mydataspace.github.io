@@ -1,4 +1,17 @@
 describe('MDSCommon', function() {
+  describe('#diff', function() {
+    it('valid difference of simple object', function() {
+      var res = MDSCommon.diff({
+        address: 'Lenin st',
+        city: 'MGN'
+      }, {
+        address: 'K.Mark st',
+        city: 'MGN'
+      });
+      expect(res).to.eql({ address: 'Lenin st' });
+    });
+  });
+
   describe('#textToHtml', function() {
     it('returns same text for simple text', function() {
       expect(MDSCommon.textToHtml('Hello, World!')).to.eq('Hello,&nbsp;World!');

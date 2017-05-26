@@ -737,7 +737,13 @@ function EntitySimplifier() {
   EntityRecursiveFormatter.call(this, new EntityFieldsSimplifier());
 }
 
+function EntityUnsimplifier() {
+  EntityRecursiveFormatter.call(this, new EntityFieldsUnsimplifier());
+}
+
 EntitySimplifier.prototype = Object.create(EntityRecursiveFormatter.prototype);
+EntityUnsimplifier.prototype = Object.create(EntityRecursiveFormatter.prototype);
+
 
 
 

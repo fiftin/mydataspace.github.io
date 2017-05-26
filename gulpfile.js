@@ -45,6 +45,8 @@ gulp.task('mds', function() {
     .pipe(gulp.dest('./js/dist/'));
 });
 
+gulp.task('a', ['api', 'nodejs', 'mds']);
+
 gulp.task('ui', function() {
   return gulp.src([
       './js/ace.js',

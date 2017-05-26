@@ -254,7 +254,8 @@ var LANGUAGE;
 (function() {
   var languageFromLocalStorage = window.localStorage && window.localStorage.getItem('language');
   if (window.location && window.location.pathname) {
-    var languageMatch = location.pathname.match(/^\/(\w\w)(\/.*)?/);
+    console.log(location.pathname);
+    var languageMatch = location.pathname.match(/^\/(\w\w)(\/.*)?$/);
     var languageFromURL = languageMatch ? languageMatch[1].toUpperCase() : null;
     if (!languageFromURL && !languageFromLocalStorage) {
       LANGUAGE = 'EN';
