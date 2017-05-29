@@ -9,10 +9,12 @@
   {% assign client_id = "my-data.space" %}
   {% assign api_url = site.local_api_url %}
   {% assign api_websocket_url = site.local_api_websocket_url %}
+  {% assign refine_url = site.local_refine_url %}
 {% else %}
   {% assign client_id = site.client_id %}
   {% assign api_url = site.api_url %}
   {% assign api_websocket_url = site.api_websocket_url %}
+  {% assign refine_url = site.refine_url %}
 {% endif %}
 <head>
   <meta charset="utf-8">

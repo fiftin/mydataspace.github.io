@@ -984,6 +984,9 @@ function Myda(optionsOrRoot) {
     this.formatters[eventName].push(formatter);
   };
 
+  this.registerFormatter('entities.change', new EntityUnsimplifier());
+  this.registerFormatter('entities.create', new EntityUnsimplifier());
+
   if (this.options.simpleFormat !== false) {
     this.registerFormatter('entities.get.res', new EntitySimplifier());
     this.registerFormatter('entities.change.res', new EntitySimplifier());
@@ -991,8 +994,6 @@ function Myda(optionsOrRoot) {
     this.registerFormatter('entities.getRoots.res', new EntitySimplifier());
     this.registerFormatter('entities.getMyRoots.res', new EntitySimplifier());
 
-    this.registerFormatter('entities.change', new EntityUnsimplifier());
-    this.registerFormatter('entities.create', new EntityUnsimplifier());
   }
   this.entities = new Entities(this, options.root);
   this.on('connected', this.options.connected);
@@ -1147,6 +1148,14 @@ Myda.prototype.emit = function(eventName, data) {
   if (typeof this.socket === 'undefined') {
     throw new Error('You must connect to server before emit data');
   }
+
+  var arr = Array.isArray(data) ? data : [data];
+  (this.formatters[eventName] || []).forEach(function(formatter) {
+    arr.forEach(function(d) {
+      formatter.format(d);
+    });
+  });
+
   if (Array.isArray(data)) {
     data = { datas: data };
   }

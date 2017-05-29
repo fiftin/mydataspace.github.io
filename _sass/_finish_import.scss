@@ -1,0 +1,49 @@
+@import "./vars";
+
+$finish-import-progress-height: 35px;
+
+.finish_import__content_container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} 
+
+.finish_import__content {
+  width: 300px;
+}
+
+.finish_import__buttons {
+  text-align: right;
+}
+
+.finish_import__button {
+  width: calc(50% - 2.5px);
+}
+
+.finish_import__progress_bar {
+  position: relative;
+  height: $finish-import-progress-height;
+  border: 1px solid $brand-success;
+  margin-bottom: 20px;
+}
+
+.finish_import__progress_label {
+  padding-bottom: 3px;
+}
+
+.finish_import__progress_indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: $finish-import-progress-height - 2px;
+  width: 0%;
+  background: $brand-success;
+  opacity: 0.5;
+}
+
+.finish_import__progress_num {
+  position: relative;
+  line-height: $finish-import-progress-height;
+  text-align: center;
+}

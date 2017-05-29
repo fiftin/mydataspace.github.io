@@ -26,7 +26,7 @@ local_refine_url: "http://localhost:3333/"
 
 api_url: "https://api.mydataspace.net"
 api_websocket_url: "https://api.mydataspace.net"
-refine_url: "https://myda.space/import"
+refine_url: "https://refine.mydataspace.net"
 
 client_id: "a56e6a0c-06ab-bca7-bb97-18c8898c68f9"
 github_username:  fiftin

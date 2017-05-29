@@ -2,55 +2,113 @@
 layout: frame
 language: en
 ---
-<div id="finish_import__create_root">
-  <form>
+<div class="finish_import__content_container">
+  <div class="finish_import__content" id="finish_import__create_root">
     <div class="form-group">
       <input class="form-control" placeholder="Root Name" id="finish_import__root_name" />
     </div>
     <div class="form-group">
       <input class="form-control" placeholder="Data Path" id="finish_import__data_path" />
     </div>
-    <div>
-      <button class="btn btn-success" id="finish_import__create">Create</button>
-      <button class="btn btn-default" id="finish_import__cancel">Cancel</button>
+    <div class="finish_import__buttons">
+      <button class="finish_import__button btn btn-default" id="finish_import__cancel">Cancel</button>
+      <button class="finish_import__button btn btn-success" id="finish_import__create" disabled>Create</button>
     </div>
-  </form>
+  </div>
+  <div class="finish_import__content" id="finish_import__progress" style="display: none;">
+    <div id="finish_import__progress_label" class="finish_import__progress_label">Importing...</div>
+    <div class="finish_import__progress_bar">
+      <div class="finish_import__progress_indicator" id="finish_import__progress_indicator"></div>
+      <div class="finish_import__progress_num" id="finish_import__progress_num">0%</div>
+    </div>
+    <div class="finish_import__buttons">
+      <button class="finish_import__button btn btn-default" id="finish_import__cancel">Cancel</button>
+      <button class="finish_import__button btn btn-success" id="finish_import__background">Background</button>
+    </div>
+  </div>
+  <div class="finish_import__content" id="finish_import__finished" style="display: none;">
+    <div id="finish_import__cancelled"></div>
+    <div id="finish_import__failed"></div>
+    <div id="finish_import__completed"></div>
+  </div
 </div>
-<div id="finish_import__progress" style="display: none;">
-</div>
-<div id="finish_import__complete" style="display: none;">
-</div>
-
 <script>
+  Mydataspace.connect();
+  
+  Mydataspace.on('login', function() {
+    document.getElementById('finish_import__create').disabled = false;
+  });
+  Mydataspace.on('logout', function() {
+    document.getElementById('finish_import__create').disabled = false;
+  });
+
   (function() {
     var m = location.search.match(/^\?id=([\w\d\-]+)$/);
-    var importId = m[1];
+    var importId = m[0];
     var importingProcessPath;
+    var processData;
 
-    Mydataspace.on('entities.change.res', function(data) {
-      if (data.path !== importingProcessPath) {
+    Mydataspace.entities.onChange(function(data) {
+      if (data.root !== processData.root || data.path !== processData.path) {
         return;
       }
+
+
+      var state = MDSCommon.findValueByName(data.fields, 'state');
+     
+      if (['failed', 'cancelled', 'completed'].indexOf(state) >= 0) {
+        document.getElementById('finish_import__progress').style.display = 'none';
+        document.getElementById('finish_import__finished').style.display = 'block';
+      }
+        
       // update import progress
+      switch(state) {
+        case 'cancelled':
+          document.getElementById('finish_import__cancelled').style.display = 'block'; 
+          break;  
+        case 'failed':
+          document.getElementById('finish_import__failed').style.display = 'block'; 
+          break;
+        case 'completed':
+          document.getElementById('finish_import__completed').style.display = 'block'; 
+          break;
+        case 'paused':
+          break;
+        case 'progress':
+          
+          document.getElementById('finish_import__progress_indicator').style.width = MDSCommon.findValueByName(data.fields, 'progress') + '%';
+          document.getElementById('finish_import__progress_num').innerText = MDSCommon.findValueByName(data.fields, 'progress') + '%';
+          break;
+        default:
+          throw new Error('Unknown process state: ' + state);
+      }
 
     });
 
     document.getElementById('finish_import__create').addEventListener('click', function() {
-      Mydataspace.entities.request('entities.create', {
-        root: document.getElementById('finish_import__root_name'),
+      Mydataspace.entities.create({
+        root: document.getElementById('finish_import__root_name').value,
         path: ''
       }).then(function() {
         importingProcessPath = 'processes/' + MDSCommon.guid();
-        return Mydataspace.entities.request('entities.create', {
-          root: document.getElementById('finish_import__root_name'),
+        return Mydataspace.entities.create({
+          root: document.getElementById('finish_import__root_name').value,
           path: importingProcessPath,
-          fields: [
-            { name: 'type', value: 'import', type: 's' },
-            { name: 'path', value: document.getElementById('finish_import__data_path'), type: 's' }
-            { name: 'id', value: importId, type: 's' }
-          ]
+          fields: {
+            type: 'importOverOpenRefine',
+            targetPath: document.getElementById('finish_import__data_path').value,
+            id: importId,
+            state: 'paused',
+            targetState: 'progress'
+          }
         });
-      })
+      }).then(function(data) {
+        processData = data;
+        Mydataspace.entities.subscribe(MDSCommon.permit(data, ['root', 'path']));
+        document.getElementById('finish_import__create_root').style.display = 'none';
+        document.getElementById('finish_import__progress').style.display = 'block';
+      }, function(err) {
+      });
     });
     document.getElementById('finish_import__cancel').addEventListener('click', function() {
       ;

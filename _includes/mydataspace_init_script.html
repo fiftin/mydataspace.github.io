@@ -1,0 +1,15 @@
+<script src="/js/dist/api-v2.1.js" type="text/javascript"></script>
+<script>
+  Mydataspace = new Myda({
+    apiURL: '{{ api_url }}',
+    websocketURL: '{{ api_websocket_url }}',
+    clientId: '{{ client_id }}',
+    permission: 'admin',
+    connected: function() {
+      Mydataspace.on('users.getMyProfile.res', function(data) {
+        document.getElementById('profile_button').style.backgroundImage = 'url(' + data.avatar + ')';
+        $('#signin_modal').modal('hide');
+      });
+    }
+  });
+</script>
