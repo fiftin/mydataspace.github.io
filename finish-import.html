@@ -3,7 +3,7 @@ layout: frame
 language: en
 ---
 <div class="finish_import__content_container">
-  <div class="finish_import__content" id="finish_import__create_root" style="display: none">
+  <div class="finish_import__content" id="finish_import__create_root">
     <div class="form-group">
       <input class="form-control" placeholder="Root Name" id="finish_import__root_name" />
     </div>
@@ -26,7 +26,7 @@ language: en
       <button class="finish_import__button btn btn-success" id="finish_import__background">Background</button>
     </div>
   </div>
-  <div class="finish_import__content" id="finish_import__finished">
+  <div class="finish_import__content" id="finish_import__finished" style="display: none">
     <div class="finish_import__result" id="finish_import__failed">
       <i class="fa fa-times fa-3x"></i> 
       <div class="finish_import__result_message">Importing failed!</div>
@@ -63,29 +63,28 @@ language: en
         path: processData.path,
         targetState: 'cancelled'
       }).then(function() {
-        window.parent.postMessage({ message: 'openRefineImport', stage: 'finished' });
+        window.parent.postMessage({ message: 'openRefineImport', stage: 'finished' }, '*');
       }, function(err) {
-        window.parent.postMessage({ message: 'openRefineImport', stage: 'finished' });
+        window.parent.postMessage({ message: 'openRefineImport', stage: 'finished' }, '*');
       });
     });
 
     document.getElementById('finish_import__cancel').addEventListener('click', function() {
-      window.parent.postMessage({ message: 'openRefineImport', stage: 'finished' });
+      window.parent.postMessage({ message: 'openRefineImport', stage: 'finished' }, '*');
     });
     
     document.getElementById('finish_import__close').addEventListener('click', function() {
-      window.parent.postMessage({ message: 'openRefineImport', stage: 'finished' });
+      window.parent.postMessage({ message: 'openRefineImport', stage: 'finished' }, '*');
     });
     
     document.getElementById('finish_import__background').addEventListener('click', function() {
-      window.parent.postMessage({ message: 'openRefineImport', stage: 'finished' });
+      window.parent.postMessage({ message: 'openRefineImport', stage: 'finished' }, '*');
     });
 
     Mydataspace.entities.onChange(function(data) {
       if (data.root !== processData.root || data.path !== processData.path) {
         return;
       }
-
 
       var state = MDSCommon.findValueByName(data.fields, 'state');
      
