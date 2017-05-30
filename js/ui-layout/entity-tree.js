@@ -24,6 +24,16 @@ UILayout.entityTree =
           }
         },
         { view: 'button',
+          type: 'icon',
+          icon: 'cloud-upload',
+          //hidden: true,
+          id: 'IMPORT_ROOT_LABEL', label: STRINGS.IMPORT_ROOT_LABEL,
+          width: 35,
+          click: function() {
+            $('#import_data_modal').modal('show');
+          }
+        },
+        { view: 'button',
           width: 35,
           type: 'iconButton',
           icon: 'user',
