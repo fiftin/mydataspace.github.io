@@ -41,7 +41,8 @@ EntityFieldsSimplifier.prototype.format = function(data) {
   var res = {};
   if (data != null && data.fields != null) {
     if (!Array.isArray(data.fields)) {
-      throw new Error('fields must be array');
+      return;
+      // throw new Error('fields must be array');
     }
     for (var i in data.fields) {
       var field = data.fields[i];
