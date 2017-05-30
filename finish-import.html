@@ -76,8 +76,8 @@ language: en
           break;
         case 'progress':
           
-          document.getElementById('finish_import__progress_indicator').style.width = MDSCommon.findValueByName(data.fields, 'progress') + '%';
-          document.getElementById('finish_import__progress_num').innerText = MDSCommon.findValueByName(data.fields, 'progress') + '%';
+          document.getElementById('finish_import__progress_indicator').style.width = (MDSCommon.findValueByName(data.fields, 'progress') || 0) + '%';
+          document.getElementById('finish_import__progress_num').innerText = (MDSCommon.findValueByName(data.fields, 'progress') || 0) + '%';
           break;
         default:
           throw new Error('Unknown process state: ' + state);
