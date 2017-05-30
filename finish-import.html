@@ -27,11 +27,15 @@ language: en
     </div>
   </div>
   <div class="finish_import__content" id="finish_import__finished" style="display: none">
-    <div class="finish_import__result" id="finish_import__failed">
+    <div class="finish_import__result" id="finish_import__cancelled" style="display: none">
       <i class="fa fa-times fa-3x"></i> 
-      <div class="finish_import__result_message">Importing failed!</div>
+      <div class="finish_import__result_message">Importing cancelled</div>
     </div>
-    <div class="finish_import__result" id="finish_import__completed">
+    <div class="finish_import__result" id="finish_import__failed" style="display: none">
+      <i class="fa fa-times fa-3x"></i> 
+      <div class="finish_import__result_message">Importing failed</div>
+    </div>
+    <div class="finish_import__result" id="finish_import__completed" style="display: none">
       <i class="fa fa-check fa-3x"></i>
       <div class="finish_import__result_message">Import successful competed!</div>
     </div>
