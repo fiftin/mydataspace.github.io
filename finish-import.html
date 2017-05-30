@@ -3,7 +3,7 @@ layout: frame
 language: en
 ---
 <div class="finish_import__content_container">
-  <div class="finish_import__content" id="finish_import__create_root">
+  <div class="finish_import__content" id="finish_import__create_root" style="display: none">
     <div class="form-group">
       <input class="form-control" placeholder="Root Name" id="finish_import__root_name" />
     </div>
@@ -22,14 +22,22 @@ language: en
       <div class="finish_import__progress_num" id="finish_import__progress_num">0%</div>
     </div>
     <div class="finish_import__buttons">
-      <button class="finish_import__button btn btn-default" id="finish_import__cancel">Cancel</button>
+      <button class="finish_import__button btn btn-default" id="finish_import__cancel_importing">Cancel</button>
       <button class="finish_import__button btn btn-success" id="finish_import__background">Background</button>
     </div>
   </div>
-  <div class="finish_import__content" id="finish_import__finished" style="display: none;">
-    <div id="finish_import__cancelled"></div>
-    <div id="finish_import__failed"></div>
-    <div id="finish_import__completed"></div>
+  <div class="finish_import__content" id="finish_import__finished">
+    <div class="finish_import__result" id="finish_import__failed">
+      <i class="fa fa-times fa-3x"></i> 
+      <div class="finish_import__result_message">Importing failed!</div>
+    </div>
+    <div class="finish_import__result" id="finish_import__completed">
+      <i class="fa fa-check fa-3x"></i>
+      <div class="finish_import__result_message">Import successful competed!</div>
+    </div>
+    <div class="text-center">
+      <button class="btn btn-success" id="finish_import__close">Close</button>
+    </div>
   </div
 </div>
 <script>
@@ -47,6 +55,31 @@ language: en
     var importId = m[1];
     var importingProcessPath;
     var processData;
+    var state;
+
+    document.getElementById('finish_import__cancel_importing').addEventListener('click', function() {
+      Mydataspace.entities.change({
+        root: processData.root,
+        path: processData.path,
+        targetState: 'cancelled'
+      }).then(function() {
+        window.parent.postMessage({ message: 'openRefineImport', stage: 'finished' });
+      }, function(err) {
+        window.parent.postMessage({ message: 'openRefineImport', stage: 'finished' });
+      });
+    });
+
+    document.getElementById('finish_import__cancel').addEventListener('click', function() {
+      window.parent.postMessage({ message: 'openRefineImport', stage: 'finished' });
+    });
+    
+    document.getElementById('finish_import__close').addEventListener('click', function() {
+      window.parent.postMessage({ message: 'openRefineImport', stage: 'finished' });
+    });
+    
+    document.getElementById('finish_import__background').addEventListener('click', function() {
+      window.parent.postMessage({ message: 'openRefineImport', stage: 'finished' });
+    });
 
     Mydataspace.entities.onChange(function(data) {
       if (data.root !== processData.root || data.path !== processData.path) {

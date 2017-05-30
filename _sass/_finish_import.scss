@@ -47,3 +47,13 @@ $finish-import-progress-height: 35px;
   line-height: $finish-import-progress-height;
   text-align: center;
 }
+
+
+.finish_import__result {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.finish_import__result_message {
+  padding-top: 10px;
+}
