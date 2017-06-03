@@ -161,9 +161,13 @@ language: en
     });
 
     document.getElementById('finish_import__create').addEventListener('click', function() {
-      Mydataspace.entities.create({
-        root: openRefineImportEntity.root || document.getElementById('finish_import__root_name').value,
-        path: ''
+      Promise.resolve().then(function() {
+        if (!openRefineImportEntity.root) {
+          return Mydataspace.entities.create({
+            root: openRefineImportEntity.root || document.getElementById('finish_import__root_name').value,
+            path: ''
+          });
+        }
       }).then(function() {
         importingProcessPath = 'processes/' + MDSCommon.guid();
         var targetPath = (openRefineImportEntity.path ? openRefineImportEntity.path + '/' : '') + document.getElementById('finish_import__data_path').value;
