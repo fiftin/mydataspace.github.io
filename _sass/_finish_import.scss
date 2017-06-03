@@ -2,6 +2,20 @@
 
 $finish-import-progress-height: 35px;
 
+
+.finish_import__known_info {
+  margin-top: 5px;
+}
+
+.finish_import__known_root_avatar {
+  width: 40px;
+  height: 40px;
+}
+
+.finish_import__known_root_name {
+  line-height: 40px;
+}
+
 .finish_import__content_container {
   height: 100%;
   display: flex;

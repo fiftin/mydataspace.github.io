@@ -3210,7 +3210,7 @@ UILayout.entityList =
           type: 'icon',
           icon: 'refresh',
           id: 'REFRESH_LABEL', label: STRINGS.REFRESH,
-          width: 100,
+          width: 35,
           click: function() {
             UI.entityList.refreshData();
           }
@@ -3219,7 +3219,7 @@ UILayout.entityList =
           type: 'icon',
           icon: 'plus',
           id: 'ADD_ENTITY_LABEL', label: STRINGS.ADD_ENTITY,
-          width: 130,
+          width: 35,
           click: function() {
             switch (UIHelper.getEntityTypeByPath(Identity.dataFromId(UI.entityTree.getCurrentId()).path)) {
               case 'resources':
@@ -3229,6 +3229,17 @@ UILayout.entityList =
                 $$('add_entity_window').show();
                 break;
             }
+          }
+        },
+        { view: 'button',
+          type: 'icon',
+          icon: 'cloud-upload',
+          //hidden: true,
+          id: 'IMPORT_ENTITY_LABEL', label: STRINGS.IMPORT_ENTITY_LABEL,
+          width: 35,
+          click: function() {
+            openRefineImportEntity = Identity.dataFromId(UI.entityTree.getCurrentId());
+            $('#import_data_modal').modal('show');
           }
         },
         { view: 'search',

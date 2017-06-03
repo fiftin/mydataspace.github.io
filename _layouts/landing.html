@@ -216,10 +216,16 @@
                 openRefineImportEntity: typeof openRefineImportEntity === 'undefined' ? {} : openRefineImportEntity
 
               }, '*');        
+              if (typeof openRefineImportEntity !== 'undefined') {
+                delete openRefineImportEntity;
+              }
               break;
             case 'finished':
               $('#import_data_modal').modal('hide');
               UI.entityTree.refresh();
+              if (typeof openRefineImportEntity !== 'undefined') {
+                delete openRefineImportEntity;
+              }
               //if (Identity.dataFromId(UI.entityTree.getCurrentId).root !== e.data.root) {
               //  UI.entityTree.setCurrentId(Identity.idFromData({ root: e.data.root, path: '' }));
               //} else {
@@ -229,9 +235,6 @@
             case 'created': // Open Refine finished his work
               document.getElementById('import_data_modal__refine').src = '/finish-import.html?id=' + e.data.id;
               break;
-          }
-          if (typeof openRefineImportEntity !== 'undefined') {
-            delete openRefineImportEntity;
           }
         }
       });
