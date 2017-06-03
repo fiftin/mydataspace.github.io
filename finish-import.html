@@ -85,7 +85,13 @@ language: en
           root: openRefineImportEntity.root,
           path: ''
         }).then(function(root){
-          document.getElementById('finish_import__known_root_avatar').src = root.fields.avatar || '/images/icons/root.svg';
+          var avatar;
+          if (root.fields.avatar) {
+            avatar = '/avatars/sm/' + root.fields.avatar + '.png';
+          } else {
+            avatar = '/images/icons/root.svg';
+          }
+          document.getElementById('finish_import__known_root_avatar').src = avatar;
           document.getElementById('finish_import__known_root_name').innerText = root.fields.name || root.root;
           document.getElementById('finish_import__root_name').style.display = 'none';
         });
@@ -157,15 +163,16 @@ language: en
     document.getElementById('finish_import__create').addEventListener('click', function() {
       Mydataspace.entities.create({
         root: openRefineImportEntity.root || document.getElementById('finish_import__root_name').value,
-        path: openRefineImportEntity.path || ''
+        path: ''
       }).then(function() {
         importingProcessPath = 'processes/' + MDSCommon.guid();
+        var targetPath = (openRefineImportEntity.path ? openRefineImportEntity.path + '/' : '') + document.getElementById('finish_import__data_path').value;
         return Mydataspace.entities.create({
           root: document.getElementById('finish_import__root_name').value,
           path: importingProcessPath,
           fields: {
             type: 'importOverOpenRefine',
-            targetPath: document.getElementById('finish_import__data_path').value,
+            targetPath: targetPath,
             id: importId,
             state: 'paused',
             targetState: 'progress'
