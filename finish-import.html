@@ -161,10 +161,11 @@ language: en
     });
 
     document.getElementById('finish_import__create').addEventListener('click', function() {
+      var root = openRefineImportEntity.root || document.getElementById('finish_import__root_name').value;
       Promise.resolve().then(function() {
         if (!openRefineImportEntity.root) {
           return Mydataspace.entities.create({
-            root: openRefineImportEntity.root || document.getElementById('finish_import__root_name').value,
+            root: root,
             path: ''
           });
         }
@@ -172,7 +173,7 @@ language: en
         importingProcessPath = 'processes/' + MDSCommon.guid();
         var targetPath = (openRefineImportEntity.path ? openRefineImportEntity.path + '/' : '') + document.getElementById('finish_import__data_path').value;
         return Mydataspace.entities.create({
-          root: document.getElementById('finish_import__root_name').value,
+          root: root,
           path: importingProcessPath,
           fields: {
             type: 'importOverOpenRefine',
