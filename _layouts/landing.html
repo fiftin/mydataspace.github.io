@@ -216,11 +216,18 @@
               break;
             case 'finished':
               $('#import_data_modal').modal('hide');
+              if (Identity.dataFromId(UI.entityTree.getCurrentId).root !== e.data.root) {
+                UI.entityTree.setCurrentId(Identity.idFromData({ root: e.data.root, path: '' }));
+              } else {
+                UI.entityList.refreshData();
+              }
               delete openRefineImportEntity;
               break;
             case 'created':
               document.getElementById('import_data_modal__refine').src = '/finish-import.html?id=' + e.data.id;
-              UI.updatePageState();
+              if (!openRefineImportEntity) {
+                UI.entityTree.refresh();
+              }
               delete openRefineImportEntity;
               break;
           }
