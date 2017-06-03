@@ -161,19 +161,19 @@ language: en
     });
 
     document.getElementById('finish_import__create').addEventListener('click', function() {
-      var root = openRefineImportEntity.root || document.getElementById('finish_import__root_name').value;
       Promise.resolve().then(function() {
         if (!openRefineImportEntity.root) {
           return Mydataspace.entities.create({
-            root: root,
+            root: document.getElementById('finish_import__root_name').value,
             path: ''
           });
         }
-      }).then(function() {
+      }).then(function(root) {
+        var rootName = root ? root.root : openRefineImportEntity.root;
         importingProcessPath = 'processes/' + MDSCommon.guid();
         var targetPath = (openRefineImportEntity.path ? openRefineImportEntity.path + '/' : '') + document.getElementById('finish_import__data_path').value;
         return Mydataspace.entities.create({
-          root: root,
+          root: rootName,
           path: importingProcessPath,
           fields: {
             type: 'importOverOpenRefine',
