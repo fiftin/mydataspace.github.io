@@ -7,11 +7,11 @@ language: en
     <div class="form-group">
       <div id="finish_import__known" style="display: none">
         <div class="finish_import__known_path_wrap">
-          Import to <b id="finish_import__known_path"></b> of
+          Import to <b id="finish_import__known_path"></b>
         </div>
         <div class="finish_import__known_info">
           <img class="finish_import__known_root_avatar" id="finish_import__known_root_avatar" />
-          <span classs="finish_import__known_root_name" id="finish_import__known_root_name"></span>
+          <span class="finish_import__known_root_name" id="finish_import__known_root_name"></span>
         </div>
       </div>
       <input class="form-control" placeholder="Root Name" id="finish_import__root_name" style="display: none" />
@@ -83,7 +83,7 @@ language: en
           root: e.data.openRefineImportEntity.root,
           path: ''
         }).then(function(root){
-          document.getElementById('finish_import__known_root_avatar').src = root.fields.avatarURL || '/images/icons/root.svg';
+          document.getElementById('finish_import__known_root_avatar').src = root.fields.avatar || '/images/icons/root.svg';
           document.getElementById('finish_import__known_root_name').innerText = root.fields.name || root.root;
           document.getElementById('finish_import__root_name').style.display = 'none';
         });

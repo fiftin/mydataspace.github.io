@@ -5,6 +5,9 @@ $finish-import-progress-height: 35px;
 
 .finish_import__known_info {
   margin-top: 5px;
+  overflow: hidden;
+  white-space: none;
+  text-overflow: ellipsis;
 }
 
 .finish_import__known_root_avatar {
@@ -13,6 +16,7 @@ $finish-import-progress-height: 35px;
 }
 
 .finish_import__known_root_name {
+  font-weight: bold;
   line-height: 40px;
 }
 
