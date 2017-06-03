@@ -68,6 +68,7 @@ language: en
     var importId = m[1];
     var importingProcessPath;
     var processData;
+    var openRefineImportEntity;
 
     var importingStarted;
     window.parent.postMessage({ message: 'openRefineImport', stage: 'getTargetEntity' }, '*');
@@ -77,10 +78,11 @@ language: en
       }
       importingStarted = true;
       if(e.data.openRefineImportEntity.root) {
+        openRefineImportEntity = e.data.openRefineImportEntity;
         document.getElementById('finish_import__known').style.display = 'block';
-        document.getElementById('finish_import__known_path').innerText = e.data.openRefineImportEntity.path;
+        document.getElementById('finish_import__known_path').innerText = openRefineImportEntity.path;
         Mydataspace.entities.get({
-          root: e.data.openRefineImportEntity.root,
+          root: openRefineImportEntity.root,
           path: ''
         }).then(function(root){
           document.getElementById('finish_import__known_root_avatar').src = root.fields.avatar || '/images/icons/root.svg';
@@ -154,8 +156,8 @@ language: en
 
     document.getElementById('finish_import__create').addEventListener('click', function() {
       Mydataspace.entities.create({
-        root: document.getElementById('finish_import__root_name').value,
-        path: ''
+        root: openRefineImportEntity.root || document.getElementById('finish_import__root_name').value,
+        path: openRefineImportEntity.path || ''
       }).then(function() {
         importingProcessPath = 'processes/' + MDSCommon.guid();
         return Mydataspace.entities.create({
