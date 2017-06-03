@@ -87,7 +87,7 @@ language: en
         }).then(function(root){
           var avatar;
           if (root.fields.avatar) {
-            avatar = '/avatars/sm/' + root.fields.avatar + '.png';
+            avatar = 'https://api.mydataspace.net/avatars/sm/' + root.fields.avatar + '.png';
           } else {
             avatar = '/images/icons/root.svg';
           }

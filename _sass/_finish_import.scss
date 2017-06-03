@@ -6,7 +6,7 @@ $finish-import-progress-height: 35px;
 .finish_import__known_info {
   margin-top: 5px;
   overflow: hidden;
-  white-space: none;
+  white-space: nowrap;
   text-overflow: ellipsis;
 }
 
