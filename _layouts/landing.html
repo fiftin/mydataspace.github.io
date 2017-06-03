@@ -210,26 +210,28 @@
       window.addEventListener('message', function(e) {
         if (e.data.message === 'openRefineImport') {
           switch (e.data.stage) {
-            case 'creating':
-              e.source.postMessage({ openRefineImportEntity: openRefineImportEntity || {} }, '*');        
-              delete openRefineImportEntity;
+            case 'getTargetEntity':
+              e.source.postMessage({
+                message: 'targetEntity',
+                openRefineImportEntity: typeof openRefineImportEntity === 'undefined' ? {} : openRefineImportEntity
+
+              }, '*');        
               break;
             case 'finished':
               $('#import_data_modal').modal('hide');
-              if (Identity.dataFromId(UI.entityTree.getCurrentId).root !== e.data.root) {
-                UI.entityTree.setCurrentId(Identity.idFromData({ root: e.data.root, path: '' }));
-              } else {
-                UI.entityList.refreshData();
-              }
-              delete openRefineImportEntity;
+              UI.entityTree.refresh();
+              //if (Identity.dataFromId(UI.entityTree.getCurrentId).root !== e.data.root) {
+              //  UI.entityTree.setCurrentId(Identity.idFromData({ root: e.data.root, path: '' }));
+              //} else {
+              //  UI.entityList.refreshData();
+              //}
               break;
-            case 'created':
+            case 'created': // Open Refine finished his work
               document.getElementById('import_data_modal__refine').src = '/finish-import.html?id=' + e.data.id;
-              if (!openRefineImportEntity) {
-                UI.entityTree.refresh();
-              }
-              delete openRefineImportEntity;
               break;
+          }
+          if (typeof openRefineImportEntity !== 'undefined') {
+            delete openRefineImportEntity;
           }
         }
       });
