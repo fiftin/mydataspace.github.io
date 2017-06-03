@@ -5,10 +5,19 @@ language: en
 <div class="finish_import__content_container">
   <div class="finish_import__content" id="finish_import__create_root">
     <div class="form-group">
+      <div id="finish_import__known">
+        <div class="finish_import__known_path_wrap">
+          Import to <b id="finish_import__known_path"></b> of
+        </div>
+        <div class="finish_import__known_info">
+          <img src="/images/icons/root.svg" id="finish_import__known_root_avatar" />
+          <div id="finish_import__known_root_path"></div>
+        </div>
+      </div>
       <input class="form-control" placeholder="Root Name" id="finish_import__root_name" />
     </div>
     <div class="form-group">
-      <input class="form-control" placeholder="Data Path" id="finish_import__data_path" />
+      <input class="form-control" placeholder="Entity Name" id="finish_import__data_path" />
     </div>
     <div class="finish_import__buttons">
       <button class="finish_import__button btn btn-default" id="finish_import__cancel">Cancel</button>
@@ -59,7 +68,28 @@ language: en
     var importId = m[1];
     var importingProcessPath;
     var processData;
-    var state;
+
+    var importingStarted;
+    window.parent.postMessage({ message: 'openRefineImport', stage: 'creating' }, '*');
+    window.addEventListener('message', function(e) {
+      if (importingStarted) {
+        return;
+      }
+      importingStarted = true;
+      if (MDSCommon.isBlank(e.openRefineImportEntity)) {
+        document.getElementById('finish_import__known_path').innerText = e.openRefineImportEntity.path;
+        Mydataspace.entities.get({
+          root: e.openRefineImportEntity.root,
+          path: ''
+        }).then(function(root){
+          document.getElementById('finish_import__known_root_avatar').src = root.fields.avatarURL || '';
+          document.getElementById('finish_import__known_root_name').innerText = root.fields.name || root.root;
+          document.getElementById('finish_import__root_name').style.display = 'none';
+        });
+      } else {
+        
+      }
+    });
 
     document.getElementById('finish_import__cancel_importing').addEventListener('click', function() {
       Mydataspace.entities.change({
@@ -70,7 +100,7 @@ language: en
         window.parent.postMessage({ message: 'openRefineImport', stage: 'finished' }, '*');
       }, function(err) {
         window.parent.postMessage({ message: 'openRefineImport', stage: 'finished' }, '*');
-      });
+     });
     });
 
     document.getElementById('finish_import__cancel').addEventListener('click', function() {
