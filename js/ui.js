@@ -139,7 +139,17 @@ UI = {
 
     // No items
     for (var no_item_id in strings.no_items) {
-      document.getElementById(no_item_id).innerHTML = strings.no_items[no_item_id];
+      var noItemsHTML;
+      if (Array.isArray(strings.no_items[no_item_id])) {
+        noItemsHTML = '<ul class="no_items__notice_list">';
+        for (var i in strings.no_items[no_item_id]) {
+          noItemsHTML += '<li>' + strings.no_items[no_item_id][i] + '</li>';
+        }
+        noItemsHTML += '</ul>';
+      } else {
+        noItemsHTML = strings.no_items[no_item_id];
+      }
+      document.getElementById(no_item_id).innerHTML = noItemsHTML;
     }
   },
 

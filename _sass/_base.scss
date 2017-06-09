@@ -97,6 +97,13 @@ body {
   background: white;
 }
 
+.no_items__notice_list {
+  padding-left: 15px;
+  li {
+    padding-bottom: 7px;
+  }
+}
+
 .no_items__no_apps {
   text-align: center;
   font-size: 35px;
@@ -161,6 +168,7 @@ body {
 .no_items__refine_img {
   margin-top: 30px;
   width: 100%;
+  opacity: 0.5;
 }
 
 .no_items__new_root_input {
