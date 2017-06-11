@@ -116,7 +116,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       no_items__import__refine_desc: 'OpenRefine is a free, open source power tool for working with messy data and improving it',
       no_items__import__button: 'Import',
       no_items__create__desc: 'Start from scratch &mdash; create an empty root',
-      no_items__notice: 'Root name must be unique among all existing roots',
+      no_items__notice: [
+        'Root name should be 3..50 characters',
+        'Root name contains illegal characters',
+        'Root name must be unique among all existing roots'
+      ],
       no_items__create__button: 'Create'
     }
 
