@@ -7908,8 +7908,8 @@ function Myda(options) {
   }
   this.options = MDSCommon.extend({
     useLocalStorage: true,
-		apiURL: 'https://api.my-data.space',
-		websocketURL: 'https://api.my-data.space',
+		apiURL: 'https://api.mydataspace.net',
+		websocketURL: 'https://api.mydataspace.net',
     connected: function() {
       // console.log('Maybe you forgot to specify connected-event handler');
     }
