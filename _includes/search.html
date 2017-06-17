@@ -34,7 +34,8 @@
     function startSearch_{{include.id}}(search) {
       // Try to get roots from server
       Mydataspace.request('entities.getRoots', {
-        search: search
+        search: search,
+        profiles: true
       }, function(data) {
         var rootsHtml = data.roots.map(function(root) {
           var avatar = MDSCommon.findValueByName(root.fields, 'avatar');
