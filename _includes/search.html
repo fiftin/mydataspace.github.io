@@ -58,7 +58,7 @@
 
           var lang = languageMatch ? languageMatch[1] + '/' : '';
 
-          return '<div class="col-md-4"><a class="snippet clearfix" href="/' + lang + root.root + '">\n' +
+          return '<div class="col-md-6"><a class="snippet clearfix" href="/' + lang + root.root + '">\n' +
             '  <div class="snippet__overview">\n' +
             '  <img class="snippet__image" src="' + avatar + '" />\n' +
             '  <div class="snippet__info' + (MDSCommon.isBlank(tags) ? ' snippet__info--small' : '') + '">\n' +
@@ -85,8 +85,35 @@
 
             '</a></div>';
         });
+
+        function getFilterHTML(items, title, itemTitlesCollection) {
+          if (MDSCommon.isBlank(items)) {
+            return '';
+          }
+
+          var filters = items.map(function(facet) {
+            return '<div class="search_filter__item">' +
+              '<i class="flag-icon flag-icon-'+ facet.name + '"></i>' +
+              '<span class="search_filter__item_title">' + tr$(itemTitlesCollection + '.' + facet.name) + '</span>' +
+              '<span class="search_filter__item_count">' + facet.count + '</span>' +
+              '</div>';
+          }).join('');
+
+          return '<div class="search_filter">' +
+            '<div class="search_filter__title">' + title + '</div>' +
+            '<div class="search_filter__items">' + filters + '</div>' +
+          '</div>';
+        }
+
         document.getElementById('{{include.resultContainer}}').innerHTML =
-          rootsHtml.length > 0 ? '<div class="container search__content"><div class="row">' + rootsHtml.join('\n') + '</div></div>' : "WTF????";
+          rootsHtml.length > 0 ?
+            '<div class="container search__content">' +
+              '<div class="search__filter_panel">' +
+                getFilterHTML(data.facets.language, tr$('language'), 'languages') +
+                getFilterHTML(data.facets.country, tr$('country'), 'countries') +
+              '</div>' +
+              '<div class="search__results"><div class="row">' + rootsHtml.join('\n') + '</div></div>' +
+            '</div>' : '';
       }, function(err) {
         console.log(err);
       });

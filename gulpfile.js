@@ -97,6 +97,23 @@ gulp.task('vendor:md', function () {
   return gulp.src('bower_components/remarkable/dist/*.js').pipe(gulp.dest('vendor'));
 });
 
+//
+// Flags
+//
+
+gulp.task('vendor:flags:css', function() {
+  return gulp.src(
+    'bower_components/flag-icon-css/sass/*'
+  ).pipe(gulp.dest('vendor/flag-icon-css'));
+});
+
+gulp.task('vendor:flags:svg', function() {
+  return gulp.src(
+    'bower_components/flag-icon-css/flags/**/*'
+  ).pipe(gulp.dest('vendor/flag-icon-css/flags'));
+});
+
+gulp.task('vendor:flags', ['vendor:flags:css', 'vendor:flags:svg']);
 
 //
 // Bootstrap

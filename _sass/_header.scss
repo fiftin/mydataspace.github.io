@@ -443,3 +443,16 @@ $slogan-animation-offset-mobile: 400px;
     width: 100%;
   }
 }
+
+$search-filter-panel-width: 230px;
+
+.search__filter_panel {
+  width: $search-filter-panel-width - 20px;
+  position: fixed;
+
+}
+
+.search__results {
+  width: calc(100% - #{$search-filter-panel-width});
+  margin-left: $search-filter-panel-width;
+}

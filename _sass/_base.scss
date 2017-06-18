@@ -71,6 +71,9 @@ body {
 @import "view";
 @import "finish_import";
 
+$flag-icon-css-path: '../vendor/flag-icon-css/flags';
+
+@import "../vendor/flag-icon-css/flag-icon";
 
 .mission {
   text-align: center;

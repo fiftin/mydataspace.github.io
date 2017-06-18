@@ -122,6 +122,20 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
         'Root name must be unique among all existing roots'
       ],
       no_items__create__button: 'Create'
+    },
+
+    language: 'Language',
+    country: 'Country',
+
+    languages: {
+      ru: 'Russian',
+      gb: 'English'
+    },
+
+    countries: {
+      ru: 'Russia',
+      gb: 'Great Britain',
+      us: 'USA'
     }
 
   },
@@ -254,6 +268,20 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       ],
       //no_items__notice: 'Имя корня должно быть уникальным среди всех существующих корней. В имени допускаются только латинские бувы, цифры, знак тере и подчеркивания',
       no_items__create__button: 'Создать'
+    },
+
+    language: 'Язык',
+    country: 'Страна',
+
+    languages: {
+      ru: 'Русский',
+      gb: 'Английский'
+    },
+
+    countries: {
+      ru: 'Россия',
+      gb: 'Великобритания',
+      us: 'США'
     }
   }
 };
@@ -263,7 +291,6 @@ var LANGUAGE;
 (function() {
   var languageFromLocalStorage = window.localStorage && window.localStorage.getItem('language');
   if (window.location && window.location.pathname) {
-    console.log(location.pathname);
     var languageMatch = location.pathname.match(/^\/(\w\w)(\/.*)?$/);
     var languageFromURL = languageMatch ? languageMatch[1].toUpperCase() : null;
     if (!languageFromURL && !languageFromLocalStorage) {
@@ -286,5 +313,10 @@ function tr$(key) {
   } else {
     lang = 'EN';
   }
-  return STRINGS_ON_DIFFERENT_LANGUAGES[lang][key];
+  var parts = key.split('.');
+  var ret = STRINGS_ON_DIFFERENT_LANGUAGES[lang];
+  for (var i in parts) {
+    ret = ret[parts[i]];
+  }
+  return ret;
 }

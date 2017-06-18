@@ -1,6 +1,50 @@
+@import "./vars";
+
 $snippet-image-size: 52px;
 $small-padding: 10px;
 $snippet-height: 200px;
+
+$filter-item-height: 30px;
+
+.search_filter {
+  margin-bottom: 20px;
+}
+
+.search_filter__title {
+  font-weight: bold;
+  padding-bottom: 5px;
+}
+
+.search_filter__item {
+  height: $filter-item-height;
+  font-size: 16px;
+  padding: 0 5px;
+  .flag-icon {
+    margin-right: 7px;
+    line-height: $filter-item-height;
+    float: left;
+  }
+}
+
+.search_filter__item--active {
+  color: white;
+  background: $selected-bg;
+  .search_filter__item_count {
+    display: none;
+  }
+}
+
+.search_filter__item_title {
+  line-height: $filter-item-height;
+  float: left;
+}
+
+.search_filter__item_count {
+  line-height: $filter-item-height;
+  float: right;
+  font-weight: bold;
+  color: gray;
+}
 
 .snippet {
   margin-bottom: 30px;
