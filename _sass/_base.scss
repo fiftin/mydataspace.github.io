@@ -75,6 +75,13 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
 
 @import "../vendor/flag-icon-css/flag-icon";
 
+.flag-icon-en {
+  background-image: url(#{$flag-icon-css-path}#{$flag-icon-rect-path}/gb.svg);
+  &.flag-icon-squared {
+    background-image: url(#{$flag-icon-css-path}#{$flag-icon-square-path}/gb.svg);
+  }
+}
+
 .mission {
   text-align: center;
   font-size: $font-size-h3;

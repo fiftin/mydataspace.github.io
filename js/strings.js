@@ -129,7 +129,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
 
     languages: {
       ru: 'Russian',
-      gb: 'English'
+      en: 'English'
     },
 
     countries: {
@@ -275,7 +275,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
 
     languages: {
       ru: 'Русский',
-      gb: 'Английский'
+      en: 'Английский'
     },
 
     countries: {
