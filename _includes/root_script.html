@@ -464,12 +464,12 @@
         document.getElementById('view__title').innerText =
           data.fields.name || MDSCommon.getPathName(data.root);
 
-        if (data.fields.language) {
-          document.getElementById('view__language').className = 'flag-icon flag-icon-' + data.fields.language;
-        }
-        if (data.fields.country) {
-          document.getElementById('view__country').className = 'flag-icon flag-icon-' + data.fields.country;
-        }
+//        if (data.fields.language) {
+//          document.getElementById('view__language').className = 'flag-icon flag-icon-' + data.fields.language;
+//        }
+//        if (data.fields.country) {
+//          document.getElementById('view__country').className = 'flag-icon flag-icon-' + data.fields.country;
+//        }
 
         var tags = (data.fields.tags || '').split(' ').filter(function(tag) {
           return tag != null && tag !== '';
