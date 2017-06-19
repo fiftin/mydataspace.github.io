@@ -126,6 +126,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
 
     language: 'Language',
     country: 'Country',
+    category: 'Category',
 
     languages: {
       ru: 'Russian',
@@ -136,6 +137,9 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       ru: 'Russia',
       gb: 'Great Britain',
       us: 'USA'
+    },
+
+    categories: {
     }
 
   },
@@ -272,6 +276,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
 
     language: 'Язык',
     country: 'Страна',
+    category: 'Категория',
 
     languages: {
       ru: 'Русский',
@@ -282,7 +287,9 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       ru: 'Россия',
       gb: 'Великобритания',
       us: 'США'
-    }
+    },
+
+    categories: {}
   }
 };
 

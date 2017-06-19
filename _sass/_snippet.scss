@@ -16,6 +16,9 @@ $filter-item-height: 30px;
 }
 
 .search_filter__item {
+  display: block;
+  color: black !important;
+  text-decoration: none !important;
   height: $filter-item-height;
   font-size: 16px;
   padding: 0 5px;
@@ -27,7 +30,7 @@ $filter-item-height: 30px;
 }
 
 .search_filter__item--active {
-  color: white;
+  color: white !important;
   background: $selected-bg;
   .search_filter__item_count {
     display: none;
