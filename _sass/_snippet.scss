@@ -121,18 +121,20 @@ $filter-item-height: 30px;
 .snippet__description {
   font-size: 14px;
   color: #424242;
+  word-wrap: break-word;
 }
 
 $snippet-footer-height: 30px;
-
+$snippet-footer-height-with-gradient: 50px;
 .snippet__footer {
   position: absolute;
   bottom: 0;
   left: $small-padding;
   right: $small-padding;
-  background: white;
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%);
   padding-bottom: $small-padding / 2;
-  height: $snippet-footer-height;
+  padding-top: $snippet-footer-height-with-gradient - $snippet-footer-height;
+  height: $snippet-footer-height-with-gradient;
 }
 
 .snippet__author {
