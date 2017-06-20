@@ -851,10 +851,17 @@ input {
   background: #f0f3f5;
   z-index: 10;
 }
+#webix__header__search_input {
+  width: 400px !important;
+}
+
+#webix__header__search_input_wrap {
+  text-align: center;
+}
 
 #webix__header__search {
   position: absolute;
   left: 200px;
-  width: 400px;
+  //width: 400px;
   z-index: 20;
 }

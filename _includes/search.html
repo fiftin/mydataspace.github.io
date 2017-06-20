@@ -1,5 +1,5 @@
 <div class="navbar-form navbar-left header__search_wrap hidden-sm" id="{{include.id}}">
-  <div class="form-group">
+  <div class="form-group" id="{{include.id}}_input_wrap">
     <input id="{{include.id}}_input"
            type="text"
            class="form-control header__search_input"
@@ -199,12 +199,14 @@
         document.getElementById('{{include.resultContainer}}').innerHTML =
           rootsHtml.length > 0 ?
             '<div class="container search__content">' +
-              '<div class="search__filter_panel">' +
-                getFilterHTML(data.facets.language, 'languages', 'lang', filters) +
-                getFilterHTML(data.facets.country, 'countries', 'ctry', filters) +
-                getFilterHTML(data.facets.categories, 'categories', 'cat', filters) +
-              '</div>' +
               '<div class="search__results"><div class="row">' + rootsHtml.join('\n') + '</div></div>' +
+              '<div class="search__filter_panel_wrap">' +
+                '<div class="search__filter_panel">' +
+                  getFilterHTML(data.facets.language, 'languages', 'lang', filters) +
+                  getFilterHTML(data.facets.country, 'countries', 'ctry', filters) +
+                  getFilterHTML(data.facets.categories, 'categories', 'cat', filters) +
+                '</div>' +
+              '</div>' +
             '</div>' : '';
       }, function(err) {
         console.log(err);

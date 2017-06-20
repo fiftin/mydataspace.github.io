@@ -145,8 +145,8 @@ $snippet-footer-height: 30px;
 }
 
 .snippet__author_avatar {
-  height: $snippet-footer-height - $small-padding / 2;
-  width: $snippet-footer-height - $small-padding / 2;
+  height: 20px;
+  width: 20px;
   transform: translateY(-2px);
   border: 0;
   border-radius: 100px;
