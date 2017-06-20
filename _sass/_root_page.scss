@@ -53,7 +53,7 @@ $side-width: 300px;
 .view__side_panel {
   margin-left: $padding;
   width: $side-width - $padding;
-  position: fixed;
+  position: absolute;
 }
 
 .snippet--auto_height {

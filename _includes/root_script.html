@@ -542,7 +542,11 @@
         if (data.profile && document.getElementById('view__user')) {
           document.getElementById('view__user_name').innerText = data.profile.name;
           document.getElementById('view__user_username').innerText = '@' + data.profile.username;
-          document.getElementById('view__user_about').innerText = data.profile.about;
+          if (data.profile.about) {
+            document.getElementById('view__user_about').innerText = data.profile.about;
+          } else {
+            document.getElementById('view__user_about').style.display = 'none';
+          }
           var userAvatar = MDSCommon.isPresent(data.profile.avatar) ? 'https://cdn.mydataspace.net/avatars/lg/' + data.profile.avatar + '.png' : 'https://myda.space/images/no_avatar.png';
           var userCover = MDSCommon.isPresent(data.profile.cover) ? 'https://cdn.mydataspace.net/images/md/' + data.profile.avatar + '.png' : 'https://myda.space/images/default_cover_sm.jpg';
           document.getElementById('view__user_avatar').src = userAvatar;
