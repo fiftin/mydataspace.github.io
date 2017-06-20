@@ -1,7 +1,13 @@
+@import "./vars";
+
 @media (min-width: $screen-md-min) {
   .default_main {
     min-height: calc(100% - 288px);
   }
+}
+
+.default_main--gray {
+  background: $toolbar-bg;
 }
 
 .page__section:not(:first-child) {
