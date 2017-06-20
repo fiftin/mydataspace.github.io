@@ -130,10 +130,10 @@
           //root.profile = 'denis';
 
           if (root.profile && data.profiles[root.profile]) {
-            var avatar = 'https://cdn.mydataspace.net/avatars/sm/' + (data.profiles[root.profile].avatar || 'HJYrGU87W') + '.png';
+            var authorAvatar = 'https://cdn.mydataspace.net/avatars/sm/' + (data.profiles[root.profile].avatar || 'HJYrGU87W') + '.png';
             footer =
               '<div class="snippet__author">' +
-              '  <img class="snippet__author_avatar" src="' + avatar + '" />' +
+              '  <img class="snippet__author_avatar" src="' + authorAvatar + '" />' +
               '  <span class="snippet__author_name">' + data.profiles[root.profile].name + '</span>' +
               '</div>'; 
           } else {
