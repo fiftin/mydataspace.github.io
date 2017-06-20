@@ -120,6 +120,29 @@
 
           var lang = languageMatch ? languageMatch[1] + '/' : '';
 
+          var footer;
+          //data.profiles = {
+          //  'denis': {
+          //    avatar: '',
+          //    name: 'Denis Gukov'
+          //  }
+          //};
+          //root.profile = 'denis';
+
+          if (root.profile && data.profiles[root.profile]) {
+            var avatar = 'https://cdn.mydataspace.net/avatars/sm/' + (data.profiles[root.profile].avatar || 'HJYrGU87W') + '.png';
+            footer =
+              '<div class="snippet__author">' +
+              '  <img class="snippet__author_avatar" src="' + avatar + '" />' +
+              '  <span class="snippet__author_name">' + data.profiles[root.profile].name + '</span>' +
+              '</div>'; 
+          } else {
+            footer = 
+              '<div class="snippet__date view__comment__date view__date_wrap">' +
+              '  ' + tr$('created') + ' <span class="view__date" id="view__date">' + MDSCommon.humanizeDate(root.createdAt) + '</span> ' + tr$('ago') +
+              '</div>'; 
+          }
+
           return '<div class="col-md-6"><a class="snippet clearfix" href="/' + lang + root.root + '">\n' +
             '  <div class="snippet__overview">\n' +
             '  <img class="snippet__image" src="' + avatar + '" />\n' +
@@ -134,10 +157,7 @@
             '  <div class="snippet__description">' + (MDSCommon.findValueByName(root.fields, 'description') || '') + '</div>\n' +
 
             '<div class="snippet__footer">' +
-            '<div class="snippet__date view__comment__date view__date_wrap">' +
-            '  ' + tr$('created') + ' <span class="view__date" id="view__date">' + MDSCommon.humanizeDate(root.createdAt) + '</span> ' + tr$('ago') +
-            '</div>' +
-
+            footer +
             '<div class="snippet__counters">' +
             '<span class="root_counter" id="view__counters_likes"><i class="fa fa-heart" aria-hidden="true"></i><span class="root_counter__count root_counter__count--likes" id="view__counters_likes_count">' + nLikes + '</span></span>' +
             '<span class="root_counter" id="view__counters_comments"><i class="fa fa-comments" aria-hidden="true"></i><span class="root_counter__count" id="view__counters_comments_count">' + nComments + '</span></span>' +
