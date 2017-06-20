@@ -31,6 +31,12 @@
       startSearch_{{include.id}}(search);
     }
 
+    function removeSearchPart_{{include.id}}(part) {
+      var search = document.getElementById('{{include.id}}_input').value;
+      var newSearch = search.replace(part, '').replace(/^\s+/, '').replace(/\s+/, ' ');
+      openSearch_{{include.id}}(newSearch);
+    }
+
     function setSearchPart_{{include.id}}(part) {
       var search = document.getElementById('{{include.id}}_input').value;
       if (part[0] !== '#') { // search string
@@ -153,11 +159,14 @@
             if (filters[filter] && filters[filter] !== facet.name) {
               return '';
             }
-            var classes = filters[filter] === facet.name ? 'search_filter__item--active' : '';
-            return '<a href="javascript:void(0)" onclick="setSearchPart_{{include.id}}(\'#' + prefix + ':' + facet.name + '\')" class="search_filter__item ' + classes + '">' +
+            var active = filters[filter] === facet.name;
+            var classes = active ? 'search_filter__item--active' : '';
+            var action = active ? 'remove' : 'set';
+            return '<a href="javascript:void(0)" onclick="' + action + 'SearchPart_{{include.id}}(\'#' + prefix + ':' + facet.name + '\')" class="search_filter__item ' + classes + '">' +
               '<i class="flag-icon flag-icon-'+ facet.name + '"></i>' +
               '<span class="search_filter__item_title">' + tr$(itemTitlesCollection + '.' + facet.name) + '</span>' +
               '<span class="search_filter__item_count">' + facet.count + '</span>' +
+              '<i class="search_filter__item_remove fa fa-remove"></i>' +
               '</a>';
           }).join('');
 

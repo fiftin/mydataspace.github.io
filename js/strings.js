@@ -140,6 +140,16 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     },
 
     categories: {
+      biz: 'Business',
+      economy: 'Economy',
+      health: 'Health',
+      edu: 'Education',
+      ecology: 'Ecology',
+      culture: 'Culture',
+      sec: 'Security',
+      trans: 'Transport',
+      geo: 'Geo',
+      state: 'State',
     }
 
   },
@@ -289,7 +299,19 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       us: 'США'
     },
 
-    categories: {}
+    categories: {
+      biz: 'Бизнес',
+      economy: 'Экономика',
+      health: 'Здоровье',
+      edu: 'Образование',
+      ecology: 'Экология',
+      culture: 'Культура',
+      sec: 'Безопасность',
+      trans: 'Транспорт',
+      geo: 'Геоданные',
+      state: 'Государство',
+
+    }
   }
 };
 
