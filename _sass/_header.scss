@@ -444,12 +444,12 @@ $slogan-animation-offset-mobile: 400px;
   }
 }
 
-$search-filter-panel-width: 230px;
-
+$search-filter-panel-width: 250px;
+$search-filter-panel-gap: 40px;
 .search__filter_panel {
-  width: $search-filter-panel-width - 20px;
+  width: $search-filter-panel-width - $search-filter-panel-gap;
   position: fixed;
-  margin-left: 20px;
+  margin-left: $search-filter-panel-gap;
 
 }
 
