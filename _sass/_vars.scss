@@ -1,6 +1,13 @@
 @import "bootstrap_vars";
 
-$logo-size: 50px;
+$padding: 20px;
+$small-padding: $padding / 2;
+$default-border-radius: 2px;
+
+$block-bg: white;
+$block-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
+
+$logo-size: 50px;;
 $logo-text-height: 32px;
 $header-height: 53px;
 $brand-bg: #85b4d4; // #3498db;

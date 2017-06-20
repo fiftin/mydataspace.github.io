@@ -4,9 +4,9 @@ $side-width: 300px;
 .root_page {
 
   .view__overview--root {
-    background: white;
+    background: $block-bg;
     border: 0;
-    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: $block-box-shadow;
     padding-bottom: 0;
   }
 
@@ -38,11 +38,8 @@ $side-width: 300px;
 
 
 .view__about {
-  background: white;
-  border-radius: 2px;
-  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
-  padding: 0 20px;
-  margin-top: 20px;
+  padding: 0 $padding;
+  margin-top: $padding;
   width: calc(100% - #{$side-width});
   float: left;
 }
@@ -50,12 +47,12 @@ $side-width: 300px;
 .view__side_panel_wrap {
   width: $side-width;
   float: right;
-  margin-top: 20px;
+  margin-top: $padding;
 }
 
 .view__side_panel {
-  margin-left: 20px;
-  width: $side-width - 20px;
+  margin-left: $padding;
+  width: $side-width - $padding;
   position: fixed;
 }
 
@@ -71,11 +68,52 @@ $side-width: 300px;
   right: 15px;
 }
 
+$user-cover-height: 100px;
+$user-avatar-size: 98px;
+$follow-button-height: 40px;
+
+
 .user_snippet__cover {
   position: absolute;
-  width: 100%;
+  left: 0;
+  right: 0;
   top: 0;
-  height: 100px;
+  border-top-right-radius: $default-border-radius;
+  border-top-left-radius: $default-border-radius;
+  height: $user-cover-height;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #85b4d4;
 }
 
+.user_snippet__avatar {
+  position: absolute;
+  left: $small-padding;
+  top: $user-cover-height - $user-avatar-size / 2;
+  width: $user-avatar-size;
+  height: $user-avatar-size;
+  border-radius: $user-avatar-size / 2;
+  border: 3px solid $block-bg;
+}
 
+.user_snippet__name {
+  padding-top: 10px;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.user_snippet__username {
+  color: gray;
+  line-height: 1.2;
+}
+
+.user_snippet__about {
+  padding-top: 10px;
+}
+
+.user_snippet__follow {
+  padding-top: $user-cover-height;
+  text-align: right;
+}

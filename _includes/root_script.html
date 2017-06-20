@@ -476,8 +476,11 @@
         }).map(function(tag) {
           return '<a class="view__tag" href="/?q=%23' + tag + '" onclick="openSearch_header__search(\'' + tag + '\'); return false;">' + tag + '</a>';
         }).join(' ');
-        document.getElementById('view__tags').innerHTML = tags || '';
-
+        if (MDSCommon.isPresent(tags)) {
+          document.getElementById('view__tags').innerHTML = tags;
+        } else {
+          document.getElementById('view__tags').style.display = 'none';
+        }
         document.getElementById('view__data_link').href = '/#' + data.root;
         document.getElementById('view__data_link').classList.remove('hidden');
 
@@ -528,6 +531,22 @@
               document.getElementById('view__tabs_views_count').innerText = child.numberOfChildren;
               break;
           }
+        }
+
+        data.profile = {
+          name: 'Denis',
+          username: 'denis',
+          about: 'Hello, World!',
+        };
+
+        if (data.profile && document.getElementById('view__user')) {
+          document.getElementById('view__user_name').innerText = data.profile.name;
+          document.getElementById('view__user_username').innerText = '@' + data.profile.username;
+          document.getElementById('view__user_about').innerText = data.profile.about;
+          var userAvatar = MDSCommon.isPresent(data.profile.avatar) ? 'https://cdn.mydataspace.net/avatars/lg/' + data.profile.avatar + '.png' : 'https://myda.space/images/no_avatar.png';
+          var userCover = MDSCommon.isPresent(data.profile.cover) ? 'https://cdn.mydataspace.net/images/md/' + data.profile.avatar + '.png' : 'https://myda.space/images/default_cover_sm.png';
+          document.getElementById('view__user_avatar').src = userAvatar;
+          document.getElementById('view__user_cover').style.backgroundImage = 'url("' + userCover + ')';
         }
 
 //        document.getElementById('view__date').innerText = MDSCommon.humanizeDate(data.createdAt);
