@@ -140,6 +140,9 @@
       return 'https://codepen.io/' + parts[0] + '/pen/' + parts[1];
     }
 
+    /**
+     *
+     */
     function getLookPreviewNode(path) {
       var lookPreviews = document.getElementById('view__looks__previews').childNodes;
       for (var i = 0; i < lookPreviews.length; i++) {
@@ -151,6 +154,9 @@
       return null;
     }
 
+    /**
+     *
+     */
     function openLookEditModal(isEdit) {
       document.getElementById('new_look_modal_title_err').innerText = '';
       document.getElementById('new_look_modal_codepen_err').innerText = '';
