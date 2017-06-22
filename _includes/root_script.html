@@ -201,22 +201,24 @@
       currentLook = data;
     }
 
-    function selectLook(path) {
+    function unselectLook() {
       var previews = document.getElementById('view__looks__previews');
+      $(previews).find('.look_preview--active').removeClass('look_preview--active');
+      document.getElementById('view__looks__content_wrap').style.display = 'none';
+    }
+
+    function selectLook(path) {
       if (path == null) {
         path = previews.childNodes[0].getAttribute('data-look-path');
       }
-      $(previews).find('.look_preview--active').removeClass('look_preview--active');
+      var previews = document.getElementById('view__looks__previews');
       var preview = getLookPreviewNode(path);
       if (!preview) {
         return;
       }
-      preview.classList.add('look_preview--active');
-      Mydataspace.entities.request('entities.get', {
-        root: DATA.root,
-        children: true,
-        path: path
-      }).then(setLook, function(err) {});
+      $(previews).find('.look_preview--active').removeClass('look_preview--active');
+      document.getElementById('view__looks__content_wrap').style.display = 'block';
+      preview.childNodes[0].classList.add('look_preview--active');
     }
 
     function getLookPreviewHTML(data, isActive) {
@@ -225,9 +227,9 @@
       // codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
       // document.getElementById('view__looks__content').appendChild(codepenScript);
       //
-      return '<div data-look-path="'+ data.path + '" class="col-md-4"><div class="block snippet' + (isActive ? ' look_preview--active' : '') + '">' +
-        '<div class="look_preview__background"><p data-height="402" data-theme-id="0" data-slug-hash="' + codepenParts[1] + '" data-default-tab="result" data-user="'+ codepenParts[0] +'" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/' +  codepenParts[0] + '/pen/' + codepenParts[1] + '/">' + codepenParts[1] + '</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p></div>' +
-        '<div class="look_preview__background_locker"></div>' +
+      return '<div data-look-path="'+ data.path + '" class="col-md-4"><div data-look-path="'+ data.path + '" class="block snippet look_preview' + (isActive ? ' look_preview--active' : '') + '">' +
+        '<div class="look_preview__codepen_wrap"><p data-height="402" data-theme-id="0" data-slug-hash="' + codepenParts[1] + '" data-default-tab="result" data-user="'+ codepenParts[0] +'" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/' +  codepenParts[0] + '/pen/' + codepenParts[1] + '/">' + codepenParts[1] + '</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p></div>' +
+        '<div class="look_preview__codepen_locker"></div>' +
         // '<div class="look_preview__header"><i class="fa fa-codepen"></i><span class="look_preview__title">' + MDSCommon.findValueByName(data.fields, 'title') + '</span></div>' +
         // '<div class="look_preview__description">' + (MDSCommon.findValueByName(data.fields, 'description') || '') + '</div>' +
         // '<div class="look_preview__footer">' +
@@ -363,32 +365,18 @@
       if (looksData.length === 0) {
         document.getElementById('view__looks__empty').style.display = 'block';
 //        document.getElementById('view__looks__pills').style.display = 'none';
-        document.getElementById('view__looks__content_wrap').style.display = 'none';
+//        document.getElementById('view__looks__content_wrap').style.display = 'none';
         return;
       } else {
         document.getElementById('view__looks__empty').style.display = 'none';
 //        document.getElementById('view__looks__pills').style.display = 'block';
-        document.getElementById('view__looks__content_wrap').style.display = 'block';
+//        document.getElementById('view__looks__content_wrap').style.display = 'block';
       }
 
-      var content = document.getElementById('view__looks__content');
-      var index = content.getAttribute('data-view-index');
-      if (index == null || newIndex != null) {
-        index = newIndex || 0;
-        content.setAttribute('data-view-index', index);
-      } else {
-        index = parseInt(index);
-      }
-      var lookData = looksData[index];
-      if (lookData == null) {
-        throw new Error('Illegal view index: ' + index + '. Must be less ' + looksData.length);
-      }
-
-      setLook(lookData);
 
       var previewsHTML = '';
       for (var lookIndex in looksData) {
-        previewsHTML += getLookPreviewHTML(looksData[lookIndex], lookIndex.toString() === '0');
+        previewsHTML += getLookPreviewHTML(looksData[lookIndex]);
       }
       document.getElementById('view__looks__previews').innerHTML = previewsHTML;
       var previewNodes = document.getElementById('view__looks__previews').childNodes;
@@ -423,11 +411,11 @@
                 if (document.getElementById('view__tabs_views_count').innerText === '0') {
                   document.getElementById('view__looks__empty').style.display = 'block';
 //                  document.getElementById('view__looks__pills').style.display = 'none';
-                  document.getElementById('view__looks__content_wrap').style.display = 'none';
+//                  document.getElementById('view__looks__content_wrap').style.display = 'none';
                 } else {
                   document.getElementById('view__looks__empty').style.display = 'none';
 //                  document.getElementById('view__looks__pills').style.display = 'block';
-                  document.getElementById('view__looks__content_wrap').style.display = 'block';
+//                  document.getElementById('view__looks__content_wrap').style.display = 'block';
                 }
                 Mydataspace.entities.request('entities.get', { root: DATA.root, children: true, path: 'views' }).then(function(data) {
                   updateLooks(data.children);
@@ -620,6 +608,11 @@
           selectLook($(this).data('look-path'));
         });
 
+
+        document.getElementById('view__looks__close').addEventListener('click', function() {
+          unselectLook();
+        });
+
         document.getElementById('view__looks__edit').addEventListener('click', function() {
           openLookEditModal(true);
         });
@@ -688,7 +681,7 @@
         if (viewsCount === 0) {
           document.getElementById('view__looks__empty').style.display = 'none';
 //        document.getElementById('view__looks__pills').style.display = 'block';
-          document.getElementById('view__looks__content_wrap').style.display = 'block';
+//          document.getElementById('view__looks__content_wrap').style.display = 'block';
           selectLook();
         }
       }
@@ -721,7 +714,7 @@
         if (viewsCount <= 1) {
           document.getElementById('view__looks__empty').style.display = 'block';
 //        document.getElementById('view__looks__pills').style.display = 'none';
-          document.getElementById('view__looks__content_wrap').style.display = 'none';
+//          document.getElementById('view__looks__content_wrap').style.display = 'none';
         } else {
           if (currentLook.path === data.path) {
             selectLook();

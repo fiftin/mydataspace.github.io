@@ -89,7 +89,7 @@
     </div>
   </div>
 
-  <div id="view__looks" class="view__page" style="display: none;">
+  <div id="view__looks" style="margin-top: 20px; display: none;">
     <div class="" id="view__looks__empty" style="display: none;"><i>There are no views.</i></div>
 
     <!--<ul class="nav nav-pills view__pills view__pills&#45;&#45;looks" id="view__looks__pills">-->
@@ -99,22 +99,16 @@
       <!--<li role="presentation"><a href="#">Yours</a></li>-->
     <!--</ul>-->
 
-    <div class="look hidden" id="view__looks__content_wrap">
+    <div class="look" id="view__looks__content_wrap" style="display: none">
       <div class="look__header">
         <div class="look__title" id="view__looks__title"></div>
         <div class="look__actions" id="view__looks__actions">
+          <div class="look__action" id="view__looks__close"><i class="fa fa-2x fa-remove"></i></div>
           <div class="look__action"
                id="view__looks__delete"
                data-toggle="modal"
-               data-target="#delete_look_modal"><i class="fa fa-2x fa-remove"></i></div>
+               data-target="#delete_look_modal"><i class="fa fa-2x fa-trash"></i></div>
           <div class="look__action" id="view__looks__edit"><i class="fa fa-2x fa-pencil"></i></div>
-        </div>
-      </div>
-      <div id="view__looks__content" class="look__content"></div>
-
-      <div class="look__footer">
-        <div class="view__comment__date view__date_wrap">
-          created <span class="view__date" id="view__looks__date"></span> ago
         </div>
       </div>
     </div>

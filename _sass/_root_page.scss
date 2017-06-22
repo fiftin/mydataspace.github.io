@@ -244,22 +244,38 @@ $follow-button-height: 40px;
   right: 0;
 }
 
+.look {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  z-index: 10000;
+}
+
 .look_previews {
 }
 
 .look_preview {
-  width: 200px;
-  height: 130px;
-  float: left;
-  position: relative;
-  padding: 5px 10px;
-  margin-right: 10px;
-  border: 1px solid #ababab;
   cursor: pointer;
 }
 
 .look_preview--active {
-  border-color: black;
+  .look_preview__codepen_wrap {
+    position: fixed;
+    transform: scale(1);
+    width: 100%;
+    bottom: 0;
+    top: 50px;
+    left: 0;
+    z-index: 10000;
+    .cp_embed_wrapper {
+      height: 100% !important;
+      & > iframe {
+        height: 100% !important;
+      }
+    }
+  }
 }
 
 .look_preview__title {
@@ -269,8 +285,6 @@ $follow-button-height: 40px;
 }
 
 .look_preview__header {
-  padding-bottom: 5px;
-  line-height: 1.2;
 }
 
 .look_preview__description {
@@ -283,7 +297,7 @@ $follow-button-height: 40px;
   width: 100%;
 }
 
-.look_preview__background {
+.look_preview__codepen_wrap {
   position: absolute;
   top: calc(-50% - 2px);
   left: calc(-50% - 1px);
@@ -291,7 +305,7 @@ $follow-button-height: 40px;
   transform: scale(0.5);
 }
 
-.look_preview__background_locker {
+.look_preview__codepen_locker {
   position: absolute;
   top: 0;
   left: 0;
@@ -324,16 +338,17 @@ $follow-button-height: 40px;
 
 .look__actions {
   position: absolute;
-  right: -5px;
+  right: 0px;
   bottom: 0;
 }
 
 .look__action {
+  color: white;
   float: right;
   padding: 5px;
   margin-left: 15px;
   cursor: pointer;
-  opacity: 0;
+  opacity: 0.4;
   transition: opacity 300ms;
   &:hover {
     opacity: 0.8 !important;
@@ -342,6 +357,7 @@ $follow-button-height: 40px;
 
 .look__header {
   position: relative;
+  background: black;
 }
 
 
