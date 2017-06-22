@@ -230,9 +230,11 @@ $follow-button-height: 40px;
 }
 
 .look__title {
-  height: 50px;
+  line-height: 50px;
   font-size: 25px;
-  padding-top: 5px;
+  padding-left: 20px;
+  font-weight: bold;
+  color: white;
 }
 
 .view__new_look {
@@ -250,7 +252,7 @@ $follow-button-height: 40px;
   left: 0;
   right: 0;
   height: 50px;
-  z-index: 10000;
+  z-index: 1;
 }
 
 .look_previews {
@@ -268,7 +270,7 @@ $follow-button-height: 40px;
     bottom: 0;
     top: 50px;
     left: 0;
-    z-index: 10000;
+    z-index: 1;
     .cp_embed_wrapper {
       height: 100% !important;
       & > iframe {
