@@ -381,7 +381,7 @@
 
       var codepenScript = document.createElement('script');
       codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
-      document.getElementById('view__looks__previews').appendChild(codepenScript);
+      document.getElementById('view__looks').appendChild(codepenScript);
     }
 
     function initTabs() {
@@ -619,6 +619,30 @@
           openLookEditModal(false);
         });
 
+        Mydataspace.entities.getMyChildren({
+          root: 'mydataspace',
+          path: '',
+          onlyMine: '',
+        }).then(function() {});
+
+        document.getElementById('view__user_follow').addEventListener('click', function() {
+          Mydataspace.request('entities.create', {
+            root: 'mydataspace',
+            path: 'profiles/' + data.profile.username + '/followers' + MDSCommon.guid(),
+            fields: []
+          }, function() {
+            $textarea.val('');
+            $button.prop('disabled', false);
+            $textarea.prop('disabled', false);
+            $textarea.focus();
+            updateCommentFormTextareaHeight();
+          }, function(err) {
+            $button.prop('disabled', false);
+            $textarea.prop('disabled', false);
+            console.log(err);
+          });
+        
+        });
       });
     }
 
@@ -671,13 +695,16 @@
       } else if (/^views\//.test(data.path)) {
         $('#view__looks__previews').append(getLookPreviewHTML(data));
 
+        var preview = getLookPreviewNode(data.path);
+        var codepenScript = document.createElement('script');
+        codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
+        preview.appendChild(codepenScript);
+        $(preview).data('look-data', data);
+
         var viewsCount = parseInt(document.getElementById('view__tabs_views_count').innerText);
         document.getElementById('view__tabs_views_count').innerText = viewsCount + 1;
         if (viewsCount === 0) {
           document.getElementById('view__looks__empty').style.display = 'none';
-//        document.getElementById('view__looks__pills').style.display = 'block';
-//          document.getElementById('view__looks__content_wrap').style.display = 'block';
-          selectLook();
         }
       }
     });

@@ -61,7 +61,7 @@
 
   <div id="view__about">
 
-    <div class="view__about">
+    <div class="block view__about">
       <div class="view__tags" id="view__tags"></div>
       <div class="view__description_wrap">
         <span class="view__description" id="view__description"></span>
@@ -73,11 +73,9 @@
 
     <div class="view__side_panel_wrap">
       <div class="view__side_panel">
-        <div class="snippet snippet--auto_height" id="view__user">
+        <div class="block user_snippet" id="view__user">
           <div class="user_snippet__cover" id="view__user_cover"></div>
-          <div class="user_snippet__avatar_wrap">
-            <img class="user_snippet__avatar" id="view__user_avatar" />
-          </div>
+          <img class="user_snippet__avatar" id="view__user_avatar" />
           <div class="user_snippet__follow">
             <button class="btn btn-success" id="view__user_follow">Follow</button>
           </div>
@@ -91,7 +89,7 @@
     </div>
   </div>
 
-  <div id="view__looks" class="view__page" style="display: none;">
+  <div id="view__looks" style="margin-top: 20px; display: none;">
     <div class="" id="view__looks__empty" style="display: none;"><i>There are no views.</i></div>
 
     <!--<ul class="nav nav-pills view__pills view__pills&#45;&#45;looks" id="view__looks__pills">-->
@@ -101,71 +99,35 @@
       <!--<li role="presentation"><a href="#">Yours</a></li>-->
     <!--</ul>-->
 
-    <div class="look" id="view__looks__content_wrap">
+    <div class="look" id="view__looks__content_wrap" style="display: none">
       <div class="look__header">
         <div class="look__title" id="view__looks__title"></div>
         <div class="look__actions" id="view__looks__actions">
-          <div class="look__action"
+          <div class="look__action" id="view__looks__close"><i class="fa fa-2x fa-remove"></i></div>
+          <div class="look__action look__action--only-owner"
                id="view__looks__delete"
                data-toggle="modal"
-               data-target="#delete_look_modal"><i class="fa fa-2x fa-remove"></i></div>
-          <div class="look__action" id="view__looks__edit"><i class="fa fa-2x fa-pencil"></i></div>
+               data-target="#delete_look_modal"><i class="fa fa-2x fa-trash"></i></div>
+          <div class="look__action look__action--only-owner" id="view__looks__edit"><i class="fa fa-2x fa-pencil"></i></div>
         </div>
       </div>
-      <div id="view__looks__content" class="look__content"></div>
-
-      <div class="look__footer">
-        <div class="view__comment__date view__date_wrap">
-          created <span class="view__date" id="view__looks__date"></span> ago
-        </div>
-        <!--<div class="root_counters root_counters&#45;&#45;look">-->
-          <!--<span class="root_counter" id="view__looks__likes">-->
-            <!--<i class="fa fa-heart" id="view__looks__likes_icon" aria-hidden="true"></i>-->
-            <!--<span class="root_counter__count root_counter__count&#45;&#45;likes" id="view__looks__likes_count">0</span>-->
-          <!--</span>-->
-
-          <!--<span class="root_counter" id="view__looks__comments">-->
-            <!--<i class="fa fa-comments" aria-hidden="true"></i>-->
-            <!--<span class="root_counter__count" id="view__looks__comments_count">0</span>-->
-          <!--</span>-->
-        <!--</div>-->
-      </div>
-
-      <!--<div id="view__looks__empty_comment" style="display: none;"><i>There are no comments.</i></div>-->
-      <!--<div class="view__comments__list" id="view__looks__comments_list"></div>-->
-      <!--<div id="view__looks__new_comment" class="new_comment">-->
-        <!--<form>-->
-          <!--<div class="form-group new_comment__textarea_wrap">-->
-                <!--<textarea class="form-control new_comment__textarea"-->
-                          <!--style="height: 74px;"-->
-                          <!--id="view__looks__new_comment_textarea"-->
-                          <!--placeholder="Write a comment..."></textarea>-->
-          <!--</div>-->
-          <!--<div class="form-group text-right">-->
-            <!--<button type="button" class="btn btn-lg btn-success new_comment__button">Post comment</button>-->
-          <!--</div>-->
-        <!--</form>-->
-      <!--</div>-->
+      <div id="view__looks__content"></div>
     </div>
 
-    <div class="look_previews" id="view__looks__previews">
+    <div class="row look_previews" id="view__looks__previews">
     </div>
   </div>
 
-  <div id="view__comments" class="view__page" style="display: none;">
+  <div id="view__comments" class="block view__page" style="display: none;">
     <div id="view__comments__empty" style="display: none;"><i>There are no comments.</i></div>
     <div class="view__comments__list" id="view__comments__list"></div>
     <div id="view__new_comment" class="new_comment">
       <form>
-        <div class="form-group new_comment__textarea_wrap">
-              <textarea class="form-control new_comment__textarea"
-                        style="height: 74px;"
-                        id="view__comments__new_comment_textarea"
-                        placeholder="Write a comment..."></textarea>
-        </div>
-        <div class="form-group text-right">
-          <button type="button" class="btn btn-lg btn-success new_comment__button">Post comment</button>
-        </div>
+        <textarea class="form-control new_comment__textarea"
+                  style="height: 74px;"
+                  id="view__comments__new_comment_textarea"
+                  placeholder="Write a comment..."></textarea>
+        <button type="button" class="btn btn-lg btn-success new_comment__button">Post comment</button>
       </form>
     </div>
   </div>
