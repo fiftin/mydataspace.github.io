@@ -107,7 +107,8 @@ UILayout.entityForm =
         id: 'NAME_LABEL_5',
         label: STRINGS.NAME,
         name: 'name',
-        labelWidth: UIHelper.LABEL_WIDTH
+        labelWidth: UIHelper.LABEL_WIDTH,
+        css: 'entity_form__first_input'
       },
       UIControls.getEntityTypeSelectTemplate(),
       { view: 'text',
@@ -130,7 +131,8 @@ UILayout.entityForm =
       },
       { id: 'entity_form__fields_title',
         template: STRINGS.FIELDS,
-        type: 'section'
+        type: 'section',
+        css: 'entity_form__fields_title'
       },
       { view: 'label',
         id: 'NO_FIELDS_LABEL',
