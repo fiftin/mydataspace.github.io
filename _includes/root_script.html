@@ -619,30 +619,30 @@
           openLookEditModal(false);
         });
 
-        Mydataspace.entities.getMyChildren({
-          root: 'mydataspace',
-          path: '',
-          onlyMine: '',
-        }).then(function() {});
+        //Mydataspace.entities.getMyChildren({
+        //  root: 'mydataspace',
+        //  path: '',
+        //  onlyMine: '',
+        //}).then(function() {});
 
-        document.getElementById('view__user_follow').addEventListener('click', function() {
-          Mydataspace.request('entities.create', {
-            root: 'mydataspace',
-            path: 'profiles/' + data.profile.username + '/followers' + MDSCommon.guid(),
-            fields: []
-          }, function() {
-            $textarea.val('');
-            $button.prop('disabled', false);
-            $textarea.prop('disabled', false);
-            $textarea.focus();
-            updateCommentFormTextareaHeight();
-          }, function(err) {
-            $button.prop('disabled', false);
-            $textarea.prop('disabled', false);
-            console.log(err);
-          });
-        
-        });
+        //document.getElementById('view__user_follow').addEventListener('click', function() {
+        //  Mydataspace.request('entities.create', {
+        //    root: 'mydataspace',
+        //    path: 'profiles/' + data.profile.username + '/followers' + MDSCommon.guid(),
+        //    fields: []
+        //  }, function() {
+        //    $textarea.val('');
+        //    $button.prop('disabled', false);
+        //    $textarea.prop('disabled', false);
+        //    $textarea.focus();
+        //    updateCommentFormTextareaHeight();
+        //  }, function(err) {
+        //    $button.prop('disabled', false);
+        //    $textarea.prop('disabled', false);
+        //    console.log(err);
+        //  });
+        //
+        //});
       });
     }
 
