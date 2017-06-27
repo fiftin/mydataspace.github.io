@@ -123,6 +123,9 @@ $follow-button-height: 40px;
 .user_snippet__follow {
   padding-top: $user-cover-height;
   text-align: right;
+  button {
+    display: none;
+  }
 }
 
 
