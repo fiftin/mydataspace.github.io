@@ -546,6 +546,10 @@
 
         if (data.profile && document.getElementById('view__user')) {
           document.getElementById('view__user_name').innerText = data.profile.name;
+          if (data.profile.verified) {
+            document.getElementById('view__user_verified').style.display = 'block';
+            document.getElementById('view__user_name').classList.add('view__user_name--verified');
+          }
           document.getElementById('view__user_username').innerText = '@' + data.profile.username;
           if (data.profile.about) {
             document.getElementById('view__user_about').innerText = data.profile.about;
