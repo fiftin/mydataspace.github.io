@@ -23,6 +23,7 @@ strings:
   view_data: View Data
   top_roots: Featured Roots
   search: Search
+  explore_root: Explore Roots
 
 buttons:
   - id: facebook

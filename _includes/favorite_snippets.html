@@ -1,12 +1,18 @@
 <div class="favorite_snippets">
     <div class="container relative">
         <h2 class="section__title section__title--top-roots">{{ site.data[page.language].strings.top_roots }}</h2>
-        <div class="row" id="favorite_snippets">
+        <div class="row" id="favorite_snippets" class="favorite_snippets__list">
+        </div>
+        <div class="text-center favorite_snippets__button_wrap">
+            <button class="btn btn-success sub_footer__button" id="favorite_snippets__explore_roots">{{ site.data[page.language].strings.explore_roots }}</button>
         </div>
     </div>
     <script>
-
       (function() {
+        document.getElementById('favorite_snippets__explore_roots').addEventListener('click', function() {
+          openSearch_header__search();
+        });
+
         function load() {        // Try to get roots from server
           Mydataspace.request('entities.getRoots', {
             profiles: true,

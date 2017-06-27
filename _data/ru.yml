@@ -18,6 +18,7 @@ strings:
   view_data: См. данные
   search: Поиск
   top_roots: Популярые данные
+  explore_roots: Показать все
 
 buttons:
   - id: facebook
