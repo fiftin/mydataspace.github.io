@@ -106,7 +106,7 @@ $follow-button-height: 40px;
 
 .user_snippet__name {
   max-width: $side-panel-width - $padding - $user-avatar-size;
-  margin-left: $side-panel-width + $padding;
+  margin-left: $user-avatar-size + $padding;
   float: left;
   font-weight: bold;
   font-size: 20px;
@@ -132,7 +132,7 @@ $follow-button-height: 40px;
   max-width: $side-panel-width - $padding * 2 - $user-avatar-size;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-left: $side-panel-width + $padding;
+  margin-left: $user-avatar-size + $padding;
 }
 
 .user_snippet__about {
