@@ -161,6 +161,9 @@ $snippet-footer-height-with-gradient: 50px;
   float: left;
   line-height: $snippet-footer-height;
   width: calc(100% - #{$snippet-footer-height + $small-padding / 2 + 100});
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 
@@ -171,7 +174,7 @@ $snippet-footer-height-with-gradient: 50px;
   border-radius: 100px;
   display: block;
   float: left;
-  margin-right: 10px;
+  margin-right: $small-padding / 2;
 }
 
 .snippet__date {
