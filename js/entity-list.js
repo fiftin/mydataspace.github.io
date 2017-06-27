@@ -203,7 +203,9 @@ EntityList.prototype.showMore = function() {
   req.offset = self.count();
   $$('entity_list').disable();
   Mydataspace.request('entities.getChildren', req, function(data) {
-    var children = data.children.map(Identity.entityFromData);
+    var children = data.children.filter(function(child) {
+      return UIHelper.IGNORED_PATHS.indexOf(child.path) < 0;
+    }).map(Identity.entityFromData);
     self.addChildren(children);
     $$('entity_list').enable();
   });

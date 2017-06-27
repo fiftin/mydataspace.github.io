@@ -173,6 +173,13 @@ UIHelper = {
     'view': 'file-image-o'
   },
 
+  IGNORED_PATHS: [
+    'comments',
+    'views',
+    'likes',
+    'processes'
+  ],
+
   /**
    * User can only view entities. All buttons for manipulations is hidden in
    * this mode.
@@ -1839,7 +1846,9 @@ EntityList.prototype.showMore = function() {
   req.offset = self.count();
   $$('entity_list').disable();
   Mydataspace.request('entities.getChildren', req, function(data) {
-    var children = data.children.map(Identity.entityFromData);
+    var children = data.children.filter(function(child) {
+      return UIHelper.IGNORED_PATHS.indexOf(child.path) < 0;
+    }).map(Identity.entityFromData);
     self.addChildren(children);
     $$('entity_list').enable();
   });
@@ -2193,12 +2202,15 @@ EntityTree.prototype.addChildren = function(entityId, children) {
  * @param id Id of parent entity.
  */
 EntityTree.prototype.showMore = function(id) {
+
   var self = this;
   var req = Identity.dataFromId(id);
   req.offset = self.numberOfChildren(id);
   Mydataspace.request('entities.getChildren', req, function(data) {
     var entityId = Identity.idFromData(data);
-    var children = data.children.map(Identity.entityFromData);
+    var children = data.children.filter(function(child) {
+      return UIHelper.IGNORED_PATHS.indexOf(child.path) < 0;
+    }).map(Identity.entityFromData);
     self.addChildren(entityId, children);
   });
 };

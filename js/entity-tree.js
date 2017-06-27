@@ -333,12 +333,15 @@ EntityTree.prototype.addChildren = function(entityId, children) {
  * @param id Id of parent entity.
  */
 EntityTree.prototype.showMore = function(id) {
+
   var self = this;
   var req = Identity.dataFromId(id);
   req.offset = self.numberOfChildren(id);
   Mydataspace.request('entities.getChildren', req, function(data) {
     var entityId = Identity.idFromData(data);
-    var children = data.children.map(Identity.entityFromData);
+    var children = data.children.filter(function(child) {
+      return UIHelper.IGNORED_PATHS.indexOf(child.path) < 0;
+    }).map(Identity.entityFromData);
     self.addChildren(entityId, children);
   });
 };

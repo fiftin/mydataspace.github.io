@@ -35,6 +35,13 @@ UIHelper = {
     'view': 'file-image-o'
   },
 
+  IGNORED_PATHS: [
+    'comments',
+    'views',
+    'likes',
+    'processes'
+  ],
+
   /**
    * User can only view entities. All buttons for manipulations is hidden in
    * this mode.
