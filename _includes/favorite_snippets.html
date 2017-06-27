@@ -77,7 +77,7 @@
                 '</a></div>';
             });
 
-            document.getElementById('favorite_snippets').innerHTML = rootsHtml;
+            document.getElementById('favorite_snippets').innerHTML = rootsHtml.join('');
           });
         }
         setTimeout(load, 1000);
