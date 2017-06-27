@@ -81,6 +81,11 @@ $snippet-footer-height-with-gradient: 50px;
   position: relative;
 }
 
+
+.block--padding {
+  padding: $padding;
+}
+
 .snippet {
   cursor: pointer;
   margin-bottom: 30px;
