@@ -31,28 +31,6 @@
 </div>
 
 <div class="container view__container">
-  <div class="view__tabs cf hidden" id="view__tabs">
-    <a href="" class="view__tab view__tab--active" id="VIEW_TAB_README_LABEL">
-      Описание
-    </a>
-
-    <a href="" class="view__tab" id="VIEW_TAB_VIEW_LABEL">
-      Визуализация <span class="view__tab__counter" id="view__tabs_views_count">0</span>
-    </a>
-
-    <a href="" class="view__tab" id="VIEW_TAB_COMMENTS_LABEL">
-      Комментарии <span class="view__tab__counter" id="view__tabs_comments_count">0</span>
-    </a>
-
-    <div class="view__tab" id="VIEW_TAB_DATA_LABEL">
-      <a href="/" class="hidden hidden-xs hidden-sm links__link view__title_link" id="view__data_link">
-        <i class="fa fa-database" aria-hidden="true"></i><span class="links__link_text">См. данные</span>
-      </a>
-      <button class="btn btn-success hidden view__new_look"
-              id="view__new_look"><i class="fa fa-plus"></i> Создать</button>
-    </div>
-  </div>
-
   <div id="view__about">
     <div class="view__description_wrap">
       <span class="view__description" id="view__description"></span>
@@ -60,85 +38,6 @@
     </div>
 
     <div class="view__readme" id="view__readme"></div>
-  </div>
-
-  <div id="view__looks" class="view__page" style="display: none;">
-    <div class="" id="view__looks__empty" style="display: none;"><i>Нет ни одного представления.</i></div>
-
-    <!--<ul class="nav nav-pills view__pills view__pills&#45;&#45;looks" id="view__looks__pills">-->
-      <!--<li role="presentation"><a href="#">All</a></li>-->
-      <!--<li role="presentation" class="active"><a href="#">Featured</a></li>-->
-      <!--<li role="presentation"><a href="#">Sandbox</a></li>-->
-      <!--<li role="presentation"><a href="#">Yours</a></li>-->
-    <!--</ul>-->
-
-    <div class="look" id="view__looks__content_wrap">
-      <div class="look__header">
-        <div class="look__title" id="view__looks__title"></div>
-        <div class="look__actions" id="view__looks__actions">
-          <div class="look__action"
-               id="view__looks__delete"
-               data-toggle="modal"
-               data-target="#delete_look_modal"><i class="fa fa-2x fa-remove"></i></div>
-          <div class="look__action" id="view__looks__edit"><i class="fa fa-2x fa-pencil"></i></div>
-        </div>
-      </div>
-      <div id="view__looks__content" class="look__content"></div>
-
-      <div class="look__footer">
-        <div class="view__comment__date view__date_wrap">
-          создан <span class="view__date" id="view__looks__date"></span> назад
-        </div>
-        <!--<div class="root_counters root_counters&#45;&#45;look">-->
-          <!--<span class="root_counter" id="view__looks__likes">-->
-            <!--<i class="fa fa-heart" id="view__looks__likes_icon" aria-hidden="true"></i>-->
-            <!--<span class="root_counter__count root_counter__count&#45;&#45;likes" id="view__looks__likes_count">0</span>-->
-          <!--</span>-->
-
-          <!--<span class="root_counter" id="view__looks__comments">-->
-            <!--<i class="fa fa-comments" aria-hidden="true"></i>-->
-            <!--<span class="root_counter__count" id="view__looks__comments_count">0</span>-->
-          <!--</span>-->
-        <!--</div>-->
-      </div>
-
-      <!--<div id="view__looks__empty_comment" style="display: none;"><i>There are no comments.</i></div>-->
-      <!--<div class="view__comments__list" id="view__looks__comments_list"></div>-->
-      <!--<div id="view__looks__new_comment" class="new_comment">-->
-        <!--<form>-->
-          <!--<div class="form-group new_comment__textarea_wrap">-->
-                <!--<textarea class="form-control new_comment__textarea"-->
-                          <!--style="height: 74px;"-->
-                          <!--id="view__looks__new_comment_textarea"-->
-                          <!--placeholder="Write a comment..."></textarea>-->
-          <!--</div>-->
-          <!--<div class="form-group text-right">-->
-            <!--<button type="button" class="btn btn-lg btn-success new_comment__button">Post comment</button>-->
-          <!--</div>-->
-        <!--</form>-->
-      <!--</div>-->
-    </div>
-
-    <div class="look_previews" id="view__looks__previews">
-    </div>
-  </div>
-
-  <div id="view__comments" class="view__page" style="display: none;">
-    <div id="view__comments__empty" style="display: none;"><i>Нет ни одного комментария.</i></div>
-    <div class="view__comments__list" id="view__comments__list"></div>
-    <div id="view__new_comment" class="new_comment">
-      <form>
-        <div class="form-group new_comment__textarea_wrap">
-              <textarea class="form-control new_comment__textarea"
-                        style="height: 74px;"
-                        id="view__comments__new_comment_textarea"
-                        placeholder="Написать комментарий..."></textarea>
-        </div>
-        <div class="form-group text-right">
-          <button type="button" class="btn btn-lg btn-success new_comment__button">Добавть комментарий</button>
-        </div>
-      </form>
-    </div>
   </div>
 </div>
 
