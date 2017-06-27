@@ -4,7 +4,7 @@ $snippet-image-size: 52px;
 
 $filter-item-height: 30px;
 
-$snippet-footer-height: 30px;
+$snippet-footer-height: 20px;
 $snippet-footer-height-with-gradient: 50px;
 
 .search_filter {
@@ -151,31 +151,37 @@ $snippet-footer-height-with-gradient: 50px;
 }
 
 .snippet__author {
-  line-height: $snippet-footer-height - $small-padding / 2;
+  height: $snippet-footer-height;
 }
 
 .snippet__author_name {
   font-size: 14px;
   color: black;
+  display: block;
+  float: left;
+  line-height: $snippet-footer-height;
 }
 
+
 .snippet__author_avatar {
-  height: 20px;
-  width: 20px;
-  transform: translateY(-2px);
+  height: $snippet-footer-height;
+  width: $snippet-footer-height;
   border: 0;
   border-radius: 100px;
+  display: block;
+  float: left;
+  margin-right: 10px;
 }
 
 .snippet__date {
-  line-height: $snippet-footer-height - $small-padding / 2;
+  line-height: $snippet-footer-height;
 }
 
 .snippet__counters {
   position: absolute;
   right: 0;
   bottom: $small-padding / 2;
-  line-height: $snippet-footer-height - $small-padding / 2;
+  line-height: $snippet-footer-height;
   transform: scale(0.9);
   color: #b9b9b9;
 }
