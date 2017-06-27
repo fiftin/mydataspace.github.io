@@ -93,6 +93,7 @@
           newSearch += part;
         }
       }
+
       // Try to get roots from server
       Mydataspace.request('entities.getRoots', {
         search: newSearch,
@@ -121,13 +122,6 @@
           var lang = languageMatch ? languageMatch[1] + '/' : '';
 
           var footer;
-          //data.profiles = {
-          //  'denis': {
-          //    avatar: '',
-          //    name: 'Denis Gukov'
-          //  }
-          //};
-          //root.profile = 'denis';
 
           if (root.profile && data.profiles[root.profile]) {
             var authorAvatar = 'https://cdn.mydataspace.net/avatars/sm/' + (data.profiles[root.profile].avatar || 'HJYrGU87W') + '.png';

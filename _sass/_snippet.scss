@@ -1,9 +1,11 @@
 @import "./vars";
 
 $snippet-image-size: 52px;
-$snippet-height: 200px;
 
 $filter-item-height: 30px;
+
+$snippet-footer-height: 30px;
+$snippet-footer-height-with-gradient: 50px;
 
 .search_filter {
   margin-bottom: 20px;
@@ -132,8 +134,6 @@ $filter-item-height: 30px;
   word-wrap: break-word;
 }
 
-$snippet-footer-height: 30px;
-$snippet-footer-height-with-gradient: 50px;
 .snippet__footer {
   position: absolute;
   bottom: 0;
