@@ -111,7 +111,8 @@ $follow-button-height: 40px;
   font-weight: bold;
   font-size: 20px;
   line-height: 1;
-  word-wrap: break-word;
+  overflow: hidden;
+  //text-overflow: ellipsis;
 }
 
 .user_snippet__name_wrap {
