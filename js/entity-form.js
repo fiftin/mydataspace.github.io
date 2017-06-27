@@ -543,8 +543,10 @@ EntityForm.prototype.refresh = function() {
     } else {
       self.setData(data);
       if (self.isProto()) {
+        $('.entity_form__first_input').addClass('.entity_form__first_input--proto');
         $$('PROTO_IS_FIXED_LABEL').show();
       } else {
+        $('.entity_form__first_input').removeClass('.entity_form__first_input--proto');
         $$('PROTO_IS_FIXED_LABEL').hide();
       }
       $$('entity_form').enable();
