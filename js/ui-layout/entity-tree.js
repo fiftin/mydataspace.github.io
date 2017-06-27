@@ -71,6 +71,7 @@ UILayout.entityTree =
       select: true,
       template:function(obj, common) {
         var path = Identity.dataFromId(obj.id).path;
+        var isTopLevelEntity = path.indexOf('/') < 0;
         if (path === '') { // root
           var ava = MDSCommon.findValueByName(obj.associatedData.fields, 'avatar');
           var name = MDSCommon.findValueByName(obj.associatedData.fields, 'name') || obj.value;
@@ -101,7 +102,7 @@ UILayout.entityTree =
                                           obj.open);
         return common.icon(obj, common) +
                '<div class="webix_tree_folder_open fa fa-' + icon + '"></div>' +
-               '<span>' + obj.value + '</span>';
+               '<span class="webix_tree_item__name ' + (isTopLevelEntity ? ' webix_tree_item__name--top' : '') + '">' + obj.value + '</span>';
       },
       on: {
         onAfterLoad: function() {

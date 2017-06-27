@@ -3154,6 +3154,7 @@ UILayout.entityTree =
       select: true,
       template:function(obj, common) {
         var path = Identity.dataFromId(obj.id).path;
+        var isTopLevelEntity = path.indexOf('/') < 0;
         if (path === '') { // root
           var ava = MDSCommon.findValueByName(obj.associatedData.fields, 'avatar');
           var name = MDSCommon.findValueByName(obj.associatedData.fields, 'name') || obj.value;
@@ -3184,7 +3185,7 @@ UILayout.entityTree =
                                           obj.open);
         return common.icon(obj, common) +
                '<div class="webix_tree_folder_open fa fa-' + icon + '"></div>' +
-               '<span>' + obj.value + '</span>';
+               '<span class="webix_tree_item__name ' + (isTopLevelEntity ? ' webix_tree_item__name--top' : '') + '">' + obj.value + '</span>';
       },
       on: {
         onAfterLoad: function() {
@@ -3282,6 +3283,7 @@ UILayout.entityList =
       id: 'entity_list',
       select: true,
       template: function(obj) {
+        var isTopLevelEntity = Identity.dataFromId(obj.id).path.indexOf('/') < 0;
         var icon =
           UIHelper.getIconByPath(Identity.dataFromId(obj.id).path,
                                  obj.count === 0,
@@ -3289,7 +3291,7 @@ UILayout.entityList =
         return (obj.id.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID) ? '' :
                   '<div class="entity_list__item_icon fa fa-' + icon + '"></div>') +
                '<div class="entity_list__item">' +
-               '<div class="entity_list__item_name">' + obj.value + '</div>' +
+               '<div class="entity_list__item_name' + (isTopLevelEntity ? ' entity_list__item_name--top' : '') + '">' + obj.value + '</div>' +
                (obj.count == null ? '' :
                  '<div class="entity_list__item_count">' + obj.count + '</div>' +
                  '<div class="entity_list__item_count_prefix fa fa-copy"></div>') +
