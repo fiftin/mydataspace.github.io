@@ -11,7 +11,7 @@
           Mydataspace.request('entities.getRoots', {
             profiles: true,
             filter: {
-              language: 'ru'
+              language: '{{ page.language }}'
             },
             limit: 3
           }, function(data) {
