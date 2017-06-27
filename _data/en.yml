@@ -4,26 +4,21 @@ menu:
   docs: Documentation
   console: My Data
   login: Sign In
-
 slogan: GitHub for Data
 slogan_description: Love Open Source? Let's create Open Data together!
-
 slogan_2: Incredibly fast backend of your website
 slogan_description_2: You will be surprised how fast and responsive website can be
-
 mission: From the outset we wanted to create a simple, reliable and fast product.
 special_offer: Free now and <b>forever</b> for registered users
 final_prompt: ""
 get_started_now: Get Started!
 prompt: "Sign in with:"
-
-
 strings:
   view_source_code: View Code
   view_data: View Data
-  top_roots: Featured Roots
   search: Search
-  explore_root: Explore Roots
+  top_roots: Featured Roots
+  explore_roots: Explore Roots
 
 buttons:
   - id: facebook
