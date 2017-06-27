@@ -160,6 +160,7 @@ $snippet-footer-height-with-gradient: 50px;
   display: block;
   float: left;
   line-height: $snippet-footer-height;
+  width: calc(100% - #{$snippet-footer-height + $small-padding / 2 + 100});
 }
 
 
