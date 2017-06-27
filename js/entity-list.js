@@ -128,7 +128,9 @@ EntityList.prototype.refreshData = function() {
     var showMoreChildId =
       Identity.childId(this.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
     var entityId = Identity.idFromData(data);
-    var children = data.children.filter(function(x) { return x.root !== 'root' || x.path !== ''; }).map(Identity.entityFromData);
+    var children = data.children.filter(function(x) {
+      return (x.root !== 'root' || x.path !== '') && UIHelper.IGNORED_PATHS.indexOf(x.path) < 0;
+    }).map(Identity.entityFromData);
     if (this.getRootId() === entityId) {
       if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
         children[children.length - 1] = {

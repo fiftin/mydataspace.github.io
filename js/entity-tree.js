@@ -40,7 +40,9 @@ EntityTree.prototype.resolveChildren = function(id) {
     // Load children to first time opened node.
     Mydataspace.request('entities.getChildren', Identity.dataFromId(id), function(data) {
       var entityId = Identity.idFromData(data);
-      var children = data.children.filter(function(x) { return x.root !== 'root' || x.path !== ''; }).map(Identity.entityFromData);
+      var children = data.children.filter(function(x) {
+        return (x.root !== 'root' || x.path !== '') && UIHelper.IGNORED_PATHS.indexOf(x.path) < 0;
+      }).map(Identity.entityFromData);
       UI.entityTree.setChildren(entityId, children);
       resolve();
     }, function(err) {
