@@ -1,5 +1,7 @@
-$side-width: 300px;
+@import "./vars";
 
+$side-width: 300px;
+$side-panel-width: $side-width - $padding;
 
 .root_page {
 
@@ -57,7 +59,7 @@ $side-width: 300px;
 
 .view__side_panel {
   margin-left: $padding;
-  width: $side-width - $padding;
+  width: $side-panel-width;
   position: absolute;
 }
 
@@ -103,17 +105,34 @@ $follow-button-height: 40px;
 }
 
 .user_snippet__name {
-  //padding-top: 10px;
+  max-width: $side-panel-width - $padding - $user-avatar-size;
+  margin-left: $side-panel-width + $padding;
+  float: left;
   font-weight: bold;
   font-size: 20px;
   line-height: 1;
-  margin-left: 110px;
+  word-wrap: break-word;
+}
+
+.user_snippet__name_wrap {
+
+}
+
+.user_snippet__verified {
+  float: right;
+}
+
+.user_snippet__name--verified {
+  max-width: $side-panel-width - $padding * 2 - $user-avatar-size;
 }
 
 .user_snippet__username {
   color: gray;
   line-height: 1.2;
-  margin-left: 110px;
+  max-width: $side-panel-width - $padding * 2 - $user-avatar-size;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: $side-panel-width + $padding;
 }
 
 .user_snippet__about {
