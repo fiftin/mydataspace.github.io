@@ -180,6 +180,15 @@ UIHelper = {
     'processes'
   ],
 
+  SYSTEM_PATHS: [
+    'resources',
+    'tasks',
+    'protos',
+    'comments',
+    'views',
+    'likes',
+    'processes'
+  ],
   /**
    * User can only view entities. All buttons for manipulations is hidden in
    * this mode.
@@ -3154,7 +3163,7 @@ UILayout.entityTree =
       select: true,
       template:function(obj, common) {
         var path = Identity.dataFromId(obj.id).path;
-        var isTopLevelEntity = path.indexOf('/') < 0;
+        var isTopLevelEntity = path.indexOf('/') < 0 && UIHelper.SYSTEM_PATHS.indexOf(path) < 0;
         if (path === '') { // root
           var ava = MDSCommon.findValueByName(obj.associatedData.fields, 'avatar');
           var name = MDSCommon.findValueByName(obj.associatedData.fields, 'name') || obj.value;
@@ -3283,9 +3292,10 @@ UILayout.entityList =
       id: 'entity_list',
       select: true,
       template: function(obj) {
-        var isTopLevelEntity = Identity.dataFromId(obj.id).path.indexOf('/') < 0;
+        var path = Identity.dataFromId(obj.id).path;
+        var isTopLevelEntity = path.indexOf('/') < 0 && UIHelper.SYSTEM_PATHS.indexOf(path) < 0;
         var icon =
-          UIHelper.getIconByPath(Identity.dataFromId(obj.id).path,
+          UIHelper.getIconByPath(path,
                                  obj.count === 0,
                                  false);
         return (obj.id.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID) ? '' :

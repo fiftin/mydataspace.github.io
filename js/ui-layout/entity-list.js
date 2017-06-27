@@ -62,9 +62,10 @@ UILayout.entityList =
       id: 'entity_list',
       select: true,
       template: function(obj) {
-        var isTopLevelEntity = Identity.dataFromId(obj.id).path.indexOf('/') < 0;
+        var path = Identity.dataFromId(obj.id).path;
+        var isTopLevelEntity = path.indexOf('/') < 0 && UIHelper.SYSTEM_PATHS.indexOf(path) < 0;
         var icon =
-          UIHelper.getIconByPath(Identity.dataFromId(obj.id).path,
+          UIHelper.getIconByPath(path,
                                  obj.count === 0,
                                  false);
         return (obj.id.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID) ? '' :
