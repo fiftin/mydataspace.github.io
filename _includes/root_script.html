@@ -659,6 +659,7 @@
           } else {
             var data = result.children[0];
             var codepenParts = MDSCommon.findValueByName(data.fields, 'id').split('/');
+            document.getElementById('view__about_look_title').innerText = MDSCommon.findValueByName(data.fields, 'title');
             document.getElementById('view__about_look_codepen').innerHTML = '<p data-height="402" data-theme-id="0" data-slug-hash="' + codepenParts[1] + '" data-default-tab="result" data-user="'+ codepenParts[0] +'" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/' +  codepenParts[0] + '/pen/' + codepenParts[1] + '/">' + codepenParts[1] + '</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p>';
             var codepenScript = document.createElement('script');
             codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');

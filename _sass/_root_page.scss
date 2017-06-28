@@ -427,17 +427,17 @@ $follow-button-height: 40px;
 
 .block--look {
   padding: 0;
+  background: #3d3d3e;
 }
 
 .view__about_look_title {
-  font-weight: bold;
-  padding: 10px 20px;
-  background: #3d3d3e;
+  padding: 10px 10px 2px 10px;
   color: white;
 }
 
 .view__about_look_codepen {
   overflow: hidden;
+  height: 400px;
   .cp_embed_wrapper {
     margin: -1px;
     height: 400px;
