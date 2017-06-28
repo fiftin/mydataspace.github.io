@@ -45,10 +45,13 @@ $side-panel-width: $side-width - $padding;
 
 
 .view__about {
-  padding: 0 $padding;
   margin-top: $padding;
   width: calc(100% - #{$side-width});
   float: left;
+}
+
+.block--about {
+  padding: 0 20px;
 }
 
 .view__side_panel_wrap {
@@ -285,7 +288,7 @@ $follow-button-height: 40px;
 }
 
 .look_preview {
-  cursor: pointer;
+  cursor: zoom-in;
 }
 
 .look_preview--active {
@@ -391,7 +394,7 @@ $follow-button-height: 40px;
 
 .look__actions {
   position: absolute;
-  right: 0px;
+  right: 0;
   bottom: 0;
 }
 
@@ -419,5 +422,24 @@ $follow-button-height: 40px;
     .look__action {
       opacity: 0.4;
     }
+  }
+}
+
+.block--look {
+  padding: 0;
+}
+
+.view__about_look_title {
+  font-weight: bold;
+  padding: 10px 20px;
+  background: #3d3d3e;
+  color: white;
+}
+
+.view__about_look_codepen {
+  overflow: hidden;
+  .cp_embed_wrapper {
+    margin: -1px;
+    height: 400px;
   }
 }

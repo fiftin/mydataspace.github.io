@@ -405,12 +405,8 @@
 
                 if (document.getElementById('view__tabs_views_count').innerText === '0') {
                   document.getElementById('view__looks__empty').style.display = 'block';
-//                  document.getElementById('view__looks__pills').style.display = 'none';
-//                  document.getElementById('view__looks__content_wrap').style.display = 'none';
                 } else {
                   document.getElementById('view__looks__empty').style.display = 'none';
-//                  document.getElementById('view__looks__pills').style.display = 'block';
-//                  document.getElementById('view__looks__content_wrap').style.display = 'block';
                 }
                 Mydataspace.entities.request('entities.get', { root: DATA.root, children: true, path: 'views' }).then(function(data) {
                   updateLooks(data.children);
@@ -648,6 +644,28 @@
         //  });
         //
         //});
+
+
+        // Load data for root and render it on the page
+        Mydataspace.entities.request('entities.get', {
+          root: DATA.root,
+          path: 'views',
+          children: true,
+          limit: 1
+        }).then(function(result) {
+          var look = document.getElementById('view__about_look');
+          if (result.children.length <= 0) {
+            look.style.display = 'none';
+          } else {
+            var data = result.children[0];
+            var codepenParts = MDSCommon.findValueByName(data.fields, 'id').split('/');
+            document.getElementById('view__about_look_codepen').innerHTML = '<p data-height="402" data-theme-id="0" data-slug-hash="' + codepenParts[1] + '" data-default-tab="result" data-user="'+ codepenParts[0] +'" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/' +  codepenParts[0] + '/pen/' + codepenParts[1] + '/">' + codepenParts[1] + '</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p>';
+            var codepenScript = document.createElement('script');
+            codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
+            look.appendChild(codepenScript);
+          }
+        });
+
       });
     }
 
@@ -655,7 +673,6 @@
     Mydataspace.entities.request('entities.get', DATA).then(function(result) {
       setRootView(result);
     });
-
 
     //
     // Likes & comments
