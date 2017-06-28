@@ -309,7 +309,7 @@ $follow-button-height: 40px;
 .look_preview__title {
   font-weight: bold;
   padding-left: 7px;
-  font-size: 14px;
+  font-size: 18px;
 }
 
 .look_preview__header {
@@ -317,12 +317,29 @@ $follow-button-height: 40px;
 
 .look_preview__description {
   font-size: 14px;
+  margin-top: 5px;
 }
 
 .look_preview__footer {
   position: absolute;
   bottom: 0;
   width: 100%;
+  height: 28px;
+}
+
+.snippet:hover {
+  .look_preview__codepen_wrap {
+    filter: blur(20px);
+  }
+  .look_preview__codepen_locker {
+    opacity: 1;
+  }
+}
+
+.look_preview--active {
+  .look_preview__codepen_wrap {
+    filter: none !important;
+  }
 }
 
 .look_preview__codepen_wrap {
@@ -339,6 +356,14 @@ $follow-button-height: 40px;
   left: 0;
   bottom: 0;
   right: 0;
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.8);
+  padding: $small-padding;
+  transition: opacity 0.3s;
+  color: white;
+  .view__comment__date {
+    color: white !important;
+  }
 }
 
 .codepen {
