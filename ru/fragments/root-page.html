@@ -32,14 +32,14 @@
               <i class="fa fa-database" aria-hidden="true"></i><span class="links__link_text">Explore Data</span>
             </a>
             <a href="javascript:void(0)" class="hidden links__link view__title_link"
-                    id="view__new_look"><i class="fa fa-plus"></i> New <span class="hidden-xs">View</span></a>
+               id="view__new_look"><i class="fa fa-plus"></i> New <span class="hidden-xs">View</span></a>
           </div>
         </div>
 
-        
+
       </div>
       <!--<div class="view__comment__date view__date_wrap">-->
-        <!--created <span class="view__date" id="view__date"></span> ago-->
+      <!--created <span class="view__date" id="view__date"></span> ago-->
       <!--</div>-->
     </div>
 
@@ -61,14 +61,20 @@
 
   <div id="view__about">
 
-    <div class="block view__about">
-      <div class="view__tags" id="view__tags"></div>
-      <div class="view__description_wrap">
-        <span class="view__description" id="view__description"></span>
-        <a class="view__websiteURL" id="view__websiteURL" target="_blank"></a>
+    <div class="view__about">
+      <div class="block block--about">
+        <div class="view__description_wrap">
+          <span class="view__description" id="view__description"></span>
+          <a class="view__websiteURL" id="view__websiteURL" target="_blank"></a>
+        </div>
+        <div class="view__tags" id="view__tags"></div>
+        <div class="view__readme" id="view__readme"></div>
       </div>
 
-      <div class="view__readme" id="view__readme"></div>
+      <div class="block block--look" id="view__about_look">
+        <div id="view__about_look_title" class="view__about_look_title"></div>
+        <div id="view__about_look_codepen" class="view__about_look_codepen"></div>
+      </div>
     </div>
 
     <div class="view__side_panel_wrap">
@@ -79,7 +85,10 @@
           <div class="user_snippet__follow">
             <button class="btn btn-success" id="view__user_follow">Follow</button>
           </div>
-          <div class="user_snippet__name" id="view__user_name"></div>
+          <div class="user_snippet__name_wrap clearfix">
+            <div class="user_snippet__name" id="view__user_name"></div>
+            <i style="display: none;" class="fa fa-check user_snippet__verified" aria-hidden="true" id="view__user_verified"></i>
+          </div>
           <div class="user_snippet__username" id="view__user_username"></div>
           <div class="user_snippet__about" id="view__user_about"></div>
           <div class="user_snippet__stats">
@@ -90,13 +99,13 @@
   </div>
 
   <div id="view__looks" style="margin-top: 20px; display: none;">
-    <div class="" id="view__looks__empty" style="display: none;"><i>There are no views.</i></div>
+    <div class="block block--padding" id="view__looks__empty" style="display: none;"><i>There are no views.</i></div>
 
     <!--<ul class="nav nav-pills view__pills view__pills&#45;&#45;looks" id="view__looks__pills">-->
-      <!--<li role="presentation"><a href="#">All</a></li>-->
-      <!--<li role="presentation" class="active"><a href="#">Featured</a></li>-->
-      <!--<li role="presentation"><a href="#">Sandbox</a></li>-->
-      <!--<li role="presentation"><a href="#">Yours</a></li>-->
+    <!--<li role="presentation"><a href="#">All</a></li>-->
+    <!--<li role="presentation" class="active"><a href="#">Featured</a></li>-->
+    <!--<li role="presentation"><a href="#">Sandbox</a></li>-->
+    <!--<li role="presentation"><a href="#">Yours</a></li>-->
     <!--</ul>-->
 
     <div class="look" id="view__looks__content_wrap" style="display: none">
