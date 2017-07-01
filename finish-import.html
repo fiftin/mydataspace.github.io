@@ -21,7 +21,7 @@ language: en
     </div>
     <div class="form-group">
       <select class="form-control" id="finish_import__pk">
-        <option>Primary Key</option>
+        <option>Primary Key (optional)</option>
       </select>
     </div>
     <div class="finish_import__buttons">
@@ -194,7 +194,7 @@ language: en
             id: importId,
             state: 'paused',
             targetState: 'progress',
-            primaryKey: document.getElementById('finish_import__pk').value()
+            primaryKey: document.getElementById('finish_import__pk').value
           }
         });
       }).then(function(data) {
