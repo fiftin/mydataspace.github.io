@@ -9,7 +9,7 @@ UILayout.popups.fieldIndexed = {
         class: 'entity_form__field_indexed_list',
         borderless: true,
 		data:[
-          { id: 'on', value: 'Search &amp; Order', icon: Fields.FIELD_INDEXED_ICONS['on'] },
+          // { id: 'on', value: 'Search &amp; Order', icon: Fields.FIELD_INDEXED_ICONS['on'] },
           { id: 'fulltext', value: 'Fulltext Search', icon: Fields.FIELD_INDEXED_ICONS['fulltext'] },
           { id: 'off', value: 'None', icon: Fields.FIELD_INDEXED_ICONS['off'] },
 		],
