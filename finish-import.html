@@ -203,6 +203,8 @@ language: en
         document.getElementById('finish_import__create_root').style.display = 'none';
         document.getElementById('finish_import__progress').style.display = 'block';
       }, function(err) {
+        console.log(err);
+        alert(err.message);
       });
     });
     document.getElementById('finish_import__cancel').addEventListener('click', function() {
