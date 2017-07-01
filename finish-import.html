@@ -69,11 +69,19 @@ language: en
   });
 
   (function() {
-    var m = location.search.match(/^\?id=([\w\d\-]+)$/);
+    var m = location.search.match(/^\?id=([\w\d\-]+)&header=(.*)$/);
     var importId = m[1];
     var importingProcessPath;
     var processData;
     var openRefineImportEntity;
+
+    var pk = document.getElementById('finish_import__pk');
+    JSON.parse(decodeURIComponent(m[2])).forEach(function(col) {
+      var opt = document.createElement('option');
+      opt.text = col;
+      opt.value = col;
+      pk.add(opt);
+    });
 
     var importingStarted;
     window.parent.postMessage({ message: 'openRefineImport', stage: 'getTargetEntity' }, '*');
@@ -81,14 +89,6 @@ language: en
       if (e.data.message !== 'targetEntity' || importingStarted) {
         return;
       }
-      var pk = document.getElementById('finish_import__pk');
-      e.data.header.forEach(function(col) {
-        var opt = document.createElement('option');
-        opt.text = col;
-        opt.value = col;
-        pk.add(opt);
-      });
-
       importingStarted = true;
       openRefineImportEntity = e.data.openRefineImportEntity;
       if(openRefineImportEntity.root) {
