@@ -38,8 +38,8 @@ UIHelper = {
   IGNORED_PATHS: [
     'comments',
     'views',
-    'likes',
-    'processes'
+    'likes'
+    // 'processes'
   ],
 
   SYSTEM_PATHS: [
