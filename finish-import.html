@@ -19,6 +19,11 @@ language: en
     <div class="form-group">
       <input class="form-control" placeholder="Entity Name" id="finish_import__data_path" />
     </div>
+    <div class="form-group">
+      <select class="form-control" id="finish_import__pk">
+        <option>Primary Key</option>
+      </select>
+    </div>
     <div class="finish_import__buttons">
       <button class="finish_import__button btn btn-default" id="finish_import__cancel">Cancel</button>
       <button class="finish_import__button btn btn-success" id="finish_import__create" disabled>Create</button>
@@ -51,7 +56,7 @@ language: en
     <div class="text-center">
       <button class="btn btn-success" id="finish_import__close">Close</button>
     </div>
-  </div
+  </div>
 </div>
 <script>
   Mydataspace.connect();
@@ -76,6 +81,14 @@ language: en
       if (e.data.message !== 'targetEntity' || importingStarted) {
         return;
       }
+      var pk = document.getElementById('finish_import__pk');
+      e.data.header.forEach(function(col) {
+        var opt = document.createElement('option');
+        opt.text = col;
+        opt.value = col;
+        pk.add(opt);
+      });
+
       importingStarted = true;
       openRefineImportEntity = e.data.openRefineImportEntity;
       if(openRefineImportEntity.root) {
@@ -180,7 +193,8 @@ language: en
             targetPath: targetPath,
             id: importId,
             state: 'paused',
-            targetState: 'progress'
+            targetState: 'progress',
+            primaryKey: document.getElementById('finish_import__pk').value()
           }
         });
       }).then(function(data) {
