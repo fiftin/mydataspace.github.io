@@ -28,7 +28,7 @@ language: en
       <div class="from-group">
         <div class="checkbox">
           <label>
-              <input type="checkbox" id="finish_import__groupping" /> Groupping
+              <input type="checkbox" id="finish_import__grouping" /> Groupping
           </label>
         </div>
       </div>
@@ -209,8 +209,8 @@ language: en
       }
     });
 
-    document.getElementById('finish_import__groupping').addEventListener('change', function() {
-      if (document.getElementById('finish_import__groupping').checked) {
+    document.getElementById('finish_import__grouping').addEventListener('change', function() {
+      if (document.getElementById('finish_import__grouping').checked) {
         document.getElementById('finish_import__subitem_first_column_wrap').style.display = 'block';
         document.getElementById('finish_import__subitem_pk_wrap').style.display = 'block';
       } else {
@@ -241,15 +241,14 @@ language: en
             state: 'paused',
             targetState: 'progress',
             primaryKey: document.getElementById('finish_import__pk').value,
-            groupping: document.getElementById('finish_import__groupping').checked,
+            grouping: document.getElementById('finish_import__groupping').checked,
             subitemPrimaryKey: document.getElementById('finish_import__subitem_pk').value,
             subitemFirstColumn: document.getElementById('finish_import__subitem_first_column').value,
           }
         });
       }).then(function(data) {
         processData = data;
-        Mydataspace.entities.subscribe(MDSCommon.permit(data, ['root', 'path']));
-        document.getElementById('finish_import__create_root').style.display = 'none';
+        Mydataspace.entities.subscribe(MDSCommon.permit(data, ['root', 'path'])); document.getElementById('finish_import__create_root').style.display = 'none';
         document.getElementById('finish_import__progress').style.display = 'block';
       }, function(err) {
         console.log(err);
