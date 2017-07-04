@@ -24,6 +24,25 @@ language: en
         <option value="">Primary Key (optional)</option>
       </select>
     </div>
+    <div id="finish_import__subitem" style="display: none">
+      <div class="from-group">
+        <div class="checkbox">
+          <label>
+              <input type="checkbox" id="finish_import__groupping" /> Groupping
+          </label>
+        </div>
+      </div>
+      <div class="form-group" id="finish_import__subitem_first_column_wrap" style="display: none">
+        <select class="form-control" id="finish_import__subitem_first_column">
+          <option value="">Subitem Start From</option>
+        </select>
+      </div>
+      <div class="form-group" id="finish_import__subitem_pk_wrap" style="display: none">
+        <select class="form-control" id="finish_import__subitem_pk">
+          <option value="">Subitem Primary Key (optional)</option>
+        </select>
+      </div>
+    </div>
     <div class="finish_import__buttons">
       <button class="finish_import__button btn btn-default" id="finish_import__cancel">Cancel</button>
       <button class="finish_import__button btn btn-success" id="finish_import__create" disabled>Create</button>
@@ -69,6 +88,15 @@ language: en
   });
 
   (function() {
+
+    function addOptionToSelect(select, col) {
+      var opt = document.createElement('option');
+      opt.text = col;
+      opt.value = col;
+      select.add(opt);
+    }
+
+
     var m = location.search.match(/^\?id=([\w\d\-]+)&header=(.*)$/);
     var importId = m[1];
     var importingProcessPath;
@@ -76,11 +104,12 @@ language: en
     var openRefineImportEntity;
 
     var pk = document.getElementById('finish_import__pk');
+    var subitemPk = document.getElementById('finish_import__subitem_pk');
+    var subitemFirstColumn = document.getElementById('finish_import__subitem_first_column');
     JSON.parse(decodeURIComponent(m[2])).forEach(function(col) {
-      var opt = document.createElement('option');
-      opt.text = col;
-      opt.value = col;
-      pk.add(opt);
+      addOptionToSelect(pk, col);
+      addOptionToSelect(subitemPk, col);
+      addOptionToSelect(subitemFirstColumn, col);
     });
 
     var importingStarted;
@@ -170,7 +199,24 @@ language: en
         default:
           throw new Error('Unknown process state: ' + state);
       }
+    });
+   
+    document.getElementById('finish_import__pk').addEventListener('change', function() {
+      if (document.getElementById('finish_import__pk').value !== '') {
+        document.getElementById('finish_import__subitem').style.display = 'block';
+      } else {
+        document.getElementById('finish_import__subitem').style.display = 'none';
+      }
+    });
 
+    document.getElementById('finish_import__groupping').addEventListener('change', function() {
+      if (document.getElementById('finish_import__groupping').checked) {
+        document.getElementById('finish_import__subitem_first_column_wrap').style.display = 'block';
+        document.getElementById('finish_import__subitem_pk_wrap').style.display = 'block';
+      } else {
+        document.getElementById('finish_import__subitem_first_column_wrap').style.display = 'none';
+        document.getElementById('finish_import__subitem_pk_wrap').style.display = 'none';
+      }
     });
 
     document.getElementById('finish_import__create').addEventListener('click', function() {
@@ -194,7 +240,10 @@ language: en
             id: importId,
             state: 'paused',
             targetState: 'progress',
-            primaryKey: document.getElementById('finish_import__pk').value
+            primaryKey: document.getElementById('finish_import__pk').value,
+            groupping: document.getElementById('finish_import__groupping').checked,
+            subitemPrimaryKey: document.getElementById('finish_import__subitem_pk').value,
+            subitemFirstColumn: document.getElementById('finish_import__first_column').value,
           }
         });
       }).then(function(data) {
