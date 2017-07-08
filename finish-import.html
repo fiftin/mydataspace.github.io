@@ -146,15 +146,22 @@ language: en
       Mydataspace.entities.change({
         root: processData.root,
         path: processData.path,
-        targetState: 'cancelled'
+        fields: [
+          {
+            name: 'targetState',
+            value: 'cancelled',
+            type: 's'
+          }
+        ]
       }).then(function() {
         window.parent.postMessage({ message: 'openRefineImport', stage: 'finished' }, '*');
       }, function(err) {
         window.parent.postMessage({ message: 'openRefineImport', stage: 'finished' }, '*');
-     });
+      });
     });
 
     document.getElementById('finish_import__cancel').addEventListener('click', function() {
+
       window.parent.postMessage({ message: 'openRefineImport', stage: 'finished' }, '*');
     });
     
@@ -255,8 +262,8 @@ language: en
         alert(err.message);
       });
     });
-    document.getElementById('finish_import__cancel').addEventListener('click', function() {
-      ;
-    });
+//    document.getElementById('finish_import__cancel').addEventListener('click', function() {
+//      ;
+//    });
   })();
 </script>
