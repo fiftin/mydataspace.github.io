@@ -620,6 +620,14 @@
           openLookEditModal(false);
         });
 
+        document.getElementById('view__about_look_full').addEventListener('click', function() {
+          document.getElementById('view__about_look_content').classList.add('view__about_look--full');
+        });
+
+        document.getElementById('view__about_look_normal').addEventListener('click', function() {
+          document.getElementById('view__about_look_content').classList.remove('view__about_look--full');
+        });
+
         //Mydataspace.entities.getMyChildren({
         //  root: 'mydataspace',
         //  path: '',

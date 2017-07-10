@@ -4,6 +4,9 @@ $side-width: 300px;
 $side-panel-width: $side-width - $padding;
 
 .root_page {
+  .view__title: {
+    margin-right: $side-panel-width;
+  }
 
   .view__overview--root {
     background: $block-bg;
@@ -445,3 +448,48 @@ $follow-button-height: 40px;
     height: 400px;
   }
 }
+
+.view__about_look_title__content {
+  padding-left: 5px;
+}
+
+.view__about_look_action {
+  cursor: pointer;
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  padding: 13px 20px 0px;
+  top: 0;
+  right: 0;
+}
+
+.view__about_look--full {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  
+  #view__about_look_normal {
+    display: block !important;
+  }
+  
+  #view__about_look_full {
+    display: none;
+  }
+
+  .view__about_look_codepen {
+    height: calc(100% - 45px) !important;
+    .cp_embed_wrapper {
+      height: 100% !important;
+      & > iframe {
+        height: 100% !important;
+      }
+    }
+  }
+}
+
+
+
+
