@@ -33,7 +33,10 @@
 
     function removeSearchPart_{{include.id}}(part) {
       var search = document.getElementById('{{include.id}}_input').value;
-      var newSearch = search.replace(part, '').replace(/^\s+/, '').replace(/\s+/, ' ');
+      var newSearch = search.replace(part, '').replace(/^\s+/, '').replace(/\s+/, ' ').trim();
+      if (newSearch !== '') {
+        newSearch += ' ';
+      }
       openSearch_{{include.id}}(newSearch);
     }
 

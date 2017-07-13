@@ -428,7 +428,7 @@ $slogan-animation-offset-mobile: 400px;
 }
 
 .navbar--fixed {
-  transform: translate(0, 0, 0);
+  transform: translate3d(0, 0, 0);
   position: fixed;
   background: black;
   z-index: 10;
