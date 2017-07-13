@@ -267,6 +267,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     new_view: 'Новое представление',
     create_view: 'Создать представление',
 
+    no_description_provided: 'Нет описания',
+
     no_items: {
       no_items__title: 'У вас еще нет никаких данных',
       no_items__explore__desc: 'Найдите нужные данные среди огромного количества уже существующих данных',
