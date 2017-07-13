@@ -107,7 +107,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     save_view: 'Save View',
     new_view: 'New View',
     create_view: 'Create View',
-
+    no_description_provided: 'No description provided',
     no_items: {
       no_items__title: 'You have ho any data yet',
       no_items__explore__desc: 'Find data you need among a huge amount of existing data',
