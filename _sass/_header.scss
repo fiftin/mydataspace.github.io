@@ -454,6 +454,7 @@ $search-filter-panel-gap: 40px;
 .search__filter_panel {
   width: $search-filter-panel-width - $search-filter-panel-gap;
   position: fixed;
+  transform: translate3d(0, 0, 0);
   margin-left: $search-filter-panel-gap;
 
 }
