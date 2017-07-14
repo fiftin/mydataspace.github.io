@@ -117,3 +117,22 @@ docs:
     title: Импорт данных
   - id: client-api
     title: Клиентский API
+
+root:
+  about: Описание
+  data: Данные
+  visualization: Визуализация
+  new_view: Добавить
+  no_views: Нет визуализаций
+  no_comments: Нет коментариев
+  post_comment: Отправть
+  delete_view: Удалить
+  delete_view_answer: Вы действительное хотите удалить данную визуализацию?
+  new_view_title: Новая визуализация
+  create_view: Создать
+  cancel: Отмена
+  yes: Да
+  codepen_url: Codepen URL
+  view_title: Заголовок
+  view_description: Описание
+  comments: Комментарии
