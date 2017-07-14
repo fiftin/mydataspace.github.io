@@ -860,6 +860,14 @@ input {
   right: 0 !important;
 }
 
+.view__tags {
+  margin-bottom: 0 !important;
+}
+
+.view__tag:last-child {
+  margin-right: 100px;
+}
+
 #view__counters_likes {
   cursor: default !important;
 }
