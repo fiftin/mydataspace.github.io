@@ -181,7 +181,9 @@
             var classes = active ? 'search_filter__item--active' : '';
             var action = active ? 'remove' : 'set';
             var title = tr$(itemTitlesCollection + '.' + facet.name);
-
+            if (!title) {
+              return '';
+            }
             return '<a href="javascript:void(0)" onclick="' + action + 'SearchPart_{{include.id}}(\'#' + prefix + ':' + facet.name + '\')" class="search_filter__item ' + classes + '">' +
               '<i class="flag-icon flag-icon-'+ facet.name + '"></i>' +
               '<span class="search_filter__item_title">' + title + '</span>' +
