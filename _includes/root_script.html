@@ -38,7 +38,7 @@
     //
     // Delete view button
     document.getElementById('delete_look_modal_button').addEventListener('click', function() {
-      var lookPath = document.getElementById('view__looks__content').getAttribute('data-look-path');
+      var lookPath = document.getElementById('root__looks__content').getAttribute('data-look-path');
       Mydataspace.entities.request('entities.delete', {
         root: DATA.root,
         path: lookPath
@@ -97,9 +97,9 @@
     };
 
     var TABS = {
-      VIEW_TAB_README_LABEL: 'view__about',
-      VIEW_TAB_VIEW_LABEL: 'view__looks',
-      VIEW_TAB_COMMENTS_LABEL: 'view__comments',
+      VIEW_TAB_README_LABEL: 'root__about',
+      VIEW_TAB_VIEW_LABEL: 'root__looks',
+      VIEW_TAB_COMMENTS_LABEL: 'root__comments',
       VIEW_TAB_EXPLORE_LABEL: ''
     };
 
@@ -154,7 +154,7 @@
      *
      */
     function getLookPreviewNode(path) {
-      var lookPreviews = document.getElementById('view__looks__previews').childNodes;
+      var lookPreviews = document.getElementById('root__looks__previews').childNodes;
       for (var i = 0; i < lookPreviews.length; i++) {
         var lookPath = lookPreviews[i].childNodes[0].getAttribute('data-look-path');
         if (lookPath === path) {
@@ -190,19 +190,19 @@
 
     function setLook(data) {
       $('#view__looks__actions .look__action--only-owner').css('display', data.mine ? 'block' : 'none');
-//      document.getElementById('view__looks__likes_count').innerText = MDSCommon.findValueByName(viewData.children, 'likes');
-//      document.getElementById('view__looks__date').innerText = MDSCommon.humanizeDate(data.createdAt);
-      document.getElementById('view__looks__title').innerText = MDSCommon.findValueByName(data.fields, 'title');
-      document.getElementById('view__looks__content').setAttribute('data-look-path', data.path);
+//      document.getElementById('root__looks__likes_count').innerText = MDSCommon.findValueByName(viewData.children, 'likes');
+//      document.getElementById('root__looks__date').innerText = MDSCommon.humanizeDate(data.createdAt);
+      document.getElementById('root__looks__title').innerText = MDSCommon.findValueByName(data.fields, 'title');
+      document.getElementById('root__looks__content').setAttribute('data-look-path', data.path);
       currentLook = data;
     }
 
     function unselectLook() {
-      var previews = document.getElementById('view__looks__previews');
+      var previews = document.getElementById('root__looks__previews');
       $(previews).find('.look_preview--active').removeClass('look_preview--active');
-      document.getElementById('view__looks__content_wrap').style.display = 'none';
+      document.getElementById('root__looks__content_wrap').style.display = 'none';
       currentLook = null;
-      document.getElementById('view__looks__content').setAttribute('data-look-path', null);
+      document.getElementById('root__looks__content').setAttribute('data-look-path', null);
     }
 
     function selectLook(path) {
@@ -216,7 +216,7 @@
 
       $('#view__looks__previews').find('.look_preview--active').removeClass('look_preview--active');
 
-      document.getElementById('view__looks__content_wrap').style.display = 'block';
+      document.getElementById('root__looks__content_wrap').style.display = 'block';
 
       preview.classList.add('look_preview--active');
 
@@ -296,7 +296,7 @@
     }
 
     function updateCommentFormTextareaHeight() {
-      var textarea = document.getElementById('view__comments__new_comment_textarea');
+      var textarea = document.getElementById('root__comments__new_comment_textarea');
       setTimeout(function(){
         textarea.style.cssText = 'height: auto; padding: 0';
         textarea.style.cssText = 'height: ' + textarea.scrollHeight + 'px';
@@ -327,27 +327,27 @@
     }
 
     function initCounters() {
-      var elem = document.getElementById('view__counters_likes');
+      var elem = document.getElementById('root__counters_likes');
       elem.addEventListener('click', function() {
         if (!Mydataspace.isLoggedIn()) {
           $('#signin_modal').modal('show');
           return;
         }
 
-        if (document.getElementById('view__counters_likes_icon').className === 'fa like_icon_animation fa-heart') {
+        if (document.getElementById('root__counters_likes_icon').className === 'fa like_icon_animation fa-heart') {
           return;
         }
 
-        document.getElementById('view__counters_likes_icon').className = 'fa like_icon_animation fa-heart';
+        document.getElementById('root__counters_likes_icon').className = 'fa like_icon_animation fa-heart';
 
         if (MDSCommon.isPresent(elem.getAttribute('data-like-path'))) {
           Mydataspace.entities.request('entities.delete', {
             root: DATA.root,
             path: elem.getAttribute('data-like-path')
           }).then(function() {
-            document.getElementById('view__counters_likes_icon').className = 'fa fa-heart';
+            document.getElementById('root__counters_likes_icon').className = 'fa fa-heart';
           }, function(err) {
-            document.getElementById('view__counters_likes_icon').className = 'fa fa-heart';
+            document.getElementById('root__counters_likes_icon').className = 'fa fa-heart';
             console.log(err);
           });
         } else {
@@ -355,9 +355,9 @@
             root: DATA.root,
             path: 'likes/' + MDSCommon.guid()
           }).then(function() {
-            document.getElementById('view__counters_likes_icon').className = 'fa fa-heart';
+            document.getElementById('root__counters_likes_icon').className = 'fa fa-heart';
           }, function(err) {
-            document.getElementById('view__counters_likes_icon').className = 'fa fa-heart';
+            document.getElementById('root__counters_likes_icon').className = 'fa fa-heart';
             console.log(err);
           });
         }
@@ -383,7 +383,7 @@
 
       var codepenScript = document.createElement('script');
       codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
-      document.getElementById('view__looks').appendChild(codepenScript);
+      document.getElementById('root__looks').appendChild(codepenScript);
     }
 
     function initTabs() {
@@ -410,23 +410,23 @@
             document.getElementById('webix').style.display = 'none';
             switch (tabID) {
               case 'VIEW_TAB_VIEW_LABEL':
-//                document.getElementById('view__data_link').classList.add('hidden');
-                document.getElementById('view__new_look').classList.remove('hidden');
+//                document.getElementById('root__data_link').classList.add('hidden');
+                document.getElementById('root__new_look').classList.remove('hidden');
 
-                if (document.getElementById('view__tabs_views_count').innerText === '0') {
-                  document.getElementById('view__looks__empty').style.display = 'block';
+                if (document.getElementById('root__tabs_views_count').innerText === '0') {
+                  document.getElementById('root__looks__empty').style.display = 'block';
                 } else {
-                  document.getElementById('view__looks__empty').style.display = 'none';
+                  document.getElementById('root__looks__empty').style.display = 'none';
                 }
                 Mydataspace.entities.request('entities.get', { root: DATA.root, children: true, path: 'views' }).then(function(data) {
                   updateLooks(data.children);
                 });
                 break;
               case 'VIEW_TAB_COMMENTS_LABEL':
-                //document.getElementById('view__data_link').classList.add('hidden');
-                document.getElementById('view__new_look').classList.add('hidden');
+                //document.getElementById('root__data_link').classList.add('hidden');
+                document.getElementById('root__new_look').classList.add('hidden');
                 Mydataspace.entities.request('entities.get', { root: DATA.root, children: true, path: 'comments', limit: 7, orderChildrenBy: '$createdAt DESC' }).then(function(data) {
-                  var comments = document.getElementById('view__comments__list');
+                  var comments = document.getElementById('root__comments__list');
                   comments.innerHTML = '';
                   var html = '';
                   for (var i in data.children) {
@@ -434,13 +434,13 @@
                   }
                   comments.innerHTML = html;
                   if(html === '') {
-                    document.getElementById('view__comments__empty').style.display = 'block';
+                    document.getElementById('root__comments__empty').style.display = 'block';
                   }
                 });
                 break;
               case 'VIEW_TAB_README_LABEL':
-                //document.getElementById('view__data_link').classList.remove('hidden');
-                document.getElementById('view__new_look').classList.add('hidden');
+                //document.getElementById('root__data_link').classList.remove('hidden');
+                document.getElementById('root__new_look').classList.add('hidden');
                 break;
               case 'VIEW_TAB_EXPLORE_LABEL':
                 document.getElementById('bootstrap').style.display = 'block';
@@ -466,7 +466,7 @@
         lang = '/' + language;
       }
       $.ajax({ url: lang + '/fragments/root-page.html', method: 'get' }).then(function(html) {
-        var view = document.getElementById('view');
+        var view = document.getElementById('root');
         var websiteURL = MDSCommon.findValueByName(data.fields, 'websiteURL');
         var description = MDSCommon.findValueByName(data.fields, 'description');
         var readme = MDSCommon.findValueByName(data.fields, 'readme');
@@ -477,15 +477,15 @@
         if (MDSCommon.isPresent(ava)) {
           ava = Mydataspace.options.apiURL + '/avatars/sm/' + ava + '.png';
         }
-        document.getElementById('view__overview_image').src = ava || '/images/icons/root.svg';
-        document.getElementById('view__title').innerText =
+        document.getElementById('root__overview_image').src = ava || '/images/icons/root.svg';
+        document.getElementById('root__title').innerText =
           MDSCommon.findValueByName(data.fields, 'name') || MDSCommon.getPathName(data.root);
 
 //        if (data.fields.language) {
-//          document.getElementById('view__language').className = 'flag-icon flag-icon-' + data.fields.language;
+//          document.getElementById('root__language').className = 'flag-icon flag-icon-' + data.fields.language;
 //        }
 //        if (data.fields.country) {
-//          document.getElementById('view__country').className = 'flag-icon flag-icon-' + data.fields.country;
+//          document.getElementById('root__country').className = 'flag-icon flag-icon-' + data.fields.country;
 //        }
 
         var tags = (MDSCommon.findValueByName(data.fields, 'tags') || '').split(' ').filter(function(tag) {
@@ -494,59 +494,59 @@
           return '<a class="view__tag" href="/?q=%23' + tag + '" onclick="openSearch_header__search(\'' + tag + '\'); return false;">' + tag + '</a>';
         }).join(' ');
         if (MDSCommon.isPresent(tags)) {
-          document.getElementById('view__tags').innerHTML = tags;
+          document.getElementById('root__tags').innerHTML = tags;
         } else {
-          document.getElementById('view__tags').style.display = 'none';
+          document.getElementById('root__tags').style.display = 'none';
         }
 
 
         if (tags && websiteURL) {
           document.getElementsByClassName('view__overview_image_wrap')[0].classList.add('view__overview_image_wrap--large');
-          document.getElementById('view__overview_image').classList.add('view__overview_image--large');
+          document.getElementById('root__overview_image').classList.add('view__overview_image--large');
         } else if (tags || websiteURL) {
           document.getElementsByClassName('view__overview_image_wrap')[0].classList.add('view__overview_image_wrap--medium');
-          document.getElementById('view__overview_image').classList.add('view__overview_image--medium');
+          document.getElementById('root__overview_image').classList.add('view__overview_image--medium');
         }
 
         if (MDSCommon.isBlank(websiteURL)) {
-          document.getElementById('view__websiteURL').style.display = 'none';
+          document.getElementById('root__websiteURL').style.display = 'none';
         } else {
-          document.getElementById('view__websiteURL').style.display = 'inline';
-          document.getElementById('view__websiteURL').innerText = websiteURL;
-          document.getElementById('view__websiteURL').href = websiteURL;
+          document.getElementById('root__websiteURL').style.display = 'inline';
+          document.getElementById('root__websiteURL').innerText = websiteURL;
+          document.getElementById('root__websiteURL').href = websiteURL;
         }
 
         if (MDSCommon.isBlank(description)) {
           if (MDSCommon.isBlank(websiteURL)) {
-            document.getElementById('view__description').innerHTML = '<i>' + 
+            document.getElementById('root__description').innerHTML = '<i>' + 
             STRINGS.no_description_provided +
             '</i>';
           }
         } else {
-          document.getElementById('view__description').innerText = description;
+          document.getElementById('root__description').innerText = description;
         }
 
         if (MDSCommon.isBlank(readme)) {
-          document.getElementById('view__readme').style.display = 'none';
+          document.getElementById('root__readme').style.display = 'none';
         } else {
-          document.getElementById('view__readme').style.display = 'block';
+          document.getElementById('root__readme').style.display = 'block';
         }
-        document.getElementById('view__readme').innerHTML = md.render(readme);
+        document.getElementById('root__readme').innerHTML = md.render(readme);
 
-        document.getElementById('view__tabs').classList.remove('hidden');
+        document.getElementById('root__tabs').classList.remove('hidden');
 
         for (var i in data.children) {
           var child = data.children[i];
           switch (child.path) {
             case 'likes':
-              document.getElementById('view__counters_likes_count').innerText = child.numberOfChildren;
+              document.getElementById('root__counters_likes_count').innerText = child.numberOfChildren;
               break;
             case 'comments':
-              document.getElementById('view__counters_comments_count').innerText = child.numberOfChildren;
-              document.getElementById('view__tabs_comments_count').innerText = child.numberOfChildren;
+              document.getElementById('root__counters_comments_count').innerText = child.numberOfChildren;
+              document.getElementById('root__tabs_comments_count').innerText = child.numberOfChildren;
               break;
             case 'views':
-              document.getElementById('view__tabs_views_count').innerText = child.numberOfChildren;
+              document.getElementById('root__tabs_views_count').innerText = child.numberOfChildren;
               break;
           }
         }
@@ -557,25 +557,25 @@
         //  about: 'Hello, World!',
         //};
 
-        if (data.profile && document.getElementById('view__user')) {
-          document.getElementById('view__user_name').innerText = data.profile.name;
+        if (data.profile && document.getElementById('root__user')) {
+          document.getElementById('root__user_name').innerText = data.profile.name;
           if (data.profile.verified) {
-            document.getElementById('view__user_verified').style.display = 'block';
-            document.getElementById('view__user_name').classList.add('view__user_name--verified');
+            document.getElementById('root__user_verified').style.display = 'block';
+            document.getElementById('root__user_name').classList.add('view__user_name--verified');
           }
-          document.getElementById('view__user_username').innerText = '@' + data.profile.username;
+          document.getElementById('root__user_username').innerText = '@' + data.profile.username;
           if (data.profile.about) {
-            document.getElementById('view__user_about').innerText = data.profile.about;
+            document.getElementById('root__user_about').innerText = data.profile.about;
           } else {
-            document.getElementById('view__user_about').style.display = 'none';
+            document.getElementById('root__user_about').style.display = 'none';
           }
           var userAvatar = MDSCommon.isPresent(data.profile.avatar) ? 'https://cdn.mydataspace.net/avatars/lg/' + data.profile.avatar + '.png' : 'https://myda.space/images/no_avatar.png';
           var userCover = MDSCommon.isPresent(data.profile.cover) ? 'https://cdn.mydataspace.net/images/md/' + data.profile.avatar + '.png' : 'https://myda.space/images/default_cover_sm.jpg';
-          document.getElementById('view__user_avatar').src = userAvatar;
-          document.getElementById('view__user_cover').style.backgroundImage = 'url("' + userCover + '")';
+          document.getElementById('root__user_avatar').src = userAvatar;
+          document.getElementById('root__user_cover').style.backgroundImage = 'url("' + userCover + '")';
         }
 
-//        document.getElementById('view__date').innerText = MDSCommon.humanizeDate(data.createdAt);
+//        document.getElementById('root__date').innerText = MDSCommon.humanizeDate(data.createdAt);
 
         initCounters();
 
@@ -620,15 +620,15 @@
         });
 
 
-        document.getElementById('view__looks__close').addEventListener('click', function() {
+        document.getElementById('root__looks__close').addEventListener('click', function() {
           unselectLook();
         });
 
-        document.getElementById('view__looks__edit').addEventListener('click', function() {
+        document.getElementById('root__looks__edit').addEventListener('click', function() {
           openLookEditModal(true);
         });
 
-        document.getElementById('view__new_look').addEventListener('click', function() {
+        document.getElementById('root__new_look').addEventListener('click', function() {
           if (!Mydataspace.isLoggedIn()) {
             $('#signin_modal').modal('show');
             return;
@@ -636,12 +636,12 @@
           openLookEditModal(false);
         });
 
-        document.getElementById('view__about_look_full').addEventListener('click', function() {
-          document.getElementById('view__about_look_content').classList.add('view__about_look--full');
+        document.getElementById('root__about_look_full').addEventListener('click', function() {
+          document.getElementById('root__about_look_content').classList.add('view__about_look--full');
         });
 
-        document.getElementById('view__about_look_normal').addEventListener('click', function() {
-          document.getElementById('view__about_look_content').classList.remove('view__about_look--full');
+        document.getElementById('root__about_look_normal').addEventListener('click', function() {
+          document.getElementById('root__about_look_content').classList.remove('view__about_look--full');
         });
 
         //Mydataspace.entities.getMyChildren({
@@ -650,7 +650,7 @@
         //  onlyMine: '',
         //}).then(function() {});
 
-        //document.getElementById('view__user_follow').addEventListener('click', function() {
+        //document.getElementById('root__user_follow').addEventListener('click', function() {
         //  Mydataspace.request('entities.create', {
         //    root: 'mydataspace',
         //    path: 'profiles/' + data.profile.username + '/followers' + MDSCommon.guid(),
@@ -677,14 +677,14 @@
           children: true,
           limit: 1
         }).then(function(result) {
-          var look = document.getElementById('view__about_look');
+          var look = document.getElementById('root__about_look');
           if (result.children.length <= 0) {
             look.style.display = 'none';
           } else {
             var data = result.children[0];
             var codepenParts = MDSCommon.findValueByName(data.fields, 'id').split('/');
-            document.getElementById('view__about_look_title').innerText = MDSCommon.findValueByName(data.fields, 'title');
-            document.getElementById('view__about_look_codepen').innerHTML = '<p data-height="402" data-theme-id="0" data-slug-hash="' + codepenParts[1] + '" data-default-tab="result" data-user="'+ codepenParts[0] +'" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/' +  codepenParts[0] + '/pen/' + codepenParts[1] + '/">' + codepenParts[1] + '</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p>';
+            document.getElementById('root__about_look_title').innerText = MDSCommon.findValueByName(data.fields, 'title');
+            document.getElementById('root__about_look_codepen').innerHTML = '<p data-height="402" data-theme-id="0" data-slug-hash="' + codepenParts[1] + '" data-default-tab="result" data-user="'+ codepenParts[0] +'" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/' +  codepenParts[0] + '/pen/' + codepenParts[1] + '/">' + codepenParts[1] + '</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p>';
             var codepenScript = document.createElement('script');
             codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
             look.appendChild(codepenScript);
@@ -720,23 +720,23 @@
 
     Mydataspace.on('entities.create.res', function(data) {
       if (/^likes\//.test(data.path)) {
-        document.getElementById('view__counters_likes_count').innerText =
-          parseInt(document.getElementById('view__counters_likes_count').innerText) + 1;
+        document.getElementById('root__counters_likes_count').innerText =
+          parseInt(document.getElementById('root__counters_likes_count').innerText) + 1;
         if (data.mine) {
           setMyLike(data);
         }
       } else if (/^comments\//.test(data.path)) {
-        document.getElementById('view__tabs_comments_count').innerText =
-          parseInt(document.getElementById('view__tabs_comments_count').innerText) + 1;
-        document.getElementById('view__counters_comments_count').innerText =
-          parseInt(document.getElementById('view__counters_comments_count').innerText) + 1;
+        document.getElementById('root__tabs_comments_count').innerText =
+          parseInt(document.getElementById('root__tabs_comments_count').innerText) + 1;
+        document.getElementById('root__counters_comments_count').innerText =
+          parseInt(document.getElementById('root__counters_comments_count').innerText) + 1;
 
         // if comment is not exists already
         if (document.getElementById(data.path) == null) {
-          if (document.getElementById('view__comments').style.display === 'block') {
+          if (document.getElementById('root__comments').style.display === 'block') {
             var commentHTML = getCommentHTML(data);
             $('#view__comments__list').append(commentHTML);
-            document.getElementById('view__comments__empty').style.display = 'none';
+            document.getElementById('root__comments__empty').style.display = 'none';
           }
         }
       } else if (/^views\//.test(data.path)) {
@@ -748,40 +748,40 @@
         preview.appendChild(codepenScript);
         $(preview).data('look-data', data);
 
-        var viewsCount = parseInt(document.getElementById('view__tabs_views_count').innerText);
-        document.getElementById('view__tabs_views_count').innerText = viewsCount + 1;
+        var viewsCount = parseInt(document.getElementById('root__tabs_views_count').innerText);
+        document.getElementById('root__tabs_views_count').innerText = viewsCount + 1;
         if (viewsCount === 0) {
-          document.getElementById('view__looks__empty').style.display = 'none';
+          document.getElementById('root__looks__empty').style.display = 'none';
         }
       }
     });
 
     Mydataspace.on('entities.delete.res', function(data) {
       if (/^likes\//.test(data.path)) {
-        document.getElementById('view__counters_likes_count').innerText =
-          parseInt(document.getElementById('view__counters_likes_count').innerText) - 1;
+        document.getElementById('root__counters_likes_count').innerText =
+          parseInt(document.getElementById('root__counters_likes_count').innerText) - 1;
         resetMyLike(data);
       } else if (/^comments\//.test(data.path)) {
-        document.getElementById('view__tabs_comments_count').innerText =
-          parseInt(document.getElementById('view__tabs_comments_count').innerText) - 1;
-        document.getElementById('view__counters_comments_count').innerText =
-          parseInt(document.getElementById('view__counters_comments_count').innerText) - 1;
+        document.getElementById('root__tabs_comments_count').innerText =
+          parseInt(document.getElementById('root__tabs_comments_count').innerText) - 1;
+        document.getElementById('root__counters_comments_count').innerText =
+          parseInt(document.getElementById('root__counters_comments_count').innerText) - 1;
 
         var comment = document.getElementById(data.path);
         if (comment != null) {
           comment.parentNode.removeChild(comment);
-          if (document.getElementById('view__comments__list').children.length === 0) {
-            document.getElementById('view__comments__empty').style.display = 'block';
+          if (document.getElementById('root__comments__list').children.length === 0) {
+            document.getElementById('root__comments__empty').style.display = 'block';
           }
         }
       } else if (/^views\//.test(data.path)) {
         $(getLookPreviewNode(data.path)).parent().remove();
 
-        var viewsCount = parseInt(document.getElementById('view__tabs_views_count').innerText);
-        document.getElementById('view__tabs_views_count').innerText = viewsCount - 1;
+        var viewsCount = parseInt(document.getElementById('root__tabs_views_count').innerText);
+        document.getElementById('root__tabs_views_count').innerText = viewsCount - 1;
         if (viewsCount <= 1) {
-          document.getElementById('view__looks__empty').style.display = 'block';
-          document.getElementById('view__looks__content_wrap').style.display = 'none';
+          document.getElementById('root__looks__empty').style.display = 'block';
+          document.getElementById('root__looks__content_wrap').style.display = 'none';
         } else {
           if (currentLook.path === data.path) {
             selectLook();
@@ -791,15 +791,15 @@
     });
 
     function setMyLike(data) {
-      document.getElementById('view__counters_likes').setAttribute('data-like-path', data.path);
-      document.getElementById('view__counters_likes').classList.add('root_counter--active');
+      document.getElementById('root__counters_likes').setAttribute('data-like-path', data.path);
+      document.getElementById('root__counters_likes').classList.add('root_counter--active');
     }
 
     function resetMyLike(data) {
-      var path = document.getElementById('view__counters_likes').getAttribute('data-like-path');
+      var path = document.getElementById('root__counters_likes').getAttribute('data-like-path');
       if (MDSCommon.isPresent(path) && (MDSCommon.isBlank(data) || data.path === path)) {
-        document.getElementById('view__counters_likes').removeAttribute('data-like-path');
-        document.getElementById('view__counters_likes').classList.remove('root_counter--active');
+        document.getElementById('root__counters_likes').removeAttribute('data-like-path');
+        document.getElementById('root__counters_likes').classList.remove('root_counter--active');
       }
     }
 
