@@ -121,7 +121,6 @@ docs:
     title: Client API
 
 root:
-
   about: About
   data: Data
   visualization: Visualization
