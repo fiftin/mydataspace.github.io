@@ -106,6 +106,9 @@
     var isEmptyHash = window.location.hash == null ||
       window.location.hash === '' ||
       window.location.hash === '#';
+    if (window.location.pathname !== '/') {
+      return;
+    }
     if (!isEmptyHash && document.getElementById('webix').style.display === 'none') {
       document.getElementById('bootstrap').style.display = 'none';
       document.getElementById('webix').style.display = 'block';
