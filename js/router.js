@@ -43,7 +43,7 @@ var Router = {
    * Route links to single root.
    */
   isRoot: function() {
-    if (window.pathname !== '/' && window.pathname.length > 2) {
+    if (window.location.pathname !== '/' && window.location.pathname.length > 2) {
       return true;
     }
     // var parts = Router.getCommonSearchParts();
