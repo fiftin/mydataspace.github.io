@@ -71,9 +71,12 @@ webix.protoUI({
 
 var Router = {
   isEmpty: function() {
+    if (window.path !== '/') {
+      return false;
+    }
     return window.location.hash == null ||
-           window.location.hash === '' ||
-           window.location.hash === '#';
+      window.location.hash === '' ||
+      window.location.hash === '#';
   },
 
   getCommonSearchParts: function() {
@@ -94,6 +97,9 @@ var Router = {
   },
 
   isSearch: function() {
+    if (window.path !== '/') {
+      return false;
+    }
     var parts = Router.getCommonSearchParts();
     if (parts == null || MDSCommon.isBlank(parts.search)) {
       return false;
@@ -106,11 +112,17 @@ var Router = {
    * Route links to single root.
    */
   isRoot: function() {
+    if (window.path !== '/') {
+      return true;
+    }
     var parts = Router.getCommonSearchParts();
     return parts != null && MDSCommon.isPresent(parts.search) && parts.search.indexOf('*') < 0;
   },
 
   isFilterByName: function() {
+    if (window.path !== '/') {
+      return false;
+    }
     var parts = Router.getCommonSearchParts();
     if (parts == null || MDSCommon.isBlank(parts.search) || parts.search === '*') {
       return false;
@@ -119,6 +131,9 @@ var Router = {
   },
 
   getSearch: function(raw) {
+    if (window.path !== '/') {
+      return window.location.pathname.split('/').filter(function(x) { return MDSCommon.isPresent(x); })[0];
+    }
     if (raw) {
       return window.location.hash.substring(1);
     }
@@ -131,6 +146,9 @@ var Router = {
   },
 
   isMe: function() {
+    if (window.path !== '/') {
+      return false;
+    }
     var parts = Router.getCommonSearchParts();
     return parts == null || parts != null && parts.user === 'me';
   }
@@ -4066,7 +4084,6 @@ UI = {
     if (withHeader) {
       rows.push(UILayout.header);
     }
-    rows.push(UILayout.header);
     rows.push(UILayout.apps);
     rows.push({ id: 'my_data_panel',
       height: window.innerHeight - 46,
@@ -4122,7 +4139,9 @@ UI = {
       updateTreeSearchScope();
     });
 
-    UI.updateLanguage();
+    if (withHeader) {
+      UI.updateLanguage();
+    }
   },
 
   updateSizes: function() {

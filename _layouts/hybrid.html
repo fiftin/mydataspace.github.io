@@ -13,7 +13,7 @@
 {% include signin_modal.html %}
 
 <div id="webix">
-  {% include webix.html no_header=page.webix_no_header %}
+  {% include webix.html with_header=false %}
 </div>
 
 <script>
@@ -133,7 +133,7 @@
 
   Mydataspace.authProviders.facebook.title = STRINGS.CONNECT_TO_FACEBOOK;
   Mydataspace.authProviders.google.title = STRINGS.CONNECT_TO_GOOGLE;
-  UI.render({% if page.webix_no_header %}false{% else %}true{% endif %});
+  UI.render(false);
   if (!Mydataspace.connected) {
     Mydataspace.connect();
   }

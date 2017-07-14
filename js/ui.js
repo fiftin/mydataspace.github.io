@@ -421,7 +421,6 @@ UI = {
     if (withHeader) {
       rows.push(UILayout.header);
     }
-    rows.push(UILayout.header);
     rows.push(UILayout.apps);
     rows.push({ id: 'my_data_panel',
       height: window.innerHeight - 46,
@@ -477,7 +476,9 @@ UI = {
       updateTreeSearchScope();
     });
 
-    UI.updateLanguage();
+    if (withHeader) {
+      UI.updateLanguage();
+    }
   },
 
   updateSizes: function() {

@@ -99,7 +99,8 @@
     var TABS = {
       VIEW_TAB_README_LABEL: 'view__about',
       VIEW_TAB_VIEW_LABEL: 'view__looks',
-      VIEW_TAB_COMMENTS_LABEL: 'view__comments'
+      VIEW_TAB_COMMENTS_LABEL: 'view__comments',
+      VIEW_TAB_EXPLORE_LABEL: ''
     };
 
     var currentLook;
@@ -389,18 +390,27 @@
       for (var tabID in TABS) {
         (function(tabID) {
           var tab = document.getElementById(tabID);
+          var el;
           tab.addEventListener('click', function(event) {
             event.preventDefault();
             for (var tid in TABS) {
               document.getElementById(tid).classList.remove('view__tab--active');
-              document.getElementById(TABS[tid]).style.display = 'none';
+              el = document.getElementById(TABS[tid]);
+              if (el) {
+                el.style.display = 'none';
+              }
             }
             tab.classList.add('view__tab--active');
-            document.getElementById(TABS[tabID]).style.display = 'block';
 
+            el = document.getElementById(TABS[tabID]);
+            if (el) {
+              el.style.display = 'block';
+            }
+
+            document.getElementById('webix').style.display = 'none';
             switch (tabID) {
               case 'VIEW_TAB_VIEW_LABEL':
-                document.getElementById('view__data_link').classList.add('hidden');
+//                document.getElementById('view__data_link').classList.add('hidden');
                 document.getElementById('view__new_look').classList.remove('hidden');
 
                 if (document.getElementById('view__tabs_views_count').innerText === '0') {
@@ -413,7 +423,7 @@
                 });
                 break;
               case 'VIEW_TAB_COMMENTS_LABEL':
-                document.getElementById('view__data_link').classList.add('hidden');
+                //document.getElementById('view__data_link').classList.add('hidden');
                 document.getElementById('view__new_look').classList.add('hidden');
                 Mydataspace.entities.request('entities.get', { root: DATA.root, children: true, path: 'comments', limit: 7, orderChildrenBy: '$createdAt DESC' }).then(function(data) {
                   var comments = document.getElementById('view__comments__list');
@@ -429,8 +439,13 @@
                 });
                 break;
               case 'VIEW_TAB_README_LABEL':
-                document.getElementById('view__data_link').classList.remove('hidden');
+                //document.getElementById('view__data_link').classList.remove('hidden');
                 document.getElementById('view__new_look').classList.add('hidden');
+                break;
+              case 'VIEW_TAB_EXPLORE_LABEL':
+                document.getElementById('bootstrap').style.display = 'block';
+                document.getElementById('webix').style.display = 'block';
+                UI.pages.refreshPage('data', true);
                 break;
             }
 
@@ -484,16 +499,6 @@
           document.getElementById('view__tags').style.display = 'none';
         }
 
-
-        document.getElementById('view__data_link').href = '/#' + data.root;
-        document.getElementById('view__data_link').classList.remove('hidden');
-        document.getElementById('view__data_link').addEventListener('click', function() {
-          history.pushState({}, '', '/#' + data.root);
-          document.getElementById('bootstrap').style.display = 'block';
-          document.getElementById('webix').style.display = 'block';
-//          adminPanel_startWaiting(1000);
-          UI.pages.refreshPage('data', true);
-        });
 
         if (tags && websiteURL) {
           document.getElementsByClassName('view__overview_image_wrap')[0].classList.add('view__overview_image_wrap--large');
