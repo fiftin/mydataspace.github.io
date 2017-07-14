@@ -133,7 +133,7 @@
 
   Mydataspace.authProviders.facebook.title = STRINGS.CONNECT_TO_FACEBOOK;
   Mydataspace.authProviders.google.title = STRINGS.CONNECT_TO_GOOGLE;
-  UI.render({% if page.webix_no_header %}true{% else %}false{% endif %});
+  UI.render({% if page.webix_no_header %}false{% else %}true{% endif %});
   if (!Mydataspace.connected) {
     Mydataspace.connect();
   }
