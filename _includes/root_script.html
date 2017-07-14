@@ -189,7 +189,7 @@
     }
 
     function setLook(data) {
-      $('#view__looks__actions .look__action--only-owner').css('display', data.mine ? 'block' : 'none');
+      $('#root__looks__actions .look__action--only-owner').css('display', data.mine ? 'block' : 'none');
 //      document.getElementById('root__looks__likes_count').innerText = MDSCommon.findValueByName(viewData.children, 'likes');
 //      document.getElementById('root__looks__date').innerText = MDSCommon.humanizeDate(data.createdAt);
       document.getElementById('root__looks__title').innerText = MDSCommon.findValueByName(data.fields, 'title');
@@ -214,7 +214,7 @@
         return;
       }
 
-      $('#view__looks__previews').find('.look_preview--active').removeClass('look_preview--active');
+      $('#root__looks__previews').find('.look_preview--active').removeClass('look_preview--active');
 
       document.getElementById('root__looks__content_wrap').style.display = 'block';
 
@@ -259,7 +259,7 @@
         return;
       }
 
-      var $newComment = $('#view__new_comment');
+      var $newComment = $('#root__new_comment');
       var $textarea = $newComment.find('.new_comment__textarea');
       var $button = $newComment.find('.new_comment__button');
 
@@ -304,7 +304,7 @@
     }
 
     function initNewCommentForm() {
-      var $newComment = $('#view__new_comment');
+      var $newComment = $('#root__new_comment');
       var $textarea = $newComment.find('.new_comment__textarea');
       $textarea.on('focus', function() {
         $(this).parent().parent().find('.new_comment__button').show();
@@ -366,18 +366,18 @@
 
     function updateLooks(looksData) {
       if (looksData.length === 0) {
-        $('#view__looks__empty').css('display', 'block');
+        $('#root__looks__empty').css('display', 'block');
         return;
       }
 
-      $('#view__looks__empty').css('display', 'none');
+      $('#root__looks__empty').css('display', 'none');
 
       var previewsHTML = '';
       $.each(looksData, function(i, val) {
         previewsHTML += getLookPreviewHTML(val);
       });
 
-      $('#view__looks__previews').html(previewsHTML).find('.look_preview').each(function(i) {
+      $('#root__looks__previews').html(previewsHTML).find('.look_preview').each(function(i) {
         $(this).data('look-data', looksData[i]);
       });
 
@@ -594,7 +594,7 @@
           }
         });
 
-        $('#view__comments__list').on('click', '.view__comment__delete', function() {
+        $('#root__comments__list').on('click', '.view__comment__delete', function() {
           var commentPath = this.parentNode.getAttribute('data-comment-path');
 //          $(this).find('i').removeClass('fa-remove');
 //          $(this).find('i').addClass('fa-cog');
@@ -615,7 +615,7 @@
           });
         });
 
-        $('#view__looks__previews').on('click', '.look_preview', function() {
+        $('#root__looks__previews').on('click', '.look_preview', function() {
           selectLook($(this).data('look-path'));
         });
 
@@ -735,12 +735,12 @@
         if (document.getElementById(data.path) == null) {
           if (document.getElementById('root__comments').style.display === 'block') {
             var commentHTML = getCommentHTML(data);
-            $('#view__comments__list').append(commentHTML);
+            $('#root__comments__list').append(commentHTML);
             document.getElementById('root__comments__empty').style.display = 'none';
           }
         }
       } else if (/^views\//.test(data.path)) {
-        $('#view__looks__previews').append(getLookPreviewHTML(data));
+        $('#root__looks__previews').append(getLookPreviewHTML(data));
 
         var preview = getLookPreviewNode(data.path);
         var codepenScript = document.createElement('script');
