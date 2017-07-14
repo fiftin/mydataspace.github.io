@@ -4,7 +4,7 @@ $side-width: 300px;
 $side-panel-width: $side-width - $padding;
 
 .root_page {
-  .view__title: {
+  .view__title {
     margin-right: $side-panel-width;
   }
 
@@ -74,11 +74,11 @@ $side-panel-width: $side-width - $padding;
 }
 
 .view__tab--right {
-  margin: 0;
-  padding-right: 0;
-  padding-bottom: 0;
-  position: absolute;
-  right: 15px;
+  margin: 0 !important;
+  padding-right: 0 !important;
+  padding-bottom: 0 !important;
+  position: absolute !important;
+  right: 15px !important;
 }
 
 $user-cover-height: 100px;

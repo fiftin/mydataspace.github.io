@@ -1,5 +1,30 @@
 ---
-layout: landing
+layout: hybrid
 title: MyDataSpace — GitHub for Data
 language: en
 ---
+<div class="landing landing--{{ page.language }}">
+  <script type="text/javascript">
+    if (isValidJWT(localStorage.getItem('authToken')) ||
+      window.location.hash && window.location.hash !== '' && window.location.hash !== '#') {
+      document.getElementById('bootstrap').style.display = 'none';
+    }
+  </script>
+
+  <div class="page_top">
+    <div class="smoke">
+      {% include nav.html %}
+      {% include header.html %}
+    </div>
+  </div>
+
+  {% include favorite_snippets.html %}
+
+  <div class="mission">
+    <div class="container">{{ site.data[page.language].mission }}</div>
+  </div>
+
+  {% include feature_sections.html %}
+  {% include sub_footer.html %}
+  {% include footer.html %}
+</div>

@@ -5,6 +5,7 @@
     websocketURL: '{{ api_websocket_url }}',
     clientId: '{{ client_id }}',
     permission: 'admin',
+    simpleFormat: false,
     connected: function() {
       Mydataspace.on('users.getMyProfile.res', function(data) {
         document.getElementById('profile_button').style.backgroundImage = 'url(' + data.avatar + ')';

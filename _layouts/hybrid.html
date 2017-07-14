@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+
+{% include head.html webix=true %}
+
+<body style="height: 100%">
+
+{% include mydataspace_init_script.html %}
+
+<div id="bootstrap" style="height: 100%">
+  {{ content }}
+</div>
+
+{% include signin_modal.html %}
+
+<div id="webix">
+  {% include webix.html %}
+</div>
+
+<script src="/vendor/jquery.min.js"></script>
+
+<script type="text/javascript">
+  var adminPanel_waiting  = false;
+  function adminPanel_startWaiting(duration) {
+    if (adminPanel_waiting) {
+      return;
+    }
+    adminPanel_waiting = true;
+    $('#admin_panel__loading').show();
+    $('#webix_preloaded_header').addClass('invisible');
+    $('#logo_link').addClass('invisible');
+    $('#no_items').addClass('invisible');
+    $('#admin_panel').addClass('invisible');
+
+    setTimeout(function() {
+      adminPanel_waiting = false;
+      $('#admin_panel__loading').hide();
+      $('#webix_preloaded_header').removeClass('invisible');
+      $('#logo_link').removeClass('invisible');
+      $('#no_items').removeClass('invisible');
+      $('#admin_panel').removeClass('invisible');
+    }, duration);
+  }
+
+  adminPanel_startWaiting(2500);
+</script>
+
+<script src="/js/dist/api-v2.js" type="text/javascript"></script>
+<script src="/vendor/bootstrap/bootstrap.min.js"></script>
+<script src="/vendor/webix/webix_debug.js"></script>
+<script src="/skins/flat/skin.js"></script>
+<script src="/vendor/remarkable.js"></script>
+<script src="/js/dist/ui.js"></script>
+<script>
+  $(function() {
+    // Get Started large button
+    $('#sub_footer__button').popover({
+      placement: 'top',
+      html : true,
+      trigger: 'focus',
+      content: function() {
+        return $('#signin_popover').html();
+      }
+    });
+    $('#import_data_modal').on('show.bs.modal', function () {
+      document.getElementById('import_data_modal__refine').src = '{{ refine_url }}';
+    });
+
+  });
+
+  window.addEventListener('message', function(e) {
+    if (e.data.message === 'openRefineImport') {
+      switch (e.data.stage) {
+        case 'getTargetEntity':
+          e.source.postMessage({
+            message: 'targetEntity',
+            openRefineImportEntity: typeof openRefineImportEntity === 'undefined' ? {} : openRefineImportEntity
+
+          }, '*');
+          if (typeof openRefineImportEntity !== 'undefined') {
+            delete openRefineImportEntity;
+          }
+          break;
+        case 'finished':
+          $('#import_data_modal').modal('hide');
+          UI.entityTree.refresh();
+          if (typeof openRefineImportEntity !== 'undefined') {
+            delete openRefineImportEntity;
+          }
+          //if (Identity.dataFromId(UI.entityTree.getCurrentId).root !== e.data.root) {
+          //  UI.entityTree.setCurrentId(Identity.idFromData({ root: e.data.root, path: '' }));
+          //} else {
+          //  UI.entityList.refreshData();
+          //}
+          break;
+        case 'created': // Open Refine finished his work
+          document.getElementById('import_data_modal__refine').src =
+            '/finish-import.html?id=' + e.data.id +
+            '&header=' + encodeURIComponent(JSON.stringify(e.data.header));
+          break;
+      }
+    }
+  });
+
+  $(window).on('hashchange', function() {
+    var isEmptyHash = window.location.hash == null ||
+      window.location.hash === '' ||
+      window.location.hash === '#';
+    if (!isEmptyHash && document.getElementById('webix').style.display === 'none') {
+      document.getElementById('bootstrap').style.display = 'none';
+      document.getElementById('webix').style.display = 'block';
+    }
+  });
+
+  //
+  // Init MyDataSpace
+  //
+
+  webix.codebase = "/vendor/";
+
+  Mydataspace.on('connected', function() {
+    UI.initConnection();
+    if (!isValidJWT(localStorage.getItem('authToken'))) {
+      UI.pages.refreshPage('data', true);
+    }
+  });
+
+  Mydataspace.authProviders.facebook.title = STRINGS.CONNECT_TO_FACEBOOK;
+  Mydataspace.authProviders.google.title = STRINGS.CONNECT_TO_GOOGLE;
+  UI.render('admin_panel');
+  if (!Mydataspace.connected) {
+    Mydataspace.connect();
+  }
+
+  //
+  // Init Markdown renderer
+  //
+  var md = new Remarkable({
+    html:         true,        // Enable HTML tags in source
+    xhtmlOut:     false,        // Use '/' to close single tags (<br />)
+    breaks:       false,        // Convert '\n' in paragraphs into <br>
+    langPrefix:   'language-',  // CSS language prefix for fenced blocks
+    linkify:      false,        // Autoconvert URL-like text to links
+
+    // Enable some language-neutral replacement + quotes beautification
+    typographer:  false,
+
+    // Double + single quotes replacement pairs, when typographer enabled,
+    // and smartquotes on. Set doubles to '«»' for Russian, '„“' for German.
+    quotes: '“”‘’',
+
+    // Highlighter function. Should return escaped HTML,
+    // or '' if the source string is not changed
+    highlight: function (/*str, lang*/) { return ''; }
+  });
+</script>
+
+
+<div id="import_data_modal"
+     class="modal"
+     role="dialog"
+     aria-labelledby="Importing Data">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="modal-title">Importing Data</div>
+      </div>
+      <div class="modal-body">
+        <iframe id="import_data_modal__refine" class="import_data_model__refine"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

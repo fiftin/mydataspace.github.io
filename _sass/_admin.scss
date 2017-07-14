@@ -846,47 +846,52 @@ input {
   background: $input-border-color !important;
 }
 
-.view__container {
-  width: 100%;
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-top: 5px;
+.admin_panel {
+
+  .root_counters {
+    //  top: initial !important;
+    //  bottom: 0;
+    top: 0 !important;
+    right: 0 !important;
+  }
+
+  .view__container {
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 5px;
+  }
+
+  .view__tags {
+    margin-bottom: 0 !important;
+  }
+
+  .view__tag:last-child {
+    margin-right: 100px;
+  }
+
+  #view__counters_likes {
+    cursor: default !important;
+  }
+
+  .view__websiteURL {
+    font-size: 16px;
+  }
+
+  .links__link_text {
+    font-size: 14px;
+  }
+
+  .view__title_link {
+    transform: translateY(-3px);
+  }
+
+  .view__description {
+    padding-top: 20px;
+  }
+
 }
 
-.root_counters {
-//  top: initial !important;
-//  bottom: 0;
-  top: 0 !important;
-  right: 0 !important;
-}
-
-.view__tags {
-  margin-bottom: 0 !important;
-}
-
-.view__tag:last-child {
-  margin-right: 100px;
-}
-
-#view__counters_likes {
-  cursor: default !important;
-}
-
-.view__websiteURL {
-  font-size: 16px;
-}
-
-.links__link_text {
-  font-size: 14px;
-}
-
-.view__title_link {
-  transform: translateY(-3px);
-}
-
-.view__description {
-  padding-top: 20px;
-}
 
 #webix_search {
   position: absolute;

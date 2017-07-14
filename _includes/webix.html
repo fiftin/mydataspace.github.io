@@ -1,0 +1,132 @@
+<script type="text/javascript">
+  if (!isValidJWT(localStorage.getItem('authToken')) &&
+    !(window.location.hash && window.location.hash !== '' && window.location.hash !== '#')) {
+    document.getElementById('webix').style.display = 'none';
+  }
+</script>
+
+
+<div class="webix_preloaded_header invisible" id="webix_preloaded_header"></div>
+
+<a class="logo invisible" href="/" id="logo_link">
+  <div class="logo__img_wrap">
+    <img src="/images/logo_128.png" class="logo__img" />
+  </div>
+  <img src="/images/logo_text.svg" class="logo__text_img hidden-xs" />
+</a>
+
+
+<div id="admin_panel__loading"><i class="fa fa-cog fa-spin fa-fw"></i></div>
+
+<div id="no_items" class="no_items invisible">
+  <div id="no_items__no_apps"></div>
+
+  <div class="no_items__content" id="no_items__no_data">
+    <div class="container">
+      <div id="no_items__title" class="no_items__no_apps"></div>
+      <!--<div class="no_items__no_apps_description">-->
+      <!--Create empty root, import data from file or explore existing roots with using-->
+      <!--useful search-->
+      <!--</div>-->
+      <div class="row">
+
+        <!-- Explore -->
+        <div class="col-xs-4 no_items__column">
+          <div id="no_items__explore__desc" class="no_items__desc"></div>
+          <div class="no_items__roots clearfix">
+            <img src="https://api.mydataspace.net/avatars/sm/Hk3L6-itg.png" class="no_items__root" />
+            <img src="https://api.mydataspace.net/avatars/sm/B1VWVnOnl.png" class="no_items__root" />
+            <img src="https://api.mydataspace.net/avatars/sm/HkuFL3o2x.png" class="no_items__root" />
+            <img src="https://cdn.mydataspace.net/avatars/sm/BJMK_ni2e.png" class="no_items__root" />
+            <img src="https://api.mydataspace.net/avatars/sm/Sy2jU2jhg.png" class="no_items__root" />
+            <img src="https://api.mydataspace.net/avatars/sm/Skblwho3x.png" class="no_items__root" />
+            <img src="https://api.mydataspace.net/avatars/sm/rymJD3o3e.png" class="no_items__root" />
+            <img src="https://api.mydataspace.net/avatars/sm/SyNT83jhg.png" class="no_items__root" />
+          </div>
+          <a href="/#*"
+             class="btn btn-default btn-lg no_items__btn no_items__btn--bottom"
+             id="no_items__explore__button"></a>
+        </div>
+
+        <!-- Import -->
+        <div class="col-xs-4 no_items__column">
+          <div id="no_items__import__desc" class="no_items__desc"></div>
+
+          <img class="no_items__refine_img" src="/images/openrefine.png" />
+
+          <div class="no_items__import" id="no_items__import__refine_desc"></div>
+
+          <button class="btn btn-primary btn-lg no_items__btn no_items__btn--bottom"
+                  data-toggle="modal"
+                  data-target="#import_data_modal" id="no_items__import__button"></button>
+
+        </div>
+
+        <!-- Create -->
+        <div class="col-xs-4 no_items__column">
+          <div id="no_items__create__desc" class="no_items__desc"></div>
+          <div class="no_items__center no_items__center--right">
+            <input id="no_items__new_root_input"
+                   type="text"
+                   class="no_items__new_root_input form-control"
+                   onkeypress="no_items__new_root_input__onKeyPress(event)"
+                   placeholder="New Root Name"
+                   id="no_items__create__input" />
+
+            <div id="no_items__notice" class="no_items__notice"></div>
+          </div>
+
+          <button class="btn btn-success btn-lg no_items__btn no_items__btn--bottom"
+                  onclick="no_items__createNewRoot()"
+                  id="no_items__create__button"></button>
+
+          <script>
+            function no_items__createNewRoot() {
+              var notices = document.getElementById('no_items__notice').childNodes[0].childNodes;
+              for (var i = 0; i < notices.length; i++) {
+                notices[i].classList.remove('no_items__notice--alert');
+              }
+              var root = document.getElementById('no_items__new_root_input').value;
+              if (MDSCommon.isBlank(root) || root.length < 3 || root.length > 50) {
+                notices[0].classList.add('no_items__notice--alert');
+                document.getElementById('no_items__new_root_input').focus();
+                return;
+              }
+              Mydataspace.request('entities.create', {
+                root: root,
+                path: '',
+                fields: []
+              }, function() {
+                document.getElementById('no_items__new_root_input').value = '';
+              }, function(err) {
+                switch (err.name) {
+                  case 'SequelizeValidationError':
+                    notices[1].classList.add('no_items__notice--alert');
+                    break;
+                  case 'SequelizeUniqueConstraintError':
+                    notices[2].classList.add('no_items__notice--alert');
+                    break;
+                  default:
+                }
+                document.getElementById('no_items__new_root_input').focus();
+              });
+            }
+
+            function no_items__new_root_input__onKeyPress(e) {
+              if (e.keyCode === 13) {
+                no_items__createNewRoot();
+                return false;
+              }
+            }
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="admin_panel" class="admin_panel invisible"></div>
+
+{% include search.html id="webix__header__search" admin=true resultContainer="webix_search" %}
+
+<div id="webix_search"></div>

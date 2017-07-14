@@ -1,0 +1,35 @@
+---
+layout: hybrid
+---
+
+<div class="page_top">
+  <div class="smoke">
+    {% include nav.html %}
+  </div>
+</div>
+
+<script>
+  Mydataspace.connect();
+  Mydataspace.on('login', function() {
+    document.getElementById('login_button_menu_item').style.display = 'none';
+    document.getElementById('profile_button_menu_item').style.display = 'block';
+    Mydataspace.emit('users.getMyProfile', {});
+  });
+  Mydataspace.on('logout', function() {
+    document.getElementById('login_button_menu_item').style.display = 'block';
+    document.getElementById('profile_button_menu_item').style.display = 'none';
+  });
+</script>
+
+<main class="default_main {{ page.main_class }}">
+  {{ content }}
+</main>
+
+{% include footer.html %}
+
+{% include signin_modal.html %}
+
+
+<script src="/vendor/jquery.min.js"></script>
+<script src="/vendor/bootstrap/bootstrap.min.js"></script>
+
