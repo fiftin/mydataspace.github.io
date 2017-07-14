@@ -15,7 +15,15 @@
   </div>
   <img src="/images/logo_text.svg" class="logo__text_img hidden-xs" />
 </a>
-
+{% else %}
+<style>
+  #view__page_link {
+    display: none !important;
+  }
+  #view__counters {
+    display: none !important;
+  }
+</style>
 {% endif %}
 
 <div id="admin_panel__loading"><i class="fa fa-cog fa-spin fa-fw"></i></div>
