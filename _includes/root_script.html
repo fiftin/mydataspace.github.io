@@ -491,7 +491,7 @@
           history.pushState({}, '', '/#' + data.root);
           document.getElementById('bootstrap').style.display = 'none';
           document.getElementById('webix').style.display = 'block';
-          adminPanel_startWaiting(3000);
+          adminPanel_startWaiting(1000);
           UI.pages.refreshPage('data', true);
         });
 
