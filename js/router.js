@@ -43,9 +43,11 @@ var Router = {
    * Route links to single root.
    */
   isRoot: function() {
-    if (window.location.pathname !== '/' && window.location.pathname.length > 2) {
-      return true;
+    if (window.location.pathname === '/') {
+      return false;
     }
+    var root = window.location.pathname.split('/').filter(function(x) { MDSCommon.isPresent(x) })[0];
+    return root != null || root.length > 2;
     // var parts = Router.getCommonSearchParts();
     // return parts != null && MDSCommon.isPresent(parts.search) && parts.search.indexOf('*') < 0;
   },
