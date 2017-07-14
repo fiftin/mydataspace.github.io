@@ -139,10 +139,18 @@ var Router = {
   },
 
   getSearch: function(raw) {
-    if (window.path !== '/') {
-      return window.location.pathname.split('/').filter(function(x) { return MDSCommon.isPresent(x); })[0];
+    if (window.location.pathname === '/') {
+      return '';
     }
-    return '';
+    var parts = window.location.pathname.split('/').filter(function(x) { return MDSCommon.isPresent(x); });
+    if (parts.length >= 2) {
+      return parts[1];
+    } else if (parts[0] != null && parts[0].length > 2) {
+      return parts[0];
+    } else {
+      return '';
+    }
+
     // if (raw) {
     //   return window.location.hash.substring(1);
     // }
@@ -918,8 +926,10 @@ EntityForm.prototype.setRootView = function(data) {
     }
           
           
-    document.getElementById('view__counters_likes_count').innerText = MDSCommon.findValueByName(data.fields, 'likes');
-    document.getElementById('view__counters_comments_count').innerText = MDSCommon.findValueByName(data.fields, 'comments');
+    document.getElementById('view__counters_likes_count').innerText =
+      MDSCommon.findValueByName(data.fields, 'likes');
+    document.getElementById('view__counters_comments_count').innerText =
+      MDSCommon.findValueByName(data.fields, 'comments');
 
     //for (var i in data.children) {
     //  var child = data.children[i];
