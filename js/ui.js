@@ -456,17 +456,17 @@ UI = {
     });
 
     function updateTreeSearchScope() {
-      if (Router.isRoot() || Router.isFilterByName()) {
-        $$('entity_tree__root_scope').define('icon', 'database');
-        $$('entity_tree__search').setValue(Router.getSearch(true));
-      } else if ((Router.isEmpty() || Router.isMe())) {
-        $$('entity_tree__root_scope').define('icon', 'user');
-        $$('entity_tree__search').setValue(Router.getSearch());
-      } else {
-        $$('entity_tree__root_scope').define('icon', 'globe');
-        $$('entity_tree__search').setValue(Router.getSearch());
-      }
-      $$('entity_tree__root_scope').refresh();
+      // if (Router.isRoot() || Router.isFilterByName()) {
+      //   $$('entity_tree__root_scope').define('icon', 'database');
+      //   $$('entity_tree__search').setValue(Router.getSearch(true));
+      // } else if ((Router.isEmpty() || Router.isMe())) {
+      //   $$('entity_tree__root_scope').define('icon', 'user');
+      //   $$('entity_tree__search').setValue(Router.getSearch());
+      // } else {
+      //   $$('entity_tree__root_scope').define('icon', 'globe');
+      //   $$('entity_tree__search').setValue(Router.getSearch());
+      // }
+      // $$('entity_tree__root_scope').refresh();
     }
 
     updateTreeSearchScope();

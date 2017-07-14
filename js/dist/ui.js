@@ -71,12 +71,13 @@ webix.protoUI({
 
 var Router = {
   isEmpty: function() {
-    if (window.path !== '/') {
-      return false;
-    }
-    return window.location.hash == null ||
-      window.location.hash === '' ||
-      window.location.hash === '#';
+    return !Router.isRoot();
+    // if (window.path !== '/') {
+    //   return false;
+    // }
+    // return window.location.hash == null ||
+    //   window.location.hash === '' ||
+    //   window.location.hash === '#';
   },
 
   getCommonSearchParts: function() {
@@ -97,52 +98,55 @@ var Router = {
   },
 
   isSearch: function() {
-    if (window.path !== '/') {
-      return false;
-    }
-    var parts = Router.getCommonSearchParts();
-    if (parts == null || MDSCommon.isBlank(parts.search)) {
-      return false;
-    }
-    var s = parts.search;
-    return s.indexOf('*') === 0 && s.lastIndexOf('*') === s.length - 1;
+    return false;
+    // if (window.path !== '/') {
+    //   return false;
+    // }
+    // var parts = Router.getCommonSearchParts();
+    // if (parts == null || MDSCommon.isBlank(parts.search)) {
+    //   return false;
+    // }
+    // var s = parts.search;
+    // return s.indexOf('*') === 0 && s.lastIndexOf('*') === s.length - 1;
   },
 
   /**
    * Route links to single root.
    */
   isRoot: function() {
-    if (window.path !== '/') {
+    if (window.path !== '/' && window.path.length > 2) {
       return true;
     }
-    var parts = Router.getCommonSearchParts();
-    return parts != null && MDSCommon.isPresent(parts.search) && parts.search.indexOf('*') < 0;
+    // var parts = Router.getCommonSearchParts();
+    // return parts != null && MDSCommon.isPresent(parts.search) && parts.search.indexOf('*') < 0;
   },
 
   isFilterByName: function() {
-    if (window.path !== '/') {
-      return false;
-    }
-    var parts = Router.getCommonSearchParts();
-    if (parts == null || MDSCommon.isBlank(parts.search) || parts.search === '*') {
-      return false;
-    }
-    return parts.search.indexOf('*') === parts.search.length - 1;
+    return false;
+    // if (window.path !== '/') {
+    //   return false;
+    // }
+    // var parts = Router.getCommonSearchParts();
+    // if (parts == null || MDSCommon.isBlank(parts.search) || parts.search === '*') {
+    //   return false;
+    // }
+    // return parts.search.indexOf('*') === parts.search.length - 1;
   },
 
   getSearch: function(raw) {
     if (window.path !== '/') {
       return window.location.pathname.split('/').filter(function(x) { return MDSCommon.isPresent(x); })[0];
     }
-    if (raw) {
-      return window.location.hash.substring(1);
-    }
-
-    var parts = Router.getCommonSearchParts();
-    if (parts == null) {
-      return '';
-    }
-    return parts.search.replace(/\*/g, '');
+    return '';
+    // if (raw) {
+    //   return window.location.hash.substring(1);
+    // }
+    //
+    // var parts = Router.getCommonSearchParts();
+    // if (parts == null) {
+    //   return '';
+    // }
+    // return parts.search.replace(/\*/g, '');
   },
 
   isMe: function() {
@@ -2104,35 +2108,35 @@ EntityTree.prototype.requestRoots = function(onlyMine, reqData, selectedId) {
 };
 
 EntityTree.prototype.updateRouteBySearch = function() {
-  var search = $$('entity_tree__search').getValue();
-  var icon = $$('entity_tree__root_scope')._settings['icon'];
-  if (icon === 'database' && search === '') {
-    return;
-  }
-  switch (icon) {
-    case 'user':
-      if (MDSCommon.isBlank(search)) {
-        search = 'me:*';
-      } else {
-        search = 'me:*' + search + '*';
-      }
-      break;
-    case 'globe':
-      if (MDSCommon.isBlank(search)) {
-        search = '*';
-      } else {
-        search = '*' + search + '*';
-      }
-      break;
-    case 'database':
-      break;
-  }
-  var prefix = '';
-  var lang = localStorage.getItem('language');
-  if (MDSCommon.isPresent(lang) && lang.toLowerCase() !== 'en') {
-    prefix = '/' + lang.toLowerCase();
-  }
-  window.location.href = prefix + '/#' + search;
+  // var search = $$('entity_tree__search').getValue();
+  // var icon = $$('entity_tree__root_scope')._settings['icon'];
+  // if (icon === 'database' && search === '') {
+  //   return;
+  // }
+  // switch (icon) {
+  //   case 'user':
+  //     if (MDSCommon.isBlank(search)) {
+  //       search = 'me:*';
+  //     } else {
+  //       search = 'me:*' + search + '*';
+  //     }
+  //     break;
+  //   case 'globe':
+  //     if (MDSCommon.isBlank(search)) {
+  //       search = '*';
+  //     } else {
+  //       search = '*' + search + '*';
+  //     }
+  //     break;
+  //   case 'database':
+  //     break;
+  // }
+  // var prefix = '';
+  // var lang = localStorage.getItem('language');
+  // if (MDSCommon.isPresent(lang) && lang.toLowerCase() !== 'en') {
+  //   prefix = '/' + lang.toLowerCase();
+  // }
+  // window.location.href = prefix + '/#' + search;
 };
 
 EntityTree.prototype.refresh = function(root) {
@@ -3147,35 +3151,35 @@ UILayout.entityTree =
             $('#import_data_modal').modal('show');
           }
         },
-        { view: 'button',
-          width: 35,
-          type: 'iconButton',
-          icon: 'user',
-          css: 'entity_tree__search_button',
-          popup: 'entity_tree__root_scope_popup',
-          id: 'entity_tree__root_scope',
-          on: {
-            onItemClick: function() {
-              // this.currentFieldName = data.name;
-              // $$('entity_form__field_type_popup_list').select(data.type);
-            }.bind(this)
-          }
-        },
-        { view: 'search',
-          id: 'entity_tree__search',
-          css: 'entity_tree__search',
-          align: 'center',
-          icon: 'close',
-          placeholder: STRINGS.SEARCH_BY_ROOTS,
-          on: {
-            onAfterRender: function() {
-
-            },
-            onTimedKeyPress: function() {
-              UI.entityTree.updateRouteBySearch();
-            }
-          }
-        }
+        // { view: 'button',
+        //   width: 35,
+        //   type: 'iconButton',
+        //   icon: 'user',
+        //   css: 'entity_tree__search_button',
+        //   popup: 'entity_tree__root_scope_popup',
+        //   id: 'entity_tree__root_scope',
+        //   on: {
+        //     onItemClick: function() {
+        //       // this.currentFieldName = data.name;
+        //       // $$('entity_form__field_type_popup_list').select(data.type);
+        //     }.bind(this)
+        //   }
+        // },
+        // { view: 'search',
+        //   id: 'entity_tree__search',
+        //   css: 'entity_tree__search',
+        //   align: 'center',
+        //   icon: 'close',
+        //   placeholder: STRINGS.SEARCH_BY_ROOTS,
+        //   on: {
+        //     onAfterRender: function() {
+        //
+        //     },
+        //     onTimedKeyPress: function() {
+        //       UI.entityTree.updateRouteBySearch();
+        //     }
+        //   }
+        // }
       ]
     },
     { view: 'tree',
@@ -4119,17 +4123,17 @@ UI = {
     });
 
     function updateTreeSearchScope() {
-      if (Router.isRoot() || Router.isFilterByName()) {
-        $$('entity_tree__root_scope').define('icon', 'database');
-        $$('entity_tree__search').setValue(Router.getSearch(true));
-      } else if ((Router.isEmpty() || Router.isMe())) {
-        $$('entity_tree__root_scope').define('icon', 'user');
-        $$('entity_tree__search').setValue(Router.getSearch());
-      } else {
-        $$('entity_tree__root_scope').define('icon', 'globe');
-        $$('entity_tree__search').setValue(Router.getSearch());
-      }
-      $$('entity_tree__root_scope').refresh();
+      // if (Router.isRoot() || Router.isFilterByName()) {
+      //   $$('entity_tree__root_scope').define('icon', 'database');
+      //   $$('entity_tree__search').setValue(Router.getSearch(true));
+      // } else if ((Router.isEmpty() || Router.isMe())) {
+      //   $$('entity_tree__root_scope').define('icon', 'user');
+      //   $$('entity_tree__search').setValue(Router.getSearch());
+      // } else {
+      //   $$('entity_tree__root_scope').define('icon', 'globe');
+      //   $$('entity_tree__search').setValue(Router.getSearch());
+      // }
+      // $$('entity_tree__root_scope').refresh();
     }
 
     updateTreeSearchScope();
