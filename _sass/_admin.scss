@@ -853,11 +853,12 @@ input {
   margin-top: 5px;
 }
 
-//.root_counters {
+.root_counters {
 //  top: initial !important;
 //  bottom: 0;
-//  right: 0 !important;
-//}
+  top: 0 !important;
+  right: 0 !important;
+}
 
 #view__counters_likes {
   cursor: default !important;
