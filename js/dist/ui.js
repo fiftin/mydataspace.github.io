@@ -3896,9 +3896,11 @@ UI = {
 
   initConnection: function() {
     Mydataspace.on('login', function() {
-      document.getElementById('bootstrap').style.display = 'none';
-      document.getElementById('webix').style.display = 'block';
-      adminPanel_startWaiting(1000);
+      if (window.location.pathname === '/') {
+        document.getElementById('bootstrap').style.display = 'none';
+        document.getElementById('webix').style.display = 'block';
+      }
+      adminPanel_startWaiting(2000);
       UI.updateSizes();
       UI.refresh();
       $$('SIGN_IN_LABEL').hide();
