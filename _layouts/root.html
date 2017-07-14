@@ -1,11 +1,8 @@
 ---
-layout: default
-main_class: default_main--gray
-language: en
+layout: hybrid_default
 ---
 
-
-<div id="view" class="root_page" style="padding-bottom: 30px">
+<div id="root" class="root_page" style="padding-bottom: 30px">
 </div>
 
 <div id="delete_look_modal"
@@ -17,19 +14,18 @@ language: en
     <div class="modal-content">
       <div class="modal-header new_look_modal__header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <div class="modal-title">Delete View</div>
+        <div class="modal-title">{{ site.data[page.language].delete_view }}</div>
       </div>
       <div class="modal-body new_look_modal__body">
-        You really want to delete this view?
+        {{ site.data[page.language].delete_view_answer }}
       </div>
       <div class="modal-footer new_look_modal__footer">
-        <button class="btn btn-danger" data-dismiss="modal" id="delete_look_modal_button">Yes</button>
-        <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-danger" data-dismiss="modal" id="delete_look_modal_button">{{ site.data[page.language].yes }}</button>
+        <button class="btn btn-default" data-dismiss="modal">{{ site.data[page.language].cancel }}</button>
       </div>
     </div>
   </div>
 </div>
-
 
 <div id="new_look_modal"
      class="modal fade"
@@ -40,7 +36,7 @@ language: en
     <div class="modal-content">
       <div class="modal-header new_look_modal__header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <div class="modal-title" id="new_look_modal_header">New View</div>
+        <div class="modal-title" id="new_look_modal_header">{{ site.data[page.language].new_view_title }}</div>
       </div>
       <div class="modal-body new_look_modal__body">
         <form class="bootstrap-form">
@@ -48,7 +44,7 @@ language: en
             <input type="text"
                    id="new_look_modal_title"
                    class="form-control"
-                   placeholder="Title"
+                   placeholder="{{ site.data[page.language].view_title }}"
                    autofocus />
             <div class="bootstrap-form-error" id="new_look_modal_title_err"></div>
           </div>
@@ -56,23 +52,22 @@ language: en
             <input type="text"
                    id="new_look_modal_codepen"
                    class="form-control"
-                   placeholder="Codepen URL" />
+                   placeholder="{{ site.data[page.language].codepen_url }}" />
             <div class="bootstrap-form-error" id="new_look_modal_codepen_err"></div>
           </div>
           <div class="form-group">
             <textarea id="new_look_modal_description"
                       class="form-control"
                       rows="3"
-                      placeholder="Description"></textarea>
+                      placeholder="{{ site.data[page.language].view_description }}"></textarea>
           </div>
         </form>
       </div>
       <div class="modal-footer new_look_modal__footer">
-        <button class="btn btn-success" id="new_look_modal_button">Create View</button>
+        <button class="btn btn-success" id="new_look_modal_button">{{ site.data[page.language].create_view }}</button>
       </div>
     </div>
   </div>
 </div>
-
 
 {% include root_script.html language="en" %}

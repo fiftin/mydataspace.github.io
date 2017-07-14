@@ -119,3 +119,23 @@ docs:
     title: Import of data
   - id: client-api
     title: Client API
+
+root:
+
+  about: About
+  data: Data
+  visualization: Visualization
+  new_view: New <span class="hidden-xs">View</span>
+  no_views: There are no views
+  no_comments: There are no comments
+  post_comment: Post comment
+  delete_view: Delete View
+  delete_view_answer: You really want to delete this view?
+  new_view_title: New View
+  create_view: Create View
+  cancel: Cancel
+  yes: yes
+  codepen_url: Codepen URL
+  view_title: Title
+  view_description: Description
+
