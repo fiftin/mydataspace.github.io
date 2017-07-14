@@ -117,8 +117,11 @@ var Router = {
     if (window.location.pathname === '/') {
       return false;
     }
-    var root = window.location.pathname.split('/').filter(function(x) { MDSCommon.isPresent(x) })[0];
-    return root != null || root.length > 2;
+    var parts = window.location.pathname.split('/').filter(function(x) { return MDSCommon.isPresent(x); });
+    if (parts.length >= 2) {
+      return true;
+    }
+    return parts[0] != null && parts[0].length > 2;
     // var parts = Router.getCommonSearchParts();
     // return parts != null && MDSCommon.isPresent(parts.search) && parts.search.indexOf('*') < 0;
   },
