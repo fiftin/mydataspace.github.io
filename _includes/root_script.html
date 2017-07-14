@@ -489,7 +489,7 @@
         document.getElementById('view__data_link').classList.remove('hidden');
         document.getElementById('view__data_link').addEventListener('click', function() {
           history.pushState({}, '', '/#' + data.root);
-          document.getElementById('bootstrap').style.display = 'none';
+          document.getElementById('bootstrap').style.display = 'block';
           document.getElementById('webix').style.display = 'block';
 //          adminPanel_startWaiting(1000);
           UI.pages.refreshPage('data', true);

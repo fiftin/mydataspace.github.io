@@ -4007,7 +4007,7 @@ UI = {
    */
   rendered: false,
 
-  render: function() {
+  render: function(withHeader) {
     if (UI.rendered) {
       return;
     }
@@ -4062,32 +4062,32 @@ UI = {
     //
     // Admin panel
     //
+    var rows = [];
+    if (withHeader) {
+      rows.push(UILayout.header);
+    }
+    rows.push(UILayout.header);
+    rows.push(UILayout.apps);
+    rows.push({ id: 'my_data_panel',
+      height: window.innerHeight - 46,
+      cols: [
+        UILayout.entityTree,
+        {
+          id: 'my_data_panel__resizer_1',
+          view: 'resizer'
+        },
+        UILayout.entityList,
+        {
+          id: 'my_data_panel__resizer_2',
+          view: 'resizer'
+        },
+        UILayout.entityForm
+      ]
+    });
     webix.ui({
       id: 'admin_panel',
       container: 'admin_panel',
-      rows: [
-        UILayout.header,
-        UILayout.apps,
-        //
-        // My Data Page
-        //
-        { id: 'my_data_panel',
-          height: window.innerHeight - 46,
-          cols: [
-            UILayout.entityTree,
-            {
-              id: 'my_data_panel__resizer_1',
-              view: 'resizer'
-            },
-            UILayout.entityList,
-            {
-              id: 'my_data_panel__resizer_2',
-              view: 'resizer'
-            },
-            UILayout.entityForm
-          ]
-        }
-      ]
+      rows: rows
     });
 
     UI.updateSizes();
