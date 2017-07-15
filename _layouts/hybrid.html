@@ -125,7 +125,7 @@
   webix.codebase = "/vendor/";
 
   Mydataspace.on('connected', function() {
-    UI.initConnection();
+    UI.initConnection({{page.webix_with_header}});
     if (!isValidJWT(localStorage.getItem('authToken'))) {
       UI.pages.refreshPage('data', true);
     }

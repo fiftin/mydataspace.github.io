@@ -3931,7 +3931,7 @@ UI = {
     UI.appForm_setClean();
   },
 
-  initConnection: function() {
+  initConnection: function(withHeader) {
     Mydataspace.on('login', function() {
       if (window.location.pathname === '/') {
         document.getElementById('bootstrap').style.display = 'none';
@@ -3940,21 +3940,25 @@ UI = {
       adminPanel_startWaiting(2000);
       UI.updateSizes();
       UI.refresh();
-      $$('SIGN_IN_LABEL').hide();
-      $$('menu_button').show();
+      if (withHeader) {
+        $$('SIGN_IN_LABEL').hide();
+        $$('menu_button').show();
+      }
       $('#signin_modal').modal('hide');
       UI.entityTree.setReadOnly(false);
     });
 
     Mydataspace.on('logout', function() {
-      $$('menu').hide();
       if (!UIHelper.isViewOnly()) {
         document.getElementById('bootstrap').style.display = 'block';
         document.getElementById('webix').style.display = 'none';
       }
       document.getElementById('no_items').style.display = 'none';
-      $$('SIGN_IN_LABEL').show();
-      $$('menu_button').hide();
+      if (withHeader) {
+        $$('menu').hide();
+        $$('SIGN_IN_LABEL').show();
+        $$('menu_button').hide();
+      }
       UI.entityTree.setReadOnly(true);
     });
 
