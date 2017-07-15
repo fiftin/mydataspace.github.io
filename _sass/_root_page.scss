@@ -5,7 +5,9 @@ $side-panel-width: $side-width - $padding;
 
 .root_page {
   .view__title {
-    margin-right: $side-panel-width;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .view__overview--root {
@@ -39,6 +41,14 @@ $side-panel-width: $side-width - $padding;
     font-size: 15px;
   }
 
+  .view__overview_image_wrap, .view__info {
+    display: block !important;
+    float: left !important;
+  }
+
+  .view__info {
+    width: calc(100% - #{$root-icon-size-lg + 50px});
+  }
 }
 
 .view__page {

@@ -64,33 +64,33 @@ $view-field-value-max-height: 170px;
 }
 
 .view__overview_image_wrap--medium {
-  width: 55px;
+  width: $root-icon-size;
 }
 
 .view__overview_image_wrap--large {
-  width: 65px;
+  width: $root-icon-size-lg;
 }
 
 .view__overview_image {
-  width: 35px;
-  height: 35px;
+  width: $root-icon-size-sm;
+  height: $root-icon-size-sm;
   object-fit: cover;
 }
 
 .view__overview_image--medium {
-  width: 55px;
-  height: 55px;
+  width: $root-icon-size;
+  height: $root-icon-size;
 }
 
 .view__overview_image--large {
-  width: 65px;
-  height: 65px;
+  width: $root-icon-size-lg;
+  height: $root-icon-size-lg;
 }
 
 .view__overview_icon {
   border-radius: 10px;
   color: $brand-bg;
-  font-size: 35px !important;
+  font-size: $root-icon-size-sm !important;
 }
 
 .view__info {
