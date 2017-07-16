@@ -146,6 +146,13 @@ Myda.prototype.connect = function() {
       if (self.options.useLocalStorage && MDSCommon.isPresent(localStorage.getItem('authToken'))) {
         self.emit('authenticate', { token: localStorage.getItem('authToken') });
       }
+
+      self.subscriptions.forEach(function(subscription) {
+        self.socket.on(subscription, function(data) {
+          self.handleResponse(data, 'success');
+        });
+      });
+
       self.callListeners('connected');
       resolve();
     });
