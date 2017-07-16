@@ -9,7 +9,9 @@
     connected: function() {
       Mydataspace.on('users.getMyProfile.res', function(data) {
         document.getElementById('profile_button').style.backgroundImage = 'url(' + data.avatar + ')';
-        $('#signin_modal').modal('hide');
+        if (typeof $ !== 'undefined') {
+          $('#signin_modal').modal('hide');
+        }
       });
     }
   });
