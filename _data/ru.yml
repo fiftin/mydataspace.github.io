@@ -41,7 +41,7 @@ sections:
         description: Позволяет справиться с любой нагрузкой
       - id: distribution
         title: Распределенное хранение данных
-        description: Быствый доступ из любой точки мира
+        description: Быстрый доступ из любой точки мира
   - id: ease
     title: Простота
     features:
