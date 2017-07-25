@@ -111,6 +111,10 @@ $header-toggle-btn-width: 50px;
     box-shadow: none;
     border: 0;
   }
+
+  .header__logo_text {
+    display: none;
+  }
 }
 
 .header__search_input {
