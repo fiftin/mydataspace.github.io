@@ -446,6 +446,11 @@ $search-filter-panel-gap: 40px;
   width: $search-filter-panel-width;
 }
 
+@media (max-width: $screen-sm-max) {
+  .header__logo_text {
+    display: none !important;
+  }
+}
 
 @media (max-width: $screen-xs-max) {
   .header__search_wrap {
@@ -467,9 +472,6 @@ $search-filter-panel-gap: 40px;
     border: 0;
   }
 
-  .header__logo_text {
-    display: none !important;
-  }
 
   .navbar--fixed {
     width: 100%;
