@@ -46,7 +46,7 @@ sections:
     features:
       - id: coding
         title: HTML/CSS/JS
-        description: All you need to know to create amazing website
+        description: All you need to know to create amazing website, desktop or mobile app
       - id: open_data
         title: Open Data
         description: Use data of others and share data with others

@@ -2345,7 +2345,7 @@ Pages.prototype.updatePageState = function(page) {
       }
       break;
     case 'data':
-      if ($$('entity_tree').getFirstId() == null && Router.isMe() && !Router.isSearch()) {
+      //if ($$('entity_tree').getFirstId() == null && Router.isMe() && !Router.isSearch()) {
         document.getElementById('no_items__no_apps').style.display = 'none';
         document.getElementById('no_items__no_data').style.display = 'block';
         document.getElementById('no_items').style.display = 'block';
@@ -2354,20 +2354,20 @@ Pages.prototype.updatePageState = function(page) {
         $$('my_data_panel__resizer_2').hide();
         $$('my_data_panel__central_panel').hide();
         $$('my_data_panel__resizer_1').hide();
-      } else {
-        document.getElementById('no_items').style.display = 'none';
-        $$('my_data_panel__right_panel').show();
-        $$('my_data_panel__resizer_2').show();
-        $$('my_data_panel__central_panel').show();
-        $$('my_data_panel__resizer_1').show();
-        if ($$('entity_tree').getFirstId() == null) {
-          if (Router.isRoot()) { // root not found
-            UI.entityTree.refresh('notfound');
-          } else { // nothing found
-            UI.entityTree.refresh('nothing');
-          }
-        }
-      }
+      // } else {
+      //   document.getElementById('no_items').style.display = 'none';
+      //   $$('my_data_panel__right_panel').show();
+      //   $$('my_data_panel__resizer_2').show();
+      //   $$('my_data_panel__central_panel').show();
+      //   $$('my_data_panel__resizer_1').show();
+      //   if ($$('entity_tree').getFirstId() == null) {
+      //     if (Router.isRoot()) { // root not found
+      //       UI.entityTree.refresh('notfound');
+      //     } else { // nothing found
+      //       UI.entityTree.refresh('nothing');
+      //     }
+      //   }
+      // }
       break;
     default:
       throw new Error('Illegal page: ' + this.currentPage);

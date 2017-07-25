@@ -23,7 +23,7 @@
     "gulp-concat": "^2.6.0",
     "gulp-jekyll": "0.0.0",
     "gulp-less": "^3.0.5",
-    "karma": "^0.13.19",
+    "karma": "^0.13.22",
     "karma-bower": "^1.0.1",
     "karma-chai": "^0.1.0",
     "karma-chrome-extra-launcher": "^0.1.0",
