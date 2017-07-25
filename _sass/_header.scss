@@ -1,3 +1,6 @@
+$header-logo-size: 50px;
+$header-toggle-btn-width: 50px;
+
 #profile_button_menu_item {
   display: none;
 }
@@ -69,7 +72,7 @@
 }
 
 .header__logo_img {
-  width: 50px;
+  width: $header-logo-size;
   float: left;
 }
 
@@ -81,7 +84,7 @@
 
 .header__search_wrap {
   width: calc(100% - 750px);
-  margin-left: 50px;
+  margin-left: $header-logo-size;
   .form-group {
     width: 100%;
   }
@@ -92,9 +95,11 @@
 
 @media (max-width: $screen-xs-max) {
   .header__search_wrap {
-    width: 100%;
-    margin-left: 0;
+    width: calc(100% - #{$header-logo-size + $header-toggle-btn-width});
+    position: absolute;
+    top: 0;
   }
+
   .navbar-form {
     padding-left: 0;
     padding-right: 0;
