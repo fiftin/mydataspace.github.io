@@ -450,6 +450,9 @@ $search-filter-panel-gap: 40px;
   .header__logo_text {
     display: none !important;
   }
+  .header__search_wrap {
+    width: calc(100% - 350px);
+  }
 }
 
 @media (max-width: $screen-xs-max) {
