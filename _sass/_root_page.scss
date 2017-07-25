@@ -79,6 +79,19 @@ $side-panel-width: $side-width - $padding;
   position: absolute;
 }
 
+
+@media (max-width: $screen-sm-max) {
+  .view__about {
+    width: initial;
+    float: none;
+  }
+
+  .view__side_panel_wrap {
+    display: none;
+  }
+}
+
+
 .snippet--auto_height {
   height: auto;
 }
