@@ -1,6 +1,7 @@
 UILayout.entityTree =
 { id: 'my_data_panel__left_panel',
   gravity: 0.2,
+  hidden: window.parent !== window,
   rows: [
     { view: 'toolbar',
       elements: [
