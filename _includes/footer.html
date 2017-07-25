@@ -1,4 +1,9 @@
 <footer class="footer" id="page_footer">
+  <script type="text/javascript">
+  if (window.parent !== window) {
+    document.getElementById('page_footer').style.display = 'none';
+  }
+  </script>
   <div class="container">
     <div class="row">
       <div class="col-md-3">
@@ -39,8 +44,6 @@
 <script type="text/javascript">
 if (window.parent === window) {
   VK.Widgets.CommunityMessages("vk_community_messages", 127607773);
-} else {
-  document.getElementById('page_footer').style.display = 'none';
 }
 </script>
 {% endif %}
