@@ -5,7 +5,7 @@
   (function() {
     var language = '{{ include.language }}';
 
-    var results = new RegExp(".*/([^?#\/]+)").exec(location.href);
+    var results = new RegExp("[^?#]*/([^?#\/]+)").exec(location.href);
     if (!results) {
       return;
     }
