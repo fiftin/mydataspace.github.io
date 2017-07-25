@@ -7,6 +7,11 @@
 {% include mydataspace_init_script.html %}
 
 <div id="bootstrap" style="height: 100%">
+  <script type="text/javascript">
+    if (window.parent !== window) {
+      document.getElementById('bootstrap').style.overflow = 'auto';
+    }
+  </script>
   {{ content }}
 </div>
 
