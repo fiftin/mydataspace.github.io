@@ -25,10 +25,10 @@
       }
     }
 
-    function openSearch_{{include.id}}(search) {
+    function openSearch_{{include.id}}(search, nonHiddable) {
       document.getElementById('{{include.id}}_input').value = search;
       document.getElementById('{{include.id}}_input').focus();
-      startSearch_{{include.id}}(search);
+      startSearch_{{include.id}}(search, nonHiddable);
     }
 
     function removeSearchPart_{{include.id}}(part) {
@@ -65,7 +65,7 @@
       openSearch_{{include.id}}(search);
     }
 
-    function startSearch_{{include.id}}(search) {
+    function startSearch_{{include.id}}(search, nonHiddable) {
       var filters = {};
       var tags = [];
       var newSearch = '';

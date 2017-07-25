@@ -1,8 +1,32 @@
 <script src="/vendor/remarkable.js"></script>
 
 <script>
+
   (function() {
     var language = '{{ include.language }}';
+
+    var results = new RegExp(".*/([^?#\/]+)").exec(location.href);
+    if (!results) {
+      return;
+    }
+
+    var DATA = {
+      root: results[1] === 'root' ? 'fiftin' : results[1],
+      path: '',
+      children: true
+    };
+    
+    if (DATA.root === 'search') {
+      openSearch_header__search('', true);
+      return;
+    }
+
+    var TABS = {
+      VIEW_TAB_README_LABEL: 'root__about',
+      VIEW_TAB_VIEW_LABEL: 'root__looks',
+      VIEW_TAB_COMMENTS_LABEL: 'root__comments',
+      VIEW_TAB_EXPLORE_LABEL: ''
+    };
 
     //
     // Save view button
@@ -84,24 +108,6 @@
       // or '' if the source string is not changed
       highlight: function (/*str, lang*/) { return ''; }
     });
-
-    var results = new RegExp(".*/([^?#\/]+)").exec(location.href);
-    if (!results) {
-      return;
-    }
-
-    var DATA = {
-      root: results[1] === 'root' ? 'fiftin' : results[1],
-      path: '',
-      children: true
-    };
-
-    var TABS = {
-      VIEW_TAB_README_LABEL: 'root__about',
-      VIEW_TAB_VIEW_LABEL: 'root__looks',
-      VIEW_TAB_COMMENTS_LABEL: 'root__comments',
-      VIEW_TAB_EXPLORE_LABEL: ''
-    };
 
     var currentLook;
 
