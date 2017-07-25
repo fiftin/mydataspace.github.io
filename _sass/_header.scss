@@ -95,7 +95,7 @@ $header-toggle-btn-width: 50px;
 
 @media (max-width: $screen-xs-max) {
   .header__search_wrap {
-    width: calc(100% - #{$header-logo-size + $header-toggle-btn-width});
+    width: calc(100% - #{$header-logo-size + $header-toggle-btn-width + 40px});
     position: absolute;
     top: 0;
   }
