@@ -75,13 +75,13 @@ demos:
     title: Spreex
     website: https://spreex.github.io
     source_code_url: https://github.com/spreex/spreex.github.io
-    data_url: https://my-data.space/#spreex
+    data_url: https://myda.space/spreex
     description: Каталог расширений для Spree Commerce
     screenshot_width: 1088
     screenshot_height: 663
   - id: ui
     title: My Data Space
-    website: https://my-data.space/#*
+    website: https://myda.space/#*
     source_code_url: https://github.com/mydataspace/mydataspace.github.io
     description: Административная панель <span class="nowrap">My Data Space</span>
     screenshot_width: 1105
@@ -97,10 +97,10 @@ get_started:
         type: demo
         height: 612
         width: 1045
-        website: https://my-data.space
+        website: https://myda.space
         url: /images/get_started/hello_world.gif
         preview_url: /images/get_started/hello_world.jpg
-        data_url: https://my-data.space/#hello-world
+        data_url: https://myda.space/hello-world
       - id: client
         title: Клиент
         description: Просто выводим на экран JSON полученный с бекенда

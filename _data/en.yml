@@ -75,13 +75,13 @@ demos:
     title: Spreex
     website: https://spreex.github.io
     source_code_url: https://github.com/spreex/spreex.github.io
-    data_url: https://my-data.space/#spreex
+    data_url: https://myda.space/spreex
     description: Spree Commerce extensions catalogue.
     screenshot_width: 1088
     screenshot_height: 663
   - id: ui
     title: My Data Space
-    website: https://my-data.space/#*
+    website: https://myda.space
     source_code_url: https://github.com/mydataspace/mydataspace.github.io
     description: My Data Space administrative panel.
     screenshot_width: 1105
@@ -101,10 +101,10 @@ get_started:
         # width: 1034
         height: 612
         width: 1045
-        website: https://my-data.space
+        website: https://myda.space
         url: /images/get_started/hello_world.gif
         preview_url: /images/get_started/hello_world.jpg
-        data_url: https://my-data.space/#hello-world
+        data_url: https://myda.space/hello-world
       - id: client
         title: Client
         description: Print JSON received from the backend
@@ -138,4 +138,3 @@ root:
   view_title: Title
   view_description: Description
   comments: Comments
-
