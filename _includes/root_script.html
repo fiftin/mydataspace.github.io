@@ -562,8 +562,10 @@
         //  username: 'denis',
         //  about: 'Hello, World!',
         //};
-
-        if (data.profile && document.getElementById('root__user')) {
+        if (MDSCommon.isBlank(data.profile)) {
+          document.getElementById('root__side_panel').style.display = 'none';
+          document.getElementById('root__about_content').style.width = '100%';
+        } else if (document.getElementById('root__user')) {
           document.getElementById('root__user_name').innerText = data.profile.name;
           if (data.profile.verified) {
             document.getElementById('root__user_verified').style.display = 'block';
@@ -684,9 +686,8 @@
           limit: 1
         }).then(function(result) {
           var look = document.getElementById('root__about_look');
-          if (result.children.length <= 0) {
-            look.style.display = 'none';
-          } else {
+          if (result.children.length > 0) {
+            look.style.display = 'block';
             var data = result.children[0];
             var codepenParts = MDSCommon.findValueByName(data.fields, 'id').split('/');
             document.getElementById('root__about_look_title').innerText = MDSCommon.findValueByName(data.fields, 'title');

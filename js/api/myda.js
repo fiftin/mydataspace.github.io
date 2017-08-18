@@ -131,6 +131,7 @@ Myda.prototype.getAuthProvider = function(providerName) {
 
 Myda.prototype.connect = function() {
   var self = this;
+  self.disconnect();
   return new Promise(function(resolve, reject) {
     self.socket = io(self.options.websocketURL, {
       secure: true,
@@ -197,7 +198,9 @@ Myda.prototype.callListeners = function(eventName, args) {
  * You need re-initialize listeners after that!
  */
 Myda.prototype.disconnect = function() {
-  this.socket.disconnect();
+  if (this.socket) {
+    this.socket.disconnect();
+  }
   this.socket = null;
 };
 
