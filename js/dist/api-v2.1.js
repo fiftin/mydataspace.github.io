@@ -8285,10 +8285,14 @@ Myda.prototype.getAuthProvider = function(providerName) {
   return ret;
 };
 
-Myda.prototype.connect = function() {
+Myda.prototype.connect = function(forceConnect) {
   var self = this;
-  self.disconnect();
+  if (self.connecting || self.connected) {
+    return;
+  }
+  
   return new Promise(function(resolve, reject) {
+    self.connecting = true;
     self.socket = io(self.options.websocketURL, {
       secure: true,
       'forceNew' : true,
@@ -8299,6 +8303,7 @@ Myda.prototype.connect = function() {
     });
 
     self.on('connect', function () {
+      self.connecting = false;
       self.connected = true;
       if (self.options.useLocalStorage && MDSCommon.isPresent(localStorage.getItem('authToken'))) {
         self.emit('authenticate', { token: localStorage.getItem('authToken') });
@@ -8357,6 +8362,7 @@ Myda.prototype.disconnect = function() {
   if (this.socket) {
     this.socket.disconnect();
   }
+  this.connected = false;
   this.socket = null;
 };
 
