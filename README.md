@@ -2,6 +2,8 @@
 
 ![MyDataSpace](https://cs7064.vk.me/c836520/v836520717/23506/okyFdL8xLOw.jpg)
 
+[![StackShare](https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/mydataspace/mydataspace)
+
 Open Source continues to capture the world. With the ability to use the code freely,
 developers save time and effort, which allowed for the implementation of new ideas.
 
