@@ -1,20 +1,20 @@
 UILayout.popups.fieldType = {
   view: 'popup',
   id: 'entity_form__field_type_popup',
-    css: 'entity_form__field_type_popup',
+  css: 'entity_form__field_type_popup',
   width: 130,
   body:{
     view: 'list',
-        id: 'entity_form__field_type_popup_list',
-        class: 'entity_form__field_type_popup_list',
-        borderless: true,
+    id: 'entity_form__field_type_popup_list',
+    class: 'entity_form__field_type_popup_list',
+    borderless: true,
     data:[
           { id: 's', value: 'String', icon: 'commenting' },
           { id: 'j', value: 'Text', icon: 'align-justify' },
           { id: 'i', value: 'Integer', icon: 'italic' },
           { id: 'r', value: 'Float', icon: 'calculator'  },
           { id: 'u', value: 'URL', icon: 'link' },
-          { id: 'w', value: 'Secret', icon: 'lock' },
+          { id: 'w', value: 'Secret', icon: 'lock' }
 
           // { id: 'b', value: 'Boolean', icon: 'check-square-o' },
           // { id: 'd', value: 'Date', icon: 'calendar-o' },

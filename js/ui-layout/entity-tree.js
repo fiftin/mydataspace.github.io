@@ -20,20 +20,22 @@ UILayout.entityTree =
           id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
           hidden: true,
           width: 35,
-          click: function() {
-            $$('add_root_window').show();
-          }
+          popup: 'entity_tree__new_root_popup',
+//          click: function() {
+//            $$('add_root_window').show();
+//          }
         },
-        { view: 'button',
-          type: 'icon',
-          icon: 'cloud-upload',
-          //hidden: true,
-          id: 'IMPORT_ROOT_LABEL', label: STRINGS.IMPORT_ROOT_LABEL,
-          width: 35,
-          click: function() {
-            $('#import_data_modal').modal('show');
-          }
-        },
+//        { view: 'button',
+//          type: 'icon',
+//          icon: 'cloud-upload',
+//          //hidden: true,
+//          id: 'IMPORT_ROOT_LABEL', label: STRINGS.IMPORT_ROOT_LABEL,
+//          width: 35,
+//          click: function() {
+//            $('#import_data_modal').modal('show');
+//          }
+//        },
+        
         // { view: 'button',
         //   width: 35,
         //   type: 'iconButton',

@@ -408,6 +408,9 @@ UI = {
     webix.ui(UILayout.popups.fieldIndexed);
     webix.ui(UILayout.popups.fieldType);
     webix.ui(UILayout.popups.searchScope);
+    webix.ui(UILayout.popups.newRoot);
+    webix.ui(UILayout.popups.newEntity);
+    webix.ui(UILayout.popups.newRootVersion);
 
 
     webix.ui(UILayout.windows.editScript);

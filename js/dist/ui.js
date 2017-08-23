@@ -2868,20 +2868,20 @@ UILayout.popups.fieldIndexed = {
 UILayout.popups.fieldType = {
   view: 'popup',
   id: 'entity_form__field_type_popup',
-    css: 'entity_form__field_type_popup',
+  css: 'entity_form__field_type_popup',
   width: 130,
   body:{
     view: 'list',
-        id: 'entity_form__field_type_popup_list',
-        class: 'entity_form__field_type_popup_list',
-        borderless: true,
+    id: 'entity_form__field_type_popup_list',
+    class: 'entity_form__field_type_popup_list',
+    borderless: true,
     data:[
           { id: 's', value: 'String', icon: 'commenting' },
           { id: 'j', value: 'Text', icon: 'align-justify' },
           { id: 'i', value: 'Integer', icon: 'italic' },
           { id: 'r', value: 'Float', icon: 'calculator'  },
           { id: 'u', value: 'URL', icon: 'link' },
-          { id: 'w', value: 'Secret', icon: 'lock' },
+          { id: 'w', value: 'Secret', icon: 'lock' }
 
           // { id: 'b', value: 'Boolean', icon: 'check-square-o' },
           // { id: 'd', value: 'Date', icon: 'calendar-o' },
@@ -2980,6 +2980,122 @@ UILayout.popups.searchScope = {
       }
     }
   }
+};
+
+UILayout.popups.newEntity = {
+	view: 'popup',
+	id: 'entity_tree__new_entity_popup',
+  css: 'entity_tree__new_entity_popup',
+	width: 250,
+	body: {
+		view: 'list',
+    id: 'entity_tree__new_entity_list',
+    class: 'entity_tree__new_entity_list',
+    borderless: true,
+		data: [
+      { id: 'new_entity', value: 'New Entity', icon: 'file-o' },
+      { id: 'new_resource', value: 'New Resource', icon: 'diamond' },
+      { id: 'new_task', value: 'New Task', icon: 'file-code-o' },
+      { id: 'new_proto', value: 'New Prototype', icon: 'cube' },
+      { id: 'import_wizard', value: 'Import Entity Wizard' },
+      { id: 'import_csv', value: 'Import Entity from CSV As Is' }
+		],
+		datatype: 'json',
+		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
+		autoheight: true,
+		select: true,
+    on: {
+      onItemClick: function(newv) {
+        switch (newv) {
+          case 'new_entity':
+            break;
+          case 'new_resource':
+            break;
+          case 'new_task':
+            break;
+          case 'new_entity':
+            break;
+          case 'new_proto':
+            break;
+          case 'import_wizard':
+            break;
+          case 'import_csv':
+            break;
+        }
+      }
+    }
+	}
+};
+
+UILayout.popups.newRootVersion = {
+	view: 'popup',
+	id: 'entity_tree__new_root_version_popup',
+  css: 'entity_tree__new_root_version_popup',
+	width: 270,
+	body: {
+		view: 'list',
+    id: 'entity_tree__new_root_version_list',
+    class: 'entity_tree__new_root_version_list',
+    borderless: true,
+		data: [
+      { id: 'new_version', value: 'New Empty Version' },
+      { id: 'copy_version', value: 'New Version as Copy of Current' },
+      { id: 'import_version', value: 'Import New Version Wizard' },
+      { id: 'import_version_csv', value: 'Import New Version from CSV As Is' }
+		],
+		datatype: 'json',
+//		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
+		autoheight: true,
+		select: true,
+    on: {
+      onItemClick: function(newv) {
+        switch (newv) {
+          case 'new_version':
+            break;
+          case 'copy_version':
+            break;
+          case 'import_version':
+            break;
+          case 'import_version_csv':
+            break;
+        }
+      }
+    }
+	}
+};
+
+UILayout.popups.newRoot = {
+	view: 'popup',
+	id: 'entity_tree__new_root_popup',
+  css: 'entity_tree__new_root_popup',
+	width: 220,
+	body: {
+		view: 'list',
+    id: 'entity_tree__new_root_list',
+    class: 'entity_tree__new_root_list',
+    borderless: true,
+		data: [
+      { id: 'new_root', value: 'New Empty Root' },
+      { id: 'import_wizard', value: 'Import Root Wizard' },
+      { id: 'import_csv', value: 'Import Root from CSV As Is' }
+		],
+		datatype: 'json',
+//		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
+		autoheight: true,
+		select: true,
+    on: {
+      onItemClick: function(newv) {
+        switch (newv) {
+          case 'new_root':
+            break;
+          case 'import_wizard':
+            break;
+          case 'import_csv':
+            break;
+        }
+      }
+    }
+	}
 };
 
 UILayout.sideMenu =
@@ -3153,20 +3269,22 @@ UILayout.entityTree =
           id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
           hidden: true,
           width: 35,
-          click: function() {
-            $$('add_root_window').show();
-          }
+          popup: 'entity_tree__new_root_popup',
+//          click: function() {
+//            $$('add_root_window').show();
+//          }
         },
-        { view: 'button',
-          type: 'icon',
-          icon: 'cloud-upload',
-          //hidden: true,
-          id: 'IMPORT_ROOT_LABEL', label: STRINGS.IMPORT_ROOT_LABEL,
-          width: 35,
-          click: function() {
-            $('#import_data_modal').modal('show');
-          }
-        },
+//        { view: 'button',
+//          type: 'icon',
+//          icon: 'cloud-upload',
+//          //hidden: true,
+//          id: 'IMPORT_ROOT_LABEL', label: STRINGS.IMPORT_ROOT_LABEL,
+//          width: 35,
+//          click: function() {
+//            $('#import_data_modal').modal('show');
+//          }
+//        },
+        
         // { view: 'button',
         //   width: 35,
         //   type: 'iconButton',
@@ -3290,27 +3408,29 @@ UILayout.entityList =
           icon: 'plus',
           id: 'ADD_ENTITY_LABEL', label: STRINGS.ADD_ENTITY,
           width: 35,
-          click: function() {
-            switch (UIHelper.getEntityTypeByPath(Identity.dataFromId(UI.entityTree.getCurrentId()).path)) {
-              case 'resources':
-                $$('add_resource_window').show();
-                break;
-              default:
-                $$('add_entity_window').show();
-                break;
-            }
-          }
+          popup: 'entity_tree__new_entity_popup',
+//          click: function() {
+//            switch (UIHelper.getEntityTypeByPath(Identity.dataFromId(UI.entityTree.getCurrentId()).path)) {
+//              case 'resources':
+//                $$('add_resource_window').show();
+//                break;
+//              default:
+//                $$('add_entity_window').show();
+//                break;
+//            }
+//          }
         },
         { view: 'button',
           type: 'icon',
-          icon: 'cloud-upload',
+          icon: 'copy',
           //hidden: true,
           id: 'IMPORT_ENTITY_LABEL', label: STRINGS.IMPORT_ENTITY_LABEL,
           width: 35,
-          click: function() {
-            openRefineImportEntity = Identity.dataFromId(UI.entityTree.getCurrentId());
-            $('#import_data_modal').modal('show');
-          }
+          popup: 'entity_tree__new_root_version_popup',
+//          click: function() {
+//            openRefineImportEntity = Identity.dataFromId(UI.entityTree.getCurrentId());
+//            $('#import_data_modal').modal('show');
+//          }
         },
         { view: 'search',
           id: 'entity_list__search',
@@ -4091,6 +4211,9 @@ UI = {
     webix.ui(UILayout.popups.fieldIndexed);
     webix.ui(UILayout.popups.fieldType);
     webix.ui(UILayout.popups.searchScope);
+    webix.ui(UILayout.popups.newRoot);
+    webix.ui(UILayout.popups.newEntity);
+    webix.ui(UILayout.popups.newRootVersion);
 
 
     webix.ui(UILayout.windows.editScript);

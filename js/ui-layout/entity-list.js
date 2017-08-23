@@ -18,27 +18,29 @@ UILayout.entityList =
           icon: 'plus',
           id: 'ADD_ENTITY_LABEL', label: STRINGS.ADD_ENTITY,
           width: 35,
-          click: function() {
-            switch (UIHelper.getEntityTypeByPath(Identity.dataFromId(UI.entityTree.getCurrentId()).path)) {
-              case 'resources':
-                $$('add_resource_window').show();
-                break;
-              default:
-                $$('add_entity_window').show();
-                break;
-            }
-          }
+          popup: 'entity_tree__new_entity_popup',
+//          click: function() {
+//            switch (UIHelper.getEntityTypeByPath(Identity.dataFromId(UI.entityTree.getCurrentId()).path)) {
+//              case 'resources':
+//                $$('add_resource_window').show();
+//                break;
+//              default:
+//                $$('add_entity_window').show();
+//                break;
+//            }
+//          }
         },
         { view: 'button',
           type: 'icon',
-          icon: 'cloud-upload',
+          icon: 'copy',
           //hidden: true,
           id: 'IMPORT_ENTITY_LABEL', label: STRINGS.IMPORT_ENTITY_LABEL,
           width: 35,
-          click: function() {
-            openRefineImportEntity = Identity.dataFromId(UI.entityTree.getCurrentId());
-            $('#import_data_modal').modal('show');
-          }
+          popup: 'entity_tree__new_root_version_popup',
+//          click: function() {
+//            openRefineImportEntity = Identity.dataFromId(UI.entityTree.getCurrentId());
+//            $('#import_data_modal').modal('show');
+//          }
         },
         { view: 'search',
           id: 'entity_list__search',
