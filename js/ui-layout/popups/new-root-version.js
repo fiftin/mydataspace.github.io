@@ -10,7 +10,7 @@ UILayout.popups.newRootVersion = {
     borderless: true,
 		data: [
       { id: 'new_version', value: 'New Empty Version' },
-      { id: 'copy_version', value: 'New Version as Copy of Current' },
+//      { id: 'copy_version', value: 'Clone Current Version' },
       { id: 'import_version', value: 'Import New Version Wizard' },
       { id: 'import_version_csv', value: 'Import New Version from CSV As Is' }
 		],
