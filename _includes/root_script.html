@@ -28,6 +28,27 @@
       VIEW_TAB_EXPLORE_LABEL: ''
     };
 
+
+    /**
+     * Add JSON-LD for Google Search Engine
+     * @param {Object} data - Data receviced for current root from MyDataSpace backend.
+     */
+    function addJsonLD(data) {
+      var script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.text = JSON.stringify({
+        "@id": "https://myda.space/" + data.root,
+        "@context": "http://schema.org",
+        "@type": "Root",
+        "name": data.root
+        "description": data.fields.description,
+        "tags": data.fields.tags,
+        "readme": data.fields.readme
+      });
+      document.querySelector('head').appendChild(el);
+    }
+
+
     //
     // Save view button
     document.getElementById('new_look_modal_button').addEventListener('click', function() {
@@ -704,6 +725,7 @@
     // Load data for root and render it on the page
     Mydataspace.entities.request('entities.get', DATA).then(function(result) {
       setRootView(result);
+      addJsonLD(result);
     });
 
     //
