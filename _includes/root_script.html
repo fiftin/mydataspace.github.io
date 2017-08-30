@@ -47,6 +47,21 @@
       });
       document.querySelector('head').appendChild(script);
     }
+    
+    function loadJsonLD() {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState === XMLHttpRequest.DONE ) {
+          if (xmlhttp.status === 200) {
+            addJsonLD(JSON.parse(xmlhttp.responseText));
+          }
+        }
+      };
+      xmlhttp.open('GET', 'https://api.mydataspace.net/v1/entities/get?root=' + DATA.root + '&path=', true);
+      xmlhttp.send();
+    }
+    
+    loadJsonLD();
 
 
     //
@@ -725,7 +740,6 @@
     // Load data for root and render it on the page
     Mydataspace.entities.request('entities.get', DATA).then(function(result) {
       setRootView(result);
-      addJsonLD(result);
     });
 
     //
