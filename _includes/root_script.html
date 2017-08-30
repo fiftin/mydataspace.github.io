@@ -37,13 +37,13 @@
       var script = document.createElement('script');
       script.type = 'application/ld+json';
       script.text = JSON.stringify({
-        "@id": "https://myda.space/" + data.root,
         "@context": "http://schema.org",
-        "@type": "Root",
+        "@id": "https://myda.space/" + data.root,
+        "@type": "Dataset",
         "name":  MDSCommon.findValueByName(data.fields, 'name'),
         "description": MDSCommon.findValueByName(data.fields, 'description'),
-        "tags": MDSCommon.findValueByName(data.fields, 'tags'),
-        "readme": MDSCommon.findValueByName(data.fields, 'readme')
+        "keywords": MDSCommon.findValueByName(data.fields, 'tags'),
+        //"readme": MDSCommon.findValueByName(data.fields, 'readme')
       });
       document.querySelector('head').appendChild(script);
     }
