@@ -2986,7 +2986,7 @@ UILayout.popups.newEntity = {
 	view: 'popup',
 	id: 'entity_tree__new_entity_popup',
   css: 'entity_tree__new_entity_popup',
-	width: 250,
+	width: 190,
 	body: {
 		view: 'list',
     id: 'entity_tree__new_entity_list',
@@ -2994,11 +2994,11 @@ UILayout.popups.newEntity = {
     borderless: true,
 		data: [
       { id: 'new_entity', value: 'New Entity', icon: 'file-o' },
+      { id: 'import_wizard', value: 'Import Entity' },
       { id: 'new_resource', value: 'New Resource', icon: 'diamond' },
       { id: 'new_task', value: 'New Task', icon: 'file-code-o' },
       { id: 'new_proto', value: 'New Prototype', icon: 'cube' },
-      { id: 'import_wizard', value: 'Import Entity Wizard' },
-      { id: 'import_csv', value: 'Import Entity from CSV As Is' }
+//      { id: 'import_csv', value: 'Import Entity from CSV As Is' }
 		],
 		datatype: 'json',
 		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
@@ -3031,7 +3031,7 @@ UILayout.popups.newRootVersion = {
 	view: 'popup',
 	id: 'entity_tree__new_root_version_popup',
   css: 'entity_tree__new_root_version_popup',
-	width: 270,
+	width: 190,
 	body: {
 		view: 'list',
     id: 'entity_tree__new_root_version_list',
@@ -3040,8 +3040,8 @@ UILayout.popups.newRootVersion = {
 		data: [
       { id: 'new_version', value: 'New Empty Version' },
 //      { id: 'copy_version', value: 'Clone Current Version' },
-      { id: 'import_version', value: 'Import New Version Wizard' },
-      { id: 'import_version_csv', value: 'Import New Version from CSV As Is' }
+      { id: 'import_version', value: 'Import to New Version' },
+//      { id: 'import_version_csv', value: 'Import New Version from CSV As Is' }
 		],
 		datatype: 'json',
 //		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
@@ -3068,7 +3068,7 @@ UILayout.popups.newRoot = {
 	view: 'popup',
 	id: 'entity_tree__new_root_popup',
   css: 'entity_tree__new_root_popup',
-	width: 220,
+	width: 150,
 	body: {
 		view: 'list',
     id: 'entity_tree__new_root_list',
@@ -3076,8 +3076,8 @@ UILayout.popups.newRoot = {
     borderless: true,
 		data: [
       { id: 'new_root', value: 'New Empty Root' },
-      { id: 'import_wizard', value: 'Import Root Wizard' },
-      { id: 'import_csv', value: 'Import Root from CSV As Is' }
+      { id: 'import_wizard', value: 'Import Root' },
+//      { id: 'import_csv', value: 'Import Root from CSV As Is' }
 		],
 		datatype: 'json',
 //		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
@@ -3258,7 +3258,7 @@ UILayout.entityTree =
           type: 'icon',
           icon: 'refresh',
           id: 'REFRESH_LABEL_2', label: STRINGS.REFRESH,
-          width: 35,
+          width: 85,
           click: function() {
             UI.entityTree.refresh();
           }
@@ -3268,7 +3268,7 @@ UILayout.entityTree =
           icon: 'plus',
           id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
           hidden: true,
-          width: 35,
+          width: 110,
           popup: 'entity_tree__new_root_popup',
 //          click: function() {
 //            $$('add_root_window').show();
@@ -3398,39 +3398,22 @@ UILayout.entityList =
           type: 'icon',
           icon: 'refresh',
           id: 'REFRESH_LABEL', label: STRINGS.REFRESH,
-          width: 35,
-          click: function() {
-            UI.entityList.refreshData();
-          }
+          width: 85,
+          click: function() { UI.entityList.refreshData(); }
         },
         { view: 'button',
           type: 'icon',
           icon: 'plus',
           id: 'ADD_ENTITY_LABEL', label: STRINGS.ADD_ENTITY,
-          width: 35,
+          width: 75,
           popup: 'entity_tree__new_entity_popup',
-//          click: function() {
-//            switch (UIHelper.getEntityTypeByPath(Identity.dataFromId(UI.entityTree.getCurrentId()).path)) {
-//              case 'resources':
-//                $$('add_resource_window').show();
-//                break;
-//              default:
-//                $$('add_entity_window').show();
-//                break;
-//            }
-//          }
         },
         { view: 'button',
           type: 'icon',
-          icon: 'copy',
-          //hidden: true,
-          id: 'IMPORT_ENTITY_LABEL', label: STRINGS.IMPORT_ENTITY_LABEL,
-          width: 35,
+          icon: 'clone',
+          id: 'NEW_VERSION_LABEL', label: STRINGS.NEW_VERSION_LABEL,
+          width: 120,
           popup: 'entity_tree__new_root_version_popup',
-//          click: function() {
-//            openRefineImportEntity = Identity.dataFromId(UI.entityTree.getCurrentId());
-//            $('#import_data_modal').modal('show');
-//          }
         },
         { view: 'search',
           id: 'entity_list__search',

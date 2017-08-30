@@ -8,39 +8,22 @@ UILayout.entityList =
           type: 'icon',
           icon: 'refresh',
           id: 'REFRESH_LABEL', label: STRINGS.REFRESH,
-          width: 35,
-          click: function() {
-            UI.entityList.refreshData();
-          }
+          width: 85,
+          click: function() { UI.entityList.refreshData(); }
         },
         { view: 'button',
           type: 'icon',
           icon: 'plus',
           id: 'ADD_ENTITY_LABEL', label: STRINGS.ADD_ENTITY,
-          width: 35,
+          width: 75,
           popup: 'entity_tree__new_entity_popup',
-//          click: function() {
-//            switch (UIHelper.getEntityTypeByPath(Identity.dataFromId(UI.entityTree.getCurrentId()).path)) {
-//              case 'resources':
-//                $$('add_resource_window').show();
-//                break;
-//              default:
-//                $$('add_entity_window').show();
-//                break;
-//            }
-//          }
         },
         { view: 'button',
           type: 'icon',
-          icon: 'copy',
-          //hidden: true,
-          id: 'IMPORT_ENTITY_LABEL', label: STRINGS.IMPORT_ENTITY_LABEL,
-          width: 35,
+          icon: 'clone',
+          id: 'NEW_VERSION_LABEL', label: STRINGS.NEW_VERSION_LABEL,
+          width: 120,
           popup: 'entity_tree__new_root_version_popup',
-//          click: function() {
-//            openRefineImportEntity = Identity.dataFromId(UI.entityTree.getCurrentId());
-//            $('#import_data_modal').modal('show');
-//          }
         },
         { view: 'search',
           id: 'entity_list__search',

@@ -9,7 +9,7 @@ UILayout.entityTree =
           type: 'icon',
           icon: 'refresh',
           id: 'REFRESH_LABEL_2', label: STRINGS.REFRESH,
-          width: 35,
+          width: 85,
           click: function() {
             UI.entityTree.refresh();
           }
@@ -19,7 +19,7 @@ UILayout.entityTree =
           icon: 'plus',
           id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
           hidden: true,
-          width: 35,
+          width: 110,
           popup: 'entity_tree__new_root_popup',
 //          click: function() {
 //            $$('add_root_window').show();

@@ -8,7 +8,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     // SAVE_ENTITY: 'Save Entity',
     RUN_SCRIPT: 'Debug',
     ONLY_READ: 'Only Read',
-    ADD_ENTITY: 'New Entity',
+    ADD_ENTITY: 'New...',
     SEARCH: 'Filter...',
     DELETE_ENTITY: 'Delete Entity',
     DELETE_ENTITY_SHORT: 'Delete',
@@ -95,7 +95,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     ROOT_AVATAR_BROWSE: 'Browse',
     ROOT_AVATAR_REMOVE: 'Remove',
     SHOW_ACCESS_KEY: 'Show access key',
-
+    NEW_VERSION_LABEL: 'New Versoin',
 
     created: 'created',
     ago: 'ago',
@@ -162,7 +162,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     // SAVE_ENTITY: 'Сохранить элемент',
     RUN_SCRIPT: 'Отл.',
     ONLY_READ: 'Только читать',
-    ADD_ENTITY: 'Новый элем.',
+    ADD_ENTITY: 'Нов...',
     SEARCH: 'Фильтр...',
     DELETE_ENTITY: 'Удалить элемент',
     DELETE_ENTITY_SHORT: 'Удал.',
@@ -252,6 +252,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     ROOT_AVATAR_BROWSE: 'Обзор',
     ROOT_AVATAR_REMOVE: 'Удалить',
     SHOW_ACCESS_KEY: 'Показать ключ доступа',
+    NEW_VERSION_LABEL: 'Нов. версия',
 
 
 
