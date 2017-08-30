@@ -3008,20 +3008,25 @@ UILayout.popups.newEntity = {
       onItemClick: function(newv) {
         switch (newv) {
           case 'new_entity':
+            $$('add_entity_window').show();
             break;
           case 'new_resource':
+            $$('add_resource_window').show();
             break;
           case 'new_task':
-            break;
-          case 'new_entity':
+            $$('add_entity_window').show();
             break;
           case 'new_proto':
+            $$('add_entity_window').show();
             break;
           case 'import_wizard':
+            openRefineImportEntity = Identity.dataFromId(UI.entityTree.getCurrentId());
+            $('#import_data_modal').modal('show');
             break;
           case 'import_csv':
             break;
         }
+        $$('entity_tree__new_entity_popup').hide();
       }
     }
 	}
@@ -3059,6 +3064,7 @@ UILayout.popups.newRootVersion = {
           case 'import_version_csv':
             break;
         }
+        $$('entity_tree__new_root_version_popup').hide();
       }
     }
 	}
@@ -3087,12 +3093,15 @@ UILayout.popups.newRoot = {
       onItemClick: function(newv) {
         switch (newv) {
           case 'new_root':
+            $$('add_root_window').show();
             break;
           case 'import_wizard':
+            $('#import_data_modal').modal('show');
             break;
           case 'import_csv':
             break;
         }
+        $$('entity_tree__new_root_popup').hide();
       }
     }
 	}
@@ -3403,17 +3412,20 @@ UILayout.entityList =
         },
         { view: 'button',
           type: 'icon',
+          icon: 'clone',
+          id: 'NEW_VERSION_LABEL', label: STRINGS.NEW_VERSION_LABEL,
+          width: 120,
+          click: function() {
+            alert('Version 10 created');
+          }
+          //popup: 'entity_tree__new_root_version_popup',
+        },
+        { view: 'button',
+          type: 'icon',
           icon: 'plus',
           id: 'ADD_ENTITY_LABEL', label: STRINGS.ADD_ENTITY,
           width: 75,
           popup: 'entity_tree__new_entity_popup',
-        },
-        { view: 'button',
-          type: 'icon',
-          icon: 'clone',
-          id: 'NEW_VERSION_LABEL', label: STRINGS.NEW_VERSION_LABEL,
-          width: 120,
-          popup: 'entity_tree__new_root_version_popup',
         },
         { view: 'search',
           id: 'entity_list__search',

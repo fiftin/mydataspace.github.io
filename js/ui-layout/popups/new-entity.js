@@ -24,20 +24,25 @@ UILayout.popups.newEntity = {
       onItemClick: function(newv) {
         switch (newv) {
           case 'new_entity':
+            $$('add_entity_window').show();
             break;
           case 'new_resource':
+            $$('add_resource_window').show();
             break;
           case 'new_task':
-            break;
-          case 'new_entity':
+            $$('add_entity_window').show();
             break;
           case 'new_proto':
+            $$('add_entity_window').show();
             break;
           case 'import_wizard':
+            openRefineImportEntity = Identity.dataFromId(UI.entityTree.getCurrentId());
+            $('#import_data_modal').modal('show');
             break;
           case 'import_csv':
             break;
         }
+        $$('entity_tree__new_entity_popup').hide();
       }
     }
 	}

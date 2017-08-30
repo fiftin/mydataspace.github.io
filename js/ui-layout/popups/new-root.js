@@ -21,12 +21,15 @@ UILayout.popups.newRoot = {
       onItemClick: function(newv) {
         switch (newv) {
           case 'new_root':
+            $$('add_root_window').show();
             break;
           case 'import_wizard':
+            $('#import_data_modal').modal('show');
             break;
           case 'import_csv':
             break;
         }
+        $$('entity_tree__new_root_popup').hide();
       }
     }
 	}

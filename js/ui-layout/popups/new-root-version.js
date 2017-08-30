@@ -30,6 +30,7 @@ UILayout.popups.newRootVersion = {
           case 'import_version_csv':
             break;
         }
+        $$('entity_tree__new_root_version_popup').hide();
       }
     }
 	}
