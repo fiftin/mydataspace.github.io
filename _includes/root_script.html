@@ -68,24 +68,10 @@
         }
         query += k + '=' + DATA[k];
       }
-      xmlhttp.open('GET', 'https://localhost:8443/v1/entities/get?' + query, true);
-      //xmlhttp.open('GET', 'https://api.mydataspace.net/v1/entities/get?' + query, true);
+      xmlhttp.open('GET', '{{ api_url }}/v1/entities/get?' + query, true);
       xmlhttp.send();
     }
 
-//    function loadJsonLD() {
-//      var xmlhttp = new XMLHttpRequest();
-//      xmlhttp.onreadystatechange = function() {
-//        if (xmlhttp.readyState === XMLHttpRequest.DONE ) {
-//          if (xmlhttp.status === 200) {
-//            addJsonLD(JSON.parse(xmlhttp.responseText));
-//          }
-//        }
-//      };
-//      xmlhttp.open('GET', 'https://api.mydataspace.net/v1/entities/get?root=' + DATA.root + '&path=', true);
-//      xmlhttp.send();
-//    }
-//    loadJsonLD();
     loadEntityData(DATA, function(result) {
       addJsonLD(result);
       setRootView(result);
