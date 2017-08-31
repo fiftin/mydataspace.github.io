@@ -3056,6 +3056,15 @@ UILayout.popups.newRootVersion = {
       onItemClick: function(newv) {
         switch (newv) {
           case 'new_version':
+            Mydataspace.entities.create({
+              root: UI.entityTree.currentId,
+              path: '',
+              fields: [
+                { name: '$newVersion', value: true }
+              ]
+            }).then(function(data) {
+              alert('New version created');
+            });
             break;
           case 'copy_version':
             break;
