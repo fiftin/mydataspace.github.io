@@ -11,7 +11,7 @@
     }
 
     var DATA = {
-      root: results[1] === 'root' ? 'fiftin' : results[1],
+      root: results[1] === 'root' ? '11111' : results[1],
       path: '',
       children: true
     };
@@ -47,22 +47,49 @@
       });
       document.querySelector('head').appendChild(script);
     }
-    
-    function loadJsonLD() {
+
+
+    function loadEntityData(requestData, success, fail) {
       var xmlhttp = new XMLHttpRequest();
       xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState === XMLHttpRequest.DONE ) {
           if (xmlhttp.status === 200) {
-            addJsonLD(JSON.parse(xmlhttp.responseText));
+            var data = JSON.parse(xmlhttp.responseText);
+            success(data);
+          } else {
+            fail();
           }
         }
       };
-      xmlhttp.open('GET', 'https://api.mydataspace.net/v1/entities/get?root=' + DATA.root + '&path=', true);
+      var query = '';
+      for (var k in DATA) {
+        if (query !== '') {
+          query += '&';
+        }
+        query += k + '=' + DATA[k];
+      }
+      xmlhttp.open('GET', 'https://localhost:8443/v1/entities/get?' + query, true);
+      //xmlhttp.open('GET', 'https://api.mydataspace.net/v1/entities/get?' + query, true);
       xmlhttp.send();
     }
-    
-    loadJsonLD();
 
+//    function loadJsonLD() {
+//      var xmlhttp = new XMLHttpRequest();
+//      xmlhttp.onreadystatechange = function() {
+//        if (xmlhttp.readyState === XMLHttpRequest.DONE ) {
+//          if (xmlhttp.status === 200) {
+//            addJsonLD(JSON.parse(xmlhttp.responseText));
+//          }
+//        }
+//      };
+//      xmlhttp.open('GET', 'https://api.mydataspace.net/v1/entities/get?root=' + DATA.root + '&path=', true);
+//      xmlhttp.send();
+//    }
+//    loadJsonLD();
+    loadEntityData(DATA, function(result) {
+      addJsonLD(result);
+      setRootView(result);
+    }, function() {});
 
     //
     // Save view button
@@ -738,9 +765,9 @@
     }
 
     // Load data for root and render it on the page
-    Mydataspace.entities.request('entities.get', DATA).then(function(result) {
-      setRootView(result);
-    });
+    //Mydataspace.entities.request('entities.get', DATA).then(function(result) {
+    //  setRootView(result);
+    //});
 
     //
     // Likes & comments
