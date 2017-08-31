@@ -61,11 +61,13 @@ EntityTree.prototype.onCreate = function(data) {
   var parentId = Identity.parentId(Identity.idFromData(data));
   var entity = Identity.entityFromData(data);
   if (parentId === 'root') {
+    $$('entity_tree').remove(entity.id);
     $$('entity_tree').add(entity, 0);
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
       this.setChildren(entity.id, entity.data);
     }
     $$('entity_tree').select(entity.id);
+    UI.entityList.refreshData();
   } else if (!MDSCommon.isNull($$('entity_tree').getItem(parentId)) &&
     MDSCommon.isNull($$('entity_tree').getItem(Identity.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)))) {
     $$('entity_tree').add(entity, 0, parentId);

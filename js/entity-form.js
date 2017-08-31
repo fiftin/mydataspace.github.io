@@ -247,21 +247,21 @@ EntityForm.prototype.setRootView = function(data) {
     document.getElementById('view__counters_comments_count').innerText =
       MDSCommon.findValueByName(data.fields, 'comments');
 
-    //for (var i in data.children) {
-    //  var child = data.children[i];
-    //  switch (child.path) {
-    //    case 'likes':
-    //      document.getElementById('view__counters_likes_count').innerText = child.numberOfChildren;
-    //      break;
-    //    case 'comments':
-    //      document.getElementById('view__counters_comments_count').innerText = child.numberOfChildren;
-    //      document.getElementById('view__tabs_comments_count').innerText = child.numberOfChildren;
-    //      break;
-    //    case 'views':
-    //      document.getElementById('view__tabs_views_count').innerText = child.numberOfChildren;
-    //      break;
-    //  }
-    //}
+    for (var i in data.children) {
+     var child = data.children[i];
+     switch (child.path) {
+       case 'likes':
+         document.getElementById('view__counters_likes_count').innerText = child.numberOfChildren;
+         break;
+       case 'comments':
+         document.getElementById('view__counters_comments_count').innerText = child.numberOfChildren;
+         document.getElementById('view__tabs_comments_count').innerText = child.numberOfChildren;
+         break;
+       case 'views':
+         document.getElementById('view__tabs_views_count').innerText = child.numberOfChildren;
+         break;
+     }
+    }
 
     if (data.root === 'nothing' || data.root === 'notfound') {
       document.getElementById('view__counters').style.display = 'none';

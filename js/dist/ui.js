@@ -931,21 +931,21 @@ EntityForm.prototype.setRootView = function(data) {
     document.getElementById('view__counters_comments_count').innerText =
       MDSCommon.findValueByName(data.fields, 'comments');
 
-    //for (var i in data.children) {
-    //  var child = data.children[i];
-    //  switch (child.path) {
-    //    case 'likes':
-    //      document.getElementById('view__counters_likes_count').innerText = child.numberOfChildren;
-    //      break;
-    //    case 'comments':
-    //      document.getElementById('view__counters_comments_count').innerText = child.numberOfChildren;
-    //      document.getElementById('view__tabs_comments_count').innerText = child.numberOfChildren;
-    //      break;
-    //    case 'views':
-    //      document.getElementById('view__tabs_views_count').innerText = child.numberOfChildren;
-    //      break;
-    //  }
-    //}
+    for (var i in data.children) {
+     var child = data.children[i];
+     switch (child.path) {
+       case 'likes':
+         document.getElementById('view__counters_likes_count').innerText = child.numberOfChildren;
+         break;
+       case 'comments':
+         document.getElementById('view__counters_comments_count').innerText = child.numberOfChildren;
+         document.getElementById('view__tabs_comments_count').innerText = child.numberOfChildren;
+         break;
+       case 'views':
+         document.getElementById('view__tabs_views_count').innerText = child.numberOfChildren;
+         break;
+     }
+    }
 
     if (data.root === 'nothing' || data.root === 'notfound') {
       document.getElementById('view__counters').style.display = 'none';
@@ -1982,11 +1982,13 @@ EntityTree.prototype.onCreate = function(data) {
   var parentId = Identity.parentId(Identity.idFromData(data));
   var entity = Identity.entityFromData(data);
   if (parentId === 'root') {
+    $$('entity_tree').remove(entity.id);
     $$('entity_tree').add(entity, 0);
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
       this.setChildren(entity.id, entity.data);
     }
     $$('entity_tree').select(entity.id);
+    UI.entityList.refreshData();
   } else if (!MDSCommon.isNull($$('entity_tree').getItem(parentId)) &&
     MDSCommon.isNull($$('entity_tree').getItem(Identity.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)))) {
     $$('entity_tree').add(entity, 0, parentId);
@@ -3059,10 +3061,7 @@ UILayout.popups.newRootVersion = {
             Mydataspace.entities.create({
               root: UI.entityTree.currentId,
               path: '',
-              fields: [
-                { name: '$newVersion', value: true }
-              ]
-            }).then(function(data) {
+            }, [{ name: '$newVersion', value: true }]).then(function(data) {
               alert('New version created');
             });
             break;
@@ -3425,7 +3424,13 @@ UILayout.entityList =
           id: 'NEW_VERSION_LABEL', label: STRINGS.NEW_VERSION_LABEL,
           width: 120,
           click: function() {
-            alert('Version 10 created');
+            Mydataspace.entities.create({
+              root: UI.entityTree.currentId,
+              path: '',
+              fields: [{ name: '$newVersion', value: true }]
+            }).then(function(data) {
+              alert('New version created');
+            });
           }
           //popup: 'entity_tree__new_root_version_popup',
         },

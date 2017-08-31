@@ -25,10 +25,7 @@ UILayout.popups.newRootVersion = {
             Mydataspace.entities.create({
               root: UI.entityTree.currentId,
               path: '',
-              fields: [
-                { name: '$newVersion', value: true }
-              ]
-            }).then(function(data) {
+            }, [{ name: '$newVersion', value: true }]).then(function(data) {
               alert('New version created');
             });
             break;
