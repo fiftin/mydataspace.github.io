@@ -1,7 +1,7 @@
 UILayout.popups.newRoot = {
 	view: 'popup',
 	id: 'entity_tree__new_root_popup',
-  css: 'entity_tree__new_root_popup',
+  css: 'admin_context_menu entity_tree__new_root_popup',
 	width: 150,
 	body: {
 		view: 'list',

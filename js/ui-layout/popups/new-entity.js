@@ -1,7 +1,7 @@
 UILayout.popups.newEntity = {
 	view: 'popup',
 	id: 'entity_tree__new_entity_popup',
-  css: 'entity_tree__new_entity_popup',
+  css: 'admin_context_menu entity_tree__new_entity_popup',
 	width: 190,
 	body: {
 		view: 'list',

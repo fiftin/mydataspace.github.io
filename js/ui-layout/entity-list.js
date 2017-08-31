@@ -15,17 +15,8 @@ UILayout.entityList =
           type: 'icon',
           icon: 'clone',
           id: 'NEW_VERSION_LABEL', label: STRINGS.NEW_VERSION_LABEL,
-          width: 120,
-          click: function() {
-            Mydataspace.entities.create({
-              root: UI.entityTree.currentId,
-              path: '',
-              fields: [{ name: '$newVersion', value: true }]
-            }).then(function(data) {
-              alert('New version created');
-            });
-          }
-          //popup: 'entity_tree__new_root_version_popup',
+          width: 100,
+          popup: 'entity_tree__new_root_version_popup',
         },
         { view: 'button',
           type: 'icon',
