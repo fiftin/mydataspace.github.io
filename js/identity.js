@@ -86,5 +86,9 @@ var Identity = {
       }
     }
     return newItemData;
+  },
+
+  isRootId: function(id) {
+    return id.indexOf(':') < 0;
   }
 };

@@ -19,28 +19,17 @@ EntityForm.prototype.emitLoaded = function(data) {
 EntityForm.prototype.setEditing = function(editing) {
   this.editing = editing;
   $$('edit_script_window').hide();
+  var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(this.selectedId).path);
+
+  UIHelper.setVisible('EDIT_ENTITY_LABEL', !editing);
+  UIHelper.setVisible('RUN_SCRIPT_LABEL', editing && entityType === 'task');
+  UIHelper.setVisible(['SAVE_ENTITY_LABEL', 'CANCEL_ENTITY_LABEL', 'ADD_FIELD_LABEL'], editing);
+
   if (editing) {
-    $$('EDIT_ENTITY_LABEL').hide();
-    $$('SAVE_ENTITY_LABEL').show();
-    $$('CANCEL_ENTITY_LABEL').show();
-    // $$('REFRESH_ENTITY_LABEL').hide();
-    const  entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(this.selectedId).path);
-    if (entityType === 'task') {
-      $$('RUN_SCRIPT_LABEL').show();
-    } else {
-      $$('RUN_SCRIPT_LABEL').hide();
-    }
-    $$('ADD_FIELD_LABEL').show();
     webix.html.addCss($$('edit_script_window__toolbar').getNode(), 'entity_form__toolbar--edit');
     webix.html.addCss($$('entity_form__toolbar').getNode(), 'entity_form__toolbar--edit');
     $$('edit_script_window__editor').getEditor().setReadOnly(false);
   } else {
-    $$('EDIT_ENTITY_LABEL').show();
-    $$('SAVE_ENTITY_LABEL').hide();
-    $$('CANCEL_ENTITY_LABEL').hide();
-    $$('RUN_SCRIPT_LABEL').hide();
-    // $$('REFRESH_ENTITY_LABEL').show();
-    $$('ADD_FIELD_LABEL').hide();
     webix.html.removeCss($$('edit_script_window__toolbar').getNode(), 'entity_form__toolbar--edit');
     webix.html.removeCss($$('entity_form__toolbar').getNode(), 'entity_form__toolbar--edit');
     $$('edit_script_window__editor').getEditor().setReadOnly(true);

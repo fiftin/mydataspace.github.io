@@ -95,7 +95,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     ROOT_AVATAR_BROWSE: 'Browse',
     ROOT_AVATAR_REMOVE: 'Remove',
     SHOW_ACCESS_KEY: 'Show access key',
-    NEW_VERSION_LABEL: 'Versions',
+    NEW_VERSION: 'Versions',
 
     created: 'created',
     ago: 'ago',
@@ -180,7 +180,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     NO_ENTITY: 'Нет полей',
     ADD_ROOT: 'Нов. корень',
     ADD_FIELD: 'Нов. поле',
-    REFRESH: 'Обновить',
+    REFRESH: 'Обнов.',
     SAVE: 'Сохр.',
     SAVE_APP: 'Сохр.',
     REFRESH_APP: 'Обновить прил.',
@@ -252,7 +252,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     ROOT_AVATAR_BROWSE: 'Обзор',
     ROOT_AVATAR_REMOVE: 'Удалить',
     SHOW_ACCESS_KEY: 'Показать ключ доступа',
-    NEW_VERSION_LABEL: 'Версии',
+    NEW_VERSION: 'Версии',
 
 
 

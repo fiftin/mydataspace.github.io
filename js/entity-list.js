@@ -9,13 +9,14 @@ function EntityList() {
 
 }
 
+/**
+ * Hide/show toolbar buttons according passed state - readonly or not.
+ */
 EntityList.prototype.setReadOnly = function(isReadOnly) {
-  if (isReadOnly) {
-    $$('ADD_ENTITY_LABEL').hide();
-  } else {
-    $$('ADD_ENTITY_LABEL').show();
-  }
+  UIHelper.setVisible('ADD_ENTITY_LABEL', !isReadOnly);
+  UIHelper.setVisible('NEW_VERSION_LABEL', !isReadOnly && Identity.isRootId(this.getRootId()));
 };
+
 
 EntityList.prototype.onCreate = function(data) {
   var parentId = Identity.parentId(Identity.idFromData(data));
@@ -25,6 +26,7 @@ EntityList.prototype.onCreate = function(data) {
     $$('entity_list').select(entity.id);
   }
 };
+
 
 EntityList.prototype.changeItems = function(applyForData) {
   var nextId;
@@ -42,6 +44,10 @@ EntityList.prototype.changeItems = function(applyForData) {
   }
 };
 
+
+/**
+ * Listen delete/create/rename events to update items in list.
+ */
 EntityList.prototype.listen = function() {
   var self = this;
 
@@ -70,6 +76,10 @@ EntityList.prototype.listen = function() {
   });
 };
 
+
+/**
+ * Set Id of entity witch items displayed in list. This method reloading data.
+ */
 EntityList.prototype.setRootId = function(id) {
   if (this.rootId === id) {
     return;
@@ -88,26 +98,34 @@ EntityList.prototype.setRootId = function(id) {
       events: ['entities.rename.res']
     }));
   }
-  // var subscription = Identity.dataFromId(id);
-  // var childrenSubscription = Identity.dataFromId(id);
-  // childrenSubscription.path += '/*';
-  // Mydataspace.emit('entities.subscribe', subscription);
-  // Mydataspace.emit('entities.subscribe', childrenSubscription);
 
   this.refreshData();
 };
 
+
+/**
+ * Id of entity witch items displayed in list.
+ */
 EntityList.prototype.getRootId = function() {
   return this.rootId;
 };
 
+
+/**
+ * Set item selected in list.
+ */
 EntityList.prototype.setCurrentId = function(id) {
   this.currentId = id;
 };
 
+
+/**
+ * Get item selected in list.
+ */
 EntityList.prototype.getCurrentId = function() {
   return this.currentId;
 };
+
 
 /**
  * Reload data (from server) of entity list.
@@ -146,6 +164,7 @@ EntityList.prototype.refreshData = function() {
   }.bind(this), function(err) { UI.error(err); });
 };
 
+
 /**
  * Fills entity list by items from children array.
  *
@@ -163,6 +182,7 @@ EntityList.prototype.fill = function(parentEntityId, children, data) {
   $$('entity_list').select(parentEntityId);
 };
 
+
 /**
  * Creates new entity by data received from the 'New Entity' form.
  * @param formData data received from form by method getValues.
@@ -174,6 +194,7 @@ EntityList.prototype.createByFormData = function(formData) {
   data.othersCan = formData.othersCan;
   Mydataspace.emit('entities.create', data);
 };
+
 
 EntityList.prototype.addChildren = function(children) {
   var showMoreChildId =
@@ -195,6 +216,7 @@ EntityList.prototype.addChildren = function(children) {
   }
 };
 
+
 EntityList.prototype.showMore = function() {
   var self = this;
   var req = Identity.dataFromId(this.getRootId());
@@ -212,6 +234,7 @@ EntityList.prototype.showMore = function() {
     $$('entity_list').enable();
   });
 };
+
 
 /**
  * Calculates number of items of entity list.

@@ -224,6 +224,24 @@ UIHelper = {
     'likes',
     'processes'
   ],
+
+  setVisible: function(components, isVisible) {
+    if (!Array.isArray(components)) {
+      components = [components];
+    }
+    for (var i in components) {
+      var component = components[i];
+      if (typeof component === 'string') {
+        component = $$(component);
+      }
+      if (isVisible) {
+        component.show();
+      } else {
+        component.hide();
+      }
+    }
+  },
+
   /**
    * User can only view entities. All buttons for manipulations is hidden in
    * this mode.
@@ -563,6 +581,10 @@ var Identity = {
       }
     }
     return newItemData;
+  },
+
+  isRootId: function(id) {
+    return id.indexOf(':') < 0;
   }
 };
 
@@ -703,28 +725,17 @@ EntityForm.prototype.emitLoaded = function(data) {
 EntityForm.prototype.setEditing = function(editing) {
   this.editing = editing;
   $$('edit_script_window').hide();
+  var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(this.selectedId).path);
+
+  UIHelper.setVisible('EDIT_ENTITY_LABEL', !editing);
+  UIHelper.setVisible('RUN_SCRIPT_LABEL', editing && entityType === 'task');
+  UIHelper.setVisible(['SAVE_ENTITY_LABEL', 'CANCEL_ENTITY_LABEL', 'ADD_FIELD_LABEL'], editing);
+
   if (editing) {
-    $$('EDIT_ENTITY_LABEL').hide();
-    $$('SAVE_ENTITY_LABEL').show();
-    $$('CANCEL_ENTITY_LABEL').show();
-    // $$('REFRESH_ENTITY_LABEL').hide();
-    const  entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(this.selectedId).path);
-    if (entityType === 'task') {
-      $$('RUN_SCRIPT_LABEL').show();
-    } else {
-      $$('RUN_SCRIPT_LABEL').hide();
-    }
-    $$('ADD_FIELD_LABEL').show();
     webix.html.addCss($$('edit_script_window__toolbar').getNode(), 'entity_form__toolbar--edit');
     webix.html.addCss($$('entity_form__toolbar').getNode(), 'entity_form__toolbar--edit');
     $$('edit_script_window__editor').getEditor().setReadOnly(false);
   } else {
-    $$('EDIT_ENTITY_LABEL').show();
-    $$('SAVE_ENTITY_LABEL').hide();
-    $$('CANCEL_ENTITY_LABEL').hide();
-    $$('RUN_SCRIPT_LABEL').hide();
-    // $$('REFRESH_ENTITY_LABEL').show();
-    $$('ADD_FIELD_LABEL').hide();
     webix.html.removeCss($$('edit_script_window__toolbar').getNode(), 'entity_form__toolbar--edit');
     webix.html.removeCss($$('entity_form__toolbar').getNode(), 'entity_form__toolbar--edit');
     $$('edit_script_window__editor').getEditor().setReadOnly(true);
@@ -1702,13 +1713,14 @@ function EntityList() {
 
 }
 
+/**
+ * Hide/show toolbar buttons according passed state - readonly or not.
+ */
 EntityList.prototype.setReadOnly = function(isReadOnly) {
-  if (isReadOnly) {
-    $$('ADD_ENTITY_LABEL').hide();
-  } else {
-    $$('ADD_ENTITY_LABEL').show();
-  }
+  UIHelper.setVisible('ADD_ENTITY_LABEL', !isReadOnly);
+  UIHelper.setVisible('NEW_VERSION_LABEL', !isReadOnly && Identity.isRootId(this.getRootId()));
 };
+
 
 EntityList.prototype.onCreate = function(data) {
   var parentId = Identity.parentId(Identity.idFromData(data));
@@ -1718,6 +1730,7 @@ EntityList.prototype.onCreate = function(data) {
     $$('entity_list').select(entity.id);
   }
 };
+
 
 EntityList.prototype.changeItems = function(applyForData) {
   var nextId;
@@ -1735,6 +1748,10 @@ EntityList.prototype.changeItems = function(applyForData) {
   }
 };
 
+
+/**
+ * Listen delete/create/rename events to update items in list.
+ */
 EntityList.prototype.listen = function() {
   var self = this;
 
@@ -1763,6 +1780,10 @@ EntityList.prototype.listen = function() {
   });
 };
 
+
+/**
+ * Set Id of entity witch items displayed in list. This method reloading data.
+ */
 EntityList.prototype.setRootId = function(id) {
   if (this.rootId === id) {
     return;
@@ -1781,26 +1802,34 @@ EntityList.prototype.setRootId = function(id) {
       events: ['entities.rename.res']
     }));
   }
-  // var subscription = Identity.dataFromId(id);
-  // var childrenSubscription = Identity.dataFromId(id);
-  // childrenSubscription.path += '/*';
-  // Mydataspace.emit('entities.subscribe', subscription);
-  // Mydataspace.emit('entities.subscribe', childrenSubscription);
 
   this.refreshData();
 };
 
+
+/**
+ * Id of entity witch items displayed in list.
+ */
 EntityList.prototype.getRootId = function() {
   return this.rootId;
 };
 
+
+/**
+ * Set item selected in list.
+ */
 EntityList.prototype.setCurrentId = function(id) {
   this.currentId = id;
 };
 
+
+/**
+ * Get item selected in list.
+ */
 EntityList.prototype.getCurrentId = function() {
   return this.currentId;
 };
+
 
 /**
  * Reload data (from server) of entity list.
@@ -1839,6 +1868,7 @@ EntityList.prototype.refreshData = function() {
   }.bind(this), function(err) { UI.error(err); });
 };
 
+
 /**
  * Fills entity list by items from children array.
  *
@@ -1856,6 +1886,7 @@ EntityList.prototype.fill = function(parentEntityId, children, data) {
   $$('entity_list').select(parentEntityId);
 };
 
+
 /**
  * Creates new entity by data received from the 'New Entity' form.
  * @param formData data received from form by method getValues.
@@ -1867,6 +1898,7 @@ EntityList.prototype.createByFormData = function(formData) {
   data.othersCan = formData.othersCan;
   Mydataspace.emit('entities.create', data);
 };
+
 
 EntityList.prototype.addChildren = function(children) {
   var showMoreChildId =
@@ -1888,6 +1920,7 @@ EntityList.prototype.addChildren = function(children) {
   }
 };
 
+
 EntityList.prototype.showMore = function() {
   var self = this;
   var req = Identity.dataFromId(this.getRootId());
@@ -1905,6 +1938,7 @@ EntityList.prototype.showMore = function() {
     $$('entity_list').enable();
   });
 };
+
 
 /**
  * Calculates number of items of entity list.
@@ -1924,11 +1958,7 @@ function EntityTree() {
 }
 
 EntityTree.prototype.setReadOnly = function(isReadOnly) {
-  if (isReadOnly) {
-    $$('ADD_ROOT_LABEL').hide();
-  } else {
-    $$('ADD_ROOT_LABEL').show();
-  }
+  UIHelper.setVisible('ADD_ROOT_LABEL', !isReadOnly);
 };
 
 EntityTree.prototype.getCurrentId = function() {
@@ -2987,7 +3017,7 @@ UILayout.popups.searchScope = {
 UILayout.popups.newEntity = {
 	view: 'popup',
 	id: 'entity_tree__new_entity_popup',
-  css: 'entity_tree__new_entity_popup',
+  css: 'admin_context_menu entity_tree__new_entity_popup',
 	width: 190,
 	body: {
 		view: 'list',
@@ -3037,7 +3067,7 @@ UILayout.popups.newEntity = {
 UILayout.popups.newRootVersion = {
 	view: 'popup',
 	id: 'entity_tree__new_root_version_popup',
-  css: 'entity_tree__new_root_version_popup',
+  css: 'admin_context_menu entity_tree__new_root_version_popup',
 	width: 190,
 	body: {
 		view: 'list',
@@ -3093,7 +3123,7 @@ UILayout.popups.newRootVersion = {
 UILayout.popups.newRoot = {
 	view: 'popup',
 	id: 'entity_tree__new_root_popup',
-  css: 'entity_tree__new_root_popup',
+  css: 'admin_context_menu entity_tree__new_root_popup',
 	width: 150,
 	body: {
 		view: 'list',
@@ -3434,7 +3464,7 @@ UILayout.entityList =
           type: 'icon',
           icon: 'clone',
           id: 'NEW_VERSION_LABEL', label: STRINGS.NEW_VERSION_LABEL,
-          width: 100,
+          width: 90,
           popup: 'entity_tree__new_root_version_popup',
         },
         { view: 'button',

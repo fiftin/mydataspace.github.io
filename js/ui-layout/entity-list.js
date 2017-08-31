@@ -15,7 +15,7 @@ UILayout.entityList =
           type: 'icon',
           icon: 'clone',
           id: 'NEW_VERSION_LABEL', label: STRINGS.NEW_VERSION_LABEL,
-          width: 100,
+          width: 90,
           popup: 'entity_tree__new_root_version_popup',
         },
         { view: 'button',

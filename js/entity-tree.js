@@ -3,11 +3,7 @@ function EntityTree() {
 }
 
 EntityTree.prototype.setReadOnly = function(isReadOnly) {
-  if (isReadOnly) {
-    $$('ADD_ROOT_LABEL').hide();
-  } else {
-    $$('ADD_ROOT_LABEL').show();
-  }
+  UIHelper.setVisible('ADD_ROOT_LABEL', !isReadOnly);
 };
 
 EntityTree.prototype.getCurrentId = function() {

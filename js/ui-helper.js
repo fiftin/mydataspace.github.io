@@ -51,6 +51,24 @@ UIHelper = {
     'likes',
     'processes'
   ],
+
+  setVisible: function(components, isVisible) {
+    if (!Array.isArray(components)) {
+      components = [components];
+    }
+    for (var i in components) {
+      var component = components[i];
+      if (typeof component === 'string') {
+        component = $$(component);
+      }
+      if (isVisible) {
+        component.show();
+      } else {
+        component.hide();
+      }
+    }
+  },
+
   /**
    * User can only view entities. All buttons for manipulations is hidden in
    * this mode.
