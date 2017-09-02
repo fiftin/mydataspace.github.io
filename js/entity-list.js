@@ -160,6 +160,13 @@ EntityList.prototype.refreshData = function() {
       $$('entity_list').addCss(showMoreChildId, 'entity_list__show_more_item');
     }
     this.setReadOnly(!data.mine);
+    
+    var versionLabel = $$('NEW_VERSION_LABEL');
+    var versionLabelText = versionLabel.data.label.split('<span')[0];
+    versionLabelText += '<span class="version_btn__version">' + MDSCommon.findValueByName(data.fields, '$version') + '</span>';
+    versionLabel.define('label', versionLabelText);
+    versionLabel.refresh();
+
     $$('entity_list').enable();
   }.bind(this), function(err) { UI.error(err); });
 };

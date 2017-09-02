@@ -13,7 +13,8 @@ UILayout.popups.newRootVersion = {
 //      { id: 'copy_version', value: 'Clone Current Version' },
       // { id: 'import_version', value: 'Import to New Version' },
 //      { id: 'import_version_csv', value: 'Import New Version from CSV As Is' }
-      { id: 'switch_version', value: 'Switch Version...' },
+      { id: 'view_version', value: 'View Other Version...' },
+      { id: 'switch_version', value: 'Switch Default Version...' },
 		],
 		datatype: 'json',
 //		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
@@ -23,23 +24,16 @@ UILayout.popups.newRootVersion = {
       onItemClick: function(newv) {
         switch (newv) {
           case 'new_version':
-            Mydataspace.entities.create({
-              root: UI.entityTree.currentId,
-              path: '',
-              fields: [{ name: '$newVersion', value: true }]
-            }).then(function(data) {
-              alert('New version created');
-            });
+            $$('add_version_window').show();
             break;
           case 'switch_version':
-            var version = parseInt(prompt("Please enter version number", "Switch Root Version"));
-            Mydataspace.entities.change({
-              root: UI.entityTree.currentId,
-              path: '',
-              fields: [{ name: '$version', value: version }]
-            }).then(function(data) {
-              alert('Switched to version ' + version);
-            });
+            //var version = parseInt(prompt("Please enter version number", "Switch Root Version"));
+            $$('change_version_window').mode = 'switch';
+            $$('change_version_window').show();
+            break;
+          case 'view_version':
+            $$('change_version_window').mode = 'view';
+            $$('change_version_window').show();
             break;
           case 'copy_version':
             break;

@@ -1864,6 +1864,13 @@ EntityList.prototype.refreshData = function() {
       $$('entity_list').addCss(showMoreChildId, 'entity_list__show_more_item');
     }
     this.setReadOnly(!data.mine);
+    
+    var versionLabel = $$('NEW_VERSION_LABEL');
+    var versionLabelText = versionLabel.data.label.split('<span')[0];
+    versionLabelText += '<span class="version_btn__version">' + MDSCommon.findValueByName(data.fields, '$version') + '</span>';
+    versionLabel.define('label', versionLabelText);
+    versionLabel.refresh();
+
     $$('entity_list').enable();
   }.bind(this), function(err) { UI.error(err); });
 };
@@ -2862,6 +2869,152 @@ UILayout.windows.addResource = {
     }
 };
 
+UILayout.windows.changeVersion = {
+  view: 'window',
+  id: 'change_version_window',
+  width: 700,
+  position: 'center',
+  modal: true,
+  head: STRINGS.CHANGE_VERSION,
+  on: {
+    onShow: function() {
+      var title;
+
+      switch ($$('change_version_window').mode) {
+        case 'switch':
+          title = 'Switch Default Version';
+          break;
+        case 'view':
+          title = 'View Version...';
+          break;
+      };
+      
+      $$('change_version_window').getHead().define('template', title);
+      $$('change_version_window').getHead().refresh();
+
+      var root = UI.entityList.getRootId();
+      Mydataspace.request('entities.getRootVersions', {
+        root: root
+      }).then(function(data) {
+        $$('change_version_window__table').clearAll();
+        $$('change_version_window__table').parse(data.versions.map(function(version) {
+          return MDSCommon.extend(version, { id: version.version });
+        }));
+      }).catch(function(data) {
+      });
+    }
+  },
+  body: {
+    rows: [
+      { view: 'datatable',
+        id: 'change_version_window__table',
+        height: 350,
+        autowidth: true,
+        select: 'row',
+        columns: [
+          { id: 'version', header: '#', width: 50, sort: 'int' },
+          { id: 'createdAt', header: 'Created At', width: 200 },
+          { id: 'versionDescription', header: 'Description', width: 450 }
+        ]
+      },
+      { cols: [
+          {},
+          { view: 'button',
+            value: 'OK',
+            type: 'form',
+            width: 150,
+            click: function() {
+              switch ($$('change_version_window').mode) {
+                case 'switch':
+                  Mydataspace.entities.change({
+                    root: UI.entityTree.currentId,
+                    path: '',
+                    fields: [{ name: '$version', value: version }]
+                  }).then(function(data) {
+                    alert('Switched to version ' + version);
+                  });
+                  break;
+                case 'view':
+                  ;
+                  break;
+              }
+              $$('change_version_window').hide();
+            }
+          },
+          { width: 10 },
+          { view: 'button',
+            id: 'CANCEL_LABEL',
+            width: 150,
+            value: STRINGS.CANCEL,
+            click: function() { $$('change_version_window').hide(); }
+          }
+        ],
+        padding: 17
+      }
+    ] 
+  }
+};
+
+UILayout.windows.addVersion = {
+    view: 'window',
+    id: 'add_version_window',
+    width: 350,
+    position: 'center',
+    modal: true,
+    head: STRINGS.NEW_VERSION,
+    on: UIControls.getOnForFormWindow('add_version'),
+    body: {
+      view: 'form',
+      id: 'add_version_form',
+      borderless: true,
+      on: {
+        onSubmit: function() {
+          if (!$$('add_version_form').validate()) {
+            return;
+          }
+
+          Mydataspace.entities.create({
+            root: UI.entityTree.currentId,
+            path: '',
+            fields: [
+              { name: '$newVersion', value: true },
+              { name: '$newVersionDescription', value: true }
+            ]
+          }).then(function() {
+            $$('add_version_window').hide();
+            UIControls.removeSpinnerFromWindow('add_version_window');
+          }, function(err) {
+            UIControls.removeSpinnerFromWindow('add_version_window');
+            //if (err.errors != null) {
+            //  for (var i in err.errors) {
+            //    var e = err.errors[i];
+            //    switch (e.type) {
+            //      case 'unique violation':
+            //        if (e.path === 'entities_root_path') {
+            //          $$('add_root_form').elements.root.define('invalidMessage', 'Name already exists');
+            //          $$('add_root_form').markInvalid('root', true);
+            //        }
+            //        break;
+            //    }
+            //  }
+            //} else {
+            //  if (err.message.startsWith('ER_DATA_TOO_LONG:')) {
+            //    $$('add_root_form').elements.root.define('invalidMessage', 'Too long');
+            //    $$('add_root_form').markInvalid('root', true);
+            //  } else {
+            //    UI.error(err);
+            //  }
+            //}
+          });
+        }
+      },
+      elements: [
+        { view: 'text', id: 'VERSION_DESCRIPTION_LABEL', label: STRINGS.VERSION_DESCRIPTION, required: true, name: 'versionDescription', labelWidth: UIHelper.LABEL_WIDTH },
+        UIControls.getSubmitCancelForFormWindow('add_version')
+      ]
+    }
+};
+
 UILayout.popups.fieldIndexed = {
 	view: 'popup',
 	id: 'entity_form__field_indexed_popup',
@@ -3079,7 +3232,8 @@ UILayout.popups.newRootVersion = {
 //      { id: 'copy_version', value: 'Clone Current Version' },
       // { id: 'import_version', value: 'Import to New Version' },
 //      { id: 'import_version_csv', value: 'Import New Version from CSV As Is' }
-      { id: 'switch_version', value: 'Switch Version...' },
+      { id: 'view_version', value: 'View Other Version...' },
+      { id: 'switch_version', value: 'Switch Default Version...' },
 		],
 		datatype: 'json',
 //		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
@@ -3089,23 +3243,16 @@ UILayout.popups.newRootVersion = {
       onItemClick: function(newv) {
         switch (newv) {
           case 'new_version':
-            Mydataspace.entities.create({
-              root: UI.entityTree.currentId,
-              path: '',
-              fields: [{ name: '$newVersion', value: true }]
-            }).then(function(data) {
-              alert('New version created');
-            });
+            $$('add_version_window').show();
             break;
           case 'switch_version':
-            var version = parseInt(prompt("Please enter version number", "Switch Root Version"));
-            Mydataspace.entities.change({
-              root: UI.entityTree.currentId,
-              path: '',
-              fields: [{ name: '$version', value: version }]
-            }).then(function(data) {
-              alert('Switched to version ' + version);
-            });
+            //var version = parseInt(prompt("Please enter version number", "Switch Root Version"));
+            $$('change_version_window').mode = 'switch';
+            $$('change_version_window').show();
+            break;
+          case 'view_version':
+            $$('change_version_window').mode = 'view';
+            $$('change_version_window').show();
             break;
           case 'copy_version':
             break;
@@ -3462,17 +3609,17 @@ UILayout.entityList =
         },
         { view: 'button',
           type: 'icon',
-          icon: 'clone',
-          id: 'NEW_VERSION_LABEL', label: STRINGS.NEW_VERSION_LABEL,
-          width: 90,
-          popup: 'entity_tree__new_root_version_popup',
+          icon: 'plus',
+          id: 'ADD_ENTITY_LABEL', label: STRINGS.ADD_ENTITY,
+          width: 70,
+          popup: 'entity_tree__new_entity_popup',
         },
         { view: 'button',
           type: 'icon',
-          icon: 'plus',
-          id: 'ADD_ENTITY_LABEL', label: STRINGS.ADD_ENTITY,
-          width: 75,
-          popup: 'entity_tree__new_entity_popup',
+          icon: 'clone',
+          id: 'NEW_VERSION_LABEL', label: STRINGS.NEW_VERSION,
+          width: 110,
+          popup: 'entity_tree__new_root_version_popup',
         },
         { view: 'search',
           id: 'entity_list__search',
@@ -3910,15 +4057,17 @@ UI = {
 
       var i = 1;
       while (label != null) {
-        label.define('label', strings[key]);
+        var leftPart = strings[key].split('<span')[0];
+        var rightPartIndex = label.data.label.indexOf('<span');
+        var rightPart = rightPartIndex >= 0 ? label.data.label.substring(rightPartIndex) : '';
+        label.define('label', leftPart + rightPart);
         label.refresh();
         label = $$(key + '_LABEL_' + i);
         i++;
       }
     }
 
-    // Menu
-
+    // Side Menu
     var menuItemList = $$('menu__item_list');
     var menuItemListSelectedId = menuItemList.getSelectedId();
     var data = [
@@ -4264,7 +4413,9 @@ UI = {
     webix.ui(UILayout.windows.addField);
     webix.ui(UILayout.windows.addApp);
     webix.ui(UILayout.windows.addResource);
-		webix.ui(UILayout.sideMenu);
+    webix.ui(UILayout.windows.changeVersion);
+    webix.ui(UILayout.windows.addVersion);
+    webix.ui(UILayout.sideMenu);
 
     //
     // Admin panel

@@ -95,7 +95,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     ROOT_AVATAR_BROWSE: 'Browse',
     ROOT_AVATAR_REMOVE: 'Remove',
     SHOW_ACCESS_KEY: 'Show access key',
-    NEW_VERSION: 'Versions',
+    NEW_VERSION: 'Version <span class="version_btn__version">0</span>',
+    CHANGE_VERSION: 'Change Version',
 
     created: 'created',
     ago: 'ago',
@@ -252,9 +253,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     ROOT_AVATAR_BROWSE: 'Обзор',
     ROOT_AVATAR_REMOVE: 'Удалить',
     SHOW_ACCESS_KEY: 'Показать ключ доступа',
-    NEW_VERSION: 'Версии',
-
-
+    NEW_VERSION: 'Версия <span class="version_btn__version">0</span>',
+    CHANGE_VERSION: 'Change Version',
 
 
     created: 'создан',

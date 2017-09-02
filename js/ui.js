@@ -65,15 +65,17 @@ UI = {
 
       var i = 1;
       while (label != null) {
-        label.define('label', strings[key]);
+        var leftPart = strings[key].split('<span')[0];
+        var rightPartIndex = label.data.label.indexOf('<span');
+        var rightPart = rightPartIndex >= 0 ? label.data.label.substring(rightPartIndex) : '';
+        label.define('label', leftPart + rightPart);
         label.refresh();
         label = $$(key + '_LABEL_' + i);
         i++;
       }
     }
 
-    // Menu
-
+    // Side Menu
     var menuItemList = $$('menu__item_list');
     var menuItemListSelectedId = menuItemList.getSelectedId();
     var data = [
@@ -419,7 +421,9 @@ UI = {
     webix.ui(UILayout.windows.addField);
     webix.ui(UILayout.windows.addApp);
     webix.ui(UILayout.windows.addResource);
-		webix.ui(UILayout.sideMenu);
+    webix.ui(UILayout.windows.changeVersion);
+    webix.ui(UILayout.windows.addVersion);
+    webix.ui(UILayout.sideMenu);
 
     //
     // Admin panel
