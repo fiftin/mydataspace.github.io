@@ -1898,7 +1898,7 @@ EntityList.prototype.refreshData = function() {
     
     var versionLabel = $$('NEW_VERSION_LABEL');
     var versionLabelText = versionLabel.data.label.split('<span')[0];
-    versionLabelText += '<span class="version_btn__version">' + MDSCommon.findValueByName(data.fields, '$version') + '</span>';
+    versionLabelText += '<span class="version_btn__version">' + (MDSCommon.findValueByName(data.fields, '$version') || 0) + '</span>';
     versionLabel.define('label', versionLabelText);
     versionLabel.refresh();
 
