@@ -134,6 +134,7 @@ EntityList.prototype.getCurrentId = function() {
 EntityList.prototype.refreshData = function() {
   var req = Identity.dataFromId(this.getRootId());
   var search = $$('entity_list__search').getValue();
+  var self = this;
   if (MDSCommon.isPresent(search)) {
     if (search.indexOf('*') === search.length - 1) {
       req['filterByName'] = search.substring(0, search.length - 1);
@@ -144,22 +145,22 @@ EntityList.prototype.refreshData = function() {
   $$('entity_list').disable();
   Mydataspace.request('entities.getChildren', req, function(data) {
     var showMoreChildId =
-      Identity.childId(this.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
+      Identity.childId(self.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
     var entityId = Identity.idFromData(data);
     var children = data.children.filter(function(x) {
       return (x.root !== 'root' || x.path !== '') && UIHelper.IGNORED_PATHS.indexOf(x.path) < 0;
     }).map(Identity.entityFromData);
-    if (this.getRootId() === entityId) {
+    if (self.getRootId() === entityId) {
       if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
         children[children.length - 1] = {
           id: Identity.childId(entityId, UIHelper.ENTITY_LIST_SHOW_MORE_ID),
           value: STRINGS.SHOW_MORE
         }
       }
-      this.fill(entityId, children, data);
+      self.fill(entityId, children, data);
       $$('entity_list').addCss(showMoreChildId, 'entity_list__show_more_item');
     }
-    this.setReadOnly(!data.mine);
+    self.setReadOnly(!data.mine);
     
     var versionLabel = $$('NEW_VERSION_LABEL');
     var versionLabelText = versionLabel.data.label.split('<span')[0];
@@ -168,7 +169,7 @@ EntityList.prototype.refreshData = function() {
     versionLabel.refresh();
 
     $$('entity_list').enable();
-  }.bind(this), function(err) { UI.error(err); });
+  }, function(err) { UI.error(err); });
 };
 
 

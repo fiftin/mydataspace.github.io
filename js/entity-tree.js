@@ -26,6 +26,34 @@ EntityTree.prototype.setCurrentId = function(id) {
   }
 };
 
+
+
+EntityTree.prototype.changeRootVersion = function(rootId, version) {
+  var data = Identity.dataFromId(rootId);
+  var self = this;
+
+  Mydataspace.entities.get({
+    root: data.root,
+    path: '',
+    version: version
+  }).then(function(data) {
+    var entity = Identity.entityFromData(data);
+    const item = $$('entity_tree').getItem(entity.id);
+    $$('entity_tree').remove(rootId);
+    //if (item) {
+    //  $$('entity_tree').remove(entity.id);
+    //}
+    $$('entity_tree').add(entity, 0);
+    if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
+      self.setChildren(entity.id, entity.data);
+    }
+    $$('entity_tree').select(entity.id);
+    UI.entityList.refreshData();
+    UI.entityForm.refresh();
+  });
+};
+
+
 EntityTree.prototype.resolveChildren = function(id) {
   return new Promise(function(resolve, reject) {
     var firstChildId = $$('entity_tree').getFirstChildId(id);
@@ -56,21 +84,26 @@ EntityTree.prototype.setCurrentIdToFirst = function() {
 EntityTree.prototype.onCreate = function(data) {
   var parentId = Identity.parentId(Identity.idFromData(data));
   var entity = Identity.entityFromData(data);
+  var self = this;
   if (parentId === 'root') {
-    $$('entity_tree').remove(entity.id);
+    const item = $$('entity_tree').getItem(entity.id);
+    if (item) {
+      $$('entity_tree').remove(entity.id);
+    }
     $$('entity_tree').add(entity, 0);
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-      this.setChildren(entity.id, entity.data);
+      self.setChildren(entity.id, entity.data);
     }
     $$('entity_tree').select(entity.id);
     UI.entityList.refreshData();
+    UI.entityForm.refresh();
   } else if (!MDSCommon.isNull($$('entity_tree').getItem(parentId)) &&
     MDSCommon.isNull($$('entity_tree').getItem(Identity.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)))) {
     $$('entity_tree').add(entity, 0, parentId);
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-      this.setChildren(entity.id, entity.data);
+      self.setChildren(entity.id, entity.data);
     }
-    this.resolveChildren(parentId).then(function() {
+    self.resolveChildren(parentId).then(function() {
       $$('entity_tree').open(entity.id);
     });
   }
@@ -100,14 +133,32 @@ EntityTree.prototype.listen = function() {
 
   Mydataspace.on('entities.create.res', this.onCreate.bind(this));
   Mydataspace.on('entities.change.res', function(data) {
-    var id = Identity.idFromData(data);
-    if (id !== self.currentId) {
+    var entity = Identity.entityFromData(data);
+
+  
+    if (data.path === '') {
+      if ($$('entity_tree').getItem(entity.id)) {
+        $$('entity_tree').remove(entity.id); 
+        $$('entity_tree').add(entity, 0);
+        if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
+          self.setChildren(entity.id, entity.data);
+        }
+        $$('entity_tree').select(entity.id);
+        UI.entityList.refreshData();
+        UI.entityForm.refresh();
+        return;
+      }
+    }
+
+
+    if (entity.id !== self.currentId) {
       return;
     }
-    if ($$('entity_tree').getItem(id) == null) {
+    var item = $$('entity_tree').getItem(entity.id);
+    if (item == null) {
       return;
     }
-    $$('entity_tree').updateItem(id, Identity.entityFromData(data));
+    $$('entity_tree').updateItem(entity.id, entity);
   });
 
   Mydataspace.on('entities.rename.res', function(data) {

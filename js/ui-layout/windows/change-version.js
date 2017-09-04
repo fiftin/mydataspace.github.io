@@ -21,7 +21,8 @@ UILayout.windows.changeVersion = {
       $$('change_version_window').getHead().define('template', title);
       $$('change_version_window').getHead().refresh();
 
-      var root = UI.entityList.getRootId();
+      var root = Identity.dataFromId(UI.entityList.getRootId()).root;
+
       Mydataspace.request('entities.getRootVersions', {
         root: root
       }).then(function(data) {
@@ -53,17 +54,18 @@ UILayout.windows.changeVersion = {
             type: 'form',
             width: 150,
             click: function() {
+              var root = Identity.dataFromId(UI.entityList.getRootId()).root;
+              var version = $$('change_version_window__table').getSelectedItem().version;
               switch ($$('change_version_window').mode) {
                 case 'switch':
                   Mydataspace.entities.change({
-                    root: UI.entityTree.currentId,
+                    root: root,
                     path: '',
                     fields: [{ name: '$version', value: version }]
-                  }).then(function(data) {
-                    alert('Switched to version ' + version);
                   });
                   break;
                 case 'view':
+                  UI.entityTree.changeRootVersion(Identity.rootId(UI.entityList.getRootId()), version);
                   break;
               }
               $$('change_version_window').hide();

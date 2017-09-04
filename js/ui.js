@@ -91,7 +91,7 @@ UI = {
 
 
     // Dialogs
-    var dialogs = ['ADD_ROOT', 'ADD_ENTITY', 'ADD_FIELD'];
+    var dialogs = ['ADD_ROOT', 'ADD_ENTITY', 'ADD_FIELD', 'ADD_VERSION'];
     for (var i in dialogs) {
       var dialogId = dialogs[i];
       var dialog = $$(dialogId.toLowerCase() + '_window');

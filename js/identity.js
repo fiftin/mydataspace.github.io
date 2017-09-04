@@ -36,38 +36,63 @@ var Identity = {
    * @returns string Entity id
    */
   idFromData: function(data) {
-    if (MDSCommon.isBlank(data.path)) {
-      return data.root;
+    var v = MDSCommon.findValueByName(data.fields || [], '$version');
+    var version = '';
+    if (typeof v === 'number' && v > 0) {
+      version = '?' + v;
     }
-    return data.root + ':' + data.path;
+    
+    if (MDSCommon.isBlank(data.path)) {
+      return data.root + version;
+    }
+    return data.root + ':' + data.path + version;
   },
 
   dataFromId: function(id) {
-    var idParts = id.split(':');
+    var idVersionParts = id.split('?');
+    var idParts = idVersionParts[0].split(':');
     var ret = {
       root: idParts[0],
       path: idParts.length === 1 ? '' : idParts[1]
     };
+    
+    if (MDSCommon.isInt(idVersionParts[1])) {
+      ret.version = parseInt(idVersionParts[1]);
+    }
+
     return ret;
   },
 
-  childId: function(entityId, childSubPath) {
+  childId: function(entityIdWithVersion, childSubPath) {
+    var idVersionParts = entityIdWithVersion.split('?');
+    var entityId = idVersionParts[0];
     if (entityId.indexOf(':') !== -1) {
       return entityId + '/' + childSubPath;
     }
-    return entityId + ':' + childSubPath;
+    var version = idVersionParts[1] != null ? '?' + idVersionParts[1] : '';
+    return entityId + ':' + childSubPath + version;
   },
 
-  parentId: function(entityId) {
+  parentId: function(entityIdWithVersion) {
+    var idVersionParts = entityIdWithVersion.split('?');
+    var entityId = idVersionParts[0];
     var i = entityId.lastIndexOf('/');
+    var version = idVersionParts[1] != null ? '?' + idVersionParts[1] : '';
     if (i === -1) {
       var parts = entityId.split(':');
       if (parts.length === 1) {
         return 'root';
       }
-      return parts[0];
+      return parts[0] + version;
     }
-    return entityId.slice(0, i);
+    return entityId.slice(0, i) + version;
+  },
+
+
+  rootId: function(entityIdWithVersion) {
+    var data = Identity.dataFromId(entityIdWithVersion);
+    var version = data.version && data.version > 0 ? '?' + data.version : '';
+    return data.root + version; 
   },
 
   renameData: function(renameData, itemData) {

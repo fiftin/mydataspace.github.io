@@ -97,6 +97,12 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SHOW_ACCESS_KEY: 'Show access key',
     NEW_VERSION: 'Version <span class="version_btn__version">0</span>',
     CHANGE_VERSION: 'Change Version',
+    ADD_VERSION: 'New Empty Version',
+    VERSION_DESCRIPTION: 'Description',
+
+
+    switch_default_version: 'Switch Default Versin',
+    view_other_version: 'View Other Version',
 
     created: 'created',
     ago: 'ago',
@@ -151,7 +157,9 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       trans: 'Transport',
       geo: 'Geo',
       state: 'State',
-    }
+    },
+
+
 
   },
   RU: {
@@ -255,6 +263,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SHOW_ACCESS_KEY: 'Показать ключ доступа',
     NEW_VERSION: 'Версия <span class="version_btn__version">0</span>',
     CHANGE_VERSION: 'Change Version',
+    ADD_VERSION: 'New Empty Version',
+    VERSION_DESCRIPTION: 'Description',
 
 
     created: 'создан',

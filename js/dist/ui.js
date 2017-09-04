@@ -531,38 +531,63 @@ var Identity = {
    * @returns string Entity id
    */
   idFromData: function(data) {
-    if (MDSCommon.isBlank(data.path)) {
-      return data.root;
+    var v = MDSCommon.findValueByName(data.fields || [], '$version');
+    var version = '';
+    if (typeof v === 'number' && v > 0) {
+      version = '?' + v;
     }
-    return data.root + ':' + data.path;
+    
+    if (MDSCommon.isBlank(data.path)) {
+      return data.root + version;
+    }
+    return data.root + ':' + data.path + version;
   },
 
   dataFromId: function(id) {
-    var idParts = id.split(':');
+    var idVersionParts = id.split('?');
+    var idParts = idVersionParts[0].split(':');
     var ret = {
       root: idParts[0],
       path: idParts.length === 1 ? '' : idParts[1]
     };
+    
+    if (MDSCommon.isInt(idVersionParts[1])) {
+      ret.version = parseInt(idVersionParts[1]);
+    }
+
     return ret;
   },
 
-  childId: function(entityId, childSubPath) {
+  childId: function(entityIdWithVersion, childSubPath) {
+    var idVersionParts = entityIdWithVersion.split('?');
+    var entityId = idVersionParts[0];
     if (entityId.indexOf(':') !== -1) {
       return entityId + '/' + childSubPath;
     }
-    return entityId + ':' + childSubPath;
+    var version = idVersionParts[1] != null ? '?' + idVersionParts[1] : '';
+    return entityId + ':' + childSubPath + version;
   },
 
-  parentId: function(entityId) {
+  parentId: function(entityIdWithVersion) {
+    var idVersionParts = entityIdWithVersion.split('?');
+    var entityId = idVersionParts[0];
     var i = entityId.lastIndexOf('/');
+    var version = idVersionParts[1] != null ? '?' + idVersionParts[1] : '';
     if (i === -1) {
       var parts = entityId.split(':');
       if (parts.length === 1) {
         return 'root';
       }
-      return parts[0];
+      return parts[0] + version;
     }
-    return entityId.slice(0, i);
+    return entityId.slice(0, i) + version;
+  },
+
+
+  rootId: function(entityIdWithVersion) {
+    var data = Identity.dataFromId(entityIdWithVersion);
+    var version = data.version && data.version > 0 ? '?' + data.version : '';
+    return data.root + version; 
   },
 
   renameData: function(renameData, itemData) {
@@ -938,25 +963,25 @@ EntityForm.prototype.setRootView = function(data) {
           
           
     document.getElementById('view__counters_likes_count').innerText =
-      MDSCommon.findValueByName(data.fields, 'likes');
+      MDSCommon.findValueByName(data.fields, '$likes');
     document.getElementById('view__counters_comments_count').innerText =
-      MDSCommon.findValueByName(data.fields, 'comments');
+      MDSCommon.findValueByName(data.fields, '$comments');
 
-    for (var i in data.children) {
-     var child = data.children[i];
-     switch (child.path) {
-       case 'likes':
-         document.getElementById('view__counters_likes_count').innerText = child.numberOfChildren;
-         break;
-       case 'comments':
-         document.getElementById('view__counters_comments_count').innerText = child.numberOfChildren;
-         document.getElementById('view__tabs_comments_count').innerText = child.numberOfChildren;
-         break;
-       case 'views':
-         document.getElementById('view__tabs_views_count').innerText = child.numberOfChildren;
-         break;
-     }
-    }
+    //for (var i in data.children) {
+    // var child = data.children[i];
+    // switch (child.path) {
+    //   case 'likes':
+    //     document.getElementById('view__counters_likes_count').innerText = child.numberOfChildren;
+    //     break;
+    //   case 'comments':
+    //     document.getElementById('view__counters_comments_count').innerText = child.numberOfChildren;
+    //     document.getElementById('view__tabs_comments_count').innerText = child.numberOfChildren;
+    //     break;
+    //   case 'views':
+    //     document.getElementById('view__tabs_views_count').innerText = child.numberOfChildren;
+    //     break;
+    // }
+    //}
 
     if (data.root === 'nothing' || data.root === 'notfound') {
       document.getElementById('view__counters').style.display = 'none';
@@ -974,7 +999,12 @@ EntityForm.prototype.setRootView = function(data) {
                                          'description',
                                          'websiteURL',
                                          'readme',
-                                         'tags'],
+                                         'tags',
+                                         '$version',
+                                         '$rating',
+                                         '$likes',
+                                         '$comments',
+                                         '$lastVersion'],
                                         false);
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
@@ -1838,6 +1868,7 @@ EntityList.prototype.getCurrentId = function() {
 EntityList.prototype.refreshData = function() {
   var req = Identity.dataFromId(this.getRootId());
   var search = $$('entity_list__search').getValue();
+  var self = this;
   if (MDSCommon.isPresent(search)) {
     if (search.indexOf('*') === search.length - 1) {
       req['filterByName'] = search.substring(0, search.length - 1);
@@ -1848,22 +1879,22 @@ EntityList.prototype.refreshData = function() {
   $$('entity_list').disable();
   Mydataspace.request('entities.getChildren', req, function(data) {
     var showMoreChildId =
-      Identity.childId(this.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
+      Identity.childId(self.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
     var entityId = Identity.idFromData(data);
     var children = data.children.filter(function(x) {
       return (x.root !== 'root' || x.path !== '') && UIHelper.IGNORED_PATHS.indexOf(x.path) < 0;
     }).map(Identity.entityFromData);
-    if (this.getRootId() === entityId) {
+    if (self.getRootId() === entityId) {
       if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
         children[children.length - 1] = {
           id: Identity.childId(entityId, UIHelper.ENTITY_LIST_SHOW_MORE_ID),
           value: STRINGS.SHOW_MORE
         }
       }
-      this.fill(entityId, children, data);
+      self.fill(entityId, children, data);
       $$('entity_list').addCss(showMoreChildId, 'entity_list__show_more_item');
     }
-    this.setReadOnly(!data.mine);
+    self.setReadOnly(!data.mine);
     
     var versionLabel = $$('NEW_VERSION_LABEL');
     var versionLabelText = versionLabel.data.label.split('<span')[0];
@@ -1872,7 +1903,7 @@ EntityList.prototype.refreshData = function() {
     versionLabel.refresh();
 
     $$('entity_list').enable();
-  }.bind(this), function(err) { UI.error(err); });
+  }, function(err) { UI.error(err); });
 };
 
 
@@ -1988,6 +2019,34 @@ EntityTree.prototype.setCurrentId = function(id) {
   }
 };
 
+
+
+EntityTree.prototype.changeRootVersion = function(rootId, version) {
+  var data = Identity.dataFromId(rootId);
+  var self = this;
+
+  Mydataspace.entities.get({
+    root: data.root,
+    path: '',
+    version: version
+  }).then(function(data) {
+    var entity = Identity.entityFromData(data);
+    const item = $$('entity_tree').getItem(entity.id);
+    $$('entity_tree').remove(rootId);
+    //if (item) {
+    //  $$('entity_tree').remove(entity.id);
+    //}
+    $$('entity_tree').add(entity, 0);
+    if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
+      self.setChildren(entity.id, entity.data);
+    }
+    $$('entity_tree').select(entity.id);
+    UI.entityList.refreshData();
+    UI.entityForm.refresh();
+  });
+};
+
+
 EntityTree.prototype.resolveChildren = function(id) {
   return new Promise(function(resolve, reject) {
     var firstChildId = $$('entity_tree').getFirstChildId(id);
@@ -2018,21 +2077,26 @@ EntityTree.prototype.setCurrentIdToFirst = function() {
 EntityTree.prototype.onCreate = function(data) {
   var parentId = Identity.parentId(Identity.idFromData(data));
   var entity = Identity.entityFromData(data);
+  var self = this;
   if (parentId === 'root') {
-    $$('entity_tree').remove(entity.id);
+    const item = $$('entity_tree').getItem(entity.id);
+    if (item) {
+      $$('entity_tree').remove(entity.id);
+    }
     $$('entity_tree').add(entity, 0);
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-      this.setChildren(entity.id, entity.data);
+      self.setChildren(entity.id, entity.data);
     }
     $$('entity_tree').select(entity.id);
     UI.entityList.refreshData();
+    UI.entityForm.refresh();
   } else if (!MDSCommon.isNull($$('entity_tree').getItem(parentId)) &&
     MDSCommon.isNull($$('entity_tree').getItem(Identity.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)))) {
     $$('entity_tree').add(entity, 0, parentId);
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-      this.setChildren(entity.id, entity.data);
+      self.setChildren(entity.id, entity.data);
     }
-    this.resolveChildren(parentId).then(function() {
+    self.resolveChildren(parentId).then(function() {
       $$('entity_tree').open(entity.id);
     });
   }
@@ -2062,14 +2126,32 @@ EntityTree.prototype.listen = function() {
 
   Mydataspace.on('entities.create.res', this.onCreate.bind(this));
   Mydataspace.on('entities.change.res', function(data) {
-    var id = Identity.idFromData(data);
-    if (id !== self.currentId) {
+    var entity = Identity.entityFromData(data);
+
+  
+    if (data.path === '') {
+      if ($$('entity_tree').getItem(entity.id)) {
+        $$('entity_tree').remove(entity.id); 
+        $$('entity_tree').add(entity, 0);
+        if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
+          self.setChildren(entity.id, entity.data);
+        }
+        $$('entity_tree').select(entity.id);
+        UI.entityList.refreshData();
+        UI.entityForm.refresh();
+        return;
+      }
+    }
+
+
+    if (entity.id !== self.currentId) {
       return;
     }
-    if ($$('entity_tree').getItem(id) == null) {
+    var item = $$('entity_tree').getItem(entity.id);
+    if (item == null) {
       return;
     }
-    $$('entity_tree').updateItem(id, Identity.entityFromData(data));
+    $$('entity_tree').updateItem(entity.id, entity);
   });
 
   Mydataspace.on('entities.rename.res', function(data) {
@@ -2887,12 +2969,13 @@ UILayout.windows.changeVersion = {
         case 'view':
           title = 'View Version...';
           break;
-      };
+      }
       
       $$('change_version_window').getHead().define('template', title);
       $$('change_version_window').getHead().refresh();
 
-      var root = UI.entityList.getRootId();
+      var root = Identity.dataFromId(UI.entityList.getRootId()).root;
+
       Mydataspace.request('entities.getRootVersions', {
         root: root
       }).then(function(data) {
@@ -2924,18 +3007,18 @@ UILayout.windows.changeVersion = {
             type: 'form',
             width: 150,
             click: function() {
+              var root = Identity.dataFromId(UI.entityList.getRootId()).root;
+              var version = $$('change_version_window__table').getSelectedItem().version;
               switch ($$('change_version_window').mode) {
                 case 'switch':
                   Mydataspace.entities.change({
-                    root: UI.entityTree.currentId,
+                    root: root,
                     path: '',
                     fields: [{ name: '$version', value: version }]
-                  }).then(function(data) {
-                    alert('Switched to version ' + version);
                   });
                   break;
                 case 'view':
-                  ;
+                  UI.entityTree.changeRootVersion(Identity.rootId(UI.entityList.getRootId()), version);
                   break;
               }
               $$('change_version_window').hide();
@@ -2958,10 +3041,10 @@ UILayout.windows.changeVersion = {
 UILayout.windows.addVersion = {
     view: 'window',
     id: 'add_version_window',
-    width: 350,
+    width: 450,
     position: 'center',
     modal: true,
-    head: STRINGS.NEW_VERSION,
+    head: STRINGS.ADD_VERSION,
     on: UIControls.getOnForFormWindow('add_version'),
     body: {
       view: 'form',
@@ -2974,37 +3057,17 @@ UILayout.windows.addVersion = {
           }
 
           Mydataspace.entities.create({
-            root: UI.entityTree.currentId,
+            root: Identity.dataFromId(UI.entityTree.currentId).root,
             path: '',
             fields: [
               { name: '$newVersion', value: true },
-              { name: '$newVersionDescription', value: true }
+              { name: '$newVersionDescription', value: $$('add_version_form').getValues().versionDescription }
             ]
           }).then(function() {
             $$('add_version_window').hide();
             UIControls.removeSpinnerFromWindow('add_version_window');
-          }, function(err) {
+          }).catch(function(err) {
             UIControls.removeSpinnerFromWindow('add_version_window');
-            //if (err.errors != null) {
-            //  for (var i in err.errors) {
-            //    var e = err.errors[i];
-            //    switch (e.type) {
-            //      case 'unique violation':
-            //        if (e.path === 'entities_root_path') {
-            //          $$('add_root_form').elements.root.define('invalidMessage', 'Name already exists');
-            //          $$('add_root_form').markInvalid('root', true);
-            //        }
-            //        break;
-            //    }
-            //  }
-            //} else {
-            //  if (err.message.startsWith('ER_DATA_TOO_LONG:')) {
-            //    $$('add_root_form').elements.root.define('invalidMessage', 'Too long');
-            //    $$('add_root_form').markInvalid('root', true);
-            //  } else {
-            //    UI.error(err);
-            //  }
-            //}
           });
         }
       },
@@ -4083,7 +4146,7 @@ UI = {
 
 
     // Dialogs
-    var dialogs = ['ADD_ROOT', 'ADD_ENTITY', 'ADD_FIELD'];
+    var dialogs = ['ADD_ROOT', 'ADD_ENTITY', 'ADD_FIELD', 'ADD_VERSION'];
     for (var i in dialogs) {
       var dialogId = dialogs[i];
       var dialog = $$(dialogId.toLowerCase() + '_window');
