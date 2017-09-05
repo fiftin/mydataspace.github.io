@@ -1,12 +1,11 @@
+/**
+ * Earlier this class provided info about complex URL used for search roots in admin dashboard.
+ * Now this functionality has been removed.
+ * @type {{isEmpty: Router.isEmpty, getCommonSearchParts: Router.getCommonSearchParts, isSearch: Router.isSearch, isRoot: Router.isRoot, isFilterByName: Router.isFilterByName, getSearch: Router.getSearch, isMe: Router.isMe}}
+ */
 var Router = {
   isEmpty: function() {
     return !Router.isRoot();
-    // if (window.path !== '/') {
-    //   return false;
-    // }
-    // return window.location.hash == null ||
-    //   window.location.hash === '' ||
-    //   window.location.hash === '#';
   },
 
   getCommonSearchParts: function() {
@@ -28,15 +27,6 @@ var Router = {
 
   isSearch: function() {
     return false;
-    // if (window.path !== '/') {
-    //   return false;
-    // }
-    // var parts = Router.getCommonSearchParts();
-    // if (parts == null || MDSCommon.isBlank(parts.search)) {
-    //   return false;
-    // }
-    // var s = parts.search;
-    // return s.indexOf('*') === 0 && s.lastIndexOf('*') === s.length - 1;
   },
 
   /**
@@ -51,22 +41,17 @@ var Router = {
       return true;
     }
     return parts[0] != null && parts[0].length > 2;
-    // var parts = Router.getCommonSearchParts();
-    // return parts != null && MDSCommon.isPresent(parts.search) && parts.search.indexOf('*') < 0;
   },
 
   isFilterByName: function() {
     return false;
-    // if (window.path !== '/') {
-    //   return false;
-    // }
-    // var parts = Router.getCommonSearchParts();
-    // if (parts == null || MDSCommon.isBlank(parts.search) || parts.search === '*') {
-    //   return false;
-    // }
-    // return parts.search.indexOf('*') === parts.search.length - 1;
   },
 
+  /**
+   *
+   * @param raw
+   * @returns {string}
+   */
   getSearch: function(raw) {
     if (window.location.pathname === '/') {
       return '';
@@ -79,16 +64,6 @@ var Router = {
     } else {
       return '';
     }
-
-    // if (raw) {
-    //   return window.location.hash.substring(1);
-    // }
-    //
-    // var parts = Router.getCommonSearchParts();
-    // if (parts == null) {
-    //   return '';
-    // }
-    // return parts.search.replace(/\*/g, '');
   },
 
   isMe: function() {

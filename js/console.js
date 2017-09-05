@@ -25,7 +25,7 @@ var MDSConsole = {
   error: function(message) { MDSConsole.post('error', message) },
 
   /**
-   * Call this method when one of the subtasks successfuly completed.
+   * Call this method when one of the subtasks successfully completed.
    */
   ok: function(message) { MDSConsole.post('ok', message) },
 
