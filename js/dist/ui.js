@@ -2103,29 +2103,34 @@ EntityTree.prototype.listen = function() {
   Mydataspace.on('entities.change.res', function(data) {
     var entity = Identity.entityFromData(data);
 
-  
     if (data.path === '') {
-      if ($$('entity_tree').getItem(entity.id)) {
-        $$('entity_tree').remove(entity.id); 
-        $$('entity_tree').add(entity, 0);
-        if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-          self.setChildren(entity.id, entity.data);
+      var version = MDSCommon.findValueByName(data.fields, '$oldVersion');
+      if (version) {
+        var oldId = version === 0 ? data.root : data.root + '?' + version;
+        if ($$('entity_tree').getItem(oldId)) {
+          var i = $$('entity_tree').getIndexById(oldId);
+          $$('entity_tree').remove(entity.id);
+          $$('entity_tree').add(entity, i);
+          if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
+            self.setChildren(entity.id, entity.data);
+          }
+          $$('entity_tree').select(entity.id);
+          UI.entityList.refreshData();
+          UI.entityForm.refresh();
+          return;
         }
-        $$('entity_tree').select(entity.id);
-        UI.entityList.refreshData();
-        UI.entityForm.refresh();
-        return;
       }
     }
-
 
     if (entity.id !== self.currentId) {
       return;
     }
+
     var item = $$('entity_tree').getItem(entity.id);
     if (item == null) {
       return;
     }
+
     $$('entity_tree').updateItem(entity.id, entity);
   });
 
