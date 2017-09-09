@@ -2109,7 +2109,7 @@ EntityTree.prototype.listen = function() {
         var oldId = version === 0 ? data.root : data.root + '?' + version;
         if ($$('entity_tree').getItem(oldId)) {
           var i = $$('entity_tree').getIndexById(oldId);
-          $$('entity_tree').remove(entity.id);
+          $$('entity_tree').remove(oldId);
           $$('entity_tree').add(entity, i);
           if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
             self.setChildren(entity.id, entity.data);
