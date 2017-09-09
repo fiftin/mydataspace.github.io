@@ -84,20 +84,27 @@ EntityTree.prototype.setCurrentIdToFirst = function() {
 EntityTree.prototype.onCreate = function(data) {
   var parentId = Identity.parentId(Identity.idFromData(data));
   var entity = Identity.entityFromData(data);
+  var oldVersion = MDSCommon.findValueByName(data.fields || [], '$oldVersion');
   var self = this;
-  if (parentId === 'root') {
-    const item = $$('entity_tree').getItem(entity.id);
-    if (item) {
-      $$('entity_tree').remove(entity.id);
+  if (parentId === 'root' && oldVersion != null) {
+
+    var oldId = oldVersion === 0 ? data.root : data.root + '?' + oldVersion;
+    if ($$('entity_tree').getItem(oldId)) {
+      var i = $$('entity_tree').getBranchIndex(oldId);
+      $$('entity_tree').add(entity, i, null);
+      $$('entity_tree').remove(oldId);
+      if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
+        self.setChildren(entity.id, entity.data);
+      }
+      $$('entity_tree').select(entity.id);
+      UI.entityList.refreshData();
+      UI.entityForm.refresh();
+      return;
     }
-    $$('entity_tree').add(entity, 0);
-    if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-      self.setChildren(entity.id, entity.data);
-    }
-    $$('entity_tree').select(entity.id);
-    UI.entityList.refreshData();
-    UI.entityForm.refresh();
-  } else if (!MDSCommon.isNull($$('entity_tree').getItem(parentId)) &&
+
+  }
+
+  if (!MDSCommon.isNull($$('entity_tree').getItem(parentId)) &&
     MDSCommon.isNull($$('entity_tree').getItem(Identity.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)))) {
     $$('entity_tree').add(entity, 0, parentId);
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
@@ -134,23 +141,22 @@ EntityTree.prototype.listen = function() {
   Mydataspace.on('entities.create.res', this.onCreate.bind(this));
   Mydataspace.on('entities.change.res', function(data) {
     var entity = Identity.entityFromData(data);
+    var oldVersion = MDSCommon.findValueByName(data.fields || [], '$oldVersion');
 
-    if (data.path === '') {
-      var version = MDSCommon.findValueByName(data.fields, '$oldVersion');
-      if (version) {
-        var oldId = version === 0 ? data.root : data.root + '?' + version;
-        if ($$('entity_tree').getItem(oldId)) {
-          var i = $$('entity_tree').getIndexById(oldId);
-          $$('entity_tree').remove(oldId);
-          $$('entity_tree').add(entity, i);
-          if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-            self.setChildren(entity.id, entity.data);
-          }
-          $$('entity_tree').select(entity.id);
-          UI.entityList.refreshData();
-          UI.entityForm.refresh();
-          return;
+    // Result of 'Switch Version' request
+    if (data.path === '' && oldVersion != null) {
+      var oldId = oldVersion === 0 ? data.root : data.root + '?' + oldVersion;
+      if ($$('entity_tree').getItem(oldId)) {
+        var i = $$('entity_tree').getBranchIndex(oldId);
+        $$('entity_tree').add(entity, i, null);
+        $$('entity_tree').remove(oldId);
+        if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
+          self.setChildren(entity.id, entity.data);
         }
+        $$('entity_tree').select(entity.id);
+        UI.entityList.refreshData();
+        UI.entityForm.refresh();
+        return;
       }
     }
 
@@ -256,35 +262,6 @@ EntityTree.prototype.requestRoots = function(onlyMine, reqData, selectedId) {
 };
 
 EntityTree.prototype.updateRouteBySearch = function() {
-  // var search = $$('entity_tree__search').getValue();
-  // var icon = $$('entity_tree__root_scope')._settings['icon'];
-  // if (icon === 'database' && search === '') {
-  //   return;
-  // }
-  // switch (icon) {
-  //   case 'user':
-  //     if (MDSCommon.isBlank(search)) {
-  //       search = 'me:*';
-  //     } else {
-  //       search = 'me:*' + search + '*';
-  //     }
-  //     break;
-  //   case 'globe':
-  //     if (MDSCommon.isBlank(search)) {
-  //       search = '*';
-  //     } else {
-  //       search = '*' + search + '*';
-  //     }
-  //     break;
-  //   case 'database':
-  //     break;
-  // }
-  // var prefix = '';
-  // var lang = localStorage.getItem('language');
-  // if (MDSCommon.isPresent(lang) && lang.toLowerCase() !== 'en') {
-  //   prefix = '/' + lang.toLowerCase();
-  // }
-  // window.location.href = prefix + '/#' + search;
 };
 
 EntityTree.prototype.refresh = function(root) {

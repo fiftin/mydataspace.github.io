@@ -15,13 +15,14 @@ UILayout.windows.addVersion = {
           if (!$$('add_version_form').validate()) {
             return;
           }
-
+          var currentData = Identity.dataFromId(UI.entityTree.currentId);
           Mydataspace.entities.create({
-            root: Identity.dataFromId(UI.entityTree.currentId).root,
+            root: currentData.root,
             path: '',
+            version: currentData.version,
             fields: [
-              { name: '$newVersion', value: true },
-              { name: '$newVersionDescription', value: $$('add_version_form').getValues().versionDescription }
+              { name: '$newVersion', value: true, type: 'b' },
+              { name: '$newVersionDescription', value: $$('add_version_form').getValues().versionDescription, type: 's' }
             ]
           }).then(function() {
             $$('add_version_window').hide();

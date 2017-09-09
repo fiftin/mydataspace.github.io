@@ -54,14 +54,17 @@ UILayout.windows.changeVersion = {
             type: 'form',
             width: 150,
             click: function() {
-              var root = Identity.dataFromId(UI.entityList.getRootId()).root;
+              var rootData = Identity.dataFromId(UI.entityList.getRootId());
+              var root = rootData.root;
               var version = $$('change_version_window__table').getSelectedItem().version;
+
               switch ($$('change_version_window').mode) {
                 case 'switch':
                   Mydataspace.entities.change({
                     root: root,
                     path: '',
-                    fields: [{ name: '$version', value: version }]
+                    version: rootData.version,
+                    fields: [{ name: '$version', value: version, type: 'i' }]
                   });
                   break;
                 case 'view':
