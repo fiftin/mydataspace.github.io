@@ -1999,19 +1999,15 @@ EntityTree.prototype.setCurrentId = function(id) {
 EntityTree.prototype.changeRootVersion = function(rootId, version) {
   var data = Identity.dataFromId(rootId);
   var self = this;
-
   Mydataspace.entities.get({
     root: data.root,
     path: '',
     version: version
   }).then(function(data) {
     var entity = Identity.entityFromData(data);
-    const item = $$('entity_tree').getItem(entity.id);
+    var i = $$('entity_tree').getBranchIndex(rootId);
+    $$('entity_tree').add(entity, i, null);
     $$('entity_tree').remove(rootId);
-    //if (item) {
-    //  $$('entity_tree').remove(entity.id);
-    //}
-    $$('entity_tree').add(entity, 0);
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
       self.setChildren(entity.id, entity.data);
     }
