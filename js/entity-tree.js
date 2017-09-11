@@ -80,28 +80,36 @@ EntityTree.prototype.setCurrentIdToFirst = function() {
 EntityTree.prototype.onCreate = function(data) {
   var parentId = Identity.parentId(Identity.idFromData(data));
   var entity = Identity.entityFromData(data);
-  var oldVersion = MDSCommon.findValueByName(data.fields || [], '$oldVersion');
   var self = this;
-  if (parentId === 'root' && oldVersion != null) {
+  if (parentId === 'root') {
+    var oldVersion = MDSCommon.findValueByName(data.fields || [], '$oldVersion');
 
-    var oldId = oldVersion === 0 ? data.root : data.root + '?' + oldVersion;
-    if ($$('entity_tree').getItem(oldId)) {
-      var i = $$('entity_tree').getBranchIndex(oldId);
-      $$('entity_tree').add(entity, i, null);
-      $$('entity_tree').remove(oldId);
-      if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-        self.setChildren(entity.id, entity.data);
-      }
-      $$('entity_tree').select(entity.id);
-      UI.entityList.refreshData();
-      UI.entityForm.refresh();
-      return;
+    var oldId;
+    if (oldVersion != null) {
+      oldId = oldVersion === 0 ? data.root : data.root + '?' + oldVersion;
     }
 
-  }
+    var i = 0;
+    if (oldId != null && $$('entity_tree').getItem(oldId)) {
+      i = $$('entity_tree').getBranchIndex(oldId);
+    }
 
-  if (!MDSCommon.isNull($$('entity_tree').getItem(parentId)) &&
-    MDSCommon.isNull($$('entity_tree').getItem(Identity.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)))) {
+    $$('entity_tree').add(entity, i, null);
+
+    if (oldId) {
+      $$('entity_tree').remove(oldId);
+    }
+
+    if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
+      self.setChildren(entity.id, entity.data);
+    }
+
+    $$('entity_tree').select(entity.id);
+    UI.entityList.refreshData();
+    UI.entityForm.refresh();
+
+  } else if ($$('entity_tree').getItem(parentId) != null &&
+    $$('entity_tree').getItem(Identity.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)) == null) {
     $$('entity_tree').add(entity, 0, parentId);
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
       self.setChildren(entity.id, entity.data);
