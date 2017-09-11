@@ -604,21 +604,22 @@
         for (var i in data.children) {
           var child = data.children[i];
           switch (child.path) {
-            case 'likes':
-              document.getElementById('root__counters_likes_count').innerText = child.numberOfChildren;
-              break;
-            case 'comments':
-              document.getElementById('root__counters_comments_count').innerText = child.numberOfChildren;
-              document.getElementById('root__tabs_comments_count').innerText = child.numberOfChildren;
-              break;
+//            case 'likes':
+//              document.getElementById('root__counters_likes_count').innerText = child.numberOfChildren;
+//              break;
+//            case 'comments':
+//              document.getElementById('root__counters_comments_count').innerText = child.numberOfChildren;
+//              document.getElementById('root__tabs_comments_count').innerText = child.numberOfChildren;
+//              break;
             case 'views':
               document.getElementById('root__tabs_views_count').innerText = child.numberOfChildren;
               break;
           }
         }
 
-
-
+        document.getElementById('root__counters_likes_count').innerText = MDSCommon.findValueByName(data.fields, '$likes');
+        document.getElementById('root__counters_comments_count').innerText = MDSCommon.findValueByName(data.fields, '$comments');
+        document.getElementById('root__tabs_comments_count').innerText = MDSCommon.findValueByName(data.fields, '$comments');
 
         //data.profile = {
         //  name: 'Denis',
@@ -874,7 +875,7 @@
     }
 
     function requestMyLike() {
-      Mydataspace.entities.request('entities.getMyChildren', { root: DATA.root, path: 'likes' }).then(function(result) {
+      Mydataspace.request('entities.getMyChildren', { root: DATA.root, path: 'likes' }).then(function(result) {
         var children = result.children;
         if (children.length > 0) {
           setMyLike(children[0]);

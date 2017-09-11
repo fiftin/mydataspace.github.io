@@ -117,8 +117,8 @@
             return '<span class="view__tag" onclick="openSearch_{{include.id}}(\'' + tag + '\'); return false;">' + tag + '</span>';
           }).join(' ');
 
-          var nLikes = MDSCommon.findValueByName(root.fields, 'likes') || 0;
-          var nComments = MDSCommon.findValueByName(root.fields, 'comments') || 0;
+          var nLikes = MDSCommon.findValueByName(root.fields, '$likes') || 0;
+          var nComments = MDSCommon.findValueByName(root.fields, '$comments') || 0;
 
           var languageMatch = location.pathname.match(/^\/(\w\w)(\/.*)?$/);
 
