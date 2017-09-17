@@ -136,7 +136,8 @@ EntityTree.prototype.viewRootVersion = function(rootId, version) {
   Mydataspace.entities.get({
     root: data.root,
     path: '',
-    version: version
+    version: version,
+    children: true
   }).then(function(data) {
     var entity = Identity.entityFromData(data);
 
@@ -152,12 +153,17 @@ EntityTree.prototype.viewRootVersion = function(rootId, version) {
       self.setChildren(entity.id, entity.data);
     }
 
-    self.resolveChildren(entity.id).then(function() {
-      $$('entity_tree').select(entity.id);
-      $$('entity_tree').open(entity.id);
-      UI.entityList.refreshData();
-      UI.entityForm.refresh();
-    });
+    $$('entity_tree').select(entity.id);
+    $$('entity_tree').open(entity.id);
+    UI.entityList.refreshData();
+    UI.entityForm.refresh();
+
+    // self.resolveChildren(entity.id).then(function() {
+    //   $$('entity_tree').select(entity.id);
+    //   $$('entity_tree').open(entity.id);
+    //   UI.entityList.refreshData();
+    //   UI.entityForm.refresh();
+    // });
 
   }).catch(function(err) {
     UI.error(err);
