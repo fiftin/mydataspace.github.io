@@ -67,7 +67,6 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SAVE_ENTITY: 'Save',
     REFRESH_ENTITY: 'Refresh',
     CANCEL_ENTITY: 'View',
-    SIGN_OUT: 'Log Out',
     SEARCH_BY_ROOTS: 'Search roots',
     SEARCH_BY_ENTITIES: 'Search',
     ADD_RESOURCE_WINDOW: 'New Resource',
@@ -115,6 +114,9 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     new_view: 'New View',
     create_view: 'Create View',
     no_description_provided: 'No description provided',
+    switch_default_version_window_title: 'Switch Default Version',
+    view_other_version_window_title: 'View Other Version',
+
     no_items: {
       no_items__title: 'You have ho any data yet',
       no_items__explore__desc: 'Find data you need among a huge amount of existing data',
@@ -156,8 +158,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       sec: 'Security',
       trans: 'Transport',
       geo: 'Geo',
-      state: 'State',
-    },
+      state: 'State'
+    }
 
 
 
@@ -233,7 +235,6 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SAVE_ENTITY: 'Сохр.',
     REFRESH_ENTITY: 'Обнов.',
     CANCEL_ENTITY: 'Пр.',
-    SIGN_OUT: 'Выход',
     SEARCH_BY_ROOTS: 'Поиск по корням',
     SEARCH_BY_ENTITIES: 'Поиск по элементам',
     ADD_RESOURCE_WINDOW: 'Добавить ресурс',
@@ -279,6 +280,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     create_view: 'Создать представление',
 
     no_description_provided: 'Нет описания',
+    switch_default_version_window_title: 'Установить другую версию по умолчанию',
+    view_other_version_window_title: 'Смотреть другую версию',
 
     no_items: {
       no_items__title: 'У вас еще нет никаких данных',

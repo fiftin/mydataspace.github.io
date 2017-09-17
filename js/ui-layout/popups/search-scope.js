@@ -27,7 +27,6 @@ UILayout.popups.searchScope = {
         $$('entity_tree__root_scope').define('icon', newv);
         $$('entity_tree__root_scope').refresh();
         $('.entity_tree__search input').focus();
-        UI.entityTree.updateRouteBySearch();
       }
     }
   }

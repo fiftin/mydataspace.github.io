@@ -16,14 +16,14 @@ UILayout.entityList =
           icon: 'plus',
           id: 'ADD_ENTITY_LABEL', label: STRINGS.ADD_ENTITY,
           width: 70,
-          popup: 'entity_tree__new_entity_popup',
+          popup: 'entity_tree__new_entity_popup'
         },
         { view: 'button',
           type: 'icon',
           icon: 'clone',
           id: 'NEW_VERSION_LABEL', label: STRINGS.NEW_VERSION,
           width: 110,
-          popup: 'entity_tree__new_root_version_popup',
+          popup: 'entity_tree__new_root_version_popup'
         },
         { view: 'search',
           id: 'entity_list__search',

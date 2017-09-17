@@ -1,14 +1,37 @@
 function EntityTree() {
-
 }
+
+
+/**
+ *
+ * @param entityIdOrData
+ * @param isReturnId
+ * @returns {*}
+ */
+EntityTree.prototype.findRoot = function(entityIdOrData, isReturnId) {
+  var wantedData = typeof entityIdOrData === 'string' ? Identity.dataFromId(entityIdOrData) : entityIdOrData;
+  var id = $$('entity_tree').getFirstId();
+  var data = Identity.dataFromId(id);
+  while (data.root !== wantedData.root) {
+    id = $$('entity_tree').getNextSiblingId(id);
+    if (id === false) {
+      return null;
+    }
+    data = Identity.dataFromId(id);
+  }
+  return isReturnId ? id : data;
+};
+
 
 EntityTree.prototype.setReadOnly = function(isReadOnly) {
   UIHelper.setVisible('ADD_ROOT_LABEL', !isReadOnly);
 };
 
+
 EntityTree.prototype.getCurrentId = function() {
   return this.currentId;
 };
+
 
 EntityTree.prototype.setCurrentId = function(id) {
   if (this.currentId != null) {
@@ -28,7 +51,86 @@ EntityTree.prototype.setCurrentId = function(id) {
 
 
 
-EntityTree.prototype.changeRootVersion = function(rootId, version) {
+EntityTree.prototype.createNewEmptyVersion = function(description) {
+  var self = this;
+  var currentData = Identity.dataFromId(UI.entityTree.currentId);
+
+  return Mydataspace.entities.create({
+    root: currentData.root,
+    path: '',
+    version: currentData.version,
+    fields: [
+      { name: '$newVersion', value: true, type: 'b' },
+      { name: '$newVersionDescription', value: description, type: 's' }
+    ]
+  }).then(function(data) {
+    var entity = Identity.entityFromData(data);
+    var oldVersion = MDSCommon.findValueByName(data.fields || [], '$oldVersion');
+
+    var oldId;
+    if (oldVersion != null) {
+      oldId = oldVersion === 0 ? data.root : data.root + '?' + oldVersion;
+    }
+
+    var i = 0;
+    if (oldId != null && $$('entity_tree').getItem(oldId)) {
+      i = $$('entity_tree').getBranchIndex(oldId);
+    }
+
+    if (oldId) {
+      $$('entity_tree').remove(oldId);
+    }
+
+    $$('entity_tree').add(entity, i, null);
+
+    if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
+      self.setChildren(entity.id, entity.data);
+    }
+
+    $$('entity_tree').select(entity.id);
+    $$('entity_tree').open(entity.id);
+    UI.entityList.refreshData();
+    UI.entityForm.refresh();
+  });
+};
+
+/**
+ * Change current version of root.
+ * @param {string} rootId Existing Root ID which version you want to change.
+ * @param {int} version Version you want to have.
+ */
+EntityTree.prototype.changeCurrentRootVersion = function(rootId, version) {
+  var rootData = Identity.dataFromId(UI.entityList.getRootId());
+  var self = this;
+  Mydataspace.entities.change({
+    root: rootData.root,
+    path: '',
+    version: rootData.version,
+    fields: [{ name: '$version', value: version, type: 'i' }]
+  }).then(function(data) {
+    var entity = Identity.entityFromData(data);
+    var i = $$('entity_tree').getBranchIndex(rootId);
+    $$('entity_tree').remove(rootId);
+    $$('entity_tree').add(entity, i, null);
+    if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
+      self.setChildren(entity.id, entity.data);
+    }
+    $$('entity_tree').select(entity.id);
+    $$('entity_tree').open(entity.id);
+    UI.entityList.refreshData();
+    UI.entityForm.refresh();
+  }).catch(function(err) {
+    UI.error(err);
+  });
+};
+
+
+/**
+ * View another version of passed root.
+ * @param {string} rootId Existing Root ID which version you want to view.
+ * @param {int} version Version you want to view.
+ */
+EntityTree.prototype.viewRootVersion = function(rootId, version) {
   var data = Identity.dataFromId(rootId);
   var self = this;
   Mydataspace.entities.get({
@@ -37,19 +139,33 @@ EntityTree.prototype.changeRootVersion = function(rootId, version) {
     version: version
   }).then(function(data) {
     var entity = Identity.entityFromData(data);
+
+
     var i = $$('entity_tree').getBranchIndex(rootId);
-    $$('entity_tree').add(entity, i, null);
+
     $$('entity_tree').remove(rootId);
+
+    $$('entity_tree').add(entity, i, null);
+
+
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
       self.setChildren(entity.id, entity.data);
     }
     $$('entity_tree').select(entity.id);
+    $$('entity_tree').open(entity.id);
     UI.entityList.refreshData();
     UI.entityForm.refresh();
+  }).catch(function(err) {
+    UI.error(err);
   });
 };
 
 
+/**
+ * Check if children of entity are loaded.
+ * Load children from server if children didn't loaded yet.
+ * @param id Parent entity ID
+ */
 EntityTree.prototype.resolveChildren = function(id) {
   return new Promise(function(resolve, reject) {
     var firstChildId = $$('entity_tree').getFirstChildId(id);
@@ -71,135 +187,113 @@ EntityTree.prototype.resolveChildren = function(id) {
   });
 };
 
+
 EntityTree.prototype.setCurrentIdToFirst = function() {
   var firstId = $$('entity_tree').getFirstId();
   this.setCurrentId(firstId);
   return firstId;
 };
 
-EntityTree.prototype.onCreate = function(data) {
-  var parentId = Identity.parentId(Identity.idFromData(data));
-  var entity = Identity.entityFromData(data);
-  var self = this;
-  if (parentId === 'root') {
-    var oldVersion = MDSCommon.findValueByName(data.fields || [], '$oldVersion');
-
-    var oldId;
-    if (oldVersion != null) {
-      oldId = oldVersion === 0 ? data.root : data.root + '?' + oldVersion;
-    }
-
-    var i = 0;
-    if (oldId != null && $$('entity_tree').getItem(oldId)) {
-      i = $$('entity_tree').getBranchIndex(oldId);
-    }
-
-    $$('entity_tree').add(entity, i, null);
-
-    if (oldId) {
-      $$('entity_tree').remove(oldId);
-    }
-
-    if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-      self.setChildren(entity.id, entity.data);
-    }
-
-    $$('entity_tree').select(entity.id);
-    UI.entityList.refreshData();
-    UI.entityForm.refresh();
-
-  } else if ($$('entity_tree').getItem(parentId) != null &&
-    $$('entity_tree').getItem(Identity.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)) == null) {
-    $$('entity_tree').add(entity, 0, parentId);
-    if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-      self.setChildren(entity.id, entity.data);
-    }
-    self.resolveChildren(parentId).then(function() {
-      $$('entity_tree').open(entity.id);
-    });
-  }
-};
 
 /**
  * Initializes event listeners.
  */
 EntityTree.prototype.listen = function() {
   var self = this;
-  Mydataspace.on('entities.delete.res', function(data) {
-    var entityId = Identity.idFromData(data);
 
-    if ($$('entity_tree').getItem(entityId) == null) {
-      return;
+
+  Mydataspace.on('entities.create.res', function(data) {
+    var parentId = Identity.parentId(Identity.idFromData(data));
+    var entity = Identity.entityFromData(data);
+
+    if (parentId === 'root') {
+
+      // Now do nothing
+
+    } else if ($$('entity_tree').getItem(parentId) != null &&
+      $$('entity_tree').getItem(Identity.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)) == null) {
+
+
+      // simply add new entity to tree and no more
+      $$('entity_tree').add(entity, 0, parentId);
+      if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
+        self.setChildren(entity.id, entity.data);
+      }
+      self.resolveChildren(parentId).then(function() { $$('entity_tree').open(entity.id); });
     }
-
-    if (entityId === self.getCurrentId()) { // Select other item if selected item is deleted.
-      var nextId = $$('entity_tree').getPrevSiblingId(entityId) ||
-                   $$('entity_tree').getNextSiblingId(entityId) ||
-                   $$('entity_tree').getParentId(entityId);
-      $$('entity_tree').select(nextId);
-    }
-
-    $$('entity_tree').remove(entityId);
   });
 
-  Mydataspace.on('entities.create.res', this.onCreate.bind(this));
-  Mydataspace.on('entities.change.res', function(data) {
-    var entity = Identity.entityFromData(data);
-    var oldVersion = MDSCommon.findValueByName(data.fields || [], '$oldVersion');
 
-    // Result of 'Switch Version' request
-    if (data.path === '' && oldVersion != null) {
-      var oldId = oldVersion === 0 ? data.root : data.root + '?' + oldVersion;
-      if ($$('entity_tree').getItem(oldId)) {
-        var i = $$('entity_tree').getBranchIndex(oldId);
-        $$('entity_tree').add(entity, i, null);
-        $$('entity_tree').remove(oldId);
-        if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-          self.setChildren(entity.id, entity.data);
-        }
-        $$('entity_tree').select(entity.id);
-        UI.entityList.refreshData();
-        UI.entityForm.refresh();
+  Mydataspace.on('entities.delete.res', function(data) {
+    var entityId;
+    if (data.path === '') {
+      var rootData = self.findRoot(data);
+      if (rootData == null) {
+        return;
+      }
+      entityId = Identity.idFromData(MDSCommon.extend(data, { version: rootData.version }));
+    } else {
+      entityId = Identity.idFromData(data);
+      if ($$('entity_tree').getItem(entityId) == null) {
         return;
       }
     }
 
-    if (entity.id !== self.currentId) {
+
+    if (entityId === self.getCurrentId()) { // Select other item if selected item is deleted.
+      var nextId = $$('entity_tree').getPrevSiblingId(entityId) ||
+        $$('entity_tree').getNextSiblingId(entityId) ||
+        $$('entity_tree').getParentId(entityId);
+      $$('entity_tree').select(nextId);
+    }
+
+
+    $$('entity_tree').remove(entityId);
+  });
+
+
+  Mydataspace.on('entities.change.res', function(data) {
+    var oldVersion = MDSCommon.findValueByName(data.fields || [], '$oldVersion');
+
+    // User only changed current version. Ignore it.
+    if (data.path === '' && oldVersion != null) {
       return;
     }
 
+    // Update changed entity view
+    var entity = Identity.entityFromData(data);
     var item = $$('entity_tree').getItem(entity.id);
     if (item == null) {
       return;
     }
-
     $$('entity_tree').updateItem(entity.id, entity);
   });
 
+
   Mydataspace.on('entities.rename.res', function(data) {
-    var id = Identity.idFromData(data);
-    if (id !== self.currentId) {
+    var rootData = self.findRoot(data);
+    if (rootData == null) {
       return;
     }
 
+    var id = Identity.idFromData(MDSCommon.extend(data, { version: rootData.version }));
     if ($$('entity_tree').getItem(id) == null) {
       return;
     }
 
     var parentId = $$('entity_tree').getParentId(id);
-
     var newId = self.cloneItem(id, parentId, Identity.renameData.bind(null, data));
-
     self.setCurrentId(newId);
     $$('entity_tree').remove(id);
   });
 };
 
+
 /**
  * Create a copy of entity with all children.
- * @param id            Id of entity for clone.
- * @param parentId      Id of entity witch must be parent of created copy.
- * @param applyForData
+ * @param {string} id               Id of entity for clone.
+ * @param {string} parentId         Id of entity witch must be parent of created copy.
+ * @param {function} applyForData   Function applied for associatedData of each entity.
  */
 EntityTree.prototype.cloneItem = function(id, parentId, applyForData) {
   var currentParentId = $$('entity_tree').getParentId(id);
@@ -238,23 +332,30 @@ EntityTree.prototype.cloneItem = function(id, parentId, applyForData) {
   return newId;
 };
 
-EntityTree.getViewOnlyRoot = function() {
-  return window.location.hash.substring(1).split('/')[0];
-};
 
-EntityTree.prototype.handleFormattedData = function(formattedData) {
+// EntityTree.getViewOnlyRoot = function() {
+//   return window.location.hash.substring(1).split('/')[0];
+// };
+
+
+/**
+ * Load data to Tree component.
+ * @param formattedData Data which should be loaded.
+ */
+EntityTree.prototype.loadFormattedData = function(formattedData) {
   $$('entity_tree').clearAll();
   this.currentId = null;
   $$('entity_tree').parse(formattedData);
   $$('entity_tree').enable();
 };
 
+
 EntityTree.prototype.requestRoots = function(onlyMine, reqData, selectedId) {
   var req = onlyMine ? 'entities.getMyRoots' : 'entities.getRoots';
   var self = this;
   Mydataspace.request(req, reqData, function(data) {
-    // convert received data to treeview format and load its to entity_tree.
-    self.handleFormattedData(data['roots'].map(Identity.entityFromData));
+    // convert received data to TreeView format and load its to entity_tree.
+    self.loadFormattedData(data['roots'].map(Identity.entityFromData));
     if (selectedId) {
       self.setCurrentId(selectedId);
     }
@@ -265,8 +366,6 @@ EntityTree.prototype.requestRoots = function(onlyMine, reqData, selectedId) {
   });
 };
 
-EntityTree.prototype.updateRouteBySearch = function() {
-};
 
 EntityTree.prototype.refresh = function(root) {
   var self = this;
@@ -290,12 +389,7 @@ EntityTree.prototype.refresh = function(root) {
       root: requiredRoot,
       path: ''
     }, function(data) {
-      // if (data.mine) {
-      //   self.requestRoots(true, {}, data.root);
-      // } else {
-        // convert received data to treeview format and load its to entity_tree.
-        self.handleFormattedData([Identity.entityFromData(data)]);
-      // }
+      self.loadFormattedData([Identity.entityFromData(data)]);
       UI.pages.updatePageState('data');
     }, function(err) {
       if (err.message === "Cannot read property 'Entity' of undefined") {
@@ -307,6 +401,7 @@ EntityTree.prototype.refresh = function(root) {
     });
   }
 };
+
 
 /**
  * Override entity's children recursively.
@@ -337,11 +432,7 @@ EntityTree.prototype.setChildren = function(entityId, children) {
   $$('entity_tree').addCss(showMoreChildId, 'entity_tree__show_more_item');
 };
 
-/**
- *
- * @param entityId
- * @param children
- */
+
 EntityTree.prototype.addChildren = function(entityId, children) {
   var self = this;
   var showMoreChildId = Identity.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID);
@@ -365,6 +456,7 @@ EntityTree.prototype.addChildren = function(entityId, children) {
   });
 };
 
+
 /**
  * Request and and add more items to entity.
  * @param id Id of parent entity.
@@ -383,6 +475,7 @@ EntityTree.prototype.showMore = function(id) {
   });
 };
 
+
 EntityTree.prototype.numberOfChildren = function(id) {
   var n = 0;
   var prevChildId = null;
@@ -395,9 +488,14 @@ EntityTree.prototype.numberOfChildren = function(id) {
   return n;
 };
 
-EntityTree.prototype.lastChildId = function(id) {
+/**
+ * Find last child ID
+ * @param {string} parentId ID of entity which last child you want to find
+ * @returns {*} Last child ID or null
+ */
+EntityTree.prototype.lastChildId = function(parentId) {
   var prevChildId = null;
-  var childId = $$('entity_tree').getFirstChildId(id);
+  var childId = $$('entity_tree').getFirstChildId(parentId);
   while (childId != null && prevChildId !== childId) {
     prevChildId = childId;
     childId = $$('entity_tree').getNextSiblingId(childId);

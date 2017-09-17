@@ -32,6 +32,8 @@ var Identity = {
 
   /**
    * Forms string with id of entity.
+   * Entity ID format:
+   * root:path?version
    * @param data Entity data included root & path.
    * @returns string Entity id
    */

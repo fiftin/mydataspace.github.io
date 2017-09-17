@@ -7,30 +7,29 @@ UILayout.windows.changeVersion = {
   head: STRINGS.CHANGE_VERSION,
   on: {
     onShow: function() {
+      // Update dialog title
       var title;
-
       switch ($$('change_version_window').mode) {
         case 'switch':
-          title = 'Switch Default Version';
+          title = STRINGS.switch_default_version_window_title;
           break;
         case 'view':
-          title = 'View Version...';
+          title = STRINGS.view_other_version_window_title;
           break;
       }
-      
       $$('change_version_window').getHead().define('template', title);
       $$('change_version_window').getHead().refresh();
 
-      var root = Identity.dataFromId(UI.entityList.getRootId()).root;
-
+      // Load and display data
       Mydataspace.request('entities.getRootVersions', {
-        root: root
+        root: Identity.dataFromId(UI.entityList.getRootId()).root
       }).then(function(data) {
         $$('change_version_window__table').clearAll();
         $$('change_version_window__table').parse(data.versions.map(function(version) {
           return MDSCommon.extend(version, { id: version.version });
         }));
       }).catch(function(data) {
+        UI.error(data);
       });
     }
   },
@@ -54,21 +53,14 @@ UILayout.windows.changeVersion = {
             type: 'form',
             width: 150,
             click: function() {
-              var rootData = Identity.dataFromId(UI.entityList.getRootId());
-              var root = rootData.root;
               var version = $$('change_version_window__table').getSelectedItem().version;
-
+              var rootId = Identity.rootId(UI.entityList.getRootId());
               switch ($$('change_version_window').mode) {
                 case 'switch':
-                  Mydataspace.entities.change({
-                    root: root,
-                    path: '',
-                    version: rootData.version,
-                    fields: [{ name: '$version', value: version, type: 'i' }]
-                  });
+                  UI.entityTree.changeCurrentRootVersion(rootId, version);
                   break;
                 case 'view':
-                  UI.entityTree.changeRootVersion(Identity.rootId(UI.entityList.getRootId()), version);
+                  UI.entityTree.viewRootVersion(rootId, version);
                   break;
               }
               $$('change_version_window').hide();

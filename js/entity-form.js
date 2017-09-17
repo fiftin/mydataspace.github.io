@@ -561,6 +561,9 @@ EntityForm.prototype.refresh = function() {
 
 EntityForm.prototype.delete = function() {
   $$('entity_form').disable();
+  UI.deleteEntity(this.selectedId);
+
+
   Mydataspace.request('entities.delete', Identity.dataFromId(this.selectedId), function(data) {
     // do nothing because selected item already deleted.
   }, function(err) {

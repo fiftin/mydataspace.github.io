@@ -171,6 +171,7 @@ UI = {
         webix.message({ type: 'error', text: err.message || err.name });
         break;
     }
+    console.error(err);
   },
 
   refresh: function() {
@@ -518,5 +519,9 @@ UI = {
     }, function(err) {
 
     });
+  },
+
+  deleteEntity: function(entityId) {
+
   }
 };

@@ -47,12 +47,7 @@ var Router = {
     return false;
   },
 
-  /**
-   *
-   * @param raw
-   * @returns {string}
-   */
-  getSearch: function(raw) {
+  getSearch: function() {
     if (window.location.pathname === '/') {
       return '';
     }
