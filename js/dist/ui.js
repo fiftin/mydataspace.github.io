@@ -469,13 +469,22 @@ var Identity = {
    */
   entityFromData: function(data) {
     var entityId = Identity.idFromData(data);
-    var children = [];
+    var children;
     if (!MDSCommon.isBlank(data.numberOfChildren) && data.numberOfChildren > 0) {
-      children.push({
-        id: Identity.childId(entityId, UIHelper.ENTITY_TREE_DUMMY_ID),
-        value: ''
-      });
+      if (MDSCommon.isPresent(data.children)) {
+        children = data.children.filter(function(x) {
+          return (x.root !== 'root' || x.path !== '') && UIHelper.IGNORED_PATHS.indexOf(x.path) < 0;
+        }).map(Identity.entityFromData);
+      } else {
+        children = [{
+          id: Identity.childId(entityId, UIHelper.ENTITY_TREE_DUMMY_ID),
+          value: ''
+        }];
+      }
+    } else {
+      children = [];
     }
+
     return {
       id: entityId,
       value: Identity.nameFromData(data),
@@ -1819,9 +1828,10 @@ EntityList.prototype.getCurrentId = function() {
 /**
  * Reload data (from server) of entity list.
  * Uses entityList_fill internally.
+ * @param {string} [newRootId]
  */
-EntityList.prototype.refreshData = function() {
-  var req = Identity.dataFromId(this.getRootId());
+EntityList.prototype.refresh = function(newRootId) {
+  var req = Identity.dataFromId(newRootId || this.getRootId());
   var search = $$('entity_list__search').getValue();
   var self = this;
   if (MDSCommon.isPresent(search)) {
@@ -2037,7 +2047,7 @@ EntityTree.prototype.createNewEmptyVersion = function(description) {
 
     $$('entity_tree').select(entity.id);
     $$('entity_tree').open(entity.id);
-    UI.entityList.refreshData();
+    UI.entityList.refresh(entity.id);
     UI.entityForm.refresh();
   });
 };
@@ -2065,7 +2075,7 @@ EntityTree.prototype.changeCurrentRootVersion = function(rootId, version) {
     }
     $$('entity_tree').select(entity.id);
     $$('entity_tree').open(entity.id);
-    UI.entityList.refreshData();
+    UI.entityList.refresh(entity.id);
     UI.entityForm.refresh();
   }).catch(function(err) {
     UI.error(err);
@@ -2103,15 +2113,8 @@ EntityTree.prototype.viewRootVersion = function(rootId, version) {
 
     $$('entity_tree').select(entity.id);
     $$('entity_tree').open(entity.id);
-    UI.entityList.refreshData();
+    UI.entityList.refresh(entity.id);
     UI.entityForm.refresh();
-    
-    // self.resolveChildren(entity.id).then(function() {
-    //   $$('entity_tree').select(entity.id);
-    //   $$('entity_tree').open(entity.id);
-    //   UI.entityList.refreshData();
-    //   UI.entityForm.refresh();
-    // });
 
   }).catch(function(err) {
     UI.error(err);
@@ -2163,21 +2166,24 @@ EntityTree.prototype.listen = function() {
   Mydataspace.on('entities.create.res', function(data) {
     var parentId = Identity.parentId(Identity.idFromData(data));
     var entity = Identity.entityFromData(data);
+    var oldVersion = MDSCommon.findValueByName(data.fields || [], '$oldVersion');
 
-    if (parentId === 'root') {
-
-      // Now do nothing
-
-    } else if ($$('entity_tree').getItem(parentId) != null &&
+    if (oldVersion == null &&
       $$('entity_tree').getItem(Identity.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)) == null) {
-
 
       // simply add new entity to tree and no more
       $$('entity_tree').add(entity, 0, parentId);
+
       if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
         self.setChildren(entity.id, entity.data);
       }
-      self.resolveChildren(parentId).then(function() { $$('entity_tree').open(entity.id); });
+
+      if (parentId === 'root') {
+        $$('entity_tree').select(entity.id);
+        $$('entity_tree').open(entity.id);
+      }
+
+      self.resolveChildren(entity.id).then(function() { $$('entity_tree').open(entity.id); });
     }
   });
 
@@ -2945,7 +2951,7 @@ UILayout.windows.addResource = {
               function(res) {
                 $$('add_resource_window').hide();
                 UIControls.removeSpinnerFromWindow('add_resource_window');
-                UI.entityList.refreshData();
+                UI.entityList.refresh();
               },
               function(err) {
                 UIControls.removeSpinnerFromWindow('add_resource_window');
@@ -3704,7 +3710,7 @@ UILayout.entityList =
           icon: 'refresh',
           id: 'REFRESH_LABEL', label: STRINGS.REFRESH,
           width: 85,
-          click: function() { UI.entityList.refreshData(); }
+          click: function() { UI.entityList.refresh(); }
         },
         { view: 'button',
           type: 'icon',
@@ -3728,11 +3734,11 @@ UILayout.entityList =
           placeholder: STRINGS.SEARCH_BY_ENTITIES,
           on: {
             onTimedKeyPress: function(code, e) {
-              UI.entityList.refreshData();
+              UI.entityList.refresh();
             },
             onSearchIconClick: function() {
               // $$('entity_list__search').setValue('');
-              // UI.entityList.refreshData();
+              // UI.entityList.refresh();
             }
           }
         }

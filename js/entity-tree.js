@@ -89,7 +89,7 @@ EntityTree.prototype.createNewEmptyVersion = function(description) {
 
     $$('entity_tree').select(entity.id);
     $$('entity_tree').open(entity.id);
-    UI.entityList.refreshData();
+    UI.entityList.refresh(entity.id);
     UI.entityForm.refresh();
   });
 };
@@ -117,7 +117,7 @@ EntityTree.prototype.changeCurrentRootVersion = function(rootId, version) {
     }
     $$('entity_tree').select(entity.id);
     $$('entity_tree').open(entity.id);
-    UI.entityList.refreshData();
+    UI.entityList.refresh(entity.id);
     UI.entityForm.refresh();
   }).catch(function(err) {
     UI.error(err);
@@ -155,15 +155,8 @@ EntityTree.prototype.viewRootVersion = function(rootId, version) {
 
     $$('entity_tree').select(entity.id);
     $$('entity_tree').open(entity.id);
-    UI.entityList.refreshData();
+    UI.entityList.refresh(entity.id);
     UI.entityForm.refresh();
-
-    // self.resolveChildren(entity.id).then(function() {
-    //   $$('entity_tree').select(entity.id);
-    //   $$('entity_tree').open(entity.id);
-    //   UI.entityList.refreshData();
-    //   UI.entityForm.refresh();
-    // });
 
   }).catch(function(err) {
     UI.error(err);
@@ -215,21 +208,24 @@ EntityTree.prototype.listen = function() {
   Mydataspace.on('entities.create.res', function(data) {
     var parentId = Identity.parentId(Identity.idFromData(data));
     var entity = Identity.entityFromData(data);
+    var oldVersion = MDSCommon.findValueByName(data.fields || [], '$oldVersion');
 
-    if (parentId === 'root') {
-
-      // Now do nothing
-
-    } else if ($$('entity_tree').getItem(parentId) != null &&
+    if (oldVersion == null &&
       $$('entity_tree').getItem(Identity.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)) == null) {
-
 
       // simply add new entity to tree and no more
       $$('entity_tree').add(entity, 0, parentId);
+
       if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
         self.setChildren(entity.id, entity.data);
       }
-      self.resolveChildren(parentId).then(function() { $$('entity_tree').open(entity.id); });
+
+      if (parentId === 'root') {
+        $$('entity_tree').select(entity.id);
+        $$('entity_tree').open(entity.id);
+      }
+
+      self.resolveChildren(entity.id).then(function() { $$('entity_tree').open(entity.id); });
     }
   });
 

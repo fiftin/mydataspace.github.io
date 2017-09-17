@@ -130,9 +130,10 @@ EntityList.prototype.getCurrentId = function() {
 /**
  * Reload data (from server) of entity list.
  * Uses entityList_fill internally.
+ * @param {string} [newRootId]
  */
-EntityList.prototype.refreshData = function() {
-  var req = Identity.dataFromId(this.getRootId());
+EntityList.prototype.refresh = function(newRootId) {
+  var req = Identity.dataFromId(newRootId || this.getRootId());
   var search = $$('entity_list__search').getValue();
   var self = this;
   if (MDSCommon.isPresent(search)) {

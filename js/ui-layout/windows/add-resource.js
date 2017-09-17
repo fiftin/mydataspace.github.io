@@ -23,7 +23,7 @@ UILayout.windows.addResource = {
               function(res) {
                 $$('add_resource_window').hide();
                 UIControls.removeSpinnerFromWindow('add_resource_window');
-                UI.entityList.refreshData();
+                UI.entityList.refresh();
               },
               function(err) {
                 UIControls.removeSpinnerFromWindow('add_resource_window');

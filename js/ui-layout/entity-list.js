@@ -9,7 +9,7 @@ UILayout.entityList =
           icon: 'refresh',
           id: 'REFRESH_LABEL', label: STRINGS.REFRESH,
           width: 85,
-          click: function() { UI.entityList.refreshData(); }
+          click: function() { UI.entityList.refresh(); }
         },
         { view: 'button',
           type: 'icon',
@@ -33,11 +33,11 @@ UILayout.entityList =
           placeholder: STRINGS.SEARCH_BY_ENTITIES,
           on: {
             onTimedKeyPress: function(code, e) {
-              UI.entityList.refreshData();
+              UI.entityList.refresh();
             },
             onSearchIconClick: function() {
               // $$('entity_list__search').setValue('');
-              // UI.entityList.refreshData();
+              // UI.entityList.refresh();
             }
           }
         }

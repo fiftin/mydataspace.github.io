@@ -4,13 +4,22 @@ var Identity = {
    */
   entityFromData: function(data) {
     var entityId = Identity.idFromData(data);
-    var children = [];
+    var children;
     if (!MDSCommon.isBlank(data.numberOfChildren) && data.numberOfChildren > 0) {
-      children.push({
-        id: Identity.childId(entityId, UIHelper.ENTITY_TREE_DUMMY_ID),
-        value: ''
-      });
+      if (MDSCommon.isPresent(data.children)) {
+        children = data.children.filter(function(x) {
+          return (x.root !== 'root' || x.path !== '') && UIHelper.IGNORED_PATHS.indexOf(x.path) < 0;
+        }).map(Identity.entityFromData);
+      } else {
+        children = [{
+          id: Identity.childId(entityId, UIHelper.ENTITY_TREE_DUMMY_ID),
+          value: ''
+        }];
+      }
+    } else {
+      children = [];
     }
+
     return {
       id: entityId,
       value: Identity.nameFromData(data),
