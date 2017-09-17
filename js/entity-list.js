@@ -99,7 +99,7 @@ EntityList.prototype.setRootId = function(id) {
     }));
   }
 
-  this.refreshData();
+  this.refresh();
 };
 
 
