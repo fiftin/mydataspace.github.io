@@ -2099,10 +2099,14 @@ EntityTree.prototype.viewRootVersion = function(rootId, version) {
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
       self.setChildren(entity.id, entity.data);
     }
-    $$('entity_tree').select(entity.id);
-    $$('entity_tree').open(entity.id);
-    UI.entityList.refreshData();
-    UI.entityForm.refresh();
+
+    self.resolveChildren(entity.id).then(function() {
+      $$('entity_tree').select(entity.id);
+      $$('entity_tree').open(entity.id);
+      UI.entityList.refreshData();
+      UI.entityForm.refresh();
+    });
+
   }).catch(function(err) {
     UI.error(err);
   });
