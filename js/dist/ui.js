@@ -2809,9 +2809,8 @@ UILayout.windows.addTask = {
         onSubmit: function() {
           if ($$('add_task_form').validate()) {
             var formData = $$('add_task_form').getValues();
-            var newEntityId = Identity.childId(UI.entityList.getRootId(), formData.name);
+            var newEntityId = Identity.childId(Identity.rootId(UI.entityList.getRootId()), 'tasks/' + formData.name);
             var data = Identity.dataFromId(newEntityId);
-            data.path = 'tasks';
             data.fields = [];
             data.othersCan = formData.othersCan;
             Mydataspace.request('entities.create', data, function() {
@@ -2858,9 +2857,8 @@ UILayout.windows.addProto = {
         onSubmit: function() {
           if ($$('add_proto_form').validate()) {
             var formData = $$('add_proto_form').getValues();
-            var newEntityId = Identity.childId(UI.entityList.getRootId(), formData.name);
+            var newEntityId = Identity.childId(Identity.rootId(UI.entityList.getRootId()), 'protos/' + formData.name);
             var data = Identity.dataFromId(newEntityId);
-            data.path = 'protos';
             data.fields = [];
             data.othersCan = formData.othersCan;
             Mydataspace.request('entities.create', data, function() {
