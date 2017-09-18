@@ -296,7 +296,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     new_entity: 'Новый элемент',
     import_entity: 'Импорт элемента',
     new_resource: 'Новый ресурс',
-    new_task: 'Новый задача',
+    new_task: 'Новая задача',
     new_proto: 'Новый прототип',
 
     no_items: {
