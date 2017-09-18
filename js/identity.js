@@ -79,10 +79,10 @@ var Identity = {
   childId: function(entityIdWithVersion, childSubPath) {
     var idVersionParts = entityIdWithVersion.split('?');
     var entityId = idVersionParts[0];
-    if (entityId.indexOf(':') !== -1) {
-      return entityId + '/' + childSubPath;
-    }
     var version = idVersionParts[1] != null ? '?' + idVersionParts[1] : '';
+    if (entityId.indexOf(':') !== -1) {
+      return entityId + '/' + childSubPath + version;
+    }
     return entityId + ':' + childSubPath + version;
   },
 
