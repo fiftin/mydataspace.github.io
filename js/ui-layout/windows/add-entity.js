@@ -4,7 +4,7 @@ UILayout.windows.addEntity = {
     width: 350,
     position: 'center',
     modal: true,
-    head: STRINGS.ADD_ENTITY,
+    head: STRINGS.new_entity,
     on: UIControls.getOnForFormWindow('add_entity'),
     body: {
       view: 'form',
