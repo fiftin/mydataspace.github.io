@@ -111,5 +111,51 @@ UIControls = {
         Mydataspace.login(providerName);
       }
     };
+  },
+
+  getChangeVersionPopupData: function(isReadOnly) {
+    if (isReadOnly) {
+      return [{ id: 'new_version', value: STRINGS.ADD_VERSION }];
+    }
+    return [
+      { id: 'new_version', value: STRINGS.ADD_VERSION },
+//      { id: 'copy_version', value: 'Clone Current Version' },
+      // { id: 'import_version', value: 'Import to New Version' },
+//      { id: 'import_version_csv', value: 'Import New Version from CSV As Is' }
+      { id: 'view_version', value: STRINGS.view_other_version_window_title },
+      { id: 'switch_version', value: STRINGS.switch_default_version_window_title }
+    ];
+  },
+
+  getNewEntityPopupData: function(id) {
+    var path = id ? Identity.dataFromId(id).path : '';
+    switch (path) {
+      case '':
+        return [
+          {id: 'new_entity', value: STRINGS.new_entity, icon: 'file-o'},
+          {id: 'import_wizard', value: STRINGS.import_entity},
+          {id: 'new_resource', value: STRINGS.new_resource, icon: 'diamond'},
+          {id: 'new_task', value: STRINGS.new_task, icon: 'file-code-o'},
+          {id: 'new_proto', value: STRINGS.new_proto, icon: 'cube'}
+//      { id: 'import_csv', value: 'Import Entity from CSV As Is' }
+        ];
+      case 'tasks':
+        return [
+          {id: 'new_task', value: STRINGS.new_task, icon: 'file-code-o'}
+        ];
+      case 'protos':
+        return [
+          {id: 'new_proto', value: STRINGS.new_proto, icon: 'cube'}
+        ];
+      case 'resources':
+        return [
+          {id: 'new_resource', value: STRINGS.new_resource, icon: 'diamond'}
+        ];
+      default:
+        return [
+          {id: 'new_entity', value: STRINGS.new_entity, icon: 'file-o'},
+          {id: 'import_wizard', value: STRINGS.import_entity}
+        ];
+    }
   }
 };

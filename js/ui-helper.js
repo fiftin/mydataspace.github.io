@@ -181,4 +181,5 @@ UIHelper = {
   isValidJWT: function(token) {
     return isValidJWT(token);
   }
+
 };

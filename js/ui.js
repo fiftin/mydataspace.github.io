@@ -181,12 +181,12 @@ UI = {
   },
 
   /**
-   * Handler of upload resouce-file event for file input.
+   * Handler of upload resource-file event for file input.
    * @param fileInput Input file
-   * @param root Root for resurce
+   * @param root Root for resource
    * @param type Type of resource - avatar, image or file
    * @param done Success upload feedback
-   * @param fial Unsuccess upload feedback
+   * @param fail Unsuccess upload feedback
    */
   uploadResource: function(fileInput, root, type, done, fail) {
     var formData = new FormData();
@@ -419,9 +419,11 @@ UI = {
     webix.ui(UILayout.windows.editScript);
     webix.ui(UILayout.windows.addRoot);
     webix.ui(UILayout.windows.addEntity);
+    webix.ui(UILayout.windows.addTask);
+    webix.ui(UILayout.windows.addProto);
+    webix.ui(UILayout.windows.addResource);
     webix.ui(UILayout.windows.addField);
     webix.ui(UILayout.windows.addApp);
-    webix.ui(UILayout.windows.addResource);
     webix.ui(UILayout.windows.changeVersion);
     webix.ui(UILayout.windows.addVersion);
     webix.ui(UILayout.sideMenu);

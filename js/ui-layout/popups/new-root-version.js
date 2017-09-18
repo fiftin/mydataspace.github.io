@@ -8,14 +8,7 @@ UILayout.popups.newRootVersion = {
     id: 'entity_tree__new_root_version_list',
     class: 'entity_tree__new_root_version_list',
     borderless: true,
-		data: [
-      { id: 'new_version', value: STRINGS.ADD_VERSION },
-//      { id: 'copy_version', value: 'Clone Current Version' },
-      // { id: 'import_version', value: 'Import to New Version' },
-//      { id: 'import_version_csv', value: 'Import New Version from CSV As Is' }
-      { id: 'view_version', value: STRINGS.view_other_version_window_title },
-      { id: 'switch_version', value: STRINGS.switch_default_version_window_title }
-		],
+		data: UIControls.getChangeVersionPopupData(),
 		datatype: 'json',
 //		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
 		autoheight: true,

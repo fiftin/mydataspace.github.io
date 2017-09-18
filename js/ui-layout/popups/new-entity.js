@@ -8,14 +8,7 @@ UILayout.popups.newEntity = {
     id: 'entity_tree__new_entity_list',
     class: 'entity_tree__new_entity_list',
     borderless: true,
-		data: [
-      { id: 'new_entity', value: STRINGS.new_entity, icon: 'file-o' },
-      { id: 'import_wizard', value: STRINGS.import_entity },
-      { id: 'new_resource', value: STRINGS.new_resource, icon: 'diamond' },
-      { id: 'new_task', value: STRINGS.new_task, icon: 'file-code-o' },
-      { id: 'new_proto', value: STRINGS.new_proto, icon: 'cube' }
-//      { id: 'import_csv', value: 'Import Entity from CSV As Is' }
-		],
+		data: UIControls.getNewEntityPopupData(),
 		datatype: 'json',
 		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
 		autoheight: true,
@@ -30,12 +23,13 @@ UILayout.popups.newEntity = {
             $$('add_resource_window').show();
             break;
           case 'new_task':
-            $$('add_entity_window').show();
+            $$('add_task_window').show();
             break;
           case 'new_proto':
-            $$('add_entity_window').show();
+            $$('add_proto_window').show();
             break;
           case 'import_wizard':
+            // global var openRefineImportEntity
             openRefineImportEntity = Identity.dataFromId(UI.entityTree.getCurrentId());
             $('#import_data_modal').modal('show');
             break;

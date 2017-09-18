@@ -13,6 +13,8 @@ function EntityList() {
  * Hide/show toolbar buttons according passed state - readonly or not.
  */
 EntityList.prototype.setReadOnly = function(isReadOnly) {
+  $$('entity_tree__new_root_version_list').clearAll();
+  $$('entity_tree__new_root_version_list').parse(UIControls.getChangeVersionPopupData(isReadOnly));
   UIHelper.setVisible('ADD_ENTITY_LABEL', !isReadOnly);
   UIHelper.setVisible('NEW_VERSION_LABEL', !isReadOnly && Identity.isRootId(this.getRootId()));
 };
@@ -80,7 +82,7 @@ EntityList.prototype.listen = function() {
 /**
  * Set Id of entity witch items displayed in list. This method reloading data.
  */
-EntityList.prototype.setRootId = function(id) {
+EntityList.prototype.setRootIdWithoutRefresh = function(id) {
   if (this.rootId === id) {
     return;
   }
@@ -98,7 +100,14 @@ EntityList.prototype.setRootId = function(id) {
       events: ['entities.rename.res']
     }));
   }
+};
 
+
+/**
+ * Set Id of entity witch items displayed in list. This method reloading data.
+ */
+EntityList.prototype.setRootId = function(id) {
+  this.setRootIdWithoutRefresh(id);
   this.refresh();
 };
 
@@ -133,9 +142,18 @@ EntityList.prototype.getCurrentId = function() {
  * @param {string} [newRootId]
  */
 EntityList.prototype.refresh = function(newRootId) {
-  var req = Identity.dataFromId(newRootId || this.getRootId());
-  var search = $$('entity_list__search').getValue();
   var self = this;
+
+  if (newRootId != null) {
+    self.setRootIdWithoutRefresh(newRootId);
+  }
+
+  $$('entity_tree__new_entity_list').clearAll();
+  $$('entity_tree__new_entity_list').parse(UIControls.getNewEntityPopupData(self.getRootId()));
+
+  var req = Identity.dataFromId(self.getRootId());
+  var search = $$('entity_list__search').getValue();
+
   if (MDSCommon.isPresent(search)) {
     if (search.indexOf('*') === search.length - 1) {
       req['filterByName'] = search.substring(0, search.length - 1);

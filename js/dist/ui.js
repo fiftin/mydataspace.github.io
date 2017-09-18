@@ -324,6 +324,7 @@ UIHelper = {
   isValidJWT: function(token) {
     return isValidJWT(token);
   }
+
 };
 
 var Fields = {
@@ -709,6 +710,52 @@ UIControls = {
         Mydataspace.login(providerName);
       }
     };
+  },
+
+  getChangeVersionPopupData: function(isReadOnly) {
+    if (isReadOnly) {
+      return [{ id: 'new_version', value: STRINGS.ADD_VERSION }];
+    }
+    return [
+      { id: 'new_version', value: STRINGS.ADD_VERSION },
+//      { id: 'copy_version', value: 'Clone Current Version' },
+      // { id: 'import_version', value: 'Import to New Version' },
+//      { id: 'import_version_csv', value: 'Import New Version from CSV As Is' }
+      { id: 'view_version', value: STRINGS.view_other_version_window_title },
+      { id: 'switch_version', value: STRINGS.switch_default_version_window_title }
+    ];
+  },
+
+  getNewEntityPopupData: function(id) {
+    var path = id ? Identity.dataFromId(id).path : '';
+    switch (path) {
+      case '':
+        return [
+          {id: 'new_entity', value: STRINGS.new_entity, icon: 'file-o'},
+          {id: 'import_wizard', value: STRINGS.import_entity},
+          {id: 'new_resource', value: STRINGS.new_resource, icon: 'diamond'},
+          {id: 'new_task', value: STRINGS.new_task, icon: 'file-code-o'},
+          {id: 'new_proto', value: STRINGS.new_proto, icon: 'cube'}
+//      { id: 'import_csv', value: 'Import Entity from CSV As Is' }
+        ];
+      case 'tasks':
+        return [
+          {id: 'new_task', value: STRINGS.new_task, icon: 'file-code-o'}
+        ];
+      case 'protos':
+        return [
+          {id: 'new_proto', value: STRINGS.new_proto, icon: 'cube'}
+        ];
+      case 'resources':
+        return [
+          {id: 'new_resource', value: STRINGS.new_resource, icon: 'diamond'}
+        ];
+      default:
+        return [
+          {id: 'new_entity', value: STRINGS.new_entity, icon: 'file-o'},
+          {id: 'import_wizard', value: STRINGS.import_entity}
+        ];
+    }
   }
 };
 
@@ -1713,6 +1760,8 @@ function EntityList() {
  * Hide/show toolbar buttons according passed state - readonly or not.
  */
 EntityList.prototype.setReadOnly = function(isReadOnly) {
+  $$('entity_tree__new_root_version_list').clearAll();
+  $$('entity_tree__new_root_version_list').parse(UIControls.getChangeVersionPopupData(isReadOnly));
   UIHelper.setVisible('ADD_ENTITY_LABEL', !isReadOnly);
   UIHelper.setVisible('NEW_VERSION_LABEL', !isReadOnly && Identity.isRootId(this.getRootId()));
 };
@@ -1780,7 +1829,7 @@ EntityList.prototype.listen = function() {
 /**
  * Set Id of entity witch items displayed in list. This method reloading data.
  */
-EntityList.prototype.setRootId = function(id) {
+EntityList.prototype.setRootIdWithoutRefresh = function(id) {
   if (this.rootId === id) {
     return;
   }
@@ -1798,7 +1847,14 @@ EntityList.prototype.setRootId = function(id) {
       events: ['entities.rename.res']
     }));
   }
+};
 
+
+/**
+ * Set Id of entity witch items displayed in list. This method reloading data.
+ */
+EntityList.prototype.setRootId = function(id) {
+  this.setRootIdWithoutRefresh(id);
   this.refresh();
 };
 
@@ -1833,9 +1889,18 @@ EntityList.prototype.getCurrentId = function() {
  * @param {string} [newRootId]
  */
 EntityList.prototype.refresh = function(newRootId) {
-  var req = Identity.dataFromId(newRootId || this.getRootId());
-  var search = $$('entity_list__search').getValue();
   var self = this;
+
+  if (newRootId != null) {
+    self.setRootIdWithoutRefresh(newRootId);
+  }
+
+  $$('entity_tree__new_entity_list').clearAll();
+  $$('entity_tree__new_entity_list').parse(UIControls.getNewEntityPopupData(self.getRootId()));
+
+  var req = Identity.dataFromId(self.getRootId());
+  var search = $$('entity_list__search').getValue();
+
   if (MDSCommon.isPresent(search)) {
     if (search.indexOf('*') === search.length - 1) {
       req['filterByName'] = search.substring(0, search.length - 1);
@@ -2728,6 +2793,184 @@ UILayout.windows.addEntity = {
     }
 };
 
+UILayout.windows.addTask = {
+    view: 'window',
+    id: 'add_task_window',
+    width: 350,
+    position: 'center',
+    modal: true,
+    head: STRINGS.new_task,
+    on: UIControls.getOnForFormWindow('add_task'),
+    body: {
+      view: 'form',
+      id: 'add_task_form',
+      borderless: true,
+      on: {
+        onSubmit: function() {
+          if ($$('add_task_form').validate()) {
+            var formData = $$('add_task_form').getValues();
+            var newEntityId = Identity.childId(UI.entityList.getRootId(), formData.name);
+            var data = Identity.dataFromId(newEntityId);
+            data.path = 'tasks';
+            data.fields = [];
+            data.othersCan = formData.othersCan;
+            Mydataspace.request('entities.create', data, function() {
+              $$('add_task_window').hide();
+              UIControls.removeSpinnerFromWindow('add_task_window');
+            }, function(err) {
+              UIControls.removeSpinnerFromWindow('add_task_window');
+              for (var i in err.errors) {
+                var e = err.errors[i];
+                switch (e.type) {
+                  case 'unique violation':
+                    if (e.path === 'entities_root_path') {
+                      $$('add_task_form').elements.name.define('invalidMessage', 'Name already exists');
+                      $$('add_task_form').markInvalid('name', true);
+                    }
+                    break;
+                }
+              }
+            });
+          }
+        }
+      },
+      elements: [
+        { view: 'text', required: true, id: 'NAME_LABEL_7', label: STRINGS.NAME, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
+        UIControls.getEntityTypeSelectTemplate(),
+        UIControls.getSubmitCancelForFormWindow('add_task')
+      ]
+    }
+};
+
+UILayout.windows.addProto = {
+    view: 'window',
+    id: 'add_proto_window',
+    width: 350,
+    position: 'center',
+    modal: true,
+    head: STRINGS.new_proto,
+    on: UIControls.getOnForFormWindow('add_proto'),
+    body: {
+      view: 'form',
+      id: 'add_proto_form',
+      borderless: true,
+      on: {
+        onSubmit: function() {
+          if ($$('add_proto_form').validate()) {
+            var formData = $$('add_proto_form').getValues();
+            var newEntityId = Identity.childId(UI.entityList.getRootId(), formData.name);
+            var data = Identity.dataFromId(newEntityId);
+            data.path = 'protos';
+            data.fields = [];
+            data.othersCan = formData.othersCan;
+            Mydataspace.request('entities.create', data, function() {
+              $$('add_entity_window').hide();
+              UIControls.removeSpinnerFromWindow('add_proto_window');
+            }, function(err) {
+              UIControls.removeSpinnerFromWindow('add_proto_window');
+              for (var i in err.errors) {
+                var e = err.errors[i];
+                switch (e.type) {
+                  case 'unique violation':
+                    if (e.path === 'entities_root_path') {
+                      $$('add_entity_form').elements.name.define('invalidMessage', 'Name already exists');
+                      $$('add_entity_form').markInvalid('name', true);
+                    }
+                    break;
+                }
+              }
+            });
+          }
+        }
+      },
+      elements: [
+        { view: 'text', required: true, id: 'NAME_LABEL_6', label: STRINGS.NAME, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
+        UIControls.getEntityTypeSelectTemplate(),
+        UIControls.getSubmitCancelForFormWindow('add_proto')
+      ]
+    }
+};
+
+UILayout.windows.addResource = {
+    view: 'window',
+    id: 'add_resource_window',
+    width: 350,
+    position: 'center',
+    modal: true,
+    head: STRINGS.ADD_RESOURCE_WINDOW,
+    on: UIControls.getOnForFormWindow('add_resource'),
+    body: {
+      view: 'form',
+      id: 'add_resource_form',
+      borderless: true,
+      on: {
+        onSubmit: function() {
+          if ($$('add_resource_form').validate()) {
+            var formData = $$('add_resource_form').getValues();
+            var newEntityId = Identity.childId(UI.entityList.getRootId(), 'test');
+            var data = Identity.dataFromId(newEntityId);
+            UI.uploadResource(
+              document.getElementById('add_resource_form__file').files[0],
+              data.root,
+              formData.type,
+              function(res) {
+                $$('add_resource_window').hide();
+                UIControls.removeSpinnerFromWindow('add_resource_window');
+                UI.entityList.refresh();
+              },
+              function(err) {
+                UIControls.removeSpinnerFromWindow('add_resource_window');
+                for (var i in err.errors) {
+                  var e = err.errors[i];
+                  // switch (e.type) {
+                  //   case 'unique violation':
+                  //     if (e.path === 'entities_root_path') {
+                  //       $$('add_resource_form').elements.name.define('invalidMessage', 'Name already exists');
+                  //       $$('add_resource_form').markInvalid('name', true);
+                  //     }
+                  //     break;
+                  // }
+                }
+              });
+          }
+        }
+      },
+
+      elements: [
+        {
+          cols: [
+            { view: 'label',
+              id: 'ADD_RESOURCE_FILE',
+              required: true,
+              label: STRINGS.ADD_RESOURCE_FILE,
+              width: UIHelper.LABEL_WIDTH
+            },
+            {
+              template: ' <input type="file" ' +
+                        '        id="add_resource_form__file" ' +
+                        '        required />',
+              css: 'add_resource_form__file_wrap'
+            }
+          ]
+        },
+        {
+          view: 'combo',
+          label: STRINGS.ADD_RESOURCE_TYPE,
+          name: 'type',
+          value: 'file',
+          options: [
+            { id: 'avatar', value: STRINGS.AVATAR },
+            { id: 'image', value: STRINGS.IMAGE },
+            { id: 'file', value: STRINGS.FILE }
+          ],
+          labelWidth: UIHelper.LABEL_WIDTH
+        },
+        UIControls.getEntityTypeSelectTemplate(),
+        UIControls.getSubmitCancelForFormWindow('add_resource')
+      ]
+    }
+};
+
 UILayout.windows.addField = {
   view: 'window',
   id: 'add_field_window',
@@ -2926,86 +3169,6 @@ UILayout.windows.editScript = {
       }
     ]
   }
-};
-
-UILayout.windows.addResource = {
-    view: 'window',
-    id: 'add_resource_window',
-    width: 350,
-    position: 'center',
-    modal: true,
-    head: STRINGS.ADD_RESOURCE_WINDOW,
-    on: UIControls.getOnForFormWindow('add_resource'),
-    body: {
-      view: 'form',
-      id: 'add_resource_form',
-      borderless: true,
-      on: {
-        onSubmit: function() {
-          if ($$('add_resource_form').validate()) {
-            var formData = $$('add_resource_form').getValues();
-            var newEntityId = Identity.childId(UI.entityList.getRootId(), 'test');
-            var data = Identity.dataFromId(newEntityId);
-            UI.uploadResource(
-              document.getElementById('add_resource_form__file').files[0],
-              data.root,
-              formData.type,
-              function(res) {
-                $$('add_resource_window').hide();
-                UIControls.removeSpinnerFromWindow('add_resource_window');
-                UI.entityList.refresh();
-              },
-              function(err) {
-                UIControls.removeSpinnerFromWindow('add_resource_window');
-                for (var i in err.errors) {
-                  var e = err.errors[i];
-                  // switch (e.type) {
-                  //   case 'unique violation':
-                  //     if (e.path === 'entities_root_path') {
-                  //       $$('add_resource_form').elements.name.define('invalidMessage', 'Name already exists');
-                  //       $$('add_resource_form').markInvalid('name', true);
-                  //     }
-                  //     break;
-                  // }
-                }
-              });
-          }
-        }
-      },
-
-      elements: [
-        {
-          cols: [
-            { view: 'label',
-              id: 'ADD_RESOURCE_FILE',
-              required: true,
-              label: STRINGS.ADD_RESOURCE_FILE,
-              width: UIHelper.LABEL_WIDTH
-            },
-            {
-              template: ' <input type="file" ' +
-                        '        id="add_resource_form__file" ' +
-                        '        required />',
-              css: 'add_resource_form__file_wrap'
-            }
-          ]
-        },
-        {
-          view: 'combo',
-          label: STRINGS.ADD_RESOURCE_TYPE,
-          name: 'type',
-          value: 'file',
-          options: [
-            { id: 'avatar', value: STRINGS.AVATAR },
-            { id: 'image', value: STRINGS.IMAGE },
-            { id: 'file', value: STRINGS.FILE }
-          ],
-          labelWidth: UIHelper.LABEL_WIDTH
-        },
-        UIControls.getEntityTypeSelectTemplate(),
-        UIControls.getSubmitCancelForFormWindow('add_resource')
-      ]
-    }
 };
 
 UILayout.windows.changeVersion = {
@@ -3284,14 +3447,7 @@ UILayout.popups.newEntity = {
     id: 'entity_tree__new_entity_list',
     class: 'entity_tree__new_entity_list',
     borderless: true,
-		data: [
-      { id: 'new_entity', value: STRINGS.new_entity, icon: 'file-o' },
-      { id: 'import_wizard', value: STRINGS.import_entity },
-      { id: 'new_resource', value: STRINGS.new_resource, icon: 'diamond' },
-      { id: 'new_task', value: STRINGS.new_task, icon: 'file-code-o' },
-      { id: 'new_proto', value: STRINGS.new_proto, icon: 'cube' }
-//      { id: 'import_csv', value: 'Import Entity from CSV As Is' }
-		],
+		data: UIControls.getNewEntityPopupData(),
 		datatype: 'json',
 		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
 		autoheight: true,
@@ -3306,12 +3462,13 @@ UILayout.popups.newEntity = {
             $$('add_resource_window').show();
             break;
           case 'new_task':
-            $$('add_entity_window').show();
+            $$('add_task_window').show();
             break;
           case 'new_proto':
-            $$('add_entity_window').show();
+            $$('add_proto_window').show();
             break;
           case 'import_wizard':
+            // global var openRefineImportEntity
             openRefineImportEntity = Identity.dataFromId(UI.entityTree.getCurrentId());
             $('#import_data_modal').modal('show');
             break;
@@ -3334,14 +3491,7 @@ UILayout.popups.newRootVersion = {
     id: 'entity_tree__new_root_version_list',
     class: 'entity_tree__new_root_version_list',
     borderless: true,
-		data: [
-      { id: 'new_version', value: STRINGS.ADD_VERSION },
-//      { id: 'copy_version', value: 'Clone Current Version' },
-      // { id: 'import_version', value: 'Import to New Version' },
-//      { id: 'import_version_csv', value: 'Import New Version from CSV As Is' }
-      { id: 'view_version', value: STRINGS.view_other_version_window_title },
-      { id: 'switch_version', value: STRINGS.switch_default_version_window_title }
-		],
+		data: UIControls.getChangeVersionPopupData(),
 		datatype: 'json',
 //		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
 		autoheight: true,
@@ -4280,12 +4430,12 @@ UI = {
   },
 
   /**
-   * Handler of upload resouce-file event for file input.
+   * Handler of upload resource-file event for file input.
    * @param fileInput Input file
-   * @param root Root for resurce
+   * @param root Root for resource
    * @param type Type of resource - avatar, image or file
    * @param done Success upload feedback
-   * @param fial Unsuccess upload feedback
+   * @param fail Unsuccess upload feedback
    */
   uploadResource: function(fileInput, root, type, done, fail) {
     var formData = new FormData();
@@ -4518,9 +4668,11 @@ UI = {
     webix.ui(UILayout.windows.editScript);
     webix.ui(UILayout.windows.addRoot);
     webix.ui(UILayout.windows.addEntity);
+    webix.ui(UILayout.windows.addTask);
+    webix.ui(UILayout.windows.addProto);
+    webix.ui(UILayout.windows.addResource);
     webix.ui(UILayout.windows.addField);
     webix.ui(UILayout.windows.addApp);
-    webix.ui(UILayout.windows.addResource);
     webix.ui(UILayout.windows.changeVersion);
     webix.ui(UILayout.windows.addVersion);
     webix.ui(UILayout.sideMenu);
