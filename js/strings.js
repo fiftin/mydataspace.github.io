@@ -95,9 +95,9 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     ROOT_AVATAR_REMOVE: 'Remove',
     SHOW_ACCESS_KEY: 'Show access key',
     NEW_VERSION: 'Version <span class="version_btn__version">0</span>',
-    CHANGE_VERSION: 'Change Version',
     ADD_VERSION: 'New Empty Version',
     VERSION_DESCRIPTION: 'Description',
+    VERSION_CREATED_AT: 'Created At',
 
 
     switch_default_version: 'Switch Default Versin',
@@ -116,6 +116,14 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     no_description_provided: 'No description provided',
     switch_default_version_window_title: 'Switch Default Version',
     view_other_version_window_title: 'View Other Version',
+    new_empty_root: 'New Empty Root',
+    import_root: 'Import Root',
+
+    new_entity: 'New Entity',
+    import_entity: 'Import Entity',
+    new_resource: 'New Resource',
+    new_task: 'New Task',
+    new_proto: 'New Prototype',
 
     no_items: {
       no_items__title: 'You have ho any data yet',
@@ -263,9 +271,9 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     ROOT_AVATAR_REMOVE: 'Удалить',
     SHOW_ACCESS_KEY: 'Показать ключ доступа',
     NEW_VERSION: 'Версия <span class="version_btn__version">0</span>',
-    CHANGE_VERSION: 'Change Version',
-    ADD_VERSION: 'New Empty Version',
-    VERSION_DESCRIPTION: 'Description',
+    ADD_VERSION: 'Новая версия',
+    VERSION_DESCRIPTION: 'Описание',
+    VERSION_CREATED_AT: 'Создана',
 
 
     created: 'создан',
@@ -280,8 +288,16 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     create_view: 'Создать представление',
 
     no_description_provided: 'Нет описания',
-    switch_default_version_window_title: 'Установить другую версию по умолчанию',
+    switch_default_version_window_title: 'Уст. версию по умолчанию',
     view_other_version_window_title: 'Смотреть другую версию',
+    new_empty_root: 'Пусктой корень',
+    import_root: 'Импорт корня',
+
+    new_entity: 'Новый элемент',
+    import_entity: 'Импорт элемента',
+    new_resource: 'Новый ресурс',
+    new_task: 'Новый задача',
+    new_proto: 'Новый прототип',
 
     no_items: {
       no_items__title: 'У вас еще нет никаких данных',
@@ -325,8 +341,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       sec: 'Безопасность',
       trans: 'Транспорт',
       geo: 'Геоданные',
-      state: 'Государство',
-
+      state: 'Государство'
     }
   }
 };

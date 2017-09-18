@@ -2,18 +2,18 @@ UILayout.popups.newEntity = {
 	view: 'popup',
 	id: 'entity_tree__new_entity_popup',
   css: 'admin_context_menu entity_tree__new_entity_popup',
-	width: 190,
+	width: 200,
 	body: {
 		view: 'list',
     id: 'entity_tree__new_entity_list',
     class: 'entity_tree__new_entity_list',
     borderless: true,
 		data: [
-      { id: 'new_entity', value: 'New Entity', icon: 'file-o' },
-      { id: 'import_wizard', value: 'Import Entity' },
-      { id: 'new_resource', value: 'New Resource', icon: 'diamond' },
-      { id: 'new_task', value: 'New Task', icon: 'file-code-o' },
-      { id: 'new_proto', value: 'New Prototype', icon: 'cube' },
+      { id: 'new_entity', value: STRINGS.new_entity, icon: 'file-o' },
+      { id: 'import_wizard', value: STRINGS.import_entity },
+      { id: 'new_resource', value: STRINGS.new_resource, icon: 'diamond' },
+      { id: 'new_task', value: STRINGS.new_task, icon: 'file-code-o' },
+      { id: 'new_proto', value: STRINGS.new_proto, icon: 'cube' }
 //      { id: 'import_csv', value: 'Import Entity from CSV As Is' }
 		],
 		datatype: 'json',

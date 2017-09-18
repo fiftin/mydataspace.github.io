@@ -9,8 +9,8 @@ UILayout.popups.newRoot = {
     class: 'entity_tree__new_root_list',
     borderless: true,
 		data: [
-      { id: 'new_root', value: 'New Empty Root' },
-      { id: 'import_wizard', value: 'Import Root' },
+      { id: 'new_root', value: STRINGS.new_empty_root },
+      { id: 'import_wizard', value: STRINGS.import_root }
 //      { id: 'import_csv', value: 'Import Root from CSV As Is' }
 		],
 		datatype: 'json',

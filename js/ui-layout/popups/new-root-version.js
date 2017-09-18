@@ -2,19 +2,19 @@ UILayout.popups.newRootVersion = {
 	view: 'popup',
 	id: 'entity_tree__new_root_version_popup',
   css: 'admin_context_menu entity_tree__new_root_version_popup',
-	width: 190,
+	width: 230,
 	body: {
 		view: 'list',
     id: 'entity_tree__new_root_version_list',
     class: 'entity_tree__new_root_version_list',
     borderless: true,
 		data: [
-      { id: 'new_version', value: 'New Empty Version' },
+      { id: 'new_version', value: STRINGS.ADD_VERSION },
 //      { id: 'copy_version', value: 'Clone Current Version' },
       // { id: 'import_version', value: 'Import to New Version' },
 //      { id: 'import_version_csv', value: 'Import New Version from CSV As Is' }
-      { id: 'view_version', value: 'View Other Version...' },
-      { id: 'switch_version', value: 'Switch Default Version...' },
+      { id: 'view_version', value: STRINGS.view_other_version_window_title },
+      { id: 'switch_version', value: STRINGS.switch_default_version_window_title }
 		],
 		datatype: 'json',
 //		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',

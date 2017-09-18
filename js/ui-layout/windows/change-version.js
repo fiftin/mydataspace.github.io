@@ -4,7 +4,7 @@ UILayout.windows.changeVersion = {
   width: 700,
   position: 'center',
   modal: true,
-  head: STRINGS.CHANGE_VERSION,
+  head: STRINGS.switch_default_version_window_title,
   on: {
     onShow: function() {
       // Update dialog title
@@ -42,8 +42,8 @@ UILayout.windows.changeVersion = {
         select: 'row',
         columns: [
           { id: 'version', header: '#', width: 50, sort: 'int' },
-          { id: 'createdAt', header: 'Created At', width: 200 },
-          { id: 'versionDescription', header: 'Description', width: 450 }
+          { id: 'createdAt', header: STRINGS.VERSION_CREATED_AT, width: 200 },
+          { id: 'versionDescription', header: STRINGS.VERSION_DESCRIPTION, width: 450 }
         ]
       },
       { cols: [

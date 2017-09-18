@@ -3014,7 +3014,7 @@ UILayout.windows.changeVersion = {
   width: 700,
   position: 'center',
   modal: true,
-  head: STRINGS.CHANGE_VERSION,
+  head: STRINGS.switch_default_version_window_title,
   on: {
     onShow: function() {
       // Update dialog title
@@ -3052,8 +3052,8 @@ UILayout.windows.changeVersion = {
         select: 'row',
         columns: [
           { id: 'version', header: '#', width: 50, sort: 'int' },
-          { id: 'createdAt', header: 'Created At', width: 200 },
-          { id: 'versionDescription', header: 'Description', width: 450 }
+          { id: 'createdAt', header: STRINGS.VERSION_CREATED_AT, width: 200 },
+          { id: 'versionDescription', header: STRINGS.VERSION_DESCRIPTION, width: 450 }
         ]
       },
       { cols: [
@@ -3278,18 +3278,18 @@ UILayout.popups.newEntity = {
 	view: 'popup',
 	id: 'entity_tree__new_entity_popup',
   css: 'admin_context_menu entity_tree__new_entity_popup',
-	width: 190,
+	width: 200,
 	body: {
 		view: 'list',
     id: 'entity_tree__new_entity_list',
     class: 'entity_tree__new_entity_list',
     borderless: true,
 		data: [
-      { id: 'new_entity', value: 'New Entity', icon: 'file-o' },
-      { id: 'import_wizard', value: 'Import Entity' },
-      { id: 'new_resource', value: 'New Resource', icon: 'diamond' },
-      { id: 'new_task', value: 'New Task', icon: 'file-code-o' },
-      { id: 'new_proto', value: 'New Prototype', icon: 'cube' },
+      { id: 'new_entity', value: STRINGS.new_entity, icon: 'file-o' },
+      { id: 'import_wizard', value: STRINGS.import_entity },
+      { id: 'new_resource', value: STRINGS.new_resource, icon: 'diamond' },
+      { id: 'new_task', value: STRINGS.new_task, icon: 'file-code-o' },
+      { id: 'new_proto', value: STRINGS.new_proto, icon: 'cube' }
 //      { id: 'import_csv', value: 'Import Entity from CSV As Is' }
 		],
 		datatype: 'json',
@@ -3328,19 +3328,19 @@ UILayout.popups.newRootVersion = {
 	view: 'popup',
 	id: 'entity_tree__new_root_version_popup',
   css: 'admin_context_menu entity_tree__new_root_version_popup',
-	width: 190,
+	width: 230,
 	body: {
 		view: 'list',
     id: 'entity_tree__new_root_version_list',
     class: 'entity_tree__new_root_version_list',
     borderless: true,
 		data: [
-      { id: 'new_version', value: 'New Empty Version' },
+      { id: 'new_version', value: STRINGS.ADD_VERSION },
 //      { id: 'copy_version', value: 'Clone Current Version' },
       // { id: 'import_version', value: 'Import to New Version' },
 //      { id: 'import_version_csv', value: 'Import New Version from CSV As Is' }
-      { id: 'view_version', value: 'View Other Version...' },
-      { id: 'switch_version', value: 'Switch Default Version...' },
+      { id: 'view_version', value: STRINGS.view_other_version_window_title },
+      { id: 'switch_version', value: STRINGS.switch_default_version_window_title }
 		],
 		datatype: 'json',
 //		template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
@@ -3385,8 +3385,8 @@ UILayout.popups.newRoot = {
     class: 'entity_tree__new_root_list',
     borderless: true,
 		data: [
-      { id: 'new_root', value: 'New Empty Root' },
-      { id: 'import_wizard', value: 'Import Root' },
+      { id: 'new_root', value: STRINGS.new_empty_root },
+      { id: 'import_wizard', value: STRINGS.import_root }
 //      { id: 'import_csv', value: 'Import Root from CSV As Is' }
 		],
 		datatype: 'json',
