@@ -14,7 +14,7 @@ EntityTree.prototype.findRoot = function(entityIdOrData, isReturnId) {
   var data = Identity.dataFromId(id);
   while (data.root !== wantedData.root) {
     id = $$('entity_tree').getNextSiblingId(id);
-    if (id === false) {
+    if (!id) {
       return null;
     }
     data = Identity.dataFromId(id);
