@@ -214,7 +214,7 @@ EntityTree.prototype.listen = function() {
       $$('entity_tree').getItem(Identity.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)) == null) {
 
       // simply add new entity to tree and no more
-      $$('entity_tree').add(entity, 0, parentId);
+      $$('entity_tree').add(entity, 0, parentId === 'root' ? null : parentId);
 
       if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
         self.setChildren(entity.id, entity.data);
