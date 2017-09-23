@@ -11,6 +11,11 @@ $side-panel-width: $side-width - $padding;
   width: 250px;
 }
 
+.change_root_version_modal__body {
+  height: 400px;
+  overflow: auto;
+}
+
 .change_root_version_modal__table {
   margin-bottom: 0;
 
