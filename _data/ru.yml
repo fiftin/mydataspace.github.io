@@ -136,3 +136,7 @@ root:
   view_title: Заголовок
   view_description: Описание
   comments: Комментарии
+  change_root_version: Изменить версию
+  version_created_at: Дата создания
+  version_description: Описание
+  version_select: Выбрать

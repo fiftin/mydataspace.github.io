@@ -69,4 +69,38 @@ layout: hybrid_default
   </div>
 </div>
 
+<div id="change_root_version_modal"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="Change Version">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header new_look_modal__header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="modal-title">{{ site.data[page.language].root.change_root_version }}</div>
+      </div>
+      <div class="modal-body new_look_modal__body">
+        <table class="table change_root_version_modal__table" id="change_root_version_modal__table">
+          <thead>
+            <tr>
+              <th class="change_root_version_modal_table__number">#</th>
+              <th class="change_root_version_modal_table__created_at">{{ site.data[page.language].root.version_created_at }}</th>
+              <th>{{ site.data[page.language].root.version_description }}</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer new_look_modal__footer">
+        <!--<button class="btn btn-danger"-->
+                <!--data-dismiss="modal"-->
+                <!--id="change_root_version_modal_button">{{ site.data[page.language].root.version_select }}</button>-->
+        <button class="btn btn-default"
+                data-dismiss="modal">{{ site.data[page.language].root.cancel }}</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% include root_script.html language=page.language %}

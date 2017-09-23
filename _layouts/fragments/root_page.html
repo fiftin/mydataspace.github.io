@@ -5,7 +5,13 @@
     </div>
     <div class="view__info">
       <div>
-        <h1 class="view__title" id="root__title"></h1>
+        <h1 class="view__title">
+          <span id="root__title"></span>
+          <span class="view__version"
+                id="root__version"
+                data-toggle="modal"
+                data-target="#change_root_version_modal">#0</span>
+        </h1>
 
         <div class="view__tabs cf hidden" id="root__tabs">
           <a href="javascript: void(0)" class="view__tab view__tab--active" id="VIEW_TAB_README_LABEL">

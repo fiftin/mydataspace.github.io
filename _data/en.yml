@@ -138,3 +138,7 @@ root:
   view_title: Title
   view_description: Description
   comments: Comments
+  change_root_version: Change Version
+  version_created_at: Created At
+  version_description: Description
+  version_select: Select

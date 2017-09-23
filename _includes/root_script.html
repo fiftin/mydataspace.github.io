@@ -17,12 +17,28 @@
     if (!results) {
       return;
     }
+    var search = location.search;
+    if (search.length > 0) {
+      search = search.substr(1);
+    }
+
+    var searchParts = search.split('&');
+    var searchParams = {};
+    for (var i = 0; i < searchParts.length; i++) {
+      var part = searchParts[i];
+      var keyValue = part.split('=');
+      searchParams[keyValue[0]] = keyValue[1];
+    }
 
     var DATA = {
       root: results[1] === 'root' ? '11111' : results[1],
       path: '',
       children: true
     };
+
+    if (searchParams.v) {
+      DATA.version = searchParams.v;
+    }
     
     if (DATA.root === 'search') {
       openSearch_header__search('', true);
@@ -56,8 +72,7 @@
       document.querySelector('head').appendChild(script);
     }
 
-
-    function loadEntityData(requestData, success, fail) {
+    function loadEntityData(method, requestData, success, fail) {
       var xmlhttp = new XMLHttpRequest();
       xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState === XMLHttpRequest.DONE ) {
@@ -70,17 +85,17 @@
         }
       };
       var query = '';
-      for (var k in DATA) {
+      for (var k in requestData) {
         if (query !== '') {
           query += '&';
         }
-        query += k + '=' + DATA[k];
+        query += k + '=' + requestData[k];
       }
-      xmlhttp.open('GET', '{{ api_url }}/v1/entities/get?' + query, true);
+      xmlhttp.open('GET', '{{ api_url }}/v1/entities/' + method + '?' + query, true);
       xmlhttp.send();
     }
 
-    loadEntityData(DATA, function(result) {
+    loadEntityData('get', DATA, function(result) {
       addJsonLD(result);
       setRootView(result);
     }, function() {});
@@ -543,6 +558,8 @@
         document.getElementById('root__overview_image').src = ava || '/images/icons/root.svg';
         document.getElementById('root__title').innerText =
           MDSCommon.findValueByName(data.fields, 'name') || MDSCommon.getPathName(data.root);
+        document.getElementById('root__version').innerText = '#' +
+          (MDSCommon.findValueByName(data.fields, 'version') || 0);
 
 //        if (data.fields.language) {
 //          document.getElementById('root__language').className = 'flag-icon flag-icon-' + data.fields.language;
@@ -659,21 +676,15 @@
 
         $('#root__comments__list').on('click', '.view__comment__delete', function() {
           var commentPath = this.parentNode.getAttribute('data-comment-path');
-//          $(this).find('i').removeClass('fa-remove');
-//          $(this).find('i').addClass('fa-cog');
-          $(this).find('i').addClass('fa-pulse');
+          $(this).find('i').addClass('fa-spin');
 
           Mydataspace.request('entities.delete', {
             root: DATA.root,
             path: commentPath
           }, function() {
-//            $(this).find('i').addClass('fa-remove');
-//            $(this).find('i').removeClass('fa-cog');
-            $(this).find('i').removeClass('fa-pulse');
+            $(this).find('i').removeClass('fa-spin');
           }, function(err) {
-//            $(this).find('i').addClass('fa-remove');
-//            $(this).find('i').removeClass('fa-cog');
-            $(this).find('i').removeClass('fa-pulse');
+            $(this).find('i').removeClass('fa-spin');
             console.log(err);
           });
         });
@@ -699,6 +710,37 @@
           openLookEditModal(false);
         });
 
+        document.getElementById('root__version').addEventListener('click', function() {
+          loadEntityData('getRootVersions', DATA, function(result) {
+            console.log(result.versions);
+            var table = document.getElementById('change_root_version_modal__table');
+            for (var i = 0; i < result.versions.length; i++) {
+              var row = table.insertRow();
+              var version = result.versions[i];
+              var number = row.insertCell(0);
+              var createdAt = row.insertCell(1);
+              var description = row.insertCell(2);
+              var numberLink = document.createElement('a');
+              var createdAtLink = document.createElement('a');
+              var descriptionLink = document.createElement('a');
+
+              numberLink.href = 'https://myda.space/' + DATA.root + '?v=' + version.version;
+              createdAtLink.href = 'https://myda.space/' + DATA.root + '?v=' + version.version;
+              descriptionLink.href = 'https://myda.space/' + DATA.root + '?v=' + version.version;
+
+              numberLink.appendChild(document.createTextNode(version.version));
+              createdAtLink.appendChild(document.createTextNode(version.createdAt));
+              descriptionLink.appendChild(document.createTextNode(version.versionDescription || ''));
+
+              number.appendChild(numberLink);
+              createdAt.appendChild(createdAtLink);
+              description.appendChild(descriptionLink);
+            }
+          }, function() {
+
+          });
+        });
+
         document.getElementById('root__about_look_full').addEventListener('click', function() {
           document.getElementById('root__about_look_content').classList.add('view__about_look--full');
         });
@@ -706,32 +748,6 @@
         document.getElementById('root__about_look_normal').addEventListener('click', function() {
           document.getElementById('root__about_look_content').classList.remove('view__about_look--full');
         });
-
-        //Mydataspace.entities.getMyChildren({
-        //  root: 'mydataspace',
-        //  path: '',
-        //  onlyMine: '',
-        //}).then(function() {});
-
-        //document.getElementById('root__user_follow').addEventListener('click', function() {
-        //  Mydataspace.request('entities.create', {
-        //    root: 'mydataspace',
-        //    path: 'profiles/' + data.profile.username + '/followers' + MDSCommon.guid(),
-        //    fields: []
-        //  }, function() {
-        //    $textarea.val('');
-        //    $button.prop('disabled', false);
-        //    $textarea.prop('disabled', false);
-        //    $textarea.focus();
-        //    updateCommentFormTextareaHeight();
-        //  }, function(err) {
-        //    $button.prop('disabled', false);
-        //    $textarea.prop('disabled', false);
-        //    console.log(err);
-        //  });
-        //
-        //});
-
 
         // Load data for root and render it on the page
         Mydataspace.entities.request('entities.get', {
@@ -755,11 +771,6 @@
 
       });
     }
-
-    // Load data for root and render it on the page
-    //Mydataspace.entities.request('entities.get', DATA).then(function(result) {
-    //  setRootView(result);
-    //});
 
     //
     // Likes & comments

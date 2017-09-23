@@ -3,11 +3,61 @@
 $side-width: 300px;
 $side-panel-width: $side-width - $padding;
 
+.change_root_version_modal_table__number {
+  width: 50px;
+}
+
+.change_root_version_modal_table__created_at {
+  width: 250px;
+}
+
+.change_root_version_modal__table {
+  margin-bottom: 0;
+
+  td {
+    padding: 0 !important;
+
+    a {
+      display: block;
+      padding: 10px;
+      color: black;
+      text-decoration: none !important;
+    }
+  }
+  tr {
+    &:hover {
+      td {
+        background: $selected-bg;
+        a {
+          color: white;
+        }
+      }
+    }
+  }
+}
+
 .root_page {
+  .view__version {
+    color: $selected-bg;
+    visibility: hidden;
+    cursor: pointer;
+  }
+
+  .view__version--right-pos {
+    position: absolute;
+    right: 0;
+  }
+
   .view__title {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    position: relative;
+    &:hover {
+      .view__version {
+        visibility: visible;
+      }
+    }
   }
 
   .view__overview--root {
