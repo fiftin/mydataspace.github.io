@@ -706,8 +706,8 @@
 
         document.getElementById('root__version').addEventListener('click', function() {
           loadEntityData('getRootVersions', DATA, function(result) {
-            console.log(result.versions);
-            var table = document.getElementById('change_root_version_modal__table');
+            var table = document.getElementById('change_root_version_modal__table').tBodies[0];
+
             for (var i = 0; i < result.versions.length; i++) {
               var row = table.insertRow();
               var version = result.versions[i];
