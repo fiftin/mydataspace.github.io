@@ -393,7 +393,8 @@ EntityTree.prototype.refresh = function(root) {
     var requiredRoot = root || Router.getSearch();
     Mydataspace.request('entities.get', {
       root: requiredRoot,
-      path: ''
+      path: '',
+      version: Router.getVersion()
     }, function(data) {
       self.loadFormattedData([Identity.entityFromData(data)]);
       UI.pages.updatePageState('data');
