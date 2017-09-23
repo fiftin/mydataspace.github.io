@@ -79,6 +79,23 @@ var Router = {
     return !Router.isRoot();
   },
 
+  getVersion: function() {
+    var search = window.location.search;
+    if (search.length > 0) {
+      search = search.substr(1);
+    }
+
+    var searchParts = search.split('&');
+    var searchParams = {};
+    for (var i = 0; i < searchParts.length; i++) {
+      var part = searchParts[i];
+      var keyValue = part.split('=');
+      searchParams[keyValue[0]] = keyValue[1];
+    }
+
+    return searchParams.v;
+  },
+
   getCommonSearchParts: function() {
     if (Router.isEmpty()) {
       return null;
@@ -2418,7 +2435,8 @@ EntityTree.prototype.refresh = function(root) {
     var requiredRoot = root || Router.getSearch();
     Mydataspace.request('entities.get', {
       root: requiredRoot,
-      path: ''
+      path: '',
+      version: Router.getVersion()
     }, function(data) {
       self.loadFormattedData([Identity.entityFromData(data)]);
       UI.pages.updatePageState('data');
