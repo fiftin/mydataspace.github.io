@@ -552,8 +552,9 @@
         document.getElementById('root__overview_image').src = ava || '/images/icons/root.svg';
         document.getElementById('root__title').innerText =
           MDSCommon.findValueByName(data.fields, 'name') || MDSCommon.getPathName(data.root);
+
         document.getElementById('root__version').innerText = '#' +
-          (MDSCommon.findValueByName(data.fields, 'version') || 0);
+          (MDSCommon.findValueByName(data.fields, '$version') || 0);
 
 //        if (data.fields.language) {
 //          document.getElementById('root__language').className = 'flag-icon flag-icon-' + data.fields.language;
