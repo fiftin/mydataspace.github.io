@@ -559,6 +559,10 @@ EntityForm.prototype.refresh = function() {
 //  Mydataspace.emit('entities.create', data);
 //};
 
+EntityForm.prototype.clone = function() {
+  $$('clone_entity_window').show();
+};
+
 EntityForm.prototype.delete = function() {
   $$('entity_form').disable();
   UI.deleteEntity(this.selectedId);

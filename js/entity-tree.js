@@ -232,6 +232,8 @@ EntityTree.prototype.listen = function() {
 
   Mydataspace.on('entities.delete.res', function(data) {
     var entityId;
+
+
     if (data.path === '') {
       var rootData = self.findRoot(data);
       if (rootData == null) {

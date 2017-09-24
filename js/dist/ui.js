@@ -1337,6 +1337,10 @@ EntityForm.prototype.refresh = function() {
 //  Mydataspace.emit('entities.create', data);
 //};
 
+EntityForm.prototype.clone = function() {
+  $$('clone_entity_window').show();
+};
+
 EntityForm.prototype.delete = function() {
   $$('entity_form').disable();
   UI.deleteEntity(this.selectedId);
@@ -2274,6 +2278,8 @@ EntityTree.prototype.listen = function() {
 
   Mydataspace.on('entities.delete.res', function(data) {
     var entityId;
+
+
     if (data.path === '') {
       var rootData = self.findRoot(data);
       if (rootData == null) {
@@ -2807,6 +2813,59 @@ UILayout.windows.addEntity = {
         { view: 'text', required: true, id: 'NAME_LABEL_1', label: STRINGS.NAME, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
         UIControls.getEntityTypeSelectTemplate(),
         UIControls.getSubmitCancelForFormWindow('add_entity')
+      ]
+    }
+};
+
+UILayout.windows.cloneEntity = {
+    view: 'window',
+    id: 'clone_entity_window',
+    width: 350,
+    position: 'center',
+    modal: true,
+    head: STRINGS.CLONE_ENTITY,
+    on: UIControls.getOnForFormWindow('add_entity'),
+    body: {
+      view: 'form',
+      id: 'clone_entity_form',
+      borderless: true,
+      on: {
+        onSubmit: function() {
+          if ($$('clone_entity_form').validate()) {
+            var formData = $$('clone_entity_form').getValues();
+            var newEntityId = Identity.childId(UI.entityList.getRootId(), formData.name);
+            var data = Identity.dataFromId(newEntityId);
+            data.fields = [];
+            data.othersCan = formData.othersCan;
+            var selectedData = Identity.dataFromId(UI.entityForm.selectedId);
+            data.sourceRoot = selectedData.root;
+            data.sourcePath = selectedData.path;
+            data.sourceVersion = selectedData.version;
+            Mydataspace.request('entities.create', data, function() {
+              $$('clone_entity_window').hide();
+              UIControls.removeSpinnerFromWindow('clone_entity_window');
+            }, function(err) {
+              UIControls.removeSpinnerFromWindow('clone_entity_window');
+              for (var i in err.errors) {
+                var e = err.errors[i];
+                switch (e.type) {
+                  case 'unique violation':
+                    if (e.path === 'entities_root_path') {
+                      $$('clone_entity_form').elements.name.define('invalidMessage', 'Name already exists');
+                      $$('clone_entity_form').markInvalid('name', true);
+                    }
+                    break;
+                }
+              }
+            });
+          }
+        }
+      },
+      elements: [
+        { view: 'text', required: true, id: 'CLONE_ROOT_NAME_LABEL', label: STRINGS.CLONE_ROOT_NAME, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
+        { view: 'text', required: true, id: 'CLONE_ENTITY_PATH_LABEL', label: STRINGS.CLONE_ENTITY_PATH, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
+        UIControls.getEntityTypeSelectTemplate(),
+        UIControls.getSubmitCancelForFormWindow('clone_entity')
       ]
     }
 };
@@ -4013,6 +4072,16 @@ UILayout.entityForm =
       {},
       { view: 'button',
         type: 'icon',
+        icon: 'copy',
+        id: 'CLONE_ENTITY_LABEL',
+        label: STRINGS.CLONE_ENTITY,
+        width: 80,
+        click: function() {
+          UI.entityForm.clone();
+        }
+      },
+      { view: 'button',
+        type: 'icon',
         icon: 'remove',
         id: 'DELETE_ENTITY_SHORT_LABEL', label: STRINGS.DELETE_ENTITY_SHORT,
         width: 80,
@@ -4684,6 +4753,7 @@ UI = {
     webix.ui(UILayout.windows.editScript);
     webix.ui(UILayout.windows.addRoot);
     webix.ui(UILayout.windows.addEntity);
+    webix.ui(UILayout.windows.cloneEntity);
     webix.ui(UILayout.windows.addTask);
     webix.ui(UILayout.windows.addProto);
     webix.ui(UILayout.windows.addResource);

@@ -64,6 +64,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     PROTO_IS_FIXED: 'Is Fixed',
     MAX_NUMBER_OF_CHILDREN: 'Children limit',
     EDIT_ENTITY: 'Edit',
+    CLONE_ENTITY: 'Clone',
+
+    CLONE_ROOT_NAME: 'Root',
+    CLONE_ENTITY_PATH: 'Path',
+
     SAVE_ENTITY: 'Save',
     REFRESH_ENTITY: 'Refresh',
     CANCEL_ENTITY: 'View',
@@ -240,6 +245,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     PROTO_IS_FIXED: 'Зафиксирован',
     MAX_NUMBER_OF_CHILDREN: 'Доч. эл-тов',
     EDIT_ENTITY: 'Ред.',
+    CLONE_ENTITY: 'Копир.',
     SAVE_ENTITY: 'Сохр.',
     REFRESH_ENTITY: 'Обнов.',
     CANCEL_ENTITY: 'Пр.',

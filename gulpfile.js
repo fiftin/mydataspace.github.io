@@ -63,6 +63,7 @@ gulp.task('ui', function() {
       './js/ui-layout/windows/add-app.js',
       './js/ui-layout/windows/add-root.js',
       './js/ui-layout/windows/add-entity.js',
+      './js/ui-layout/windows/clone-entity.js',
       './js/ui-layout/windows/add-task.js',
       './js/ui-layout/windows/add-proto.js',
       './js/ui-layout/windows/add-resource.js',

@@ -49,6 +49,16 @@ UILayout.entityForm =
       {},
       { view: 'button',
         type: 'icon',
+        icon: 'copy',
+        id: 'CLONE_ENTITY_LABEL',
+        label: STRINGS.CLONE_ENTITY,
+        width: 80,
+        click: function() {
+          UI.entityForm.clone();
+        }
+      },
+      { view: 'button',
+        type: 'icon',
         icon: 'remove',
         id: 'DELETE_ENTITY_SHORT_LABEL', label: STRINGS.DELETE_ENTITY_SHORT,
         width: 80,

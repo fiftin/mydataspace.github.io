@@ -419,6 +419,7 @@ UI = {
     webix.ui(UILayout.windows.editScript);
     webix.ui(UILayout.windows.addRoot);
     webix.ui(UILayout.windows.addEntity);
+    webix.ui(UILayout.windows.cloneEntity);
     webix.ui(UILayout.windows.addTask);
     webix.ui(UILayout.windows.addProto);
     webix.ui(UILayout.windows.addResource);
