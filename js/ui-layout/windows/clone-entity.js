@@ -14,14 +14,14 @@ UILayout.windows.cloneEntity = {
         onSubmit: function() {
           if ($$('clone_entity_form').validate()) {
             var formData = $$('clone_entity_form').getValues();
-            var newEntityId = Identity.childId(UI.entityList.getRootId(), formData.name);
-            var data = Identity.dataFromId(newEntityId);
-            data.fields = [];
-            data.othersCan = formData.othersCan;
             var selectedData = Identity.dataFromId(UI.entityForm.selectedId);
-            data.sourceRoot = selectedData.root;
-            data.sourcePath = selectedData.path;
-            data.sourceVersion = selectedData.version;
+            var data = MDSCommon.extend(formData, {
+              fields: [],
+              sourceRoot: selectedData.root,
+              sourcePath: selectedData.path,
+              sourceVersion: selectedData.version
+            });
+
             Mydataspace.request('entities.create', data, function() {
               $$('clone_entity_window').hide();
               UIControls.removeSpinnerFromWindow('clone_entity_window');
@@ -43,8 +43,8 @@ UILayout.windows.cloneEntity = {
         }
       },
       elements: [
-        { view: 'text', required: true, id: 'CLONE_ROOT_NAME_LABEL', label: STRINGS.CLONE_ROOT_NAME, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
-        { view: 'text', required: true, id: 'CLONE_ENTITY_PATH_LABEL', label: STRINGS.CLONE_ENTITY_PATH, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
+        { view: 'text', required: true, id: 'CLONE_ROOT_NAME_LABEL', label: STRINGS.CLONE_ROOT_NAME, name: 'root', labelWidth: UIHelper.LABEL_WIDTH },
+        { view: 'text', required: true, id: 'CLONE_ENTITY_PATH_LABEL', label: STRINGS.CLONE_ENTITY_PATH, name: 'path', labelWidth: UIHelper.LABEL_WIDTH },
         UIControls.getEntityTypeSelectTemplate(),
         UIControls.getSubmitCancelForFormWindow('clone_entity')
       ]
