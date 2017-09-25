@@ -2738,25 +2738,21 @@ UILayout.windows.addRoot = {
             UIControls.removeSpinnerFromWindow('add_root_window');
           }, function(err) {
             UIControls.removeSpinnerFromWindow('add_root_window');
-            if (err.errors != null) {
-              for (var i in err.errors) {
-                var e = err.errors[i];
-                switch (e.type) {
-                  case 'unique violation':
-                    if (e.path === 'entities_root_path') {
-                      $$('add_root_form').elements.root.define('invalidMessage', 'Name already exists');
-                      $$('add_root_form').markInvalid('root', true);
-                    }
-                    break;
+            switch (err.name) {
+              case 'SequelizeValidationError':
+                if (err.message === 'Validation error: Validation len failed') {
+                  var msg = data.root.length > 10 ? 'Too long root name' : 'Too short root name';
+                  $$('add_root_form').elements.root.define('invalidMessage', msg);
+                  $$('add_root_form').markInvalid('root', true);
                 }
-              }
-            } else {
-              if (err.message.startsWith('ER_DATA_TOO_LONG:')) {
-                $$('add_root_form').elements.root.define('invalidMessage', 'Too long');
+                break;
+              case 'SequelizeUniqueConstraintError':
+                $$('add_root_form').elements.root.define('invalidMessage', 'Name already exists');
                 $$('add_root_form').markInvalid('root', true);
-              } else {
+                break;
+              default:
                 UI.error(err);
-              }
+                break;
             }
           });
         }
@@ -2794,16 +2790,11 @@ UILayout.windows.addEntity = {
               UIControls.removeSpinnerFromWindow('add_entity_window');
             }, function(err) {
               UIControls.removeSpinnerFromWindow('add_entity_window');
-              for (var i in err.errors) {
-                var e = err.errors[i];
-                switch (e.type) {
-                  case 'unique violation':
-                    if (e.path === 'entities_root_path') {
-                      $$('add_entity_form').elements.name.define('invalidMessage', 'Name already exists');
-                      $$('add_entity_form').markInvalid('name', true);
-                    }
-                    break;
-                }
+              if (err.name === 'SequelizeUniqueConstraintError') {
+                $$('add_entity_form').elements.name.define('invalidMessage', 'Name already exists');
+                $$('add_entity_form').markInvalid('name', true);
+              } else {
+                UI.error(err);
               }
             });
           }
@@ -2895,16 +2886,11 @@ UILayout.windows.addTask = {
               UIControls.removeSpinnerFromWindow('add_task_window');
             }, function(err) {
               UIControls.removeSpinnerFromWindow('add_task_window');
-              for (var i in err.errors) {
-                var e = err.errors[i];
-                switch (e.type) {
-                  case 'unique violation':
-                    if (e.path === 'entities_root_path') {
-                      $$('add_task_form').elements.name.define('invalidMessage', 'Name already exists');
-                      $$('add_task_form').markInvalid('name', true);
-                    }
-                    break;
-                }
+              if (err.name === 'SequelizeUniqueConstraintError') {
+                $$('add_task_form').elements.name.define('invalidMessage', 'Name already exists');
+                $$('add_task_form').markInvalid('name', true);
+              } else {
+                UI.error(err);
               }
             });
           }
@@ -2939,20 +2925,15 @@ UILayout.windows.addProto = {
             data.fields = [];
             data.othersCan = formData.othersCan;
             Mydataspace.request('entities.create', data, function() {
-              $$('add_entity_window').hide();
+              $$('add_proto_window').hide();
               UIControls.removeSpinnerFromWindow('add_proto_window');
             }, function(err) {
               UIControls.removeSpinnerFromWindow('add_proto_window');
-              for (var i in err.errors) {
-                var e = err.errors[i];
-                switch (e.type) {
-                  case 'unique violation':
-                    if (e.path === 'entities_root_path') {
-                      $$('add_entity_form').elements.name.define('invalidMessage', 'Name already exists');
-                      $$('add_entity_form').markInvalid('name', true);
-                    }
-                    break;
-                }
+              if (err.name === 'SequelizeUniqueConstraintError') {
+                $$('add_proto_form').elements.name.define('invalidMessage', 'Name already exists');
+                $$('add_proto_form').markInvalid('name', true);
+              } else {
+                UI.error(err);
               }
             });
           }
@@ -2995,16 +2976,11 @@ UILayout.windows.addResource = {
               },
               function(err) {
                 UIControls.removeSpinnerFromWindow('add_resource_window');
-                for (var i in err.errors) {
-                  var e = err.errors[i];
-                  // switch (e.type) {
-                  //   case 'unique violation':
-                  //     if (e.path === 'entities_root_path') {
-                  //       $$('add_resource_form').elements.name.define('invalidMessage', 'Name already exists');
-                  //       $$('add_resource_form').markInvalid('name', true);
-                  //     }
-                  //     break;
-                  // }
+                if (err.name === 'SequelizeUniqueConstraintError') {
+                  $$('add_resource_form').elements.name.define('invalidMessage', 'Name already exists');
+                  $$('add_resource_form').markInvalid('name', true);
+                } else {
+                  UI.error(err);
                 }
               });
           }

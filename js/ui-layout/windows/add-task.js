@@ -23,16 +23,11 @@ UILayout.windows.addTask = {
               UIControls.removeSpinnerFromWindow('add_task_window');
             }, function(err) {
               UIControls.removeSpinnerFromWindow('add_task_window');
-              for (var i in err.errors) {
-                var e = err.errors[i];
-                switch (e.type) {
-                  case 'unique violation':
-                    if (e.path === 'entities_root_path') {
-                      $$('add_task_form').elements.name.define('invalidMessage', 'Name already exists');
-                      $$('add_task_form').markInvalid('name', true);
-                    }
-                    break;
-                }
+              if (err.name === 'SequelizeUniqueConstraintError') {
+                $$('add_task_form').elements.name.define('invalidMessage', 'Name already exists');
+                $$('add_task_form').markInvalid('name', true);
+              } else {
+                UI.error(err);
               }
             });
           }

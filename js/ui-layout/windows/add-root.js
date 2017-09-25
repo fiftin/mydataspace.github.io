@@ -24,25 +24,21 @@ UILayout.windows.addRoot = {
             UIControls.removeSpinnerFromWindow('add_root_window');
           }, function(err) {
             UIControls.removeSpinnerFromWindow('add_root_window');
-            if (err.errors != null) {
-              for (var i in err.errors) {
-                var e = err.errors[i];
-                switch (e.type) {
-                  case 'unique violation':
-                    if (e.path === 'entities_root_path') {
-                      $$('add_root_form').elements.root.define('invalidMessage', 'Name already exists');
-                      $$('add_root_form').markInvalid('root', true);
-                    }
-                    break;
+            switch (err.name) {
+              case 'SequelizeValidationError':
+                if (err.message === 'Validation error: Validation len failed') {
+                  var msg = data.root.length > 10 ? 'Too long root name' : 'Too short root name';
+                  $$('add_root_form').elements.root.define('invalidMessage', msg);
+                  $$('add_root_form').markInvalid('root', true);
                 }
-              }
-            } else {
-              if (err.message.startsWith('ER_DATA_TOO_LONG:')) {
-                $$('add_root_form').elements.root.define('invalidMessage', 'Too long');
+                break;
+              case 'SequelizeUniqueConstraintError':
+                $$('add_root_form').elements.root.define('invalidMessage', 'Name already exists');
                 $$('add_root_form').markInvalid('root', true);
-              } else {
+                break;
+              default:
                 UI.error(err);
-              }
+                break;
             }
           });
         }

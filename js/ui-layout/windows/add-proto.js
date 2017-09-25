@@ -19,20 +19,15 @@ UILayout.windows.addProto = {
             data.fields = [];
             data.othersCan = formData.othersCan;
             Mydataspace.request('entities.create', data, function() {
-              $$('add_entity_window').hide();
+              $$('add_proto_window').hide();
               UIControls.removeSpinnerFromWindow('add_proto_window');
             }, function(err) {
               UIControls.removeSpinnerFromWindow('add_proto_window');
-              for (var i in err.errors) {
-                var e = err.errors[i];
-                switch (e.type) {
-                  case 'unique violation':
-                    if (e.path === 'entities_root_path') {
-                      $$('add_entity_form').elements.name.define('invalidMessage', 'Name already exists');
-                      $$('add_entity_form').markInvalid('name', true);
-                    }
-                    break;
-                }
+              if (err.name === 'SequelizeUniqueConstraintError') {
+                $$('add_proto_form').elements.name.define('invalidMessage', 'Name already exists');
+                $$('add_proto_form').markInvalid('name', true);
+              } else {
+                UI.error(err);
               }
             });
           }

@@ -23,16 +23,11 @@ UILayout.windows.addEntity = {
               UIControls.removeSpinnerFromWindow('add_entity_window');
             }, function(err) {
               UIControls.removeSpinnerFromWindow('add_entity_window');
-              for (var i in err.errors) {
-                var e = err.errors[i];
-                switch (e.type) {
-                  case 'unique violation':
-                    if (e.path === 'entities_root_path') {
-                      $$('add_entity_form').elements.name.define('invalidMessage', 'Name already exists');
-                      $$('add_entity_form').markInvalid('name', true);
-                    }
-                    break;
-                }
+              if (err.name === 'SequelizeUniqueConstraintError') {
+                $$('add_entity_form').elements.name.define('invalidMessage', 'Name already exists');
+                $$('add_entity_form').markInvalid('name', true);
+              } else {
+                UI.error(err);
               }
             });
           }
