@@ -192,7 +192,7 @@ EntityForm.prototype.setRootView = function(data) {
     view.innerHTML = html;
     var ava = MDSCommon.findValueByName(data.fields, 'avatar');
     if (MDSCommon.isPresent(ava)) {
-      ava = Mydataspace.options.apiURL + '/avatars/sm/' + ava + '.png';
+      ava = Mydataspace.options.cdnURL + '/avatars/sm/' + ava + '.png';
     }
     document.getElementById('view__overview_image').src = ava || '/images/icons/root.svg';
     document.getElementById('view__title').innerText =
@@ -706,7 +706,7 @@ EntityForm.prototype.onUploadAvatar = function(event) {
     function(res) {
       var entityName = res.resources[0];
       $$('entity_form__root_avatar_value').setValue(entityName);
-      $('#entity_form__root_img').prop('src', Mydataspace.options.apiURL + '/avatars/sm/' + entityName + '.png');    },
+      $('#entity_form__root_img').prop('src', Mydataspace.options.cdnURL + '/avatars/sm/' + entityName + '.png');    },
     function(err) {
       console.log(err);
     }
@@ -783,7 +783,7 @@ EntityForm.prototype.addRootField = function(data) {
           borderless: true,
           css: 'entity_form__root_img_template',
           template: '<img id="entity_form__root_img" class="entity_form__root_img" src="' +
-                      (MDSCommon.isPresent(data.value) ? Mydataspace.options.apiURL + '/avatars/sm/' + data.value + '.png' : '/images/icons/root.svg') +
+                      (MDSCommon.isPresent(data.value) ? Mydataspace.options.cdnURL + '/avatars/sm/' + data.value + '.png' : '/images/icons/root.svg') +
                     '" alt="Icon" />',
           width: 32
         },

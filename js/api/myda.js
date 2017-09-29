@@ -17,6 +17,7 @@ function Myda(optionsOrRoot) {
   this.options = MDSCommon.extend({
     useLocalStorage: true,
 		apiURL:  apiURL,
+    cdnURL:  'https://cdn.mydataspace.net',
 		websocketURL: apiURL,
     connected: function() { }
   }, options);

@@ -7937,6 +7937,7 @@ function Myda(options) {
   this.options = common.extend({
     useLocalStorage: true,
 		apiURL: 'https://api.mydataspace.net',
+    cdnURL: 'https://cdn.mydataspace.net',
 		websocketURL: 'https://api.mydataspace.net',
     connected: function() {
       // console.log('Maybe you forgot to specify connected-event handler');

@@ -547,7 +547,7 @@
         view.innerHTML = html;
 
         if (MDSCommon.isPresent(ava)) {
-          ava = Mydataspace.options.apiURL + '/avatars/sm/' + ava + '.png';
+          ava = Mydataspace.options.cdnURL + '/avatars/sm/' + ava + '.png';
         }
         document.getElementById('root__overview_image').src = ava || '/images/icons/root.svg';
         document.getElementById('root__title').innerText =
