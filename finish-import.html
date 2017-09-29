@@ -129,7 +129,7 @@ language: en
         }).then(function(root){
           var avatar;
           if (MDSCommon.findValueByName(root.fields, 'avatar')) {
-            avatar = 'https://api.mydataspace.net/avatars/sm/' + root.fields.avatar + '.png';
+            avatar = 'https://cdn.mydataspace.net/avatars/sm/' + root.fields.avatar + '.png';
           } else {
             avatar = '/images/icons/root.svg';
           }
