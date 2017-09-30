@@ -35,7 +35,7 @@ var Fields = {
     u: {
       title: 'URL',
       isValidValue: function(value) {
-        return MDSCommon.isUrl(value);
+        return MDSCommon.isURL(value);
       }
     },
     b: {
