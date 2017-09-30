@@ -7249,7 +7249,6 @@ module.exports = yeast;
 
 'use strict';
 
-
 var MDSCommon = {
   BASE32: '0123456789bcdefghjkmnpqrstuvwxyz',
 
@@ -7313,6 +7312,7 @@ var MDSCommon = {
     var i;
     var cd;
     var mask;
+    var c, j;
 
     for (i=0; i<geohash.length; i++) {
       c = geohash[i];
@@ -7495,12 +7495,64 @@ var MDSCommon = {
     }).join('\n');
   },
 
+
+
+  binarySearchOf: function(arr, searchElement, comparer) {
+    var minIndex = 0;
+    var maxIndex = arr.length - 1;
+    var currentIndex;
+    var currentElement;
+
+    while (minIndex <= maxIndex) {
+      currentIndex = (minIndex + maxIndex) / 2 | 0;
+      currentElement = arr[currentIndex];
+      var cmp = comparer(currentElement, searchElement);
+      if (cmp < 0) {
+        minIndex = currentIndex + 1;
+      }
+      else if (cmp > 0) {
+        maxIndex = currentIndex - 1;
+      }
+      else {
+        return arr[currentIndex];
+      }
+    }
+  },
+
+  parseInt: function(x, defaultValue) {
+    var ret = parseInt(x);
+    if (isNaN(ret)) {
+      return defaultValue;
+    }
+    return ret;
+  },
+
+  parseBool: function(x) {
+    switch (x.toString().toLowerCase()) {
+      case 'true':
+      case '1':
+        return true;
+      case 'false':
+      case '0':
+        return false;
+    }
+    throw new Error('Value is not boolean');
+  },
+
+  isBool: function(x) {
+    var s = x.toString().toLowerCase();
+    return s === 'true' ||
+      s === 'false' ||
+      s === '1' ||
+      s === '0';
+  },
+
   isNumber: function(n) {
-    return Number(n) === n || (typeof n === 'string' && /^\d[\d\.]*$/.test(n));
+    return Number(n) === n || (typeof n === 'string' && /^-?\d[\d.]*$/.test(n));
   },
 
   isInt: function(n) {
-    return (typeof n === 'string' && /^\d+$/.test(n)) || MDSCommon.isNumber(n) && n % 1 === 0;
+    return (typeof n === 'string' && /^-?\d+$/.test(n)) || MDSCommon.isNumber(n) && n % 1 === 0;
   },
 
   isPrimitive: function(value) {
@@ -7509,6 +7561,79 @@ var MDSCommon = {
 
   isReal: function(value) {
     return !isNaN(parseFloat(value));
+  },
+  isGeo: function(value) {
+    if (value == null || typeof value !== 'string') {
+      return false;
+    }
+    const m = value.match(/^-?(\d+(\.\d+)?),-?(\d+(\.\d+)?)$/);
+    if (m) {
+      const lat = parseFloat(m[1]);
+      const lon = parseFloat(m[3]);
+      if (lat <= 90 && lon <= 90) {
+        return true;
+      }
+    }
+    return false;
+  },
+
+  isGeoShape: function() {
+    return false;
+  },
+
+  isEmail: function(t) {
+    if (t == null) {
+      return true;
+    }
+    if (t.length > 256) return false;
+    if (t.lastIndexOf("@") > 64) return false;
+    var r = new RegExp('^(?:(?:\\r\\n)?[ \\t])*(?:(?:(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*|(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*)*\\<(?:(?:\\r\\n)?[ \\t])*(?:@(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*(?:,@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*)*:(?:(?:\\r\\n)?[ \\t])*)?(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*\\>(?:(?:\\r\\n)?[ \\t])*)|(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*)*:(?:(?:\\r\\n)?[ \\t])*(?:(?:(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*|(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*)*\\<(?:(?:\\r\\n)?[ \\t])*(?:@(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*(?:,@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*)*:(?:(?:\\r\\n)?[ \\t])*)?(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*\\>(?:(?:\\r\\n)?[ \\t])*)(?:,\\s*(?:(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*|(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*)*\\<(?:(?:\\r\\n)?[ \\t])*(?:@(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*(?:,@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*)*:(?:(?:\\r\\n)?[ \\t])*)?(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*\\>(?:(?:\\r\\n)?[ \\t])*))*)?;\\s*)$');
+    return r.test(t + ' ');
+  },
+
+  isURL: function(t) {
+    if (t == null) {
+      return true;
+    }
+    return /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(t);
+  },
+
+  isPhone: function(t) {
+    if (t == null) {
+      return true;
+    }
+    return /^\+?\d{3,15}$/.test(t);
+  },
+
+  isDate: function(t) {
+    if (t == null) {
+      return true;
+    }
+    var d = new Date(t);
+    return isNaN(d.getDay());
+  },
+
+  getVersionOf: function(root) {
+    const parts = root.split('$');
+    const version = parts[1] ? parseInt(parts[1]) : 0;
+    return version;
+  },
+
+  getBaseOf: function(root) {
+    return root.split('$')[0];
+  },
+
+  /**
+   *
+   * @param {string} str String with GPS coordinates with format: "lat,lon".
+   * @return {Object} Object with fields "lat" & "lon".
+   */
+  latLonStrToObject: function(str) {
+    var parts = str.split(',');
+    return {
+      lat: parseFloat(parts[0]),
+      lon: parseFloat(parts[1])
+    };
   },
 
   isComplex: function(value) {
@@ -7609,10 +7734,19 @@ var MDSCommon = {
     return ret;
   },
 
-  convertNameValueArrayToMap: function(arr) {
+  convertNameValueArrayToMap: function(arr, nameFieldName, valueFieldName) {
     var ret = {};
+    if (nameFieldName == null) {
+      nameFieldName = 'name';
+    }
+    if (valueFieldName == null) {
+      valueFieldName = 'value';
+    }
     for (var  i in arr) {
-      ret[arr[i].name] = arr[i].value;
+      if (typeof arr[i][nameFieldName] === 'undefined') {
+        continue;
+      }
+      ret[arr[i][nameFieldName]] = arr[i][valueFieldName];
     }
     return ret;
   },
@@ -7631,6 +7765,9 @@ var MDSCommon = {
   findIndexByName: function(arr, name, caseInsensitive) {
     if (typeof caseInsensitive === 'undefined') {
       caseInsensitive = false;
+    }
+    if (arr == null) {
+      throw new Error('Argument arr can not be null');
     }
     if (!Array.isArray(arr)) {
       throw new Error('Argument arr isnt array');
@@ -7671,6 +7808,9 @@ var MDSCommon = {
     }
   },
 
+  /**
+   * Returns last part of the path.
+   */
   getPathName: function(path) {
     var i = path.lastIndexOf('/');
     if (i === -1) {
@@ -7678,7 +7818,6 @@ var MDSCommon = {
       if (i === -1) {
         return path;
       }
-      // throw new Error('Path has no child');
     }
     return path.substr(i + 1);
   },
@@ -7691,7 +7830,7 @@ var MDSCommon = {
     if (i === -1) {
       i = path.lastIndexOf('\\');
       if (i === -1) {
-        return path;
+        return '';
       }
     }
     return path.slice(0, i);
@@ -7733,6 +7872,9 @@ var MDSCommon = {
   consoleFormat: function(format) {
     if (format == null) {
       format = '';
+    }
+    if (typeof format !== 'string') {
+      format = format.toString();
     }
     if (arguments.length === 1) {
       return format;
@@ -7784,7 +7926,7 @@ var MDSCommon = {
     return MDSCommon.permit(MDSCommon.req(data, keys), keys);
   },
 
-  reqArray: function(data, keys) {
+  reqArray: function(arr, keys) {
     var ret = [];
     for (var i in arr) {
       var data = arr[i];
@@ -7904,19 +8046,16 @@ var MDSCommon = {
     return ret;
   },
 
-  isValidPrimitiveType: function(val, type) {
+  isValidPrimitiveTypeSingle: function(val, type) {
     var ok = false;
     switch (type) {
       case 's': // string
-      case 'j': // javascript
-      case 'u': // javascript source
-        if (Array.isArray(val)) {
-          ok = val.reduce(function(prev, curr) {
-            return prev && MDSCommon.isPrimitive(curr);
-          });
-        } else {
-          ok = MDSCommon.isPrimitive(val);
-        }
+      case 'j': // test
+      case '*': // test
+        ok = MDSCommon.isPrimitive(val);
+        break;
+      case 'u': // url
+        ok = MDSCommon.isURL(val);
         break;
       case 'i':
         ok = MDSCommon.isInt(val);
@@ -7924,15 +8063,52 @@ var MDSCommon = {
       case 'r':
         ok = MDSCommon.isReal(val);
         break;
+      case 'b':
+        ok = MDSCommon.isBool(val);
+        break;
+      case 'd':
+        ok = MDSCommon.isDate(val);
+        break;
+      case 'e':
+        ok = MDSCommon.isEmail(val);
+        break;
+      case 'p':
+        ok = MDSCommon.isPhone(val);
+        break;
+      case 'g':
+        ok = MDSCommon.isGeo(val);
+        break;
+      case 'G':
+        ok = MDSCommon.isGeoShape(val);
+        break;
       case 'o':
         ok = MDSCommon.isObject(val);
+        break;
+      case 'true':
+        ok = MDSCommon.isBool(val) && MDSCommon.parseBool(val);
         break;
       case 'a':
         ok = true;
         break;
     }
     return ok;
-  }
+  },
+
+  /**
+   * @param val - Value or array of values to check.
+   * @param type - Required value type.
+   */
+  isValidPrimitiveType: function(val, type) {
+    var ok;
+    if (Array.isArray(val)) {
+      ok = val.reduce(function(prev, curr) {
+        return prev && MDSCommon.isValidPrimitiveTypeSingle(curr, type);
+      });
+    } else {
+      ok = MDSCommon.isPrimitive(val, type);
+    }
+    return ok;
+  },
 };
 
 if (typeof module !== 'undefined') {
@@ -8173,6 +8349,7 @@ function Myda(optionsOrRoot) {
   this.options = MDSCommon.extend({
     useLocalStorage: true,
 		apiURL:  apiURL,
+    cdnURL:  'https://cdn.mydataspace.net',
 		websocketURL: apiURL,
     connected: function() { }
   }, options);
