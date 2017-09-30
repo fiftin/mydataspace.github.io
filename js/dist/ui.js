@@ -361,7 +361,7 @@ var Fields = {
       }
     },
     j: {
-      title: 'Text',
+      title: STRINGS.TEXT,
       isValidValue: function(value) {
         return value.toString().length < Fields.MAX_TEXT_FIELD_LENGTH;
       }
@@ -381,20 +381,59 @@ var Fields = {
     u: {
       title: 'URL',
       isValidValue: function(value) {
-        return value.toString().length < Fields.MAX_STRING_FIELD_LENGTH;
+        return MDSCommon.isUrl(value);
+      }
+    },
+    b: {
+      title: STRINGS.BOOL,
+      isValidValue: function(value) {
+        return MDSCommon.isBool(value);
+      }
+    },
+    d: {
+      title: STRINGS.DATE,
+      isValidValue: function(value) {
+        return MDSCommon.isDate(value);
+      }
+    },
+    e: {
+      title: STRINGS.EMAIL,
+      isValidValue: function(value) {
+        return MDSCommon.isEmail(value);
+      }
+    },
+    p: {
+      title: STRINGS.PHONE,
+      isValidValue: function(value) {
+        return MDSCommon.isPhone(value);
       }
     }
   },
 
+  FIELD_TYPE_LIST: [
+    { id: 's', value: STRINGS.STRING, icon: 'commenting' },
+    { id: 'j', value: STRINGS.TEXT, icon: 'align-justify' },
+    { id: 'i', value: STRINGS.INT, icon: 'italic' },
+    { id: 'r', value: STRINGS.REAL, icon: 'calculator'  },
+    { id: 'u', value: 'URL', icon: 'link' },
+    { id: 'b', value: STRINGS.BOOL, icon: 'check-square-o' },
+    { id: 'd', value: STRINGS.DATE, icon: 'calendar-o' },
+    { id: 'e', value: STRINGS.EMAIL, icon: 'envelope' },
+    { id: 'p', value: STRINGS.PHONE, icon: 'phone' },
+    { id: '*', value: STRINGS.SECRET, icon: 'lock' }
+  ],
+
   FIELD_TYPE_ICONS: {
     s: 'commenting',
-    w: 'lock',
     j: 'align-justify',
     i: 'italic',
     r: 'calculator',
+    u: 'link',
     b: 'check-square-o',
     d: 'calendar-o',
-    u: 'link'
+    e: 'envelope',
+    p: 'phone',
+    '*': 'lock',
   },
 
   expandFields: function(fields) {
@@ -3382,19 +3421,7 @@ UILayout.popups.fieldType = {
     id: 'entity_form__field_type_popup_list',
     class: 'entity_form__field_type_popup_list',
     borderless: true,
-    data:[
-          { id: 's', value: 'String', icon: 'commenting' },
-          { id: 'j', value: 'Text', icon: 'align-justify' },
-          { id: 'i', value: 'Integer', icon: 'italic' },
-          { id: 'r', value: 'Float', icon: 'calculator'  },
-          { id: 'u', value: 'URL', icon: 'link' },
-          { id: 'b', value: 'Boolean', icon: 'check-square-o' },
-          { id: 'd', value: 'Date', icon: 'calendar-o' },
-          { id: 'e', value: 'Email', icon: 'envelope' },
-          { id: 'p', value: 'Phone', icon: 'phone' },
-          { id: '*', value: 'Secret', icon: 'lock' },
-          // { id: 'm', value: 'Money', icon: 'dollar' },
-    ],
+    data: Fields.FIELD_TYPE_LIST,
     datatype: 'json',
     template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
     autoheight: true,
