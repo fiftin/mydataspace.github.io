@@ -14,16 +14,12 @@ UILayout.popups.fieldType = {
           { id: 'i', value: 'Integer', icon: 'italic' },
           { id: 'r', value: 'Float', icon: 'calculator'  },
           { id: 'u', value: 'URL', icon: 'link' },
-          { id: 'w', value: 'Secret', icon: 'lock' }
-
-          // { id: 'b', value: 'Boolean', icon: 'check-square-o' },
-          // { id: 'd', value: 'Date', icon: 'calendar-o' },
+          { id: 'b', value: 'Boolean', icon: 'check-square-o' },
+          { id: 'd', value: 'Date', icon: 'calendar-o' },
+          { id: 'e', value: 'Email', icon: 'envelope' },
+          { id: 'p', value: 'Phone', icon: 'phone' },
+          { id: '*', value: 'Secret', icon: 'lock' },
           // { id: 'm', value: 'Money', icon: 'dollar' },
-          // { id: 'e', value: 'Email', icon: 'envelope' },
-          // { id: 'p', value: 'Phone', icon: 'phone' },
-
-          // { id: 'c', value: 'Custom', icon: 'pencil' },
-          // { value: 'More...', icon: '' },
     ],
     datatype: 'json',
     template: '<i class="fa fa-#icon#" style="width: 28px;"></i> #value#',
