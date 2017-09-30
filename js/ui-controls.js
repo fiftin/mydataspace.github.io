@@ -23,8 +23,8 @@ UIControls = {
       value: 'view_children',
       options: [
         // { id: 'nothing', value: STRINGS.NOTHING },
-        { id: 'read', value: STRINGS.ONLY_READ },
-        // { id: 'view_children', value: STRINGS.READ_AND_VIEW_CHILDREN },
+        // { id: 'read', value: STRINGS.ONLY_READ },
+        { id: 'view_children', value: STRINGS.ONLY_READ },
         { id: 'create_child', value: STRINGS.CREATE_ONE_CHILD },
         { id: 'create_children', value: STRINGS.CREATE_CHILDREN }
       ],
