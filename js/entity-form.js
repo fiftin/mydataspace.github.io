@@ -382,15 +382,14 @@ EntityForm.prototype.setEntityView = function(data) {
     if (entityType === 'resource') {
       const resourceType = MDSCommon.findValueByName(data.fields, 'type');
       const resourceName = MDSCommon.getPathName(data.path);
-      const resourcesHost = Mydataspace.options.apiURL;
       switch (resourceType) {
         case 'avatar':
           document.getElementById('view__overview_icon').parentNode.innerHTML =
-            '<img src="' + resourcesHost + '/avatars/sm/' + resourceName + '.png" class="view__overview_image" />';
+            '<img src="' + Mydataspace.options.cdnURL + '/avatars/sm/' + resourceName + '.png" class="view__overview_image" />';
           break;
         case 'image':
           document.getElementById('view__overview_icon').parentNode.innerHTML =
-            '<img src="' + resourcesHost + '/images/sm/' + resourceName + '.jpg" class="view__overview_image" />';
+            '<img src="' + Mydataspace.options.cdnURL + '/images/sm/' + resourceName + '.jpg" class="view__overview_image" />';
           break;
         default:
           document.getElementById('view__overview_icon').className =
