@@ -559,6 +559,13 @@ var MDSCommon = {
     }
   },
 
+  getChildPath: function(parentPath, childName) {
+    if (common.isBlank(parentPath)) {
+      return childName;
+    }
+    return parentPath + '/' + childName;
+  },
+
   /**
    * Returns last part of the path.
    */

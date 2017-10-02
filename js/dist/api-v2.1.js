@@ -7808,6 +7808,13 @@ var MDSCommon = {
     }
   },
 
+  getChildPath: function(parentPath, childName) {
+    if (common.isBlank(parentPath)) {
+      return childName;
+    }
+    return parentPath + '/' + childName;
+  },
+
   /**
    * Returns last part of the path.
    */
@@ -8188,7 +8195,9 @@ EntityFieldsUnsimplifier.prototype.format = function(data) {
   var res = [];
   if (data != null && data.fields != null) {
     if (Array.isArray(data.fields)) {
-      res.push(...data.fields);
+      for (var i in data.fields) {
+        res.push(data.fields[i]);
+      }
     } else {
       for (var key in data.fields) {
         res.push({
