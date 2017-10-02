@@ -560,7 +560,7 @@ var MDSCommon = {
   },
 
   getChildPath: function(parentPath, childName) {
-    if (common.isBlank(parentPath)) {
+    if (MDSCommon.isBlank(parentPath)) {
       return childName;
     }
     return parentPath + '/' + childName;
