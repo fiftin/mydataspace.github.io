@@ -1,8 +1,9 @@
 'use strict';
 
-function EntityRecursiveFormatter(fieldsFormatter) {
+function EntityRecursiveFormatter(fieldsFormatter, childrenFormatter) {
   this.fieldsFormatter = fieldsFormatter;
-};
+  this.childrenFormatter = childrenFormatter;
+}
 
 EntityRecursiveFormatter.prototype.format = function(data) {
   var datas;

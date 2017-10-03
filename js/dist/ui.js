@@ -581,6 +581,31 @@ var Identity = {
     return data.root + ':' + data.path + version;
   },
 
+  idFromChildProtoData: function(data) {
+    if (MDSCommon.isPresent(data.root)) {
+      return data.root + ':' + data.path;
+    }
+    if (data.path.indexOf('protos/') !== 0) {
+      throw new Error('Illegal child proto path: "' + data + '". Must starts with "protos/"');
+    }
+    return data.path.substring('protos/'.length);
+  },
+
+  dataFromChildProtoId: function(id) {
+    if (id.indexOf('root:') === 0) {
+      var parts = id.split(':');
+      return {
+        root: parts[0],
+        path: parts[1]
+      }
+    } else {
+      return {
+        root: '',
+        path: 'protos/' + id
+      }
+    }
+  },
+
   dataFromId: function(id) {
     var idVersionParts = id.split('?');
     var idParts = idVersionParts[0].split(':');
@@ -1301,7 +1326,7 @@ EntityForm.prototype.setData = function(data) {
     description: data.description,
     maxNumberOfChildren: data.maxNumberOfChildren,
     isFixed: data.isFixed,
-    childPrototype: Identity.idFromData(data.childPrototype)
+    childPrototype: Identity.idFromChildProtoData(data.childPrototype)
   };
   this.clear();
   $$('entity_form').setValues(formData);
@@ -1436,7 +1461,7 @@ EntityForm.prototype.save = function() {
                                 Fields.expandFields(oldData.fields))); // old fields
   $$('entity_form').disable();
   if (typeof dirtyData.childPrototype !== 'undefined') {
-    dirtyData.childPrototype = Identity.dataFromId(dirtyData.childPrototype);
+    dirtyData.childPrototype = Identity.dataFromChildProtoId(dirtyData.childPrototype);
   }
   Mydataspace.request('entities.change', dirtyData, function(res) {
     if (dirtyData.name != null) {

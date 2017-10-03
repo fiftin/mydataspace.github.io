@@ -484,7 +484,7 @@ EntityForm.prototype.setData = function(data) {
     description: data.description,
     maxNumberOfChildren: data.maxNumberOfChildren,
     isFixed: data.isFixed,
-    childPrototype: Identity.idFromData(data.childPrototype)
+    childPrototype: Identity.idFromChildProtoData(data.childPrototype)
   };
   this.clear();
   $$('entity_form').setValues(formData);
@@ -619,7 +619,7 @@ EntityForm.prototype.save = function() {
                                 Fields.expandFields(oldData.fields))); // old fields
   $$('entity_form').disable();
   if (typeof dirtyData.childPrototype !== 'undefined') {
-    dirtyData.childPrototype = Identity.dataFromId(dirtyData.childPrototype);
+    dirtyData.childPrototype = Identity.dataFromChildProtoId(dirtyData.childPrototype);
   }
   Mydataspace.request('entities.change', dirtyData, function(res) {
     if (dirtyData.name != null) {

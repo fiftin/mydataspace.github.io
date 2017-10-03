@@ -806,6 +806,10 @@ var MDSCommon = {
 
   isValidPrimitiveTypeSingle: function(val, type) {
     var ok = false;
+    if (type && type.length > 3 && type[0] === '"' && type[type.length - 1] === '"') {
+      var validValue = type.substring(1, type.length - 1);
+      return val === validValue;
+    }
     switch (type) {
       case 's': // string
       case 'j': // test
