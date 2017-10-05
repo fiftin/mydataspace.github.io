@@ -648,7 +648,11 @@ EntityForm.prototype.clear = function() {
 
 EntityForm.prototype.addFields = function(fields, setDirty, isProto) {
   for (var i in fields) {
-    this.addField(fields[i], setDirty, isProto);
+    var field = fields[i];
+    if (field.name.indexof('$') === 0) {
+      continue;
+    }
+    this.addField(field, setDirty, isProto);
   }
 };
 
