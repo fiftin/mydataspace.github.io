@@ -348,7 +348,9 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     countries: {
       ru: 'Россия',
       gb: 'Великобритания',
-      us: 'США'
+      us: 'США',
+      kz: 'Казахстан',
+      by: 'Беларусь'
     },
 
     categories: {
