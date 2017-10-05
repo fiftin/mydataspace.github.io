@@ -164,7 +164,9 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     countries: {
       ru: 'Russia',
       gb: 'Great Britain',
-      us: 'USA'
+      us: 'USA',
+      kz: 'Kazakhstan',
+      by: 'Belarus'
     },
 
     categories: {
