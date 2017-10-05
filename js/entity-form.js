@@ -695,10 +695,14 @@ EntityForm.prototype.addRootFields = function(fields, setDirty) {
   });
 
   for (var i in fields) {
-    if (ROOT_FIELDS.indexOf(fields[i].name) >= 0) {
-      this.addRootField(fields[i], setDirty);
+    var field = fields[i];
+    if (field.name.indexOf('$') === 0) {
+      continue;
+    }
+    if (ROOT_FIELDS.indexOf(field.name) >= 0) {
+      this.addRootField(field, setDirty);
     } else {
-      this.addField(fields[i], setDirty, false);
+      this.addField(field, setDirty, false);
     }
   }
 };
