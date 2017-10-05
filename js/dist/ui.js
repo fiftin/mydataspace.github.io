@@ -1330,9 +1330,11 @@ EntityForm.prototype.setData = function(data) {
   };
   this.clear();
   $$('entity_form').setValues(formData);
+
   if (MDSCommon.isBlank(data.path)) { // root entity
     this.addRootFields(data.fields);
   } else {
+    $$('NO_FIELDS_LABEL').show();
     this.addFields(data.fields, false, UIHelper.isProtoPath(data.path));
   }
   this.setClean();
