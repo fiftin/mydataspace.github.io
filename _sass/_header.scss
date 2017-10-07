@@ -5,6 +5,52 @@ $header-toggle-btn-width: 50px;
   display: none;
 }
 
+.profile_button__dropdown {
+  a {
+    opacity: 1 !important;
+  }
+  padding: 4px 0 !important;
+  border: 0 !important;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3) !important;
+  border-radius: 2px;
+  margin-top: -42px;
+  margin-right: -7px;
+  .divider {
+    margin: 4px 0 !important;
+  }
+}
+
+
+.profile_button__dropdown_profile_link {
+  display: block !important;
+  padding-right: 7px !important;
+  background: white !important;
+}
+
+
+.profile_button__dropdown_profile {
+  background-repeat: no-repeat;
+  background-size: 35px 35px;
+  background-position: center right;
+  height: 35px;
+}
+
+
+.profile_button__dropdown_name {
+  font-weight: bold;
+}
+
+.profile_button__dropdown_login {
+  font-weight: bold;
+  font-size: 12px;
+  color: #b3b3b3;
+}
+
+
+.profile_button__dropdown_item {
+  padding-left: 5px;
+}
+
 .profile_button {
   display: block;
   border: none;
@@ -14,7 +60,6 @@ $header-toggle-btn-width: 50px;
   border-radius: 4px;
   margin-left: 25px;
   border-radius: 4px;
-  // background-image: url(/images/no_avatar_small.png);
   background-size: cover;
   width: 35px;
   height: 35px;
@@ -303,7 +348,7 @@ $slogan-animation-offset-mobile: 400px;
   background-size: cover;
   background-position: bottom;
   background-attachment: fixed;
-  overflow: hidden;
+  //overflow: hidden;
 }
 
 @media (max-width: $screen-md-max) {

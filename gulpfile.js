@@ -143,20 +143,6 @@ gulp.task('vendor:bootstrap:css', function() {
 gulp.task('vendor:bootstrap', ['vendor:bootstrap:js', 'vendor:bootstrap:css']);
 
 
-//
-// Tether
-//
-
-gulp.task('vendor:tether', function() {
-  return gulp.src(
-    ['bower_components/tether/dist/js/tether.min.js',
-     'bower_components/tether/dist/js/tether.js',
-     'bower_components/tether/dist/css/tether.css',
-     'bower_components/tether/dist/css/tether-theme-arrows-dark.css']
-  ).pipe(gulp.dest('vendor/tether'));
-});
-
-
 gulp.task('vendor:jquery', function() {
   return gulp.src(
     [

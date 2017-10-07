@@ -10,6 +10,7 @@
     connected: function() {
       Mydataspace.on('users.getMyProfile.res', function(data) {
         document.getElementById('profile_button').style.backgroundImage = 'url(' + data.avatar + ')';
+        document.getElementById('profile_button__dropdown_profile').style.backgroundImage = 'url(' + data.avatar + ')';
         if (typeof $ !== 'undefined') {
           $('#signin_modal').modal('hide');
         }

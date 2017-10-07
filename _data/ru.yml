@@ -140,3 +140,4 @@ root:
   version_created_at: Дата создания
   version_description: Описание
   version_select: Выбрать
+  table_path: Путь к данных

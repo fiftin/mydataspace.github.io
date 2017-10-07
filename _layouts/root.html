@@ -11,14 +11,14 @@ layout: hybrid_default
      aria-labelledby="Delete View">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
-      <div class="modal-header new_look_modal__header">
+      <div class="modal-header look_modal__header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <div class="modal-title">{{ site.data[page.language].root.delete_view }}</div>
       </div>
-      <div class="modal-body new_look_modal__body">
+      <div class="modal-body look_modal__body">
         {{ site.data[page.language].root.delete_view_answer }}
       </div>
-      <div class="modal-footer new_look_modal__footer">
+      <div class="modal-footer look_modal__footer">
         <button class="btn btn-danger" data-dismiss="modal" id="delete_look_modal_button">{{ site.data[page.language].root.yes }}</button>
         <button class="btn btn-default" data-dismiss="modal">{{ site.data[page.language].root.cancel }}</button>
       </div>
@@ -26,44 +26,116 @@ layout: hybrid_default
   </div>
 </div>
 
-<div id="new_look_modal"
+<div id="look_modal"
      class="modal fade"
      tabindex="-1"
      role="dialog"
      aria-labelledby="New View">
-  <div class="modal-dialog modal-sm">
+  <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header new_look_modal__header">
+      <div class="modal-header look_modal__header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <div class="modal-title" id="new_look_modal_header">{{ site.data[page.language].root.new_view_title }}</div>
+        <div class="modal-title" id="look_modal__header">{{ site.data[page.language].root.new_view_title }}</div>
       </div>
-      <div class="modal-body new_look_modal__body">
+
+      <div class="modal-body look_modal__body">
         <form class="bootstrap-form">
           <div class="form-group">
             <input type="text"
-                   id="new_look_modal_title"
+                   id="look_modal__title"
                    class="form-control"
                    placeholder="{{ site.data[page.language].root.view_title }}"
                    autofocus />
-            <div class="bootstrap-form-error" id="new_look_modal_title_err"></div>
+            <div class="bootstrap-form-error" id="look_modal__title_err"></div>
           </div>
+
           <div class="form-group">
-            <input type="text"
-                   id="new_look_modal_codepen"
-                   class="form-control"
-                   placeholder="{{ site.data[page.language].root.codepen_url }}" />
-            <div class="bootstrap-form-error" id="new_look_modal_codepen_err"></div>
-          </div>
-          <div class="form-group">
-            <textarea id="new_look_modal_description"
+            <textarea id="look_modal__description"
                       class="form-control"
                       rows="3"
                       placeholder="{{ site.data[page.language].root.view_description }}"></textarea>
           </div>
+
+          <div class="form-group">
+            <ul class="nav nav-pills">
+              <li role="presentation" class="active" id="look_modal__codepen_tab">
+                <a href="javascript: void(0);" id="look_modal__codepen_tab_link">
+                  <i class="fa fa-codepen" aria-hidden="true"></i> Codepen
+                </a>
+              </li>
+              <li role="presentation" id="look_modal__table_tab">
+                <a href="javascript: void(0);" id="look_modal__table_tab_link">
+                  <i class="fa fa-table" aria-hidden="true"></i> Table
+                </a>
+              </li>
+              <!--<li role="presentation"><a href="javascript: void(0);"><i class="fa fa-bar-chart" aria-hidden="true"></i> Chart</a></li>-->
+              <!--<li role="presentation"><a href="javascript: void(0);"><i class="fa fa-map" aria-hidden="true"></i> Map</a></li>-->
+              <!--<li role="presentation"><a href="javascript: void(0);"><i class="fa fa-pie-chart" aria-hidden="true"></i> Vega</a></li>-->
+            </ul>
+          </div>
+
+          <div id="look_modal__table_wrap" class="hidden">
+            <div class="form-group" id="look_modal__table_path_wrap">
+              <input type="text"
+                     id="look_modal__table_path"
+                     class="form-control"
+                     placeholder="{{ site.data[page.language].root.table_path }}" />
+              <div class="bootstrap-form-error" id="look_modal__table_path_err"></div>
+            </div>
+            <div class="form-group" id="look_modal__table_webix"></div>
+          </div>
+
+          <div class="form-group" id="look_modal__codepen_wrap">
+            <input type="text"
+                   id="look_modal__codepen"
+                   class="form-control"
+                   placeholder="{{ site.data[page.language].root.codepen_url }}" />
+            <div class="bootstrap-form-error" id="look_modal__codepen_err"></div>
+          </div>
+
+
+          <script>
+            document.getElementById('look_modal__codepen_tab_link').addEventListener('click', function() {
+              document.getElementById('look_modal__table_tab').classList.remove('active');
+              document.getElementById('look_modal__codepen_tab').classList.add('active');
+
+              document.getElementById('look_modal__table_wrap').classList.add('hidden');
+              document.getElementById('look_modal__codepen_wrap').classList.remove('hidden');
+            });
+
+            $('#look_modal__table_tab_link').click(function() {
+              $('#look_modal__table_tab').addClass('active');
+              $('#look_modal__codepen_tab').addClass('remove');
+            });
+            
+            document.getElementById('look_modal__table_tab_link').addEventListener('click', function() {
+              document.getElementById('look_modal__table_tab').classList.add('active');
+              document.getElementById('look_modal__codepen_tab').classList.remove('active');
+
+              document.getElementById('look_modal__table_wrap').classList.remove('hidden');
+              document.getElementById('look_modal__codepen_wrap').classList.add('hidden');
+            });
+
+            setTimeout(function() {
+              $('#look_modal').on('shown.bs.modal', function () {
+                $('#look_modal_title').focus();
+              });
+
+              webix.ui({
+                view: "datatable",
+                id: "look_modal__table_webix",
+                container: "look_modal__table_webix",
+                height: 150,
+                width: 545,
+//                autoheight: true,
+//                autowidth: true
+              });
+            }, 3000);
+          </script>
         </form>
       </div>
-      <div class="modal-footer new_look_modal__footer">
-        <button class="btn btn-success" id="new_look_modal_button">{{ site.data[page.language].root.create_view }}</button>
+      <div class="modal-footer look_modal__footer">
+        <button class="btn btn-success" id="look_modal__button">{{ site.data[page.language].root.create_view }}</button>
       </div>
     </div>
   </div>
@@ -76,11 +148,11 @@ layout: hybrid_default
      aria-labelledby="Change Version">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <div class="modal-header new_look_modal__header">
+      <div class="modal-header look_modal__header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <div class="modal-title">{{ site.data[page.language].root.change_root_version }}</div>
       </div>
-      <div class="modal-body new_look_modal__body change_root_version_modal__body">
+      <div class="modal-body look_modal__body change_root_version_modal__body">
         <table class="table change_root_version_modal__table" id="change_root_version_modal__table">
           <thead>
             <tr>
@@ -93,7 +165,7 @@ layout: hybrid_default
           </tbody>
         </table>
       </div>
-      <div class="modal-footer new_look_modal__footer">
+      <div class="modal-footer look_modal__footer">
         <!--<button class="btn btn-danger"-->
                 <!--data-dismiss="modal"-->
                 <!--id="change_root_version_modal_button">{{ site.data[page.language].root.version_select }}</button>-->

@@ -102,27 +102,27 @@
 
     //
     // Save view button
-    document.getElementById('new_look_modal_button').addEventListener('click', function() {
+    document.getElementById('look_modal__button').addEventListener('click', function() {
       if (!validateLookForm()) {
         return;
       }
 
-      var lookPath = document.getElementById('new_look_modal_button').getAttribute('data-look-path');
+      var lookPath = document.getElementById('look_modal__button').getAttribute('data-look-path');
 
       Mydataspace.entities.request(lookPath ? 'entities.change' : 'entities.create', MDSCommon.extend(DATA, {
         path: lookPath || 'views/' + MDSCommon.guid(),
         fields: [
           { name: 'type', value: 'codepen', type: 's' },
-          { name: 'title', value: document.getElementById('new_look_modal_title').value, type: 's' },
+          { name: 'title', value: document.getElementById('look_modal__title').value, type: 's' },
           {
             name: 'id',
-            value: getCodepenIDByURL(document.getElementById('new_look_modal_codepen').value),
+            value: getCodepenIDByURL(document.getElementById('look_modal__codepen').value),
             type: 's'
           },
-          { name: 'description', value: document.getElementById('new_look_modal_description').value, type: 's' }
+          { name: 'description', value: document.getElementById('look_modal__description').value, type: 's' }
         ]
       })).then(function(data) {
-        $('#new_look_modal').modal('hide');
+        $('#look_modal').modal('hide');
         if (!lookPath) {
           setTimeout(function() { selectLook(data.path); }, 500);
         }
@@ -182,30 +182,30 @@
     var currentLook;
 
     function validateLookForm() {
-      document.getElementById('new_look_modal_title_err').innerText = '';
-      document.getElementById('new_look_modal_codepen_err').innerText = '';
+      document.getElementById('look_modal__title_err').innerText = '';
+      document.getElementById('look_modal__codepen_err').innerText = '';
 
-      var title = document.getElementById('new_look_modal_title').value;
-      var codepen = document.getElementById('new_look_modal_codepen').value;
+      var title = document.getElementById('look_modal__title').value;
+      var codepen = document.getElementById('look_modal__codepen').value;
 
       if (MDSCommon.isBlank(title)) {
-        document.getElementById('new_look_modal_title_err').innerText = tr$('title_cant_be_blank');
+        document.getElementById('look_modal__title_err').innerText = tr$('title_cant_be_blank');
         return false;
       }
 
       if (title.length > 250) {
-        document.getElementById('new_look_modal_title_err').innerText = tr$('too_long_title');
+        document.getElementById('look_modal__title_err').innerText = tr$('too_long_title');
         return false;
       }
 
       if (MDSCommon.isBlank(codepen)) {
-        document.getElementById('new_look_modal_codepen_err').innerText = tr$('codepen_url_cant_be_blank');
+        document.getElementById('look_modal__codepen_err').innerText = tr$('codepen_url_cant_be_blank');
         return false;
       }
 
       var codepenID = getCodepenIDByURL(codepen);
       if (!codepenID) {
-        document.getElementById('new_look_modal_codepen_err').innerText = tr$('invalid_codepen_pen_url');
+        document.getElementById('look_modal__codepen_err').innerText = tr$('invalid_codepen_pen_url');
         return false;
       }
 
@@ -244,24 +244,24 @@
      *
      */
     function openLookEditModal(isEdit) {
-      document.getElementById('new_look_modal_title_err').innerText = '';
-      document.getElementById('new_look_modal_codepen_err').innerText = '';
+      document.getElementById('look_modal__title_err').innerText = '';
+      document.getElementById('look_modal__codepen_err').innerText = '';
       if (isEdit) {
-        document.getElementById('new_look_modal_header').innerText = tr$('edit_view');
-        document.getElementById('new_look_modal_button').setAttribute('data-look-path', currentLook.path);
-        document.getElementById('new_look_modal_button').innerText = tr$('save_view');
-        document.getElementById('new_look_modal_title').value = MDSCommon.findValueByName(currentLook.fields, 'title');
-        document.getElementById('new_look_modal_codepen').value =  getCodepenURL(MDSCommon.findValueByName(currentLook.fields, 'id'));
-        document.getElementById('new_look_modal_description').value = MDSCommon.findValueByName(currentLook.fields, 'description') || '';
+        document.getElementById('look_modal__header').innerText = tr$('edit_view');
+        document.getElementById('look_modal__button').setAttribute('data-look-path', currentLook.path);
+        document.getElementById('look_modal__button').innerText = tr$('save_view');
+        document.getElementById('look_modal__title').value = MDSCommon.findValueByName(currentLook.fields, 'title');
+        document.getElementById('look_modal__codepen').value =  getCodepenURL(MDSCommon.findValueByName(currentLook.fields, 'id'));
+        document.getElementById('look_modal__description').value = MDSCommon.findValueByName(currentLook.fields, 'description') || '';
       } else {
-        document.getElementById('new_look_modal_header').innerText = tr$('new_view');
-        document.getElementById('new_look_modal_button').removeAttribute('data-look-path');
-        document.getElementById('new_look_modal_button').innerText = tr$('create_view');
-        document.getElementById('new_look_modal_title').value = '';
-        document.getElementById('new_look_modal_codepen').value = '';
-        document.getElementById('new_look_modal_description').value = '';
+        document.getElementById('look_modal__header').innerText = tr$('new_view');
+        document.getElementById('look_modal__button').removeAttribute('data-look-path');
+        document.getElementById('look_modal__button').innerText = tr$('create_view');
+        document.getElementById('look_modal__title').value = '';
+        document.getElementById('look_modal__codepen').value = '';
+        document.getElementById('look_modal__description').value = '';
       }
-      $('#new_look_modal').modal('show');
+      $('#look_modal').modal('show');
     }
 
     function setLook(data) {

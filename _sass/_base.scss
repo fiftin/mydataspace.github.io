@@ -8,6 +8,27 @@ body {
   margin: 0;
 }
 
+.select-with-placeholder:invalid {
+  color: #a1a1a1;
+}
+
+::-webkit-input-placeholder {
+  color: #a1a1a1;
+}
+:-ms-input-placeholder {
+  color: #a1a1a1;
+}
+::-moz-placeholder {
+  color: #a1a1a1;
+  opacity: 1;
+}
+:-moz-placeholder {
+  color: #a1a1a1;
+  opacity: 1;
+}
+
+
+
 .landing {
   min-height: 3000px;
 }

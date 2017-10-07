@@ -12,14 +12,14 @@ layout: hybrid_default
      aria-labelledby="Delete View">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
-      <div class="modal-header new_look_modal__header">
+      <div class="modal-header look_modal__header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <div class="modal-title">{{ site.data[page.language].root.delete_view }}</div>
       </div>
-      <div class="modal-body new_look_modal__body">
+      <div class="modal-body look_modal__body">
         {{ site.data[page.language].root.delete_view_answer }}
       </div>
-      <div class="modal-footer new_look_modal__footer">
+      <div class="modal-footer look_modal__footer">
         <button class="btn btn-danger" data-dismiss="modal" id="delete_look_modal_button">{{ site.data[page.language].root.yes }}</button>
         <button class="btn btn-default" data-dismiss="modal">{{ site.data[page.language].root.cancel }}</button>
       </div>
@@ -27,44 +27,44 @@ layout: hybrid_default
   </div>
 </div>
 
-<div id="new_look_modal"
+<div id="look_modal"
      class="modal fade"
      tabindex="-1"
      role="dialog"
      aria-labelledby="New View">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
-      <div class="modal-header new_look_modal__header">
+      <div class="modal-header look_modal__header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <div class="modal-title" id="new_look_modal_header">{{ site.data[page.language].root.new_view_title }}</div>
+        <div class="modal-title" id="look_modal__header">{{ site.data[page.language].root.new_view_title }}</div>
       </div>
-      <div class="modal-body new_look_modal__body">
+      <div class="modal-body look_modal__body">
         <form class="bootstrap-form">
           <div class="form-group">
             <input type="text"
-                   id="new_look_modal_title"
+                   id="look_modal__title"
                    class="form-control"
                    placeholder="{{ site.data[page.language].root.view_title }}"
                    autofocus />
-            <div class="bootstrap-form-error" id="new_look_modal_title_err"></div>
+            <div class="bootstrap-form-error" id="look_modal__title_err"></div>
           </div>
           <div class="form-group">
             <input type="text"
-                   id="new_look_modal_codepen"
+                   id="look_modal__codepen"
                    class="form-control"
                    placeholder="{{ site.data[page.language].root.codepen_url }}" />
-            <div class="bootstrap-form-error" id="new_look_modal_codepen_err"></div>
+            <div class="bootstrap-form-error" id="look_modal__codepen_err"></div>
           </div>
           <div class="form-group">
-            <textarea id="new_look_modal_description"
+            <textarea id="look_modal__description"
                       class="form-control"
                       rows="3"
                       placeholder="{{ site.data[page.language].root.view_description }}"></textarea>
           </div>
         </form>
       </div>
-      <div class="modal-footer new_look_modal__footer">
-        <button class="btn btn-success" id="new_look_modal_button">{{ site.data[page.language].root.create_view }}</button>
+      <div class="modal-footer look_modal__footer">
+        <button class="btn btn-success" id="look_modal__button">{{ site.data[page.language].root.create_view }}</button>
       </div>
     </div>
   </div>

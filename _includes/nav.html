@@ -77,11 +77,33 @@
                       document.getElementById('profile_button_menu_item').style.display = 'block';
                     }
                   </script>
-                  {% if page.language == 'en' %}
-                  <a id="profile_button" class="profile_button" href="{{ baseurl }}/en"></a>
-                  {% else %}
-                  <a id="profile_button" class="profile_button" href="{{ baseurl }}/"></a>
-                  {% endif %}
+
+                  <div class="btn-group">
+                    <button type="button"
+                            id="profile_button"
+                            class="dropdown-toggle profile_button"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
+                    </button>
+
+                    <ul class="dropdown-menu profile_button__dropdown">
+                      <li>
+                        <a class="profile_button__dropdown_profile_link"
+                           id="profile_button__dropdown_profile_link">
+                          <div class="profile_button__dropdown_profile" id="profile_button__dropdown_profile">
+                            <div id="profile_button__dropdown_name" class="profile_button__dropdown_name">Denis</div>
+                            <div id="profile_button__dropdown_login" class="profile_button__dropdown_login">@fiftin</div>
+                          </div>
+                        </a>
+                      </li>
+                      <li role="separator" class="divider"></li>
+                      <li><a href="{{ baseurl }}/"#mydata><i class="fa fa-database"></i> <span class="profile_button__dropdown_item">My Data</span></a></li>
+                      <!--<li><a href="{{ baseurl }}/#myapps"><i class="fa fa-cogs"></i> <span class="profile_button__dropdown_item">My Apps</span></a></li>-->
+                      <li role="separator" class="divider"></li>
+                      <li><a href="#"><i class="fa fa-sign-out"></i> <span class="profile_button__dropdown_item">Sign out</span></a></li>
+                    </ul>
+                  </div>
                 </li>
                 <li id="login_button_menu_item">
                   <script>
