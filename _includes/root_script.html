@@ -851,9 +851,10 @@
                     id: 'root__about__look',
                     container: 'root__about__look',
                     columns: columns,
-                    height: 402,
+//                    height: 402,
                     select: 'row',
-                    resizeColumn: true
+                    resizeColumn: true,
+                    autoheight: true,
                   });
                   return [data, columnsData];
                 }).then(function(res) {
