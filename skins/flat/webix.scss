@@ -1481,6 +1481,7 @@ div.webix_modal_cover {
   font-size: $font-size;
   color: #666666;
   pointer-events: none;
+  z-index: 3000 !important;
 }
 .webix_drag_zone .borderless {
   padding: 2px 20px 2px 2px;

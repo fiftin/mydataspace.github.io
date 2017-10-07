@@ -82,7 +82,12 @@ layout: hybrid_default
                      placeholder="{{ site.data[page.language].root.table_path }}" />
               <div class="bootstrap-form-error" id="look_modal__table_path_err"></div>
             </div>
-            <div class="form-group" id="look_modal__table_webix"></div>
+            <div class="form-group look_modal__table_webix" id="look_modal__table_webix"></div>
+            <div class="text-right">
+              <button type="button" class="btn btn-default look_modal__table_btn" id="look_modal__table_add"><i class="fa fa-plus"></i> Add</button>
+              <button type="button" class="btn btn-default look_modal__table_btn" id="look_modal__table_remove"><i class="fa fa-remove"></i> Remove</button>
+              <button type="button" class="btn btn-danger look_modal__table_btn" id="look_modal__table_reset"><i class="fa fa-refresh"></i> Reset</button>
+            </div>
           </div>
 
           <div class="form-group" id="look_modal__codepen_wrap">
@@ -95,42 +100,47 @@ layout: hybrid_default
 
 
           <script>
-            document.getElementById('look_modal__codepen_tab_link').addEventListener('click', function() {
-              document.getElementById('look_modal__table_tab').classList.remove('active');
-              document.getElementById('look_modal__codepen_tab').classList.add('active');
+            $(function() {
+              $('#look_modal__codepen_tab_link').click(function() {
+                $('#look_modal__table_tab').removeClass('active');
+                $('#look_modal__codepen_tab').addClass('active');
+                $('#look_modal__table_wrap').addClass('hidden');
+                $('#look_modal__codepen_wrap').removeClass('hidden');
+                $('#look_modal').data('look-type', 'codepen');
+                $('#look_modal__codepen').focus();
+              });
 
-              document.getElementById('look_modal__table_wrap').classList.add('hidden');
-              document.getElementById('look_modal__codepen_wrap').classList.remove('hidden');
-            });
+              $('#look_modal__table_tab_link').click(function() {
+                $('#look_modal__table_tab').addClass('active');
+                $('#look_modal__codepen_tab').removeClass('active');
+                $('#look_modal__table_wrap').removeClass('hidden');
+                $('#look_modal__codepen_wrap').addClass('hidden');
+                $('#look_modal').data('look-type', 'table');
+                $('#look_modal__table_path').focus();
+              });
 
-            $('#look_modal__table_tab_link').click(function() {
-              $('#look_modal__table_tab').addClass('active');
-              $('#look_modal__codepen_tab').addClass('remove');
-            });
-            
-            document.getElementById('look_modal__table_tab_link').addEventListener('click', function() {
-              document.getElementById('look_modal__table_tab').classList.add('active');
-              document.getElementById('look_modal__codepen_tab').classList.remove('active');
-
-              document.getElementById('look_modal__table_wrap').classList.remove('hidden');
-              document.getElementById('look_modal__codepen_wrap').classList.add('hidden');
-            });
-
-            setTimeout(function() {
               $('#look_modal').on('shown.bs.modal', function () {
-                $('#look_modal_title').focus();
+                $('#look_modal__title').focus();
               });
 
               webix.ui({
-                view: "datatable",
-                id: "look_modal__table_webix",
-                container: "look_modal__table_webix",
-                height: 150,
-                width: 545,
-//                autoheight: true,
-//                autowidth: true
+                view: 'datatable',
+                id: 'look_modal__table',
+                container: 'look_modal__table_webix',
+                columns:[
+                  { id: 'value', header: 'Field Name/Statement', width: 200, editor: 'text' },
+                  { id: 'title', header: 'Title', width: 345 - 17, editor: 'text' }
+                ],
+                height: 200,
+                select: 'multiselect',
+                headerRowHeight: 30,
+                autowidth: true,
+                drag: true,
+                scrollX: false,
+                editable: true,
+                editaction: 'dblclick'
               });
-            }, 3000);
+            });
           </script>
         </form>
       </div>

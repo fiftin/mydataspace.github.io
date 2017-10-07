@@ -3,6 +3,17 @@
 $side-width: 300px;
 $side-panel-width: $side-width - $padding;
 
+.look_modal__table_btn {
+  font-size: $font-size-small;
+  margin-top: -10px;
+}
+
+.look_modal__table_webix {
+  .webix_view {
+    border: 1px solid $input-border !important;
+  }
+}
+
 .change_root_version_modal_table__number {
   width: 50px;
 }

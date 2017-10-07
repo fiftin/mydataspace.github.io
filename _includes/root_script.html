@@ -102,39 +102,88 @@
 
     //
     // Save view button
-    document.getElementById('look_modal__button').addEventListener('click', function() {
+    $('#look_modal__button').click(function() {
       if (!validateLookForm()) {
         return;
       }
 
-      var lookPath = document.getElementById('look_modal__button').getAttribute('data-look-path');
+      var lookPath = $('#look_modal__button').data('look-path');
 
-      Mydataspace.entities.request(lookPath ? 'entities.change' : 'entities.create', MDSCommon.extend(DATA, {
-        path: lookPath || 'views/' + MDSCommon.guid(),
-        fields: [
-          { name: 'type', value: 'codepen', type: 's' },
-          { name: 'title', value: document.getElementById('look_modal__title').value, type: 's' },
-          {
-            name: 'id',
-            value: getCodepenIDByURL(document.getElementById('look_modal__codepen').value),
-            type: 's'
-          },
-          { name: 'description', value: document.getElementById('look_modal__description').value, type: 's' }
-        ]
-      })).then(function(data) {
-        $('#look_modal').modal('hide');
-        if (!lookPath) {
-          setTimeout(function() { selectLook(data.path); }, 500);
-        }
-      }, function(err) {});
+      switch ($('#look_modal').data('look-type')) {
+        case 'codepen':
+          Mydataspace.request(lookPath ? 'entities.change' : 'entities.create', MDSCommon.extend(DATA, {
+            path: lookPath || 'views/' + MDSCommon.guid(),
+            fields: [
+              { name: 'type', value: 'codepen', type: 's' },
+              { name: 'title', value: $('#look_modal__title').val(), type: 's' },
+              {
+                name: 'id',
+                value: getCodepenIDByURL($('#look_modal__codepen').val()),
+                type: 's'
+              },
+              { name: 'description', value: $('#look_modal__description').val(), type: 's' }
+            ]
+          })).then(function(data) {
+            $('#look_modal').modal('hide');
+            if (!lookPath) {
+              setTimeout(function() { selectLook(data.path); }, 500);
+            }
+          }, function(err) {
+            UI.error(err);
+          });
+          break;
+        case 'table':
+          Mydataspace.request(lookPath ? 'entities.change' : 'entities.create', MDSCommon.extend(DATA, {
+            path: lookPath || 'views/' + MDSCommon.guid(),
+            fields: [
+              { name: 'type', value: 'table', type: 's' },
+              { name: 'title', value: $('#look_modal__title').val(), type: 's' },
+              { name: 'description', value: $('#look_modal__description').val(), type: 's' }
+            ]
+          })).then(function(data) {
+            return Promise.all([data, Mydataspace.request('entities.delete', MDSCommon.extend(DATA, {
+              path: data.path + '/columns'
+            })).catch(function() {})]);
+          }).then(function(res) {
+            var data = res[0];
+            return Promise.all([data, Mydataspace.request('entities.create', MDSCommon.extend(DATA, {
+              path: data.path + '/columns'
+            }))]);
+          }).then(function(res) {
+            var data = res[0];
+            var columns = [];
+            var i = 0;
+            $$('look_modal__table').data.each(function(obj) {
+              columns.push(MDSCommon.extend(DATA, {
+                path: data.path + '/columns/' + MDSCommon.guid(),
+                fields: [
+                  { name: 'index', value: i, type: 'i' },
+                  { name: 'title', value: obj.title, type: 's' },
+                  { name: 'value', value: obj.value, type: 's' }
+                ]
+              }));
+              i++;
+            });
+            return Promise.all([data, Mydataspace.request('entities.create', columns)]);
+          }).then(function(res) {
+            var data = res[0];
+            $('#look_modal').modal('hide');
+            if (!lookPath) {
+              setTimeout(function() { selectLook(data.path); }, 500);
+            }
+          }, function(err) {
+            UI.error(err);
+          });
+          break;
+      }
     });
 
 
     //
     // Delete view button
     document.getElementById('delete_look_modal_button').addEventListener('click', function() {
-      var lookPath = document.getElementById('root__looks__content').getAttribute('data-look-path');
-      Mydataspace.entities.request('entities.delete', MDSCommon.extend(DATA, {
+      var lookPath = $('#root__looks__content').data('look-path');
+      Mydataspace.request('entities.delete', MDSCommon.extend(DATA, {
         path: lookPath
       })).then(function(data) { }, function(err) {});
     });
@@ -198,17 +247,21 @@
         return false;
       }
 
-      if (MDSCommon.isBlank(codepen)) {
-        document.getElementById('look_modal__codepen_err').innerText = tr$('codepen_url_cant_be_blank');
-        return false;
+      switch ($('#look_modal').data('look-type')) {
+        case 'codepen':
+          if (MDSCommon.isBlank(codepen)) {
+            document.getElementById('look_modal__codepen_err').innerText = tr$('codepen_url_cant_be_blank');
+            return false;
+          }
+          var codepenID = getCodepenIDByURL(codepen);
+          if (!codepenID) {
+            document.getElementById('look_modal__codepen_err').innerText = tr$('invalid_codepen_pen_url');
+            return false;
+          }
+          break;
+        case 'table':
+          break;
       }
-
-      var codepenID = getCodepenIDByURL(codepen);
-      if (!codepenID) {
-        document.getElementById('look_modal__codepen_err').innerText = tr$('invalid_codepen_pen_url');
-        return false;
-      }
-
       return true;
     }
 
@@ -230,13 +283,13 @@
      *
      */
     function getLookPreviewNode(path) {
-      var lookPreviews = document.getElementById('root__looks__previews').childNodes;
-      for (var i = 0; i < lookPreviews.length; i++) {
-        var lookPath = lookPreviews[i].childNodes[0].getAttribute('data-look-path');
-        if (lookPath === path) {
-          return lookPreviews[i].childNodes[0];
+      var ret;
+      $('#root__looks__previews').children().each(function() {
+        if ($(this).data('look-path') === path) {
+          ret = this;
+          return false;
         }
-      }
+      });
       return null;
     }
 
@@ -300,17 +353,31 @@
     }
 
     function getUnwrappedLookPreviewHTML(data, isActive) {
-      var codepenParts = MDSCommon.findValueByName(data.fields, 'id').split('/');
-      return '<div data-look-path="'+ data.path + '" class="block snippet look_preview' + (isActive ? ' look_preview--active' : '') + '">' +
-        '<div class="look_preview__codepen_wrap"><p data-height="402" data-theme-id="0" data-slug-hash="' + codepenParts[1] + '" data-default-tab="result" data-user="'+ codepenParts[0] +'" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/' +  codepenParts[0] + '/pen/' + codepenParts[1] + '/">' + codepenParts[1] + '</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p></div>' +
-        '<div class="look_preview__codepen_locker">' +
-          '<div class="look_preview__header"><i class="fa fa-codepen"></i><span class="look_preview__title">' + MDSCommon.findValueByName(data.fields, 'title') + '</span></div>' +
-          '<div class="look_preview__description">' + (MDSCommon.findValueByName(data.fields, 'description') || '') + '</div>' +
-          '<div class="look_preview__footer">' +
-          '<span class="view__comment__date view__comment__date--small">' + tr$('created') + ' ' + MDSCommon.humanizeDate(data.createdAt) + ' ' + tr$('ago') + '</span>' +
-          '</div>' +
-        '</div>' +
-        '</div>';
+      switch (MDSCommon.findValueByName(data.fields, 'type')) {
+        case 'codepen':
+          var codepenParts = MDSCommon.findValueByName(data.fields, 'id').split('/');
+          return '<div data-look-path="'+ data.path + '" class="block snippet look_preview' + (isActive ? ' look_preview--active' : '') + '">' +
+            '<div class="look_preview__codepen_wrap"><p data-height="402" data-theme-id="0" data-slug-hash="' + codepenParts[1] + '" data-default-tab="result" data-user="'+ codepenParts[0] +'" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/' +  codepenParts[0] + '/pen/' + codepenParts[1] + '/">' + codepenParts[1] + '</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p></div>' +
+            '<div class="look_preview__codepen_locker">' +
+            '<div class="look_preview__header"><i class="fa fa-codepen"></i><span class="look_preview__title">' + MDSCommon.findValueByName(data.fields, 'title') + '</span></div>' +
+            '<div class="look_preview__description">' + (MDSCommon.findValueByName(data.fields, 'description') || '') + '</div>' +
+            '<div class="look_preview__footer">' +
+            '<span class="view__comment__date view__comment__date--small">' + tr$('created') + ' ' + MDSCommon.humanizeDate(data.createdAt) + ' ' + tr$('ago') + '</span>' +
+            '</div>' +
+            '</div>' +
+            '</div>';
+        case 'table':
+          return '<div data-look-path="'+ data.path + '" class="block snippet look_preview' + (isActive ? ' look_preview--active' : '') + '">' +
+            '<div class="look_preview__codepen_locker">' +
+            '<div class="look_preview__header"><i class="fa fa-table"></i><span class="look_preview__title">' + MDSCommon.findValueByName(data.fields, 'title') + '</span></div>' +
+            '<div class="look_preview__description">' + (MDSCommon.findValueByName(data.fields, 'description') || '') + '</div>' +
+            '<div class="look_preview__footer">' +
+            '<span class="view__comment__date view__comment__date--small">' + tr$('created') + ' ' + MDSCommon.humanizeDate(data.createdAt) + ' ' + tr$('ago') + '</span>' +
+            '</div>' +
+            '</div>' +
+            '</div>';
+          break;
+      }
     }
 
     function getLookPreviewHTML(data, isActive) {
@@ -750,7 +817,7 @@
         });
 
         // Load data for root and render it on the page
-        Mydataspace.entities.request('entities.get', MDSCommon.extend(DATA, {
+        Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
           path: 'views',
           children: true,
           limit: 1
@@ -759,12 +826,58 @@
           if (result.children.length > 0) {
             look.style.display = 'block';
             var data = result.children[0];
-            var codepenParts = MDSCommon.findValueByName(data.fields, 'id').split('/');
             document.getElementById('root__about_look_title').innerText = MDSCommon.findValueByName(data.fields, 'title');
-            document.getElementById('root__about_look_codepen').innerHTML = '<p data-height="402" data-theme-id="0" data-slug-hash="' + codepenParts[1] + '" data-default-tab="result" data-user="'+ codepenParts[0] +'" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/' +  codepenParts[0] + '/pen/' + codepenParts[1] + '/">' + codepenParts[1] + '</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p>';
-            var codepenScript = document.createElement('script');
-            codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
-            look.appendChild(codepenScript);
+            switch (MDSCommon.findValueByName(data.fields, 'type')) {
+              case 'codepen':
+                var codepenParts = MDSCommon.findValueByName(data.fields, 'id').split('/');
+                document.getElementById('root__about__look').innerHTML = '<p data-height="402" data-theme-id="0" data-slug-hash="' + codepenParts[1] + '" data-default-tab="result" data-user="'+ codepenParts[0] +'" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/' +  codepenParts[0] + '/pen/' + codepenParts[1] + '/">' + codepenParts[1] + '</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p>';
+                var codepenScript = document.createElement('script');
+                codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
+                look.appendChild(codepenScript);
+                break;
+              case 'table':
+                document.getElementById('root__about__look').innerHTML = '';
+                Mydataspace.request('entities.get', MDSCommon.extend(DATA, { path: data.path + '/columns', children: true })).then(function(columnsData) {
+                  var columns = columnsData.children.map(function(column) {
+                    return {
+                      id: MDSCommon.getPathName(column.path),
+                      header: MDSCommon.findValueByName(column.fields, 'title'),
+                      fillspace: true
+                    };
+                  });
+                  webix.ui({
+                    view: 'datatable',
+                    id: 'root__about__look',
+                    container: 'root__about__look',
+                    columns: columns,
+                    height: 402,
+                    select: 'row',
+                    resizeColumn: true
+                  });
+                  return [data, columnsData];
+                }).then(function(res) {
+                  var data = res[0];
+                  var columnsData = res[1];
+                  return Promise.all([
+                    data,
+                    columnsData,
+                    Mydataspace.request('entities.get', MDSCommon.extend(DATA, { path: MDSCommon.findValueByName(data.fields, 'path'), children: true }))]);
+                }).then(function(res) {
+                  var columnsData = res[1];
+                  var rowsData = res[2];
+                  var rows = rowsData.children.map(function(rowData) {
+                    var ret = { id: MDSCommon.getPathName(rowData.path) };
+                    for (var i in columnsData.children) {
+                      var column = columnsData.children[i];
+                      var field = MDSCommon.findValueByName(column.fields, 'value');
+                      ret[MDSCommon.getPathName(column.path)] = MDSCommon.findValueByName(rowData.fields, field);
+                    }
+                    return ret;
+                  });
+                  $$('root__about__look').parse(rows);
+                });
+                break;
+            }
           }
         });
 
@@ -810,13 +923,17 @@
         }
       } else if (/^views\//.test(data.path)) {
         $('#root__looks__previews').append(getLookPreviewHTML(data));
-
         var preview = getLookPreviewNode(data.path);
-        var codepenScript = document.createElement('script');
-        codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
-        preview.appendChild(codepenScript);
+        switch (MDSCommon.findValueByName(data.fields, 'type')) {
+          case 'codepen':
+            var codepenScript = document.createElement('script');
+            codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
+            preview.appendChild(codepenScript);
+            break;
+          case 'table':
+            break;
+        }
         $(preview).data('look-data', data);
-
         var viewsCount = parseInt(document.getElementById('root__tabs_views_count').innerText);
         document.getElementById('root__tabs_views_count').innerText = viewsCount + 1;
         if (viewsCount === 0) {
@@ -882,5 +999,46 @@
         }
       });
     }
+
+    $('#look_modal__table_reset').click(function() {
+      refreshLookTableColumns();
+    });
+    $('#look_modal__table_remove').click(function() {
+      $$('look_modal__table').remove($$('look_modal__table').getSelectedId(true));
+    });
+    $('#look_modal__table_add').click(function() {
+      var id = $$('look_modal__table').add({ field: '', title: '' });
+      $$('look_modal__table').editCell(id, 'field');
+    });
+
+    function refreshLookTableColumns() {
+      $$('look_modal__table').clearAll();
+      Mydataspace.entities.get(MDSCommon.extend(DATA, {
+        path: $('#look_modal__table_path').val(),
+        children: true
+      })).then(function(data) {
+        var child = data.children[0];
+        var formattedData = child.fields.filter(function(field) {
+          return field.name.indexOf('$') !== 0;
+        }).map(function(field) {
+          return {
+            field: field.name,
+            title: field.name
+          }
+        });
+        $$('look_modal__table').parse(formattedData);
+      });
+    }
+    var lastKeypressTime;
+    $('#look_modal__table_path').keydown(function() {
+      lastKeypressTime = new Date().getTime();
+    });
+    setInterval(function() {
+      var now = new Date().getTime();
+      if (lastKeypressTime && now - lastKeypressTime > 500) {
+        lastKeypressTime = null;
+        refreshLookTableColumns();
+      }
+    }, 200);
   })();
 </script>
