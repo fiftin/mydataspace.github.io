@@ -1007,8 +1007,8 @@
       $$('look_modal__table').remove($$('look_modal__table').getSelectedId(true));
     });
     $('#look_modal__table_add').click(function() {
-      var id = $$('look_modal__table').add({ field: '', title: '' });
-      $$('look_modal__table').editCell(id, 'field');
+      var id = $$('look_modal__table').add({ value: '', title: '' });
+      $$('look_modal__table').editCell(id, 'value');
     });
 
     function refreshLookTableColumns() {
@@ -1022,7 +1022,7 @@
           return field.name.indexOf('$') !== 0;
         }).map(function(field) {
           return {
-            field: field.name,
+            value: field.name,
             title: field.name
           }
         });
