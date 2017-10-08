@@ -362,6 +362,19 @@
               select: 'row',
               resizeColumn: true,
               height: $(window).innerHeight() - 50,
+              on: {
+                onColumnResize: function(id, newWidth, oldWidth, user_action) {
+                  if (!user_action) {
+                    return;
+                  }
+                  Mydataspace.request('entities.change', MDSCommon.extend(DATA, {
+                    path: data.path + '/columns/' + id,
+                    fields: [
+                      { name: 'width', value: newWidth, type: 'i' }
+                    ]
+                  })).catch(function() {});
+                }
+              }
             });
             return [data, columnsData];
           }).then(function(res) {
