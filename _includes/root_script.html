@@ -906,31 +906,26 @@
           });
         });
 
-//        document.getElementById('root__about_look_full').addEventListener('click', function() {
-//          document.getElementById('root__about_look_content').classList.add('root__about__look--full');
-//        });
-//
-//        document.getElementById('root__about_look_normal').addEventListener('click', function() {
-//          document.getElementById('root__about_look_content').classList.remove('root__about_look--full');
-//        });
-
         // Load data for root and render it on the page
         Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
           path: 'views',
           children: true,
           limit: 1
         })).then(function(result) {
-          var look = document.getElementById('root__about_look');
+          var $lookWrap = $('#root__about__look_wrap');
+          var $look = $('#root__about__look');
+
           if (result.children.length > 0) {
-            look.style.display = 'block';
-            var data = result.children[0];
-            var type = MDSCommon.findValueByName(data.fields, 'type');
-            $('#root__about_look_title').text(MDSCommon.findValueByName(data.fields, 'title'));
-            $('#root__about__look').attr('class', 'root__about__look root__about__look--' + type);
+            $lookWrap.css('display', 'block');
+            var lookMetaData = result.children[0];
+            var type = MDSCommon.findValueByName(lookMetaData.fields, 'type');
+            $('#root__about__look_title').text(MDSCommon.findValueByName(lookMetaData.fields, 'title'));
+
+            $look.attr('class', 'root__about__look root__about__look--' + type);
             switch (type) {
               case 'codepen':
-                var codepenParts = MDSCommon.findValueByName(data.fields, 'id').split('/');
-                $('#root__about__look').html('<p data-height="402" data-theme-id="0" data-slug-hash="' + codepenParts[1] +
+                var codepenParts = MDSCommon.findValueByName(lookMetaData.fields, 'id').split('/');
+                $look.html('<p data-height="402" data-theme-id="0" data-slug-hash="' + codepenParts[1] +
                                              '" data-default-tab="result" data-user="'+ codepenParts[0] +
                                              '" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/' +  codepenParts[0] +
                                              '/pen/' + codepenParts[1] + '/">' + codepenParts[1] +
@@ -938,16 +933,17 @@
 
                 var codepenScript = document.createElement('script');
                 codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
-                look.appendChild(codepenScript);
+                $lookWrap.append(codepenScript);
                 break;
               case 'table':
-                $('#root__about__look').html('');
-                Mydataspace.request('entities.get', MDSCommon.extend(DATA, { path: data.path + '/columns', children: true })).then(function(columnsData) {
-                  var columns = columnsData.children.map(function(column) {
+                $look.html('');
+                Mydataspace.request('entities.get', MDSCommon.extend(DATA, { path: lookMetaData.path + '/columns', children: true })).then(function(columnsMetaData) {
+                  var columns = columnsMetaData.children.map(function(column) {
                     return {
                       id: MDSCommon.getPathName(column.path),
                       header: MDSCommon.findValueByName(column.fields, 'title'),
                       width: parseInt(MDSCommon.findValueByName(column.fields, 'width')) || 200,
+                      sort: 'server'
                     };
                   });
                   webix.ui({
@@ -958,32 +954,43 @@
                     select: 'row',
                     resizeColumn: true,
                     autoheight: true,
-                  });
-                  return [data, columnsData];
-                }).then(function(res) {
-                  var data = res[0];
-                  var columnsData = res[1];
-                  return Promise.all([
-                    data,
-                    columnsData,
-                    Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
-                      path: MDSCommon.findValueByName(data.fields, 'path'),
-                      children: true,
-                      limit: 15,
-                    }))]);
-                }).then(function(res) {
-                  var columnsData = res[1];
-                  var rowsData = res[2];
-                  var rows = rowsData.children.map(function(rowData) {
-                    var ret = { id: MDSCommon.getPathName(rowData.path) };
-                    for (var i in columnsData.children) {
-                      var column = columnsData.children[i];
-                      var field = MDSCommon.findValueByName(column.fields, 'value');
-                      ret[MDSCommon.getPathName(column.path)] = MDSCommon.findValueByName(rowData.fields, field);
+                    on: {
+                      onDataRequest: function(start, count, callback, url) {
+                        var state = this.getState();
+                        var orderField;
+                        if (state.sort) {
+                          for (var i in columnsMetaData.children) {
+                            var column = columnsMetaData.children[i];
+                            if (MDSCommon.getPathName(column.path) === state.sort.id) {
+                              orderField = MDSCommon.findValueByName(column.fields, 'value');
+                              break;
+                            }
+                          }
+                        }
+
+                        Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
+                          path: MDSCommon.findValueByName(lookMetaData.fields, 'path'),
+                          children: true,
+                          limit: count,
+                          offset: start,
+                          orderChildrenBy: orderField ? orderField + ' ' + state.sort.dir : undefined
+                        })).then(function(rowsData) {
+                          var rows = rowsData.children.map(function(rowData) {
+                            var ret = { id: MDSCommon.getPathName(rowData.path) };
+                            for (var i in columnsMetaData.children) {
+                              var column = columnsMetaData.children[i];
+                              var field = MDSCommon.findValueByName(column.fields, 'value');
+                              ret[MDSCommon.getPathName(column.path)] = MDSCommon.findValueByName(rowData.fields, field);
+                            }
+                            return ret;
+                          });
+                          $$('root__about__look').parse(rows);
+                        });
+                        return false;
+                      }
                     }
-                    return ret;
                   });
-                  $$('root__about__look').parse(rows);
+                  $$('root__about__look').loadNext(15, 0, function(res) { console.log(res); }, null, true);
                 });
                 break;
             }
