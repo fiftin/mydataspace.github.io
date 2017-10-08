@@ -131,7 +131,7 @@ root:
   new_view_title: Новая визуализация
   create_view: Создать
   cancel: Отмена
-  yes: Да
+  y: Да
   codepen_url: Codepen URL
   view_title: Заголовок
   view_description: Описание

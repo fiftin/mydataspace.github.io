@@ -132,8 +132,8 @@ root:
   delete_view_answer: You really want to delete this view?
   new_view_title: New View
   create_view: Create View
+  y: "Yes"
   cancel: Cancel
-  yes: yes
   codepen_url: Codepen URL
   view_title: Title
   view_description: Description

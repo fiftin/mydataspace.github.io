@@ -19,7 +19,7 @@ layout: hybrid_default
         {{ site.data[page.language].root.delete_view_answer }}
       </div>
       <div class="modal-footer look_modal__footer">
-        <button class="btn btn-danger" data-dismiss="modal" id="delete_look_modal_button">{{ site.data[page.language].root.yes }}</button>
+        <button class="btn btn-danger" data-dismiss="modal" id="delete_look_modal_button">{{ site.data[page.language].root.y }}</button>
         <button class="btn btn-default" data-dismiss="modal">{{ site.data[page.language].root.cancel }}</button>
       </div>
     </div>
@@ -57,8 +57,8 @@ layout: hybrid_default
           </div>
 
           <div class="form-group">
-            <ul class="nav nav-pills">
-              <li role="presentation" class="active" id="look_modal__codepen_tab">
+            <ul class="nav nav-pills" id="look_modal__tabs">
+              <li role="presentation" id="look_modal__codepen_tab">
                 <a href="javascript: void(0);" id="look_modal__codepen_tab_link">
                   <i class="fa fa-codepen" aria-hidden="true"></i> Codepen
                 </a>
@@ -74,30 +74,31 @@ layout: hybrid_default
             </ul>
           </div>
 
-          <div id="look_modal__table_wrap" class="hidden">
-            <div class="form-group" id="look_modal__table_path_wrap">
+          <div id="look_modal__type_forms">
+            <div id="look_modal__table_wrap">
+              <div class="form-group" id="look_modal__table_path_wrap">
+                <input type="text"
+                       id="look_modal__table_path"
+                       class="form-control"
+                       placeholder="{{ site.data[page.language].root.table_path }}" />
+                <div class="bootstrap-form-error" id="look_modal__table_path_err"></div>
+              </div>
+              <div class="form-group look_modal__table_webix" id="look_modal__table_webix"></div>
+              <div class="text-right">
+                <button type="button" class="btn btn-default look_modal__table_btn" id="look_modal__table_add"><i class="fa fa-plus"></i> Add</button>
+                <button type="button" class="btn btn-default look_modal__table_btn" id="look_modal__table_remove"><i class="fa fa-remove"></i> Remove</button>
+                <button type="button" class="btn btn-danger look_modal__table_btn" id="look_modal__table_reset"><i class="fa fa-refresh"></i> Reset</button>
+              </div>
+            </div>
+
+            <div class="form-group" id="look_modal__codepen_wrap">
               <input type="text"
-                     id="look_modal__table_path"
+                     id="look_modal__codepen"
                      class="form-control"
-                     placeholder="{{ site.data[page.language].root.table_path }}" />
-              <div class="bootstrap-form-error" id="look_modal__table_path_err"></div>
-            </div>
-            <div class="form-group look_modal__table_webix" id="look_modal__table_webix"></div>
-            <div class="text-right">
-              <button type="button" class="btn btn-default look_modal__table_btn" id="look_modal__table_add"><i class="fa fa-plus"></i> Add</button>
-              <button type="button" class="btn btn-default look_modal__table_btn" id="look_modal__table_remove"><i class="fa fa-remove"></i> Remove</button>
-              <button type="button" class="btn btn-danger look_modal__table_btn" id="look_modal__table_reset"><i class="fa fa-refresh"></i> Reset</button>
+                     placeholder="{{ site.data[page.language].root.codepen_url }}" />
+              <div class="bootstrap-form-error" id="look_modal__codepen_err"></div>
             </div>
           </div>
-
-          <div class="form-group" id="look_modal__codepen_wrap">
-            <input type="text"
-                   id="look_modal__codepen"
-                   class="form-control"
-                   placeholder="{{ site.data[page.language].root.codepen_url }}" />
-            <div class="bootstrap-form-error" id="look_modal__codepen_err"></div>
-          </div>
-
           <script>
             $(function() {
               $('#look_modal__codepen_tab_link').click(function() {
@@ -116,6 +117,24 @@ layout: hybrid_default
                 $('#look_modal__codepen_wrap').addClass('hidden');
                 $('#look_modal').data('look-type', 'table');
                 $('#look_modal__table_path').focus();
+              });
+
+              $('#look_modal').on('show.bs.modal', function () {
+                $('#look_modal__title_err').text('');
+                $('#look_modal__codepen_err').text('');
+
+                $('#look_modal__title').val('');
+                $('#look_modal__description').val('');
+                $('#look_modal__codepen').val('');
+                $('#look_modal__table_path').val('');
+
+                $$('look_modal__table').clearAll();
+
+                $('#look_modal__tabs').children().removeClass('active');
+                $('#look_modal__type_forms').children().addClass('hidden');
+
+
+                $('#look_modal').data('look-type', null);
               });
 
               $('#look_modal').on('shown.bs.modal', function () {
