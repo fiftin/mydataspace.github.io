@@ -338,22 +338,23 @@
       }
     }
 
-    function setLook(data) {
-      $('#root__looks__actions').find('.look__action--only-owner').css('display', data.mine ? 'block' : 'none');
-      $('#root__looks__title').text(MDSCommon.findValueByName(data.fields, 'title'));
-      $('#root__looks__content').data('look-path', data.path);
-      switch (MDSCommon.findValueByName(data.fields, 'type')) {
+    function setLook(lookMetaData) {
+      $('#root__looks__actions').find('.look__action--only-owner').css('display', lookMetaData.mine ? 'block' : 'none');
+      $('#root__looks__title').text(MDSCommon.findValueByName(lookMetaData.fields, 'title'));
+      $('#root__looks__content').data('look-path', lookMetaData.path);
+      switch (MDSCommon.findValueByName(lookMetaData.fields, 'type')) {
         case 'table':
           if ($$('root__looks__content')) {
             $$('root__looks__content').destructor();
           }
           $('#root__looks__content').html('');
-          Mydataspace.request('entities.get', MDSCommon.extend(DATA, { path: data.path + '/columns', children: true })).then(function(columnsData) {
-            var columns = columnsData.children.map(function(column) {
+          Mydataspace.request('entities.get', MDSCommon.extend(DATA, { path: lookMetaData.path + '/columns', children: true })).then(function(columnsMetaData) {
+            var columns = columnsMetaData.children.map(function(column) {
               return {
                 id: MDSCommon.getPathName(column.path),
                 header: MDSCommon.findValueByName(column.fields, 'title'),
                 width: parseInt(MDSCommon.findValueByName(column.fields, 'width')) || 200,
+                sort: 'server'
               };
             });
             webix.ui({
@@ -371,43 +372,54 @@
                     return;
                   }
                   Mydataspace.request('entities.change', MDSCommon.extend(DATA, {
-                    path: data.path + '/columns/' + id,
+                    path: lookMetaData.path + '/columns/' + id,
                     fields: [
                       { name: 'width', value: newWidth, type: 'i' }
                     ]
                   })).catch(function() {});
+                },
+
+                onDataRequest: function(start, count, callback, url) {
+                  var state = this.getState();
+                  var orderField;
+                  if (state.sort) {
+                    for (var i in columnsMetaData.children) {
+                      var column = columnsMetaData.children[i];
+                      if (MDSCommon.getPathName(column.path) === state.sort.id) {
+                        orderField = MDSCommon.findValueByName(column.fields, 'value');
+                        break;
+                      }
+                    }
+                  }
+
+                  Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
+                    path: MDSCommon.findValueByName(lookMetaData.fields, 'path'),
+                    children: true,
+                    limit: count,
+                    offset: start,
+                    orderChildrenBy: orderField ? orderField + ' ' + state.sort.dir : undefined
+                  })).then(function(rowsData) {
+                    var rows = rowsData.children.map(function(rowData) {
+                      var ret = { id: MDSCommon.getPathName(rowData.path) };
+                      for (var i in columnsMetaData.children) {
+                        var column = columnsMetaData.children[i];
+                        var field = MDSCommon.findValueByName(column.fields, 'value');
+                        ret[MDSCommon.getPathName(column.path)] = MDSCommon.findValueByName(rowData.fields, field);
+                      }
+                      return ret;
+                    });
+                    $$('root__looks__content').clearAll();
+                    $$('root__looks__content').parse(rows);
+                  });
+                  return false;
                 }
               }
             });
-            return [data, columnsData];
-          }).then(function(res) {
-            var data = res[0];
-            var columnsData = res[1];
-            return Promise.all([
-              data,
-              columnsData,
-              Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
-                path: MDSCommon.findValueByName(data.fields, 'path'),
-                children: true,
-                limit: 50,
-              }))]);
-          }).then(function(res) {
-            var columnsData = res[1];
-            var rowsData = res[2];
-            var rows = rowsData.children.map(function(rowData) {
-              var ret = { id: MDSCommon.getPathName(rowData.path) };
-              for (var i in columnsData.children) {
-                var column = columnsData.children[i];
-                var field = MDSCommon.findValueByName(column.fields, 'value');
-                ret[MDSCommon.getPathName(column.path)] = MDSCommon.findValueByName(rowData.fields, field);
-              }
-              return ret;
-            });
-            $$('root__looks__content').parse(rows);
+            $$('root__looks__content').loadNext(15, 0, function(res) { console.log(res); }, null, true);
           });
           break;
       }
-      currentLook = data;
+      currentLook = lookMetaData;
     }
 
 
