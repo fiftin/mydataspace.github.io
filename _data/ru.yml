@@ -124,20 +124,33 @@ root:
   visualization: Визуализация
   new_view: Добавить
   no_views: Нет визуализаций
-  no_comments: Нет коментариев
-  post_comment: Отправть
+  no_comments: Нет комментариев
+  post_comment: Отправить
+  write_a_comment: Написать комментарий...
   delete_view: Удалить
   delete_view_answer: Вы действительное хотите удалить данную визуализацию?
   new_view_title: Новая визуализация
   create_view: Создать
   cancel: Отмена
   y: Да
-  codepen_url: Codepen URL
-  view_title: Заголовок
-  view_description: Описание
   comments: Комментарии
   change_root_version: Изменить версию
   version_created_at: Дата создания
   version_description: Описание
   version_select: Выбрать
-  table_path: Путь к данных
+
+look_modal:
+  field_title: Заголовок
+  field_description: Описание
+  button_create: Создать
+  codepen:
+    title: Codepen
+    field_url: Codepen URL
+  table:
+    title: Таблица
+    field_path: Путь к данных
+    column_value: Поле/выражение
+    column_title: Заголовок
+    button_add: Добавить
+    button_remove: Улибить
+    button_reset: Восстановить

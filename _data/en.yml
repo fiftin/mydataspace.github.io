@@ -128,18 +128,31 @@ root:
   no_views: There are no views
   no_comments: There are no comments
   post_comment: Post comment
+  write_a_comment: Write a comment...
   delete_view: Delete View
   delete_view_answer: You really want to delete this view?
   new_view_title: New View
   create_view: Create View
   y: "Yes"
   cancel: Cancel
-  codepen_url: Codepen URL
-  view_title: Title
-  view_description: Description
   comments: Comments
   change_root_version: Change Version
   version_created_at: Created At
   version_description: Description
   version_select: Select
-  table_path: Path to Data
+
+look_modal:
+  field_title: Title
+  field_description: Description
+  button_create: Create View
+  codepen:
+    title: Codepen
+    field_url: Codepen URL
+  table:
+    title: Table
+    field_path: Path to Data
+    column_value: Field Name/Statement
+    column_title: Title
+    button_add: Add
+    button_remove: Remove
+    button_reset: Reset

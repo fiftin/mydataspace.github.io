@@ -160,7 +160,8 @@
                 fields: [
                   { name: 'index', value: i, type: 'i' },
                   { name: 'title', value: obj.title, type: 's' },
-                  { name: 'value', value: obj.value, type: 's' }
+                  { name: 'value', value: obj.value, type: 's' },
+                  { name: 'width', value: obj.width, type: 'i' }
                 ]
               }));
               i++;
@@ -319,7 +320,8 @@
               var formattedData = columnsData.children.map(function(column) {
                 return {
                   value: MDSCommon.findValueByName(column.fields, 'value'),
-                  title: MDSCommon.findValueByName(column.fields, 'title')
+                  title: MDSCommon.findValueByName(column.fields, 'title'),
+                  width: parseInt(MDSCommon.findValueByName(column.fields, 'width')) || 200
                 }
               });
               $$('look_modal__table').parse(formattedData);
@@ -362,6 +364,7 @@
               select: 'row',
               resizeColumn: true,
               height: $(window).innerHeight() - 50,
+              clipboard: 'selection',
               on: {
                 onColumnResize: function(id, newWidth, oldWidth, user_action) {
                   if (!user_action) {
@@ -1113,7 +1116,7 @@
       $$('look_modal__table').remove($$('look_modal__table').getSelectedId(true));
     });
     $('#look_modal__table_add').click(function() {
-      var id = $$('look_modal__table').add({ value: '', title: '' });
+      var id = $$('look_modal__table').add({ value: '', title: '', width: 200 });
       $$('look_modal__table').editCell(id, 'value');
     });
 
@@ -1129,7 +1132,8 @@
         }).map(function(field) {
           return {
             value: field.name,
-            title: field.name
+            title: field.name,
+            width: 200
           }
         });
         $$('look_modal__table').parse(formattedData);
