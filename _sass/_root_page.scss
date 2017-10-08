@@ -3,6 +3,24 @@
 $side-width: 300px;
 $side-panel-width: $side-width - $padding;
 
+.root__looks__table_header {
+  input {
+    border-color: #b0cee3;
+    border-radius: 6px !important;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+
+.webix_dtable .webix_ss_filter input {
+  border-color: #b0cee3;
+  border-radius: 6px !important;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+
 .look_modal__table_btn {
   font-size: $font-size-small;
   margin-top: -10px;

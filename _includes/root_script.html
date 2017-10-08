@@ -352,7 +352,10 @@
             var columns = columnsMetaData.children.map(function(column) {
               return {
                 id: MDSCommon.getPathName(column.path),
-                header: MDSCommon.findValueByName(column.fields, 'title'),
+                header: [MDSCommon.findValueByName(column.fields, 'title'), {
+                  content: 'serverFilter',
+                  css: 'root__looks__table_header'
+                }],
                 width: parseInt(MDSCommon.findValueByName(column.fields, 'width')) || 200,
                 sort: 'server'
               };
@@ -366,6 +369,7 @@
               resizeColumn: true,
               height: $(window).innerHeight() - 50,
               clipboard: 'selection',
+//              headerRowHeight: 40,
               on: {
                 onColumnResize: function(id, newWidth, oldWidth, user_action) {
                   if (!user_action) {
@@ -953,7 +957,10 @@
                   var columns = columnsMetaData.children.map(function(column) {
                     return {
                       id: MDSCommon.getPathName(column.path),
-                      header: MDSCommon.findValueByName(column.fields, 'title'),
+                      header: [MDSCommon.findValueByName(column.fields, 'title'), {
+                        content: 'serverFilter',
+                        css: 'root__looks__table_header'
+                      }],
                       width: parseInt(MDSCommon.findValueByName(column.fields, 'width')) || 200,
                       sort: 'server'
                     };
@@ -966,15 +973,29 @@
                     select: 'row',
                     resizeColumn: true,
                     autoheight: true,
+//                    headerRowHeight: 40,
                     on: {
                       onDataRequest: function(start, count, callback, url) {
                         var state = this.getState();
                         var orderField;
                         if (state.sort) {
                           for (var i in columnsMetaData.children) {
-                            var column = columnsMetaData.children[i];
-                            if (MDSCommon.getPathName(column.path) === state.sort.id) {
-                              orderField = MDSCommon.findValueByName(column.fields, 'value');
+                            if (MDSCommon.getPathName(columnsMetaData.children[i].path) === state.sort.id) {
+                              orderField = MDSCommon.findValueByName(columnsMetaData.children[i].fields, 'value');
+                              break;
+                            }
+                          }
+                        }
+
+                        var filter = {};
+                        for (var columnID in state.filter) {
+                          if (MDSCommon.isBlank(state.filter[columnID])) {
+                            continue;
+                          }
+                          for (var k in columnsMetaData.children) {
+                            if (MDSCommon.getPathName(columnsMetaData.children[k].path) === columnID) {
+                              var filterField = MDSCommon.findValueByName(columnsMetaData.children[k].fields, 'value');
+                              filter[filterField] = state.filter[columnID];
                               break;
                             }
                           }
@@ -985,7 +1006,8 @@
                           children: true,
                           limit: count,
                           offset: start,
-                          orderChildrenBy: orderField ? orderField + ' ' + state.sort.dir : undefined
+                          orderChildrenBy: orderField ? orderField + ' ' + state.sort.dir : undefined,
+                          filter: filter
                         })).then(function(rowsData) {
                           var rows = rowsData.children.map(function(rowData) {
                             var ret = { id: MDSCommon.getPathName(rowData.path) };
