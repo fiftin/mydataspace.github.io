@@ -373,7 +373,7 @@
               Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
                 path: MDSCommon.findValueByName(data.fields, 'path'),
                 children: true,
-                limit: 15,
+                limit: 50,
               }))]);
           }).then(function(res) {
             var columnsData = res[1];
