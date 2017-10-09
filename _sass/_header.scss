@@ -37,6 +37,9 @@ $header-toggle-btn-width: 50px;
 
 .profile_button__dropdown_name {
   font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .profile_button__dropdown_name--no-login {
