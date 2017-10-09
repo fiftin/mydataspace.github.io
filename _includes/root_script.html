@@ -33,7 +33,7 @@
     }
 
     var DATA = {
-      root: results[1] === 'root' ? '11111' : results[1],
+      root: results[1] === 'root' ? 'egrkn' : results[1],
       path: '',
       version: searchParams.v
     };
@@ -700,7 +700,7 @@
               case 'VIEW_TAB_EXPLORE_LABEL':
                 document.getElementById('bootstrap').style.display = 'block';
                 document.getElementById('webix').style.display = 'block';
-                UI.pages.refreshPage('data', true);
+//                UI.pages.refreshPage('data', true);
                 break;
             }
 
@@ -1011,7 +1011,7 @@
                               for (var k in columnsMetaData.children) {
                                 if (MDSCommon.getPathName(columnsMetaData.children[k].path) === columnID) {
                                   var filterField = MDSCommon.findValueByName(columnsMetaData.children[k].fields, 'value');
-                                  filter[filterField] = state.filter[columnID];
+                                  filter[filterField] = state.filter[columnID].toLowerCase();
                                   break;
                                 }
                               }
@@ -1046,7 +1046,7 @@
                           { view: 'pager',
                             id: 'root__about__look_pager',
                             size: 15,
-                            group: 4,
+//                            group: 4,
                             align: 'right',
                             height: 40,
                             css: 'root__about__look_pager'
