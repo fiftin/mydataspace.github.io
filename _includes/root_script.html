@@ -344,8 +344,8 @@
       $('#root__looks__content').data('look-path', lookMetaData.path);
       switch (MDSCommon.findValueByName(lookMetaData.fields, 'type')) {
         case 'table':
-          if ($$('root__looks__content')) {
-            $$('root__looks__content').destructor();
+          if ($$('root__looks__content_wrap')) {
+            $$('root__looks__content_wrap').destructor();
           }
           $('#root__looks__content').html('');
           Mydataspace.request('entities.get', MDSCommon.extend(DATA, { path: lookMetaData.path + '/columns', children: true })).then(function(columnsMetaData) {
@@ -366,6 +366,7 @@
             });
             webix.ui({
               container: 'root__looks__content',
+              id: 'root__looks__content_wrap',
               rows: [
                 { padding: 3,
                   css: 'root__about__look_search',
