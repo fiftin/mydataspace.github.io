@@ -119,7 +119,7 @@
         }
 
         rows.from = start;
-        rows.total_count = rowsData.total == null ? rowsData.numberOfChildren || rowsData.total;
+        rows.total_count = rowsData.total == null ? rowsData.numberOfChildren : rowsData.total;
 
         for (var k in callback) {
           // text, response, loader
