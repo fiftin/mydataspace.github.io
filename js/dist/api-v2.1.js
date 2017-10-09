@@ -8055,6 +8055,10 @@ var MDSCommon = {
 
   isValidPrimitiveTypeSingle: function(val, type) {
     var ok = false;
+    if (type && type.length > 3 && type[0] === '"' && type[type.length - 1] === '"') {
+      var validValue = type.substring(1, type.length - 1);
+      return val === validValue;
+    }
     switch (type) {
       case 's': // string
       case 'j': // test
@@ -8124,9 +8128,10 @@ if (typeof module !== 'undefined') {
 
 'use strict';
 
-function EntityRecursiveFormatter(fieldsFormatter) {
+function EntityRecursiveFormatter(fieldsFormatter, childrenFormatter) {
   this.fieldsFormatter = fieldsFormatter;
-};
+  this.childrenFormatter = childrenFormatter;
+}
 
 EntityRecursiveFormatter.prototype.format = function(data) {
   var datas;
@@ -8429,8 +8434,8 @@ function Myda(optionsOrRoot) {
     this.registerFormatter('entities.create.res', new EntitySimplifier());
     this.registerFormatter('entities.getRoots.res', new EntitySimplifier());
     this.registerFormatter('entities.getMyRoots.res', new EntitySimplifier());
-
   }
+
   this.entities = new Entities(this, options.root);
   this.on('connected', this.options.connected);
 
@@ -8700,9 +8705,9 @@ Myda.prototype.formatAndCall = function(eventName, callback, data) {
   if (data != null && data.datas != null) {
     var requestId = data.requestId;
     data = data.datas;
-    if (requestId != null) {
-      data.requestId = requestId;
-    }
+    // if (requestId != null) {
+    //   data.requestId = requestId;
+    // }
   }
   if (formatterArr != null) {
     for (var i in formatterArr) {
