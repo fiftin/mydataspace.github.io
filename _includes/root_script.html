@@ -33,7 +33,7 @@
     }
 
     var DATA = {
-      root: results[1] === 'root' ? 'egrkn' : results[1],
+      root: results[1] === 'root' ? '11111' : results[1],
       path: '',
       version: searchParams.v
     };
@@ -990,57 +990,14 @@
 //                    headerRowHeight: 40,
                         minHeight: 200,
                         datafetch: 60,
-                        pager: 'root__about__look_pager',
-                        on: {
-                          onDataRequest: function(start, count, callback, url) {
-                            var state = this.getState();
-                            var orderField;
-                            if (state.sort) {
-                              for (var i in columnsMetaData.children) {
-                                if (MDSCommon.getPathName(columnsMetaData.children[i].path) === state.sort.id) {
-                                  orderField = MDSCommon.findValueByName(columnsMetaData.children[i].fields, 'value');
-                                  break;
-                                }
-                              }
-                            }
-
-                            var filter = {};
-                            for (var columnID in state.filter) {
-                              if (MDSCommon.isBlank(state.filter[columnID])) {
-                                continue;
-                              }
-                              for (var k in columnsMetaData.children) {
-                                if (MDSCommon.getPathName(columnsMetaData.children[k].path) === columnID) {
-                                  var filterField = MDSCommon.findValueByName(columnsMetaData.children[k].fields, 'value');
-                                  filter[filterField] = state.filter[columnID].toLowerCase();
-                                  break;
-                                }
-                              }
-                            }
-
-                            Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
-                              path: MDSCommon.findValueByName(lookMetaData.fields, 'path'),
-                              children: true,
-                              limit: count,
-                              offset: start,
-                              orderChildrenBy: orderField ? orderField + ' ' + state.sort.dir : undefined,
-                              filter: filter
-                            })).then(function(rowsData) {
-                              var rows = rowsData.children.map(function(rowData) {
-                                var ret = { id: MDSCommon.getPathName(rowData.path) };
-                                for (var i in columnsMetaData.children) {
-                                  var column = columnsMetaData.children[i];
-                                  var field = MDSCommon.findValueByName(column.fields, 'value');
-                                  ret[MDSCommon.getPathName(column.path)] = MDSCommon.findValueByName(rowData.fields, field);
-                                }
-                                return ret;
-                              });
-                              $$('root__about__look').clearAll();
-                              $$('root__about__look').parse(rows);
-                            });
-                            return false;
-                          }
-                        }
+                        loadahead: 15,
+                        tag: {
+                          lookMetaData: lookMetaData,
+                          columnsMetaData: columnsMetaData,
+                          DATA: DATA
+                        },
+                        url: 'look->',
+                        pager: 'root__about__look_pager'
                       },
                       { css: 'root__about__look_pager_wrap',
                         cols: [
@@ -1056,7 +1013,6 @@
                       }
                     ]
                   });
-                  $$('root__about__look').loadNext(60, 0, function(res) { console.log(res); }, null, true);
                 });
                 break;
             }

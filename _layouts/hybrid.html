@@ -58,6 +58,75 @@
 <script src="/vendor/remarkable.js"></script>
 <script src="/js/dist/ui.js"></script>
 <script>
+  webix.proxy.look = {
+    $proxy: true,
+
+    load: function(view, callback) {
+      var state = view.getState();
+      var orderField;
+      var lookMetaData = view._settings.tag.lookMetaData;
+      var columnsMetaData = view._settings.tag.columnsMetaData;
+      var DATA = view._settings.tag.DATA;
+      var count = 50;
+      var start = 0;
+      if (state.sort) {
+        for (var i in columnsMetaData.children) {
+          if (MDSCommon.getPathName(columnsMetaData.children[i].path) === state.sort.id) {
+            orderField = MDSCommon.findValueByName(columnsMetaData.children[i].fields, 'value');
+            break;
+          }
+        }
+      }
+
+      var filter = {};
+      for (var columnID in state.filter) {
+        if (MDSCommon.isBlank(state.filter[columnID])) {
+          continue;
+        }
+        for (var k in columnsMetaData.children) {
+          if (MDSCommon.getPathName(columnsMetaData.children[k].path) === columnID) {
+            var filterField = MDSCommon.findValueByName(columnsMetaData.children[k].fields, 'value');
+            filter[filterField] = state.filter[columnID].toLowerCase();
+            break;
+          }
+        }
+      }
+
+      Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
+        path: MDSCommon.findValueByName(lookMetaData.fields, 'path'),
+        children: true,
+        limit: count,
+        offset: start,
+        orderChildrenBy: orderField ? orderField + ' ' + state.sort.dir : undefined,
+        filter: filter
+      })).then(function(rowsData) {
+        var rows = rowsData.children.map(function(rowData) {
+          var ret = { id: MDSCommon.getPathName(rowData.path) };
+          for (var i in columnsMetaData.children) {
+            var column = columnsMetaData.children[i];
+            var field = MDSCommon.findValueByName(column.fields, 'value');
+            ret[MDSCommon.getPathName(column.path)] = MDSCommon.findValueByName(rowData.fields, field);
+          }
+          return ret;
+        });
+
+        for (var k in callback) {
+          // text, response, loader
+          if (callback[k].before) {
+            callback[k].before.call(view, '', rows, -1);
+          }
+        }
+
+        for (var k in callback) {
+          // text, response, loader
+          if (callback[k].success) {
+            callback[k].success.call(view, '', rows, -1);
+          }
+        }
+      });
+    }
+  };
+
   $(function() {
     // Get Started large button
     $('#sub_footer__button').popover({
