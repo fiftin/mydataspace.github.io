@@ -204,77 +204,84 @@ EntityTree.prototype.setCurrentIdToFirst = function() {
 EntityTree.prototype.listen = function() {
   var self = this;
 
+  Mydataspace.on('entities.create.res', function(res) {
+    var dataArray = Array.isArray(res) ? res : [res];
+    for (var i in dataArray) {
+      var data = dataArray[i];
+      var parentId = Identity.parentId(Identity.idFromData(data));
+      var entity = Identity.entityFromData(data);
+      var oldVersion = MDSCommon.findValueByName(data.fields || [], '$oldVersion');
 
-  Mydataspace.on('entities.create.res', function(data) {
-    var parentId = Identity.parentId(Identity.idFromData(data));
-    var entity = Identity.entityFromData(data);
-    var oldVersion = MDSCommon.findValueByName(data.fields || [], '$oldVersion');
+      if (oldVersion == null &&
+        $$('entity_tree').getItem(Identity.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)) == null) {
 
-    if (oldVersion == null &&
-      $$('entity_tree').getItem(Identity.childId(parentId, UIHelper.ENTITY_TREE_DUMMY_ID)) == null) {
+        // simply add new entity to tree and no more
+        $$('entity_tree').add(entity, 0, parentId === 'root' ? null : parentId);
 
-      // simply add new entity to tree and no more
-      $$('entity_tree').add(entity, 0, parentId === 'root' ? null : parentId);
+        if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
+          self.setChildren(entity.id, entity.data);
+        }
 
-      if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
-        self.setChildren(entity.id, entity.data);
+        if (parentId === 'root') {
+          $$('entity_tree').select(entity.id);
+          $$('entity_tree').open(entity.id);
+        }
+
+        self.resolveChildren(entity.id).then(function() { $$('entity_tree').open(entity.id); });
       }
-
-      if (parentId === 'root') {
-        $$('entity_tree').select(entity.id);
-        $$('entity_tree').open(entity.id);
-      }
-
-      self.resolveChildren(entity.id).then(function() { $$('entity_tree').open(entity.id); });
     }
   });
 
 
-  Mydataspace.on('entities.delete.res', function(data) {
-    var entityId;
-
-
-    if (data.path === '') {
-      var rootData = self.findRoot(data);
-      if (rootData == null) {
-        return;
+  Mydataspace.on('entities.delete.res', function(res) {
+    var dataArray = Array.isArray(res) ? res : [res];
+    for (var i in dataArray) {
+      var data = dataArray[i];
+      var entityId;
+      if (data.path === '') {
+        var rootData = self.findRoot(data);
+        if (rootData == null) {
+          return;
+        }
+        entityId = Identity.idFromData(MDSCommon.extend(data, {version: rootData.version}));
+      } else {
+        entityId = Identity.idFromData(data);
+        if ($$('entity_tree').getItem(entityId) == null) {
+          return;
+        }
       }
-      entityId = Identity.idFromData(MDSCommon.extend(data, { version: rootData.version }));
-    } else {
-      entityId = Identity.idFromData(data);
-      if ($$('entity_tree').getItem(entityId) == null) {
-        return;
+
+      if (entityId === self.getCurrentId()) { // Select other item if selected item is deleted.
+        var nextId = $$('entity_tree').getPrevSiblingId(entityId) ||
+          $$('entity_tree').getNextSiblingId(entityId) ||
+          $$('entity_tree').getParentId(entityId);
+        $$('entity_tree').select(nextId);
       }
+
+      $$('entity_tree').remove(entityId);
     }
-
-
-    if (entityId === self.getCurrentId()) { // Select other item if selected item is deleted.
-      var nextId = $$('entity_tree').getPrevSiblingId(entityId) ||
-        $$('entity_tree').getNextSiblingId(entityId) ||
-        $$('entity_tree').getParentId(entityId);
-      $$('entity_tree').select(nextId);
-    }
-
-
-    $$('entity_tree').remove(entityId);
   });
 
 
-  Mydataspace.on('entities.change.res', function(data) {
-    var oldVersion = MDSCommon.findValueByName(data.fields || [], '$oldVersion');
+  Mydataspace.on('entities.change.res', function(res) {
+    var dataArray = Array.isArray(res) ? res : [res];
+    for (var i in dataArray) {
+      var data = dataArray[i];
+      var oldVersion = MDSCommon.findValueByName(data.fields || [], '$oldVersion');
 
-    // User only changed current version. Ignore it.
-    if (data.path === '' && oldVersion != null) {
-      return;
-    }
+      // User only changed current version. Ignore it.
+      if (data.path === '' && oldVersion != null) {
+        return;
+      }
 
-    // Update changed entity view
-    var entity = Identity.entityFromData(data);
-    var item = $$('entity_tree').getItem(entity.id);
-    if (item == null) {
-      return;
+      // Update changed entity view
+      var entity = Identity.entityFromData(data);
+      var item = $$('entity_tree').getItem(entity.id);
+      if (item == null) {
+        return;
+      }
+      $$('entity_tree').updateItem(entity.id, entity);
     }
-    $$('entity_tree').updateItem(entity.id, entity);
   });
 
 
