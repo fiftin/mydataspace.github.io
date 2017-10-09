@@ -1127,7 +1127,7 @@
             document.getElementById('root__comments__empty').style.display = 'block';
           }
         }
-      } else if (/^views\//.test(data.path)) {
+      } else if (/^views\/[^\/]$/.test(data.path)) {
         $(getLookPreviewNode(data.path)).parent().remove();
 
         var viewsCount = parseInt(document.getElementById('root__tabs_views_count').innerText);
