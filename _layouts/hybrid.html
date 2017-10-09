@@ -111,19 +111,19 @@
           return ret;
         });
 
-        for (var k in callback) {
+        rows.from = start;
+        rows.total_count = rowsData.total == null ? rowsData.numberOfChildren : rowsData.total;
+
+        for (var k in callback[k]) {
           // text, response, loader
-          if (callback[k].before) {
+          if (callback[k] && callback[k].before) {
             callback[k].before.call(view, '', rows, -1);
           }
         }
 
-        rows.from = start;
-        rows.total_count = rowsData.total == null ? rowsData.numberOfChildren : rowsData.total;
-
         for (var k in callback) {
           // text, response, loader
-          if (callback[k].success) {
+          if (callback[k] && callback[k].success) {
             callback[k].success.call(view, '', rows, -1);
           }
         }
