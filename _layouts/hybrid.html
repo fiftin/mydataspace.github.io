@@ -61,20 +61,13 @@
   webix.proxy.look = {
     $proxy: true,
 
-    load: function(view, callback) {
+    load: function(view, callback, details) {
       var state = view.getState();
       var orderField;
       var lookMetaData = view._settings.tag.lookMetaData;
       var columnsMetaData = view._settings.tag.columnsMetaData;
       var DATA = view._settings.tag.DATA;
       var count = Math.max(count, (view._settings.datafetch||view._settings.loadahead||0));
-
-      var start = 0;
-
-      var pager = view.getPager();
-      if (pager) {
-        start = pager.data.page * pager.data.size;
-      }
 
 
       if (state.sort) {
@@ -103,8 +96,8 @@
       Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
         path: MDSCommon.findValueByName(lookMetaData.fields, 'path'),
         children: true,
-        limit: count,
-        offset: start,
+        limit: details.count,
+        offset: details.start,
         orderChildrenBy: orderField ? orderField + ' ' + state.sort.dir : undefined,
         filter: filter
       })).then(function(rowsData) {
@@ -118,7 +111,7 @@
           return ret;
         });
 
-        rows.from = start;
+        rows.from = details.start;
         rows.total_count = rowsData.total == null ? rowsData.numberOfChildren : rowsData.total;
 
         for (var k in callback[k]) {
