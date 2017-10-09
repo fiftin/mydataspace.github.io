@@ -191,7 +191,7 @@
     });
 
     Mydataspace.on('entities.change.res', function(data) {
-      if (/^views\//.test(data.path)) {
+      if (/^views\/[^\/]*$/.test(data.path)) {
         var preview = getLookPreviewNode(data.path);
         if (!preview) {
           throw new Error('Changed look is not exists');
@@ -1088,7 +1088,7 @@
             document.getElementById('root__comments__empty').style.display = 'none';
           }
         }
-      } else if (/^views\//.test(data.path)) {
+      } else if (/^views\/[^\/]*$/.test(data.path)) {
         $('#root__looks__previews').append(getLookPreviewHTML(data));
         var preview = getLookPreviewNode(data.path);
         switch (MDSCommon.findValueByName(data.fields, 'type')) {
@@ -1127,7 +1127,7 @@
             document.getElementById('root__comments__empty').style.display = 'block';
           }
         }
-      } else if (/^views\/[^\/]$/.test(data.path)) {
+      } else if (/^views\/[^\/]*$/.test(data.path)) {
         $(getLookPreviewNode(data.path)).parent().remove();
 
         var viewsCount = parseInt(document.getElementById('root__tabs_views_count').innerText);
