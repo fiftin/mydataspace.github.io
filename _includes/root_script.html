@@ -360,66 +360,67 @@
                 sort: 'server'
               };
             });
+            columns.push({
+              header: '',
+              fillspace: true
+            });
             webix.ui({
-              view: 'datatable',
-              id: 'root__looks__content',
               container: 'root__looks__content',
-              columns: columns,
-              select: 'row',
-              resizeColumn: true,
-              height: $(window).innerHeight() - 50,
-              clipboard: 'selection',
-//              headerRowHeight: 40,
-              on: {
-                onColumnResize: function(id, newWidth, oldWidth, user_action) {
-                  if (!user_action) {
-                    return;
-                  }
-                  Mydataspace.request('entities.change', MDSCommon.extend(DATA, {
-                    path: lookMetaData.path + '/columns/' + id,
-                    fields: [
-                      { name: 'width', value: newWidth, type: 'i' }
-                    ]
-                  })).catch(function() {});
+              rows: [
+                { padding: 3,
+                  css: 'root__about__look_search',
+                  cols: [
+                    { view: 'text',
+                      placeholder: 'Search...'
+                    }
+                  ]
                 },
-
-                onDataRequest: function(start, count, callback, url) {
-                  var state = this.getState();
-                  var orderField;
-                  if (state.sort) {
-                    for (var i in columnsMetaData.children) {
-                      var column = columnsMetaData.children[i];
-                      if (MDSCommon.getPathName(column.path) === state.sort.id) {
-                        orderField = MDSCommon.findValueByName(column.fields, 'value');
-                        break;
+                { view: 'datatable',
+                  id: 'root__looks__content',
+                  columns: columns,
+                  select: 'row',
+                  resizeColumn: true,
+                  headerRowHeight: 40,
+                  navigation: true,
+                  datafetch: 40,
+                  loadahead: 20,
+                  height: $(window).innerHeight() - 133,
+                  clipboard: 'selection',
+                  tag: {
+                    lookMetaData: lookMetaData,
+                    columnsMetaData: columnsMetaData,
+                    DATA: DATA
+                  },
+                  url: 'look->',
+                  pager: 'root__looks__content_pager',
+                  on: {
+                    onColumnResize: function (id, newWidth, oldWidth, user_action) {
+                      if (!user_action) {
+                        return;
                       }
+                      Mydataspace.request('entities.change', MDSCommon.extend(DATA, {
+                        path: lookMetaData.path + '/columns/' + id,
+                        fields: [
+                          {name: 'width', value: newWidth, type: 'i'}
+                        ]
+                      })).catch(function () {
+                      });
                     }
                   }
-
-                  Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
-                    path: MDSCommon.findValueByName(lookMetaData.fields, 'path'),
-                    children: true,
-                    limit: count,
-                    offset: start,
-                    orderChildrenBy: orderField ? orderField + ' ' + state.sort.dir : undefined
-                  })).then(function(rowsData) {
-                    var rows = rowsData.children.map(function(rowData) {
-                      var ret = { id: MDSCommon.getPathName(rowData.path) };
-                      for (var i in columnsMetaData.children) {
-                        var column = columnsMetaData.children[i];
-                        var field = MDSCommon.findValueByName(column.fields, 'value');
-                        ret[MDSCommon.getPathName(column.path)] = MDSCommon.findValueByName(rowData.fields, field);
-                      }
-                      return ret;
-                    });
-                    $$('root__looks__content').clearAll();
-                    $$('root__looks__content').parse(rows);
-                  });
-                  return false;
+                },
+                { css: 'root__about__look_pager_wrap',
+                  cols: [
+                    { view: 'pager',
+                      id: 'root__looks__content_pager',
+                      size: 40,
+                      group: 5,
+                      height: 40,
+                      css: 'root__about__look_pager'
+                    }
+                  ]
                 }
-              }
+              ]
             });
-            $$('root__looks__content').loadNext(15, 0, function(res) { console.log(res); }, null, true);
           });
           break;
       }
@@ -986,19 +987,33 @@
                         columns: columns,
                         select: 'row',
                         resizeColumn: true,
-                        autoheight: true,
                         headerRowHeight: 40,
-                        minHeight: 430,
                         navigation: true,
                         datafetch: 40,
                         loadahead: 20,
+                        autoheight: true,
+                        minHeight: 430,
+                        clipboard: 'selection',
                         tag: {
                           lookMetaData: lookMetaData,
                           columnsMetaData: columnsMetaData,
                           DATA: DATA
                         },
                         url: 'look->',
-                        pager: 'root__about__look_pager'
+                        pager: 'root__about__look_pager',
+                        on: {
+                          onColumnResize: function(id, newWidth, oldWidth, user_action) {
+                            if (!user_action) {
+                              return;
+                            }
+                            Mydataspace.request('entities.change', MDSCommon.extend(DATA, {
+                              path: lookMetaData.path + '/columns/' + id,
+                              fields: [
+                                { name: 'width', value: newWidth, type: 'i' }
+                              ]
+                            })).catch(function() {});
+                          }
+                        }
                       },
                       { css: 'root__about__look_pager_wrap',
                         cols: [
@@ -1006,9 +1021,7 @@
                             id: 'root__about__look_pager',
                             size: 12,
                             group: 5,
-                            align: 'right',
                             height: 40,
-                            count: 1000,
                             css: 'root__about__look_pager'
                           }
                         ]
