@@ -965,65 +965,95 @@
                       sort: 'server'
                     };
                   });
+                  columns.push({
+                    header: '',
+                    fillspace: true
+                  });
                   webix.ui({
-                    view: 'datatable',
-                    id: 'root__about__look',
                     container: 'root__about__look',
-                    columns: columns,
-                    select: 'row',
-                    resizeColumn: true,
-                    autoheight: true,
+                    rows: [
+                      { padding: 3,
+                        css: 'root__about__look_search',
+                        cols: [
+                          { view: 'text',
+                            placeholder: 'Search...'
+                          }
+                        ]
+                      },
+                      { view: 'datatable',
+                        borderless: true,
+                        id: 'root__about__look',
+                        columns: columns,
+                        select: 'row',
+                        resizeColumn: true,
+                        autoheight: true,
 //                    headerRowHeight: 40,
-                    on: {
-                      onDataRequest: function(start, count, callback, url) {
-                        var state = this.getState();
-                        var orderField;
-                        if (state.sort) {
-                          for (var i in columnsMetaData.children) {
-                            if (MDSCommon.getPathName(columnsMetaData.children[i].path) === state.sort.id) {
-                              orderField = MDSCommon.findValueByName(columnsMetaData.children[i].fields, 'value');
-                              break;
+                        minHeight: 200,
+                        pager: 'root__about__look_pager',
+                        on: {
+                          onDataRequest: function(start, count, callback, url) {
+                            var state = this.getState();
+                            var orderField;
+                            if (state.sort) {
+                              for (var i in columnsMetaData.children) {
+                                if (MDSCommon.getPathName(columnsMetaData.children[i].path) === state.sort.id) {
+                                  orderField = MDSCommon.findValueByName(columnsMetaData.children[i].fields, 'value');
+                                  break;
+                                }
+                              }
                             }
+
+                            var filter = {};
+                            for (var columnID in state.filter) {
+                              if (MDSCommon.isBlank(state.filter[columnID])) {
+                                continue;
+                              }
+                              for (var k in columnsMetaData.children) {
+                                if (MDSCommon.getPathName(columnsMetaData.children[k].path) === columnID) {
+                                  var filterField = MDSCommon.findValueByName(columnsMetaData.children[k].fields, 'value');
+                                  filter[filterField] = state.filter[columnID];
+                                  break;
+                                }
+                              }
+                            }
+
+                            Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
+                              path: MDSCommon.findValueByName(lookMetaData.fields, 'path'),
+                              children: true,
+                              limit: count,
+                              offset: start,
+                              orderChildrenBy: orderField ? orderField + ' ' + state.sort.dir : undefined,
+                              filter: filter
+                            })).then(function(rowsData) {
+                              var rows = rowsData.children.map(function(rowData) {
+                                var ret = { id: MDSCommon.getPathName(rowData.path) };
+                                for (var i in columnsMetaData.children) {
+                                  var column = columnsMetaData.children[i];
+                                  var field = MDSCommon.findValueByName(column.fields, 'value');
+                                  ret[MDSCommon.getPathName(column.path)] = MDSCommon.findValueByName(rowData.fields, field);
+                                }
+                                return ret;
+                              });
+                              $$('root__about__look').clearAll();
+                              $$('root__about__look').parse(rows);
+                            });
+                            return false;
                           }
                         }
-
-                        var filter = {};
-                        for (var columnID in state.filter) {
-                          if (MDSCommon.isBlank(state.filter[columnID])) {
-                            continue;
+                      },
+                      { css: 'root__about__look_pager_wrap',
+                        cols: [
+                          { view: 'pager',
+                            id: 'root__about__look_pager',
+                            size: 15,
+                            group: 4,
+                            align: 'right',
+                            height: 40,
+                            css: 'root__about__look_pager'
                           }
-                          for (var k in columnsMetaData.children) {
-                            if (MDSCommon.getPathName(columnsMetaData.children[k].path) === columnID) {
-                              var filterField = MDSCommon.findValueByName(columnsMetaData.children[k].fields, 'value');
-                              filter[filterField] = state.filter[columnID];
-                              break;
-                            }
-                          }
-                        }
-
-                        Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
-                          path: MDSCommon.findValueByName(lookMetaData.fields, 'path'),
-                          children: true,
-                          limit: count,
-                          offset: start,
-                          orderChildrenBy: orderField ? orderField + ' ' + state.sort.dir : undefined,
-                          filter: filter
-                        })).then(function(rowsData) {
-                          var rows = rowsData.children.map(function(rowData) {
-                            var ret = { id: MDSCommon.getPathName(rowData.path) };
-                            for (var i in columnsMetaData.children) {
-                              var column = columnsMetaData.children[i];
-                              var field = MDSCommon.findValueByName(column.fields, 'value');
-                              ret[MDSCommon.getPathName(column.path)] = MDSCommon.findValueByName(rowData.fields, field);
-                            }
-                            return ret;
-                          });
-                          $$('root__about__look').clearAll();
-                          $$('root__about__look').parse(rows);
-                        });
-                        return false;
+                        ]
                       }
-                    }
+                    ]
                   });
                   $$('root__about__look').loadNext(15, 0, function(res) { console.log(res); }, null, true);
                 });
