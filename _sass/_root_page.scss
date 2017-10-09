@@ -3,9 +3,31 @@
 $side-width: 300px;
 $side-panel-width: $side-width - $padding;
 
+.look_preview__overview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+}
+
+.look_preview__overview--codepen {
+  background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%,rgba(0,0,0,0) 100%);
+  color: white;
+  text-shadow: 1px 1px 1px black;
+}
+
+.snippet:hover .look_preview__overview {
+  background: transparent;
+}
+
+.root__about__look {
+  border-top: 1px solid #b0cee3 !important;
+}
+
 .root__about__look_search {
   background: #d2e3ef !important;
-  border-bottom: 2px solid #b0cee3 !important;
+  border-bottom: 1px solid #b0cee3 !important;
   input {
     border-color: #b0cee3 !important;
     border-radius: 6px !important;
@@ -570,6 +592,7 @@ $follow-button-height: 40px;
 }
 
 .root__about__look {
+  margin-top: -2px;
   overflow: hidden;
 }
 
