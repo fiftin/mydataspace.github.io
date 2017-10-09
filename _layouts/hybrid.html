@@ -64,9 +64,12 @@
     load: function(view, callback, details) {
       var state = view.getState();
       var orderField;
-      var lookMetaData = view._settings.tag.lookMetaData;
-      var columnsMetaData = view._settings.tag.columnsMetaData;
-      var DATA = view._settings.tag.DATA;
+
+      var lookMetaData = view._settings.lookMetaData;
+      var columnsMetaData = view._settings.columnsMetaData;
+      var DATA = view._settings.DATA;
+      var search = view._settings.search;
+
       var count = details ? details.count : Math.max(count, (view._settings.datafetch||view._settings.loadahead||0));
       var start = details ? details.start : 0;
 
@@ -102,7 +105,8 @@
         limit: count,
         offset: start,
         orderChildrenBy: orderField ? orderField + ' ' + state.sort.dir : undefined,
-        filter: filter
+        filter: filter,
+        search: search
       })).then(function(rowsData) {
         var rows = rowsData.children.map(function(rowData) {
           var ret = { id: MDSCommon.getPathName(rowData.path) };

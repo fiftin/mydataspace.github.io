@@ -372,7 +372,14 @@
                   css: 'root__about__look_search',
                   cols: [
                     { view: 'text',
-                      placeholder: 'Search...'
+                      id: 'root__looks__content_search',
+                      placeholder: 'Search...',
+                      on: {
+                        onTimedKeyPress: function(code, e) {
+                          $$('root__looks__content_search').define('search', this.getValue());
+                          $$('root__looks__content_search').load('look->');
+                        }
+                      }
                     }
                   ]
                 },
@@ -387,11 +394,9 @@
                   loadahead: 20,
                   height: $(window).innerHeight() - 133,
                   clipboard: 'selection',
-                  tag: {
-                    lookMetaData: lookMetaData,
-                    columnsMetaData: columnsMetaData,
-                    DATA: DATA
-                  },
+                  lookMetaData: lookMetaData,
+                  columnsMetaData: columnsMetaData,
+                  DATA: DATA,
                   url: 'look->',
                   pager: 'root__looks__content_pager',
                   on: {
@@ -978,7 +983,14 @@
                         css: 'root__about__look_search',
                         cols: [
                           { view: 'text',
-                            placeholder: 'Search...'
+                            placeholder: 'Search...',
+                            id: 'root__about__look_search',
+                            on: {
+                              onTimedKeyPress: function(code, e) {
+                                $$('root__about__look').define('search', this.getValue());
+                                $$('root__about__look').load('look->');
+                              }
+                            }
                           }
                         ]
                       },
@@ -995,11 +1007,9 @@
                         autoheight: true,
                         minHeight: 430,
                         clipboard: 'selection',
-                        tag: {
-                          lookMetaData: lookMetaData,
-                          columnsMetaData: columnsMetaData,
-                          DATA: DATA
-                        },
+                        lookMetaData: lookMetaData,
+                        columnsMetaData: columnsMetaData,
+                        DATA: DATA,
                         url: 'look->',
                         pager: 'root__about__look_pager',
                         on: {
