@@ -473,7 +473,11 @@ $view-field-value-max-height: 170px;
 }
 
 .root_counter:first-child {
-  padding-right: 20px;
+  margin-right: 20px;
+}
+
+.root_counter {
+  cursor: pointer;
 }
 
 .root_counter--active {

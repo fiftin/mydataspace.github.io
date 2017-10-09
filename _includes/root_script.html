@@ -385,7 +385,8 @@
                 { padding: 3,
                   css: 'root__about__look_search',
                   cols: [
-                    { view: 'text',
+                    { view: 'search',
+                      icon: 'search',
                       id: 'root__looks__content_search',
                       placeholder: 'Search...',
                       on: {
@@ -606,8 +607,12 @@
     }
 
     function initCounters() {
-      var elem = document.getElementById('root__counters_likes');
-      elem.addEventListener('click', function() {
+      $('#root__counters_comments').click(function() {
+        selectTab('VIEW_TAB_COMMENTS_LABEL');
+      });
+
+      var likesElem = document.getElementById('root__counters_likes');
+      likesElem.addEventListener('click', function() {
         if (!Mydataspace.isLoggedIn()) {
           $('#signin_modal').modal('show');
           return;
@@ -619,9 +624,9 @@
 
         document.getElementById('root__counters_likes_icon').className = 'fa like_icon_animation fa-heart';
 
-        if (MDSCommon.isPresent(elem.getAttribute('data-like-path'))) {
+        if (MDSCommon.isPresent(likesElem.getAttribute('data-like-path'))) {
           Mydataspace.entities.request('entities.delete', MDSCommon.extend(DATA, {
-            path: elem.getAttribute('data-like-path')
+            path: likesElem.getAttribute('data-like-path')
           })).then(function() {
             document.getElementById('root__counters_likes_icon').className = 'fa fa-heart';
           }, function(err) {
@@ -663,69 +668,71 @@
       document.getElementById('root__looks').appendChild(codepenScript);
     }
 
+
+    function selectTab(tabID) {
+      var tab = document.getElementById(tabID);
+      var el;
+      for (var tid in TABS) {
+        document.getElementById(tid).classList.remove('view__tab--active');
+        el = document.getElementById(TABS[tid]);
+        if (el) {
+          el.style.display = 'none';
+        }
+      }
+      tab.classList.add('view__tab--active');
+
+      el = document.getElementById(TABS[tabID]);
+      if (el) {
+        el.style.display = 'block';
+      }
+
+      document.getElementById('webix').style.display = 'none';
+      switch (tabID) {
+        case 'VIEW_TAB_VIEW_LABEL':
+          document.getElementById('root__new_look').classList.remove('hidden');
+
+          if (document.getElementById('root__tabs_views_count').innerText === '0') {
+            document.getElementById('root__looks__empty').style.display = 'block';
+          } else {
+            document.getElementById('root__looks__empty').style.display = 'none';
+          }
+          Mydataspace.entities.request('entities.get', MDSCommon.extend(DATA, { children: true, path: 'views' })).then(function(data) {
+            updateLooks(data.children);
+          });
+          break;
+        case 'VIEW_TAB_COMMENTS_LABEL':
+          document.getElementById('root__new_look').classList.add('hidden');
+          Mydataspace.entities.request('entities.get', MDSCommon.extend(DATA, { children: true, path: 'comments', limit: 7, orderChildrenBy: '$createdAt DESC' })).then(function(data) {
+            var comments = document.getElementById('root__comments__list');
+            comments.innerHTML = '';
+            var html = '';
+            for (var i in data.children) {
+              html = getCommentHTML(data.children[i]) + html;
+            }
+            comments.innerHTML = html;
+            if(html === '') {
+              document.getElementById('root__comments__empty').style.display = 'block';
+            }
+          });
+          break;
+        case 'VIEW_TAB_README_LABEL':
+          //document.getElementById('root__data_link').classList.remove('hidden');
+          document.getElementById('root__new_look').classList.add('hidden');
+          break;
+        case 'VIEW_TAB_EXPLORE_LABEL':
+          document.getElementById('bootstrap').style.display = 'block';
+          document.getElementById('webix').style.display = 'block';
+          break;
+      }
+    }
+
     function initTabs() {
       for (var tabID in TABS) {
         (function(tabID) {
           var tab = document.getElementById(tabID);
-          var el;
           tab.addEventListener('click', function(event) {
             event.preventDefault();
-            for (var tid in TABS) {
-              document.getElementById(tid).classList.remove('view__tab--active');
-              el = document.getElementById(TABS[tid]);
-              if (el) {
-                el.style.display = 'none';
-              }
-            }
-            tab.classList.add('view__tab--active');
-
-            el = document.getElementById(TABS[tabID]);
-            if (el) {
-              el.style.display = 'block';
-            }
-
-            document.getElementById('webix').style.display = 'none';
-            switch (tabID) {
-              case 'VIEW_TAB_VIEW_LABEL':
-//                document.getElementById('root__data_link').classList.add('hidden');
-                document.getElementById('root__new_look').classList.remove('hidden');
-
-                if (document.getElementById('root__tabs_views_count').innerText === '0') {
-                  document.getElementById('root__looks__empty').style.display = 'block';
-                } else {
-                  document.getElementById('root__looks__empty').style.display = 'none';
-                }
-                Mydataspace.entities.request('entities.get', MDSCommon.extend(DATA, { children: true, path: 'views' })).then(function(data) {
-                  updateLooks(data.children);
-                });
-                break;
-              case 'VIEW_TAB_COMMENTS_LABEL':
-                //document.getElementById('root__data_link').classList.add('hidden');
-                document.getElementById('root__new_look').classList.add('hidden');
-                Mydataspace.entities.request('entities.get', MDSCommon.extend(DATA, { children: true, path: 'comments', limit: 7, orderChildrenBy: '$createdAt DESC' })).then(function(data) {
-                  var comments = document.getElementById('root__comments__list');
-                  comments.innerHTML = '';
-                  var html = '';
-                  for (var i in data.children) {
-                    html = getCommentHTML(data.children[i]) + html;
-                  }
-                  comments.innerHTML = html;
-                  if(html === '') {
-                    document.getElementById('root__comments__empty').style.display = 'block';
-                  }
-                });
-                break;
-              case 'VIEW_TAB_README_LABEL':
-                //document.getElementById('root__data_link').classList.remove('hidden');
-                document.getElementById('root__new_look').classList.add('hidden');
-                break;
-              case 'VIEW_TAB_EXPLORE_LABEL':
-                document.getElementById('bootstrap').style.display = 'block';
-                document.getElementById('webix').style.display = 'block';
-//                UI.pages.refreshPage('data', true);
-                break;
-            }
-
+            selectTab(tabID);
           });
         })(tabID);
       }
@@ -997,7 +1004,8 @@
                       { padding: 3,
                         css: 'root__about__look_search',
                         cols: [
-                          { view: 'text',
+                          { view: 'search',
+                            icon: 'search',
                             placeholder: 'Search...',
                             id: 'root__about__look_search',
                             on: {

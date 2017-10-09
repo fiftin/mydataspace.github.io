@@ -11,6 +11,12 @@ $side-panel-width: $side-width - $padding;
   padding: 10px;
 }
 
+.root__about__look .webix_ss_header tr:nth-child(2) td {
+  cursor: pointer;
+  &:hover {
+    background: #deecf5;
+  }
+}
 
 .view__comment__date--preview-table {
   color: white !important;
