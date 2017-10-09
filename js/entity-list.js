@@ -20,15 +20,6 @@ EntityList.prototype.setReadOnly = function(isReadOnly) {
 };
 
 
-EntityList.prototype.onCreate = function(data) {
-  var parentId = Identity.parentId(Identity.idFromData(data));
-  var entity = Identity.entityFromData(data);
-  if (this.getRootId() === parentId) {
-    $$('entity_list').add(entity, 1);
-    $$('entity_list').select(entity.id);
-  }
-};
-
 
 EntityList.prototype.changeItems = function(applyForData) {
   var nextId;
@@ -53,26 +44,42 @@ EntityList.prototype.changeItems = function(applyForData) {
 EntityList.prototype.listen = function() {
   var self = this;
 
-  Mydataspace.on('entities.delete.res', function(data) {
-    var entityId = Identity.idFromData(data);
+  Mydataspace.on('entities.delete.res', function(res) {
+    var dataArray = Array.isArray(res) ? res : [res];
+    for (var i in dataArray) {
+      var data = dataArray[i];
+      var entityId = Identity.idFromData(data);
 
-    if ($$('entity_list').getFirstId() === entityId) { // Parent item "."
-      return;
+      if ($$('entity_list').getFirstId() === entityId) { // Parent item "."
+        return;
+      }
+
+      if ($$('entity_list').getItem(entityId) == null) {
+        return;
+      }
+
+      if (entityId === self.getCurrentId()) { // Select other item if selected item is deleted.
+        var nextId = $$('entity_list').getPrevId(entityId) || $$('entity_list').getNextId(entityId);
+        $$('entity_list').select(nextId);
+      }
+
+      $$('entity_list').remove(entityId);
     }
-
-    if ($$('entity_list').getItem(entityId) == null) {
-      return;
-    }
-
-    if (entityId === self.getCurrentId()) { // Select other item if selected item is deleted.
-      var nextId = $$('entity_list').getPrevId(entityId) || $$('entity_list').getNextId(entityId);
-      $$('entity_list').select(nextId);
-    }
-
-    $$('entity_list').remove(entityId);
   });
 
-  Mydataspace.on('entities.create.res', self.onCreate.bind(this));
+  Mydataspace.on('entities.create.res', function(res) {
+    var dataArray = Array.isArray(res) ? res : [res];
+    for (var i in dataArray) {
+      var data = dataArray[i];
+      var parentId = Identity.parentId(Identity.idFromData(data));
+      var entity = Identity.entityFromData(data);
+      if (this.getRootId() === parentId) {
+        $$('entity_list').add(entity, 1);
+        $$('entity_list').select(entity.id);
+      }
+    }
+  });
+
   Mydataspace.on('entities.rename.res', function(data) {
     self.changeItems(Identity.renameData.bind(null, data));
   });
