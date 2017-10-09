@@ -4,6 +4,9 @@ menu:
   docs: Документация
   console: Мои данные
   login: Войти
+  signout: Выйти
+  myData: Мои данные
+
 slogan: GitHub для данных
 slogan_description: Любишь Open Source? Давай создадим Open Data вместе!
 slogan_2: Невероятно быстрый бекенд вашего сайта

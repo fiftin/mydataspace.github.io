@@ -4,6 +4,8 @@ menu:
   docs: Documentation
   console: My Data
   login: Sign In
+  signout: Sign out
+  myData: My Data
 slogan: GitHub for Data
 slogan_description: Love Open Source? Let's create Open Data together!
 slogan_2: Incredibly fast backend of your website
