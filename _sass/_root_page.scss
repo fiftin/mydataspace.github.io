@@ -11,6 +11,17 @@ $side-panel-width: $side-width - $padding;
   padding: 10px;
 }
 
+
+.view__comment__date--preview-table {
+  color: white !important;
+}
+
+
+.look_preview--table {
+  background: linear-gradient(135deg, rgba(30,87,153,1) 0%,rgba(41,137,216,1) 50%,rgba(32,124,202,1) 51%,rgba(125,185,232,1) 100%);
+  color: white;
+}
+
 .look_preview__overview--codepen {
   background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%,rgba(0,0,0,0) 100%);
   color: white;
