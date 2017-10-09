@@ -376,8 +376,8 @@
                       placeholder: 'Search...',
                       on: {
                         onTimedKeyPress: function(code, e) {
-                          $$('root__looks__content_search').define('search', this.getValue());
-                          $$('root__looks__content_search').load('look->');
+                          $$('root__looks__content').define('search', this.getValue());
+                          $$('root__looks__content').load('look->');
                         }
                       }
                     }
