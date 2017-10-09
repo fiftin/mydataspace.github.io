@@ -109,6 +109,8 @@
 
       var lookPath = $('#look_modal__button').data('look-path');
 
+      $('.modal-backdrop').css('opacity', 1);
+
       switch ($('#look_modal').data('look-type')) {
         case 'codepen':
           Mydataspace.request(lookPath ? 'entities.change' : 'entities.create', MDSCommon.extend(DATA, {
@@ -125,10 +127,12 @@
             ]
           })).then(function(data) {
             $('#look_modal').modal('hide');
+            $('.modal-backdrop').css('opacity', null);
             if (!lookPath) {
               setTimeout(function() { selectLook(data.path); }, 500);
             }
           }, function(err) {
+            $('.modal-backdrop').css('opacity', null);
             UI.error(err);
           });
           break;
@@ -169,11 +173,13 @@
             return Promise.all([data, Mydataspace.request('entities.create', columns)]);
           }).then(function(res) {
             var data = res[0];
-            $('#look_modal').modal('hide');
-            if (!lookPath) {
-              setTimeout(function() { selectLook(data.path); }, 500);
-            }
+            setTimeout(function() {
+              $('.modal-backdrop').css('opacity', null);
+              selectLook(data.path);
+              $('#look_modal').modal('hide');
+            }, 500);
           }, function(err) {
+            $('.modal-backdrop').css('opacity', null);
             UI.error(err);
           });
           break;
@@ -352,13 +358,11 @@
       $('#root__looks__content').data('look-path', lookMetaData.path);
       switch (MDSCommon.findValueByName(lookMetaData.fields, 'type')) {
         case 'table':
-          MDSCommon.delay($$('root__looks__content_wrap') ? 3000 : 0).then(function() {
-            if ($$('root__looks__content_wrap')) {
-              $$('root__looks__content_wrap').destructor();
-            }
-            $('#root__looks__content').html('');
-            return Mydataspace.request('entities.get', MDSCommon.extend(DATA, { path: lookMetaData.path + '/columns', children: true }));
-          }).then(function(columnsMetaData) {
+          if ($$('root__looks__content_wrap')) {
+            $$('root__looks__content_wrap').destructor();
+          }
+          $('#root__looks__content').html('');
+          Mydataspace.request('entities.get', MDSCommon.extend(DATA, { path: lookMetaData.path + '/columns', children: true })).then(function(columnsMetaData) {
             var columns = columnsMetaData.children.map(function(column) {
               return {
                 id: MDSCommon.getPathName(column.path),
