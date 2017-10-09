@@ -7260,6 +7260,16 @@ var MDSCommon = {
     'function'
   ],
 
+  delay: function(milliseconds) {
+    return new Promise(function(resolve) {
+      if (milliseconds < 0) {
+        resolve();
+      } else {
+        setTimeout(resolve, milliseconds);
+      }
+    });
+  },
+
   refine_interval: function(interval, cd, mask) {
     if (cd&mask)
       interval[0] = (interval[0] + interval[1])/2;

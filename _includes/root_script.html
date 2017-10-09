@@ -198,12 +198,20 @@
         }
 
         $(preview).replaceWith(getUnwrappedLookPreviewHTML(data, true));
-
         preview = getLookPreviewNode(data.path);
-        var codepenScript = document.createElement('script');
-        codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
-        preview.appendChild(codepenScript);
         $(preview).data('look-data', data);
+
+        switch (MDSCommon.findValueByName(data.fields, 'type')) {
+          case 'codepen':
+            var codepenScript = document.createElement('script');
+            codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
+            preview.appendChild(codepenScript);
+            break;
+          case 'table':
+            ;
+            break;
+        }
+
 
         if (currentLook.path === data.path) {
           setLook(data);
@@ -344,11 +352,13 @@
       $('#root__looks__content').data('look-path', lookMetaData.path);
       switch (MDSCommon.findValueByName(lookMetaData.fields, 'type')) {
         case 'table':
-          if ($$('root__looks__content_wrap')) {
-            $$('root__looks__content_wrap').destructor();
-          }
-          $('#root__looks__content').html('');
-          Mydataspace.request('entities.get', MDSCommon.extend(DATA, { path: lookMetaData.path + '/columns', children: true })).then(function(columnsMetaData) {
+          MDSCommon.delay($$('root__looks__content_wrap') ? 3000 : 0).then(function() {
+            if ($$('root__looks__content_wrap')) {
+              $$('root__looks__content_wrap').destructor();
+            }
+            $('#root__looks__content').html('');
+            return Mydataspace.request('entities.get', MDSCommon.extend(DATA, { path: lookMetaData.path + '/columns', children: true }));
+          }).then(function(columnsMetaData) {
             var columns = columnsMetaData.children.map(function(column) {
               return {
                 id: MDSCommon.getPathName(column.path),
