@@ -67,7 +67,8 @@
       var lookMetaData = view._settings.tag.lookMetaData;
       var columnsMetaData = view._settings.tag.columnsMetaData;
       var DATA = view._settings.tag.DATA;
-      var count = 50;
+      var count = Math.max(count, (this._settings.datafetch||this._settings.loadahead||0));
+
       var start = 0;
       if (state.sort) {
         for (var i in columnsMetaData.children) {
