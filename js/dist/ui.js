@@ -1914,7 +1914,7 @@ EntityList.prototype.listen = function() {
       var data = dataArray[i];
       var parentId = Identity.parentId(Identity.idFromData(data));
       var entity = Identity.entityFromData(data);
-      if (this.getRootId() === parentId) {
+      if (self.getRootId() === parentId) {
         $$('entity_list').add(entity, 1);
         $$('entity_list').select(entity.id);
       }
