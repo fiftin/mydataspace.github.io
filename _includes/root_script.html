@@ -989,6 +989,7 @@
                         autoheight: true,
 //                    headerRowHeight: 40,
                         minHeight: 200,
+                        datafetch: 60,
                         pager: 'root__about__look_pager',
                         on: {
                           onDataRequest: function(start, count, callback, url) {
@@ -1046,7 +1047,7 @@
                           { view: 'pager',
                             id: 'root__about__look_pager',
                             size: 15,
-//                            group: 4,
+                            group: 5,
                             align: 'right',
                             height: 40,
                             css: 'root__about__look_pager'
@@ -1055,7 +1056,7 @@
                       }
                     ]
                   });
-                  $$('root__about__look').loadNext(15, 0, function(res) { console.log(res); }, null, true);
+                  $$('root__about__look').loadNext(60, 0, function(res) { console.log(res); }, null, true);
                 });
                 break;
             }
