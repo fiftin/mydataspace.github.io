@@ -70,6 +70,13 @@
       var count = Math.max(count, (view._settings.datafetch||view._settings.loadahead||0));
 
       var start = 0;
+
+      var pager = view.getPager();
+      if (pager) {
+        start = pager.data.page * pager.data.size;
+      }
+
+
       if (state.sort) {
         for (var i in columnsMetaData.children) {
           if (MDSCommon.getPathName(columnsMetaData.children[i].path) === state.sort.id) {
