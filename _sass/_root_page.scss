@@ -20,9 +20,16 @@ $side-panel-width: $side-width - $padding;
     position: absolute;
     right: 0;
     font-family: "FontAwesome";
-    color: rgb(204, 204, 204);
+    color: black;
     font-size: 14px;
     padding-top: 2px;
+    opacity: 0.2;
+    transition: opacity 200ms;
+  }
+  &:hover {
+    &:after {
+      opacity: 0.6;
+    }
   }
 }
 
