@@ -1163,7 +1163,7 @@
         if (viewsCount <= 1) {
           document.getElementById('root__looks__empty').style.display = 'block';
           document.getElementById('root__looks__content_wrap').style.display = 'none';
-          $('body').css('overflow', 'hidden');
+          $('body').css('overflow', null);
         } else {
           if (currentLook.path === data.path) {
             selectLook();
