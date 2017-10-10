@@ -12,7 +12,9 @@ $side-panel-width: $side-width - $padding;
 }
 
 .root__about__look .webix_ss_header tr:nth-child(2) td {
-  cursor: pointer;
+  .webix_hcell {
+    cursor: pointer;
+  }
   &:hover {
     background: #deecf5;
   }
