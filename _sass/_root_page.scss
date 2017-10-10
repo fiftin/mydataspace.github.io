@@ -14,7 +14,9 @@ $side-panel-width: $side-width - $padding;
 .root__about__look .webix_ss_header tr:nth-child(2) td {
   .webix_hcell {
     cursor: pointer;
-    transform: scale(0.9);
+    width: calc(100% - 10px);
+    margin-left: 5px;
+    padding: 0 5px !important;
   }
   &:hover {
     background: #deecf5;
