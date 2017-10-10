@@ -775,6 +775,9 @@
         document.getElementById('root__version').innerText = '#' +
           (MDSCommon.findValueByName(data.fields, '$version') || 0);
 
+        $('#root__version').tooltip({ placement: 'bottom', container: 'body' });
+
+
 //        if (data.fields.language) {
 //          document.getElementById('root__language').className = 'flag-icon flag-icon-' + data.fields.language;
 //        }

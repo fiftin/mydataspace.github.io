@@ -164,8 +164,9 @@ $side-panel-width: $side-width - $padding;
 .root_page {
   .view__version {
     color: $selected-bg;
-    visibility: hidden;
+    opacity: 0;
     cursor: pointer;
+    transition: opacity 200ms;
   }
 
   .view__version--right-pos {
@@ -180,7 +181,7 @@ $side-panel-width: $side-width - $padding;
     position: relative;
     &:hover {
       .view__version {
-        visibility: visible;
+        opacity: 1;
       }
     }
   }
