@@ -11,8 +11,19 @@ $side-panel-width: $side-width - $padding;
   padding: 10px;
 }
 
-.webix_el_search {
-
+.webix_ss_filter {
+  position: relative;
+  &:after {
+    content: "\f0b0";
+    width: 25px;
+    height: 40px;
+    position: absolute;
+    right: 0;
+    font-family: "FontAwesome";
+    color: rgb(204, 204, 204);
+    font-size: 14px;
+    padding-top: 2px;
+  }
 }
 
 .webix_ss_header tr:nth-child(2) td {
