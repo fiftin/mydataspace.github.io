@@ -554,6 +554,22 @@ $follow-button-height: 40px;
   padding: 15px 25px;
 }
 
+.look_modal__locker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: $border-radius-large;
+  text-align: center;
+  i {
+    margin-top: 50%;
+    transform: translateY(-50%);
+    color: $brand-primary;
+  }
+}
+
 .look_modal__body {
   background: #f0f3f5;
   padding: 15px 25px;

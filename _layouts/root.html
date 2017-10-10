@@ -135,6 +135,7 @@ layout: hybrid_default
 
 
                 $('#look_modal').data('look-type', null);
+                $('#look_modal__locker').addClass('hidden');
               });
 
               $('#look_modal').on('shown.bs.modal', function () {
@@ -165,6 +166,10 @@ layout: hybrid_default
       </div>
       <div class="modal-footer look_modal__footer">
         <button class="btn btn-success" id="look_modal__button">{{ site.data[page.language].look_modal.button_create }}</button>
+      </div>
+
+      <div class="look_modal__locker" id="look_modal__locker">
+        <i class="fa fa-cog fa-spin fa-4x fa-fw"></i>
       </div>
     </div>
   </div>
