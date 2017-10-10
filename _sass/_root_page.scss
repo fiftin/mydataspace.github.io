@@ -48,8 +48,11 @@ $side-panel-width: $side-width - $padding;
 }
 
 .root__about__look {
-  border-top: 1px solid #b0cee3 !important;
 }
+
+//.root__about__look--table {
+//  border-top: 1px solid #b0cee3 !important;
+//}
 
 .root__about__look_search {
   background: #d2e3ef !important;
@@ -610,6 +613,7 @@ $follow-button-height: 40px;
 .look__header {
   position: relative;
   background: black;
+  height: 50px;
 }
 
 
