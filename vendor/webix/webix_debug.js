@@ -20634,6 +20634,9 @@ webix.extend(webix.ui.datatable, {
 				var row_ind = 0;
 
 				for (var i=0; i<rows.length; i++){
+					if (rows[i] == null) {
+						break;
+					}
 					var item = this.getItem(rows[i]);
 					if (!item) continue; //dyn loading, row is not available
 					var selection = this.data.getMark(item.id, "webix_selected");
