@@ -455,7 +455,7 @@
       var previews = document.getElementById('root__looks__previews');
       $(previews).find('.look_preview--active').removeClass('look_preview--active');
       $('#root__looks__content_wrap').css('display', 'none');
-      $('body').css('overflow', null);
+      $('body').css('overflow', '');
       currentLook = null;
       $('#root__looks__content').data('look-path', null);
     }
@@ -1163,7 +1163,7 @@
         if (viewsCount <= 1) {
           document.getElementById('root__looks__empty').style.display = 'block';
           document.getElementById('root__looks__content_wrap').style.display = 'none';
-          $('body').css('overflow', null);
+          $('body').css('overflow', '');
         } else {
           if (currentLook.path === data.path) {
             selectLook();
