@@ -401,7 +401,7 @@
                 },
                 { view: 'datatable',
                   id: 'root__looks__content',
-                  css: 'root__about__look',
+                  css: 'root__about__look_webix',
                   columns: columns,
                   select: 'row',
                   resizeColumn: true,
@@ -969,8 +969,9 @@
             var lookMetaData = result.children[0];
             var type = MDSCommon.findValueByName(lookMetaData.fields, 'type');
             $('#root__about__look_title').text(MDSCommon.findValueByName(lookMetaData.fields, 'title'));
-
+            $('#root__about__look_icon').attr('class', 'fa fa-' + type);
             $look.attr('class', 'root__about__look root__about__look--' + type);
+
             switch (type) {
               case 'codepen':
                 var codepenParts = MDSCommon.findValueByName(lookMetaData.fields, 'id').split('/');
@@ -1024,7 +1025,7 @@
                       { view: 'datatable',
                         borderless: true,
                         id: 'root__about__look',
-                        css: 'root__about__look',
+                        css: 'root__about__look_webix',
                         columns: columns,
                         select: 'row',
                         resizeColumn: true,

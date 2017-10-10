@@ -6,6 +6,33 @@
 // body.modal-open .modal .modal-dialog {
 //     margin: auto;
 // }
+
+@media (min-width: $screen-sm-min) {
+  .navbar-form {
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+  }
+  .navbar {
+    height: $header-height !important;
+  }
+  .navbar-nav {
+    height: $header-height !important;
+  }
+}
+
+@media (max-width: $screen-xs-max) {
+  .navbar-form {
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+  }
+  .navbar-toggle {
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+}
+
+
+
 label {
   // font-weight: normal;
 }
