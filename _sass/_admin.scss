@@ -72,8 +72,11 @@
     right: $search-border-radius / 2 - 2px !important;
     padding-top: 7px !important;
     font-size: 16px !important;
-    color: $search-hover-color !important;
   }
+}
+
+.webix_input_icon {
+  color: $search-hover-color !important;
 }
 
 .entity_tree {
