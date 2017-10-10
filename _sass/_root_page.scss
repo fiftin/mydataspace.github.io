@@ -15,7 +15,7 @@ $side-panel-width: $side-width - $padding;
 
 }
 
-.root__about__look .webix_ss_header tr:nth-child(2) td {
+.webix_ss_header tr:nth-child(2) td {
   .webix_hcell {
     cursor: pointer;
     width: calc(100% - 10px);
