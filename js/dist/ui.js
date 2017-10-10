@@ -2750,7 +2750,7 @@ Pages.prototype.refreshPage = function(page, selectOnlyCurrentPage) {
 };
 
 var UILayout = {
-  HEADER_HEIGHT: 55,
+  HEADER_HEIGHT: 50 + 2,
   windows: {},
   popups: {}
 };

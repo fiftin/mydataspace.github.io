@@ -215,6 +215,7 @@ input:read-only {
   cursor: pointer;
   height: $header-height;
   width: 250px;
+  overflow: hidden;
 }
 
 .logo:hover {

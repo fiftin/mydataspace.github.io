@@ -355,6 +355,7 @@
 
     function setLook(lookMetaData) {
       $('#root__looks__actions').find('.look__action--only-owner').css('display', lookMetaData.mine ? 'block' : 'none');
+      $('#root__looks__title_icon').attr('class', '');
       $('#root__looks__title').text(MDSCommon.findValueByName(lookMetaData.fields, 'title'));
       $('#root__looks__content').data('look-path', lookMetaData.path);
       switch (MDSCommon.findValueByName(lookMetaData.fields, 'type')) {
