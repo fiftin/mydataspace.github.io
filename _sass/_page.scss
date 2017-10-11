@@ -2,7 +2,7 @@
 
 @media (min-width: $screen-md-min) {
   .default_main {
-    min-height: calc(100% - 287px);
+    min-height: calc(100% - #{$footer-height + $header-height});
   }
 }
 
