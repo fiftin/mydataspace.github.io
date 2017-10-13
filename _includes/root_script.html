@@ -440,7 +440,8 @@
                       size: 40,
                       group: 5,
                       height: 40,
-                      css: 'root__about__look_pager'
+                      css: 'root__about__look_pager',
+                      template: '<span class="root__about__look_pager_counter">#count# records</span>  {common.pages()}'
                     }
                   ]
                 }
@@ -1071,7 +1072,8 @@
                             css: 'root__about__look_pager',
                             animate: {
                               direction: 'top'
-                            }
+                            },
+                            template: '<span class="root__about__look_pager_counter">#count# records</span>  {common.pages()}'
                           }
                         ]
                       }

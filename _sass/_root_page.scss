@@ -94,6 +94,13 @@ $side-panel-width: $side-width - $padding;
 }
 
 
+.root__about__look_pager_counter {
+  float: left;
+  padding-top: 3px;
+  color: #4a4a4a;
+}
+
+
 .root__looks__table_header {
   input {
     border-color: #b0cee3;
