@@ -1,3 +1,2 @@
 User-agent: *
-Disallow: /vendor/
-Disallow: /fragments/
+Disallow:
