@@ -4838,6 +4838,7 @@ UI = {
     webix.ui({
       id: 'admin_panel',
       container: 'admin_panel',
+      height: webix.without_header ? window.innerHeight - (50 + 85) : window.innerHeight,
       rows: rows
     });
 
@@ -4879,9 +4880,10 @@ UI = {
   },
 
   updateSizes: function() {
+    var height = webix.without_header ? window.innerHeight - (50 + 85) : window.innerHeight;
     $$('admin_panel').define({
       width: window.innerWidth,
-      height: window.innerHeight
+      height: height
     });
     $$('my_data_panel').define({
       height: window.innerHeight - UILayout.HEADER_HEIGHT + 2
