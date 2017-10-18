@@ -16,7 +16,7 @@ UIHelper = {
   ENTITY_LIST_SHOW_MORE_ID: 'show_more_47384_3338222',
 
   COUNTRIES: {
-    en: { name: 'united-kingdom', same: ['gb'] },
+    en: { name: 'united-kingdom', same: ['gb', 'us'] },
     af: { name: 'afghanistan' },
     al: { name: 'albania' },
     dz: { name: 'algeria' },
