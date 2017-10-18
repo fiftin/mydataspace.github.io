@@ -78,7 +78,8 @@
       var TAGS_TO_FILTERS = {
         lang: 'language',
         ctry: 'country',
-        cat: 'category'
+        cat: 'category',
+        src: 'datasource'
       };
 
       var parts = search.split(/\s+/);
@@ -190,7 +191,7 @@
             '</a></div>';
         });
         
-        function getFilterHTML(items, itemTitlesCollection, prefix, filters) {
+        function getFilterHTML(items, itemTitlesCollection, prefix, filters, noTranslate) {
           var filter = TAGS_TO_FILTERS[prefix];
           var title = tr$(filter);
           if (MDSCommon.isBlank(items)) {
@@ -204,7 +205,7 @@
             var active = filters[filter] === facet.name;
             var classes = active ? 'search_filter__item--active' : '';
             var action = active ? 'remove' : 'set';
-            var title = tr$(itemTitlesCollection + '.' + facet.name);
+            var title = noTranslate ? facet.name : tr$(itemTitlesCollection + '.' + facet.name);
             if (!title) {
               return '';
             }
@@ -231,6 +232,7 @@
                   getFilterHTML(data.facets.language, 'languages', 'lang', filters) +
                   getFilterHTML(data.facets.country, 'countries', 'ctry', filters) +
                   getFilterHTML(data.facets.category, 'categories', 'cat', filters) +
+                  getFilterHTML(data.facets.datasource, 'datasources', 'src', filters, true) +
                 '</div>' +
               '</div>' +
             '</div>' : '';

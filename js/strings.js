@@ -155,6 +155,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     language: 'Language',
     country: 'Country',
     category: 'Category',
+    datasource: 'Source',
 
     languages: {
       ru: 'Russian',
@@ -345,6 +346,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     language: 'Язык',
     country: 'Страна',
     category: 'Категория',
+    datasource: 'Источник',
 
     languages: {
       ru: 'Русский',
