@@ -147,7 +147,37 @@ $header-toggle-btn-width: 50px;
   }
 }
 
-.header__search_input--focus {
+
+.header__search_input {
+  border: 0;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 100px;
+  color: transparent;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  width: 100% !important;
+  text-align: center;
+  transition: background-color 200ms;
+  background-image: url('/images/icons/search.svg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 25px 25px;
+  opacity: 0.5;
+
+  &::-webkit-input-placeholder {
+    color: transparent;
+  }
+
+  &:-ms-input-placeholder {
+    color: transparent;
+  }
+
+  &::-moz-placeholder {
+    color: transparent;
+  }
+}
+
+.header__search_input--focus, .header__search_input:focus {
   background: white;
   color: black;
   text-align: left;
@@ -170,38 +200,6 @@ $header-toggle-btn-width: 50px;
   }
 }
 
-.header__search_input {
-  border: 0;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 100px;
-  color: transparent;
-  padding-left: 20px !important;
-  padding-right: 20px !important;
-  width: 100% !important;
-  text-align: center;
-  transition: background-color 200ms;
-  background-image: url('/images/icons/search.svg');
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: 25px 25px;
-  opacity: 0.5;
-
-  &:focus {
-    @extend .header__search_input--focus;
-  }
-
-  &::-webkit-input-placeholder {
-    color: transparent;
-  }
-
-  &:-ms-input-placeholder {
-    color: transparent;
-  }
-
-  &::-moz-placeholder {
-    color: transparent;
-  }
-}
 
 $slogan-animation-offset: 350px;
 

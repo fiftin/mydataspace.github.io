@@ -22,7 +22,7 @@ strings:
   top_roots: Популярые данные
   explore_roots: Показать все
 header:
-  input_search: Поиск или Esc
+  input_search: Начните поиск или нажмите Esc
   input_search_fixed: Поиск
 buttons:
   - id: facebook
