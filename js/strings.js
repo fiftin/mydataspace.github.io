@@ -351,8 +351,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     },
 
     languagesShort: {
-      ru: 'рус',
-      en: 'анг'
+      ru: 'рус.',
+      en: 'анг.'
     },
 
     countries: {
