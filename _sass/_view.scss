@@ -151,6 +151,17 @@ $view-field-value-max-height: 170px;
   cursor: pointer;
 }
 
+.view__tag--with-icon {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.view__tag--icon {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  width: 23px;
+}
+
 .view__websiteURL {
   display: inline;
 }

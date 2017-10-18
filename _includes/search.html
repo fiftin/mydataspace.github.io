@@ -117,6 +117,19 @@
             return '<span class="view__tag" onclick="openSearch_{{include.id}}(\'' + tag + '\'); return false;">' + tag + '</span>';
           }).join(' ');
 
+          var languageAbbr = MDSCommon.findValueByName(root.fields, 'language');
+          var countryAbbr = MDSCommon.findValueByName(root.fields, 'country');
+
+          if (languageAbbr) {
+            var language = UIHelper.COUNTRIES[languageAbbr];
+            tags = '<span class="view__tag view__tag--icon" style="background-image: url(/images/square_flags/' + language + '.svg)">&nbsp;</span><span class="view__tag view__tag--with-icon">' + tr$('languages.' + languageAbbr) + '</span> ' + tags;
+          }
+
+          if (countryAbbr) {
+            var country = UIHelper.COUNTRIES[countryAbbr];
+            tags = '<span class="view__tag view__tag--icon" style="background-image: url(/images/square_flags/' + country + '.svg)">&nbsp;</span><span class="view__tag view__tag--with-icon">' + tr$('countries.' + countryAbbr) + '</span> ' + tags;
+          }
+
           var nLikes = MDSCommon.findValueByName(root.fields, '$likes') || 0;
           var nComments = MDSCommon.findValueByName(root.fields, '$comments') || 0;
 
