@@ -416,7 +416,7 @@ UIHelper = {
     eh: { name: 'western-sahara' },
     ye: { name: 'yemen' },
     zm: { name: 'zambia' },
-    zw: { name: 'zimbabwe'
+    zw: { name: 'zimbabwe' }
   },
 
   ENTITY_ICONS: {
