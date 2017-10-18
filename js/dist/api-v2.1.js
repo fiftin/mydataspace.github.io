@@ -7260,6 +7260,11 @@ var MDSCommon = {
     'function'
   ],
 
+  endsWith: function(str, str2) {
+    var i = str.indexOf(str2);
+    return i === str.length - str2.length;
+  },
+
   delay: function(milliseconds) {
     return new Promise(function(resolve) {
       if (milliseconds < 0) {
