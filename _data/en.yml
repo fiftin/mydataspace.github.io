@@ -21,8 +21,8 @@ strings:
   top_roots: Featured Roots
   explore_roots: Explore Roots
 header:
-  input_search: Start searching or press Esc
-  input_search_fixed: Search
+  input_search: Search... Press Esc to exit
+  input_search_fixed: Search...
 buttons:
   - id: facebook
     title: Facebook

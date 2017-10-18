@@ -182,9 +182,10 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       ecology: 'Ecology',
       culture: 'Culture',
       sec: 'Security',
-      trans: 'Transport',
+      transport: 'Transport',
       geo: 'Geo',
-      state: 'State'
+      state: 'State',
+      tourism: 'Tourism'
     }
 
 
@@ -351,8 +352,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     },
 
     languagesShort: {
-      ru: 'рус.',
-      en: 'анг.'
+      ru: 'рус',
+      en: 'анг'
     },
 
     countries: {
@@ -371,9 +372,10 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       ecology: 'Экология',
       culture: 'Культура',
       sec: 'Безопасность',
-      trans: 'Транспорт',
+      transport: 'Транспорт',
       geo: 'Геоданные',
-      state: 'Государство'
+      state: 'Государство',
+      tourism: 'Туризм'
     }
   }
 };
