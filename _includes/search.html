@@ -120,14 +120,14 @@
           var languageAbbr = MDSCommon.findValueByName(root.fields, 'language');
           var countryAbbr = MDSCommon.findValueByName(root.fields, 'country');
 
-          if (languageAbbr) {
-            var language = UIHelper.COUNTRIES[languageAbbr];
-            tags = '<span class="view__tag view__tag--icon" style="background-image: url(/images/square_flags/' + language + '.svg)">&nbsp;</span><span class="view__tag view__tag--with-icon">' + tr$('languages.' + languageAbbr) + '</span> ' + tags;
-          }
-
           if (countryAbbr) {
             var country = UIHelper.COUNTRIES[countryAbbr];
             tags = '<span class="view__tag view__tag--icon" style="background-image: url(/images/square_flags/' + country + '.svg)">&nbsp;</span><span class="view__tag view__tag--with-icon">' + tr$('countries.' + countryAbbr) + '</span> ' + tags;
+          }
+
+          if (languageAbbr) {
+            var language = UIHelper.COUNTRIES[languageAbbr];
+            tags = '<span class="view__tag view__tag--icon" style="background-image: url(/images/square_flags/' + language + '.svg)">&nbsp;</span><span class="view__tag view__tag--with-icon">' + tr$('languagesShort.' + languageAbbr) + '</span> ' + tags;
           }
 
           var nLikes = MDSCommon.findValueByName(root.fields, '$likes') || 0;

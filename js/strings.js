@@ -161,6 +161,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       en: 'English'
     },
 
+    languagesShort: {
+      ru: 'rus',
+      en: 'ang'
+    },
+
     countries: {
       ru: 'Russia',
       gb: 'Great Britain',
@@ -343,6 +348,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     languages: {
       ru: 'Русский',
       en: 'Английский'
+    },
+
+    languagesShort: {
+      ru: 'рус',
+      en: 'анг'
     },
 
     countries: {
