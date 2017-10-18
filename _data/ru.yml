@@ -19,10 +19,10 @@ prompt: "Войти через:"
 strings:
   view_source_code: См. код
   view_data: См. данные
-  search: Поиск
   top_roots: Популярые данные
   explore_roots: Показать все
-
+header:
+  input_search: Поиск или Esc
 buttons:
   - id: facebook
     title: Facebook
