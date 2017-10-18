@@ -8,6 +8,11 @@
   </div>
 
   <script type="text/javascript">
+    if (window.location.pathname === '/search') {
+      document.getElementById('{{include.id}}_input').classList.add('header__search_input--focus');
+      document.getElementById('{{include.id}}_input').setAttribute('placeholder', '{{ site.data[page.language].header.input_search_fixed }}');
+    }
+
     var isAdmin_{{include.id}} = {{include.admin}};
 
     function closeSearch_{{include.id}}() {
