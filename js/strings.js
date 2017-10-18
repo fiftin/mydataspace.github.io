@@ -163,7 +163,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
 
     languagesShort: {
       ru: 'rus',
-      en: 'ang'
+      en: 'eng'
     },
 
     countries: {
