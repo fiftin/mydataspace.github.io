@@ -249,7 +249,7 @@
     //
     // Filter suggestions when search input text changed
     document.getElementById('{{include.id}}_input').addEventListener('keyup', function(event) {
-      if (event.keyCode === 27) {
+      if (event.keyCode === 27 && window.location.pathname !== '/search') {
         closeSearch_{{include.id}}();
         document.getElementById('{{include.id}}_input').blur();
         return;
