@@ -1,3 +1,5 @@
+@import "./vars";
+
 .admin_context_menu {
   .webix_selected {
     background: white !important;
@@ -917,6 +919,9 @@ input {
 
 }
 
+.admin_panel--fullscreen {
+  filter: blur($fullscreen-blur);
+}
 
 #webix_search {
   position: absolute;

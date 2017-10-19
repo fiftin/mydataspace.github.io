@@ -22,6 +22,7 @@
       document.getElementById('{{include.resultContainer}}').style.display = 'none';
       if (isAdmin_{{include.id}}) {
         document.getElementById('webix_preloaded_header').classList.remove('webix_preloaded_header--top');
+        document.getElementById('admin_panel').classList.remove('admin_panel--fullscreen');
       } else {
         document.getElementsByTagName('body')[0].classList.remove('body_fixed');
         var header = document.getElementById('header');
@@ -297,6 +298,7 @@
       document.getElementById('{{include.resultContainer}}').style.display = 'block';
       if (isAdmin_{{include.id}}) {
         document.getElementById('webix_preloaded_header').classList.add('webix_preloaded_header--top');
+        document.getElementById('admin_panel').classList.add('admin_panel--fullscreen');
       } else {
         document.getElementsByTagName('body')[0].classList.add('body_fixed');
         var header = document.getElementById('header');
