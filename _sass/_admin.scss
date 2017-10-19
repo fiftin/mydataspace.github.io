@@ -926,9 +926,11 @@ input {
   bottom: 0;
   overflow: auto;
   display: none;
-  background: #f0f3f5;
+  background: rgba(240, 243, 245, 0.7);
   z-index: 10;
 }
+
+
 #webix__header__search_input {
   width: 400px !important;
 }
