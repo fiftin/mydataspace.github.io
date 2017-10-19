@@ -292,6 +292,25 @@
       });
     }
 
+    function search_parseQuery() {
+      var ret = '';
+      var params = MDSCommon.parseQuery(window.location.search);
+      if (MDSCommon.isPresent(params.tags)) {
+        var tags = params.tags.split(',');
+        tags.forEach(function(tag) {
+          if (tag[0] !== '@') {
+            ret += '#';
+          }
+          ret += tag + ' ';
+        });
+      }
+      if (MDSCommon.isPresent(params.q)) {
+        ret += params.q;
+      }
+
+      return ret;
+    }
+
     //
     // Show suggestions when search input focused
     document.getElementById('{{include.id}}_input').addEventListener('focus', function() {
@@ -316,7 +335,7 @@
         document.getElementById('page_footer').classList.add('footer--fullscreen');
 
       }
-
+      document.getElementById('{{include.id}}_input').value = search_parseQuery();
       startSearch_{{include.id}}(document.getElementById('{{include.id}}_input').value);
     });
 
