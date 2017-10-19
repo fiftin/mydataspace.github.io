@@ -11,6 +11,8 @@
   <script type="text/javascript">
     if (MDSCommon.endsWith(window.location.pathname, '/search')) {
       document.getElementById('{{include.id}}_input').classList.add('header__search_input--focus');
+      document.getElementsByClassName('smoke')[0].classList.add('smoke--fullscreen--opaque');
+
       document.getElementById('{{include.id}}_input').setAttribute('placeholder', '{{ site.data[page.language].header.input_search_fixed }}');
     }
 

@@ -469,6 +469,10 @@ $slogan-animation-offset-mobile: 400px;
   z-index: 10000;
 }
 
+.smoke--fullscreen--opaque {
+  background: rgba(240, 243, 245);
+}
+
 .navbar--fixed {
   transform: translate3d(0, 0, 0);
   position: fixed;
