@@ -83,6 +83,20 @@
         src: 'datasource'
       };
 
+      var CATEGORY_ICONS = {
+        biz: 'money',
+        economy: 'area-chart',
+        health: 'heartbeat',
+        edu: 'graduation-cap',
+        ecology: 'leaf',
+        culture: 'paint-brush',
+        security: 'shield',
+        transport: 'car',
+        geo: 'map',
+        state: 'university',
+        tourism: 'plane'
+      };
+
       var parts = search.split(/\s+/);
       for (var i in parts) {
         var part = parts[i];
@@ -126,8 +140,16 @@
 
           var languageAbbr = MDSCommon.findValueByName(root.fields, 'language');
           var countryAbbr = MDSCommon.findValueByName(root.fields, 'country');
+          var category = MDSCommon.findValueByName(root.fields, 'category');
+
           var country = UIHelper.COUNTRIES[countryAbbr];
           var language = UIHelper.COUNTRIES[languageAbbr];
+
+
+          if (category) {
+            tags = '<i class="view__tag view__tag--icon fa fa-' + CATEGORY_ICONS[category] + '"></i><span class="view__tag view__tag--with-icon">' + tr$('categories.' + category) + '</span> ' + tags;
+          }
+
 
           if (country && (languageAbbr === countryAbbr || (language.same || []).indexOf(countryAbbr) != -1)) {
             tags = '<span class="view__tag view__tag--icon" style="background-image: url(/images/square_flags/' + country.name +
@@ -142,6 +164,7 @@
               tags = '<span class="view__tag view__tag--icon" style="background-image: url(/images/square_flags/' + language.name + '.svg)">&nbsp;</span><span class="view__tag view__tag--with-icon">' + tr$('languagesShort.' + languageAbbr) + '</span> ' + tags;
             }
           }
+
 
           var nLikes = MDSCommon.findValueByName(root.fields, '$likes') || 0;
           var nComments = MDSCommon.findValueByName(root.fields, '$comments') || 0;
@@ -248,19 +271,7 @@
                   getFilterHTML(data.facets.country, 'countries', 'ctry', filters, { facetIconClass: 'search_filter__icon flag-icon flag-icon-' }) +
                   getFilterHTML(data.facets.category, 'categories', 'cat', filters, {
                     facetIconClass: 'search_filter__icon fa fa-',
-                    facetIconMap: {
-                      biz: 'money',
-                      economy: 'area-chart',
-                      health: 'heartbeat',
-                      edu: 'graduation-cap',
-                      ecology: 'leaf',
-                      culture: 'paint-brush',
-                      security: 'shield',
-                      transport: 'car',
-                      geo: 'map',
-                      state: 'university',
-                      tourism: 'plane'
-                    }
+                    facetIconMap: CATEGORY_ICONS
                   }) +
 //                  getFilterHTML(data.facets.datasource, 'datasources', 'src', filters, { translate: false }) +
                 '</div>' +
