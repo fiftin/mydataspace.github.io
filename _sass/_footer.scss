@@ -12,6 +12,10 @@
   height: $footer-height;
 }
 
+.footer--fullscreen {
+  filter: blur($fullscreen-blur);
+}
+
 .footer__link {
   display: block;
   opacity: 0.5;

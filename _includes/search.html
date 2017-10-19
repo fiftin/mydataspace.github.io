@@ -26,8 +26,15 @@
         if (header) {
           header.style.display = 'block';
         }
+
         document.getElementsByClassName('smoke')[0].classList.remove('smoke--fullscreen');
         document.getElementsByClassName('navbar')[0].classList.remove('navbar--fixed');
+        var default_main = document.getElementsByClassName('default_main')[0];
+        if (default_main) {
+          default_main.classList.remove('default_main--fullscreen');
+        }
+        document.getElementById('search').classList.remove('search--fullscreen');
+        document.getElementById('page_footer').classList.remove('footer--fullscreen');
       }
     }
 
@@ -55,7 +62,7 @@
         if (prefix === part) { // tag
           if (search.indexOf(part) < 0) {
             search += ' ' + part;
-          };
+          }
         } else { // filter
           var newSearch = search.replace(new RegExp(prefix + ':[^\\s#]\\b'), part);
           if (search === newSearch) {
@@ -142,8 +149,8 @@
           var countryAbbr = MDSCommon.findValueByName(root.fields, 'country');
           var category = MDSCommon.findValueByName(root.fields, 'category');
 
-          var country = UIHelper.COUNTRIES[countryAbbr];
-          var language = UIHelper.COUNTRIES[languageAbbr];
+          var country = COUNTRIES[countryAbbr];
+          var language = COUNTRIES[languageAbbr];
 
 
           if (category) {
@@ -294,9 +301,18 @@
         if (header) {
           header.style.display = 'none';
         }
+
         document.getElementsByClassName('smoke')[0].classList.add('smoke--fullscreen');
         document.getElementsByClassName('navbar')[0].classList.add('navbar--fixed');
+        var default_main = document.getElementsByClassName('default_main')[0];
+        if (default_main) {
+          default_main.classList.add('default_main--fullscreen');
+        }
+        document.getElementById('search').classList.add('search--fullscreen');
+        document.getElementById('page_footer').classList.add('footer--fullscreen');
+
       }
+
       startSearch_{{include.id}}(document.getElementById('{{include.id}}_input').value);
     });
 
