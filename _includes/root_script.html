@@ -779,13 +779,6 @@
         $('#root__version').tooltip({ placement: 'bottom', container: 'body' });
 
 
-//        if (data.fields.language) {
-//          document.getElementById('root__language').className = 'flag-icon flag-icon-' + data.fields.language;
-//        }
-//        if (data.fields.country) {
-//          document.getElementById('root__country').className = 'flag-icon flag-icon-' + data.fields.country;
-//        }
-
         var tags = (MDSCommon.findValueByName(data.fields, 'tags') || '').split(' ').filter(function(tag) {
           return tag != null && tag !== '';
         }).map(function(tag) {
