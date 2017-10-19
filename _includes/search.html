@@ -192,7 +192,12 @@
             '</a></div>';
         });
         
-        function getFilterHTML(items, itemTitlesCollection, prefix, filters, noTranslate) {
+        function getFilterHTML(items, itemTitlesCollection, prefix, opts) {
+          var options = MDSCommon.extend({
+            translate: true,
+            facetIconClass: null,
+            facetIconMap: null
+          }, opts);
           var filter = TAGS_TO_FILTERS[prefix];
           var title = tr$(filter);
           if (MDSCommon.isBlank(items)) {
@@ -206,12 +211,21 @@
             var active = filters[filter] === facet.name;
             var classes = active ? 'search_filter__item--active' : '';
             var action = active ? 'remove' : 'set';
-            var title = noTranslate ? facet.name : tr$(itemTitlesCollection + '.' + facet.name);
+            var title = options.translate ? tr$(itemTitlesCollection + '.' + facet.name) : facet.name;
             if (!title) {
               return '';
             }
+            var iconHTML;
+            if (options.facetIconClass) {
+              var iconClassSuffix = options.facetIconMap ? options.facetIconMap[facet.name] : facet.name;
+              iconHTML = '<i class="flag-icon flag-icon-'+ iconClassSuffix + '"></i>';
+            } else {
+              iconHTML = '';
+            }
+
+
             return '<a href="javascript:void(0)" onclick="' + action + 'SearchPart_{{include.id}}(\'#' + prefix + ':' + facet.name + '\')" class="search_filter__item ' + classes + '">' +
-              '<i class="flag-icon flag-icon-'+ facet.name + '"></i>' +
+              iconHTML +
               '<span class="search_filter__item_title">' + title + '</span>' +
               '<span class="search_filter__item_count">' + facet.count + '</span>' +
               '<i class="search_filter__item_remove fa fa-remove"></i>' +
@@ -230,10 +244,25 @@
               '<div class="search__results"><div class="row">' + rootsHtml.join('\n') + '</div></div>' +
               '<div class="search__filter_panel_wrap">' +
                 '<div class="search__filter_panel">' +
-                  getFilterHTML(data.facets.language, 'languages', 'lang', filters) +
-                  getFilterHTML(data.facets.country, 'countries', 'ctry', filters) +
-                  getFilterHTML(data.facets.category, 'categories', 'cat', filters) +
-                  getFilterHTML(data.facets.datasource, 'datasources', 'src', filters, true) +
+                  getFilterHTML(data.facets.language, 'languages', 'lang', { facetIconClass: 'flag-icon flag-icon-' }) +
+                  getFilterHTML(data.facets.country, 'countries', 'ctry', { facetIconClass: 'flag-icon flag-icon-' }) +
+                  getFilterHTML(data.facets.category, 'categories', 'cat', {
+                    facetIconClass: 'fa fa-',
+                    facetIconMap: {
+                      biz: 'money',
+                      economy: 'area-chart',
+                      health: 'heartbeat',
+                      edu: 'graduation-cap',
+                      ecology: 'leaf',
+                      culture: 'paint-brush',
+                      security: 'shield',
+                      transport: 'car',
+                      geo: 'map',
+                      state: 'university',
+                      tourism: 'plane'
+                    }
+                  }) +
+                  getFilterHTML(data.facets.datasource, 'datasources', 'src', { translate: false }) +
                 '</div>' +
               '</div>' +
             '</div>' : '';

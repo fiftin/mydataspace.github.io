@@ -182,7 +182,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       edu: 'Education',
       ecology: 'Ecology',
       culture: 'Culture',
-      sec: 'Security',
+      security: 'Security',
       transport: 'Transport',
       geo: 'Geo',
       state: 'State',
