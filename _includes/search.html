@@ -49,6 +49,7 @@
 
       if (search == null) {
         search = search_parseQuery();
+        document.getElementById('{{include.id}}_input').value = search_parseQuery();
       }
 
       startSearch_{{include.id}}(search, nonHiddable);
