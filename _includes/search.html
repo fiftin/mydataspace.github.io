@@ -9,6 +9,12 @@
   </div>
 
   <script type="text/javascript">
+    var TAGS_TO_FILTERS = {
+      lang: 'language',
+      ctry: 'country',
+      cat: 'category',
+      src: 'datasource'
+    };
 
     function search_parseQuery() {
       var ret = '';
@@ -30,12 +36,6 @@
     }
 
     function search_parseSearchString(search) {
-      var TAGS_TO_FILTERS = {
-        lang: 'language',
-        ctry: 'country',
-        cat: 'category',
-        src: 'datasource'
-      };
 
       var tags = [];
       var newSearch = '';
