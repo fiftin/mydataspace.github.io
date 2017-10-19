@@ -97,7 +97,10 @@
         ret += 'q=' + options.search;
       }
 
-      return ret;
+      if (ret === '') {
+        return '';
+      }
+      return '?' + ret;
     }
 
     var search_{{include.id}}_url = '';
@@ -372,7 +375,7 @@
         search_{{include.id}}_url = window.location.href;
       }
 
-      history.replaceState({ search: document.getElementById('{{include.id}}_input').value }, 'Search', '/search?' + search_getQueryFromSearchString(document.getElementById('{{include.id}}_input').value));
+      history.replaceState({ search: document.getElementById('{{include.id}}_input').value }, 'Search', '/search' + search_getQueryFromSearchString(document.getElementById('{{include.id}}_input').value));
 
       document.getElementById('{{include.resultContainer}}').style.display = 'block';
       if (isAdmin_{{include.id}}) {
@@ -411,7 +414,7 @@
         document.getElementById('{{include.id}}_input').value = '';
         return;
       }
-      history.replaceState({}, '', '/search?' + search_getQueryFromSearchString(document.getElementById('{{include.id}}_input').value));
+      history.replaceState({}, '', '/search' + search_getQueryFromSearchString(document.getElementById('{{include.id}}_input').value));
       startSearch_{{include.id}}(document.getElementById('{{include.id}}_input').value);
     }, false);
 
