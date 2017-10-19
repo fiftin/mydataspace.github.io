@@ -199,6 +199,7 @@
       };
 
       var searchOptions = search_parseSearchString(search);
+      var filters = searchOptions.filters;
 
       // Try to get roots from server
       Mydataspace.request('entities.getRoots', {
