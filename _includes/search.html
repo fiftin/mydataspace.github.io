@@ -140,13 +140,13 @@
     }
 
     function openSearch_{{include.id}}(search, nonHiddable) {
-      document.getElementById('{{include.id}}_input').value = search;
-      document.getElementById('{{include.id}}_input').focus();
-
       if (search == null) {
         search = search_parseQuery();
         document.getElementById('{{include.id}}_input').value = search_parseQuery();
       }
+
+      document.getElementById('{{include.id}}_input').value = search;
+      document.getElementById('{{include.id}}_input').focus();
 
       startSearch_{{include.id}}(search, nonHiddable);
     }
