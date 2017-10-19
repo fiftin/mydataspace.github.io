@@ -230,7 +230,7 @@
 
 
           if (category) {
-            tags = '<span class="view__tag"><i class="view__tag_icon fa fa-' + CATEGORY_ICONS[category] + '"></i><span>' + tr$('categories.' + category) + '</span></span> ' + tags;
+            tags = '<span class="view__tag" onclick="openSearch_{{include.id}}(\'#cat:' + category + '\'); return false;"><i class="view__tag_icon fa fa-' + CATEGORY_ICONS[category] + '"></i><span>' + tr$('categories.' + category) + '</span></span> ' + tags;
           }
 
 
