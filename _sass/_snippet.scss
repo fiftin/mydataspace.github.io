@@ -18,8 +18,9 @@ $snippet-footer-height-with-gradient: 50px;
 
 .search_filter__icon {
   margin-right: 7px;
-  line-height: $filter-item-height;
+  line-height: $filter-item-height!important;
   float: left;
+  width: 21px !important;
 }
 
 .search_filter__item {
