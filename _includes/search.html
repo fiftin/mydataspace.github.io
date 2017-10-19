@@ -100,7 +100,7 @@
       return ret;
     }
 
-    var search_{{include.id}}_url;
+    var search_{{include.id}}_url = '';
 
     if (MDSCommon.endsWith(window.location.pathname, '/search')) {
       document.getElementById('{{include.id}}_input').classList.add('header__search_input--focus');
@@ -399,7 +399,10 @@
     //
     // Filter suggestions when search input text changed
     document.getElementById('{{include.id}}_input').addEventListener('keyup', function(event) {
-      if (event.keyCode === 27 && window.location.pathname !== '/search') {
+      var url1 = search_{{include.id}}_url.split('?')[0];
+      var url2 = window.location.href.split('?')[0];
+
+      if (event.keyCode === 27 && url1 !== '' && url1 != url2) {
         closeSearch_{{include.id}}();
         document.getElementById('{{include.id}}_input').blur();
         history.replaceState({}, '', search_{{include.id}}_url);
