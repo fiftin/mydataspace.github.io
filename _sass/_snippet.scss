@@ -16,6 +16,12 @@ $snippet-footer-height-with-gradient: 50px;
   padding-bottom: 5px;
 }
 
+.search_filter__icon {
+  margin-right: 7px;
+  line-height: $filter-item-height;
+  float: left;
+}
+
 .search_filter__item {
   display: block;
   color: black !important;
@@ -23,11 +29,8 @@ $snippet-footer-height-with-gradient: 50px;
   height: $filter-item-height;
   font-size: 16px;
   padding: 0 5px;
-  .flag-icon {
-    margin-right: 7px;
-    line-height: $filter-item-height;
-    float: left;
-  }
+
+
   .search_filter__item_remove {
     display: none;
   }
