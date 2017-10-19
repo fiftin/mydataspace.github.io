@@ -219,6 +219,10 @@ $side-panel-width: $side-width - $padding;
     margin: 0 0 20px 0;
   }
 
+  .view__tag_icon {
+    margin-right: 5px;
+  }
+
   .view__tag {
     margin: 0 5px 0 0;
     font-size: 15px;
