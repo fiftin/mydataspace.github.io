@@ -243,11 +243,11 @@
               tr$('languagesShort.' + languageAbbr) + ' / ' + tr$('countries.' + countryAbbr) + '</span> ' + tags;
           } else {
             if (country) {
-              tags = '<span class="view__tag view__tag--icon" style="background-image: url(/images/square_flags/' + country.name + '.svg)">&nbsp;</span><span class="view__tag view__tag--with-icon">' + tr$('countries.' + countryAbbr) + '</span> ' + tags;
+              tags = '<span class="view__tag view__tag--icon" style="background-image: url(/images/square_flags/' + country.name + '.svg)">&nbsp;</span><span class="view__tag view__tag--with-icon" onclick="openSearch_{{include.id}}(\'#ctry:' + countryAbbr + '\'); return false;">' + tr$('countries.' + countryAbbr) + '</span> ' + tags;
             }
 
             if (language) {
-              tags = '<span class="view__tag view__tag--icon" style="background-image: url(/images/square_flags/' + language.name + '.svg)">&nbsp;</span><span class="view__tag view__tag--with-icon">' + tr$('languagesShort.' + languageAbbr) + '</span> ' + tags;
+              tags = '<span class="view__tag view__tag--icon" style="background-image: url(/images/square_flags/' + language.name + '.svg)">&nbsp;</span><span class="view__tag view__tag--with-icon" onclick="openSearch_{{include.id}}(\'#lang:' + languageAbbr + '\'); return false;">' + tr$('languagesShort.' + languageAbbr) + '</span> ' + tags;
             }
           }
 
