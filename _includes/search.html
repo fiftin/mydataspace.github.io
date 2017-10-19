@@ -218,7 +218,7 @@
             var iconHTML;
             if (options.facetIconClass) {
               var iconClassSuffix = options.facetIconMap ? options.facetIconMap[facet.name] : facet.name;
-              iconHTML = '<i class="flag-icon flag-icon-'+ iconClassSuffix + '"></i>';
+              iconHTML = '<i class="' + options.facetIconClass + iconClassSuffix + '"></i>';
             } else {
               iconHTML = '';
             }
