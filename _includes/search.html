@@ -408,6 +408,7 @@
         closeSearch_{{include.id}}();
         document.getElementById('{{include.id}}_input').blur();
         history.replaceState({}, '', search_{{include.id}}_url);
+        document.getElementById('{{include.id}}_input').value = '';
         return;
       }
       history.replaceState({}, '', '/search?' + search_getQueryFromSearchString(document.getElementById('{{include.id}}_input').value));
