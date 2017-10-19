@@ -192,7 +192,7 @@
             '</a></div>';
         });
         
-        function getFilterHTML(items, itemTitlesCollection, prefix, opts) {
+        function getFilterHTML(items, itemTitlesCollection, prefix, filters, opts) {
           var options = MDSCommon.extend({
             translate: true,
             facetIconClass: null,
@@ -204,7 +204,7 @@
             return '';
           }
 
-          var filters = items.map(function(facet) {
+          var filtersHTML = items.map(function(facet) {
             if (filters[filter] && filters[filter] !== facet.name) {
               return '';
             }
@@ -234,7 +234,7 @@
 
           return '<div class="search_filter">' +
             '<div class="search_filter__title">' + title + '</div>' +
-            '<div class="search_filter__items">' + filters + '</div>' +
+            '<div class="search_filter__items">' + filtersHTML + '</div>' +
           '</div>';
         }
 
@@ -244,9 +244,9 @@
               '<div class="search__results"><div class="row">' + rootsHtml.join('\n') + '</div></div>' +
               '<div class="search__filter_panel_wrap">' +
                 '<div class="search__filter_panel">' +
-                  getFilterHTML(data.facets.language, 'languages', 'lang', { facetIconClass: 'flag-icon flag-icon-' }) +
-                  getFilterHTML(data.facets.country, 'countries', 'ctry', { facetIconClass: 'flag-icon flag-icon-' }) +
-                  getFilterHTML(data.facets.category, 'categories', 'cat', {
+                  getFilterHTML(data.facets.language, 'languages', 'lang', filters, { facetIconClass: 'flag-icon flag-icon-' }) +
+                  getFilterHTML(data.facets.country, 'countries', 'ctry', filters, { facetIconClass: 'flag-icon flag-icon-' }) +
+                  getFilterHTML(data.facets.category, 'categories', 'cat', filters, {
                     facetIconClass: 'fa fa-',
                     facetIconMap: {
                       biz: 'money',
