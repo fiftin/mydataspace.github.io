@@ -9,6 +9,32 @@
   </div>
 
   <script type="text/javascript">
+
+    function search_parseQuery() {
+      var ret = '';
+      var params = MDSCommon.parseQuery(window.location.search);
+      if (MDSCommon.isPresent(params.tags)) {
+        var tags = params.tags.split(',');
+        tags.forEach(function(tag) {
+          if (tag[0] !== '@') {
+            ret += '#';
+          }
+          ret += tag + ' ';
+        });
+      }
+      if (MDSCommon.isPresent(params.q)) {
+        ret += params.q;
+      }
+
+      return ret;
+    }
+
+    function search_getQueryFromSearchString(search) {
+      ;
+    }
+
+    var search_{{include.id}}_url;
+
     if (MDSCommon.endsWith(window.location.pathname, '/search')) {
       document.getElementById('{{include.id}}_input').classList.add('header__search_input--focus');
       document.getElementsByClassName('smoke')[0].classList.add('smoke--fullscreen--opaque');
@@ -300,28 +326,13 @@
       });
     }
 
-    function search_parseQuery() {
-      var ret = '';
-      var params = MDSCommon.parseQuery(window.location.search);
-      if (MDSCommon.isPresent(params.tags)) {
-        var tags = params.tags.split(',');
-        tags.forEach(function(tag) {
-          if (tag[0] !== '@') {
-            ret += '#';
-          }
-          ret += tag + ' ';
-        });
-      }
-      if (MDSCommon.isPresent(params.q)) {
-        ret += params.q;
-      }
-
-      return ret;
-    }
-
     //
     // Show suggestions when search input focused
     document.getElementById('{{include.id}}_input').addEventListener('focus', function() {
+      search_{{include.id}}_url = window.location.href;
+      history.replaceState({}, '', '/search?' + search_getQueryFromSearchString(document.getElementById('{{include.id}}_input').value));
+
+
       document.getElementById('{{include.resultContainer}}').style.display = 'block';
       if (isAdmin_{{include.id}}) {
         document.getElementById('webix_preloaded_header').classList.add('webix_preloaded_header--top');
@@ -332,7 +343,6 @@
         if (header) {
           header.style.display = 'none';
         }
-
         document.getElementsByClassName('smoke')[0].classList.add('smoke--fullscreen');
         document.getElementsByClassName('navbar')[0].classList.add('navbar--fixed');
         var default_main = document.getElementsByClassName('default_main')[0];
@@ -343,7 +353,6 @@
         if (document.getElementById('page_footer')) {
           document.getElementById('page_footer').classList.add('footer--fullscreen');
         }
-
       }
       startSearch_{{include.id}}(document.getElementById('{{include.id}}_input').value);
     });
@@ -354,8 +363,10 @@
       if (event.keyCode === 27 && window.location.pathname !== '/search') {
         closeSearch_{{include.id}}();
         document.getElementById('{{include.id}}_input').blur();
+        history.replaceState({}, '', search_{{include.id}}_url);
         return;
       }
+      history.replaceState({}, '', '/search?' + search_getQueryFromSearchString(document.getElementById('{{include.id}}_input').value));
       startSearch_{{include.id}}(document.getElementById('{{include.id}}_input').value);
     }, false);
 
