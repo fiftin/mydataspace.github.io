@@ -368,9 +368,11 @@
     //
     // Show suggestions when search input focused
     document.getElementById('{{include.id}}_input').addEventListener('focus', function() {
-      search_{{include.id}}_url = window.location.href;
-      history.replaceState({}, '', '/search?' + search_getQueryFromSearchString(document.getElementById('{{include.id}}_input').value));
+      if (window.location.pathname !== '/search') {
+        search_{{include.id}}_url = window.location.href;
+      }
 
+      history.replaceState({ search: document.getElementById('{{include.id}}_input').value }, 'Search', '/search?' + search_getQueryFromSearchString(document.getElementById('{{include.id}}_input').value));
 
       document.getElementById('{{include.resultContainer}}').style.display = 'block';
       if (isAdmin_{{include.id}}) {
