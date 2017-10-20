@@ -104,7 +104,7 @@
     }
 
     var search_{{include.id}}_url = '';
-    var search_{{include.id}}_displayMode = 0;
+    var search_{{include.id}}_displayMode = localStorage.getItem('searchDisplayMode') || 0;
 
     if (MDSCommon.endsWith(window.location.pathname, '/search')) {
       document.getElementById('{{include.id}}_input').classList.add('header__search_input--focus');
@@ -114,6 +114,11 @@
     }
 
     var isAdmin_{{include.id}} = {{include.admin}};
+
+    function set_search_{{include.id}}_displayMode(mode) {
+      search_{{include.id}}_displayMode = mode;
+      localStorage.setItem('searchDisplayMode', mode);
+    }
 
     function closeSearch_{{include.id}}() {
       document.getElementById('{{include.resultContainer}}').style.display = 'none';
@@ -358,8 +363,8 @@
                 '<div class="search__header clearfix">' +
                   '<div class="search__found_count">Found ' + data.roots.length + ' root(s)</div>' +
                   '<div class="btn-group search__display_modes" role="group">' +
-                    '<button type="button" class="btn btn-default ' + (search_{{include.id}}_displayMode === 1 ? 'active' : '') + '" onclick="search_{{include.id}}_displayMode = 1; startSearch_{{include.id}}(document.getElementById(\'{{include.id}}_input\').value);"><i class="fa fa-list"></i></button>' +
-                    '<button type="button" class="btn btn-default ' + (search_{{include.id}}_displayMode === 0 ? 'active' : '') + '" onclick="search_{{include.id}}_displayMode = 0; startSearch_{{include.id}}(document.getElementById(\'{{include.id}}_input\').value);"><i class="fa fa-th-large"></i></button>' +
+                    '<button type="button" class="btn btn-default ' + (search_{{include.id}}_displayMode === 1 ? 'active' : '') + '" onclick="set_search_{{include.id}}_displayMode(1); startSearch_{{include.id}}(document.getElementById(\'{{include.id}}_input\').value);"><i class="fa fa-list"></i></button>' +
+                    '<button type="button" class="btn btn-default ' + (search_{{include.id}}_displayMode === 0 ? 'active' : '') + '" onclick="set_search_{{include.id}}_displayMode(0); startSearch_{{include.id}}(document.getElementById(\'{{include.id}}_input\').value);"><i class="fa fa-th-large"></i></button>' +
                   '</div>' +
                 '</div>' +
                 '<div class="row">' + rootsHtml.join('\n') + '</div>' +
