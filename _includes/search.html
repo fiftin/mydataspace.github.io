@@ -350,7 +350,16 @@
         document.getElementById('{{include.resultContainer}}').innerHTML =
           rootsHtml.length > 0 ?
             '<div class="container search__content">' +
-              '<div class="search__results"><div class="row">' + rootsHtml.join('\n') + '</div></div>' +
+              '<div class="search__results">' +
+                '<div class="search__header clearfix">' +
+                  '<div class="search__found_count">Found ' + data.roots.length + ' root(s)</div>' +
+                  '<div class="btn-group search__display_modes" role="group">' +
+                    '<button type="button" class="btn btn-default"><i class="fa fa-list"></i></button>' +
+                    '<button type="button" class="btn btn-default active"><i class="fa fa-th-large"></i></button>' +
+                  '</div>' +
+                '</div>' +
+                '<div class="row">' + rootsHtml.join('\n') + '</div>' +
+              '</div>' +
               '<div class="search__filter_panel_wrap">' +
                 '<div class="search__filter_panel">' +
                   getFilterHTML(data.facets.language, 'languages', 'lang', filters, { facetIconClass: 'search_filter__icon flag-icon flag-icon-' }) +
@@ -359,7 +368,6 @@
                     facetIconClass: 'search_filter__icon fa fa-',
                     facetIconMap: CATEGORY_ICONS
                   }) +
-//                  getFilterHTML(data.facets.datasource, 'datasources', 'src', filters, { translate: false }) +
                 '</div>' +
               '</div>' +
             '</div>' : '';

@@ -565,3 +565,16 @@ $search-filter-panel-gap: 40px;
     display: none;
   }
 }
+
+.search__header {
+  padding-bottom: 10px;
+}
+
+.search__display_modes {
+  float: right;
+}
+
+.search__found_count {
+  line-height: $input-height-base;
+  float: left;
+}
