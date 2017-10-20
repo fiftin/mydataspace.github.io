@@ -104,6 +104,7 @@
     }
 
     var search_{{include.id}}_url = '';
+    var search_{{include.id}}_displayMode = 0;
 
     if (MDSCommon.endsWith(window.location.pathname, '/search')) {
       document.getElementById('{{include.id}}_input').classList.add('header__search_input--focus');
@@ -186,6 +187,8 @@
     }
 
     function startSearch_{{include.id}}(search, nonHiddable) {
+
+      nonHiddable = !!nonHiddable;
 
       var CATEGORY_ICONS = {
         biz: 'briefcase',
@@ -276,7 +279,9 @@
               '</div>'; 
           }
 
-          return '<div class="col-md-6"><a class="block snippet clearfix" href="/' + lang + root.root + '">\n' +
+          var colWidth = search_{{include.id}}_displayMode === 0 ? 6 : 12;
+
+          return '<div class="col-md-' + colWidth + '"><a class="block snippet clearfix" href="/' + lang + root.root + '">\n' +
             '  <div class="snippet__overview">\n' +
             '  <img class="snippet__image" src="' + avatar + '" />\n' +
             '  <div class="snippet__info' + (MDSCommon.isBlank(tags) ? ' snippet__info--small' : '') + '">\n' +
@@ -354,8 +359,8 @@
                 '<div class="search__header clearfix">' +
                   '<div class="search__found_count">Found ' + data.roots.length + ' root(s)</div>' +
                   '<div class="btn-group search__display_modes" role="group">' +
-                    '<button type="button" class="btn btn-default"><i class="fa fa-list"></i></button>' +
-                    '<button type="button" class="btn btn-default active"><i class="fa fa-th-large"></i></button>' +
+                    '<button type="button" class="btn btn-default ' + (search_{{include.id}}_displayMode === 1 ? 'active' : '') + '" onclick="search_{{include.id}}_displayMode = 1; startSearch_{{include.id}}(document.getElementById(\'{{include.id}}_input\').value);"><i class="fa fa-list"></i></button>' +
+                    '<button type="button" class="btn btn-default ' + (search_{{include.id}}_displayMode === 0 ? 'active' : '') + '" onclick="search_{{include.id}}_displayMode = 0; startSearch_{{include.id}}(document.getElementById(\'{{include.id}}_input\').value);"><i class="fa fa-th-large"></i></button>' +
                   '</div>' +
                 '</div>' +
                 '<div class="row">' + rootsHtml.join('\n') + '</div>' +
