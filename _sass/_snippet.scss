@@ -201,3 +201,18 @@ $snippet-footer-height-with-gradient: 50px;
   transform: scale(0.9);
   color: #b9b9b9;
 }
+
+
+.snippet--line {
+  height: auto;
+  padding-bottom: $snippet-footer-height + $small-padding * 1.5;
+  .snippet__footer {
+    padding-top: 0;
+    height: $snippet-footer-height + $small-padding / 2;
+  }
+  .snippet__title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
