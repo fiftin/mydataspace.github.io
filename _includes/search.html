@@ -254,7 +254,6 @@
             }
           }
 
-
           var nLikes = MDSCommon.findValueByName(root.fields, '$likes') || 0;
           var nComments = MDSCommon.findValueByName(root.fields, '$comments') || 0;
 
@@ -281,7 +280,9 @@
 
           var colWidth = search_{{include.id}}_displayMode === 0 ? 6 : 12;
 
-          return '<div class="col-md-' + colWidth + '"><a class="block snippet clearfix" href="/' + lang + root.root + '">\n' +
+          var snippetClass = search_{{include.id}}_displayMode === 0 ? '' : 'snippet--line';
+
+          return '<div class="col-md-' + colWidth + '"><a class="block snippet ' + snippetClass + ' clearfix" href="/' + lang + root.root + '">\n' +
             '  <div class="snippet__overview">\n' +
             '  <img class="snippet__image" src="' + avatar + '" />\n' +
             '  <div class="snippet__info' + (MDSCommon.isBlank(tags) ? ' snippet__info--small' : '') + '">\n' +
@@ -300,9 +301,7 @@
             '<span class="root_counter"><i class="fa fa-heart" aria-hidden="true"></i><span class="root_counter__count root_counter__count--likes">' + nLikes + '</span></span>' +
             '<span class="root_counter"><i class="fa fa-comments" aria-hidden="true"></i><span class="root_counter__count">' + nComments + '</span></span>' +
             '</div>' +
-
             '</div>' + // footer
-
             '</a></div>';
         });
         
