@@ -49,7 +49,7 @@ function search_parseSearchString(search) {
       if (filter2val.length === 1) {
         tags.push(part.substring(1));
       } else {
-        filter = filter2val[0].substring(1); // TAGS_TO_FILTERS[filter2val[0].substring(1)];
+        filter = TAGS_TO_FILTERS[filter2val[0].substring(1)];
         if (filter) {
           filters[filter] = filter2val[1];
         }
