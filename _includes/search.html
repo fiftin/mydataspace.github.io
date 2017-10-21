@@ -133,18 +133,18 @@
 
           if (country && (languageAbbr === countryAbbr || (language.same || []).indexOf(countryAbbr) != -1)) {
             tags = '<span class="view__tag">' +
-              '<i class="view__tag_icon view__tag_icon--flag style="background-image:url(/images/square_flags/' + country.name + '.svg)"></i>' +
+              '<i class="view__tag_icon view__tag_icon--flag" style="background-image:url(/images/square_flags/' + country.name + '.svg)"></i>' +
               tr$('languagesShort.' + languageAbbr) + ' / ' + tr$('countries.' + countryAbbr) + '</span> ' + tags;
           } else {
             if (country) {
               tags = '<span class="view__tag view__tag--with-icon" onclick="openSearch_{{include.id}}(\'#ctry:' + countryAbbr + '\'); return false;">' +
-                '<i class="view__tag_icon view__tag_icon--flag style="background-image:url(/images/square_flags/' + country.name + '.svg)"></i>' +
+                '<i class="view__tag_icon view__tag_icon--flag" style="background-image:url(/images/square_flags/' + country.name + '.svg)"></i>' +
                 tr$('countries.' + countryAbbr) + '</span> ' + tags;
             }
 
             if (language) {
               tags = '<span class="view__tag view__tag--with-icon" onclick="openSearch_{{include.id}}(\'#lang:' + languageAbbr + '\'); return false;">' +
-                '<i class="view__tag_icon view__tag_icon--flag style="background-image:url(/images/square_flags/' + language.name + '.svg)"></i>' +
+                '<i class="view__tag_icon view__tag_icon--flag" style="background-image:url(/images/square_flags/' + language.name + '.svg)"></i>' +
                 tr$('languagesShort.' + languageAbbr) + '</span> ' + tags;
             }
           }
