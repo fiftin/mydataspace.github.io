@@ -4,10 +4,22 @@
   .default_main {
     min-height: calc(100% - #{$footer-height + $header-height});
   }
+  .default_main--fullscreen {
+    min-height: calc(100% - #{$footer-height});
+  }
 }
 
 .default_main--gray {
   background: $toolbar-bg;
+}
+
+.search--fullscreen {
+  background: transparent;
+}
+
+.default_main--fullscreen {
+  padding-top: $header-height;
+  filter: blur($fullscreen-blur);
 }
 
 .page__section:not(:first-child) {

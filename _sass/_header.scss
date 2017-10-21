@@ -481,16 +481,6 @@ $slogan-animation-offset-mobile: 400px;
   width: calc(100% - 17px);
 }
 
-.search--fullscreen {
-  background: transparent;
-}
-
-.default_main--fullscreen {
-  padding-top: $header-height;
-  min-height: calc(100% - #{$footer-height});
-  filter: blur($fullscreen-blur);
-}
-
 .search__content {
   margin-top: 80px;
 }
