@@ -252,7 +252,7 @@
 
         if (searchOptions.filters.datasource) {
           datasourceInfoHTML = '<div class="search__datasource" id="search_{{include.id}}__datasource"></div>';
-          Mydataspace.request('entities.get', { root: 'datasources', path: searchOptions.filters.datasource }).then(function(datasourceData) {
+          Mydataspace.request('entities.get', { root: 'datasources', path: 'data/' + searchOptions.filters.datasource }).then(function(datasourceData) {
             document.getElementById('search_{{include.id}}__datasource').innerHTML =
               '<img class="search__datasource__img" src="' + MDSCommon.findValueByName(datasourceData.fields, 'avatar') + '" />' +
               '<div class="search__datasource__title">' + MDSCommon.findValueByName(datasourceData.fields, 'avatar') + '</div>' +
