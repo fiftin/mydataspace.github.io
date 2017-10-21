@@ -1088,11 +1088,11 @@
           $('#root__datasource_name')
             .attr('href', 'http://' + MDSCommon.getPathName(datasourceData.path))
             .text(MDSCommon.getPathName(datasourceData.path));
+            .click(function() {
+              openSearch_header__search('#src:' + datasource);
+            });
         });
       }
-      $('#root__datasource').on('click', function() {
-        openSearch_header__search('#src:' + datasource);
-      });
     }
 
     //
