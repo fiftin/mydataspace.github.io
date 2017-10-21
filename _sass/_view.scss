@@ -140,13 +140,22 @@ $view-field-value-max-height: 170px;
   margin-right: 5px;
 }
 
+$view-tag-flag-size: 16px;
+
+.view__tag--flag {
+  position: relative;
+  padding-left: $view-tag-flag-size + 5px;
+}
+
 .view__tag_icon--flag {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
+  display: block;
+  width: $view-tag-flag-size;
+  height: $view-tag-flag-size;
   background: no-repeat center;
   background-size: contain;
-  padding-left: 5px;
+  position: absolute;
+  left: 5px;
+  top: 5px;
 }
 
 .view__tag {
