@@ -486,7 +486,8 @@ $slogan-animation-offset-mobile: 400px;
 }
 
 .default_main--fullscreen {
-  margin-top: $header-height;
+  padding-top: $header-height;
+  min-height: calc(100% - #{$footer-height});
   filter: blur($fullscreen-blur);
 }
 
