@@ -176,10 +176,14 @@ $view-tag-flag-size: 16px;
 
 .view__tag--multi_link {
   &:hover {
+    color: #337ab7;
     text-decoration: none;
   }
   .view__tag_link {
-    text-decoration: underline;
+    &:hover {
+      color: #23527c;
+      text-decoration: underline;
+    }
   }
 }
 
