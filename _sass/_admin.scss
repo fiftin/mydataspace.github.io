@@ -920,7 +920,7 @@ input {
 }
 
 .admin_panel--fullscreen {
-  filter: blur($fullscreen-blur);
+  filter: blur(ceil($fullscreen-blur / 2));
 }
 
 #webix_search {
