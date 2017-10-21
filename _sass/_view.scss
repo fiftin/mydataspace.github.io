@@ -140,6 +140,15 @@ $view-field-value-max-height: 170px;
   margin-right: 5px;
 }
 
+.view__tag_icon--flag {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: no-repeat center;
+  background-size: contain;
+  padding-left: 5px;
+}
+
 .view__tag {
   padding: 3px 7px;
   background: #d2dee8;
