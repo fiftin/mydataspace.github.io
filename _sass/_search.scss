@@ -1,0 +1,29 @@
+@import "./vars";
+
+$search-datasource-height: 50px;
+
+.search__datasource {
+  height: $search-datasource-height;
+  margin-bottom: $padding;
+  margin-top: -$small-padding;
+}
+
+.search__datasource__img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: $search-datasource-height;
+  height: $search-datasource-height;
+}
+
+.search__datasource__title {
+  font-weight: bold;
+  margin-left: $search-datasource-height + $small-padding;
+  line-height: $search-datasource-height / 2;
+}
+
+.search__datasource__name {
+  margin-left: $search-datasource-height + $small-padding;
+  font-size: 14px;
+  line-height: $search-datasource-height / 2;
+}

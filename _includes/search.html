@@ -248,6 +248,18 @@
           '</div>';
         }
 
+        var datasourceInfoHTML = '';
+
+        if (searchOptions.filters.datasource) {
+          datasourceInfoHTML = '<div class="search__datasource" id="search_{{include.id}}__datasource"></div>';
+          Mydataspace.request('entities.get', { root: 'datasources', path: searchOptions.filters.datasource }).then(function(datasourceData) {
+            document.getElementById('search_{{include.id}}__datasource').innerHTML =
+              '<img class="search__datasource__img" src="' + MDSCommon.findValueByName(datasourceData.fields, 'avatar') + '" />' +
+              '<div class="search__datasource__title">' + MDSCommon.findValueByName(datasourceData.fields, 'avatar') + '</div>' +
+              '<div class="search__datasource__name">' + MDSCommon.findValueByName(datasourceData.fields, 'avatar') + '</div>';
+          });
+        }
+
         document.getElementById('{{include.resultContainer}}').innerHTML =
           rootsHtml.length > 0 ?
             '<div class="container search__content">' +
@@ -259,6 +271,7 @@
                     '<button type="button" class="btn btn-default ' + (search_{{include.id}}_displayMode === 'snippet' ? 'active' : '') + '" onclick="set_search_{{include.id}}_displayMode(\'snippet\'); startSearch_{{include.id}}(document.getElementById(\'{{include.id}}_input\').value);"><i class="fa fa-th-large"></i></button>' +
                   '</div>' +
                 '</div>' +
+                datasourceInfoHTML +
                 '<div class="row">' + rootsHtml.join('\n') + '</div>' +
               '</div>' +
               '<div class="search__filter_panel_wrap">' +
