@@ -9,102 +9,10 @@
   </div>
 
   <script type="text/javascript">
-    var TAGS_TO_FILTERS = {
-      lang: 'language',
-      ctry: 'country',
-      cat: 'category',
-      src: 'datasource'
-    };
-
-    function search_parseQuery() {
-      var ret = '';
-      var params = MDSCommon.parseQuery(window.location.search);
-      if (MDSCommon.isPresent(params.tags)) {
-        var tags = params.tags.split(',');
-        tags.forEach(function(tag) {
-          if (tag[0] !== '@') {
-            ret += '#';
-          }
-          ret += tag + ' ';
-        });
-      }
-      if (MDSCommon.isPresent(params.q)) {
-        ret += params.q;
-      }
-
-      return ret;
-    }
-
-    function search_parseSearchString(search) {
-
-      var tags = [];
-      var newSearch = '';
-      var filters = {};
-      var parts = search.split(/\s+/);
-      for (var i in parts) {
-        var part = parts[i];
-        if (part[0] === '#') {
-          var filter2val = part.split(':');
-          if (filter2val.length === 1) {
-            tags.push(part.substring(1));
-          } else {
-            filter = TAGS_TO_FILTERS[filter2val[0].substring(1)];
-            if (filter) {
-              filters[filter] = filter2val[1];
-            }
-          }
-        } else {
-          if (newSearch !== '') {
-            newSearch += ' ';
-          }
-          newSearch += part;
-        }
-      }
-
-      return {
-        search: newSearch,
-        filters: filters,
-        tags: tags
-      }
-    }
-
-    function search_getQueryFromSearchString(search) {
-      var options = search_parseSearchString(search);
-      var ret = '';
-      for (var filter in options.filters) {
-        if (ret === '') {
-          ret += 'tags='
-        } else {
-          ret += ','
-        }
-        ret += filter + ':' + options.filters[filter];
-      }
-
-      options.tags.forEach(function(tag) {
-        if (ret === '') {
-          ret += 'tags='
-        } else {
-          ret += ','
-        }
-        ret += tag;
-      });
-
-      if (MDSCommon.isPresent(options.search)) {
-        if (ret !== '') {
-          ret += '&'
-        }
-
-        ret += 'q=' + options.search;
-      }
-
-      if (ret === '') {
-        return '';
-      }
-      return '?' + ret;
-    }
 
     var search_{{include.id}}_url = '';
     var search_{{include.id}}_displayMode = localStorage.getItem('searchDisplayMode') || 'snippet';
+    var isAdmin_{{include.id}} = {{include.admin}};
 
     if (MDSCommon.endsWith(window.location.pathname, '/search')) {
       document.getElementById('{{include.id}}_input').classList.add('header__search_input--focus');
@@ -112,8 +20,6 @@
       document.getElementById('{{include.id}}_input').value = search_parseQuery();
       document.getElementById('{{include.id}}_input').setAttribute('placeholder', '{{ site.data[page.language].header.input_search_fixed }}');
     }
-
-    var isAdmin_{{include.id}} = {{include.admin}};
 
     function set_search_{{include.id}}_displayMode(mode) {
       search_{{include.id}}_displayMode = mode;
@@ -150,10 +56,8 @@
         search = search_parseQuery();
         document.getElementById('{{include.id}}_input').value = search_parseQuery();
       }
-
       document.getElementById('{{include.id}}_input').value = search;
       document.getElementById('{{include.id}}_input').focus();
-
       startSearch_{{include.id}}(search, nonHiddable);
     }
 
@@ -192,22 +96,7 @@
     }
 
     function startSearch_{{include.id}}(search, nonHiddable) {
-
       nonHiddable = !!nonHiddable;
-
-      var CATEGORY_ICONS = {
-        biz: 'briefcase',
-        economy: 'area-chart',
-        health: 'heart',
-        edu: 'graduation-cap',
-        ecology: 'leaf',
-        culture: 'paint-brush',
-        security: 'shield',
-        transport: 'car',
-        geo: 'map',
-        state: 'university',
-        tourism: 'plane'
-      };
 
       var searchOptions = search_parseSearchString(search);
       var filters = searchOptions.filters;
@@ -235,15 +124,12 @@
           var languageAbbr = MDSCommon.findValueByName(root.fields, 'language');
           var countryAbbr = MDSCommon.findValueByName(root.fields, 'country');
           var category = MDSCommon.findValueByName(root.fields, 'category');
-
           var country = COUNTRIES[countryAbbr];
           var language = COUNTRIES[languageAbbr];
-
 
           if (category) {
             tags = '<span class="view__tag" onclick="openSearch_{{include.id}}(\'#cat:' + category + '\'); return false;"><i class="view__tag_icon fa fa-' + CATEGORY_ICONS[category] + '"></i><span>' + tr$('categories.' + category) + '</span></span> ' + tags;
           }
-
 
           if (country && (languageAbbr === countryAbbr || (language.same || []).indexOf(countryAbbr) != -1)) {
             tags = '<span class="view__tag view__tag--icon" style="background-image: url(/images/square_flags/' + country.name +
@@ -284,7 +170,6 @@
           }
 
           var colWidth = search_{{include.id}}_displayMode === 'snippet' ? 6 : 12;
-
           var snippetClass = search_{{include.id}}_displayMode === 'snippet' ? '' : 'snippet--line';
 
           return '<div class="col-md-' + colWidth + '"><a class="block snippet ' + snippetClass + ' clearfix" href="/' + lang + root.root + '">\n' +
