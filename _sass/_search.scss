@@ -2,14 +2,14 @@
 
 $search-datasource-height: 40px;
 
-.search__datasource {
+.datasource {
   height: $search-datasource-height;
   margin-bottom: $padding;
   margin-top: -$small-padding;
   position: relative;
 }
 
-.search__datasource__img {
+.datasource__img {
   position: absolute;
   left: 0;
   top: 0;
@@ -17,15 +17,19 @@ $search-datasource-height: 40px;
   height: $search-datasource-height;
 }
 
-.search__datasource__title {
+.datasource__title {
   font-size: 14px;
   font-weight: bold;
   margin-left: $search-datasource-height + $small-padding;
   line-height: $search-datasource-height / 2;
 }
 
-.search__datasource__name {
+.datasource__name {
   margin-left: $search-datasource-height + $small-padding;
   font-size: 14px;
   line-height: $search-datasource-height / 2;
+}
+
+.datasource--with-border-top {
+  border-top: 1px solid gray;
 }
