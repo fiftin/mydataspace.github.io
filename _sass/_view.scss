@@ -8,6 +8,8 @@
  *    `:before` to contain the top-margins of child elements.
  */
 
+@import "./vars";
+
 $view-field-value-max-height: 170px;
 
 $view-tag-flag-size: 16px;
@@ -250,7 +252,7 @@ $view-tag-flag-size: 16px;
 
 .view__readme {
   padding-top: 20px;
-  border-top: 1px solid #ebebeb;
+  border-top: 1px solid $border-color-light;
   clear: both;
   line-height: 1.4;
   word-wrap: break-word;

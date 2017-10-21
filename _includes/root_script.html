@@ -1083,7 +1083,7 @@
       if (datasource) {
         Mydataspace.request('entities.get', { root: 'datasources', path: 'data/' + datasource }).then(function(datasourceData) {
           $('#root__datasource').removeClass('hidden');
-          $('#root__datasource_icon').attr('src', '{{ cdn_url }}/avatars/md/' + MDSCommon.findValueByName(datasourceData.fields, 'icon'));
+          $('#root__datasource_icon').attr('src', '{{ cdn_url }}/avatars/md/' + MDSCommon.findValueByName(datasourceData.fields, 'icon') + '.png');
           $('#root__datasource_title').text(MDSCommon.findValueByName(datasourceData.fields, 'name'));
           $('#root__datasource_name')
             .attr('href', 'http://' + MDSCommon.getPathName(datasourceData.path))

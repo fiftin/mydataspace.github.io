@@ -296,7 +296,7 @@ input:read-only {
 }
 
 .menu__item_list > .webix_scroll_cont > .webix_list_item:first-child {
-  border-top: 1px solid #ebebeb;
+  border-top: 1px solid $border-color-light;
 }
 
 .menu_button {

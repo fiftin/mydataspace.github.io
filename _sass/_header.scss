@@ -567,6 +567,10 @@ $search-filter-panel-gap: 40px;
   padding-bottom: 10px;
 }
 
+.search__header--found-in-datasource {
+  padding-bottom: 0;
+}
+
 .search__display_modes {
   float: right;
 }

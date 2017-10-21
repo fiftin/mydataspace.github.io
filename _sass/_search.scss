@@ -5,7 +5,6 @@ $search-datasource-height: 40px;
 .datasource {
   height: $search-datasource-height;
   margin-bottom: $padding;
-  margin-top: -$small-padding;
   position: relative;
 }
 
@@ -31,5 +30,11 @@ $search-datasource-height: 40px;
 }
 
 .datasource--with-border-top {
-  border-top: 1px solid gray;
+  border-top: 1px solid $border-color-light;
+  margin-bottom: 0;
+  margin-top: $small-padding;
+  padding: $small-padding 0;
+  .datasource__img {
+    top: $small-padding;
+  }
 }
