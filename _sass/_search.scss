@@ -6,6 +6,7 @@ $search-datasource-height: 50px;
   height: $search-datasource-height;
   margin-bottom: $padding;
   margin-top: -$small-padding;
+  position: relative;
 }
 
 .search__datasource__img {
