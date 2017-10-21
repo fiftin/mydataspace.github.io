@@ -105,7 +105,7 @@ $snippet-footer-height-with-gradient: 50px;
 .snippet__overview {
   position: relative;
   min-height: $snippet-image-size + $small-padding / 2;
-  margin-bottom: $small-padding / 2;
+  margin-bottom: 9px;
 }
 
 .snippet__image {
@@ -125,7 +125,7 @@ $snippet-footer-height-with-gradient: 50px;
 }
 
 .snippet__title {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
   color: black;
   line-height: 1.1;
