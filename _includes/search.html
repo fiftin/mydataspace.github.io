@@ -1,3 +1,10 @@
+{% if jekyll.environment == "local" %}
+{% assign cdn_url = site.local_api_url %}
+{% else %}
+{% assign cdn_url = site.cdn_url %}
+{% endif %}
+
+
 <div class="navbar-form navbar-left header__search_wrap" id="{{include.id}}">
   <div class="form-group" id="{{include.id}}_input_wrap">
     <input id="{{include.id}}_input"
