@@ -158,3 +158,9 @@ look_modal:
     button_add: Добавить
     button_remove: Удалить
     button_reset: Восстановить
+
+
+search:
+  found_prefix: "Найдено"
+  found_suffix: "корней"
+  found_in_datasource: "в источнике:"

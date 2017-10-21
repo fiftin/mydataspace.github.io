@@ -161,6 +161,6 @@ look_modal:
     button_reset: Reset
 
 search:
-  found_prefix: Found
-  found_suffix: root(s)
-  found_in_datasource: in datasource:
+  found_prefix: "Found"
+  found_suffix: "root(s)"
+  found_in_datasource: "in datasource:"
