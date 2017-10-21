@@ -159,3 +159,8 @@ look_modal:
     button_add: Add
     button_remove: Remove
     button_reset: Reset
+
+search:
+  found_prefix: Found
+  found_suffix: root(s)
+  found_in_datasource: in datasource:
