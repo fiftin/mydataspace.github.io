@@ -167,6 +167,9 @@ $view-tag-flag-size: 16px;
   &:hover {
     color: #23527c;
     text-decoration: underline;
+    .view__tag_icon--flag {
+      opacity: 0.8;
+    }
   }
   cursor: pointer;
 }
