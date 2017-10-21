@@ -133,7 +133,7 @@
 
           if (country && (languageAbbr === countryAbbr || (language.same || []).indexOf(countryAbbr) != -1)) {
             tags = '<span class="view__tag view__tag--flag">' +
-              '<span class="view__tag_icon view__tag_icon--flag" style="background-image:url(/images/square_flags/' + country.name + '.svg)"></span>' +
+              '<img class="view__tag_icon view__tag_icon--flag" src="/images/square_flags/' + country.name + '.svg"></img>' +
               tr$('languagesShort.' + languageAbbr) + ' / ' + tr$('countries.' + countryAbbr) + '</span> ' + tags;
           } else {
             if (country) {
