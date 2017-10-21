@@ -37,7 +37,7 @@ function search_parseQuery() {
   return ret;
 }
 
-function search_parseSearchString(search) {
+function search_parseSearchString(search, useFilterTags) {
   var tags = [];
   var newSearch = '';
   var filters = {};
@@ -49,7 +49,7 @@ function search_parseSearchString(search) {
       if (filter2val.length === 1) {
         tags.push(part.substring(1));
       } else {
-        filter = TAGS_TO_FILTERS[filter2val[0].substring(1)];
+        filter = useFilterTags ?filter2val[0].substring(1) : TAGS_TO_FILTERS[filter2val[0].substring(1)];
         if (filter) {
           filters[filter] = filter2val[1];
         }
@@ -70,7 +70,7 @@ function search_parseSearchString(search) {
 }
 
 function search_getQueryFromSearchString(search) {
-  var options = search_parseSearchString(search);
+  var options = search_parseSearchString(search, true);
   var ret = '';
   for (var filter in options.filters) {
     if (ret === '') {
