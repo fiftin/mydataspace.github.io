@@ -263,7 +263,8 @@
             document.getElementById('search_{{include.id}}__datasource').innerHTML =
               '<img class="search__datasource__img" src="{{ cdn_url }}/avatars/md/' + MDSCommon.findValueByName(datasourceData.fields, 'icon') + '.png" />' +
               '<div class="search__datasource__title">' + MDSCommon.findValueByName(datasourceData.fields, 'name') + '</div>' +
-              '<div class="search__datasource__name">' + MDSCommon.getPathName(datasourceData.path) + '</div>';
+              '<div class="search__datasource__name"><a href="http://' + MDSCommon.getPathName(datasourceData.path) + '">' +
+                MDSCommon.getPathName(datasourceData.path) + '</a></div>';
           });
         }
 
