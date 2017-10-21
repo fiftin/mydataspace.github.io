@@ -21,6 +21,9 @@ $search-datasource-height: 40px;
   font-weight: bold;
   margin-left: $search-datasource-height + $small-padding;
   line-height: $search-datasource-height / 2;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .datasource__name {
