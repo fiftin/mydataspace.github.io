@@ -1084,7 +1084,7 @@
         Mydataspace.request('entities.get', { root: 'datasources', path: 'data/' + datasource }).then(function(datasourceData) {
           $('#root__datasource')
             .removeClass('hidden')
-            .attr('onclick', 'openSearch_header__search(\'#src: ' + datasource + ' \');');
+            .attr('onclick', 'openSearch_header__search(\'#src:' + datasource + ' \');');
 //            .click(function() { openSearch_header__search('#src:' + datasource) });
 
           $('#root__datasource_icon').attr('src', '{{ cdn_url }}/avatars/md/' + MDSCommon.findValueByName(datasourceData.fields, 'icon') + '.png');
