@@ -10,6 +10,8 @@
 
 $view-field-value-max-height: 170px;
 
+$view-tag-flag-size: 16px;
+
 .cf:before,
 .cf:after {
     content: " "; /* 1 */
@@ -140,12 +142,6 @@ $view-field-value-max-height: 170px;
   margin-right: 5px;
 }
 
-$view-tag-flag-size: 16px;
-
-.view__tag--flag {
-  position: relative;
-  padding-left: $view-tag-flag-size + 5px;
-}
 
 .view__tag_icon--flag {
   display: block;
@@ -173,10 +169,11 @@ $view-tag-flag-size: 16px;
   cursor: pointer;
 }
 
-.view__tag--with-icon {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+.view__tag--flag {
+  position: relative;
+  padding-left: $view-tag-flag-size + 10px;
 }
+
 
 .view__tag--icon {
   border-top-right-radius: 0;
