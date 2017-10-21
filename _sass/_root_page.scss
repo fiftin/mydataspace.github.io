@@ -721,6 +721,8 @@ $follow-button-height: 40px;
   }
 }
 
-
-
-
+.user_snippet__datasource {
+  border-top: 1px solid $border-color-light;
+  margin-top: $small-padding;
+  padding-top: $small-padding;
+}
