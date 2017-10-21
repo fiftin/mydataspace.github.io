@@ -1087,7 +1087,7 @@
           $('#root__datasource_title').text(MDSCommon.findValueByName(datasourceData.fields, 'name'));
           $('#root__datasource_name')
             .attr('href', 'http://' + MDSCommon.getPathName(datasourceData.path))
-            .text(MDSCommon.getPathName(datasourceData.path));
+            .text(MDSCommon.getPathName(datasourceData.path))
             .click(function() {
               openSearch_header__search('#src:' + datasource);
             });
