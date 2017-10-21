@@ -132,15 +132,12 @@
           }
 
           if (country && (languageAbbr === countryAbbr || (language.same || []).indexOf(countryAbbr) != -1)) {
-            //<i class="view__tag_icon fa fa-' + CATEGORY_ICONS[category] + '"></i>
-
             tags = '<span class="view__tag">' +
-              '<i class="view__tag_icon view__tag_icon--flag style="background-image: url(/images/square_flags/' + country.name + '.svg)"></i>'
+              '<i class="view__tag_icon view__tag_icon--flag style="background-image:url(/images/square_flags/' + country.name + '.svg)"></i>' +
               tr$('languagesShort.' + languageAbbr) + ' / ' + tr$('countries.' + countryAbbr) + '</span> ' + tags;
 
 
-//            tags = '<span class="view__tag view__tag--icon" style="background-image: url(/images/square_flags/' + country.name +
-//              '.svg)">&nbsp;</span><span class="view__tag view__tag--with-icon">' +
+//            tags = '<span class="view__tag view__tag--with-icon">' +
 //              tr$('languagesShort.' + languageAbbr) + ' / ' + tr$('countries.' + countryAbbr) + '</span> ' + tags;
           } else {
             if (country) {
