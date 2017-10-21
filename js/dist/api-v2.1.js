@@ -7272,6 +7272,9 @@ var MDSCommon = {
 
   endsWith: function(str, str2) {
     var i = str.indexOf(str2);
+    if (i === -1) {
+      return false;
+    }
     return i === str.length - str2.length;
   },
 
