@@ -1090,6 +1090,9 @@
             .text(MDSCommon.getPathName(datasourceData.path));
         });
       }
+      $('#root__datasource').on('click', function() {
+        openSearch_header__search('#src:' + datasource);
+      });
     }
 
     //
