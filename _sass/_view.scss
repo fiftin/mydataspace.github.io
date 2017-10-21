@@ -150,8 +150,11 @@ $view-tag-flag-size: 16px;
   background: no-repeat center;
   background-size: contain;
   position: absolute;
-  left: 5px;
-  top: 5px;
+  left: 4px;
+  top: 4px;
+  border-radius: 2px;
+  opacity: 0.6;
+  filter: grayscale(0.2);
 }
 
 .view__tag {
