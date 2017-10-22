@@ -17,7 +17,7 @@
 
   <script type="text/javascript">
     var search_{{include.id}}_url = '';
-    var search_{{include.id}}_pathname = window.location.pathname;
+    var search_{{include.id}}_pathname = window.location.pathname === '/datasources' ? '/datasources' : '/search';
     var search_{{include.id}}_displayMode = localStorage.getItem('searchDisplayMode') || 'snippet';
     var isAdmin_{{include.id}} = {{include.admin}};
 
@@ -61,10 +61,6 @@
     }
 
     function openSearch_{{include.id}}(search, mode) {
-      if (!mode) {
-        mode = 'search';
-      }
-      search_{{include.id}}_pathname = '/' + mode;
       if (search == null) {
         search = search_parseQuery();
         document.getElementById('{{include.id}}_input').value = search_parseQuery();
@@ -114,9 +110,8 @@
 
       var q;
       var m;
-      var pathname = search_{{include.id}}_pathname;
-      switch (pathname) {
-        case '/search':
+      switch (mode) {
+        case 'search':
           q = {
             root: 'datasources',
             path: 'data',
@@ -124,7 +119,7 @@
           };
           m = 'entities.getRoots';
           break;
-        case '/datasources':
+        case 'datasources':
           q = {
             search: searchOptions.search,
             profiles: true,
@@ -309,7 +304,7 @@
                     '<button type="button" class="btn btn-default ' + (search_{{include.id}}_displayMode === 'line' ? 'active' : '') + '" onclick="set_search_{{include.id}}_displayMode(\'line\'); startSearch_{{include.id}}(document.getElementById(\'{{include.id}}_input\').value);"><i class="fa fa-list"></i></button>' +
                     '<button type="button" class="btn btn-default ' + (search_{{include.id}}_displayMode === 'snippet' ? 'active' : '') + '" onclick="set_search_{{include.id}}_displayMode(\'snippet\'); startSearch_{{include.id}}(document.getElementById(\'{{include.id}}_input\').value);"><i class="fa fa-th-large"></i></button>' +
                   '</div>' +
-                  '<div class="search__right_link"><a href="/datasources"  onclick="openSearch_{{include.id}}(\'\', \'datasources\'); return false;">Search by datasources</a></div>' +
+                  '<div class="search__right_link"><a href="/datasources"  onclick="search_{{include.id}}_pathname = \'/datasources\'; openSearch_{{include.id}}(\'\'); return false;">Search by datasources</a></div>' +
                 '</div>' +
                 datasourceInfoHTML +
                 '<div class="row">' + rootsHtml.join('\n') + '</div>' +
