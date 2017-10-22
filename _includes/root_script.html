@@ -791,6 +791,40 @@
         }
 
 
+
+        var languageAbbr = MDSCommon.findValueByName(data.fields, 'language');
+        var countryAbbr = MDSCommon.findValueByName(data.fields, 'country');
+        var category = MDSCommon.findValueByName(data.fields, 'category');
+        var country = COUNTRIES[countryAbbr];
+        var language = COUNTRIES[languageAbbr];
+
+        if (category) {
+          tags = '<span class="view__tag" onclick="openSearch_header__search(\'#cat:' + category + '\'); return false;"><i class="view__tag_icon fa fa-' + CATEGORY_ICONS[category] + '"></i><span>' + tr$('categories.' + category) + '</span></span> ' + tags;
+        }
+
+        if (country && (languageAbbr === countryAbbr || (language.same || []).indexOf(countryAbbr) != -1)) {
+          tags = '<span class="view__tag view__tag--flag view__tag--multi_link">' +
+            '<img class="view__tag_icon view__tag_icon--flag" src="/images/square_flags/' + country.name + '.svg" />' +
+            '<span class="view__tag_link" onclick="openSearch_header__search(\'#lang:' + languageAbbr + '\'); return false;">' +
+            tr$('languagesShort.' + languageAbbr) + '</span> / ' +
+            '<span class="view__tag_link" onclick="openSearch_header__search(\'#ctry:' + countryAbbr + '\'); return false;">' +
+            tr$('countries.' + countryAbbr) + '</span></span> ' + tags;
+        } else {
+          if (country) {
+            tags = '<span class="view__tag view__tag--flag" onclick="openSearch_header__search(\'#ctry:' + countryAbbr + '\'); return false;">' +
+              '<img class="view__tag_icon view__tag_icon--flag" src="/images/square_flags/' + country.name + '.svg" />' +
+              tr$('countries.' + countryAbbr) + '</span> ' + tags;
+          }
+
+          if (language) {
+            tags = '<span class="view__tag view__tag--flag" onclick="openSearch_header__search(\'#lang:' + languageAbbr + '\'); return false;">' +
+              '<img class="view__tag_icon view__tag_icon--flag" src="/images/square_flags/' + language.name + '.svg" />' +
+              tr$('languagesShort.' + languageAbbr) + '</span> ' + tags;
+          }
+        }
+
+
+
         if (tags && websiteURL) {
           document.getElementsByClassName('view__overview_image_wrap')[0].classList.add('view__overview_image_wrap--large');
           document.getElementById('root__overview_image').classList.add('view__overview_image--large');
