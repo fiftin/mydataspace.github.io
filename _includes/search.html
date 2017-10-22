@@ -298,14 +298,17 @@
 
         var xxx;
         var xxx_pathname;
+        var found_suffix;
         switch (search_{{include.id}}_pathname) {
           case '/search':
             xxx = '{{ site.data[page.language].search.search_by_datasources }}';
             xxx_pathname = '/datasources';
+            found_suffix = ' {{ site.data[page.language].search.found_suffix }} '
             break;
           case '/datasources':
             xxx = '{{ site.data[page.language].search.search_by_roots }}';
             xxx_pathname = '/search';
+            found_suffix = ' {{ site.data[page.language].search.found_in_datasource_suffix }} '
             break;
         }
         var foundInDatasourceSuffix = searchOptions.filters.datasource ? '{{ site.data[page.language].search.found_in_datasource }}' : '';
@@ -314,7 +317,7 @@
             '<div class="container search__content">' +
               '<div class="search__results">' +
                 '<div class="search__header ' + (searchOptions.filters.datasource ? 'search__header--found-in-datasource' : '') + ' clearfix">' +
-                  '<div class="search__found_count">{{ site.data[page.language].search.found_prefix }} ' + items.length + ' {{ site.data[page.language].search.found_suffix }} ' + foundInDatasourceSuffix + '</div>' +
+                  '<div class="search__found_count">{{ site.data[page.language].search.found_prefix }} ' + items.length + found_suffix + foundInDatasourceSuffix + '</div>' +
                   '<div class="btn-group search__display_modes" role="group">' +
                     '<button type="button" class="btn btn-default ' + (search_{{include.id}}_displayMode === 'line' ? 'active' : '') + '" onclick="set_search_{{include.id}}_displayMode(\'line\'); startSearch_{{include.id}}(document.getElementById(\'{{include.id}}_input\').value);"><i class="fa fa-list"></i></button>' +
                     '<button type="button" class="btn btn-default ' + (search_{{include.id}}_displayMode === 'snippet' ? 'active' : '') + '" onclick="set_search_{{include.id}}_displayMode(\'snippet\'); startSearch_{{include.id}}(document.getElementById(\'{{include.id}}_input\').value);"><i class="fa fa-th-large"></i></button>' +
