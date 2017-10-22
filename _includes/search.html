@@ -236,6 +236,9 @@
         });
         
         function getFilterHTML(items, itemTitlesCollection, prefix, filters, opts) {
+          if (!items) {
+            return '';
+          }
           var options = MDSCommon.extend({
             translate: true,
             facetIconClass: null,
@@ -311,9 +314,9 @@
               '</div>' +
               '<div class="search__filter_panel_wrap">' +
                 '<div class="search__filter_panel">' +
-                  getFilterHTML(data.facets.language, 'languages', 'lang', filters, { facetIconClass: 'search_filter__icon flag-icon flag-icon-' }) +
-                  getFilterHTML(data.facets.country, 'countries', 'ctry', filters, { facetIconClass: 'search_filter__icon flag-icon flag-icon-' }) +
-                  getFilterHTML(data.facets.category, 'categories', 'cat', filters, {
+                  getFilterHTML(data.facets && data.facets.language, 'languages', 'lang', filters, { facetIconClass: 'search_filter__icon flag-icon flag-icon-' }) +
+                  getFilterHTML(data.facets && data.facets.country, 'countries', 'ctry', filters, { facetIconClass: 'search_filter__icon flag-icon flag-icon-' }) +
+                  getFilterHTML(data.facets && data.facets.category, 'categories', 'cat', filters, {
                     facetIconClass: 'search_filter__icon fa fa-',
                     facetIconMap: CATEGORY_ICONS
                   }) +
