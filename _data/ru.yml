@@ -164,3 +164,5 @@ search:
   found_prefix: "Найдено"
   found_suffix: "корней"
   found_in_datasource: "в источнике:"
+  search_by_roots: "Поиск по корням"
+  search_by_datasources: "Поиск по источникам"

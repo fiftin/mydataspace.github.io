@@ -164,3 +164,5 @@ search:
   found_prefix: "Found"
   found_suffix: "root(s)"
   found_in_datasource: "in datasource:"
+  search_by_roots: "Search by roots"
+  search_by_datasources: "Search by datasources"
