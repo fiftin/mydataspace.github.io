@@ -157,6 +157,13 @@ $view-tag-flag-size: 16px;
   border-radius: 2px;
   opacity: 0.6;
 }
+.view__tag_icon--flag--lg {
+  width: $view-tag-flag-size + 2px;
+  height: $view-tag-flag-size + 2px;
+  left: 5px;
+  top: 5px;
+}
+
 
 .view__tag {
   padding: 3px 7px;

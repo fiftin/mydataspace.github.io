@@ -799,7 +799,7 @@
 
         if (country && (languageAbbr === countryAbbr || (language.same || []).indexOf(countryAbbr) != -1)) {
           tags = '<span class="view__tag view__tag--flag view__tag--multi_link">' +
-            '<img class="view__tag_icon view__tag_icon--flag" src="/images/square_flags/' + country.name + '.svg" />' +
+            '<img class="view__tag_icon view__tag_icon--flag view__tag_icon--flag--lg" src="/images/square_flags/' + country.name + '.svg" />' +
             '<span class="view__tag_link" onclick="openSearch_header__search(\'#lang:' + languageAbbr + '\'); return false;">' +
             tr$('languagesShort.' + languageAbbr) + '</span> / ' +
             '<span class="view__tag_link" onclick="openSearch_header__search(\'#ctry:' + countryAbbr + '\'); return false;">' +
@@ -807,13 +807,13 @@
         } else {
           if (country) {
             tags = '<span class="view__tag view__tag--flag" onclick="openSearch_header__search(\'#ctry:' + countryAbbr + '\'); return false;">' +
-              '<img class="view__tag_icon view__tag_icon--flag" src="/images/square_flags/' + country.name + '.svg" />' +
+              '<img class="view__tag_icon view__tag_icon--flag view__tag_icon--flag--lg" src="/images/square_flags/' + country.name + '.svg" />' +
               tr$('countries.' + countryAbbr) + '</span> ' + tags;
           }
 
           if (language) {
             tags = '<span class="view__tag view__tag--flag" onclick="openSearch_header__search(\'#lang:' + languageAbbr + '\'); return false;">' +
-              '<img class="view__tag_icon view__tag_icon--flag" src="/images/square_flags/' + language.name + '.svg" />' +
+              '<img class="view__tag_icon view__tag_icon--flag view__tag_icon--flag--lg" src="/images/square_flags/' + language.name + '.svg" />' +
               tr$('languagesShort.' + languageAbbr) + '</span> ' + tags;
           }
         }
