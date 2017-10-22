@@ -135,7 +135,7 @@
 
         var rootsHtml = items.map(function(root) {
           var itemId = root.root === 'datasources' ? root.path : root.root;
-          var itemUrlQuery = root.root === 'datasources' ? '/search?tags=src:' + MDSCommon.getPathName(root.path) : root.root;
+          var itemUrlQuery = root.root === 'datasources' ? 'search?tags=src:' + MDSCommon.getPathName(root.path) : root.root;
 
           var avatar = MDSCommon.findValueByName(root.fields, 'avatar');
           if (MDSCommon.isBlank(avatar)) {
