@@ -784,11 +784,6 @@
         }).map(function(tag) {
           return '<a class="view__tag" href="/?q=%23' + tag + '" onclick="openSearch_header__search(\'' + tag + '\'); return false;">' + tag + '</a>';
         }).join(' ');
-        if (MDSCommon.isPresent(tags)) {
-          document.getElementById('root__tags').innerHTML = tags;
-        } else {
-          document.getElementById('root__tags').style.display = 'none';
-        }
 
 
 
@@ -822,6 +817,14 @@
               tr$('languagesShort.' + languageAbbr) + '</span> ' + tags;
           }
         }
+
+
+        if (MDSCommon.isPresent(tags)) {
+          document.getElementById('root__tags').innerHTML = tags;
+        } else {
+          document.getElementById('root__tags').style.display = 'none';
+        }
+
 
 
 
