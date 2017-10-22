@@ -169,11 +169,16 @@
           var footer;
 
           if (root.profile && data.profiles[root.profile]) {
+            var ds = MDSCommon.findValueByName(data.fields, 'datasource');
+
             var authorAvatar = 'https://cdn.mydataspace.net/avatars/sm/' + (data.profiles[root.profile].avatar || 'HJYrGU87W') + '.png';
             footer =
               '<div class="snippet__author">' +
               '  <img class="snippet__author_avatar" src="' + authorAvatar + '" />' +
-              '  <span class="snippet__author_name">' + data.profiles[root.profile].name + '</span>' +
+              '  <span class="snippet__author_name">'
+              + data.profiles[root.profile].name +
+              (ds ? ' / <a href="/search?tags=src:' + ds + '" onclick="openSearch_{{include.id}}(\'#src:' + ds + '\'); return false;">' + ds + '</a>' : '') +
+              '</span>' +
               (data.profiles[root.profile].verified ? '<i class="fa fa-check snippet__author_verified" aria-hidden="true"></i>' : '') +
               '</div>'; 
           } else {
@@ -278,6 +283,7 @@
                     '<button type="button" class="btn btn-default ' + (search_{{include.id}}_displayMode === 'line' ? 'active' : '') + '" onclick="set_search_{{include.id}}_displayMode(\'line\'); startSearch_{{include.id}}(document.getElementById(\'{{include.id}}_input\').value);"><i class="fa fa-list"></i></button>' +
                     '<button type="button" class="btn btn-default ' + (search_{{include.id}}_displayMode === 'snippet' ? 'active' : '') + '" onclick="set_search_{{include.id}}_displayMode(\'snippet\'); startSearch_{{include.id}}(document.getElementById(\'{{include.id}}_input\').value);"><i class="fa fa-th-large"></i></button>' +
                   '</div>' +
+                  '<div class="search__right_link"><a href="/datasources">Search by datasources</a></div>' +
                 '</div>' +
                 datasourceInfoHTML +
                 '<div class="row">' + rootsHtml.join('\n') + '</div>' +

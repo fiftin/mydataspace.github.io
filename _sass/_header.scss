@@ -579,3 +579,9 @@ $search-filter-panel-gap: 40px;
   line-height: $input-height-base;
   float: left;
 }
+
+.search__right_link {
+  line-height: $input-height-base;
+  float: right;
+  margin-right: $padding;
+}
