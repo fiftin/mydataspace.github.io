@@ -135,6 +135,7 @@
 
         var rootsHtml = items.map(function(root) {
           var itemId = root.root === 'datasources' ? root.path : root.root;
+          var itemUrlQuery = root.root === 'datasources' ? '/search?tags=src:' + root.path : root.root;
 
           var avatar = MDSCommon.findValueByName(root.fields, 'avatar');
           if (MDSCommon.isBlank(avatar)) {
@@ -212,7 +213,7 @@
           var colWidth = search_{{include.id}}_displayMode === 'snippet' ? 6 : 12;
           var snippetClass = search_{{include.id}}_displayMode === 'snippet' ? '' : 'snippet--line';
 
-          return '<div class="col-md-' + colWidth + '"><a class="block snippet ' + snippetClass + ' clearfix" href="/' + lang + itemId + '">\n' +
+          return '<div class="col-md-' + colWidth + '"><a class="block snippet ' + snippetClass + ' clearfix" href="/' + lang + itemUrlQuery + '">\n' +
             '  <div class="snippet__overview">\n' +
             '  <img class="snippet__image" src="' + avatar + '" />\n' +
             '  <div class="snippet__info' + (MDSCommon.isBlank(tags) ? ' snippet__info--small' : '') + '">\n' +
