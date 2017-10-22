@@ -113,17 +113,17 @@
       switch (search_{{include.id}}_pathname) {
         case '/search':
           q = {
-            root: 'datasources',
-            path: 'data',
-            children: true
+            search: searchOptions.search,
+            profiles: true,
+            filter: searchOptions.filters
           };
           m = 'entities.getRoots';
           break;
         case '/datasources':
           q = {
-            search: searchOptions.search,
-            profiles: true,
-            filter: searchOptions.filters
+            root: 'datasources',
+            path: 'data',
+            children: true
           };
           m = 'entities.get';
           break;
