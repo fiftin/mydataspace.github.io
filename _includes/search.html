@@ -296,16 +296,16 @@
           });
         }
 
-        var xxx_pathname;
         var xxx;
+        var xxx_pathname;
         switch (search_{{include.id}}_pathname) {
           case '/search':
             xxx = '{{ site.data[page.language].search.search_by_datasources }}';
-            xxx_pathname: '/datasources';
+            xxx_pathname = '/datasources';
             break;
           case '/datasources':
             xxx = '{{ site.data[page.language].search.search_by_roots }}';
-            xxx_pathname: '/search';
+            xxx_pathname = '/search';
             break;
         }
         var foundInDatasourceSuffix = searchOptions.filters.datasource ? '{{ site.data[page.language].search.found_in_datasource }}' : '';
