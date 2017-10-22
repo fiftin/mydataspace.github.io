@@ -16,12 +16,12 @@
   </div>
 
   <script type="text/javascript">
-
     var search_{{include.id}}_url = '';
+    var search_{{include.id}}_pathname = '/search';
     var search_{{include.id}}_displayMode = localStorage.getItem('searchDisplayMode') || 'snippet';
     var isAdmin_{{include.id}} = {{include.admin}};
 
-    if (MDSCommon.endsWith(window.location.pathname, '/search')) {
+    if (MDSCommon.endsWith(window.location.pathname, search_{{include.id}}_pathname)) {
       document.getElementById('{{include.id}}_input').classList.add('header__search_input--focus');
       document.getElementsByClassName('smoke')[0].classList.add('smoke--fullscreen--opaque');
       document.getElementById('{{include.id}}_input').value = search_parseQuery();
@@ -110,13 +110,29 @@
       var searchOptions = search_parseSearchString(search);
       var filters = searchOptions.filters;
 
+      var q;
+      var pathname = search_{{include.id}}_pathname;
+      switch (pathname) {
+        case '/search':
+          q = {
+            root: 'datasources',
+            path: 'data',
+            children: true
+          };
+          break;
+        case '/datasources':
+          q = {
+            search: searchOptions.search,
+            profiles: true,
+            filter: searchOptions.filters
+          };
+          break;
+      }
       // Try to get roots from server
-      Mydataspace.request('entities.getRoots', {
-        search: searchOptions.search,
-        profiles: true,
-        filter: searchOptions.filters
-      }, function(data) {
-        var rootsHtml = data.roots.map(function(root) {
+      Mydataspace.request('entities.getRoots', q, function(data) {
+        var items = data.roots;
+
+        var rootsHtml = items.map(function(root) {
           var avatar = MDSCommon.findValueByName(root.fields, 'avatar');
           if (MDSCommon.isBlank(avatar)) {
             avatar = '/images/icons/root.svg';
@@ -280,7 +296,7 @@
             '<div class="container search__content">' +
               '<div class="search__results">' +
                 '<div class="search__header ' + (searchOptions.filters.datasource ? 'search__header--found-in-datasource' : '') + ' clearfix">' +
-                  '<div class="search__found_count">{{ site.data[page.language].search.found_prefix }} ' + data.roots.length + ' {{ site.data[page.language].search.found_suffix }} ' + foundInDatasourceSuffix + '</div>' +
+                  '<div class="search__found_count">{{ site.data[page.language].search.found_prefix }} ' + items.length + ' {{ site.data[page.language].search.found_suffix }} ' + foundInDatasourceSuffix + '</div>' +
                   '<div class="btn-group search__display_modes" role="group">' +
                     '<button type="button" class="btn btn-default ' + (search_{{include.id}}_displayMode === 'line' ? 'active' : '') + '" onclick="set_search_{{include.id}}_displayMode(\'line\'); startSearch_{{include.id}}(document.getElementById(\'{{include.id}}_input\').value);"><i class="fa fa-list"></i></button>' +
                     '<button type="button" class="btn btn-default ' + (search_{{include.id}}_displayMode === 'snippet' ? 'active' : '') + '" onclick="set_search_{{include.id}}_displayMode(\'snippet\'); startSearch_{{include.id}}(document.getElementById(\'{{include.id}}_input\').value);"><i class="fa fa-th-large"></i></button>' +
@@ -309,13 +325,15 @@
     //
     // Show suggestions when search input focused
     document.getElementById('{{include.id}}_input').addEventListener('focus', function() {
-      if (window.location.pathname !== '/search') {
+      if (window.location.pathname !== search_{{include.id}}_pathname) {
         search_{{include.id}}_url = window.location.href;
       }
 
-      history.replaceState({ search: document.getElementById('{{include.id}}_input').value }, 'Search', '/search' + search_getQueryFromSearchString(document.getElementById('{{include.id}}_input').value));
+      history.replaceState({ search: document.getElementById('{{include.id}}_input').value },
+        'Search', search_{{include.id}}_pathname + search_getQueryFromSearchString(document.getElementById('{{include.id}}_input').value));
 
       document.getElementById('{{include.resultContainer}}').style.display = 'block';
+
       if (isAdmin_{{include.id}}) {
         document.getElementById('webix_preloaded_header').classList.add('webix_preloaded_header--top');
       } else {
@@ -335,9 +353,11 @@
           document.getElementById('page_footer').classList.add('footer--fullscreen');
         }
       }
+
       if (document.getElementById('admin_panel')) {
         document.getElementById('admin_panel').classList.add('admin_panel--fullscreen');
       }
+
       startSearch_{{include.id}}(document.getElementById('{{include.id}}_input').value);
     });
 
@@ -354,7 +374,7 @@
         document.getElementById('{{include.id}}_input').value = '';
         return;
       }
-      history.replaceState({}, '', '/search' + search_getQueryFromSearchString(document.getElementById('{{include.id}}_input').value));
+      history.replaceState({}, '', search_{{include.id}}_pathname + search_getQueryFromSearchString(document.getElementById('{{include.id}}_input').value));
       startSearch_{{include.id}}(document.getElementById('{{include.id}}_input').value);
     }, false);
 
