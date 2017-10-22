@@ -38,7 +38,7 @@
       version: searchParams.v
     };
     
-    if (DATA.root === 'search') {
+    if (['search', 'datasources'].indexOf(DATA.root) >= 0) {
       openSearch_header__search(null, true);
       return;
     }
