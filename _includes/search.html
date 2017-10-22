@@ -180,8 +180,8 @@
             }
           }
 
-          var nLikes = MDSCommon.findValueByName(root.fields, '$likes') || 0;
-          var nComments = MDSCommon.findValueByName(root.fields, '$comments') || 0;
+          var nLikes = MDSCommon.findValueByName(root.fields, '$likes') || MDSCommon.findValueByName(root.fields, 'totalLikes') || 0;
+          var nComments = MDSCommon.findValueByName(root.fields, '$comments') || MDSCommon.findValueByName(root.fields, 'totalComments') || 0;
 
           var languageMatch = location.pathname.match(/^\/(\w\w)(\/.*)?$/);
 
