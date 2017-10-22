@@ -169,7 +169,7 @@
           var footer;
 
           if (root.profile && data.profiles[root.profile]) {
-            var ds = MDSCommon.findValueByName(data.fields, 'datasource');
+            var ds = MDSCommon.findValueByName(root.fields, 'datasource');
 
             var authorAvatar = 'https://cdn.mydataspace.net/avatars/sm/' + (data.profiles[root.profile].avatar || 'HJYrGU87W') + '.png';
             footer =
