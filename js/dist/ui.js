@@ -196,9 +196,9 @@ UIHelper = {
   },
 
   IGNORED_PATHS: [
-    'comments',
+    // 'comments',
     // 'views',
-    'likes'
+    // 'likes'
     // 'processes'
   ],
 
