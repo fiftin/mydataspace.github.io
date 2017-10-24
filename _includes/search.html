@@ -57,6 +57,7 @@
       }
       if (document.getElementById('admin_panel')) {
         document.getElementById('admin_panel').classList.remove('admin_panel--fullscreen');
+        document.getElementById('no_items').classList.remove('no_items--fullscreen');
       }
     }
 
@@ -378,6 +379,8 @@
 
       if (document.getElementById('admin_panel')) {
         document.getElementById('admin_panel').classList.add('admin_panel--fullscreen');
+        document.getElementById('no_items').classList.add('no_items--fullscreen');
+
       }
 
       startSearch_{{include.id}}(document.getElementById('{{include.id}}_input').value);

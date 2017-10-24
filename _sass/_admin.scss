@@ -923,6 +923,10 @@ input {
   filter: blur(ceil($fullscreen-blur / 2));
 }
 
+.no_items--fullscreen {
+  filter: blur(ceil($fullscreen-blur));
+}
+
 #webix_search {
   position: absolute;
   left: 0;
