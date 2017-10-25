@@ -34,3 +34,10 @@ $search-datasource-height: 40px;
 .search__datasource {
   margin-bottom: $padding;
 }
+
+.search__no_results {
+  text-align: center;
+  font-size: 18px;
+  color: gray;
+  padding-top: 60px;
+}

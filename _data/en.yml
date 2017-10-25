@@ -167,3 +167,4 @@ search:
   found_in_datasource: "in datasource:"
   search_by_roots: "Search by roots"
   search_by_datasources: "Search by datasources"
+  no_results: "No results found"

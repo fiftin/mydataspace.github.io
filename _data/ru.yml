@@ -167,3 +167,4 @@ search:
   found_in_datasource: "в источнике:"
   search_by_roots: "Поиск по корням"
   search_by_datasources: "Поиск по источникам"
+  no_results: "Ничего не найдено"
