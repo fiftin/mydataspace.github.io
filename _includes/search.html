@@ -348,7 +348,8 @@
     //
     // Show suggestions when search input focused
     document.getElementById('{{include.id}}_input').addEventListener('focus', function() {
-      if (window.location.pathname !== search_{{include.id}}_pathname) {
+
+      if (['/search', '/datasources'].indexOf(window.location.pathname) === -1) {
         search_{{include.id}}_url = window.location.href;
       }
 
