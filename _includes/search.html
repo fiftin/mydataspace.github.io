@@ -4,6 +4,11 @@
 {% assign cdn_url = site.cdn_url %}
 {% endif %}
 
+{% if page.language == 'en' %}
+{% assign lang_prefix = '' %}
+{% else %}
+{% assign lang_prefix = page.language|prepend('/') %}
+{% endif %}
 
 <div class="navbar-form navbar-left header__search_wrap" id="{{include.id}}">
   <div class="form-group" id="{{include.id}}_input_wrap">
@@ -17,7 +22,7 @@
 
   <script type="text/javascript">
     var search_{{include.id}}_url = '';
-    var search_{{include.id}}_pathname = window.location.pathname === '/datasources' ? '/datasources' : '/search';
+    var search_{{include.id}}_pathname = MDSCommon.endsWith(window.location.pathname, '/datasources')  ? '{{ lang_prefix }}/datasources' : '{{ lang_prefix }}/search';
     var search_{{include.id}}_displayMode = localStorage.getItem('searchDisplayMode') || 'snippet';
     var isAdmin_{{include.id}} = {{include.admin}};
 
@@ -111,8 +116,8 @@
 
       var q;
       var m;
-      switch (search_{{include.id}}_pathname) {
-        case '/search':
+      switch (MDSCommon.getPathName(search_{{include.id}}_pathname)) {
+        case 'search':
           q = {
             search: searchOptions.search,
             profiles: true,
@@ -120,7 +125,7 @@
           };
           m = 'entities.getRoots';
           break;
-        case '/datasources':
+        case 'datasources':
           q = {
             root: 'datasources',
             path: 'data',
@@ -301,15 +306,15 @@
         var xxx;
         var xxx_pathname;
         var found_suffix;
-        switch (search_{{include.id}}_pathname) {
-          case '/search':
+        switch (MDSCommon.getPathName(search_{{include.id}}_pathname)) {
+          case 'search':
             xxx = '{{ site.data[page.language].search.search_by_datasources }}';
             xxx_pathname = '/datasources';
             found_suffix = ' {{ site.data[page.language].search.found_suffix }} '
             break;
-          case '/datasources':
+          case 'datasources':
             xxx = '{{ site.data[page.language].search.search_by_roots }}';
-            xxx_pathname = '/search';
+            xxx_pathname = '{{ lang_prefix }}/search';
             found_suffix = ' {{ site.data[page.language].search.found_in_datasource_suffix }} '
             break;
         }
@@ -348,8 +353,7 @@
     //
     // Show suggestions when search input focused
     document.getElementById('{{include.id}}_input').addEventListener('focus', function() {
-
-      if (['/search', '/datasources'].indexOf(window.location.pathname) === -1) {
+      if (['{{ lang_prefix }}/search', '{{ lang_prefix }}/datasources'].indexOf(window.location.pathname) === -1) {
         search_{{include.id}}_url = window.location.href;
       }
 
