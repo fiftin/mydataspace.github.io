@@ -7,7 +7,7 @@
 {% if page.language == 'en' %}
 {% assign lang_prefix = '' %}
 {% else %}
-{% assign lang_prefix = page.language|prepend('/') %}
+{% assign lang_prefix = page.language|prepend:'/' %}
 {% endif %}
 
 <div class="navbar-form navbar-left header__search_wrap" id="{{include.id}}">
