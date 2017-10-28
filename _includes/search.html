@@ -132,7 +132,10 @@
             children: true,
             search: searchOptions.search,
             filter: searchOptions.filters,
-            group: 'country'
+            group: [
+              'country',
+              'language'
+            ]
           };
           m = 'entities.get';
           break;
@@ -260,29 +263,30 @@
             return '';
           }
 
-          var filtersHTML = items.map(function(facet) {
-            if (filters[filter] && filters[filter] !== facet.name) {
+          var filtersHTML = Object.keys(items).map(function(facet) {
+
+            if (filters[filter] && filters[filter] !== facet) {
               return '';
             }
-            var active = filters[filter] === facet.name;
+            var active = filters[filter] === facet;
             var classes = active ? 'search_filter__item--active' : '';
             var action = active ? 'remove' : 'set';
-            var title = options.translate ? tr$(itemTitlesCollection + '.' + facet.name) : facet.name;
+            var title = options.translate ? tr$(itemTitlesCollection + '.' + facet) : facet;
             if (!title) {
               return '';
             }
             var iconHTML;
             if (options.facetIconClass) {
-              var iconClassSuffix = options.facetIconMap ? options.facetIconMap[facet.name] : facet.name;
+              var iconClassSuffix = options.facetIconMap ? options.facetIconMap[facet] : facet;
               iconHTML = '<i class="' + options.facetIconClass + iconClassSuffix + '"></i>';
             } else {
               iconHTML = '';
             }
 
-            return '<a href="javascript:void(0)" onclick="' + action + 'SearchPart_{{include.id}}(\'#' + prefix + ':' + facet.name + '\')" class="search_filter__item ' + classes + '">' +
+            return '<a href="javascript:void(0)" onclick="' + action + 'SearchPart_{{include.id}}(\'#' + prefix + ':' + facet + '\')" class="search_filter__item ' + classes + '">' +
               iconHTML +
               '<span class="search_filter__item_title">' + title + '</span>' +
-              '<span class="search_filter__item_count">' + facet.count + '</span>' +
+              '<span class="search_filter__item_count">' + items[facet] + '</span>' +
               '<i class="search_filter__item_remove fa fa-remove"></i>' +
               '</a>';
           }).join('');
