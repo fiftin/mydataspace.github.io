@@ -286,7 +286,7 @@
             return '<a href="javascript:void(0)" onclick="' + action + 'SearchPart_{{include.id}}(\'#' + prefix + ':' + facet + '\')" class="search_filter__item ' + classes + '">' +
               iconHTML +
               '<span class="search_filter__item_title">' + title + '</span>' +
-              '<span class="search_filter__item_count">' + items[facet] + '</span>' +
+              '<span class="search_filter__item_count">' + items[facet].count + '</span>' +
               '<i class="search_filter__item_remove fa fa-remove"></i>' +
               '</a>';
           }).join('');
