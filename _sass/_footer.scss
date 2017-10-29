@@ -9,7 +9,7 @@
   color: white;
   padding: 50px 0;
   font-size: $font-size-base;
-  @media (min-width: $screen-sm-min) {
+  @media (min-width: $screen-sm-max) {
     height: $footer-height;
   }
 }
