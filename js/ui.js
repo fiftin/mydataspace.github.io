@@ -499,17 +499,17 @@ UI = {
   },
 
   updateSizes: function() {
+
     var height = webix.without_header ? window.innerHeight - (50 + 85) : window.innerHeight;
     $$('admin_panel').define({
       width: window.innerWidth,
       height: height
     });
+
     $$('my_data_panel').define({
-      height: window.innerHeight - UILayout.HEADER_HEIGHT + 2
+      height: webix.without_header ? window.innerHeight - (50 + 85) : window.innerHeight - UILayout.HEADER_HEIGHT + 2
     });
-    $$('my_apps_panel').define({
-      height: window.innerHeight - UILayout.HEADER_HEIGHT + 2
-    });
+
     $$('edit_script_window').define({
       height: $$('my_data_panel__resizer_2').$height
     });
