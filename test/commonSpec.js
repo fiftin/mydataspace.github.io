@@ -1,9 +1,4 @@
 describe('MDSCommon', function() {
-
-
-
-
-
   describe('#diff', function() {
     it('', function() {
       const oldData = { root: 'test567',

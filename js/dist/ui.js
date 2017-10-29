@@ -75,12 +75,26 @@ webix.protoUI({
  * @type {{isEmpty: Router.isEmpty, getCommonSearchParts: Router.getCommonSearchParts, isSearch: Router.isSearch, isRoot: Router.isRoot, isFilterByName: Router.isFilterByName, getSearch: Router.getSearch, isMe: Router.isMe}}
  */
 var Router = {
+  window: window,
+
+  /**
+   * Check if URL has search part.
+   * Examples of URLs with search part:
+   *
+   * /test
+   * /#hello
+   * /#me:hello
+   * /#hello*
+   * /#me:hello*
+   *
+   * @returns {boolean} True if URL has search part.
+   */
   isEmpty: function() {
-    return !Router.isRoot();
+    return !Router.isRoot() && (MDSCommon.isBlank(window.location.hash) || window.location.hash === '#');
   },
 
   getVersion: function() {
-    var search = window.location.search;
+    var search = Router.window.location.search;
     if (search.length > 0) {
       search = search.substr(1);
     }
@@ -96,11 +110,26 @@ var Router = {
     return searchParams.v;
   },
 
+  /**
+   * Route links to single root.
+   */
+  isRoot: function() {
+    if (Router.window.location.pathname === '/') {
+      return false;
+    }
+    var parts = Router.window.location.pathname.split('/').filter(function(x) { return MDSCommon.isPresent(x); });
+    if (parts.length >= 2) {
+      return true;
+    }
+    return parts[0] != null && parts[0].length > 2;
+  },
+
+
   getCommonSearchParts: function() {
-    if (Router.isEmpty()) {
+    if (Router.isRoot()) {
       return null;
     }
-    var parts = window.location.hash.substring(1).split(':');
+    var parts = Router.window.location.hash.substring(1).split(':');
     var ret = {};
     if (parts.length === 1) {
       ret.search = parts[0];
@@ -114,43 +143,64 @@ var Router = {
   },
 
   isSearch: function() {
-    return false;
-  },
-
-  /**
-   * Route links to single root.
-   */
-  isRoot: function() {
-    if (window.location.pathname === '/') {
+    if (Router.isRoot()) {
       return false;
     }
-    var parts = window.location.pathname.split('/').filter(function(x) { return MDSCommon.isPresent(x); });
-    if (parts.length >= 2) {
-      return true;
+
+    var parts = Router.getCommonSearchParts();
+    if (parts == null || MDSCommon.isBlank(parts.search)) {
+      return false;
     }
-    return parts[0] != null && parts[0].length > 2;
+    var s = parts.search;
+    return s.indexOf('*') === 0 && s.lastIndexOf('*') === s.length - 1;
   },
 
   isFilterByName: function() {
-    return false;
+    if (Router.isRoot()) {
+      return false;
+    }
+    var parts = Router.getCommonSearchParts();
+    if (parts == null || MDSCommon.isBlank(parts.search) || parts.search === '*') {
+      return false;
+    }
+    return parts.search.indexOf('*') === parts.search.length - 1;
   },
 
   getSearch: function() {
-    if (window.location.pathname === '/') {
-      return '';
-    }
-    var parts = window.location.pathname.split('/').filter(function(x) { return MDSCommon.isPresent(x); });
-    if (parts.length >= 2) {
-      return parts[1];
-    } else if (parts[0] != null && parts[0].length > 2) {
-      return parts[0];
+    if (Router.isRoot()) {
+      var parts = Router.window.location.pathname.split('/').filter(function (x) { return MDSCommon.isPresent(x); });
+      switch (parts.length) {
+        case 0:
+          throw new Error('Unknown error');
+          break;
+        case 1:
+          if (parts[0].length <= 2) {
+            throw new Error('Unknown error');
+          }
+          return parts[0];
+          break;
+        case 2:
+          if (parts[0].length <= 2) {
+            return parts[1];
+          }
+          return parts;
+        default:
+          if (parts[0].length <= 2) {
+            return parts.slice(1);
+          }
+          return parts;
+      }
     } else {
-      return '';
+      var parts = Router.getCommonSearchParts();
+      if (parts == null) {
+        return '';
+      }
+      return parts.search.replace(/\*/g, '');
     }
   },
 
   isMe: function() {
-    if (window.path !== '/') {
+    if (Router.isRoot()) {
       return false;
     }
     var parts = Router.getCommonSearchParts();

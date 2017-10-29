@@ -217,6 +217,9 @@
           case 'table':
             ;
             break;
+          case 'list':
+            ;
+            break;
         }
 
 
@@ -277,6 +280,8 @@
           }
           break;
         case 'table':
+          break;
+        case 'list':
           break;
       }
       return true;
@@ -341,6 +346,9 @@
               });
               $$('look_modal__table').parse(formattedData);
             });
+            break;
+          case 'list':
+            // TODO: list presentation editor
             break;
         }
       } else {
@@ -521,6 +529,9 @@
             '<span class="view__comment__date view__comment__date--small view__comment__date--preview-table">' + tr$('created') + ' ' + MDSCommon.humanizeDate(data.createdAt) + ' ' + tr$('ago') + '</span>' +
             '</div>' +
             '</div>';
+          break;
+        case 'list':
+          return '';
           break;
       }
     }
