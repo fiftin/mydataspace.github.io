@@ -23,20 +23,7 @@ var Router = {
   },
 
   getVersion: function() {
-    var search = Router.window.location.search;
-    if (search.length > 0) {
-      search = search.substr(1);
-    }
-
-    var searchParts = search.split('&');
-    var searchParams = {};
-    for (var i = 0; i < searchParts.length; i++) {
-      var part = searchParts[i];
-      var keyValue = part.split('=');
-      searchParams[keyValue[0]] = keyValue[1];
-    }
-
-    return searchParams.v;
+    return MDSCommon.parseQuery(Router.window.location.search).v;
   },
 
   /**

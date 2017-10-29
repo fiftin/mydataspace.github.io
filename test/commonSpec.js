@@ -1,4 +1,18 @@
 describe('MDSCommon', function() {
+  describe('#parseQuery', function() {
+    it('Should return empty object for empty query', function() {
+      expect(MDSCommon.parseQuery('')).to.eql({});
+      expect(MDSCommon.parseQuery('?')).to.eql({});
+    });
+    it('Should return valid object for valid query', function() {
+      expect(MDSCommon.parseQuery('?page=1&limit=100&search=Hello')).to.eql({
+        page: "1",
+        limit: "100",
+        search: "Hello"
+      });
+    });
+  });
+
   describe('#diff', function() {
     it('', function() {
       const oldData = { root: 'test567',
