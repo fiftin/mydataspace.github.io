@@ -15,7 +15,7 @@
   (function() {
     var language = '{{ include.language }}';
 
-    var pathnameParts = location.pathname.split('/');
+    var pathnameParts = location.pathname.split('/').filter(function(part) { return part !== ''; });
     var root;
     if (pathnameParts[0].length <= 2) {
       pathnameParts.shift();
