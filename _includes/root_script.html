@@ -14,6 +14,12 @@
 
   (function() {
     var language = '{{ include.language }}';
+    var lang;
+    if (MDSCommon.isBlank(language) || language === 'en') {
+      lang = '';
+    } else {
+      lang = '/' + language;
+    }
 
     var pathnameParts = location.pathname.split('/').filter(function(part) { return part !== ''; });
     var root;
@@ -744,7 +750,7 @@
 
       for (var u in URL_TABS) {
         if (URL_TABS[u] === tabID) {
-          history.pushState({}, null, '/' + DATA.root + '/' + u);
+          history.pushState({}, null, lang + '/' + DATA.root + '/' + u);
           break;
         }
       }
@@ -767,12 +773,6 @@
      * @param data root's data.
      */
     function setRootView(data) {
-      var lang;
-      if (MDSCommon.isBlank(language) || language === 'en') {
-        lang = '';
-      } else {
-        lang = '/' + language;
-      }
       $.ajax({ url: lang + '/fragments/root-page.html', method: 'get' }).then(function(html) {
         var view = document.getElementById('root');
         var websiteURL = MDSCommon.findValueByName(data.fields, 'websiteURL');
