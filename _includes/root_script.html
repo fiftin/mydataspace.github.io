@@ -740,6 +740,13 @@
           document.getElementById('webix').style.display = 'block';
           break;
       }
+
+      for (var u in URL_TABS) {
+        if (URL_TABS[u] === tabID) {
+          history.pushState({}, null, '/' + DATA.root + '/' + u);
+          break;
+        }
+      }
     }
 
     function initTabs() {
