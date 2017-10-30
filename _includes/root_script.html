@@ -695,7 +695,7 @@
     }
 
 
-    function selectTab(tabID) {
+    function selectTab(tabID, itemID) {
       var tab = document.getElementById(tabID);
       var el;
       for (var tid in TABS) {
@@ -724,6 +724,9 @@
           }
           Mydataspace.entities.request('entities.get', MDSCommon.extend(DATA, { children: true, path: 'views' })).then(function(data) {
             updateLooks(data.children);
+            if (itemID) {
+              selectLook('views/' + itemID);
+            }
           });
           break;
         case 'VIEW_TAB_COMMENTS_LABEL':
@@ -753,7 +756,11 @@
 
       for (var u in URL_TABS) {
         if (URL_TABS[u] === tabID) {
-          history.pushState({}, null, lang + '/' + DATA.root + '/' + u);
+          var url = lang + '/' + DATA.root + '/' + u;
+          if (itemID) {
+            url += '/' + itemID;
+          }
+          history.pushState({}, null, url);
           break;
         }
       }
@@ -1134,7 +1141,7 @@
 
 
         if (pathnameParts[1]) {
-          selectTab(URL_TABS[pathnameParts[1]]);
+          selectTab(URL_TABS[pathnameParts[1]], pathnameParts[2]);
         }
       });
 
