@@ -497,6 +497,8 @@
       $(preview).addClass('look_preview--active');
 
       setLook($(preview).data('look-data'));
+
+      history.pushState({}, null, lang + '/' + DATA.root + '/' + path);
     }
 
     function getUnwrappedLookPreviewHTML(data, isActive) {
