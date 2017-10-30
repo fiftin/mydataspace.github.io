@@ -22,7 +22,7 @@
 </div>
 
 <script>
-  if (window.location.pathname !== '/') {
+  if (!isEmptyPathnameIgnoreLanguage(window.location.pathname)) {
     document.getElementById('webix').style.display = 'none';
   }
 </script>
@@ -193,7 +193,7 @@
       window.location.hash === '' ||
       window.location.hash === '#';
 
-    if (window.location.pathname === '/' && !isEmptyHash && document.getElementById('webix').style.display === 'none') {
+    if (isEmptyPathnameIgnoreLanguage(window.location.pathname) && !isEmptyHash && document.getElementById('webix').style.display === 'none') {
       document.getElementById('bootstrap').style.display = 'none';
       document.getElementById('webix').style.display = 'block';
     }

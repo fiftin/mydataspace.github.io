@@ -22,6 +22,15 @@ describe('Router', function() {
       expect(Router.getSearch()).to.eq('test');
     });
 
+    it('Should return root with language', function() {
+      Router.window = {
+        location: {
+          pathname: '/ru/test/views'
+        }
+      };
+      expect(Router.getSearch()).to.eql(['test', 'views']);
+    });
+
     it('Should return root', function() {
       Router.window = {
         location: {

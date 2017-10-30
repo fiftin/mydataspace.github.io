@@ -3,7 +3,7 @@ layout: hybrid
 ---
 <div class="landing landing--{{ page.language }}">
   <script type="text/javascript">
-    if (window.location.pathname === '/' && isValidJWT(localStorage.getItem('authToken')) ||
+    if (isEmptyPathnameIgnoreLanguage(window.location.pathname) && isValidJWT(localStorage.getItem('authToken')) ||
       window.location.hash && window.location.hash !== '' && window.location.hash !== '#') {
       document.getElementById('bootstrap').style.display = 'none';
     }

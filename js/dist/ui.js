@@ -4676,8 +4676,7 @@ UI = {
 
   initConnection: function(withHeader) {
     Mydataspace.on('login', function() {
-      var pathnameParts = window.location.pathname.split('/').filter(function(part) { return part !== ''; });
-      if (pathnameParts.length === 0 || pathnameParts.length === 1 && pathnameParts[0].length <= 2) {
+      if (isEmptyPathnameIgnoreLanguage(window.location.pathname)) {
         document.getElementById('bootstrap').style.display = 'none';
         document.getElementById('webix').style.display = 'block';
       }

@@ -19,6 +19,11 @@ var CATEGORY_ICONS = {
   tourism: 'plane'
 };
 
+function isEmptyPathnameIgnoreLanguage(pathname) {
+  var pathnameParts = pathname.split('/').filter(function(part) { return part !== ''; });
+  return pathnameParts.length === 0 || pathnameParts.length === 1 && pathnameParts[0].length <= 2;
+}
+
 function search_parseQuery() {
   var ret = '';
   var params = MDSCommon.parseQuery(window.location.search);
