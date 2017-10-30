@@ -15,14 +15,16 @@
   (function() {
     var language = '{{ include.language }}';
 
-    var results = new RegExp("[^?#]*/([^?#\/]+)").exec(location.href);
-    if (!results) {
-      return;
+    var pathnameParts = location.pathname.split('/');
+    var root;
+    if (pathnameParts[0].length <= 2) {
+      pathnameParts.shift();
     }
+
     var searchParams = MDSCommon.parseQuery(location.search);
 
     var DATA = {
-      root: results[1] === 'root' ? '11111' : results[1],
+      root: pathnameParts[0] === 'root' ? '11111' : pathnameParts[0],
       path: '',
       version: searchParams.v
     };
@@ -31,6 +33,11 @@
       openSearch_header__search(null, true);
       return;
     }
+
+    var URL_TABS = {
+      visualization: 'VIEW_TAB_VIEW_LABEL',
+      comments: 'VIEW_TAB_COMMENTS_LABEL'
+    };
 
     var TABS = {
       VIEW_TAB_README_LABEL: 'root__about',
@@ -987,9 +994,11 @@
               createdAt.appendChild(createdAtLink);
               description.appendChild(descriptionLink);
             }
-          }, function() {
+          }, function(err) { });
 
-          });
+          if (pathnameParts[1]) {
+            selectTab(URL_TABS[pathnameParts[1]]);
+          }
         });
 
         // Load data for root and render it on the page
