@@ -399,7 +399,11 @@ EntityTree.prototype.refresh = function(root) {
       filterByName: Router.getSearch()
     });
   } else if (MDSCommon.isPresent(root)  || Router.isRoot()) {
-    var requiredRoot = root || Router.getSearch();
+    var search = Router.getSearch();
+    if (Array.isArray(search)) {
+      search = search[0];
+    }
+    var requiredRoot = root || search;
     Mydataspace.request('entities.get', {
       root: requiredRoot,
       path: '',
