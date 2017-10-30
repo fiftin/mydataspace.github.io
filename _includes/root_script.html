@@ -995,10 +995,6 @@
               description.appendChild(descriptionLink);
             }
           }, function(err) { });
-
-          if (pathnameParts[1]) {
-            selectTab(URL_TABS[pathnameParts[1]]);
-          }
         });
 
         // Load data for root and render it on the page
@@ -1139,6 +1135,11 @@
             .attr('href', 'http://' + MDSCommon.getPathName(datasourceData.path))
             .text(MDSCommon.getPathName(datasourceData.path))
         });
+      }
+
+
+      if (pathnameParts[1]) {
+        selectTab(URL_TABS[pathnameParts[1]]);
       }
     }
 
