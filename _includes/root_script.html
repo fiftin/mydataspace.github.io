@@ -1119,6 +1119,11 @@
             }
           }
         });
+
+
+        if (pathnameParts[1]) {
+          selectTab(URL_TABS[pathnameParts[1]]);
+        }
       });
 
       var datasource = MDSCommon.findValueByName(data.fields, 'datasource');
@@ -1137,10 +1142,6 @@
         });
       }
 
-
-      if (pathnameParts[1]) {
-        selectTab(URL_TABS[pathnameParts[1]]);
-      }
     }
 
     //
