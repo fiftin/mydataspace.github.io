@@ -754,14 +754,13 @@
           break;
       }
 
-      for (var u in URL_TABS) {
-        if (URL_TABS[u] === tabID) {
-          var url = lang + '/' + DATA.root + '/' + u;
-          if (itemID) {
-            url += '/' + itemID;
+      if (!itemID) {
+        for (var u in URL_TABS) {
+          if (URL_TABS[u] === tabID) {
+            var url = lang + '/' + DATA.root + '/' + u;
+            history.pushState({}, null, url);
+            break;
           }
-          history.pushState({}, null, url);
-          break;
         }
       }
     }
