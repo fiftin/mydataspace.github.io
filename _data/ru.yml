@@ -125,15 +125,15 @@ docs:
 root:
   about: Описание
   data: Данные
-  visualization: Визуализация
+  visualization: Представления
   new_view: Добавить
-  no_views: Нет визуализаций
+  no_views: Нет представлений
   no_comments: Нет комментариев
   post_comment: Отправить
   write_a_comment: Написать комментарий...
   delete_view: Удалить
-  delete_view_answer: Вы действительное хотите удалить данную визуализацию?
-  new_view_title: Новая визуализация
+  delete_view_answer: Вы действительное хотите удалить данное представление?
+  new_view_title: Новое представление
   create_view: Создать
   cancel: Отмена
   y: Да

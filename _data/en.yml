@@ -126,7 +126,7 @@ docs:
 root:
   about: About
   data: Data
-  visualization: Visualization
+  visualization: Views
   new_view: New <span class="hidden-xs">View</span>
   no_views: There are no views
   no_comments: There are no comments
