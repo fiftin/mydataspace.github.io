@@ -497,10 +497,14 @@ $slogan-animation-offset-mobile: 400px;
   width: calc(100% - 17px);
 }
 
+$search-content-margin-top: 30px;
 .search__content {
-  margin-top: 80px;
+  margin-top: $header-height + $search-content-margin-top;
 }
 
+.search__content--fixed {
+  margin-top: $search-content-margin-top;
+}
 
 $search-filter-panel-width: 250px;
 $search-filter-panel-gap: 40px;
@@ -515,7 +519,10 @@ $search-filter-panel-gap: 40px;
 .search__results {
   float: left;
   width: calc(100% - #{$search-filter-panel-width});
-  // margin-left: $search-filter-panel-width;
+}
+
+.search__results--no-filter-panel {
+  width: 100%;
 }
 
 .search__filter_panel_wrap {

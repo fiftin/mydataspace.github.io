@@ -110,5 +110,64 @@ function search_getQueryFromSearchString(search) {
 
 
 function getHtmlFromTemplate(template, data) {
-  return template;
+  var ret = '';
+  var state = '';
+  var statement;
+  for (var i = 0; i < template.length; i++) {
+    var c = template[i];
+    switch (c) {
+      case '{':
+        switch (state) {
+          case 'left_brace':
+            state = 'statement';
+            statement = '';
+            break;
+          case '':
+            state = 'left_brace';
+            break;
+          default:
+            throw new Error('Unexpected character');
+        }
+        break;
+      case '}':
+        switch (state) {
+          case 'statement':
+            state = 'right_brace';
+            break;
+          case 'right_brace':
+            ret += data[statement];
+            statement = null;
+            state = '';
+            break;
+          case '':
+            ret += c;
+            break;
+          default:
+            throw new Error('Unexpected character');
+        }
+        break;
+      default:
+        switch (state) {
+          case 'statement':
+            var code = c.charCodeAt(0);
+            if (c === '_' || c === '-' || c === '.' ||
+                code >= 'a'.charCodeAt(0) && code <= 'z'.charCodeAt(0) ||
+                code >= 'A'.charCodeAt(0) && code <= 'Z'.charCodeAt(0) ||
+                code >= '0'.charCodeAt(0) && code <= '9'.charCodeAt(0)) {
+              statement += c;
+            } else if (c !== ' ') {
+              throw new Error('Unexpected character');
+            }
+            break;
+          case 'left_brace':
+            state = '';
+            ret += '{' + c;
+            break;
+          default:
+            ret += c;
+        }
+        break;
+    }
+  }
+  return ret;
 }

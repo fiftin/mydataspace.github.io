@@ -163,6 +163,7 @@ look_modal:
 search:
   found_prefix: "Found"
   found_suffix: "root(s)"
+  found_items_suffix: "item(s)"
   found_in_datasource_suffix: "datasource(s)"
   found_in_datasource: "in datasource:"
   search_by_roots: "Search by roots"

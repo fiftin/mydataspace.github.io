@@ -22,7 +22,8 @@ module.exports = function(config) {
       'js/fields.js',
       'js/identity.js',
       'js/ui-helper.js',
-      'js/router.js'
+      'js/router.js',
+      'js/main.js'
     ],
 
 
