@@ -107,3 +107,8 @@ function search_getQueryFromSearchString(search) {
   }
   return '?' + ret;
 }
+
+
+function getHtmlFromTemplate(template, data) {
+  return template;
+}

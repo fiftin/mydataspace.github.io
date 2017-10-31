@@ -473,11 +473,21 @@ $slogan-animation-offset-mobile: 400px;
   background: rgb(240, 243, 245);
 }
 
+.smoke--fullscreen--fixed {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: $header-height;
+}
+
 .page_top--landing-page {
   .smoke--fullscreen {
     @extend .smoke--fullscreen--opaque;
   }
 }
+
+
 
 .navbar--fixed {
   transform: translate3d(0, 0, 0);

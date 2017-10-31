@@ -188,6 +188,9 @@
             UI.error(err);
           });
           break;
+        case 'list':
+
+          break;
       }
     });
 
@@ -371,12 +374,14 @@
       $('#root__looks__title_icon').attr('class', 'fa fa-' + type);
       $('#root__looks__title').text(MDSCommon.findValueByName(lookMetaData.fields, 'title'));
       $('#root__looks__content').data('look-path', lookMetaData.path);
+
+      if ($$('root__looks__content_wrap')) {
+        $$('root__looks__content_wrap').destructor();
+      }
+      $('#root__looks__content').html('');
+
       switch (type) {
         case 'table':
-          if ($$('root__looks__content_wrap')) {
-            $$('root__looks__content_wrap').destructor();
-          }
-          $('#root__looks__content').html('');
           Mydataspace.request('entities.get', MDSCommon.extend(DATA, { path: lookMetaData.path + '/columns', children: true })).then(function(columnsMetaData) {
             var columns = columnsMetaData.children.map(function(column) {
               return {
@@ -461,6 +466,40 @@
             });
           });
           break;
+        case 'list':
+          var req = MDSCommon.extend(MDSCommon.extend(DATA, JSON.parse(MDSCommon.findValueByName(lookMetaData.fields, 'request'))), { children: true });
+          Mydataspace.request('entities.get', req).then(function(data) {
+            var itemsHTML = data.children.map(function(item) {
+              var itemUrlQuery = item.path;
+
+              var colWidth = 6;
+              var snippetClass = '';
+
+              return '<div class="col-md-' + colWidth + '"><a class="block snippet ' + snippetClass + ' clearfix" href="/' + lang + itemUrlQuery + '">\n' +
+                  getHtmlFromTemplate(MDSCommon.findValueByName(lookMetaData.fields, 'snippetHTML'), data) +
+                '</a></div>';
+            });
+
+            $('#root__looks__content').html('<div class="smoke smoke--fullscreen--opaque smoke--fullscreen smoke--fullscreen--fixed">' +
+              '<div class="container search__content">' +
+                '<div class="search__results">' +
+                  '<div class="search__header clearfix">' +
+                    '<div class="search__found_count">{{ site.data[page.language].search.found_prefix }} ' + data.children.length + '</div>' +
+                    '<div class="btn-group search__display_modes" role="group">' +
+                      '<button type="button" class="btn btn-default active" onclick=""><i class="fa fa-list"></i></button>' +
+                      '<button type="button" class="btn btn-default"><i class="fa fa-th-large"></i></button>' +
+                    '</div>' +
+                  '</div>' +
+                  '<div class="row">' + itemsHTML.join('\n') + '</div>' +
+                '</div>' +
+                '<div class="search__filter_panel_wrap">' +
+                  '<div class="search__filter_panel">' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+            '</div>');
+          });
+          break;
       }
       currentLook = lookMetaData;
     }
@@ -520,6 +559,7 @@
             '</div>' +
             '</div>';
         case 'table':
+        case 'list':
           return '<div data-look-path="'+ data.path + '" class="block snippet look_preview look_preview--table' + (isActive ? ' look_preview--active' : '') + '">' +
             '<div class="look_preview__overview">' +
             '<div class="look_preview__header"><i class="fa fa-table"></i><span class="look_preview__title">' + MDSCommon.findValueByName(data.fields, 'title') + '</span></div>' +
@@ -536,9 +576,6 @@
             '<span class="view__comment__date view__comment__date--small view__comment__date--preview-table">' + tr$('created') + ' ' + MDSCommon.humanizeDate(data.createdAt) + ' ' + tr$('ago') + '</span>' +
             '</div>' +
             '</div>';
-          break;
-        case 'list':
-
           break;
       }
     }
@@ -1133,6 +1170,9 @@
                     ]
                   });
                 });
+                break;
+              case 'list':
+                throw new Error('Not supported on main page');
                 break;
             }
           }
