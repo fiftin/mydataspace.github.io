@@ -511,7 +511,7 @@
 
               return '<div class="col-md-' + colWidth + '">' +
                 '<div class="block snippet snippet--no-pointer ' + snippetClass + ' clearfix">\n' +
-                  getHtmlFromTemplate(MDSCommon.findValueByName(lookMetaData.fields, snippetHTMLFieldName), MDSCommon.convertNameValueArrayToMap(data.fields)) +
+                  getHtmlFromTemplate(MDSCommon.findValueByName(lookMetaData.fields, snippetHTMLFieldName), MDSCommon.convertNameValueArrayToMap(item.fields)) +
                 '</div>' +
               '</div>';
             });
