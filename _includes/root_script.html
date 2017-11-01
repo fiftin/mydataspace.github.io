@@ -543,7 +543,7 @@
                 '<div class="search__results ' + searchResultNoFiltersClass + '">' +
                   '<div class="search__header clearfix">' +
                     '<div class="search__found_count">{{ site.data[page.language].search.found_prefix }} ' + data.children.length + ' {{ site.data[page.language].search.found_items_suffix }}</div>' +
-                    '<div class="btn-group search__display_modes" role="group">' +
+                    '<div class="btn-group search__display_modes ' + (!lineHTML || !snippetHTML ? 'hidden' : '') + ' " role="group">' +
                       (lineHTML ? '<button type="button" class="btn btn-default ' + displayLineButtonClass + '" id="root__look__content__list_look_display_line"><i class="fa fa-list"></i></button>' : '') +
                       (snippetHTML ? '<button type="button" class="btn btn-default ' + displaySnippetButtonClass + ' " id="root__look__content__list_look_display_snippet"><i class="fa fa-th-large"></i></button>' : '') +
                     '</div>' +
