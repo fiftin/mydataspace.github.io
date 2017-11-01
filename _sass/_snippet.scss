@@ -223,3 +223,8 @@ $snippet-footer-height-with-gradient: 50px;
     text-overflow: ellipsis;
   }
 }
+
+
+.snippet--line--no-padding-bottom {
+  padding-bottom: $small-padding;
+}
