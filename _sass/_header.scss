@@ -477,8 +477,8 @@ $slogan-animation-offset-mobile: 400px;
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 0;
   top: $header-height;
+  height: calc(100% - #{$header-height});
 }
 
 .page_top--landing-page {
