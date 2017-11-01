@@ -105,6 +105,13 @@ gulp.task('vendor:md', function () {
   return gulp.src('bower_components/remarkable/dist/*.js').pipe(gulp.dest('vendor'));
 });
 
+
+
+gulp.task('vendor:handlebars', function () {
+  return gulp.src('bower_components/handlebars/handlebars.runtime.js').pipe(gulp.dest('vendor'));
+});
+
+
 //
 // Flags
 //
@@ -150,6 +157,19 @@ gulp.task('vendor:jquery', function() {
       'bower_components/jquery/dist/jquery.js'
     ]
   ).pipe(gulp.dest('vendor'));
+});
+
+//
+// Tether
+//
+
+gulp.task('vendor:tether', function() {
+  return gulp.src(
+    ['bower_components/tether/dist/js/tether.min.js',
+      'bower_components/tether/dist/js/tether.js',
+      'bower_components/tether/dist/css/tether.css',
+      'bower_components/tether/dist/css/tether-theme-arrows-dark.css']
+  ).pipe(gulp.dest('vendor/tether'));
 });
 
 
@@ -230,7 +250,8 @@ gulp.task('default', function() {
       'vendor:webix',
       'vendor:bootstrap',
       'vendor:ace',
-      'vendor:tether'
+      'vendor:tether',
+      'vendor:handlebars'
     ],
     'api',
     'ui',
@@ -249,7 +270,8 @@ gulp.task('serve', function() {
       'vendor:webix',
       'vendor:bootstrap',
       'vendor:ace',
-      'vendor:tether'
+      'vendor:tether',
+      'vendor:handlebars'
     ],
     'api',
     'ui',
