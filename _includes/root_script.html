@@ -484,21 +484,28 @@
             var displayLineButtonClass;
             var search;
             var searchResultNoFiltersClass;
-            var hasSnippetTemplate = data.children[0] && MDSCommon.findValueByName(data.children[0].fields, 'snippetHTML');
-            var hasLineTemplate = data.children[0] && MDSCommon.findValueByName(data.children[0].fields, 'lineHTML');
-            var hasExtendedLineTemplate = data.children[0] && MDSCommon.findValueByName(data.children[0].fields, 'extendedLineHTML');
-            var hasPageTemplate = data.children[0] && MDSCommon.findValueByName(data.children[0].fields, 'pageHTML');
+            var snTemplate;
+
+            var snippetHTML = MDSCommon.findValueByName(lookMetaData.fields, 'snippetHTML');
+            var lineHTML = MDSCommon.findValueByName(lookMetaData.fields, 'lineHTML');
+            var extendedLineHTML = MDSCommon.findValueByName(lookMetaData.fields, 'extendedLineHTML');
+            var pageHTML = MDSCommon.findValueByName(lookMetaData.fields, 'pageHTML');
+
+            var snippetTemplate = snippetHTML && Handlebars.compile(snippetHTML);
+            var lineTemplate = lineHTML && Handlebars.compile(lineHTML);
+            var extendedLineTemplate = extendedLineHTML && Handlebars.compile(extendedLineHTML);
+            var pageTemplate = pageHTML && Handlebars.compile(pageHTML);
 
             if (data.facets == null) {
               searchResultNoFiltersClass = 'search__results--no-filter-panel';
             }
 
             var listLookDisplayMode;
-            if (hasSnippetTemplate && hasLineTemplate) {
+            if (snippetHTML && lineHTML) {
               listLookDisplayMode = window.localStorage.getItem('listLookDisplayMode') || 'line';
-            } else if (hasSnippetTemplate) {
+            } else if (snippetHTML) {
               listLookDisplayMode = 'snippet';
-            } else if (hasLineTemplate) {
+            } else if (lineHTML) {
               listLookDisplayMode = 'line';
             }
 
@@ -509,6 +516,7 @@
                 snippetHTMLFieldName = 'snippetHTML';
                 displaySnippetButtonClass = 'active';
                 displayLineButtonClass = '';
+                snTemplate = snippetTemplate;
                 break;
               case 'line':
                 colWidth = 12;
@@ -516,6 +524,7 @@
                 snippetHTMLFieldName = 'lineHTML';
                 displaySnippetButtonClass = '';
                 displayLineButtonClass = 'active';
+                snTemplate = lineTemplate;
                 break;
             }
 
@@ -524,7 +533,7 @@
 
               return '<div class="col-md-' + colWidth + '">' +
                 '<div class="block snippet snippet--no-pointer ' + snippetClass + ' clearfix">\n' +
-                  getHtmlFromTemplate(MDSCommon.findValueByName(lookMetaData.fields, snippetHTMLFieldName), MDSCommon.convertNameValueArrayToMap(item.fields)) +
+                  snTemplate(MDSCommon.convertNameValueArrayToMap(item.fields)) +
                 '</div>' +
               '</div>';
             });
@@ -535,8 +544,8 @@
                   '<div class="search__header clearfix">' +
                     '<div class="search__found_count">{{ site.data[page.language].search.found_prefix }} ' + data.children.length + ' {{ site.data[page.language].search.found_items_suffix }}</div>' +
                     '<div class="btn-group search__display_modes" role="group">' +
-                      (hasLineTemplate ? '<button type="button" class="btn btn-default ' + displayLineButtonClass + '" id="root__look__content__list_look_display_line"><i class="fa fa-list"></i></button>' : '') +
-                      (hasSnippetTemplate ? '<button type="button" class="btn btn-default ' + displaySnippetButtonClass + ' " id="root__look__content__list_look_display_snippet"><i class="fa fa-th-large"></i></button>' : '') +
+                      (lineHTML ? '<button type="button" class="btn btn-default ' + displayLineButtonClass + '" id="root__look__content__list_look_display_line"><i class="fa fa-list"></i></button>' : '') +
+                      (snippetHTML ? '<button type="button" class="btn btn-default ' + displaySnippetButtonClass + ' " id="root__look__content__list_look_display_snippet"><i class="fa fa-th-large"></i></button>' : '') +
                     '</div>' +
                   '</div>' +
                   '<div class="row">' + itemsHTML.join('\n') + '</div>' +

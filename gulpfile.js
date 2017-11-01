@@ -108,7 +108,7 @@ gulp.task('vendor:md', function () {
 
 
 gulp.task('vendor:handlebars', function () {
-  return gulp.src('bower_components/handlebars/handlebars.runtime.js').pipe(gulp.dest('vendor'));
+  return gulp.src(['bower_components/handlebars/handlebars.runtime.js', 'bower_components/handlebars/handlebars.js']).pipe(gulp.dest('vendor'));
 });
 
 
