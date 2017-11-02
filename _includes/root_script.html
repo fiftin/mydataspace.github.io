@@ -638,7 +638,8 @@
       $('#root__looks__content_wrap').css('display', 'none');
       $('body').css('overflow', '');
       currentLook = null;
-      $('#root__looks__content').data('look-path', null);
+//      $('#root__looks__content').data('look-path', null);
+      $('#root__looks__content').removeData();
       history.pushState({}, null, lang + '/' + DATA.root + '/views');
     }
 
