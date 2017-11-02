@@ -378,7 +378,7 @@
       return Object.keys(facets).map(function(facetName) {
         var classes = facetName === selectedFacetName ? 'search_filter__item--active' : '';
         var meta = MDSCommon.find(facetsMetaData, function(x) { return MDSCommon.endsWith(x.path, '/' + facetName); });
-        return  '<a href="javascript:void(0)" class="search_filter__item ' + classes + ' " data-filter-name="' + filterName + '" data-filter-value="' + facetName + '">' +
+        return  '<a href="javascript:void(0)" class="search_filter__item ' + classes + ' " data-filter-name="' + filterName + '" data-filter-value="' + facetName.toLowerCase() + '">' +
           '<span class="search_filter__item_title">' + (meta && MDSCommon.findValueByName(meta.fields, 'title') || facetName) + '</span>' +
           '<span class="search_filter__item_count">' + facets[facetName].count + '</span>' +
           '<i class="search_filter__item_remove fa fa-remove"></i>' +
