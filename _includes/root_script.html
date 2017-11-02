@@ -498,7 +498,11 @@
           });
           break;
         case 'list':
-          var req = MDSCommon.extend(MDSCommon.extend(DATA, JSON.parse(MDSCommon.findValueByName(lookMetaData.fields, 'request'))), { children: true });
+          var req = MDSCommon.extend(MDSCommon.extend(DATA, JSON.parse(MDSCommon.findValueByName(lookMetaData.fields, 'request'))), {
+            children: true,
+            filter: MDSCommon.convertNameValueArrayToMap($('#root__looks__content').data('list-look-filters') || [])
+          });
+
           Mydataspace.request('entities.get', req).then(function(data) {
             return Promise.all([data, Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
               path: lookMetaData.path + '/filters',
