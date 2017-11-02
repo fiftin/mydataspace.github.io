@@ -228,9 +228,7 @@
             ;
             break;
         }
-
-
-        if (currentLook.path === data.path) {
+        if (currentLook && currentLook.path === data.path) {
           setLook(data);
         }
       }
@@ -1393,7 +1391,7 @@
           document.getElementById('root__looks__content_wrap').style.display = 'none';
           $('body').css('overflow', '');
         } else {
-          if (currentLook.path === data.path) {
+          if (currentLook && currentLook.path === data.path) {
             selectLook();
           }
         }
