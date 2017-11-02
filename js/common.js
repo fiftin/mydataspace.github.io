@@ -11,6 +11,26 @@ var MDSCommon = {
     'function'
   ],
 
+  findIndex: function(arr, predicate) {
+    if (!Array.isArray(arr)) {
+      throw new Error('Parameter arr must be array');
+    }
+    if (typeof predicate !== 'function') {
+      throw new Error('Parameter predicate must be function');
+    }
+    for (var i in arr) {
+      if (predicate(arr[i])) {
+        return i;
+      }
+    }
+    return -1;
+  },
+
+  find: function(arr, predicate) {
+    var i = MDSCommon.findIndex(arr, predicate);
+    return i === -1 ? undefined : arr[i];
+  },
+
   parseQuery: function(queryString) {
     var query = {};
     var pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&').filter(function(part) { return part !== ''; });

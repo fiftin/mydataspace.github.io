@@ -1,4 +1,10 @@
 describe('MDSCommon', function() {
+  describe('#find', function() {
+    it('Should find existing item', function() {
+      expect(MDSCommon.find(['hello', 'test', 'world'], function(x) { return x == 'test'; })).eq('test');
+    })
+  });
+
   describe('#parseQuery', function() {
     it('Should return empty object for empty query', function() {
       expect(MDSCommon.parseQuery('')).to.eql({});

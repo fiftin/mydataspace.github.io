@@ -375,21 +375,21 @@
 
     function getListLookSingleFilter(facets, facetsMetaData) {
       return Object.keys(facets).map(function(facetName) {
-        var meta = MDSCommon.find(facetsMetaData, function(x) { return MDSCommon.endsWith(x.path, '/' + facetName) });
-       return  '<a href="javascript:void(0)">' +
+        var meta = MDSCommon.find(facetsMetaData, function(x) { return MDSCommon.endsWith(x.path, '/' + facetName); });
+        return  '<a href="javascript:void(0)" class="search_filter__item ">' +
           '<span class="search_filter__item_title">' + (meta && MDSCommon.findValueByName(meta.fields, 'title') || facetName) + '</span>' +
           '<span class="search_filter__item_count">' + facets[facetName].count + '</span>' +
           '<i class="search_filter__item_remove fa fa-remove"></i>' +
         '</a>';
-      }).join('\n');
+        }).join('\n');
     }
 
     function getListLookFilters(filters, filtersMetaData) {
       return Object.keys(filters).map(function(filterName) {
         var meta = MDSCommon.find(filtersMetaData, function(x) { return MDSCommon.endsWith(x.path, '/' + filterName) });
         return '<div class="search_filter">' +
-          '<div class="search_filter__title">' + (meta && MDSCommon.findValueByName(meta.fields, 'title') || filteName) + '</div>' +
-          '<div class="search_filter__items">' + getListLookSingleFilter(filters[filterName], meta.children) + '</div>' +
+          '<div class="search_filter__title">' + (meta && MDSCommon.findValueByName(meta.fields, 'title') || filterName) + '</div>' +
+          '<div class="search_filter__items">' + getListLookSingleFilter(filters[filterName], meta ? meta.children : []) + '</div>' +
         '</div>';
       }).join('\n');
     }
@@ -499,11 +499,11 @@
           var req = MDSCommon.extend(MDSCommon.extend(DATA, JSON.parse(MDSCommon.findValueByName(lookMetaData.fields, 'request'))), { children: true });
           Mydataspace.request('entities.get', req).then(function(data) {
             return Promise.all([data, Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
-              path: lookMetaData + '/filters',
+              path: lookMetaData.path + '/filters',
               children: true
             }))]);
           }).then(function(res) {
-            var filtersReq = res[1].filter(function(filter) {
+            var filtersReq = res[1].children.filter(function(filter) {
               var name = MDSCommon.getPathName(filter.path);
               return MDSCommon.isPresent(res[0].facets[name]);
             }).map(function(filter) {
@@ -512,7 +512,14 @@
             return Promise.all([res[0], Mydataspace.request('entities.get', filtersReq)]);
           }).then(function(res) {
             var data = res[0];
-            var filtersMetaData = res[1];
+            var filtersMetaData;
+            if (Array.isArray(res[1])) {
+              filtersMetaData = res[1];
+            } else if (res[1]) {
+              filtersMetaData = [res[1]];
+            } else {
+              filtersMetaData = [];
+            }
 
             var colWidth;
             var snippetHTMLFieldName;
@@ -589,7 +596,7 @@
                 '</div>' +
                 '<div class="search__filter_panel_wrap">' +
                   '<div class="search__filter_panel">' +
-                    getListLookFilters(data.facets, filtersMetaData) +
+                    getListLookFilters(data.facets || {}, filtersMetaData) +
                   '</div>' +
                 '</div>' +
               '</div>' +
