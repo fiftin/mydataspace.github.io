@@ -371,10 +371,14 @@
       setLook(currentLook, true);
     }
 
-    function getListLookSingleFilter(facets, facetsMetaData) {
+    function getListLookSingleFilter(facets, facetsMetaData, filterName) {
+      var currentFilters = $('#root__looks__content').data('list-look-filters');
+      var selectedFacetName = MDSCommon.findValueByName(currentFilters, filterName);
+
       return Object.keys(facets).map(function(facetName) {
+        var classes = facetName === selectedFacetName ? 'search_filter__item--active' : '';
         var meta = MDSCommon.find(facetsMetaData, function(x) { return MDSCommon.endsWith(x.path, '/' + facetName); });
-        return  '<a href="javascript:void(0)" class="search_filter__item ">' +
+        return  '<a href="javascript:void(0)" class="search_filter__item ' + classes + ' " data-filter-name="' + filterName + '" data-filter-value="' + facetName + '">' +
           '<span class="search_filter__item_title">' + (meta && MDSCommon.findValueByName(meta.fields, 'title') || facetName) + '</span>' +
           '<span class="search_filter__item_count">' + facets[facetName].count + '</span>' +
           '<i class="search_filter__item_remove fa fa-remove"></i>' +
@@ -387,7 +391,7 @@
         var meta = MDSCommon.find(filtersMetaData, function(x) { return MDSCommon.endsWith(x.path, '/' + filterName) });
         return '<div class="search_filter">' +
           '<div class="search_filter__title">' + (meta && MDSCommon.findValueByName(meta.fields, 'title') || filterName) + '</div>' +
-          '<div class="search_filter__items">' + getListLookSingleFilter(filters[filterName], meta ? meta.children : []) + '</div>' +
+          '<div class="search_filter__items">' + getListLookSingleFilter(filters[filterName], meta ? meta.children : [], filterName) + '</div>' +
         '</div>';
       }).join('\n');
     }
@@ -601,6 +605,22 @@
             '</div>' : '<div class="container search__content"><div class="search__no_results">{{ site.data[page.language].search.no_results }}</div></div>');
             $('#root__look__content__list_look_display_snippet').on('click', function() { updateListLook('snippet'); });
             $('#root__look__content__list_look_display_line').on('click', function() { updateListLook('line'); });
+            $('#root__looks__content').find('.search_filter__items').on('click', 'search_filter__item', function() {
+              var currentFilters = $('#root__looks__content').data('list-look-filters');
+              var filter = MDSCommon.findByName(currentFilters, $(this).data('filter-name'));
+              var newFilter = { name: $(this).data('filter-name'), value: $(this).data('filter-value') };
+              if (filter) {
+                if (filter.value === newFilter.value) {
+                  filter.value = null;
+                } else {
+                  filter.value = newFilter.value;
+                }
+              } else {
+                currentFilters.push(newFilter);
+              }
+              $('#root__looks__content').data('list-look-filters', currentFilters);
+              updateListLook('line');
+            });
           });
           break;
       }
