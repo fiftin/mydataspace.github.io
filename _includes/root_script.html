@@ -372,7 +372,7 @@
     }
 
     function getListLookSingleFilter(facets, facetsMetaData, filterName) {
-      var currentFilters = $('#root__looks__content').data('list-look-filters');
+      var currentFilters = $('#root__looks__content').data('list-look-filters') || [];
       var selectedFacetName = MDSCommon.findValueByName(currentFilters, filterName);
 
       return Object.keys(facets).map(function(facetName) {
@@ -605,8 +605,8 @@
             '</div>' : '<div class="container search__content"><div class="search__no_results">{{ site.data[page.language].search.no_results }}</div></div>');
             $('#root__look__content__list_look_display_snippet').on('click', function() { updateListLook('snippet'); });
             $('#root__look__content__list_look_display_line').on('click', function() { updateListLook('line'); });
-            $('#root__looks__content').find('.search_filter__items').on('click', 'search_filter__item', function() {
-              var currentFilters = $('#root__looks__content').data('list-look-filters');
+            $('#root__looks__content').find('.search_filter__items').on('click', '.search_filter__item', function() {
+              var currentFilters = $('#root__looks__content').data('list-look-filters') || [];
               var filter = MDSCommon.findByName(currentFilters, $(this).data('filter-name'));
               var newFilter = { name: $(this).data('filter-name'), value: $(this).data('filter-value') };
               if (filter) {
