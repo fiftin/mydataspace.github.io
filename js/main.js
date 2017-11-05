@@ -263,7 +263,7 @@ Handlescripts = {
     Handlescripts.helpers[name] = fn;
   },
   compile: function(scripts) {
-    return parseScripts.bind(scripts);
+    return parseScripts.bind(Handlescripts, scripts);
   }
 };
 
