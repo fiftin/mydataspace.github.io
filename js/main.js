@@ -279,7 +279,7 @@ Handlescripts.registerHelper('vkGroupWidget', function(options) {
   '</script>';
 });
 
-Handlescripts.registerHelper('vkGroupWidget', function(options) {
+Handlescripts.registerHelper('vk', function(options) {
   return '<script src="//vk.com/js/api/openapi.js?150"></script>';
 });
 
