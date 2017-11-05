@@ -534,15 +534,13 @@
             var displayLineButtonClass;
             var search;
             var searchResultNoFiltersClass;
-            var snTemplate;
+            var sn;
 
             var snippetHTML = MDSCommon.findValueByName(lookMetaData.fields, 'snippetHTML');
             var lineHTML = MDSCommon.findValueByName(lookMetaData.fields, 'lineHTML');
             var extendedLineHTML = MDSCommon.findValueByName(lookMetaData.fields, 'extendedLineHTML');
             var pageHTML = MDSCommon.findValueByName(lookMetaData.fields, 'pageHTML');
 
-            var snippetTemplate = snippetHTML && Handlebars.compile(snippetHTML);
-            var lineTemplate = lineHTML && Handlebars.compile(lineHTML);
             var extendedLineTemplate = extendedLineHTML && Handlebars.compile(extendedLineHTML);
             var pageTemplate = pageHTML && Handlebars.compile(pageHTML);
 
@@ -566,7 +564,7 @@
                 snippetHTMLFieldName = 'snippetHTML';
                 displaySnippetButtonClass = 'active';
                 displayLineButtonClass = '';
-                snTemplate = snippetTemplate;
+                sn = parseSnippetTemplate(snippetHTML);
                 break;
               case 'line':
                 colWidth = 12;
@@ -574,16 +572,17 @@
                 snippetHTMLFieldName = 'lineHTML';
                 displaySnippetButtonClass = '';
                 displayLineButtonClass = 'active';
-                snTemplate = lineTemplate;
+                sn = parseSnippetTemplate(lineHTML);
                 break;
             }
 
             var itemsHTML = data.children.map(function(item) {
 //              var itemUrlQuery = item.path;
-
+              var fields = MDSCommon.convertNameValueArrayToMap(item.fields);
               return '<div class="col-md-' + colWidth + '">' +
                 '<div class="block snippet snippet--no-pointer ' + snippetClass + ' clearfix">\n' +
-                  snTemplate(MDSCommon.convertNameValueArrayToMap(item.fields)) +
+                  sn.template(fields) +
+                  sn.scripts(fields) +
                 '</div>' +
               '</div>';
             });
@@ -666,7 +665,7 @@
 
       setLook($(preview).data('look-data'));
 
-      history.pushState({}, null, lang + '/' + DATA.root + '/' + path);
+      history.pushState({}, '', lang + '/' + DATA.root + '/' + path);
     }
 
     function getUnwrappedLookPreviewHTML(data, isActive) {

@@ -171,3 +171,110 @@ function getHtmlFromTemplate(template, data) {
   }
   return ret;
 }
+
+function parseSnippetTemplate(template) {
+  if (template == null) {
+    throw new Error('Parameter template can not be null');
+  }
+  var parts = template.split('\n---\n');
+  return {
+    template: Handlebars.compile(parts[0]),
+    scripts: Handlescripts.compile(parts[1] || '')
+  };
+}
+
+function parseSingleScript(s, fields) {
+  var state = 'helper_name';
+  var helperName = '';
+  var options = [];
+  s += ' ';
+  for (var i in s) {
+    var c = s[i];
+    switch (c) {
+      case ' ':
+        switch (state) {
+          case 'space':
+            break;
+          case 'helper_name':
+            state = 'space';
+            break;
+          case 'string':
+            options[options.length-1] += c;
+            break;
+          case 'option':
+            options[options.length-1] = fields[options[options.length-1]];
+            state = 'space';
+            break;
+          default:
+            throw new Error('Unexpected char' + c + ' in state ' + state);
+            break;
+        }
+        break;
+      case '"':
+        switch (state) {
+          case 'space':
+            options.push('');
+            state = 'string';
+            break;
+          case 'string':
+            state = 'space';
+            break;
+          case 'helper_name':
+          case 'option':
+          default:
+            throw new Error('Unexpected char' + c + ' in state ' + state);
+            break;
+        }
+        break;
+      default:
+        switch (state) {
+          case 'space':
+            state = 'option';
+            options.push(c);
+            break;
+          case 'string':
+            options[options.length-1] += c;
+            break;
+          case 'helper_name':
+            helperName += c;
+            break;
+          case 'option':
+            options[options.length-1] += c;
+            break;
+          default:
+            throw new Error('Unexpected char ' + c + ' in state ' + state);
+            break;
+        }
+        break;
+    }
+  }
+  return Handlescripts.helpers[helperName] ? Handlescripts.helpers[helperName](options) : '';
+}
+
+function parseScripts(scripts, fields) {
+  return scripts.split('\n').filter(function(l) { return l.trim() !== ''; }).map(function(l) {
+    return parseSingleScript(l, fields);
+  });
+}
+
+Handlescripts = {
+  helpers: {},
+  registerHelper: function(name, fn) {
+    Handlescripts.helpers[name] = fn;
+  },
+  compile: function(scripts) {
+    return parseScripts.bind(scripts);
+  }
+};
+
+Handlescripts.registerHelper('vkGroupWidget', function(options) {
+  var vk_id = options[0];
+  if (MDSCommon.isBlank(vk_id)) {
+    return '';
+  }
+  return '<script type="text/javascript" src="//vk.com/js/api/openapi.js?150"></script>\n' +
+  '<div id="vk_groups_' + vk_id + '"></div>\n' +
+  '<script type="text/javascript">\n' +
+  'VK.Widgets.Group("vk_groups_' + vk_id + '", {mode: 3}, ' + vk_id + ');\n' +
+  '</script>';
+});
