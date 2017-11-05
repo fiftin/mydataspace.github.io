@@ -278,3 +278,17 @@ Handlescripts.registerHelper('vkGroupWidget', function(options) {
   'VK.Widgets.Group("vk_groups_' + vk_id + '", {mode: 3}, ' + vk_id + ');\n' +
   '</script>';
 });
+
+Handlescripts.registerHelper('vkGroupWidget', function(options) {
+  return '<script src="//vk.com/js/api/openapi.js?150"></script>';
+});
+
+Handlescripts.registerHelper('vkGroupWidget', function(options) {
+  var vk_id = options[0];
+  if (MDSCommon.isBlank(vk_id)) {
+    return '';
+  }
+  return '<script>\n' +
+    'VK.Widgets.Group("vk_groups_' + vk_id + '", {mode: 3}, ' + vk_id + ');\n' +
+  '</script>';
+});

@@ -503,6 +503,7 @@
             filter: MDSCommon.convertNameValueArrayToMap($('#root__looks__content').data('list-look-filters') || [])
           });
 
+
           Mydataspace.request('entities.get', req).then(function(data) {
             return Promise.all([data, Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
               path: lookMetaData.path + '/filters',
@@ -577,15 +578,14 @@
             }
 
             var itemsHTML = data.children.map(function(item) {
-//              var itemUrlQuery = item.path;
-              var fields = MDSCommon.convertNameValueArrayToMap(item.fields);
               return '<div class="col-md-' + colWidth + '">' +
                 '<div class="block snippet snippet--no-pointer ' + snippetClass + ' clearfix">\n' +
-                  sn.template(fields) +
-                  sn.scripts(fields) +
+                  sn.template(MDSCommon.convertNameValueArrayToMap(item.fields || [])) +
                 '</div>' +
               '</div>';
             });
+
+
 
             $('#root__looks__content').html(listLookDisplayMode ? '<div class="smoke smoke--fullscreen--opaque smoke--fullscreen smoke--fullscreen--fixed">' +
               '<div class="container search__content search__content--fixed">' +
@@ -606,6 +606,15 @@
                 '</div>' +
               '</div>' +
             '</div>' : '<div class="container search__content"><div class="search__no_results">{{ site.data[page.language].search.no_results }}</div></div>');
+
+
+            var scriptsHTML = Handlescripts.compile(MDSCommon.findValueByName(lookMetaData.fields, 'listScripts') || '')();
+            scriptsHTML += '\n' + data.children.map(function(item) {
+              return sn.scripts(MDSCommon.convertNameValueArrayToMap(item.fields || []));
+            }).join('\n');
+            $(scriptsHTML).appendTo('#root__looks__content');
+
+
             $('#root__look__content__list_look_display_snippet').on('click', function() { updateListLook('snippet'); });
             $('#root__look__content__list_look_display_line').on('click', function() { updateListLook('line'); });
             $('#root__looks__content').find('.search_filter__items').on('click', '.search_filter__item', function() {
