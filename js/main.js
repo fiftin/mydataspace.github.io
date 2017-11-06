@@ -266,16 +266,26 @@ Handlescripts = {
     if (typeof src !== 'string') {
       throw new Error('src must be string');
     }
+    // Handlescripts.helpers[name] = function() {
+    //   return '<script>' +
+    //   ' $.ajax({\n' +
+    //   '    async: false,\n' +
+    //   '    url: "' + src + '",\n' +
+    //   '    dataType: "script"\n' +
+    //   ' });' +
+    //   '</script>';
+    // };
+
     Handlescripts.helpers[name] = function() {
-      return '<script>' +
-      ' $.ajax({\n' +
-      '    async: false,\n' +
-      '    url: "' + src + '",\n' +
-      '    dataType: "script"\n' +
-      ' });' +
-      '</script>';
+      return '<script>(function() {' +
+        '    var req = new XMLHttpRequest();\n' +
+        '    req.open("GET", ' + src + ', false);\n' +
+        '    req.send();' +
+        '    eval(req.responseText);' +
+        '})();</script>';
     };
   },
+
   compile: function(scripts) {
     return parseScripts.bind(Handlescripts, scripts);
   }
