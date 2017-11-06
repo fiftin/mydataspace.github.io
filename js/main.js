@@ -300,5 +300,5 @@ Handlescripts.registerHelper('vkGroupWidget', function(options) {
   if (MDSCommon.isBlank(vk_id)) {
     return '';
   }
-  return  '<scirpt>VK.Widgets.Group("vk_groups_' + vk_id + '", {mode: 3}, ' + vk_id + ');</scirpt>';
+  return  '<script>VK.Widgets.Group("vk_groups_' + vk_id + '", {mode: 3}, ' + vk_id + ');</script>';
 });

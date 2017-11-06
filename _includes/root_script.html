@@ -612,7 +612,7 @@
 
             scriptsHTML += '\n' + data.children.map(function(item) {
               return sn.scripts(MDSCommon.convertNameValueArrayToMap(item.fields || []));
-            }).join('\n');
+            }).filter(function(s) { return s !== ''; }).join('\n');
 
             $(scriptsHTML).appendTo('#root__looks__content');
 
