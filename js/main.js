@@ -262,33 +262,43 @@ Handlescripts = {
   registerHelper: function(name, fn) {
     Handlescripts.helpers[name] = fn;
   },
+  registerSource: function(name, src) {
+    if (typeof src !== 'string') {
+      throw new Error('src must be string');
+    }
+    Handlescripts.helpers[name] = function() {
+      return '<script>' +
+      ' $.ajax({\n' +
+      '    async: false,\n' +
+      '    url: "' + src + '",\n' +
+      '    dataType: "script"\n' +
+      ' });' +
+      '</script>';
+    };
+  },
   compile: function(scripts) {
     return parseScripts.bind(Handlescripts, scripts);
   }
 };
 
-Handlescripts.registerHelper('vkGroupWidget', function(options) {
-  var vk_id = options[0];
-  if (MDSCommon.isBlank(vk_id)) {
-    return '';
-  }
-  return '<script type="text/javascript" src="//vk.com/js/api/openapi.js?150"></script>\n' +
-  '<div id="vk_groups_' + vk_id + '"></div>\n' +
-  '<script type="text/javascript">\n' +
-  'VK.Widgets.Group("vk_groups_' + vk_id + '", {mode: 3}, ' + vk_id + ');\n' +
-  '</script>';
-});
+// Handlescripts.registerHelper('vkGroupWidget', function(options) {
+//   var vk_id = options[0];
+//   if (MDSCommon.isBlank(vk_id)) {
+//     return '';
+//   }
+//   return '<script type="text/javascript" src="//vk.com/js/api/openapi.js?150"></script>\n' +
+//   '<div id="vk_groups_' + vk_id + '"></div>\n' +
+//   '<script type="text/javascript">\n' +
+//   'VK.Widgets.Group("vk_groups_' + vk_id + '", {mode: 3}, ' + vk_id + ');\n' +
+//   '</script>';
+// });
 
-Handlescripts.registerHelper('vk', function(options) {
-  return '<script src="//vk.com/js/api/openapi.js?150"></script>';
-});
+Handlescripts.registerSource('vk', '//vk.com/js/api/openapi.js?150');
 
 Handlescripts.registerHelper('vkGroupWidget', function(options) {
   var vk_id = options[0];
   if (MDSCommon.isBlank(vk_id)) {
     return '';
   }
-  return '<script>\n' +
-    'VK.Widgets.Group("vk_groups_' + vk_id + '", {mode: 3}, ' + vk_id + ');\n' +
-  '</script>';
+  return  '<scirpt>VK.Widgets.Group("vk_groups_' + vk_id + '", {mode: 3}, ' + vk_id + ');</scirpt>';
 });

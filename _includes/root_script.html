@@ -609,9 +609,11 @@
 
 
             var scriptsHTML = Handlescripts.compile(MDSCommon.findValueByName(lookMetaData.fields, 'listScripts') || '')();
+
             scriptsHTML += '\n' + data.children.map(function(item) {
               return sn.scripts(MDSCommon.convertNameValueArrayToMap(item.fields || []));
             }).join('\n');
+
             $(scriptsHTML).appendTo('#root__looks__content');
 
 
