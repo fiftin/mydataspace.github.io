@@ -502,8 +502,6 @@
             children: true,
             filter: MDSCommon.convertNameValueArrayToMap($('#root__looks__content').data('list-look-filters') || [])
           });
-
-
           Mydataspace.request('entities.get', req).then(function(data) {
             return Promise.all([data, Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
               path: lookMetaData.path + '/filters',
@@ -542,9 +540,6 @@
             var extendedLineHTML = MDSCommon.findValueByName(lookMetaData.fields, 'extendedLineHTML');
             var pageHTML = MDSCommon.findValueByName(lookMetaData.fields, 'pageHTML');
 
-            var extendedLineTemplate = extendedLineHTML && Handlebars.compile(extendedLineHTML);
-            var pageTemplate = pageHTML && Handlebars.compile(pageHTML);
-
             if (data.facets == null) {
               searchResultNoFiltersClass = 'search__results--no-filter-panel';
             }
@@ -577,15 +572,20 @@
                 break;
             }
 
+            var extendedLine;
+            if (extendedLineHTML) {
+              extendedLine = parseSnippetTemplate(extendedLineHTML);
+            } else {
+              snippetClass += ' snippet--no-pointer';
+            }
+
             var itemsHTML = data.children.map(function(item) {
               return '<div class="col-md-' + colWidth + '">' +
-                '<div class="block snippet snippet--no-pointer ' + snippetClass + ' clearfix">\n' +
+                '<div class="block snippet ' + snippetClass + ' clearfix" data-item-path="' + item.path + '">\n' +
                   sn.template(MDSCommon.convertNameValueArrayToMap(item.fields || [])) +
                 '</div>' +
               '</div>';
             });
-
-
 
             $('#root__looks__content').html(listLookDisplayMode ? '<div class="smoke smoke--fullscreen--opaque smoke--fullscreen smoke--fullscreen--fixed">' +
               '<div class="container search__content search__content--fixed">' +
@@ -633,6 +633,12 @@
                 currentFilters.push(newFilter);
               }
               $('#root__looks__content').data('list-look-filters', currentFilters);
+              $('#root__looks__content').find('.search__results').on('click', '.snippet', function() {
+                var path = $(this).data('item-path');
+                Mydataspace.request('entities.get', MDSCommon.extend(DATA, { path: path, children: true })).then(function(data) {
+                  $(this).html(extendedLine.template(MDSCommon.convertNameValueArrayToMap(data.fields || [])));
+                });
+              });
               updateListLook('line');
             });
           });
