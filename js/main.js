@@ -312,3 +312,11 @@ Handlescripts.registerHelper('vkGroupWidget', function(options) {
   }
   return  '<script>VK.Widgets.Group("vk_groups_' + vk_id + '", {mode: 3}, ' + vk_id + ');</script>';
 });
+
+Handlebars.registerHelper('host', function(url) {
+  var m = url.match(/^\w+:\/\/([^/]+)/);
+  if (!m) {
+    return url;
+  }
+  return m[1];
+});
