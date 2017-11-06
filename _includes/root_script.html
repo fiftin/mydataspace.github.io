@@ -532,7 +532,7 @@
             var displaySnippetButtonClass;
             var displayLineButtonClass;
             var search;
-            var searchResultNoFiltersClass;
+            var searchResultNoFiltersClass = data.facets == null ? 'search__results--no-filter-panel' : '';
             var sn;
 
             var snippetHTML = MDSCommon.findValueByName(lookMetaData.fields, 'snippetHTML');
@@ -540,9 +540,6 @@
             var extendedLineHTML = MDSCommon.findValueByName(lookMetaData.fields, 'extendedLineHTML');
             var pageHTML = MDSCommon.findValueByName(lookMetaData.fields, 'pageHTML');
 
-            if (data.facets == null) {
-              searchResultNoFiltersClass = 'search__results--no-filter-panel';
-            }
 
             var listLookDisplayMode;
             if (snippetHTML && lineHTML) {
@@ -633,15 +630,15 @@
                 currentFilters.push(newFilter);
               }
               $('#root__looks__content').data('list-look-filters', currentFilters);
-              $('#root__looks__content').find('.search__results').on('click', '.snippet', function() {
-                var path = $(this).data('item-path');
-                Mydataspace.request('entities.get', MDSCommon.extend(DATA, { path: path, children: true })).then(function(data) {
-                  var itemFields = MDSCommon.convertNameValueArrayToMap(data.fields || []);
-                  $(this).html(extendedLine.template(itemFields));
-                  $(sn.scripts(itemFields)).appendTo($(this));
-                });
-              });
               updateListLook('line');
+            });
+            $('#root__looks__content').find('.search__results').on('click', '.snippet', function() {
+              var path = $(this).data('item-path');
+              Mydataspace.request('entities.get', MDSCommon.extend(DATA, { path: path, children: true })).then(function(data) {
+                var itemFields = MDSCommon.convertNameValueArrayToMap(data.fields || []);
+                $(this).html(extendedLine.template(itemFields));
+                $(sn.scripts(itemFields)).appendTo($(this));
+              });
             });
           });
           break;
