@@ -291,27 +291,26 @@ Handlescripts = {
   }
 };
 
-// Handlescripts.registerHelper('vkGroupWidget', function(options) {
-//   var vk_id = options[0];
-//   if (MDSCommon.isBlank(vk_id)) {
-//     return '';
-//   }
-//   return '<script type="text/javascript" src="//vk.com/js/api/openapi.js?150"></script>\n' +
-//   '<div id="vk_groups_' + vk_id + '"></div>\n' +
-//   '<script type="text/javascript">\n' +
-//   'VK.Widgets.Group("vk_groups_' + vk_id + '", {mode: 3}, ' + vk_id + ');\n' +
-//   '</script>';
-// });
 
 Handlescripts.registerSource('vk', '//vk.com/js/api/openapi.js?150');
+Handlescripts.registerSource('ok', 'https://connect.ok.ru/connect.js');
 
 Handlescripts.registerHelper('vkGroupWidget', function(options) {
   var vk_id = options[0];
   if (MDSCommon.isBlank(vk_id)) {
     return '';
   }
-  return  '<script>VK.Widgets.Group("vk_groups_' + vk_id + '", {mode: 3}, ' + vk_id + ');</script>';
+  return  '<script>VK.Widgets.Group("ok_group_widget' + vk_id + '", {mode: 3}, ' + vk_id + ');</script>';
 });
+
+Handlescripts.registerHelper('okGroupWidget', function(options) {
+  var ok_id = options[0];
+  if (MDSCommon.isBlank(ok_id)) {
+    return '';
+  }
+  return  '<script>OK.CONNECT.insertGroupWidget("ok_group_widget_' + ok_id + '", ' + ok_id + ', \'{"width":250,"height":230}\');</script>';
+});
+
 
 Handlebars.registerHelper('host', function(url) {
   var m = url.match(/^\w+:\/\/([^/]+)/);
