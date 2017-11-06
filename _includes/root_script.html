@@ -637,7 +637,10 @@
               Mydataspace.request('entities.get', MDSCommon.extend(DATA, { path: path, children: true })).then(function(data) {
                 var itemFields = MDSCommon.convertNameValueArrayToMap(data.fields || []);
                 $(this).html(extendedLine.template(itemFields));
-                $(extendedLine.scripts(itemFields)).appendTo($(this));
+                var script = extendedLine.scripts(itemFields);
+                if (MDSCommon.isPresent(script)) {
+                  $(script).appendTo($(this));
+                }
               });
             });
           });
