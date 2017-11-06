@@ -277,11 +277,11 @@ Handlescripts = {
     // };
 
     Handlescripts.helpers[name] = function() {
-      return '<script>(function() {' +
+      return '<script>(function() {\n' +
         '    var req = new XMLHttpRequest();\n' +
-        '    req.open("GET", ' + src + ', false);\n' +
-        '    req.send();' +
-        '    eval(req.responseText);' +
+        '    req.open("GET", "' + src + '", false);\n' +
+        '    req.send();\n' +
+        '    eval(req.responseText);\n' +
         '})();</script>';
     };
   },
