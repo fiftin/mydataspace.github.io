@@ -308,7 +308,7 @@ Handlescripts.registerHelper('okGroupWidget', function(options) {
   if (MDSCommon.isBlank(ok_id)) {
     return '';
   }
-  return  '<script>OK.CONNECT.insertGroupWidget("ok_group_widget_' + ok_id + '", ' + ok_id + ', \'{"width":250,"height":230}\');</script>';
+  return  '<script>OK.CONNECT.insertGroupWidget("ok_group_widget_' + ok_id + '", ' + ok_id + ', \'{"width":200,"height":210}\');</script>';
 });
 
 
