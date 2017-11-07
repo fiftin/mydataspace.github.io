@@ -269,6 +269,12 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     MAX_NUMBER_OF_CHILDREN: 'Доч. эл-тов',
     EDIT_ENTITY: 'Ред.',
     CLONE_ENTITY: 'Копир.',
+
+
+    CLONE_ROOT_NAME: 'Корень',
+    CLONE_ENTITY_PATH: 'Путь',
+
+
     SAVE_ENTITY: 'Сохр.',
     REFRESH_ENTITY: 'Обнов.',
     CANCEL_ENTITY: 'Пр.',
