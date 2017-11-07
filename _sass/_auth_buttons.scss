@@ -36,6 +36,17 @@
   }
 }
 
+.auth_button--vk {
+  &, &:focus {
+    background: #507299 !important;
+    border-color: #507299 !important;
+    color: white !important;
+  }
+  &:hover, &:active {
+    background: #486991 !important;
+    border-color: #486991 !important;
+  }
+}
 
 .auth_button--facebook {
   &, &:focus {
