@@ -8429,13 +8429,13 @@ function Myda(optionsOrRoot) {
   this.authProviders = {
     accessToken: {
       url: '/auth?authProvider=access-token' +
-           '&state=permission%3d{{permission}}%26clientId%3d{{client_id}}%26resultFormat=json'
+           '&state=permission%3d{{permission}}%3BclientId%3d{{client_id}}%3BresultFormat=json'
     },
     vk: {
       title: 'Connect through VK',
       icon: 'vk',
       url: 'https://oauth.vk.com/authorize?client_id=6037091&scope=email' +
-      '&state=permission%3d{{permission}}%26clientId%3d{{client_id}}' +
+      '&state=permission%3d{{permission}}%3BclientId%3d{{client_id}}' +
       '&redirect_uri={{api_url}}%2fauth%2fvk' +
       '&display=popup',
       loginWindow: {
@@ -8446,7 +8446,7 @@ function Myda(optionsOrRoot) {
       title: 'Connect through GitHub',
       icon: 'github',
       url: 'https://github.com/login/oauth/authorize?client_id=eaa5d1176778a1626379&scope=user:email' +
-           '&state=permission%3d{{permission}}%26clientId%3d{{client_id}}' +
+           '&state=permission%3d{{permission}}%3BclientId%3d{{client_id}}' +
            '&redirect_uri={{api_url}}%2fauth%2fgithub',
       loginWindow: {
         height: 600
@@ -8456,7 +8456,7 @@ function Myda(optionsOrRoot) {
       title: 'Connect through Facebook',
       icon: 'facebook',
       url: 'https://www.facebook.com/dialog/oauth?client_id=827438877364954&scope=email' +
-           '&state=permission%3d{{permission}}%26clientId%3d{{client_id}}' +
+           '&state=permission%3d{{permission}}%3BclientId%3d{{client_id}}' +
            '&redirect_uri={{api_url}}%2fauth%2ffacebook' +
            '&display=popup',
       loginWindow: {
@@ -8469,7 +8469,7 @@ function Myda(optionsOrRoot) {
       url: 'https://accounts.google.com/o/oauth2/auth' +
            '?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.me%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.profile.emails.read&response_type=code' +
            '&client_id=821397494321-s85oh989s0ip2msnock29bq1gpprk07f.apps.googleusercontent.com' +
-           '&state=permission%3d{{permission}}%26clientId%3d{{client_id}}' +
+           '&state=permission%3d{{permission}}%3BclientId%3d{{client_id}}' +
            '&redirect_uri={{api_url}}%2fauth%2fgoogle',
       loginWindow: {
         height: 800

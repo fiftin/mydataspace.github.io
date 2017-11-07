@@ -189,6 +189,12 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
   width: calc(100% - #{$no-items-col-gap});
 }
 
+.no_items__btn--center {
+  position: static;
+  width: auto;
+  margin-top: 20px;
+}
+
 .no_items__import {
   padding-top: 20px;
   color: gray;
