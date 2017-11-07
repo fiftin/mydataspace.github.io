@@ -25,6 +25,8 @@ header:
   input_search: Начните поиск или нажмите Esc
   input_search_fixed: Поиск...
 buttons:
+  - id: vk
+    title: VK
   - id: facebook
     title: Facebook
   - id: google
