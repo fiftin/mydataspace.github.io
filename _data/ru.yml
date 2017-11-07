@@ -26,7 +26,7 @@ header:
   input_search_fixed: Поиск...
 buttons:
   - id: vk
-    title: VK
+    title: ВКонтакте
   - id: facebook
     title: Facebook
   - id: google
