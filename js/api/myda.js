@@ -37,12 +37,23 @@ function Myda(optionsOrRoot) {
       url: '/auth?authProvider=access-token' +
            '&state=permission%3d{{permission}}%26clientId%3d{{client_id}}%26resultFormat=json'
     },
+    vk: {
+      title: 'Connect through VK',
+      icon: 'vk',
+      url: 'https://oauth.vk.com/authorize?client_id=6037091&scope=email' +
+      '&state=permission%3d{{permission}}%26clientId%3d{{client_id}}' +
+      '&redirect_uri={{api_url}}%2fauth%2fvk' +
+      '&display=popup',
+      loginWindow: {
+        height: 400
+      }
+    },
     github: {
       title: 'Connect through GitHub',
       icon: 'github',
       url: 'https://github.com/login/oauth/authorize?client_id=eaa5d1176778a1626379&scope=user:email' +
            '&state=permission%3d{{permission}}%26clientId%3d{{client_id}}' +
-           '&redirect_uri={{api_url}}%2fauth%3fauthProvider%3dgithub',
+           '&redirect_uri={{api_url}}%2fauth%2github',
       loginWindow: {
         height: 600
       }
@@ -52,7 +63,7 @@ function Myda(optionsOrRoot) {
       icon: 'facebook',
       url: 'https://www.facebook.com/dialog/oauth?client_id=827438877364954&scope=email' +
            '&state=permission%3d{{permission}}%26clientId%3d{{client_id}}' +
-           '&redirect_uri={{api_url}}%2fauth%3fauthProvider%3dfacebook' +
+           '&redirect_uri={{api_url}}%2fauth%2facebook' +
            '&display=popup',
       loginWindow: {
         height: 400
@@ -65,7 +76,7 @@ function Myda(optionsOrRoot) {
            '?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.me%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.profile.emails.read&response_type=code' +
            '&client_id=821397494321-s85oh989s0ip2msnock29bq1gpprk07f.apps.googleusercontent.com' +
            '&state=permission%3d{{permission}}%26clientId%3d{{client_id}}' +
-           '&redirect_uri={{api_url}}%2fauth%3fauthProvider%3dgoogle',
+           '&redirect_uri={{api_url}}%2fauth%2fgoogle',
       loginWindow: {
         height: 800
       }
