@@ -53,7 +53,7 @@ function Myda(optionsOrRoot) {
       icon: 'github',
       url: 'https://github.com/login/oauth/authorize?client_id=eaa5d1176778a1626379&scope=user:email' +
            '&state=permission%3d{{permission}}%26clientId%3d{{client_id}}' +
-           '&redirect_uri={{api_url}}%2fauth%2github',
+           '&redirect_uri={{api_url}}%2fauth%2fgithub',
       loginWindow: {
         height: 600
       }
@@ -63,7 +63,7 @@ function Myda(optionsOrRoot) {
       icon: 'facebook',
       url: 'https://www.facebook.com/dialog/oauth?client_id=827438877364954&scope=email' +
            '&state=permission%3d{{permission}}%26clientId%3d{{client_id}}' +
-           '&redirect_uri={{api_url}}%2fauth%2facebook' +
+           '&redirect_uri={{api_url}}%2fauth%2ffacebook' +
            '&display=popup',
       loginWindow: {
         height: 400
