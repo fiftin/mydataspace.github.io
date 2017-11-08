@@ -1,5 +1,15 @@
 @import "./vars";
 
+.profile__authorizations_btn {
+  border: 0;
+  background: transparent;
+  font-size: 20px;
+}
+
+.profile__authorizations_btn--vk--active {
+  color: #486991;
+}
+
 .admin_context_menu {
   .webix_selected {
     background: white !important;

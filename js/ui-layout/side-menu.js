@@ -26,6 +26,19 @@ UILayout.sideMenu =
             name: 'No name'
           }
         },
+        { view: 'template',
+          borderless: true,
+          id: 'profile__authorizations',
+          css: 'profile__authorizations',
+          height: 40,
+          template: function(obj) {
+            return '<button onclick="Mydataspace.authorizeTasks(\'vk\');" ' +
+              'class="profile__authorizations_btn profile__authorizations_btn--vk ' +
+              (obj.vk ? 'profile__authorizations_btn--vk--active' : '') +
+              '"><i onclick="" class="fa fa-vk"></i></button>';
+          },
+          data: {}
+        },
         { view: 'list',
           id: 'menu__item_list',
           borderless: true,

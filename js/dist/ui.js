@@ -3752,6 +3752,19 @@ UILayout.sideMenu =
             name: 'No name'
           }
         },
+        { view: 'template',
+          borderless: true,
+          id: 'profile__authorizations',
+          css: 'profile__authorizations',
+          height: 40,
+          template: function(obj) {
+            return '<button onclick="Mydataspace.authorizeTasks(\'vk\');" ' +
+              'class="profile__authorizations_btn profile__authorizations_btn--vk ' +
+              (obj.vk ? 'profile__authorizations_btn--vk--active' : '') +
+              '"><i onclick="" class="fa fa-vk"></i></button>';
+          },
+          data: {}
+        },
         { view: 'list',
           id: 'menu__item_list',
           borderless: true,
@@ -4713,6 +4726,7 @@ UI = {
         data['avatar'] = '/images/no_avatar.png';
       }
       $$('profile').setValues(data);
+      $$('profile__authorizations').setValues(data);
     });
 
     Mydataspace.on('entities.create.res', function() {
@@ -4783,6 +4797,18 @@ UI = {
 
     Mydataspace.on('apps.err', UI.error);
     Mydataspace.on('entities.err', UI.error);
+
+
+    Mydataspace.on('tasksAuthorize', function(data) {
+      switch (data.provider) {
+        case 'vk/tasks':
+          var currentData = MDSCommon.copy($$('profile__authorizations').data);
+          currentData.vk = data.result;
+          $$('profile__authorizations').define('data', currentData);
+          $$('profile__authorizations').refresh();
+          break;
+      }
+    });
   },
 
   /**

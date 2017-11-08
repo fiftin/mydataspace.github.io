@@ -8406,6 +8406,7 @@ Entities.prototype.onCreate = function(callback) {
  * @constructor
  */
 function Myda(optionsOrRoot) {
+  var self = this;
   var options = typeof optionsOrRoot === 'string' ? { root: optionsOrRoot } : optionsOrRoot;
   var apiURL = options.import === true ? 'https://import.mydataspace.net' : 'https://api.mydataspace.net';
   this.options = MDSCommon.extend({
@@ -8424,7 +8425,8 @@ function Myda(optionsOrRoot) {
   this.listeners = {
     login: [],
     logout: [],
-    connected: []
+    connected: [],
+    tasksAuthorize: []
   };
   this.authProviders = {
     accessToken: {
@@ -8437,6 +8439,17 @@ function Myda(optionsOrRoot) {
       url: 'https://oauth.vk.com/authorize?client_id=6037091&scope=email' +
       '&state=permission%3d{{permission}}%3BclientId%3d{{client_id}}' +
       '&redirect_uri={{api_url}}%2fauth%2fvk' +
+      '&display=popup',
+      loginWindow: {
+        height: 400
+      }
+    },
+    'vk/tasks': {
+      title: 'Authorize tasks through VK',
+      icon: 'vk',
+      url: 'https://oauth.vk.com/authorize?client_id=6249018&scope=email' +
+      '&state=permission%3d{{permission}}%3BclientId%3d{{client_id}}%3Bauth_token%3d{{auth_token}}' +
+      '&redirect_uri={{api_url}}%2fauth%2fvk%2Ftasks' +
       '&display=popup',
       loginWindow: {
         height: 400
@@ -8500,12 +8513,18 @@ function Myda(optionsOrRoot) {
 
 
   window.addEventListener('message', function(e) {
-    if (e.data.message === 'authResult') {
-      if (this.options.useLocalStorage) {
-        localStorage.setItem('authToken', e.data.result);
-      }
-      this.emit('authenticate', { token: e.data.result });
-      e.source.close();
+    switch (e.data.message) {
+      case 'authResult':
+        if (self.options.useLocalStorage) {
+          localStorage.setItem('authToken', e.data.result);
+        }
+        self.emit('authenticate', { token: e.data.result });
+        e.source.close();
+        break;
+      case 'taskAuthResult':
+        self.callListeners('tasksAuthorize', { result: e.data.result, provider: e.data.provider });
+        e.source.close();
+        break;
     }
   }.bind(this));
 }
@@ -8519,6 +8538,8 @@ Myda.prototype.getAuthProviders = function() {
       ret[providerName].url.replace('{{permission}}', this.options.permission);
     ret[providerName].url =
       ret[providerName].url.replace('{{client_id}}', this.options.clientId);
+    ret[providerName].url =
+      ret[providerName].url.replace('{{auth_token}}', localStorage.getItem('authToken'));
   }
   return ret;
 };
@@ -8532,6 +8553,7 @@ Myda.prototype.getAuthProvider = function(providerName) {
   ret.url = ret.url.replace('{{api_url}}', encodeURIComponent(this.options.apiURL));
   ret.url = ret.url.replace('{{permission}}', this.options.permission);
   ret.url = ret.url.replace('{{client_id}}', this.options.clientId);
+  ret.url = ret.url.replace('{{auth_token}}', localStorage.getItem('authToken'));
   return ret;
 };
 
@@ -8633,6 +8655,16 @@ Myda.prototype.popupCenter = function(url, title, w, h) {
     newWindow.focus();
   }
   return newWindow;
+};
+
+Myda.prototype.authorizeTasks = function(providerName) {
+  var authProvider = this.getAuthProvider(providerName + '/tasks');
+  var authWindow =
+    this.popupCenter(authProvider.url, 'Login over ' + providerName, 640, authProvider.loginWindow.height);
+  authWindow.focus();
+  setInterval(function() {
+    authWindow.postMessage({ message: 'requestTaskAuthResult' }, '*');
+  }, 1000);
 };
 
 Myda.prototype.login = function(providerName) {
