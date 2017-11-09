@@ -495,6 +495,8 @@
                 }
               ]
             });
+
+            hideWaitingCloak();
           });
           break;
         case 'list':
@@ -641,6 +643,8 @@
                 $(extendedLine.scripts(itemFields).join('\n')).appendTo($this);
               });
             });
+
+            hideWaitingCloak();
           });
           break;
       }
@@ -875,8 +879,18 @@
       document.getElementById('root__looks').appendChild(codepenScript);
     }
 
+    function showWaitingCloak() {
+      document.getElementById('waiting_cloak').style.display = 'block';
+    }
+
+    function hideWaitingCloak() {
+      document.getElementById('waiting_cloak').style.display = 'none';
+    }
 
     function selectTab(tabID, itemID) {
+      if (itemID) {
+        showWaitingCloak();
+      }
       var tab = document.getElementById(tabID);
       var el;
       for (var tid in TABS) {
@@ -896,6 +910,7 @@
       document.getElementById('webix').style.display = 'none';
       switch (tabID) {
         case 'VIEW_TAB_VIEW_LABEL':
+
           document.getElementById('root__new_look').classList.remove('hidden');
 
           if (document.getElementById('root__tabs_views_count').innerText === '0') {
@@ -939,7 +954,7 @@
         for (var u in URL_TABS) {
           if (URL_TABS[u] === tabID) {
             var url = lang + '/' + DATA.root + '/' + u;
-            history.pushState({}, null, url);
+            history.pushState({}, '', url);
             break;
           }
         }
