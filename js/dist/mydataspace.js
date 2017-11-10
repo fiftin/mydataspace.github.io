@@ -17,7 +17,6 @@ if (global.localStorage == null) {
 
 'use strict';
 
-
 var MDSCommon = {
   BASE32: '0123456789bcdefghjkmnpqrstuvwxyz',
 
@@ -28,6 +27,54 @@ var MDSCommon = {
     'undefined',
     'function'
   ],
+
+  findIndex: function(arr, predicate) {
+    if (!Array.isArray(arr)) {
+      throw new Error('Parameter arr must be array');
+    }
+    if (typeof predicate !== 'function') {
+      throw new Error('Parameter predicate must be function');
+    }
+    for (var i in arr) {
+      if (predicate(arr[i])) {
+        return i;
+      }
+    }
+    return -1;
+  },
+
+  find: function(arr, predicate) {
+    var i = MDSCommon.findIndex(arr, predicate);
+    return i === -1 ? undefined : arr[i];
+  },
+
+  parseQuery: function(queryString) {
+    var query = {};
+    var pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&').filter(function(part) { return part !== ''; });
+    for (var i = 0; i < pairs.length; i++) {
+      var pair = pairs[i].split('=');
+      query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+    }
+    return query;
+  },
+
+  endsWith: function(str, str2) {
+    var i = str.indexOf(str2);
+    if (i === -1) {
+      return false;
+    }
+    return i === str.length - str2.length;
+  },
+
+  delay: function(milliseconds) {
+    return new Promise(function(resolve) {
+      if (milliseconds < 0) {
+        resolve();
+      } else {
+        setTimeout(resolve, milliseconds);
+      }
+    });
+  },
 
   refine_interval: function(interval, cd, mask) {
     if (cd&mask)
@@ -81,6 +128,7 @@ var MDSCommon = {
     var i;
     var cd;
     var mask;
+    var c, j;
 
     for (i=0; i<geohash.length; i++) {
       c = geohash[i];
@@ -263,12 +311,64 @@ var MDSCommon = {
     }).join('\n');
   },
 
+
+
+  binarySearchOf: function(arr, searchElement, comparer) {
+    var minIndex = 0;
+    var maxIndex = arr.length - 1;
+    var currentIndex;
+    var currentElement;
+
+    while (minIndex <= maxIndex) {
+      currentIndex = (minIndex + maxIndex) / 2 | 0;
+      currentElement = arr[currentIndex];
+      var cmp = comparer(currentElement, searchElement);
+      if (cmp < 0) {
+        minIndex = currentIndex + 1;
+      }
+      else if (cmp > 0) {
+        maxIndex = currentIndex - 1;
+      }
+      else {
+        return arr[currentIndex];
+      }
+    }
+  },
+
+  parseInt: function(x, defaultValue) {
+    var ret = parseInt(x);
+    if (isNaN(ret)) {
+      return defaultValue;
+    }
+    return ret;
+  },
+
+  parseBool: function(x) {
+    switch (x.toString().toLowerCase()) {
+      case 'true':
+      case '1':
+        return true;
+      case 'false':
+      case '0':
+        return false;
+    }
+    throw new Error('Value is not boolean');
+  },
+
+  isBool: function(x) {
+    var s = x.toString().toLowerCase();
+    return s === 'true' ||
+      s === 'false' ||
+      s === '1' ||
+      s === '0';
+  },
+
   isNumber: function(n) {
-    return Number(n) === n || (typeof n === 'string' && /^\d[\d\.]*$/.test(n));
+    return Number(n) === n || (typeof n === 'string' && /^-?\d[\d.]*$/.test(n));
   },
 
   isInt: function(n) {
-    return (typeof n === 'string' && /^\d+$/.test(n)) || MDSCommon.isNumber(n) && n % 1 === 0;
+    return (typeof n === 'string' && /^-?\d+$/.test(n)) || MDSCommon.isNumber(n) && n % 1 === 0;
   },
 
   isPrimitive: function(value) {
@@ -277,6 +377,79 @@ var MDSCommon = {
 
   isReal: function(value) {
     return !isNaN(parseFloat(value));
+  },
+  isGeo: function(value) {
+    if (value == null || typeof value !== 'string') {
+      return false;
+    }
+    const m = value.match(/^-?(\d+(\.\d+)?),-?(\d+(\.\d+)?)$/);
+    if (m) {
+      const lat = parseFloat(m[1]);
+      const lon = parseFloat(m[3]);
+      if (lat <= 90 && lon <= 90) {
+        return true;
+      }
+    }
+    return false;
+  },
+
+  isGeoShape: function() {
+    return false;
+  },
+
+  isEmail: function(t) {
+    if (t == null) {
+      return true;
+    }
+    if (t.length > 256) return false;
+    if (t.lastIndexOf("@") > 64) return false;
+    var r = new RegExp('^(?:(?:\\r\\n)?[ \\t])*(?:(?:(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*|(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*)*\\<(?:(?:\\r\\n)?[ \\t])*(?:@(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*(?:,@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*)*:(?:(?:\\r\\n)?[ \\t])*)?(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*\\>(?:(?:\\r\\n)?[ \\t])*)|(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*)*:(?:(?:\\r\\n)?[ \\t])*(?:(?:(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*|(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*)*\\<(?:(?:\\r\\n)?[ \\t])*(?:@(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*(?:,@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*)*:(?:(?:\\r\\n)?[ \\t])*)?(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*\\>(?:(?:\\r\\n)?[ \\t])*)(?:,\\s*(?:(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*|(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*)*\\<(?:(?:\\r\\n)?[ \\t])*(?:@(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*(?:,@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*)*:(?:(?:\\r\\n)?[ \\t])*)?(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|"(?:[^\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\["()<>@,;:\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*\\>(?:(?:\\r\\n)?[ \\t])*))*)?;\\s*)$');
+    return r.test(t + ' ');
+  },
+
+  isURL: function(t) {
+    if (t == null) {
+      return true;
+    }
+    return /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(t);
+  },
+
+  isPhone: function(t) {
+    if (t == null) {
+      return true;
+    }
+    return /^\+?\d{3,15}$/.test(t);
+  },
+
+  isDate: function(t) {
+    if (t == null) {
+      return true;
+    }
+    var d = new Date(t);
+    return isNaN(d.getDay());
+  },
+
+  getVersionOf: function(root) {
+    const parts = root.split('$');
+    const version = parts[1] ? parseInt(parts[1]) : 0;
+    return version;
+  },
+
+  getBaseOf: function(root) {
+    return root.split('$')[0];
+  },
+
+  /**
+   *
+   * @param {string} str String with GPS coordinates with format: "lat,lon".
+   * @return {Object} Object with fields "lat" & "lon".
+   */
+  latLonStrToObject: function(str) {
+    var parts = str.split(',');
+    return {
+      lat: parseFloat(parts[0]),
+      lon: parseFloat(parts[1])
+    };
   },
 
   isComplex: function(value) {
@@ -377,10 +550,19 @@ var MDSCommon = {
     return ret;
   },
 
-  convertNameValueArrayToMap: function(arr) {
+  convertNameValueArrayToMap: function(arr, nameFieldName, valueFieldName) {
     var ret = {};
+    if (nameFieldName == null) {
+      nameFieldName = 'name';
+    }
+    if (valueFieldName == null) {
+      valueFieldName = 'value';
+    }
     for (var  i in arr) {
-      ret[arr[i].name] = arr[i].value;
+      if (typeof arr[i][nameFieldName] === 'undefined') {
+        continue;
+      }
+      ret[arr[i][nameFieldName]] = arr[i][valueFieldName];
     }
     return ret;
   },
@@ -399,6 +581,9 @@ var MDSCommon = {
   findIndexByName: function(arr, name, caseInsensitive) {
     if (typeof caseInsensitive === 'undefined') {
       caseInsensitive = false;
+    }
+    if (arr == null) {
+      throw new Error('Argument arr can not be null');
     }
     if (!Array.isArray(arr)) {
       throw new Error('Argument arr isnt array');
@@ -439,6 +624,16 @@ var MDSCommon = {
     }
   },
 
+  getChildPath: function(parentPath, childName) {
+    if (MDSCommon.isBlank(parentPath)) {
+      return childName;
+    }
+    return parentPath + '/' + childName;
+  },
+
+  /**
+   * Returns last part of the path.
+   */
   getPathName: function(path) {
     var i = path.lastIndexOf('/');
     if (i === -1) {
@@ -446,7 +641,6 @@ var MDSCommon = {
       if (i === -1) {
         return path;
       }
-      // throw new Error('Path has no child');
     }
     return path.substr(i + 1);
   },
@@ -459,7 +653,7 @@ var MDSCommon = {
     if (i === -1) {
       i = path.lastIndexOf('\\');
       if (i === -1) {
-        return path;
+        return '';
       }
     }
     return path.slice(0, i);
@@ -501,6 +695,9 @@ var MDSCommon = {
   consoleFormat: function(format) {
     if (format == null) {
       format = '';
+    }
+    if (typeof format !== 'string') {
+      format = format.toString();
     }
     if (arguments.length === 1) {
       return format;
@@ -552,7 +749,7 @@ var MDSCommon = {
     return MDSCommon.permit(MDSCommon.req(data, keys), keys);
   },
 
-  reqArray: function(data, keys) {
+  reqArray: function(arr, keys) {
     var ret = [];
     for (var i in arr) {
       var data = arr[i];
@@ -672,19 +869,20 @@ var MDSCommon = {
     return ret;
   },
 
-  isValidPrimitiveType: function(val, type) {
+  isValidPrimitiveTypeSingle: function(val, type) {
     var ok = false;
+    if (type && type.length > 3 && type[0] === '"' && type[type.length - 1] === '"') {
+      var validValue = type.substring(1, type.length - 1);
+      return val === validValue;
+    }
     switch (type) {
       case 's': // string
-      case 'j': // javascript
-      case 'u': // javascript source
-        if (Array.isArray(val)) {
-          ok = val.reduce(function(prev, curr) {
-            return prev && MDSCommon.isPrimitive(curr);
-          });
-        } else {
-          ok = MDSCommon.isPrimitive(val);
-        }
+      case 'j': // test
+      case '*': // test
+        ok = MDSCommon.isPrimitive(val);
+        break;
+      case 'u': // url
+        ok = MDSCommon.isURL(val);
         break;
       case 'i':
         ok = MDSCommon.isInt(val);
@@ -692,15 +890,52 @@ var MDSCommon = {
       case 'r':
         ok = MDSCommon.isReal(val);
         break;
+      case 'b':
+        ok = MDSCommon.isBool(val);
+        break;
+      case 'd':
+        ok = MDSCommon.isDate(val);
+        break;
+      case 'e':
+        ok = MDSCommon.isEmail(val);
+        break;
+      case 'p':
+        ok = MDSCommon.isPhone(val);
+        break;
+      case 'g':
+        ok = MDSCommon.isGeo(val);
+        break;
+      case 'G':
+        ok = MDSCommon.isGeoShape(val);
+        break;
       case 'o':
         ok = MDSCommon.isObject(val);
+        break;
+      case 'true':
+        ok = MDSCommon.isBool(val) && MDSCommon.parseBool(val);
         break;
       case 'a':
         ok = true;
         break;
     }
     return ok;
-  }
+  },
+
+  /**
+   * @param val - Value or array of values to check.
+   * @param type - Required value type.
+   */
+  isValidPrimitiveType: function(val, type) {
+    var ok;
+    if (Array.isArray(val)) {
+      ok = val.reduce(function(prev, curr) {
+        return prev && MDSCommon.isValidPrimitiveTypeSingle(curr, type);
+      });
+    } else {
+      ok = MDSCommon.isPrimitive(val, type);
+    }
+    return ok;
+  },
 };
 
 if (typeof module !== 'undefined') {
@@ -709,9 +944,10 @@ if (typeof module !== 'undefined') {
 
 'use strict';
 
-function EntityRecursiveFormatter(fieldsFormatter) {
+function EntityRecursiveFormatter(fieldsFormatter, childrenFormatter) {
   this.fieldsFormatter = fieldsFormatter;
-};
+  this.childrenFormatter = childrenFormatter;
+}
 
 EntityRecursiveFormatter.prototype.format = function(data) {
   var datas;
@@ -780,7 +1016,9 @@ EntityFieldsUnsimplifier.prototype.format = function(data) {
   var res = [];
   if (data != null && data.fields != null) {
     if (Array.isArray(data.fields)) {
-      res.push(...data.fields);
+      for (var i in data.fields) {
+        res.push(data.fields[i]);
+      }
     } else {
       for (var key in data.fields) {
         res.push({
@@ -829,13 +1067,20 @@ function Entities(parent, root) {
 Entities.prototype.getRootPathData = function(pathOrData, options) {
   var data;
   if (typeof pathOrData === 'string') {
-    data = MDSCommon.extend({
+    data = {
       root: this.root,
       path: pathOrData
-    }, options);
+    };
   } else {
-    data = pathOrData.root !== undefined ? pathOrData : MDSCommon.extend(pathOrData, { root: this.root })
+    data = pathOrData;
   }
+
+  MDSCommon.extendOf(data, options);
+
+  if (data.root == null) {
+    MDSCommon.extendOf(pathOrData, { root: this.root })
+  }
+
   return data;
 };
 
@@ -868,23 +1113,20 @@ Entities.prototype.get = function(pathOrOptions, fields) {
  * @deprecated Use get method with option children:true. This method returns incomplete information
  *             if you use search string.
  *
- * @param {string} path Path to entity children of that you want to get.
+ * @param {string} pathOrData Path to entity children of that you want to get.
  * @param [optionsOrSearch] Search string or options for request.
  * @param {number} [limit] Max number of children in result.
  */
-Entities.prototype.getChildren = function(path, optionsOrSearch, limit) {
-  var data = {
-    root: this.root,
-    path: path,
+Entities.prototype.getChildren = function(pathOrData, optionsOrSearch, limit) {
+  var options = MDSCommon.extend({
     children: [],
     limit: limit
-  };
-  var options = typeof options === 'string' ? { search: optionsOrSearch } : optionsOrSearch;
-  return this.request('entities.get', MDSCommon.extend(data, options)).then(function(data) { return data.children; });
+  }, typeof options === 'string' ? { search: optionsOrSearch } : optionsOrSearch);
+  return this.request('entities.get', this.getRootPathData(pathOrData, options)).then(function(data) { return data.children; });
 };
 
-Entities.prototype.delete = function(path) {
-  return this.request('entities.delete', this.getRootPathData(path));
+Entities.prototype.delete = function(pathOrData) {
+  return this.request('entities.delete', this.getRootPathData(pathOrData));
 };
 
 Entities.prototype.change = function(pathOrData, fields) {
@@ -936,11 +1178,13 @@ Entities.prototype.onCreate = function(callback) {
  * @constructor
  */
 function Myda(optionsOrRoot) {
+  var self = this;
   var options = typeof optionsOrRoot === 'string' ? { root: optionsOrRoot } : optionsOrRoot;
   var apiURL = options.import === true ? 'https://import.mydataspace.net' : 'https://api.mydataspace.net';
   this.options = MDSCommon.extend({
     useLocalStorage: true,
 		apiURL:  apiURL,
+    cdnURL:  'https://cdn.mydataspace.net',
 		websocketURL: apiURL,
     connected: function() { }
   }, options);
@@ -953,19 +1197,42 @@ function Myda(optionsOrRoot) {
   this.listeners = {
     login: [],
     logout: [],
-    connected: []
+    connected: [],
+    tasksAuthorize: []
   };
   this.authProviders = {
     accessToken: {
       url: '/auth?authProvider=access-token' +
-           '&state=permission%3d{{permission}}%26clientId%3d{{client_id}}%26resultFormat=json'
+           '&state=permission%3d{{permission}}%3BclientId%3d{{client_id}}%3BresultFormat=json'
+    },
+    vk: {
+      title: 'Connect through VK',
+      icon: 'vk',
+      url: 'https://oauth.vk.com/authorize?client_id=6037091&scope=email' +
+      '&state=permission%3d{{permission}}%3BclientId%3d{{client_id}}' +
+      '&redirect_uri={{api_url}}%2fauth%2fvk' +
+      '&display=popup',
+      loginWindow: {
+        height: 400
+      }
+    },
+    'vk/tasks': {
+      title: 'Authorize tasks through VK',
+      icon: 'vk',
+      url: 'https://oauth.vk.com/authorize?client_id=6249018&scope=email' +
+      '&state=permission%3d{{permission}}%3BclientId%3d{{client_id}}%3Bauth_token%3d{{auth_token}}' +
+      '&redirect_uri={{api_url}}%2fauth%2fvk%2Ftasks' +
+      '&display=popup',
+      loginWindow: {
+        height: 400
+      }
     },
     github: {
       title: 'Connect through GitHub',
       icon: 'github',
       url: 'https://github.com/login/oauth/authorize?client_id=eaa5d1176778a1626379&scope=user:email' +
-           '&state=permission%3d{{permission}}%26clientId%3d{{client_id}}' +
-           '&redirect_uri={{api_url}}%2fauth%3fauthProvider%3dgithub',
+           '&state=permission%3d{{permission}}%3BclientId%3d{{client_id}}' +
+           '&redirect_uri={{api_url}}%2fauth%2fgithub',
       loginWindow: {
         height: 600
       }
@@ -974,8 +1241,8 @@ function Myda(optionsOrRoot) {
       title: 'Connect through Facebook',
       icon: 'facebook',
       url: 'https://www.facebook.com/dialog/oauth?client_id=827438877364954&scope=email' +
-           '&state=permission%3d{{permission}}%26clientId%3d{{client_id}}' +
-           '&redirect_uri={{api_url}}%2fauth%3fauthProvider%3dfacebook' +
+           '&state=permission%3d{{permission}}%3BclientId%3d{{client_id}}' +
+           '&redirect_uri={{api_url}}%2fauth%2ffacebook' +
            '&display=popup',
       loginWindow: {
         height: 400
@@ -987,8 +1254,8 @@ function Myda(optionsOrRoot) {
       url: 'https://accounts.google.com/o/oauth2/auth' +
            '?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.me%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.profile.emails.read&response_type=code' +
            '&client_id=821397494321-s85oh989s0ip2msnock29bq1gpprk07f.apps.googleusercontent.com' +
-           '&state=permission%3d{{permission}}%26clientId%3d{{client_id}}' +
-           '&redirect_uri={{api_url}}%2fauth%3fauthProvider%3dgoogle',
+           '&state=permission%3d{{permission}}%3BclientId%3d{{client_id}}' +
+           '&redirect_uri={{api_url}}%2fauth%2fgoogle',
       loginWindow: {
         height: 800
       }
@@ -1011,19 +1278,25 @@ function Myda(optionsOrRoot) {
     this.registerFormatter('entities.create.res', new EntitySimplifier());
     this.registerFormatter('entities.getRoots.res', new EntitySimplifier());
     this.registerFormatter('entities.getMyRoots.res', new EntitySimplifier());
-
   }
+
   this.entities = new Entities(this, options.root);
   this.on('connected', this.options.connected);
 
 
   window.addEventListener('message', function(e) {
-    if (e.data.message === 'authResult') {
-      if (this.options.useLocalStorage) {
-        localStorage.setItem('authToken', e.data.result);
-      }
-      this.emit('authenticate', { token: e.data.result });
-      e.source.close();
+    switch (e.data.message) {
+      case 'authResult':
+        if (self.options.useLocalStorage) {
+          localStorage.setItem('authToken', e.data.result);
+        }
+        self.emit('authenticate', { token: e.data.result });
+        e.source.close();
+        break;
+      case 'taskAuthResult':
+        self.callListeners('tasksAuthorize', { result: e.data.result, provider: e.data.provider });
+        e.source.close();
+        break;
     }
   }.bind(this));
 }
@@ -1037,6 +1310,8 @@ Myda.prototype.getAuthProviders = function() {
       ret[providerName].url.replace('{{permission}}', this.options.permission);
     ret[providerName].url =
       ret[providerName].url.replace('{{client_id}}', this.options.clientId);
+    ret[providerName].url =
+      ret[providerName].url.replace('{{auth_token}}', localStorage.getItem('authToken'));
   }
   return ret;
 };
@@ -1050,12 +1325,18 @@ Myda.prototype.getAuthProvider = function(providerName) {
   ret.url = ret.url.replace('{{api_url}}', encodeURIComponent(this.options.apiURL));
   ret.url = ret.url.replace('{{permission}}', this.options.permission);
   ret.url = ret.url.replace('{{client_id}}', this.options.clientId);
+  ret.url = ret.url.replace('{{auth_token}}', localStorage.getItem('authToken'));
   return ret;
 };
 
-Myda.prototype.connect = function() {
+Myda.prototype.connect = function(forceConnect) {
   var self = this;
+  if (self.connecting || self.connected) {
+    return;
+  }
+  
   return new Promise(function(resolve, reject) {
+    self.connecting = true;
     self.socket = io(self.options.websocketURL, {
       secure: true,
       'forceNew' : true,
@@ -1066,10 +1347,18 @@ Myda.prototype.connect = function() {
     });
 
     self.on('connect', function () {
+      self.connecting = false;
       self.connected = true;
       if (self.options.useLocalStorage && MDSCommon.isPresent(localStorage.getItem('authToken'))) {
         self.emit('authenticate', { token: localStorage.getItem('authToken') });
       }
+
+      self.subscriptions.forEach(function(subscription) {
+        self.socket.on(subscription, function(data) {
+          self.handleResponse(data, 'success');
+        });
+      });
+
       self.callListeners('connected');
       resolve();
     });
@@ -1114,7 +1403,10 @@ Myda.prototype.callListeners = function(eventName, args) {
  * You need re-initialize listeners after that!
  */
 Myda.prototype.disconnect = function() {
-  this.socket.disconnect();
+  if (this.socket) {
+    this.socket.disconnect();
+  }
+  this.connected = false;
   this.socket = null;
 };
 
@@ -1135,6 +1427,16 @@ Myda.prototype.popupCenter = function(url, title, w, h) {
     newWindow.focus();
   }
   return newWindow;
+};
+
+Myda.prototype.authorizeTasks = function(providerName) {
+  var authProvider = this.getAuthProvider(providerName + '/tasks');
+  var authWindow =
+    this.popupCenter(authProvider.url, 'Login over ' + providerName, 640, authProvider.loginWindow.height);
+  authWindow.focus();
+  setInterval(function() {
+    authWindow.postMessage({ message: 'requestTaskAuthResult' }, '*');
+  }, 1000);
 };
 
 Myda.prototype.login = function(providerName) {
@@ -1266,9 +1568,9 @@ Myda.prototype.formatAndCall = function(eventName, callback, data) {
   if (data != null && data.datas != null) {
     var requestId = data.requestId;
     data = data.datas;
-    if (requestId != null) {
-      data.requestId = requestId;
-    }
+    // if (requestId != null) {
+    //   data.requestId = requestId;
+    // }
   }
   if (formatterArr != null) {
     for (var i in formatterArr) {
