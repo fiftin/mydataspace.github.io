@@ -19,13 +19,20 @@ function Entities(parent, root) {
 Entities.prototype.getRootPathData = function(pathOrData, options) {
   var data;
   if (typeof pathOrData === 'string') {
-    data = MDSCommon.extend({
+    data = {
       root: this.root,
       path: pathOrData
-    }, options);
+    };
   } else {
-    data = pathOrData.root !== undefined ? pathOrData : MDSCommon.extend(pathOrData, { root: this.root })
+    data = pathOrData;
   }
+
+  MDSCommon.extendOf(data, options);
+
+  if (data.root == null) {
+    MDSCommon.extendOf(pathOrData, { root: this.root })
+  }
+
   return data;
 };
 
