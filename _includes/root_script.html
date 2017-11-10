@@ -1179,7 +1179,7 @@
         document.getElementById('root__looks__search_input').addEventListener('blur', function() {
           if (this.value === '') {
             document.getElementById('root__looks__header').classList.remove('look__header--search');
-            this.style.display = 'block';
+            document.getElementById('root__looks__search').style.display = 'block';
           }
         });
 
