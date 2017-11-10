@@ -16,6 +16,7 @@ special_offer: Бесплатно <b>навсегда</b> для зарегис�
 final_prompt: ""
 get_started_now: Начать сейчас!
 prompt: "Войти через:"
+waiting_cloak: "Загрузка..."
 strings:
   view_source_code: См. код
   view_data: См. данные
