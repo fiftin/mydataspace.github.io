@@ -603,7 +603,11 @@ $search-filter-panel-gap: 40px;
   margin-right: $padding;
 }
 
+.waiting_cloak__look_list {
+  margin-top: 60px;
+}
+
 .waiting_cloak__look_list__img {
-  margin-left: -20px;
-  width: calc(100% + 40px);
+  margin-left: -70px;
+  width: calc(100% + 140px);
 }
