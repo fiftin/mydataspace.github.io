@@ -16,7 +16,7 @@
   </div>
   <script>
     (function() {
-      if (/^\/[^/]+\/views\/[^/]+$/.test(window.location.pathname)) {
+      if (/^(\/\w\w)?\/[^/]+\/views\/[^/]+$/.test(window.location.pathname)) {
         document.getElementById('waiting_cloak').style.display = 'block';
       }
     })();
