@@ -502,7 +502,7 @@
         case 'list':
           var req = MDSCommon.extend(MDSCommon.extend(DATA, JSON.parse(MDSCommon.findValueByName(lookMetaData.fields, 'request'))), {
             children: true,
-            search: $('#root__looks__search_input').val()
+            search: $('#root__looks__search_input').val(),
             filter: MDSCommon.convertNameValueArrayToMap($('#root__looks__content').data('list-look-filters') || [])
           });
           Mydataspace.request('entities.get', req).then(function(data) {
