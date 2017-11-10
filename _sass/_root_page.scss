@@ -561,6 +561,16 @@ $look-search-shadow-width: 100px;
   left: calc(50% - #{$search-filter-panel-width/2 + $look-search-width/2});
   top: ($header-height - $input-height-base) / 2;
   opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.look__search_shadow {
+  width: $look-search-shadow-width;
+  position: absolute;
+  top: 0;
+  height: 50px;
+  opacity: 0;
+  transition: opacity 0.3s;
 }
 
 .look__header {
@@ -570,6 +580,10 @@ $look-search-shadow-width: 100px;
   overflow: hidden;
   &:hover {
     .look__search {
+      opacity: 1;
+    }
+
+    .look__search_shadow {
       opacity: 1;
     }
   }
@@ -582,13 +596,6 @@ $look-search-shadow-width: 100px;
   height: $input-height-base;
   padding-left: 20px;
   padding-right: 20px;
-}
-
-.look__search_shadow {
-  width: $look-search-shadow-width;
-  position: absolute;
-  top: 0;
-  height: 50px;
 }
 
 .look__search_shadow--left {
