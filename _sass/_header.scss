@@ -602,3 +602,8 @@ $search-filter-panel-gap: 40px;
   float: right;
   margin-right: $padding;
 }
+
+.waiting_cloak__look_list__img {
+  margin-left: -20px;
+  width: calc(100% + 40px);
+}
