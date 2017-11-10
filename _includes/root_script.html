@@ -502,6 +502,7 @@
         case 'list':
           var req = MDSCommon.extend(MDSCommon.extend(DATA, JSON.parse(MDSCommon.findValueByName(lookMetaData.fields, 'request'))), {
             children: true,
+            search: $('#root__looks__search_input').val()
             filter: MDSCommon.convertNameValueArrayToMap($('#root__looks__content').data('list-look-filters') || [])
           });
           Mydataspace.request('entities.get', req).then(function(data) {
@@ -614,7 +615,6 @@
             }).filter(function(s) { return s !== ''; }).join('\n');
 
             $(scriptsHTML).appendTo('#root__looks__content');
-
 
             $('#root__look__content__list_look_display_snippet').on('click', function() { updateListLook('snippet'); });
             $('#root__look__content__list_look_display_line').on('click', function() { updateListLook('line'); });
@@ -1181,6 +1181,10 @@
             document.getElementById('root__looks__header').classList.remove('look__header--search');
             document.getElementById('root__looks__search').style.display = 'block';
           }
+        });
+
+        document.getElementById('root__looks__search_input').addEventListener('keydown', function() {
+          setLook(currentLook, true);
         });
 
         document.getElementById('root__new_look').addEventListener('click', function() {
