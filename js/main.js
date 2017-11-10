@@ -311,11 +311,12 @@ Handlescripts.registerHelper('okGroupWidget', function(options) {
   return  '<script>OK.CONNECT.insertGroupWidget("ok_group_widget_' + ok_id + '", ' + ok_id + ', \'{"width":200,"height":230}\');</script>';
 });
 
-
-Handlebars.registerHelper('host', function(url) {
-  var m = url.match(/^\w+:\/\/([^/]+)/);
-  if (!m) {
-    return url;
-  }
-  return m[1];
-});
+if (typeof Handlebars !== 'undefined') {
+  Handlebars.registerHelper('host', function(url) {
+    var m = url.match(/^\w+:\/\/([^/]+)/);
+    if (!m) {
+      return url;
+    }
+    return m[1];
+  });
+}

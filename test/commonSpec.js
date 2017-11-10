@@ -1,4 +1,11 @@
 describe('MDSCommon', function() {
+
+  describe('#md5', function() {
+    it('Should return valid hash of hello', function() {
+      expect(MDSCommon.md5('hello')).to.eq('5d41402abc4b2a76b9719d911017c592');
+    });
+  });
+
   describe('#find', function() {
     it('Should find existing item', function() {
       expect(MDSCommon.find(['hello', 'test', 'world'], function(x) { return x == 'test'; })).eq('test');
