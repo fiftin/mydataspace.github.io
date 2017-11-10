@@ -1170,6 +1170,11 @@
           openLookEditModal(true);
         });
 
+        document.getElementById('root__looks__search').addEventListener('click', function() {
+          document.getElementById('root__looks__header').classList.add('look__header--search');
+          this.style.display = 'none';
+        });
+
         document.getElementById('root__new_look').addEventListener('click', function() {
           if (!Mydataspace.isLoggedIn()) {
             $('#signin_modal').modal('show');
