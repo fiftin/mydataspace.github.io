@@ -558,6 +558,14 @@ $follow-button-height: 40px;
   overflow: hidden;
 }
 
+.look__search_input {
+  border: 0;
+  width: 360px;
+  border-radius: 100px;
+  height: $input-height-base;
+  padding-left: 20px;
+  padding-right: 20px;
+}
 
 .look{
   &:hover {
