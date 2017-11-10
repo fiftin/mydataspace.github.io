@@ -254,6 +254,18 @@
     });
 
     var currentLook;
+    var lastLookSearchInputKeypressTime;
+
+    setInterval(function() {
+      var now = new Date().getTime();
+      if (lastLookSearchInputKeypressTime && now - lastLookSearchInputKeypressTime > 500) {
+        lastLookSearchInputKeypressTime = null;
+        if (currentLook) {
+          setLook(currentLook, true);
+        }
+      }
+    }, 200);
+
 
     function validateLookForm() {
       document.getElementById('look_modal__title_err').innerText = '';
@@ -1184,7 +1196,7 @@
         });
 
         document.getElementById('root__looks__search_input').addEventListener('keydown', function() {
-          setLook(currentLook, true);
+          lastLookSearchInputKeypressTime = new Date().getTime();
         });
 
         document.getElementById('root__new_look').addEventListener('click', function() {
