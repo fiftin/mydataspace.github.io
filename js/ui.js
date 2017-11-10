@@ -413,7 +413,7 @@ UI = {
           }
           return 0;
         });
-        e.source.postMessage({ message: 'fields', fields: values }, '*');
+        e.source.postMessage(MDSCommon.extend(Identity.dataFromId(UI.entityForm.selectedId), { message: 'fields', fields: values }), '*');
       }
     });
 
