@@ -565,7 +565,7 @@ $look-search-shadow-width: 100px;
 .look__search {
   width: $look-search-width;
   position: absolute;
-  left: calc(50% - #{$look-search-width / 2});
+  left: calc(50% - #{$search-filter-panel-width - $look-search-width / 2});
   top: ($header-height - $input-height-base) / 2;
 }
 
@@ -580,7 +580,7 @@ $look-search-shadow-width: 100px;
 }
 
 .look__search_shadow {
-  width: $look-search-shadow-width - $search-filter-panel-width;
+  width: $look-search-shadow-width;
   position: absolute;
   top: 0;
   height: 50px;
