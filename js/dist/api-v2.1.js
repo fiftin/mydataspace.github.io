@@ -8338,23 +8338,20 @@ Entities.prototype.get = function(pathOrOptions, fields) {
  * @deprecated Use get method with option children:true. This method returns incomplete information
  *             if you use search string.
  *
- * @param {string} path Path to entity children of that you want to get.
+ * @param {string} pathOrData Path to entity children of that you want to get.
  * @param [optionsOrSearch] Search string or options for request.
  * @param {number} [limit] Max number of children in result.
  */
-Entities.prototype.getChildren = function(path, optionsOrSearch, limit) {
-  var data = {
-    root: this.root,
-    path: path,
+Entities.prototype.getChildren = function(pathOrData, optionsOrSearch, limit) {
+  var options = MDSCommon.extend({
     children: [],
     limit: limit
-  };
-  var options = typeof options === 'string' ? { search: optionsOrSearch } : optionsOrSearch;
-  return this.request('entities.get', MDSCommon.extend(data, options)).then(function(data) { return data.children; });
+  }, typeof options === 'string' ? { search: optionsOrSearch } : optionsOrSearch);
+  return this.request('entities.get', this.getRootPathData(pathOrData, options)).then(function(data) { return data.children; });
 };
 
-Entities.prototype.delete = function(path) {
-  return this.request('entities.delete', this.getRootPathData(path));
+Entities.prototype.delete = function(pathOrData) {
+  return this.request('entities.delete', this.getRootPathData(pathOrData));
 };
 
 Entities.prototype.change = function(pathOrData, fields) {
