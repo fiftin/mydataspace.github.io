@@ -558,9 +558,18 @@ $follow-button-height: 40px;
   overflow: hidden;
 }
 
+$look-search-width: 360px;
+
+.look__search {
+  width: $look-search-width;
+  position: absolute;
+  left: calc(50% - #{$look-search-width});
+  top: ($header-height - $input-height-base) / 2;
+}
+
 .look__search_input {
   border: 0;
-  width: 360px;
+  width: $look-search-width;
   border-radius: 100px;
   height: $input-height-base;
   padding-left: 20px;
