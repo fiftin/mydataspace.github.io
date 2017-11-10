@@ -587,7 +587,7 @@ $look-search-shadow-width: 100px;
 }
 
 .look__search_shadow--left {
-  left: calc(50% - #{$look-search-width/2 - $look-search-border-radius/2});
+  left: calc(50% - #{$look-search-width/2 + $look-search-border-radius/2});
   background: linear-gradient(to left, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 100%);
 }
 
