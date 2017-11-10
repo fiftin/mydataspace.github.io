@@ -153,4 +153,11 @@
       <img class="waiting_cloak__look_list__img" src="/images/waiting_cloak__look_list.jpg" />
     </div>
   </div>
+  <script>
+    (function() {
+      if (/^\/[^/]+\/views\/[^/]+$/.test(window.location.pathname)) {
+        document.getElementById('waiting_cloak').style.display = 'block';
+      }
+    })();
+  </script>
 </div>
