@@ -565,7 +565,7 @@ $look-search-shadow-width: 100px;
 .look__search {
   width: $look-search-width;
   position: absolute;
-  left: calc(50% - #{$search-filter-panel-width + $look-search-width / 2});
+  left: calc(50% - #{$search-filter-panel-width/2 + $look-search-width/2});
   top: ($header-height - $input-height-base) / 2;
 }
 
@@ -587,12 +587,12 @@ $look-search-shadow-width: 100px;
 }
 
 .look__search_shadow--left {
-  left: calc(50% - #{$search-filter-panel-width + $look-search-width/2 + $look-search-shadow-width - $look-search-border-radius/2});
+  left: calc(50% - #{$search-filter-panel-width/2 + $look-search-width/2 + $look-search-shadow-width - $look-search-border-radius/2});
   background: linear-gradient(to left, rgba(0,0,0,1) 0%,rgba(0,0,0,0) 100%);
 }
 
 .look__search_shadow--right {
-  left: calc(50% + #{$search-filter-panel-width - $look-search-width/2 - $look-search-border-radius/2});
+  left: calc(50% + #{$search-filter-panel-width/2 - $look-search-width/2 - $look-search-border-radius/2});
   background: linear-gradient(to right, rgba(0,0,0,1) 0%,rgba(0,0,0,0) 100%);
 }
 
