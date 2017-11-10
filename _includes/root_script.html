@@ -1176,6 +1176,12 @@
           this.style.display = 'none';
         });
 
+        document.getElementById('root__looks__search_input').addEventListener('blur', function() {
+          if (this.value === '') {
+            document.getElementById('root__looks__header').classList.remove('look__header--search');
+          }
+        });
+
         document.getElementById('root__new_look').addEventListener('click', function() {
           if (!Mydataspace.isLoggedIn()) {
             $('#signin_modal').modal('show');
