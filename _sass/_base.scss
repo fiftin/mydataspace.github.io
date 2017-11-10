@@ -350,10 +350,10 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
 .waiting_cloak {
   display: none;
   position: fixed;
-  top: 0;
+  top: 50px;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 50px);
   background: $toolbar-bg;
   z-index: 1000;
 }
