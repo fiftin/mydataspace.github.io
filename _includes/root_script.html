@@ -438,7 +438,7 @@
 
             var snippetHTML = MDSCommon.findValueByName(lookMetaData.fields, 'snippetHTML');
             var lineHTML = MDSCommon.findValueByName(lookMetaData.fields, 'lineHTML');
-            var extendedLineHTML = MDSCommon.findValueByName(lookMetaData.fields, 'extendedLineHTML');
+//            var extendedLineHTML = MDSCommon.findValueByName(lookMetaData.fields, 'extendedLineHTML');
             var pageHTML = MDSCommon.findValueByName(lookMetaData.fields, 'pageHTML');
 
 
@@ -470,9 +470,16 @@
                 break;
             }
 
-            var extendedLine;
-            if (extendedLineHTML) {
-              extendedLine = parseSnippetTemplate(extendedLineHTML);
+//            var extendedLine;
+//            if (extendedLineHTML) {
+//              extendedLine = parseSnippetTemplate(extendedLineHTML);
+//            } else {
+//              snippetClass += ' snippet--no-pointer';
+//            }
+
+            var pageTemplate;
+            if (pageHTML) {
+              pageTemplate = parseSnippetTemplate(pageHTML);
             } else {
               snippetClass += ' snippet--no-pointer';
             }
@@ -532,13 +539,22 @@
               $('#root__looks__content').data('list-look-filters', currentFilters);
               updateListLook('line');
             });
+
             $('#root__looks__content').find('.search__results').on('click', '.snippet', function() {
+              if (!pageHTML) {
+                return;
+              }
+
               var $this = $(this);
               var path = $this.data('item-path');
               Mydataspace.request('entities.get', MDSCommon.extend(DATA, { path: path, children: true })).then(function(data) {
                 var itemFields = MDSCommon.convertNameValueArrayToMap(data.fields || []);
-                $this.html(extendedLine.template(itemFields));
-                $(extendedLine.scripts(itemFields).join('\n')).appendTo($this);
+
+                var $pageContent = $('#list_look_page_modal__content');
+                $pageContent.html(pageTemplate.template(itemFields));
+                $(pageTemplate.scripts(itemFields).join('\n')).appendTo($pageContent);
+
+                $('#list_look_page_modal').modal('show');
               });
             });
 

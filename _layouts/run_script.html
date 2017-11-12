@@ -33,5 +33,22 @@
   </head>
   <body>
     {{ content }}
+
+    <div id="import_data_modal"
+         class="modal"
+         role="dialog"
+         aria-labelledby="Importing Data">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <div class="modal-title">Importing Data</div>
+          </div>
+          <div class="modal-body">
+            <iframe id="import_data_modal__refine" class="import_data_model__refine"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
