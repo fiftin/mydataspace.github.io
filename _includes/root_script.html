@@ -1186,7 +1186,7 @@
           }
         });
 
-
+        var pathnameParts = getPathnameParts(location.pathname);
         if (pathnameParts[1]) {
           selectTab(URL_TABS[pathnameParts[1]], pathnameParts[2]);
         }

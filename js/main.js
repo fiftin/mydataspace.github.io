@@ -353,11 +353,16 @@ function getCodepenURL(id) {
   return 'https://codepen.io/' + parts[0] + '/pen/' + parts[1];
 }
 
-function getRequestFromLocation(loc) {
-  var pathnameParts = loc.pathname.split('/').filter(function(part) { return part !== ''; });
+function getPathnameParts(pathname) {
+  var pathnameParts = pathname.split('/').filter(function(part) { return part !== ''; });
   if (pathnameParts[0].length <= 2) {
     pathnameParts.shift();
   }
+  return pathnameParts;
+}
+
+function getRequestFromLocation(loc) {
+  var pathnameParts = getPathnameParts(loc.pathname);
   var searchParams = MDSCommon.parseQuery(loc.search);
   return {
     root: pathnameParts[0] === 'root' ? '11111' : pathnameParts[0],
