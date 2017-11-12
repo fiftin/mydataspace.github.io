@@ -9,44 +9,19 @@
 {% endif %}
 
 <script src="/vendor/remarkable.js"></script>
+<script src="/js/root-html-gen.js"></script>
 
 <script>
-
   (function() {
     var language = '{{ include.language }}';
-    var lang;
-    if (MDSCommon.isBlank(language) || language === 'en') {
-      lang = '';
-    } else {
-      lang = '/' + language;
-    }
-
-    var pathnameParts = location.pathname.split('/').filter(function(part) { return part !== ''; });
-    var root;
-    if (pathnameParts[0].length <= 2) {
-      pathnameParts.shift();
-    }
-
-    var searchParams = MDSCommon.parseQuery(location.search);
-
-    var DATA = {
-      root: pathnameParts[0] === 'root' ? '11111' : pathnameParts[0],
-      path: '',
-      version: searchParams.v
-    };
-    
-    if (['search', 'datasources'].indexOf(DATA.root) >= 0) {
-      openSearch_header__search(null, true);
-      return;
-    }
-
+    var lang = getURLLanguagePrefix(language);
+    var DATA = getRequestFromLocation(window.location);
     var URL_TABS = {
       views: 'VIEW_TAB_VIEW_LABEL',
       comments: 'VIEW_TAB_COMMENTS_LABEL',
       data: 'VIEW_TAB_EXPLORE_LABEL',
       '': 'VIEW_TAB_README_LABEL'
     };
-
     var TABS = {
       VIEW_TAB_README_LABEL: 'root__about',
       VIEW_TAB_VIEW_LABEL: 'root__looks',
@@ -54,50 +29,44 @@
       VIEW_TAB_EXPLORE_LABEL: ''
     };
 
-
-    /**
-     * Add JSON-LD for Google Search Engine
-     * @param {Object} data - Data receviced for current root from MyDataSpace backend.
-     */
-    function addJsonLD(data) {
-      var script = document.createElement('script');
-      script.type = 'application/ld+json';
-      script.text = JSON.stringify({
-        "@context": "http://schema.org",
-        "@id": "https://myda.space/" + data.root,
-        "@type": "Dataset",
-        "name":  MDSCommon.findValueByName(data.fields, 'name'),
-        "description": MDSCommon.findValueByName(data.fields, 'description'),
-        "keywords": MDSCommon.findValueByName(data.fields, 'tags'),
-        //"readme": MDSCommon.findValueByName(data.fields, 'readme')
-      });
-      document.querySelector('head').appendChild(script);
+    if (['search', 'datasources'].indexOf(DATA.root) >= 0) {
+      openSearch_header__search(null, true);
+      return;
     }
 
-    function loadEntityData(method, requestData, success, fail) {
-      var xmlhttp = new XMLHttpRequest();
-      xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState === XMLHttpRequest.DONE ) {
-          if (xmlhttp.status === 200) {
-            var data = JSON.parse(xmlhttp.responseText);
-            success(data);
-          } else {
-            fail();
-          }
-        }
-      };
-      var query = '';
-      for (var k in requestData) {
-        if (query !== '') {
-          query += '&';
-        }
-        if (requestData[k] != null) {
-          query += k + '=' + requestData[k];
+    var md = new Remarkable({
+      html:         true,        // Enable HTML tags in source
+      xhtmlOut:     false,        // Use '/' to close single tags (<br />)
+      breaks:       false,        // Convert '\n' in paragraphs into <br>
+      langPrefix:   'language-',  // CSS language prefix for fenced blocks
+      linkify:      false,        // Autoconvert URL-like text to links
+      // Enable some language-neutral replacement + quotes beautification
+      typographer:  false,
+      // Double + single quotes replacement pairs, when typographer enabled,
+      // and smartquotes on. Set doubles to '«»' for Russian, '„“' for German.
+      quotes: '“”‘’',
+      // Highlighter function. Should return escaped HTML,
+      // or '' if the source string is not changed
+      highlight: function (/*str, lang*/) { return ''; }
+    });
+
+    var currentLook;
+    var lastLookSearchInputKeypressTime;
+    var lastKeypressTime;
+
+    setInterval(function() {
+      var now = new Date().getTime();
+      if (lastKeypressTime && now - lastKeypressTime > 500) {
+        lastKeypressTime = null;
+        refreshLookTableColumns();
+      }
+      if (lastLookSearchInputKeypressTime && now - lastLookSearchInputKeypressTime > 500) {
+        lastLookSearchInputKeypressTime = null;
+        if (currentLook) {
+          setLook(currentLook, true);
         }
       }
-      xmlhttp.open('GET', '{{ api_url }}/v1/entities/' + method + '?' + query, true);
-      xmlhttp.send();
-    }
+    }, 200);
 
     loadEntityData('get', MDSCommon.extend(DATA, { children: true }), function(result) {
       addJsonLD(result);
@@ -194,7 +163,6 @@
       }
     });
 
-
     //
     // Delete view button
     document.getElementById('delete_look_modal_button').addEventListener('click', function() {
@@ -211,7 +179,7 @@
           throw new Error('Changed look is not exists');
         }
 
-        $(preview).replaceWith(getUnwrappedLookPreviewHTML(data, true));
+        $(preview).replaceWith(RootHTMLGen.getUnwrappedLookPreviewHTML(data, true));
         preview = getLookPreviewNode(data.path);
         $(preview).data('look-data', data);
 
@@ -234,93 +202,14 @@
       }
     });
 
-    var md = new Remarkable({
-      html:         true,        // Enable HTML tags in source
-      xhtmlOut:     false,        // Use '/' to close single tags (<br />)
-      breaks:       false,        // Convert '\n' in paragraphs into <br>
-      langPrefix:   'language-',  // CSS language prefix for fenced blocks
-      linkify:      false,        // Autoconvert URL-like text to links
-
-      // Enable some language-neutral replacement + quotes beautification
-      typographer:  false,
-
-      // Double + single quotes replacement pairs, when typographer enabled,
-      // and smartquotes on. Set doubles to '«»' for Russian, '„“' for German.
-      quotes: '“”‘’',
-
-      // Highlighter function. Should return escaped HTML,
-      // or '' if the source string is not changed
-      highlight: function (/*str, lang*/) { return ''; }
+    $('#look_modal__table_path').keydown(function() {
+      lastKeypressTime = new Date().getTime();
     });
 
-    var currentLook;
-    var lastLookSearchInputKeypressTime;
-
-    setInterval(function() {
-      var now = new Date().getTime();
-      if (lastLookSearchInputKeypressTime && now - lastLookSearchInputKeypressTime > 500) {
-        lastLookSearchInputKeypressTime = null;
-        if (currentLook) {
-          setLook(currentLook, true);
-        }
-      }
-    }, 200);
-
-
     function validateLookForm() {
-      document.getElementById('look_modal__title_err').innerText = '';
-      document.getElementById('look_modal__codepen_err').innerText = '';
-
-      var title = document.getElementById('look_modal__title').value;
-      var codepen = document.getElementById('look_modal__codepen').value;
-
-      if (MDSCommon.isBlank(title)) {
-        document.getElementById('look_modal__title_err').innerText = tr$('title_cant_be_blank');
-        return false;
-      }
-
-      if (title.length > 250) {
-        document.getElementById('look_modal__title_err').innerText = tr$('too_long_title');
-        return false;
-      }
-
-      switch ($('#look_modal').data('look-type')) {
-        case 'codepen':
-          if (MDSCommon.isBlank(codepen)) {
-            document.getElementById('look_modal__codepen_err').innerText = tr$('codepen_url_cant_be_blank');
-            return false;
-          }
-          var codepenID = getCodepenIDByURL(codepen);
-          if (!codepenID) {
-            document.getElementById('look_modal__codepen_err').innerText = tr$('invalid_codepen_pen_url');
-            return false;
-          }
-          break;
-        case 'table':
-          break;
-        case 'list':
-          break;
-      }
-      return true;
+      return RootHelper.validateLookForm();
     }
 
-    function getCodepenIDByURL(url) {
-      var regex = /^https?:\/\/codepen.io\/(\w+)\/pen\/(\w+)/;
-      var m = regex.exec(url);
-      if (!m) {
-        return null;
-      }
-      return m[1] + '/' + m[2];
-    }
-
-    function getCodepenURL(id) {
-      var parts = id.split('/');
-      return 'https://codepen.io/' + parts[0] + '/pen/' + parts[1];
-    }
-
-    /**
-     *
-     */
     function getLookPreviewNode(path) {
       var ret;
       $('#root__looks__previews').find('.look_preview').each(function() {
@@ -332,9 +221,6 @@
       return ret;
     }
 
-    /**
-     *
-     */
     function openLookEditModal(isEdit) {
       $('#look_modal').modal('show');
       if (isEdit) {
@@ -381,31 +267,6 @@
     function updateListLook(mode) {
       window.localStorage.setItem('listLookDisplayMode', mode);
       setLook(currentLook, true);
-    }
-
-    function getListLookSingleFilter(facets, facetsMetaData, filterName) {
-      var currentFilters = $('#root__looks__content').data('list-look-filters') || [];
-      var selectedFacetName = MDSCommon.findValueByName(currentFilters, filterName);
-
-      return Object.keys(facets).map(function(facetName) {
-        var classes = facetName === selectedFacetName ? 'search_filter__item--active' : '';
-        var meta = MDSCommon.find(facetsMetaData, function(x) { return MDSCommon.endsWith(x.path, '/' + facetName); });
-        return  '<a href="javascript:void(0)" class="search_filter__item ' + classes + ' " data-filter-name="' + filterName + '" data-filter-value="' + facetName + '">' +
-          '<span class="search_filter__item_title">' + (meta && MDSCommon.findValueByName(meta.fields, 'title') || facetName) + '</span>' +
-          '<span class="search_filter__item_count">' + facets[facetName].count + '</span>' +
-          '<i class="search_filter__item_remove fa fa-remove"></i>' +
-        '</a>';
-        }).join('\n');
-    }
-
-    function getListLookFilters(filters, filtersMetaData) {
-      return Object.keys(filters).map(function(filterName) {
-        var meta = MDSCommon.find(filtersMetaData, function(x) { return MDSCommon.endsWith(x.path, '/' + filterName) });
-        return '<div class="search_filter">' +
-          '<div class="search_filter__title">' + (meta && MDSCommon.findValueByName(meta.fields, 'title') || filterName) + '</div>' +
-          '<div class="search_filter__items">' + getListLookSingleFilter(filters[filterName], meta ? meta.children : [], filterName) + '</div>' +
-        '</div>';
-      }).join('\n');
     }
 
     function setLook(lookMetaData, preserveContent) {
@@ -613,7 +474,7 @@
                 '</div>' +
                 '<div class="search__filter_panel_wrap">' +
                   '<div class="search__filter_panel">' +
-                    getListLookFilters(data.facets || {}, filtersMetaData) +
+                    RootHTMLGen.getListLookFilters(data.facets || {}, filtersMetaData) +
                   '</div>' +
                 '</div>' +
               '</div>' +
@@ -663,7 +524,6 @@
       currentLook = lookMetaData;
     }
 
-
     function unselectLook() {
       var previews = document.getElementById('root__looks__previews');
       $(previews).find('.look_preview--active').removeClass('look_preview--active');
@@ -674,7 +534,6 @@
       $('#root__looks__content').removeData();
       history.pushState({}, null, lang + '/' + DATA.root + '/views');
     }
-
 
     function selectLook(path) {
       if (path == null) {
@@ -699,61 +558,6 @@
       setLook($(preview).data('look-data'));
 
       history.pushState({}, '', lang + '/' + DATA.root + '/' + path);
-    }
-
-    function getUnwrappedLookPreviewHTML(data, isActive) {
-      switch (MDSCommon.findValueByName(data.fields, 'type')) {
-        case 'codepen':
-          var codepenParts = MDSCommon.findValueByName(data.fields, 'id').split('/');
-          return '<div data-look-path="'+ data.path + '" class="block snippet look_preview' + (isActive ? ' look_preview--active' : '') + '">' +
-            '<div class="look_preview__codepen_wrap"><p data-height="402" data-theme-id="0" data-slug-hash="' + codepenParts[1] + '" data-default-tab="result" data-user="'+ codepenParts[0] +'" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/' +  codepenParts[0] + '/pen/' + codepenParts[1] + '/">' + codepenParts[1] + '</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p></div>' +
-            '<div class="look_preview__overview look_preview__overview--codepen">' +
-            '<div class="look_preview__header"><i class="fa fa-codepen"></i><span class="look_preview__title">' + MDSCommon.findValueByName(data.fields, 'title') + '</span></div>' +
-            '</div>' +
-            '<div class="look_preview__codepen_locker">' +
-            '<div class="look_preview__header"><i class="fa fa-codepen"></i><span class="look_preview__title">' + MDSCommon.findValueByName(data.fields, 'title') + '</span></div>' +
-            '<div class="look_preview__description">' + (MDSCommon.findValueByName(data.fields, 'description') || '') + '</div>' +
-            '<div class="look_preview__footer">' +
-            '<span class="view__comment__date view__comment__date--small">' + tr$('created') + ' ' + MDSCommon.humanizeDate(data.createdAt) + ' ' + tr$('ago') + '</span>' +
-            '</div>' +
-            '</div>' +
-            '</div>';
-        case 'table':
-        case 'list':
-          return '<div data-look-path="'+ data.path + '" class="block snippet look_preview look_preview--table' + (isActive ? ' look_preview--active' : '') + '">' +
-            '<div class="look_preview__overview">' +
-            '<div class="look_preview__header"><i class="fa fa-list"></i><span class="look_preview__title">' + MDSCommon.findValueByName(data.fields, 'title') + '</span></div>' +
-            '<div class="look_preview__description">' + (MDSCommon.findValueByName(data.fields, 'description') || '') + '</div>' +
-            '</div>' +
-            '<div class="look_preview__footer">' +
-            '<span class="view__comment__date view__comment__date--small">' + tr$('created') + ' ' + MDSCommon.humanizeDate(data.createdAt) + ' ' + tr$('ago') + '</span>' +
-            '</div>' +
-            '<div class="look_preview__codepen_locker">' +
-            '<div class="look_preview__header"><i class="fa fa-list"></i><span class="look_preview__title">' + MDSCommon.findValueByName(data.fields, 'title') + '</span></div>' +
-            '<div class="look_preview__description">' + (MDSCommon.findValueByName(data.fields, 'description') || '') + '</div>' +
-            '</div>' +
-            '<div class="look_preview__footer">' +
-            '<span class="view__comment__date view__comment__date--small view__comment__date--preview-table">' + tr$('created') + ' ' + MDSCommon.humanizeDate(data.createdAt) + ' ' + tr$('ago') + '</span>' +
-            '</div>' +
-            '</div>';
-          break;
-      }
-    }
-
-    function getLookPreviewHTML(data, isActive) {
-      return '<div class="col-md-4">' + getUnwrappedLookPreviewHTML(data, isActive) + '</div>';
-    }
-
-    function getCommentHTML(commentData) {
-      var commentText =  (MDSCommon.findValueByName(commentData.fields, 'text') || '').replace(/(?:\r\n|\r|\n)/g, '<br />');
-      return '<div class="view__comment" id="' + commentData.path + '" data-comment-path="' + commentData.path + '">' +
-        (commentData.mine ? '<span class="view__comment__author">you</span>' : '') +
-        '<span class="view__comment__text">' + commentText + '</span>' +
-        '<div class="view__comment__footer">' +
-        '<span class="view__comment__date">' + MDSCommon.humanizeDate(commentData.createdAt) + ' ago</span>' +
-        '</div>' +
-        (commentData.mine ? '<div class="view__comment__delete"><i class="fa fa-remove fa-2x"></i></div>' : '') +
-        '</div>';
     }
 
     function postComment() {
@@ -879,7 +683,7 @@
 
       var previewsHTML = '';
       $.each(looksData, function(i, val) {
-        previewsHTML += getLookPreviewHTML(val);
+        previewsHTML += RootHTMLGen.getLookPreviewHTML(val);
       });
 
       $('#root__looks__previews').html(previewsHTML).find('.look_preview').each(function(i) {
@@ -889,14 +693,6 @@
       var codepenScript = document.createElement('script');
       codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
       document.getElementById('root__looks').appendChild(codepenScript);
-    }
-
-    function showWaitingCloak() {
-      document.getElementById('waiting_cloak').style.display = 'block';
-    }
-
-    function hideWaitingCloak() {
-      document.getElementById('waiting_cloak').style.display = 'none';
     }
 
     function selectTab(tabID, itemID) {
@@ -944,7 +740,7 @@
             comments.innerHTML = '';
             var html = '';
             for (var i in data.children) {
-              html = getCommentHTML(data.children[i]) + html;
+              html = RootHTMLGen.getCommentHTML(data.children[i]) + html;
             }
             comments.innerHTML = html;
             if(html === '') {
@@ -1059,8 +855,6 @@
         }
 
 
-
-
         if (tags && websiteURL) {
           document.getElementsByClassName('view__overview_image_wrap')[0].classList.add('view__overview_image_wrap--large');
           document.getElementById('root__overview_image').classList.add('view__overview_image--large');
@@ -1115,6 +909,7 @@
         //  username: 'denis',
         //  about: 'Hello, World!',
         //};
+
         if (MDSCommon.isBlank(data.profile)) {
           document.getElementById('root__side_panel').style.display = 'none';
           document.getElementById('root__about_content').style.width = '100%';
@@ -1422,13 +1217,13 @@
         // if comment is not exists already
         if (document.getElementById(data.path) == null) {
           if (document.getElementById('root__comments').style.display === 'block') {
-            var commentHTML = getCommentHTML(data);
+            var commentHTML = RootHTMLGen.getCommentHTML(data);
             $('#root__comments__list').append(commentHTML);
             document.getElementById('root__comments__empty').style.display = 'none';
           }
         }
       } else if (/^views\/[^\/]*$/.test(data.path)) {
-        $('#root__looks__previews').append(getLookPreviewHTML(data));
+        $('#root__looks__previews').append(RootHTMLGen.getLookPreviewHTML(data));
         var preview = getLookPreviewNode(data.path);
         switch (MDSCommon.findValueByName(data.fields, 'type')) {
           case 'codepen':
@@ -1537,16 +1332,5 @@
         $$('look_modal__table').parse(formattedData);
       });
     }
-    var lastKeypressTime;
-    $('#look_modal__table_path').keydown(function() {
-      lastKeypressTime = new Date().getTime();
-    });
-    setInterval(function() {
-      var now = new Date().getTime();
-      if (lastKeypressTime && now - lastKeypressTime > 500) {
-        lastKeypressTime = null;
-        refreshLookTableColumns();
-      }
-    }, 200);
   })();
 </script>

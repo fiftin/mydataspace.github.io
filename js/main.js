@@ -320,3 +320,125 @@ if (typeof Handlebars !== 'undefined') {
     return m[1];
   });
 }
+
+/**
+ * Add JSON-LD for Google Search Engine
+ * @param {Object} data - Data received for root from MyDataSpace backend.
+ */
+function addJsonLD(data) {
+  var script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.text = JSON.stringify({
+    "@context": "http://schema.org",
+    "@id": "https://myda.space/" + data.root,
+    "@type": "Dataset",
+    "name":  MDSCommon.findValueByName(data.fields, 'name'),
+    "description": MDSCommon.findValueByName(data.fields, 'description'),
+    "keywords": MDSCommon.findValueByName(data.fields, 'tags')
+  });
+  document.querySelector('head').appendChild(script);
+}
+
+function loadEntityData(method, requestData, success, fail) {
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (xmlhttp.readyState === XMLHttpRequest.DONE ) {
+      if (xmlhttp.status === 200) {
+        var data = JSON.parse(xmlhttp.responseText);
+        success(data);
+      } else {
+        fail();
+      }
+    }
+  };
+  var query = '';
+  for (var k in requestData) {
+    if (query !== '') {
+      query += '&';
+    }
+    if (requestData[k] != null) {
+      query += k + '=' + requestData[k];
+    }
+  }
+  xmlhttp.open('GET', '{{ api_url }}/v1/entities/' + method + '?' + query, true);
+  xmlhttp.send();
+}
+
+function getCodepenIDByURL(url) {
+  var regex = /^https?:\/\/codepen.io\/(\w+)\/pen\/(\w+)/;
+  var m = regex.exec(url);
+  if (!m) {
+    return null;
+  }
+  return m[1] + '/' + m[2];
+}
+
+function getCodepenURL(id) {
+  var parts = id.split('/');
+  return 'https://codepen.io/' + parts[0] + '/pen/' + parts[1];
+}
+
+function getRequestFromLocation(loc) {
+  var pathnameParts = loc.pathname.split('/').filter(function(part) { return part !== ''; });
+  if (pathnameParts[0].length <= 2) {
+    pathnameParts.shift();
+  }
+  var searchParams = MDSCommon.parseQuery(loc.search);
+  return {
+    root: pathnameParts[0] === 'root' ? '11111' : pathnameParts[0],
+    path: '',
+    version: searchParams.v
+  };
+}
+
+function getURLLanguagePrefix(language) {
+  return MDSCommon.isBlank(language) || language === 'en' ? '' : '/' + language;
+}
+
+function showWaitingCloak() {
+  document.getElementById('waiting_cloak').style.display = 'block';
+}
+
+function hideWaitingCloak() {
+  document.getElementById('waiting_cloak').style.display = 'none';
+}
+
+
+RootHelper = {
+  validateLookForm: function() {
+    document.getElementById('look_modal__title_err').innerText = '';
+    document.getElementById('look_modal__codepen_err').innerText = '';
+
+    var title = document.getElementById('look_modal__title').value;
+    var codepen = document.getElementById('look_modal__codepen').value;
+
+    if (MDSCommon.isBlank(title)) {
+      document.getElementById('look_modal__title_err').innerText = tr$('title_cant_be_blank');
+      return false;
+    }
+
+    if (title.length > 250) {
+      document.getElementById('look_modal__title_err').innerText = tr$('too_long_title');
+      return false;
+    }
+
+    switch (document.getElementById('look_modal').data('look-type')) {
+      case 'codepen':
+        if (MDSCommon.isBlank(codepen)) {
+          document.getElementById('look_modal__codepen_err').innerText = tr$('codepen_url_cant_be_blank');
+          return false;
+        }
+        var codepenID = getCodepenIDByURL(codepen);
+        if (!codepenID) {
+          document.getElementById('look_modal__codepen_err').innerText = tr$('invalid_codepen_pen_url');
+          return false;
+        }
+        break;
+      case 'table':
+        break;
+      case 'list':
+        break;
+    }
+    return true;
+  }
+};
