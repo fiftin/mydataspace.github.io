@@ -58,7 +58,6 @@ var RootHTMLGen = {
   getListLookSingleFilter: function (facets, facetsMetaData, filterName) {
     var currentFilters = $('#root__looks__content').data('list-look-filters') || [];
     var selectedFacetName = MDSCommon.findValueByName(currentFilters, filterName);
-
     return Object.keys(facets).map(function(facetName) {
       var classes = facetName === selectedFacetName ? 'search_filter__item--active' : '';
       var meta = MDSCommon.find(facetsMetaData, function(x) { return MDSCommon.endsWith(x.path, '/' + facetName); });

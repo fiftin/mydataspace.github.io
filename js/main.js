@@ -339,31 +339,6 @@ function addJsonLD(data) {
   document.querySelector('head').appendChild(script);
 }
 
-function loadEntityData(method, requestData, success, fail) {
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (xmlhttp.readyState === XMLHttpRequest.DONE ) {
-      if (xmlhttp.status === 200) {
-        var data = JSON.parse(xmlhttp.responseText);
-        success(data);
-      } else {
-        fail();
-      }
-    }
-  };
-  var query = '';
-  for (var k in requestData) {
-    if (query !== '') {
-      query += '&';
-    }
-    if (requestData[k] != null) {
-      query += k + '=' + requestData[k];
-    }
-  }
-  xmlhttp.open('GET', '{{ api_url }}/v1/entities/' + method + '?' + query, true);
-  xmlhttp.send();
-}
-
 function getCodepenIDByURL(url) {
   var regex = /^https?:\/\/codepen.io\/(\w+)\/pen\/(\w+)/;
   var m = regex.exec(url);
