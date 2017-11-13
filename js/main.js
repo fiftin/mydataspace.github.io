@@ -299,7 +299,7 @@ Handlescripts.registerHelper('ymapsAddr', function(options) {
   var address = encodeURIComponent(options[0] + ', ' + options[1]);
   return '<script>' +
     '$.getJSON(\'https://geocode-maps.yandex.ru/1.x/?geocode=' + address + '&format=json\', function(data) {\n' +
-    '    var point = eval(\'[\' + data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos + \']\');\n' +
+    '    var point = data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(\' \').map(function(p){ return parseFloat(p); });\n' +
     '    var myMap = new ymaps.Map(\'map\', {\n' +
     '            center: point,\n' +
     '            zoom: 9\n' +
