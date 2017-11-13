@@ -500,7 +500,6 @@
             $('#root__looks__content').html(data.children.length > 0 ? '<div class="smoke smoke--fullscreen--opaque smoke--fullscreen smoke--fullscreen--fixed">' +
               '<div class="container search__content search__content--fixed">' +
                 '<div class="search__results ' + searchResultNoFiltersClass + '">' +
-                  '<div class="search__results__waiting" id="search__results__waiting"></div>' +
                   '<div class="search__header clearfix">' +
                     '<div class="search__found_count">{{ site.data[page.language].search.found_prefix }} ' + data.children.length + ' {{ site.data[page.language].search.found_items_suffix }}</div>' +
                     '<div class="btn-group search__display_modes ' + (!lineHTML || !snippetHTML ? 'hidden' : '') + ' " role="group">' +
@@ -509,6 +508,7 @@
                     '</div>' +
                   '</div>' +
                   '<div class="row">' + itemsHTML.join('\n') + '</div>' +
+                  '<div class="search__results__waiting" id="search__results__waiting"></div>' +
                 '</div>' +
                 '<div class="search__filter_panel_wrap">' +
                   '<div class="search__filter_panel">' +
