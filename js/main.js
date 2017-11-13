@@ -291,9 +291,31 @@ Handlescripts = {
   }
 };
 
-
-Handlescripts.registerSource('vk', '//vk.com/js/api/openapi.js?150');
+Handlescripts.registerSource('vk', 'https://vk.com/js/api/openapi.js?150');
 Handlescripts.registerSource('ok', 'https://connect.ok.ru/connect.js');
+Handlescripts.registerSource('ymaps', 'https://api-maps.yandex.ru/2.1/?lang=en_RU');
+
+Handlescripts.registerHelper('ymapsAddr', function(options) {
+  var address = encodeURIComponent(options[0] + ', ' + options[1]);
+  return '<script>' +
+    '$.getJSON(\'https://geocode-maps.yandex.ru/1.x/?geocode=\' + address + \'&format=json\', function(data) {\n' +
+    '    var point = eval(\'[\' + data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos + \']\');\n' +
+    '    var myMap = new ymaps.Map(\'map\', {\n' +
+    '            center: point,\n' +
+    '            zoom: 9\n' +
+    '        }),\n' +
+    '    myMap.geoObjects.add(new ymaps.Placemark(point));\n' +
+    '});' +
+    '</script>';
+});
+
+Handlescripts.registerHelper('vkGroupWidget', function(options) {
+  var vk_id = options[0];
+  if (MDSCommon.isBlank(vk_id)) {
+    return '';
+  }
+  return  '<script>VK.Widgets.Group("vk_groups_' + vk_id + '", {mode: 3}, ' + vk_id + ');</script>';
+});
 
 Handlescripts.registerHelper('vkGroupWidget', function(options) {
   var vk_id = options[0];
