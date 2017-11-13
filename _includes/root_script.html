@@ -295,11 +295,17 @@
     }
 
     function showLookWaitingCloak() {
-      window.document.getElementById('search__results__waiting').style.display = 'block';
+      var div = window.document.getElementById('search__results__waiting');
+      if (div) {
+        div.style.display = 'block';
+      }
     }
 
     function hideLookWaitingCloak() {
-      window.document.getElementById('search__results__waiting').style.display = 'none';
+      var div = window.document.getElementById('search__results__waiting');
+      if (div) {
+        div.style.display = 'none';
+      }
     }
 
     function setLook(lookMetaData, preserveContent) {
