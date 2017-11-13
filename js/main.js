@@ -303,7 +303,7 @@ Handlescripts.registerHelper('ymapsAddr', function(options) {
     '    var myMap = new ymaps.Map(\'map\', {\n' +
     '            center: point,\n' +
     '            zoom: 9\n' +
-    '        }),\n' +
+    '        });\n' +
     '    myMap.geoObjects.add(new ymaps.Placemark(point));\n' +
     '});' +
     '</script>';
