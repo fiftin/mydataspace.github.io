@@ -300,7 +300,7 @@ Handlescripts.registerHelper('ymapsAddr', function(options) {
   return '<script>' +
     '$.getJSON(\'https://geocode-maps.yandex.ru/1.x/?geocode=' + address + '&format=json\', function(data) {\n' +
     '    var point = data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(\' \').map(function(p){ return parseFloat(p); });\n' +
-    '    var myMap = new ymaps.Map(\'map\', {\n' +
+    '    var myMap = new ymaps.Map(\'ymap\', {\n' +
     '            center: point,\n' +
     '            zoom: 9\n' +
     '        });\n' +
