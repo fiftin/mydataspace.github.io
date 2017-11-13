@@ -298,7 +298,7 @@ Handlescripts.registerSource('ymaps', 'https://api-maps.yandex.ru/2.1/?lang=en_R
 Handlescripts.registerHelper('ymapsAddr', function(options) {
   var address = encodeURIComponent(options[0] + ', ' + options[1]);
   return '<script>' +
-    '$.getJSON(\'https://geocode-maps.yandex.ru/1.x/?geocode=\' + address + \'&format=json\', function(data) {\n' +
+    '$.getJSON(\'https://geocode-maps.yandex.ru/1.x/?geocode=' + address + '&format=json\', function(data) {\n' +
     '    var point = eval(\'[\' + data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos + \']\');\n' +
     '    var myMap = new ymaps.Map(\'map\', {\n' +
     '            center: point,\n' +
