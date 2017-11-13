@@ -588,6 +588,17 @@ $look-search-shadow-width: 100px;
   }
 }
 
+.search__results__waiting {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100%;
+  opacity: 0.5;
+  background: $toolbar-bg;
+}
+
 .look__search_input {
   border: 0;
   width: $look-search-width;
