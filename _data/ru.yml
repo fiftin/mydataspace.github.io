@@ -48,7 +48,7 @@ sections:
         title: WebSocket-ы
         description: То что делает сайт реактивным
       - id: scalability
-        title: Масштабируемость
+        title: Масштабируе<wbr>мость
         description: Позволяет справиться с любой нагрузкой
       - id: distribution
         title: Распределенное хранение данных
