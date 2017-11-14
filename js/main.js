@@ -302,7 +302,7 @@ Handlescripts.registerHelper('ymapsAddr', function(options) {
     '    var point = data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(\' \').map(function(p){ return parseFloat(p); }).reverse();\n' +
     '    var myMap = new ymaps.Map(\'ymap\', {\n' +
     '            center: point,\n' +
-    '            zoom: 13\n' +
+    '            zoom: 14\n' +
     '        });\n' +
     '    myMap.geoObjects.add(new ymaps.Placemark(point));\n' +
     '});' +
