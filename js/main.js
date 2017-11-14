@@ -175,8 +175,7 @@ function getHtmlFromTemplate(template, data) {
 function parseSnippetTemplate(template) {
   if (template == null) {
     throw new Error('Parameter template can not be null');
-  }'' +
-  ''
+  }
 
   var parts = ('\n' + template).split('\n---\n');
   return {
