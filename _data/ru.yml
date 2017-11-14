@@ -65,8 +65,8 @@ sections:
         description: Единый инструмент управления данными и кодом
     additional_features:
       - Создайте интерфейс вашего сайта
-      - Загрузите данные на бекенд
-      - Подключите интерфейс к бэкенду
+      - Загрузите данные на сервис
+      - Подключите интерфейс к сервису через API
     code_simple_description: Пример использования данных сайта <a target="_blank" href="https://spreex.github.io">spreex.github.io</a>
   - id: reliability
     title: Надежность
