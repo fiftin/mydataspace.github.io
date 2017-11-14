@@ -59,13 +59,13 @@ sections:
         description: Все что нужно знать для создания сайта
       - id: open_data
         title: Открытые данные
-        description: Делитесь данными с другими
+        description: Опубликованные данные доступны всем
       - id: console
         title: Простота в обслуживание
         description: Единый инструмент управления данными и кодом
     additional_features:
       - Создайте интерфейс вашего сайта
-      - Загрузите данные на сервис
+      - Опубликуйте данные на сервисе
       - Подключите интерфейс к сервису через API
     code_simple_description: Пример использования данных сайта <a target="_blank" href="https://spreex.github.io">spreex.github.io</a>
   - id: reliability
