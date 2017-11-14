@@ -54,7 +54,6 @@ var RootHTMLGen = {
     return '<div class="col-md-4">' + RootHTMLGen.getUnwrappedLookPreviewHTML(data, isActive) + '</div>';
   },
 
-
   getListLookSingleFilter: function (facets, facetsMetaData, filterName) {
     var currentFilters = $('#root__looks__content').data('list-look-filters') || [];
     var selectedFacetName = MDSCommon.findValueByName(currentFilters, filterName);

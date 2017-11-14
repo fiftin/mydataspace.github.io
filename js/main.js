@@ -178,8 +178,9 @@ function parseSnippetTemplate(template) {
   }
   var parts = template.split('\n---\n');
   return {
-    template: Handlebars.compile(parts[0]),
-    scripts: Handlescripts.compile(parts[1] || '')
+    scripts: Handlescripts.compile(parts[0] || ''),
+    css: parts[1],
+    template: Handlebars.compile(parts[2] || '')
   };
 }
 
