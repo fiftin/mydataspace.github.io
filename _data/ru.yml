@@ -57,7 +57,7 @@ sections:
         description: Быстрый доступ из любой точки мира
   - id: ease
     title: Простота
-    subtitle: Просто как раз, два, три
+    subtitle: Как создать сайт в три шага?
     features:
       - id: open_data
         title: Открытые данные
