@@ -41,7 +41,7 @@ buttons:
 sections:
   - id: speed
     title: Скорость
-    subtitle: Архитекрура MyDataSpace позволяет обеспечить высокую скорость доступа к данным
+    subtitle: Современная архитектура позволяет обеспечить высокую скорость доступа к данным
     features:
       - id: websocket
         title: WebSocket-ы
