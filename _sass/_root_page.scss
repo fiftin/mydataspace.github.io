@@ -596,7 +596,7 @@ $look-search-shadow-width: 100px;
   opacity: 0.5;
   background: $toolbar-bg;
 
-  width: $screen-lg;
+  width: $screen-lg - $side-width;
 
   @media (max-width: $screen-xs-min) {
     left: 0;
