@@ -56,7 +56,7 @@ sections:
     features:
       - id: coding
         title: HTML/CSS/JS
-        description: Все что нужно знать для создания крутого сайта
+        description: Все что нужно знать для создания сайта
       - id: open_data
         title: Открытые данные
         description: Делитесь данными с другими
