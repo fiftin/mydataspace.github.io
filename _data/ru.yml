@@ -54,12 +54,12 @@ sections:
   - id: ease
     title: Простота
     features:
-      - id: coding
-        title: HTML/CSS/JS
-        description: Все что нужно знать для создания сайта
       - id: open_data
         title: Открытые данные
         description: Опубликованные данные доступны всем
+      - id: coding
+        title: HTML/CSS/JS
+        description: Все что нужно знать для создания сайта
       - id: console
         title: Простота в обслуживание
         description: Единый инструмент управления данными и кодом
