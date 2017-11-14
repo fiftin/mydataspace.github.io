@@ -177,7 +177,7 @@ function parseSnippetTemplate(template) {
     throw new Error('Parameter template can not be null');
   }
 
-  var parts = ('\n' + template).split('\n---\n');
+  var parts = template.split(/^---$/gm);
   return {
     scripts: Handlescripts.compile(parts[0] || ''),
     css: parts[1],
