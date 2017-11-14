@@ -604,7 +604,7 @@ $look-search-shadow-width: 100px;
   }
 
   @media (max-width: $screen-sm-min) {
-    width: $screen-xs;
+    width: $screen-xs - $side-width;
   }
 
   @media (max-width: $screen-md-min) {
