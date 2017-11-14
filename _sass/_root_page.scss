@@ -590,14 +590,34 @@ $look-search-shadow-width: 100px;
 
 .search__results__waiting {
   display: none;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 100%;
+  position: fixed;
+  top: $header-height;
+  height: calc(100% - #{$header-height});
   opacity: 0.5;
   background: $toolbar-bg;
+
+  width: $screen-lg;
+
+  @media (max-width: $screen-xs-min) {
+    left: 0;
+    width: 100%;
+  }
+
+  @media (max-width: $screen-sm-min) {
+    width: $screen-xs;
+  }
+
+  @media (max-width: $screen-md-min) {
+    width: $screen-sm;
+  }
+
+  @media (max-width: $screen-lg-min) {
+    width: $screen-md;
+  }
 }
+
+
+
 
 .look__search_input {
   border: 0;
