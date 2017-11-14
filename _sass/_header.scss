@@ -327,11 +327,17 @@ $slogan-animation-offset-mobile: 400px;
   }
 }
 
-
 .intro__slogan {
   font-size: 80px;
   line-height: 1.01;
   margin-top: 0;
+}
+
+
+.intro__slogan_wrap--2 {
+  .intro__slogan {
+    font-size: 65px;
+  }
 }
 
 .intro__description {
