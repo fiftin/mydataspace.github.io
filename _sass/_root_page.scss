@@ -608,11 +608,11 @@ $look-search-shadow-width: 100px;
   }
 
   @media (max-width: $screen-md-min) {
-    width: $screen-sm;
+    width: $screen-sm - $side-width;
   }
 
   @media (max-width: $screen-lg-min) {
-    width: $screen-md;
+    width: $screen-md - $side-width;
   }
 }
 
