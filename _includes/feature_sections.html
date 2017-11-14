@@ -3,6 +3,9 @@
     <div style="display: none;" class="smoke smoke--light absolute absolute--fill smoke--{{ section.id }}"></div>
     <div class="container relative">
       <h2 class="section__title section__title--{{ section.id }}">{{ section.title }}</h2>
+      {% if section.subtitle %}
+      <h3 class="section__subtitle section__subtitle--{{ section.id }}">{{ section.subtitle }}</h3>
+      {% endif %}
       {% if section.additional_features %}
         <div class="row">
           <div class="col-md-8 col-md-offset-4">

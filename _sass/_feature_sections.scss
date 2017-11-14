@@ -36,6 +36,18 @@
   margin-bottom: 40px;
 }
 
+.section__subtitle {
+  margin-top: 0;
+  text-align: center;
+  font-size: $font-size-h3;
+  word-wrap: break-word;
+}
+
+.section__subtitle--speed {
+  margin-top: -20px;
+  margin-bottom: 40px;
+}
+
 .section__title--reliability {
   margin-bottom: 40px;
 }
