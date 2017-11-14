@@ -71,7 +71,7 @@ sections:
       - id: cloud
         title: Cloud Infrastructure
       - id: availability
-        title: Availability 99.99%
+        title: Availability 99.95%
       - id: security
         title: DDoS Protection
 demos:
