@@ -113,7 +113,7 @@ get_started:
         title: Client
         description: Print JSON received from the backend
         type: code
-        height: 400
+        height: 450
         id: jrPQwR
 
 docs:
