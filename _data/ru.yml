@@ -122,7 +122,7 @@ get_started:
         title: Клиент
         description: Просто выводим на экран JSON полученный с бекенда
         type: code
-        height: 350
+        height: 400
         id: jrPQwR
 #  - id: chat
 #    title: Простой чат
