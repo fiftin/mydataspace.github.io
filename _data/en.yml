@@ -1,4 +1,5 @@
 menu:
+  features: Features
   get_started: Get Started
   demos: Showcase
   docs: Documentation
@@ -6,8 +7,8 @@ menu:
   login: Sign In
   logout: Sign out
   myData: My Data
-slogan: GitHub for Data
-slogan_description: Love Open Source? Let's create Open Data together!
+slogan: Data publishing <br /> service
+slogan_description: Reliable access to data over API from anywhere at real time
 slogan_2: Incredibly fast backend of your website
 slogan_description_2: You will be surprised how fast and responsive website can be
 mission: From the outset we wanted to create a simple, reliable and fast product.
@@ -75,6 +76,12 @@ sections:
       - id: security
         title: DDoS Protection
 demos:
+  - id: hello-world
+    title: Hello, World!
+    website: https://myda.space/get-started/hello-world/
+    description: Simplest MyDataSpace-based app
+    screenshot_width: 1088
+    screenshot_height: 663
   - id: spreex
     title: Spreex
     website: https://spreex.github.io

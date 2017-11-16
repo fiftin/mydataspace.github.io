@@ -1,4 +1,5 @@
 menu:
+  features: Возможности
   get_started: Для начала
   demos: Примеры
   docs: Документация
@@ -88,6 +89,12 @@ sections:
         title: Защита от DDoS
 demos_title: Примеры
 demos:
+  - id: hello-world
+    title: Hello, World!
+    website: https://myda.space/get-started/hello-world
+    description: Простейшее приложение на MyDataSpace
+    screenshot_width: 1088
+    screenshot_height: 663
   - id: spreex
     title: Spreex
     website: https://spreex.github.io
@@ -103,6 +110,18 @@ demos:
     description: Административная панель <span class="nowrap">My Data Space</span>
     screenshot_width: 1105
     screenshot_height: 662
+
+
+features:
+  - id: api
+    title: API
+  - id: authorization
+    title: Авторизация
+  - id: import
+    title: Импорт данных
+  - id: user-code
+    title: Код пользователя
+
 
 get_started:
   - id: hello-world
@@ -122,11 +141,8 @@ get_started:
         title: Клиент
         description: Просто выводим на экран JSON полученный с бекенда
         type: code
-        height: 400
+        height: 450
         id: jrPQwR
-#  - id: chat
-#    title: Простой чат
-    # description:
 docs:
   - id: backend
     title: Бекенд

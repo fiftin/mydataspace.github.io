@@ -7,9 +7,9 @@
   <div class="container">
     <div class="row">
       <div class="col-md-3">
-        <a class="footer__link footer__link--section" href="{{ baseurl }}/get-started">{{ site.data[page.language].menu.get_started }}</a>
-        {% for example in site.data[page.language].get_started %}
-          <a class="footer__link footer__link--subsection" href="{{ baseurl }}/get-started/{{ example.id }}">{{ example.title }}</a>
+        <a class="footer__link footer__link--section" href="{{ baseurl }}/get-started">{{ site.data[page.language].menu.features }}</a>
+        {% for feature in site.data[page.language].features %}
+        <a class="footer__link footer__link--subsection" href="{{ baseurl }}/get-started/{{ example.id }}">{{ feature.title }}</a>
         {% endfor %}
       </div>
       <div class="col-md-3">
