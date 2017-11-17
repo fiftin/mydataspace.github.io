@@ -78,7 +78,7 @@ sections:
 demos:
   - id: hello-world
     title: Hello, World!
-    website: https://myda.space/get-started/hello-world/
+    website: https://myda.space/get-started/hello-world
     description: Simplest MyDataSpace-based app
     screenshot_width: 1088
     screenshot_height: 663
