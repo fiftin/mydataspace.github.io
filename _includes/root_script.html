@@ -309,7 +309,15 @@
     }
 
     function setLook(lookMetaData, preserveContent) {
+
       $('#root__looks__actions').find('.look__action--only-owner').css('display', lookMetaData.mine ? 'block' : 'none');
+      var search = MDSCommon.parseQuery(window.location.search);
+
+      if (window.parent !== window) { // in iframe hide close button
+        $('#root__looks__actions').find('.look__action--non-embed').css('display', lookMetaData.mine ? 'block' : 'none');
+      }
+
+
       var type = MDSCommon.findValueByName(lookMetaData.fields, 'type');
       $('#root__looks__title_icon').attr('class', 'fa fa-' + type);
       $('#root__looks__title').text(MDSCommon.findValueByName(lookMetaData.fields, 'title'));

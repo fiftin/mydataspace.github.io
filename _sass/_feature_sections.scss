@@ -95,6 +95,11 @@ a.feature {
   word-wrap: break-word;
 }
 
+.feature__subtitle {
+  font-size: $font-size-large;
+  margin-top: 0;
+}
+
 .feature__description {
   font-size: $font-size-large;
   margin-top: 10px;

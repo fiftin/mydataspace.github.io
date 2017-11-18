@@ -3,21 +3,21 @@
     <div class="intro">
       <div class="row">
         <div class="col-md-9 intro__slogans">
-
-          <div class="intro__slogan_wrap intro__slogan_wrap--1">
-            <div class="intro__slogan_offset">
-              <h1 class="intro__slogan">{{ site.data[page.language].slogan }}</h1>
-              <div class="intro__description">{{ site.data[page.language].slogan_description }}</div>
+          <a href="{{ baseurl }}/features" class="intro__slogans_link">
+            <div class="intro__slogan_wrap intro__slogan_wrap--1">
+              <div class="intro__slogan_offset">
+                <h1 class="intro__slogan">{{ site.data[page.language].slogan }}</h1>
+                <div class="intro__description">{{ site.data[page.language].slogan_description }}</div>
+              </div>
             </div>
-          </div>
 
-          <div class="intro__slogan_wrap intro__slogan_wrap--2">
-            <div class="intro__slogan_offset">
-              <h1 class="intro__slogan">{{ site.data[page.language].slogan_2 }}</h1>
-              <div class="intro__description">{{ site.data[page.language].slogan_description_2 }}</div>
+            <div class="intro__slogan_wrap intro__slogan_wrap--2">
+              <div class="intro__slogan_offset">
+                <h1 class="intro__slogan">{{ site.data[page.language].slogan_2 }}</h1>
+                <div class="intro__description">{{ site.data[page.language].slogan_description_2 }}</div>
+              </div>
             </div>
-          </div>
-
+          </a>
         </div>
         <div class="col-md-3">
           {% include auth_prompt.html hide_prompt_on_xs=true %}

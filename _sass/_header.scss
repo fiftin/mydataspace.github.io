@@ -296,6 +296,12 @@ $slogan-animation-offset-mobile: 400px;
   min-height: 220px;
 }
 
+.intro__slogans_link {
+  display: block;
+  text-decoration: none !important;
+  color: white !important;
+}
+
 .intro__slogan_wrap {
   animation-delay: 10s;
   animation-duration: 30s;

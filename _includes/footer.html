@@ -9,7 +9,9 @@
       <div class="col-md-3">
         <a class="footer__link footer__link--section" href="{{ baseurl }}/features">{{ site.data[page.language].menu.features }}</a>
         {% for feature in site.data[page.language].features %}
-        <a class="footer__link footer__link--subsection" href="{{ baseurl }}/features#{{ feature.id }}">{{ feature.title }}</a>
+        {% if feature.super_title %}
+        <a class="footer__link footer__link--subsection" href="{{ baseurl }}/features#{{ feature.id }}">{{ feature.super_title }}</a>
+        {% endif %}
         {% endfor %}
       </div>
       <div class="col-md-3">

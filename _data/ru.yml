@@ -114,14 +114,64 @@ demos:
 
 features:
   - id: api
-    title: API
-  - id: authorization
-    title: Авторизация
-  - id: import
-    title: Импорт данных
-  - id: user-code
-    title: Пользовательский код
+    super_title: API
+    title: Полнотекстовый поиск
+    description: Поиск документов по содержимому с сортировкой по релевантности
+    type: code
+    code_id: NwXRMB
+    height: 480
 
+  - id: geo-clastering
+    title: Кластеризация геоданных
+    type: code
+    code_id: GOyjyv
+    height: 450
+    description: Группировка близких друг к другу объектов на карте
+    content: "Пример: отображение на карте всех видоекамер Москвы"
+
+  - id: facets
+    title: Фасеты
+    description: Группировка документов по значениям заданных полей
+    type: iframe
+    url: https://myda.space/reestrSTR/views/b3890fd4-c139-11e7-abc4-cec278b6b50a
+    height: 450
+
+  - id: authorization
+    super_title: Авторизация
+    super_description: Авторизация пользователей через популярные соцсетей
+    content: |
+      MyDataSpace полностью берет на себя управление пользователями &mdash; регистрацию, аутентификацию и авторизацию
+      через соцсети.
+
+      Все пользователи MyDataSpace по-умолчанию анонимны, но могут создавать публичные профили.
+
+      Поддерживается авторизация через следующие социальне сети:
+
+      <a href="https://vk.com/mydataspace"><img style="width: 80px; margin-right: 10px;" src="/images/logos/vk.png" /></a>
+      <a href="https://ok.ru"><img style="width: 80px; margin-right: 10px;" src="/images/logos/ok.png" /></a>
+      <a href="https://facebook.com/mydataspace"><img style="width: 80px; margin-right: 10px;" src="/images/logos/fb.png" /></a>
+      <a href="https://plus.google.com/communities/107145683419072073269"><img style="width: 80px; margin-right: 10px;" src="/images/logos/g+.png" /></a>
+      <a href="https://github.com/mydataspace"><img style="width: 150px; margin-right: 10px;" src="/images/logos/github.png" /></a>
+
+  - id: dashboard
+    super_title: Админ панель
+    super_description: Удобная панель управления данными и кодом
+    type: demo
+    preview_url: /images/docs/import-of-data/create-root.gif
+    image_url: /images/docs/import-of-data/create-root.gif
+    website: https://myda.space
+
+  - id: import
+    super_title: Импорт данных
+    super_description: Обработка и импорт данных из файлов XLS, CSV, JSON, XML и файлов других форматов
+
+  - id: user-code
+    super_title: Пользовательский код
+    super_description: Выполнение пользовательского JavaScript на сервере по расписанию
+
+  - id: resources
+    super_title: Хранение файлов
+    super_description: Хранение пользовательский файлов на сервере
 
 get_started:
   - id: hello-world
@@ -137,12 +187,11 @@ get_started:
         url: /images/get_started/hello_world.gif
         preview_url: /images/get_started/hello_world.jpg
         data_url: https://myda.space/hello-world
-      - id: client
+      - id: jrPQwR
         title: Клиент
         description: Просто выводим на экран JSON полученный с бекенда
         type: code
         height: 450
-        id: jrPQwR
 docs:
   - id: backend
     title: Бекенд
