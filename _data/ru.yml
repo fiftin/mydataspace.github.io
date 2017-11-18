@@ -51,7 +51,7 @@ sections:
     features:
       - id: websocket
         title: WebSocket-ы
-        description: То что делает сайт реактивным
+        description: То что делает доступ реактивным
       - id: scalability
         title: Масштабируе<wbr>мость
         description: Позволяет справиться с любой нагрузкой
