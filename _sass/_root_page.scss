@@ -598,21 +598,21 @@ $look-search-shadow-width: 100px;
 
   width: $screen-lg - $side-width;
 
-  @media (max-width: $screen-xs-min) {
-    left: 0;
-    width: 100%;
-  }
-
-  @media (max-width: $screen-sm-min) {
-    width: $screen-xs - $side-width;
+  @media (max-width: $screen-lg-min) {
+    width: $screen-md - $side-width;
   }
 
   @media (max-width: $screen-md-min) {
     width: $screen-sm - $side-width;
   }
 
-  @media (max-width: $screen-lg-min) {
-    width: $screen-md - $side-width;
+  @media (max-width: $screen-sm-min) {
+    width: $screen-xs - $side-width;
+  }
+
+  @media (max-width: $screen-xs-min) {
+    left: 0;
+    width: 100%;
   }
 }
 
