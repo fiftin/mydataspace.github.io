@@ -4,17 +4,16 @@ title: Возможности
 language: ru
 ---
 
-{% comment %}
 MyDataSpace &mdash; это облачное хранилище открытых данных с доступом через API.
 
 Аналигами MyDataSpace являются [Firebase](https://firebase.google.com) и [Parse](https://parseplatform.github.io/) &mdash;
-полнотектовый поиск, API для авторизации через соцсети, кластеризация гео-данных и многое другое доступно из коробки.
+полнотектовый поиск, API для авторизации через соцсети, кластеризация геоданных и многое другое доступно из коробки.
 
 В отличае от указанных сервисов выше, MyDataSpace предоставляет доступ ко всем опубликованным данным, а не только к тем
 которые загрузил сам пользователь.
 
 MyDataSpace не просто хранилище данных, MyDataSpace &mdash; это «открытый облачный бекенд».
-{% endcomment %}
+
 
 {% for demo in site.data[page.language].features %}
   <section class="page__section">
