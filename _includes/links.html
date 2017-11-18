@@ -9,4 +9,9 @@
     <i class="fa fa-database" aria-hidden="true"></i><span class="links__link_text">{{ site.data[page.language].strings.view_data }}</span>
   </a>
 {% endif %}
+{% if include.links.doc_url %}
+  <a href="{{ baseurl }}{{ include.links.doc_url }}" class="links__link">
+    <i class="fa fa-book" aria-hidden="true"></i><span class="links__link_text">{{ site.data[page.language].strings.view_doc }}</span>
+  </a>
+{% endif %}
 </div>

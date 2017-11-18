@@ -28,6 +28,8 @@ MyDataSpace не просто хранилище данных, MyDataSpace &mdas
           <p class="feature__subtitle">{{ demo.title }}</p>
           <p>{{ demo.description }}</p>
         {% endif %}
+
+      {% include links.html links=demo %}
       </div>
       <div class="col-md-8">
           <p>

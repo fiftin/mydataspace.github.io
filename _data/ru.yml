@@ -28,6 +28,7 @@ strings:
   view_source_code: См. код
   view_data: См. данные
   top_roots: Популярые данные
+  view_doc: См. документацию
   explore_roots: Показать все
 header:
   input_search: Начните поиск или нажмите Esc
@@ -145,14 +146,13 @@ features:
 
       Все пользователи MyDataSpace по-умолчанию анонимны, но могут создавать публичные профили.
 
-      Поддерживается авторизация через следующие социальне сети:
+      Поддерживается авторизация через следующие социальные сети:
 
+      <a href="https://github.com/mydataspace"><img style="width: 150px; margin-right: 10px;" src="/images/logos/github.png" /></a>
       <a href="https://vk.com/mydataspace"><img style="width: 80px; margin-right: 10px;" src="/images/logos/vk.png" /></a>
       <a href="https://ok.ru"><img style="width: 80px; margin-right: 10px;" src="/images/logos/ok.png" /></a>
       <a href="https://facebook.com/mydataspace"><img style="width: 80px; margin-right: 10px;" src="/images/logos/fb.png" /></a>
       <a href="https://plus.google.com/communities/107145683419072073269"><img style="width: 80px; margin-right: 10px;" src="/images/logos/g+.png" /></a>
-      <a href="https://github.com/mydataspace"><img style="width: 150px; margin-right: 10px;" src="/images/logos/github.png" /></a>
-
   - id: dashboard
     super_title: Админ панель
     super_description: Удобная панель управления данными и кодом
@@ -164,14 +164,27 @@ features:
   - id: import
     super_title: Импорт данных
     super_description: Обработка и импорт данных из файлов XLS, CSV, JSON, XML и файлов других форматов
+    doc_url: /docs/import-of-data
 
   - id: user-code
     super_title: Пользовательский код
     super_description: Выполнение пользовательского JavaScript на сервере по расписанию
+    doc_url: /docs/backend#docs__tasks
+    type: demo
+    preview_url: /images/docs/backend/tasks-debug-ru.png
+    image_url: /images/docs/backend/tasks-debug-ru.png
+    website: https://myda.space
+    height: 750
 
   - id: resources
     super_title: Хранение файлов
     super_description: Хранение пользовательский файлов на сервере
+    doc_url: /docs/backend#docs__resources
+    type: demo
+    preview_url: /images/docs/backend/resources-ru.png
+    image_url: /images/docs/backend/resources-ru.png
+    website: https://myda.space
+    height: 750
 
 get_started:
   - id: hello-world

@@ -20,6 +20,7 @@ waiting_cloak: "Loading..."
 strings:
   view_source_code: View Code
   view_data: View Data
+  view_doc: View Docs
   top_roots: Featured Roots
   explore_roots: Explore Roots
 header:
