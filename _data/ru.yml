@@ -74,7 +74,7 @@ sections:
     additional_features:
       - Создайте интерфейс вашего приложения
       - Опубликуйте данные на MyDataSpace
-      - Подключите интерфейс к MyDataSpace через API
+      - Подключите приложение к MyDataSpace через API
     code_simple_description: >
       После загрузки данных нужно всего несколько строк кода, чтобы отобразить их на сайте.
       Пример использования данных <a target="_blank" href="https://spreex.github.io">spreex.github.io</a>
