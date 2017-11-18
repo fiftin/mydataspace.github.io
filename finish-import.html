@@ -58,6 +58,15 @@ language: en
       <button class="finish_import__button btn btn-default" id="finish_import__cancel_importing">Cancel</button>
       <button class="finish_import__button btn btn-success" id="finish_import__background">Background</button>
     </div>
+    <div class="finish_import__waiting_cloak" id="finish_import__waiting_cloak">
+      <div class="fa fa-cog fa-spin" style="
+          position: absolute;
+          color: #85b4d4;
+          font-size: 150px;
+          left: calc(50% - 75px);
+          top: calc(50% - 75px);
+      "></div>
+    </div>
   </div>
   <div class="finish_import__content" id="finish_import__finished" style="display: none">
     <div class="finish_import__result" id="finish_import__cancelled" style="display: none">
@@ -228,6 +237,10 @@ language: en
 
     document.getElementById('finish_import__create').addEventListener('click', function() {
       var root = openRefineImportEntity.root || document.getElementById('finish_import__root_name').value;
+
+      // show waiting indicator
+      document.getElementById('finish_import__waiting_cloak').style.display = 'block';
+
       Promise.resolve().then(function() {
         if (!openRefineImportEntity.root) {
           return Mydataspace.entities.create({
@@ -257,7 +270,9 @@ language: en
         processData = data;
         Mydataspace.entities.subscribe(MDSCommon.permit(data, ['root', 'path'])); document.getElementById('finish_import__create_root').style.display = 'none';
         document.getElementById('finish_import__progress').style.display = 'block';
+        document.getElementById('finish_import__waiting_cloak').style.display = 'none';
       }, function(err) {
+        document.getElementById('finish_import__waiting_cloak').style.display = 'none';
         console.log(err);
         alert(err.message);
       });
