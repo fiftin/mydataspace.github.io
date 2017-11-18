@@ -3807,12 +3807,12 @@ UILayout.header =
       { view: 'button',
         width: 90,
         css: 'menu__language_button menu__language_button--get_started',
-        id: 'GET_STARTED_LABEL',
+        id: 'FEATURES_LABEL',
         label: STRINGS.GET_STARTED,
         click: function() {
           var currentLang = (localStorage.getItem('language') || 'en').toLowerCase();
           currentLang = currentLang === 'en' ? '' : '/' + currentLang;
-          window.open(currentLang + '/get-started', '_blank');
+          window.open(currentLang + '/features', '_blank');
         }
       },
       { view: 'button',
