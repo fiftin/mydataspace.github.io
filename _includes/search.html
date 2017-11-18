@@ -14,7 +14,7 @@
   <div class="form-group" id="{{include.id}}_input_wrap">
     <input id="{{include.id}}_input"
            type="text"
-           class="form-control header__search_input"
+           class="form-control header__search_input {%if include.id=='webix__header__search' %}hidden-xs hidden-sm{% endif %}"
            placeholder="{{ site.data[page.language].header.input_search }}"
            spellcheck="false"
     />
