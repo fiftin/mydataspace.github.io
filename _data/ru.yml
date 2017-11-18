@@ -117,7 +117,7 @@ features:
   - id: api
     super_title: API
     title: Полнотекстовый поиск
-    description: Поиск документов по содержимому с сортировкой по релевантности
+    description: Поиск документов по содержимому и сортировка их по релевантности
     type: code
     code_id: NwXRMB
     height: 480
