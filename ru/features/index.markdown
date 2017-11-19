@@ -59,7 +59,7 @@ MyDataSpace не просто хранилище данных, MyDataSpace &mdas
               <video id="{{ section_media_id }}" class="safari__video" autoplay loop>
                 <source src="{{ demo.video_url }}" type="video/mp4" />
               </video>
-              {% include video_waiter.html id=section_media_id width=demo.width height=demo.height url=demo.video_url %}
+              {% include video_waiter.html id=section_media_id width=demo.width height=demo.height url=demo.preview_url %}
             </div>
 
 
