@@ -156,7 +156,7 @@ language: en
       }
     });
 
-    document.getElementById('finish_import__root_name').focus();
+    setTimeout(function() { document.getElementById('finish_import__root_name').focus(); }, 300);
 
     document.getElementById('finish_import__cancel_importing').addEventListener('click', function() {
       Mydataspace.entities.change({
