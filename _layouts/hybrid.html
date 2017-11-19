@@ -152,6 +152,7 @@
     });
     $('#import_data_modal').on('show.bs.modal', function () {
       document.getElementById('import_data_modal__refine__waiting_cloak').style.display = 'block';
+
       document.getElementById('import_data_modal__refine').src = '{{ refine_url }}';
       setTimeout(function() {
         document.getElementById('import_data_modal__refine__waiting_cloak').style.display = 'none';
@@ -270,6 +271,13 @@
               top: calc(50% - 75px);
           "></div>
         </div>
+        <script>
+          document.getElementById('import_data_modal__refine').addEventListener('load', function() {
+            setTimeout(function() {
+              document.getElementById('import_data_modal__refine__waiting_cloak').style.display = 'none';
+            }, 1000);
+          });
+        </script>
       </div>
     </div>
   </div>
