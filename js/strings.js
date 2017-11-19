@@ -263,7 +263,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     DOCS: 'Документация',
     DEMOS: 'Примеры',
     GET_STARTED: 'Для начала',
-    FEATURES_LABEL: 'Возможности',
+    FEATURES: 'Возможности',
     SIGN_IN: 'Войти',
     NOTHING: 'Ничего',
     READ_AND_VIEW_CHILDREN: 'Чтение и просм. доч. эл.',
