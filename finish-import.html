@@ -14,10 +14,10 @@ language: en
           <span class="finish_import__known_root_name" id="finish_import__known_root_name"></span>
         </div>
       </div>
-      <input class="form-control" placeholder="Root Name" id="finish_import__root_name" style="display: none" />
+      <input class="form-control" placeholder="Root name" id="finish_import__root_name" style="display: none" />
     </div>
     <div class="form-group">
-      <input class="form-control" placeholder="Entity Name" id="finish_import__data_path" value="data" />
+      <input class="form-control" placeholder="Entity name, default &quot;data&quot;" id="finish_import__data_path" />
     </div>
     <div class="form-group">
       <select class="form-control" id="finish_import__pk">
@@ -253,7 +253,12 @@ language: en
         }
       }).then(function() {
         importingProcessPath = 'processes/' + MDSCommon.guid();
-        var targetPath = (openRefineImportEntity.path ? openRefineImportEntity.path + '/' : '') + document.getElementById('finish_import__data_path').value;
+        var dataPath = document.getElementById('finish_import__data_path').value;
+        if (!dataPath || dataPath === '') {
+          dataPath = 'data';
+        }
+        var targetPath = (openRefineImportEntity.path ? openRefineImportEntity.path + '/' : '') + dataPath;
+
         return Mydataspace.entities.create({
           root: root,
           path: importingProcessPath,
