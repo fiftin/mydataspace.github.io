@@ -151,6 +151,7 @@
       }
     });
     $('#import_data_modal').on('show.bs.modal', function () {
+      document.getElementById('import_data_modal__refine__waiting_cloak').style.display = 'block';
       document.getElementById('import_data_modal__refine').src = '{{ refine_url }}';
     });
 
@@ -256,7 +257,7 @@
         <div class="modal-title">Importing Data</div>
       </div>
       <div class="modal-body" style="position: relative">
-        <iframe id="import_data_modal__refine" class="import_data_model__refine" onload="document.getElementById('import_data_modal__refine__waiting_cloak').style.display = 'none'"></iframe>
+        <iframe id="import_data_modal__refine" class="import_data_model__refine"></iframe>
         <div class="finish_import__waiting_cloak" id="import_data_modal__refine__waiting_cloak" style="display: block;">
           <div class="fa fa-cog fa-spin" style="
               position: absolute;
@@ -266,6 +267,13 @@
               top: calc(50% - 75px);
           "></div>
         </div>
+        <script>
+          document.getElementById('import_data_modal__refine__waiting_cloak').addEventListener('load', function() {
+            setTimeout(function() {
+              document.getElementById('import_data_modal__refine__waiting_cloak').style.display = 'none';
+            }, 1000);
+          });
+        </script>
       </div>
     </div>
   </div>
