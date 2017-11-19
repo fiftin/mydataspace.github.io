@@ -136,7 +136,7 @@ features:
     type: iframe
     url: https://myda.space/reestrSTR/views/b3890fd4-c139-11e7-abc4-cec278b6b50a
     height: 450
-    content: "Пример: панель фильтров реализована с помощью фасетов"
+    content: "Пример: панель фильтрации по городам реализована с помощью фасетов"
 
   - id: events
     title: События
