@@ -112,6 +112,7 @@ language: en
     var importingProcessPath;
     var processData;
     var openRefineImportEntity;
+    var projectID;
 
     var pk = document.getElementById('finish_import__pk');
     var subitemPk = document.getElementById('finish_import__subitem_pk');
@@ -130,6 +131,8 @@ language: en
       }
       importingStarted = true;
       openRefineImportEntity = e.data.openRefineImportEntity;
+      projectID = e.data.projectID;
+
       if(openRefineImportEntity.root) {
         document.getElementById('finish_import__known').style.display = 'block';
         document.getElementById('finish_import__known_path').innerText = openRefineImportEntity.path;
@@ -171,8 +174,8 @@ language: en
     });
 
     document.getElementById('finish_import__cancel').addEventListener('click', function() {
-
-      window.parent.postMessage({ message: 'openRefineImport', stage: 'finished' }, '*');
+      window.location.href = 'https://refine.mydataspace.net/project?project=' + projectID;
+//      window.parent.postMessage({ message: 'openRefineImport', stage: 'finished' }, '*');
     });
     
     document.getElementById('finish_import__close').addEventListener('click', function() {
