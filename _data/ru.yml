@@ -166,7 +166,7 @@ features:
     super_description: Обработка и импорт данных из файлов XLS, CSV, JSON, XML и файлов других форматов
     doc_url: /docs/import-of-data
     type: video_demo
-    video_url: /images/docs/import-of-data/openrefine.pm4
+    video_url: /images/docs/import-of-data/openrefine.mp4
     preview_url: /images/docs/import-of-data/openrefine.jpg
 
   - id: user-code
