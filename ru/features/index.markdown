@@ -12,8 +12,9 @@ MyDataSpace &mdash; это облачное хранилище открытых 
 В отличае от выше указанных сервисов, MyDataSpace предоставляет доступ ко всем опубликованным данным, а не только к тем
 которые загрузил сам пользователь.
 
+{% comment %}
 MyDataSpace не просто хранилище данных, MyDataSpace &mdash; это «открытый облачный бекенд».
-
+{% endcomment %}
 
 {% for demo in site.data[page.language].features %}
   <section class="page__section">
