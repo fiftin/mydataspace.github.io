@@ -157,7 +157,7 @@ features:
     super_title: Админ панель
     super_description: Удобная панель управления данными и кодом
     type: demo
-    preview_url: /images/docs/import-of-data/create-root.gif
+#    preview_url: /images/docs/import-of-data/create-root.gif
     image_url: /images/docs/import-of-data/create-root.gif
     website: https://myda.space
 
@@ -167,7 +167,7 @@ features:
     doc_url: /docs/import-of-data
     type: demo
     image_url: /images/docs/import-of-data/openrefine.gif
-    preview_url: /images/docs/import-of-data/openrefine.jpg
+#    preview_url: /images/docs/import-of-data/openrefine.jpg
     website: https://myda.space
 
   - id: user-code
@@ -175,7 +175,7 @@ features:
     super_description: Выполнение пользовательского JavaScript на сервере по расписанию
     doc_url: /docs/backend#docs__tasks
     type: demo
-    preview_url: /images/docs/backend/tasks-debug-ru.png
+#    preview_url: /images/docs/backend/tasks-debug-ru.png
     image_url: /images/docs/backend/tasks-debug-ru.png
     website: https://myda.space
     height: 750
@@ -185,7 +185,7 @@ features:
     super_description: Хранение пользовательский файлов на сервере
     doc_url: /docs/backend#docs__resources
     type: demo
-    preview_url: /images/docs/backend/resources-ru.png
+#    preview_url: /images/docs/backend/resources-ru.png
     image_url: /images/docs/backend/resources-ru.png
     website: https://myda.space
     height: 750

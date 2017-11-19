@@ -78,7 +78,7 @@ MyDataSpace не просто хранилище данных, MyDataSpace &mdas
                 </div>
               </div>
               <div style="margin-right: -2px; margin-bottom: -2px">
-                <img class="safari__img" id="{{ section_media_id }}" src="{{ demo.preview_url }}" />
+                <img class="safari__img" id="{{ section_media_id }}" src="{{ demo.image_url }}" />
               </div>
             </div>
 
