@@ -3808,7 +3808,7 @@ UILayout.header =
         width: 90,
         css: 'menu__language_button menu__language_button--get_started',
         id: 'FEATURES_LABEL',
-        label: STRINGS.GET_STARTED,
+        label: STRINGS.FEATURES,
         click: function() {
           var currentLang = (localStorage.getItem('language') || 'en').toLowerCase();
           currentLang = currentLang === 'en' ? '' : '/' + currentLang;
