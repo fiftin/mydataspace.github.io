@@ -108,16 +108,16 @@ language: en
 
 
     var m = location.search.match(/^\?id=([\w\d\-]+)&projectID=(\w+)&header=(.*)$/);
-    var importId = m[2];
+    var importId = m[1];
     var importingProcessPath;
     var processData;
     var openRefineImportEntity;
-    var projectID;
+    var projectID = m[2];
 
     var pk = document.getElementById('finish_import__pk');
     var subitemPk = document.getElementById('finish_import__subitem_pk');
     var subitemFirstColumn = document.getElementById('finish_import__subitem_first_column');
-    JSON.parse(decodeURIComponent(m[2])).forEach(function(col) {
+    JSON.parse(decodeURIComponent(m[3])).forEach(function(col) {
       addOptionToSelect(pk, col);
       addOptionToSelect(subitemPk, col);
       addOptionToSelect(subitemFirstColumn, col);
