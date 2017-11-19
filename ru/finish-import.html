@@ -97,7 +97,7 @@ language: ru
     }
 
 
-    var m = location.search.match(/^\?id=([\w\d\-]+)&header=(.*)$/);
+    var m = location.search.match(/^\?id=([\w\d\-]+)&projectID=(\w+)&header=(.*)$/);
     var importId = m[1];
     var importingProcessPath;
     var processData;
