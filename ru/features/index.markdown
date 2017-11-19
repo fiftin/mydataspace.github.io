@@ -1,6 +1,6 @@
 ---
 layout: features/index
-title: Возможности
+title: Возможности MyDataSpace
 language: ru
 ---
 

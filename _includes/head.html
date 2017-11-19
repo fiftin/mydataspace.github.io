@@ -57,9 +57,9 @@
   <meta name="theme-color" content="black" />
   <meta property="og:url"                content="https://myda.space" />
   <meta property="og:type"               content="article" />
-  <meta property="og:title"              content="{{ site.title }}" />
+  <meta property="og:title"              content="{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}" />
   <meta property="og:description"        content="{{ site.data[page.language].slogan }}" />
-  <meta property="og:image"              content="https://myda.space/images/logo_social.jpg" />
+  <meta property="og:image"              content="https://myda.space/images/logo.png" />
 
   <script>
     function parseJWT(token) {
