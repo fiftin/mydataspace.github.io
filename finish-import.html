@@ -107,7 +107,7 @@ language: en
     }
 
 
-    var m = location.search.match(/^\?id=([\w\d\-]+)&projectID=(\w+)&header=(.*)$/);
+    var m = location.search.match(/^\?id=([\w\d\-]+)&projectID=(\d+)&header=(.*)$/);
     var importId = m[1];
     var importingProcessPath;
     var processData;
@@ -175,7 +175,6 @@ language: en
 
     document.getElementById('finish_import__cancel').addEventListener('click', function() {
       window.location.href = 'https://refine.mydataspace.net/project?project=' + projectID;
-//      window.parent.postMessage({ message: 'openRefineImport', stage: 'finished' }, '*');
     });
     
     document.getElementById('finish_import__close').addEventListener('click', function() {
