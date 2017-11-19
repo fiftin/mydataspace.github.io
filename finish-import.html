@@ -244,6 +244,15 @@ language: en
     document.getElementById('finish_import__create').addEventListener('click', function() {
       var root = openRefineImportEntity.root || document.getElementById('finish_import__root_name').value;
 
+      if (!root || root === '') {
+        document.getElementById('finish_import__root_name').focus();
+        document.getElementById('finish_import__root_name').style.borderColor = 'red';
+        setTimeout(function() {
+          document.getElementById('finish_import__root_name').style.borderColor = null;
+        }, 1000);
+        return;
+      }
+
       // show waiting indicator
       document.getElementById('finish_import__waiting_cloak').style.display = 'block';
 
