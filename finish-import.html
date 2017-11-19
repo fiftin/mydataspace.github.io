@@ -14,10 +14,10 @@ language: en
           <span class="finish_import__known_root_name" id="finish_import__known_root_name"></span>
         </div>
       </div>
-      <input class="form-control" placeholder="Root name" id="finish_import__root_name" tabindex="0" style="display: none" />
+      <input class="form-control" placeholder="Root Name" id="finish_import__root_name" tabindex="0" style="display: none" />
     </div>
     <div class="form-group">
-      <input class="form-control" placeholder="Entity name, default &quot;data&quot;" id="finish_import__data_path" />
+      <input class="form-control" placeholder="Entity Name, default &quot;data&quot;" id="finish_import__data_path" />
     </div>
     <div class="form-group">
       <select class="form-control" id="finish_import__pk">
@@ -99,6 +99,7 @@ language: en
 
   (function() {
 
+
     function addOptionToSelect(select, col) {
       var opt = document.createElement('option');
       opt.text = col;
@@ -154,6 +155,8 @@ language: en
         document.getElementById('finish_import__root_name').style.display = 'block';
       }
     });
+
+    document.getElementById('finish_import__root_name').focus();
 
     document.getElementById('finish_import__cancel_importing').addEventListener('click', function() {
       Mydataspace.entities.change({
