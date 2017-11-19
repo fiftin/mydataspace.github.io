@@ -255,8 +255,17 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <div class="modal-title">Importing Data</div>
       </div>
-      <div class="modal-body">
-        <iframe id="import_data_modal__refine" class="import_data_model__refine"></iframe>
+      <div class="modal-body" style="position: relative">
+        <iframe id="import_data_modal__refine" class="import_data_model__refine" onload="document.getElementById('import_data_modal__refine__waiting_cloak').style.display = 'none'"></iframe>
+        <div class="finish_import__waiting_cloak" id="import_data_modal__refine__waiting_cloak" style="display: block;">
+          <div class="fa fa-cog fa-spin" style="
+              position: absolute;
+              color: #85b4d4;
+              font-size: 150px;
+              left: calc(50% - 75px);
+              top: calc(50% - 75px);
+          "></div>
+        </div>
       </div>
     </div>
   </div>
