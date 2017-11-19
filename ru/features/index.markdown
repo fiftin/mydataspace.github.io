@@ -30,9 +30,12 @@ MyDataSpace не просто хранилище данных, MyDataSpace &mdas
       {% include links.html links=demo %}
       </div>
       <div class="col-md-8">
+          {% if demo.content %}
           <p>
             {{ demo.content | markdownify }}
           </p>
+          {% endif %}
+
           {% assign section_media_id = demo.id | append:"__" | append:demo.code_id %}
 
           {% case demo.type %}
@@ -94,6 +97,13 @@ MyDataSpace не просто хранилище данных, MyDataSpace &mdas
             </iframe>
             {% include waiter.html id=section_media_id %}
 
+          {% when "youtube" %}
+            <iframe height="{{ demo.height }}"
+                    width="100%"
+                    src="https://www.youtube.com/embed/{{ demo.video_id }}?rel=0&amp;showinfo=0&amp;autoplay=1&amp;loop=1&amp;color=white"
+                    frameborder="0"
+                    allowfullscreen
+                    style='width: 100%; border: 1px solid black;'></iframe>
 
           {% when "iframe" %}
             <iframe id='{{ section_media_id }}'

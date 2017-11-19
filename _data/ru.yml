@@ -128,7 +128,7 @@ features:
     code_id: GOyjyv
     height: 450
     description: Группировка близких друг к другу объектов на карте
-    content: "Пример: отображение на карте всех видоекамер Москвы"
+    content: "Пример: камеры дворового видеонаблюдения города Москвы на карте"
 
   - id: facets
     title: Фасеты
@@ -136,6 +136,16 @@ features:
     type: iframe
     url: https://myda.space/reestrSTR/views/b3890fd4-c139-11e7-abc4-cec278b6b50a
     height: 450
+    content: "Пример: панель фильтров реализована с помощью фасетов"
+
+  - id: events
+    title: События
+    description: Получение уведемлений об изменении данных
+    type: youtube
+    video_id: b5mw0xOK_YM
+    height: 445
+    content: "Пример: моментальное обновление комментариев у всех пользователей которые их просматривают"
+
 
   - id: authorization
     super_title: Авторизация
@@ -189,6 +199,8 @@ features:
     image_url: /images/docs/backend/resources-ru.png
     website: https://myda.space
     height: 750
+
+
 
 get_started:
   - id: hello-world
