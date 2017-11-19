@@ -165,9 +165,10 @@ features:
     super_title: Импорт данных
     super_description: Обработка и импорт данных из файлов XLS, CSV, JSON, XML и файлов других форматов
     doc_url: /docs/import-of-data
-    type: video_demo
-    video_url: /images/docs/import-of-data/openrefine.mp4
+    type: demo
+    image_url: /images/docs/import-of-data/openrefine.gif
     preview_url: /images/docs/import-of-data/openrefine.jpg
+    website: https://myda.space
 
   - id: user-code
     super_title: Пользовательский код
