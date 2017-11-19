@@ -189,6 +189,7 @@
         case 'created': // Open Refine finished his work
           document.getElementById('import_data_modal__refine').src =
             '/finish-import.html?id=' + e.data.id +
+            '/finish-import.html?projectID=' + e.data.projectID +
             '&header=' + encodeURIComponent(JSON.stringify(e.data.header));
           break;
       }
