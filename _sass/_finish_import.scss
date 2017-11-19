@@ -34,7 +34,7 @@ $finish-import-progress-height: 35px;
 
 .finish_import__waiting_cloak {
   position: absolute;
-  background: rgba(255,255,255,0.6);
+  background: white; //rgba(255,255,255,0.6);
   top: 0;
   left: 0;
   width: 100%;
