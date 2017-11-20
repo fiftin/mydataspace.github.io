@@ -23,7 +23,7 @@ OpenRefine позволяет открывать файлы XLS, XLSX, CSV, XML,
   <div class="row">
     <div class="col-md-4">
         <h2 class="margin-top-0">Пример импорта</h2>
-        <p>На демо показан импорт нового корня из файла XLSX через административную панель</p>
+        <p>На демо показан импорт корня из файла XLSX через административную панель</p>
     </div>
     <div class="col-md-8">
       <div class="safari">
