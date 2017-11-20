@@ -14,8 +14,8 @@ language: ru
 OpenRefine позволяет открывать файлы XLS, XLSX, CSV, XML, JSON и файлы многих других форматов.
 
 Истоичники иформации по OpenRefine:
-- Документация по OpenRefine доступна в на <a href="https://github.com/OpenRefine/OpenRefine/wiki" target="_blank">GitHub Wiki</a>.
-- Ответы на многие вопросы по работе с OpenRefine можно найти на <a href="https://stackoverflow.com/questions/tagged/openrefine" target="_blank">Stackoverflow</a>.
+- Документация по OpenRefine доступна в на <a href="https://github.com/OpenRefine/OpenRefine/wiki" target="_blank">GitHub Wiki</a> (анг).
+- Ответы на многие вопросы по работе с OpenRefine можно найти на <a href="https://stackoverflow.com/questions/tagged/openrefine" target="_blank">Stackoverflow</a> (анг).
 - <a href="https://medium.com/data-journalism/open-refine-86e7076cb488" target="_blank">Геокодирование в Open Refine</a>.
 - Уроки по работе с OpenRefine будут публиковаться в нашем <a href="https://medium.com/@mydataspace_ru" target="_blank">блоге</a>.
 
