@@ -6,7 +6,7 @@ language: ru
 
 <div class="page-tab-list">
     <a href="/ru/docs/client-api" class="page-tab">WebSocket</a>
-    <a href="/ru/docs/client-api/rest" class="page-tab page-tab--active">REST</a>
+    <a href="/ru/docs/client-api/websocket" class="page-tab page-tab--active">REST</a>
 </div>
 
 Структура URL запроса в общем виде выглядит так:
