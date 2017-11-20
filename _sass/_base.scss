@@ -357,3 +357,19 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
   background: $toolbar-bg;
   z-index: 1000;
 }
+
+.page-tab-list {
+  margin-bottom: 30px;
+}
+
+.page-tab {
+  font-size: 35px;
+  padding: 5px 15px;
+  color: black !important;
+}
+
+.page-tab--active {
+  color: white !important;
+  background: black;
+  text-decoration: none !important;
+}
