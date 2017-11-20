@@ -25,14 +25,63 @@ https://api.mydataspace.net/v1/entities/get?root=hello-world&path=
 
 Этот ```GET``` запрос возвращает информацию по корню ```hello-world```.
 
-Получить элемент/корень
-
-Создать элемент/корень
-
-Изменить элемент/корень
-
-Удалить элемент/корень
-
-Получит список элементов
-
-Получит список корней
+<section class="page__section">
+  <div class="row">
+    <div class="col-md-4">
+        <h2 class="margin-top-0">Получить элемент/корень</h2>
+        <p></p>
+    </div>
+    <div class="col-md-8">
+    </div>
+  </div>
+</section>
+<section class="page__section">
+  <div class="row">
+    <div class="col-md-4">
+        <h2 class="margin-top-0">Создать элемент/корень</h2>
+        <p></p>
+    </div>
+    <div class="col-md-8">
+    </div>
+  </div>
+</section>
+<section class="page__section">
+  <div class="row">
+    <div class="col-md-4">
+        <h2 class="margin-top-0">Изменить элемент/корень</h2>
+        <p></p>
+    </div>
+    <div class="col-md-8">
+    </div>
+  </div>
+</section>
+<section class="page__section">
+  <div class="row">
+    <div class="col-md-4">
+        <h2 class="margin-top-0">Удалить элемент/корень</h2>
+        <p></p>
+    </div>
+    <div class="col-md-8">
+    </div>
+  </div>
+</section>
+<section class="page__section">
+  <div class="row">
+    <div class="col-md-4">
+        <h2 class="margin-top-0">Получит список элементов</h2>
+        <p></p>
+    </div>
+    <div class="col-md-8">
+    </div>
+  </div>
+</section>
+<section class="page__section">
+  <div class="row">
+    <div class="col-md-4">
+        <h2 class="margin-top-0">Получит список корней</h2>
+        <p></p>
+    </div>
+    <div class="col-md-8">
+    </div>
+  </div>
+</section>
