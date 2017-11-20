@@ -5,8 +5,8 @@ language: ru
 ---
 
 <div class="page-tab-list">
-    <a href="/ru/docs/client-api" class="page-tab page-tab--active">WebSocket</a>
-    <a href="/ru/docs/client-api/websocket" class="page-tab">REST</a>
+    <a href="/ru/docs/client-api" class="page-tab page-tab--active">REST</a>
+    <a href="/ru/docs/client-api/websocket" class="page-tab">WebSocket</a>
 </div>
 
 Для доступа к API по Websocket существует библиотека JavaScript:
