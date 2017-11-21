@@ -608,7 +608,7 @@ $look-search-shadow-width: 100px;
 
   @media (max-width: $screen-sm-min) {
     left: 0;
-    width: calc(100% - #{$side-width} - 30px);
+    width: calc(100% - #{$side-width - 30px});
   }
 
   @media (max-width: $screen-xs-min) {
