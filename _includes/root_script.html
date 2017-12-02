@@ -1097,7 +1097,8 @@
         Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
           path: 'views',
           children: true,
-          limit: 1
+          limit: 1,
+          orderChildrenBy: '$createdAt DESC'
         })).then(function(result) {
           var $lookWrap = $('#root__about__look_wrap');
           var $look = $('#root__about__look');
