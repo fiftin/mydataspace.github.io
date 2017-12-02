@@ -426,7 +426,7 @@ RootHelper = {
       return false;
     }
 
-    switch (document.getElementById('look_modal').data('look-type')) {
+    switch ($('#look_modal').data('look-type')) {
       case 'codepen':
         if (MDSCommon.isBlank(codepen)) {
           document.getElementById('look_modal__codepen_err').innerText = tr$('codepen_url_cant_be_blank');
