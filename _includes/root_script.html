@@ -333,9 +333,10 @@
 
       switch (type) {
         case 'codepen':
-
-          hideLookWaitingCloak();
-          hideWaitingCloak();
+          setTimeout(function() {
+            hideLookWaitingCloak();
+            hideWaitingCloak();
+          }, 1000);
           break;
         case 'table':
           Mydataspace.request('entities.get', MDSCommon.extend(DATA, { path: lookMetaData.path + '/columns', children: true })).then(function(columnsMetaData) {
