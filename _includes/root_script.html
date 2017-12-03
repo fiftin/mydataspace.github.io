@@ -332,6 +332,11 @@
       }
 
       switch (type) {
+        case 'codepen':
+
+          hideLookWaitingCloak();
+          hideWaitingCloak();
+          break;
         case 'table':
           Mydataspace.request('entities.get', MDSCommon.extend(DATA, { path: lookMetaData.path + '/columns', children: true })).then(function(columnsMetaData) {
             var columns = columnsMetaData.children.map(function(column) {
@@ -871,7 +876,6 @@
         }).map(function(tag) {
           return '<a class="view__tag" href="/?q=%23' + tag + '" onclick="openSearch_header__search(\'' + tag + '\'); return false;">' + tag + '</a>';
         }).join(' ');
-
 
 
         var languageAbbr = MDSCommon.findValueByName(data.fields, 'language');
