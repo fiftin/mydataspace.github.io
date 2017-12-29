@@ -896,6 +896,10 @@ EntityForm.prototype.emitLoaded = function(data) {
  * Switch Entity Form to edit/view mode.
  */
 EntityForm.prototype.setEditing = function(editing) {
+  if (this.selectedId == null) {
+      return;
+  }
+
   this.editing = editing;
   $$('edit_script_window').hide();
   var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(this.selectedId).path);
@@ -1252,6 +1256,10 @@ EntityForm.prototype.setTaskView = function(data) {
 };
 
 EntityForm.prototype.setEntityView = function(data) {
+  if (this.selectedId == null) {
+      return;
+  }
+
   const self = this;
   const entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.selectedId).path);
 
@@ -1380,6 +1388,11 @@ EntityForm.prototype.setData = function(data) {
 };
 
 EntityForm.prototype.refresh = function() {
+
+  if (this.selectedId == null) {
+      return;
+  }
+
   const self = this;
   const entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.selectedId).path);
   const isWithMeta = self.isEditing();
@@ -1444,12 +1457,15 @@ EntityForm.prototype.clone = function() {
 };
 
 EntityForm.prototype.delete = function() {
+  if (this.selectedId == null) {
+    return;
+  }
+
   $$('entity_form').disable();
   UI.deleteEntity(this.selectedId);
-
-
   Mydataspace.request('entities.delete', Identity.dataFromId(this.selectedId), function(data) {
     // do nothing because selected item already deleted.
+    this.selectedId = null;
   }, function(err) {
     UI.error(err);
     $$('entity_form').enable();
@@ -1483,6 +1499,10 @@ EntityForm.prototype.setDirty = function() {
 
 
 EntityForm.prototype.save = function() {
+  if (this.selectedId == null) {
+      return;
+  }
+
   var dirtyData = webix.CodeParser.expandNames($$('entity_form').getDirtyValues());
   var existingData =
     webix.CodeParser.expandNames(
