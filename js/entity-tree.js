@@ -35,7 +35,7 @@ EntityTree.prototype.getCurrentId = function() {
 
 EntityTree.prototype.setCurrentId = function(id) {
   if (this.currentId != null) {
-    Mydataspace.emit('entities.unsubscribe', MDSCommon.extend(Identity.dataFromId(this.currentId), {
+    Mydataspace.request('entities.unsubscribe', MDSCommon.extend(Identity.dataFromId(this.currentId), {
       events: ['entities.changes.res', 'entities.rename.res']
     }));
   }

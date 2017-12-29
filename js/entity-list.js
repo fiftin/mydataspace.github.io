@@ -95,7 +95,7 @@ EntityList.prototype.setRootIdWithoutRefresh = function(id) {
   }
 
   if (this.rootId != null) {
-    Mydataspace.emit('entities.unsubscribe', MDSCommon.extend(Identity.dataFromId(this.rootId), {
+    Mydataspace.request('entities.unsubscribe', MDSCommon.extend(Identity.dataFromId(this.rootId), {
       events: ['entities.rename.res']
     }));
   }
