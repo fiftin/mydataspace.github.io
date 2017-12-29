@@ -43,7 +43,7 @@ EntityTree.prototype.setCurrentId = function(id) {
   this.currentId = id;
 
   if (id != null) {
-    Mydataspace.emit('entities.subscribe', MDSCommon.extend(Identity.dataFromId(id), {
+    Mydataspace.request('entities.subscribe', MDSCommon.extend(Identity.dataFromId(id), {
       events: ['entities.changes.res', 'entities.rename.res']
     }));
   }

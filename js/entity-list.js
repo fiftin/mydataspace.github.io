@@ -103,7 +103,7 @@ EntityList.prototype.setRootIdWithoutRefresh = function(id) {
   this.rootId = id;
 
   if (id != null) {
-    Mydataspace.emit('entities.subscribe', MDSCommon.extend(Identity.dataFromId(id), {
+    Mydataspace.request('entities.subscribe', MDSCommon.extend(Identity.dataFromId(id), {
       events: ['entities.rename.res']
     }));
   }
