@@ -51,16 +51,11 @@ EntityList.prototype.listen = function() {
       var entityId = Identity.idFromData(data);
 
       if ($$('entity_list').getFirstId() === entityId) { // Parent item "."
+		this.setRootId(null);
         return;
       }
 
       if ($$('entity_list').getItem(entityId) == null) {
-        return;
-      }
-
-      // ignore event if root item deleted
-      if (entityId === self.getRootId()) {
-        this.setRootId(null);
         return;
       }
 

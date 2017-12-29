@@ -255,7 +255,9 @@ EntityTree.prototype.listen = function() {
         var nextId = $$('entity_tree').getPrevSiblingId(entityId) ||
           $$('entity_tree').getNextSiblingId(entityId) ||
           $$('entity_tree').getParentId(entityId);
-        $$('entity_tree').select(nextId);
+        if (nextId) {
+          $$('entity_tree').select(nextId);
+		}
       }
 
       $$('entity_tree').remove(entityId);
