@@ -1949,6 +1949,7 @@ EntityList.prototype.listen = function() {
       var entityId = Identity.idFromData(data);
 
       if ($$('entity_list').getFirstId() === entityId) { // Parent item "."
+		this.setRootId(null);
         return;
       }
 
@@ -1988,17 +1989,17 @@ EntityList.prototype.listen = function() {
  * Set Id of entity witch items displayed in list. This method reloading data.
  */
 EntityList.prototype.setRootIdWithoutRefresh = function(id) {
-  if (this.rootId === id) {
+  if (this.getRootId() === id) {
     return;
   }
 
-  if (this.rootId != null) {
-    Mydataspace.request('entities.unsubscribe', MDSCommon.extend(Identity.dataFromId(this.rootId), {
+  if (this.getRootId() != null) {
+    Mydataspace.request('entities.unsubscribe', MDSCommon.extend(Identity.dataFromId(this.getRootId()), {
       events: ['entities.rename.res']
     }));
   }
 
-  this.rootId = id;
+  this.setRootId(id);
 
   if (id != null) {
     Mydataspace.request('entities.subscribe', MDSCommon.extend(Identity.dataFromId(id), {
@@ -2438,7 +2439,9 @@ EntityTree.prototype.listen = function() {
         var nextId = $$('entity_tree').getPrevSiblingId(entityId) ||
           $$('entity_tree').getNextSiblingId(entityId) ||
           $$('entity_tree').getParentId(entityId);
-        $$('entity_tree').select(nextId);
+        if (nextId) {
+          $$('entity_tree').select(nextId);
+		}
       }
 
       $$('entity_tree').remove(entityId);
