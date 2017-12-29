@@ -11,7 +11,7 @@ language: ru
 Веб-интервейс для импорта данных реализован на базе <a href="https://github.com/OpenRefine/OpenRefine" target="_black">OpenRefine</a> &mdash;
 инструмента с открытым кодом от Google для обработки данных.
 
-OpenRefine позволяет открывать файлы XLS, XLSX, CSV, XML, JSON и файлы многих других форматов.
+OpenRefine позволяет импортировать файлы XLS, XLSX, CSV, XML, JSON и файлы многих других форматов.
 
 Истоичники иформации по OpenRefine:
 - Документация по OpenRefine доступна в на <a href="https://github.com/OpenRefine/OpenRefine/wiki" target="_blank">GitHub Wiki</a> (анг).

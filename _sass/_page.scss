@@ -82,3 +82,45 @@
     padding-right: 0;
   }
 }
+
+.highlight__request_type {
+  color: white;
+  font-weight: bold;
+  line-height: 34px;
+  display: inline-block;
+  width: 80px;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.highlight__request_type--get {
+  background: #61affe;
+}
+
+.highlight__request_type--post {
+  background: #49cc90;
+}
+
+
+.highlighter__var {
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  margin-left: 13px;
+  margin-bottom: 10px;
+}
+
+.highlight__var_type {
+  color: white;
+  font-weight: bold;
+  line-height: 30px;
+  display: inline-block;
+  width: 80px;
+  text-align: center;
+  border-radius: 4px;
+  background: #b0b0b0;
+}
+
+.highlight__var_type--str {
+}
+
+.highlight__var_type--bool {
+}

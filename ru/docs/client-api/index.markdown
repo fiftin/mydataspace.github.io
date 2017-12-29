@@ -28,20 +28,126 @@ https://api.mydataspace.net/v1/entities/get?root=hello-world&path=
 <section class="page__section">
   <div class="row">
     <div class="col-md-4">
-        <p class="feature__subtitle">Получить элемент/корень</p>
-        <p></p>
+      <p class="feature__subtitle">Получить элемент/корень</p>
+      <p></p>
     </div>
     <div class="col-md-8">
+      <div class="highlighter-rouge">
+        <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--get">GET</span> /get</code></pre>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="highlighter__var">
+            <span class="highlight__var_type highlight__var_type--str">str</span> root
+          </div>
+        </div>
+        <div class="col-md-8">
+          Имя корня
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="highlighter__var">
+            <span class="highlight__var_type highlight__var_type--str">str</span> path
+          </div>
+        </div>
+        <div class="col-md-8">
+          Путь к элементу
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="highlighter__var">
+            <span class="highlight__var_type highlight__var_type--bool">bool</span> children
+          </div>
+        </div>
+        <div class="col-md-8">
+          Загрузить дочерние элементы
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="highlighter__var">
+            <span class="highlight__var_type highlight__var_type--str">str</span> search
+          </div>
+        </div>
+        <div class="col-md-8">
+          Полнотектовый поиск дочерних элементов
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="highlighter__var">
+            <span class="highlight__var_type highlight__var_type--int">int</span> offset
+          </div>
+        </div>
+        <div class="col-md-8">
+          Полнотектовый поиск дочерних элементов
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="highlighter__var">
+            <span class="highlight__var_type highlight__var_type--int">int</span> limit
+          </div>
+        </div>
+        <div class="col-md-8">
+          Максимальное количество загружаемых дочерних элементов
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="highlighter__var">
+            <span class="highlight__var_type highlight__var_type--str">str</span> <span style="font-size: 15px; font-weight: bold;">orderChildrenBy</span>
+          </div>
+        </div>
+        <div class="col-md-8">
+          Сортировка дочерних элементов по значению поля
+        </div>
+      </div>
     </div>
   </div>
 </section>
 <section class="page__section">
   <div class="row">
     <div class="col-md-4">
-        <p class="feature__subtitle">Создать элемент/корень</p>
-        <p></p>
+      <p class="feature__subtitle">Создать элемент/корень</p>
+      <p></p>
     </div>
     <div class="col-md-8">
+      <div class="highlighter-rouge">
+        <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--post">POST</span> /get</code></pre>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="highlighter__var">
+            <span class="highlight__var_type highlight__var_type--str">str</span> root
+          </div>
+        </div>
+        <div class="col-md-8">
+          Имя корня
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="highlighter__var">
+            <span class="highlight__var_type highlight__var_type--str">str</span> path
+          </div>
+        </div>
+        <div class="col-md-8">
+            Путь к новому элементу
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="highlighter__var">
+            <span class="highlight__var_type highlight__var_type--str">arr</span> fields
+          </div>
+        </div>
+        <div class="col-md-8">
+            Поля нового элемента
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -55,6 +161,7 @@ https://api.mydataspace.net/v1/entities/get?root=hello-world&path=
     </div>
   </div>
 </section>
+
 <section class="page__section">
   <div class="row">
     <div class="col-md-4">
@@ -65,16 +172,7 @@ https://api.mydataspace.net/v1/entities/get?root=hello-world&path=
     </div>
   </div>
 </section>
-<section class="page__section">
-  <div class="row">
-    <div class="col-md-4">
-        <p class="feature__subtitle">Получит список элементов</p>
-        <p></p>
-    </div>
-    <div class="col-md-8">
-    </div>
-  </div>
-</section>
+
 <section class="page__section">
   <div class="row">
     <div class="col-md-4">
