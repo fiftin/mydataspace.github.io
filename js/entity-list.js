@@ -58,6 +58,12 @@ EntityList.prototype.listen = function() {
         return;
       }
 
+      // ignore event if root item deleted
+      if (entityId === self.getRootId()) {
+        this.setRootId(null);
+        return;
+      }
+
       if (entityId === self.getCurrentId()) { // Select other item if selected item is deleted.
         var nextId = $$('entity_list').getPrevId(entityId) || $$('entity_list').getNextId(entityId);
         $$('entity_list').select(nextId);
@@ -90,17 +96,17 @@ EntityList.prototype.listen = function() {
  * Set Id of entity witch items displayed in list. This method reloading data.
  */
 EntityList.prototype.setRootIdWithoutRefresh = function(id) {
-  if (this.rootId === id) {
+  if (this.getRootId() === id) {
     return;
   }
 
-  if (this.rootId != null) {
-    Mydataspace.request('entities.unsubscribe', MDSCommon.extend(Identity.dataFromId(this.rootId), {
+  if (this.getRootId() != null) {
+    Mydataspace.request('entities.unsubscribe', MDSCommon.extend(Identity.dataFromId(this.getRootId()), {
       events: ['entities.rename.res']
     }));
   }
 
-  this.rootId = id;
+  this.setRootId(id);
 
   if (id != null) {
     Mydataspace.request('entities.subscribe', MDSCommon.extend(Identity.dataFromId(id), {
