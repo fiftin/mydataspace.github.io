@@ -51,11 +51,17 @@ EntityList.prototype.listen = function() {
       var entityId = Identity.idFromData(data);
 
       if ($$('entity_list').getFirstId() === entityId) { // Parent item "."
-		this.setRootId(null);
+        self.setRootId(null);
         return;
       }
 
       if ($$('entity_list').getItem(entityId) == null) {
+        return;
+      }
+
+      // ignore event if root item deleted
+      if (entityId === self.getRootId()) {
+        this.setRootId(null);
         return;
       }
 
@@ -91,17 +97,17 @@ EntityList.prototype.listen = function() {
  * Set Id of entity witch items displayed in list. This method reloading data.
  */
 EntityList.prototype.setRootIdWithoutRefresh = function(id) {
-  if (this.getRootId() === id) {
+  if (this.rootId === id) {
     return;
   }
 
-  if (this.getRootId() != null) {
-    Mydataspace.request('entities.unsubscribe', MDSCommon.extend(Identity.dataFromId(this.getRootId()), {
+  if (this.rootId != null) {
+    Mydataspace.request('entities.unsubscribe', MDSCommon.extend(Identity.dataFromId(this.rootId), {
       events: ['entities.rename.res']
     }));
   }
 
-  this.setRootId(id);
+  this.rootId = id;
 
   if (id != null) {
     Mydataspace.request('entities.subscribe', MDSCommon.extend(Identity.dataFromId(id), {
@@ -154,6 +160,10 @@ EntityList.prototype.refresh = function(newRootId) {
 
   if (newRootId != null) {
     self.setRootIdWithoutRefresh(newRootId);
+  }
+
+  if (self.getRootId() == null) {
+    return;
   }
 
   $$('entity_tree__new_entity_list').clearAll();
