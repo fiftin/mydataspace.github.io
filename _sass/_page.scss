@@ -101,6 +101,17 @@
   background: #49cc90;
 }
 
+.highlight__request_type--put {
+  background: #fca130;
+}
+
+.highlight__request_type--delete {
+  background: #f93e3e;
+}
+
+.highlight--example {
+  background: #fafafa;
+}
 
 .highlighter__var {
   font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
