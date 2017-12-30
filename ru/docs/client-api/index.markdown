@@ -35,6 +35,7 @@ https://api.mydataspace.net/v1/entities/get?root=hello-world&path=
       <div class="highlighter-rouge">
         <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--get">GET</span> /get</code></pre>
       </div>
+      <div class="highlighter__params">Параметры:</div>
       <div class="row">
         <div class="col-md-4">
           <div class="highlighter__var">
@@ -112,12 +113,20 @@ https://api.mydataspace.net/v1/entities/get?root=hello-world&path=
   <div class="row">
     <div class="col-md-4">
       <p class="feature__subtitle">Создать элемент/корень</p>
-      <p></p>
+      <p>Пример:</p>
+      <div class="highlighter-rouge">
+        <pre class="highlight highlight--example"><code>curl -XPOST https://api.mydataspace.net/v1/entities -d '{
+  "root": "example",
+  "path": "data/entity1",
+  "fields": []
+}'
+</code></pre></div>
     </div>
     <div class="col-md-8">
       <div class="highlighter-rouge">
         <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--post">POST</span> /</code></pre>
       </div>
+      <div class="highlighter__params">Тело:</div>
       <div class="row">
         <div class="col-md-4">
           <div class="highlighter__var">
