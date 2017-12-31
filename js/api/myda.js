@@ -17,9 +17,9 @@ function Myda(optionsOrRoot) {
   var apiURL = options.import === true ? 'https://import.mydataspace.net' : 'https://api.mydataspace.net';
   this.options = MDSCommon.extend({
     useLocalStorage: true,
-		apiURL:  apiURL,
+    apiURL:  apiURL,
     cdnURL:  'https://cdn.mydataspace.net',
-		websocketURL: apiURL,
+    websocketURL: apiURL,
     connected: function() { }
   }, options);
   this.connected = false;
@@ -119,20 +119,21 @@ function Myda(optionsOrRoot) {
 
 
   window.addEventListener('message', function(e) {
+    var authToken = e.data.result;
     switch (e.data.message) {
       case 'authResult':
         if (self.options.useLocalStorage) {
-          localStorage.setItem('authToken', e.data.result);
+          localStorage.setItem('authToken', authToken);
         }
-        self.emit('authenticate', { token: e.data.result });
+        self.emit('authenticate', { token: authToken });
         e.source.close();
         break;
       case 'taskAuthResult':
-        self.callListeners('tasksAuthorize', { result: e.data.result, provider: e.data.provider });
+        self.callListeners('tasksAuthorize', { result: authToken, provider: e.data.provider });
         e.source.close();
         break;
     }
-  }.bind(this));
+  });
 }
 
 Myda.prototype.getAuthProviders = function() {
@@ -281,6 +282,12 @@ Myda.prototype.login = function(providerName) {
   var authCheckInterval = setInterval(function() {
     authWindow.postMessage({ message: 'requestAuthResult' }, '*');
   }, 1000);
+  var self = this;
+  return new Promise(function(resolve, reject) {
+    self.on('login', function(args) {
+      resolve(args.authToken);
+    });
+  });
 };
 
 Myda.prototype.logout = function() {

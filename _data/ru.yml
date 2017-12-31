@@ -67,7 +67,7 @@ sections:
         description: Опубликованные данные доступны всем
       - id: coding
         title: HTML/CSS/JS
-        description: Все что нужно знать для создания сайта
+        description: Все что нужно знать для создания приложения
       - id: console
         title: Простота в обслуживание
         description: Единый инструмент управления данными и кодом

@@ -112,9 +112,9 @@ language: ru
     process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
     const myda = new mds.Myda({
-    root: ROOT,
-    permission: ROOT,
-    clientId: APP_API_KEY
+      root: ROOT,
+      permission: ROOT,
+      clientId: APP_API_KEY
     });
 
     var lineReader;
@@ -127,78 +127,78 @@ language: ru
     * Connect to MyDataSpace and start importing data.
     */
     myda.connect().then(() => myda.loginByToken(ACCESS_TOKEN)).then(function() {
-    console.log('--- Logged in ---');
-    lineReader = require('readline').createInterface({
-    input: require('fs').createReadStream(FILE_NAME)
-    });
-    lineReader.on('line', parseLineAndAddToBlock);
-    lineReader.on('pause', sendBlockToServer);
-    lineReader.on('end', sendBlockToServer.bind(null, true));
+      console.log('--- Logged in ---');
+      lineReader = require('readline').createInterface({
+        input: require('fs').createReadStream(FILE_NAME)
+      });
+      lineReader.on('line', parseLineAndAddToBlock);
+      lineReader.on('pause', sendBlockToServer);
+      lineReader.on('end', sendBlockToServer.bind(null, true));
     }).catch(function(err) {
-    console.log('LOGIN ERROR:');
-    console.log(err);
+      console.log('LOGIN ERROR:');
+      console.log(err);
     });
 
     function parseLineAndAddToBlock(line) {
-    linesRead++;
-    if (linesRead % 100 === 0) console.log('    parse ' + linesRead);
-    const parts = line.split('\t');
-    const suffix = crypto.createHash('md5').update(line).digest('hex').substring(0, 7);
-    block.push({
-    root: ROOT,
-    path: 'postal-codes/' + parts[0] + '-' + parts[1] + '-' + suffix,
-    fields: [
-    { name: 'code',       value: parts[1],  type: 's' },
-    { name: 'placeName',  value: parts[2],  type: 's' },
-    { name: 'adminName1', value: parts[3],  type: 's' },
-    { name: 'adminCode1', value: parts[4],  type: 's' },
-    { name: 'adminName2', value: parts[5],  type: 's' },
-    { name: 'adminCode2', value: parts[6],  type: 's' },
-    { name: 'adminName3', value: parts[7],  type: 's' },
-    { name: 'adminCode3', value: parts[8],  type: 's' },
-    { name: 'latitude',   value: parts[9],  type: 's' },
-    { name: 'longitude',  value: parts[10], type: 's' },
-    { name: 'accuracy',   value: parts[11], type: 's' }
-    ]
-    });
-    if (block.length >= 1000) {
-    lineReader.pause();
-    }
-    }
+      linesRead++;
+      if (linesRead % 100 === 0) console.log('    parse ' + linesRead);
+      const parts = line.split('\t');
+      const suffix = crypto.createHash('md5').update(line).digest('hex').substring(0, 7);
+      block.push({
+        root: ROOT,
+        path: 'postal-codes/' + parts[0] + '-' + parts[1] + '-' + suffix,
+        fields: [
+          { name: 'code',       value: parts[1],  type: 's' },
+          { name: 'placeName',  value: parts[2],  type: 's' },
+          { name: 'adminName1', value: parts[3],  type: 's' },
+          { name: 'adminCode1', value: parts[4],  type: 's' },
+          { name: 'adminName2', value: parts[5],  type: 's' },
+          { name: 'adminCode2', value: parts[6],  type: 's' },
+          { name: 'adminName3', value: parts[7],  type: 's' },
+          { name: 'adminCode3', value: parts[8],  type: 's' },
+          { name: 'latitude',   value: parts[9],  type: 's' },
+          { name: 'longitude',  value: parts[10], type: 's' },
+          { name: 'accuracy',   value: parts[11], type: 's' }
+        ]
+      });
+      if (block.length >= 1000) {
+        lineReader.pause();
+      }
+      }
 
-    function nextLineOrExit(isLastBlock, isError) {
-    if (isError) {
-    if (isLastBlock) {
-    console.log('*** Importing finished with error! ***');
-    process.exit();
-    } else {
-    console.log('--- Block sent with errors. Reading new block... ---');
-    lineReader.resume();
-    }
-    } else {
-    if (isLastBlock) {
-    console.log('*** Importing finished! ***');
-    process.exit();
-    } else {
-    console.log('---Block sent successful. Reading new block... ---');
-    lineReader.resume();
-    }
-    }
+      function nextLineOrExit(isLastBlock, isError) {
+      if (isError) {
+        if (isLastBlock) {
+          console.log('*** Importing finished with error! ***');
+          process.exit();
+        } else {
+          console.log('--- Block sent with errors. Reading new block... ---');
+          lineReader.resume();
+        }
+      } else {
+        if (isLastBlock) {
+          console.log('*** Importing finished! ***');
+          process.exit();
+        } else {
+          console.log('---Block sent successful. Reading new block... ---');
+          lineReader.resume();
+        }
+      }
     }
 
     function sendBlockToServer(isLastBlock) {
-    console.log('New block of ' + block.length + ' recoreds received. Sending it to server...');
-    var blockForSend = block;
-    block = [];
-    myda.request('entities.create', blockForSend, function(data) {
-    nextLineOrExit(isLastBlock, false);
-    }, function(err) {
-    console.log('ERROR:');
-    console.log(err);
-    console.log('INNER ERRORS:');
-    (Array.isArray(err) ? err : []).forEach(x => console.log(x.errors));
-    nextLineOrExit(isLastBlock, true);
-    });
+      console.log('New block of ' + block.length + ' recoreds received. Sending it to server...');
+      var blockForSend = block;
+      block = [];
+      myda.request('entities.create', blockForSend, function(data) {
+        nextLineOrExit(isLastBlock, false);
+      }, function(err) {
+        console.log('ERROR:');
+        console.log(err);
+        console.log('INNER ERRORS:');
+        (Array.isArray(err) ? err : []).forEach(x => console.log(x.errors));
+        nextLineOrExit(isLastBlock, true);
+      });
     }
     {% endhighlight %}
   </div>
@@ -208,8 +208,7 @@ language: ru
 <section class="page__section">
   <h2 class="margin-top-0">5. Запускаем приложение</h2>
   {% highlight bash %}
-  node app
-  {% endhighlight %}
+  node app {% endhighlight %}
   <p>Импорт больших объемов данных длительный процесс.
     Наберитесь терпения <i class="fa fa-smile-o" aria-hidden="true"></i></p>
   <p><a href="https://myda.space/ru/geonames-demo">Тут</a> можно посмотреть результат выполнения программы.</p>

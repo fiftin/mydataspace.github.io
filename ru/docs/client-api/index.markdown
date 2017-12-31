@@ -9,21 +9,89 @@ language: ru
     <a href="/ru/docs/client-api/websocket" class="page-tab">WebSocket</a>
 </div>
 
-Структура URL запроса в общем виде выглядит так:
+<br>
 
-````
-https://api.mydataspace.net/v1/entities/[метод]?параметр1=[значение1]&параметр2=[значение2]
-````
+### URL запроса
 
-В зависимости от действия, запрос может быть ```GET```, ```POST```, ```PUT``` или ```DELETE```.
+<br>
 
-Например:
+```GET``` запрос в общем виде выглядит так:
+
+```
+https://api.mydataspace.net/v1/entities/метод?параметр1=значение1&параметр2=значение2
+```
+
+<br>
+
+```POST```, ```PUT``` или ```DELETE``` запросы имеет вид:
+
+```
+https://api.mydataspace.net/v1/entities/метод
+```
+
+параметры передаются в теле запроса в виде JSON:
+
+```
+{
+    "параметр1": "значение1",
+    "параметр2": "значение2"
+}
+```
+
+<br>
+
+Пример ```GET``` запроса:
 
 ```
 https://api.mydataspace.net/v1/entities/get?root=hello-world&path=
 ```
 
-Этот ```GET``` запрос возвращает информацию по корню ```hello-world```.
+Этот запрос возвращает информацию по корню ```hello-world```.
+
+<br>
+<br>
+
+### Авторизация
+
+<br>
+
+Загружать и изменять данные могут только авторизированные пользователи. Поддерживается OAuth авторизация через следующие 
+соцсети:
+
+* VK
+* GitHub
+* Google
+* Facebook
+
+Чтобы подключить авторизацию на вашем сайте нужно создать приложение через админпанель и указать с 
+кагого IP или хоста разршена авторизация ([см. здесь](https://myda.space/ru/docs/backend#docs__apps)).
+
+После этого вы можете использовать SDK для авторизации:
+
+{% highlight html %}
+<script src="https://myda.space/js/dist/api-v2.1.js"></script>
+{% endhighlight %}
+
+{% highlight javascript %}
+var demo = new Myda({
+  clientId: 'ключ_api_вашего_приложения',
+  useLocalStorage: false // не хранить authToken в кеше браузреза
+});
+
+demo.login('google').then(function(authToken) {
+  $.ajax({
+    url: 'https://api.mydataspace.net/getMyRoots',
+    beforeSend: function(xhr) { xhr.setRequestHeader('Authorization', 'Bearer ' + authToken) }
+  }).then(function(data) {
+    // Ваш код
+  });
+});
+{% endhighlight %}
+
+<br>
+<br>
+
+### Методы
 
 <section class="page__section">
   <div class="row">
@@ -33,7 +101,7 @@ https://api.mydataspace.net/v1/entities/get?root=hello-world&path=
     </div>
     <div class="col-md-8">
       <div class="highlighter-rouge">
-        <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--get">GET</span> /get</code></pre>
+        <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--get">GET</span>  /get</code></pre>
       </div>
       <div class="highlighter__params">Параметры:</div>
       <div class="row">
