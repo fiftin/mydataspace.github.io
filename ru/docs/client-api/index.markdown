@@ -78,10 +78,10 @@ var demo = new Myda({
   useLocalStorage: false // не хранить authToken в кеше браузреза
 });
 
-demo.login('google').then(function(authToken) {
+demo.login('google').then(function(args) {
   $.ajax({
     url: 'https://api.mydataspace.net/getMyRoots',
-    beforeSend: function(xhr) { xhr.setRequestHeader('Authorization', 'Bearer ' + authToken) }
+    beforeSend: function(xhr) { xhr.setRequestHeader('Authorization', 'Bearer ' + args.authToken) }
   }).then(function(data) {
     // Ваш код
   });

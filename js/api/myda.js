@@ -125,6 +125,7 @@ function Myda(optionsOrRoot) {
         if (self.options.useLocalStorage) {
           localStorage.setItem('authToken', authToken);
         }
+        self.authToken = authToken;
         self.emit('authenticate', { token: authToken });
         e.source.close();
         break;
@@ -200,7 +201,7 @@ Myda.prototype.connect = function(forceConnect) {
 
     self.on('authenticated', function() {
       self.loggedIn = true;
-      self.callListeners('login');
+      self.callListeners('login', { authToken: self.authToken });
     });
 
     self.on('disconnect', function() {
@@ -284,9 +285,7 @@ Myda.prototype.login = function(providerName) {
   }, 1000);
   var self = this;
   return new Promise(function(resolve, reject) {
-    self.on('login', function(args) {
-      resolve(args.authToken);
-    });
+    self.on('login', function(args) { resolve(args); });
   });
 };
 
