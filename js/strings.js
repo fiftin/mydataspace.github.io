@@ -383,7 +383,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       edu: 'Образование',
       ecology: 'Экология',
       culture: 'Культура',
-      sec: 'Безопасность',
+	  security: 'Безопасность',
       transport: 'Транспорт',
       geo: 'Геоданные',
       state: 'Государство',
