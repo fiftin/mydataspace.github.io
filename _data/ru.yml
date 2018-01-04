@@ -27,7 +27,7 @@ waiting_cloak: "Загрузка..."
 strings:
   view_source_code: См. код
   view_data: См. данные
-  top_roots: Популярые данные
+  top_roots: Топ данных
   view_doc: См. документацию
   explore_roots: Показать все
 header:
@@ -52,12 +52,38 @@ sections:
       - id: websocket
         title: WebSocket-ы
         description: То что делает доступ реактивным
+        details: |
+          WebSocket — протокол, позволяющий
+          обмениваться сообщениями между браузером
+          и веб-сервером в режиме реального времени.
+          <br>
+          <br>
+          Это позволяет обеспечить отзывчивость сайта
+          недостижимую другими средствами.
       - id: scalability
         title: Масштабируе<wbr>мость
         description: Позволяет справиться с любой нагрузкой
+        details: |
+          MyDataSpace имеет микросервисную архитекртуру
+          и построен поверх облачной инфраструктуры.
+          <br>
+          <br>
+          Это позволяет лекго справиться с увеличившейся
+          нугрузки путем автоматического добавиления
+          виртуальных серверов.
       - id: distribution
         title: Распределенное хранение данных
         description: Быстрый доступ из любой точки мира
+        details: |
+          Данные хранятся на серверах
+          <!-- расположенных в разных датацентрах по всему миру. -->
+          расположенных в 5 датацентрах в Европе, Америке
+          и Азии.
+          <br>
+          <br>
+          Это позволяет сократить растояние
+          от сервера до конечного пользователя и
+          обеспечить максимальную скорость доступа.
   - id: ease
     title: Простота
     subtitle: Веб-приложение за три шага
@@ -65,12 +91,32 @@ sections:
       - id: open_data
         title: Открытые данные
         description: Опубликованные данные доступны всем
+        details: |
+          Все данные в MyDataSpace доступны
+          любому желающему через простой и понятный API.
+          <br>
+          <br>
+          Используйте уже загруженные данные для своих целей.
       - id: coding
         title: HTML/CSS/JS
         description: Все что нужно знать для создания приложения
+        details: |
+          Современные средства позволяют создать приложение для любой платформы используя только HTML/CSS/JS:
+          <ul>
+            <li><a href="https://electronjs.org" target="_blank">Electron</a> — для Desktop-приложений</li>
+            <li><a href="https://cordova.apache.org" target="_blank">Cordova</a> — для мобильных приложений</li>
+            <li><a href="https://nodejs.org" target="_blank">NodeJS</a> — для консольных и веб-приложений.</li>
+          </ul>
       - id: console
         title: Простота в обслуживание
         description: Единый инструмент управления данными и кодом
+        details: |
+          Рутинную работу по администрированию баз данных и серверов
+          команда MyDataSpace берёт на себя.
+          <br>
+          <br>
+          Вам же предоставляется удобная панель управления для
+          решения основных задач.
     additional_features:
       - Создайте интерфейс вашего приложения
       - Опубликуйте данные на MyDataSpace
@@ -83,11 +129,20 @@ sections:
     features:
       - id: cloud
         title: Облачная инфраструктура
-        # description: Облачная инфраструктура <a target="_blank" href="http://ovh.com">OVH</a>.
+        details: |
+          Облачная инфраструктура обеспечивает надежное
+          хранение данных и бесперебойный доступ к ним.
       - id: availability
         title: Доступность 99.95%
+        details: |
+          Мы пользуемся услугами надежных провайдеров
+          облачных услуг, которые гарантируют
+          SLA на уровне 99.95%.
       - id: security
         title: Защита от DDoS
+        details: |
+          Ваши данные всегда будут доступны благодаря
+          защиты от DDoS-атак копмании Cloudflare.
 demos_title: Примеры
 demos:
   - id: hello-world
@@ -160,7 +215,7 @@ features:
 
       <a href="https://github.com/mydataspace"><img style="width: 150px; margin-right: 10px;" src="/images/logos/github.png" /></a>
       <a href="https://vk.com/mydataspace"><img style="width: 80px; margin-right: 10px;" src="/images/logos/vk.png" /></a>
-      <a href="https://ok.ru"><img style="width: 80px; margin-right: 10px;" src="/images/logos/ok.png" /></a>
+      <!--<a href="https://ok.ru"><img style="width: 80px; margin-right: 10px;" src="/images/logos/ok.png" /></a>-->
       <a href="https://facebook.com/mydataspace"><img style="width: 80px; margin-right: 10px;" src="/images/logos/fb.png" /></a>
       <a href="https://plus.google.com/communities/107145683419072073269"><img style="width: 80px; margin-right: 10px;" src="/images/logos/g+.png" /></a>
   - id: dashboard

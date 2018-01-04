@@ -24,7 +24,10 @@
       <div class="row">
         {% for feature in section.features %}
           <div class="col-md-4 feature_column">
-            <div class="feature">
+            <div class="feature {% if feature.details %}feature--with-details{% endif %}">
+              {% if feature.details %}
+              <div class="feature__details">{{ feature.details }}</div>
+              {% endif %}
               <div class="feature__icon feature__icon--{{ section.id }} feature__icon--{{ feature.id }}">
                 {% assign icon_name = "icons/" | append:feature.id | append:".svg"  %}
                 {% include {{icon_name}} %}
