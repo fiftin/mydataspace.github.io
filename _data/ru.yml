@@ -27,7 +27,7 @@ waiting_cloak: "Загрузка..."
 strings:
   view_source_code: См. код
   view_data: См. данные
-  top_roots: Топ наборов данных
+  top_roots: Топ-3 наборов данных
   view_doc: См. документацию
   explore_roots: Показать все
 header:
