@@ -8641,7 +8641,7 @@ function Myda(optionsOrRoot) {
     vk: {
       title: 'Connect through VK',
       icon: 'vk',
-      url: 'https://oauth.vk.com/authorize?client_id=6037091&scope=email' +
+      url: 'https://oauth.vk.com/authorize?client_id=6037091' +
       '&state=permission%3d{{permission}}%3BclientId%3d{{client_id}}' +
       '&redirect_uri={{api_url}}%2fauth%2fvk' +
       '&display=popup',
@@ -8652,7 +8652,7 @@ function Myda(optionsOrRoot) {
     'vk/tasks': {
       title: 'Authorize tasks through VK',
       icon: 'vk',
-      url: 'https://oauth.vk.com/authorize?client_id=6249018&scope=email' +
+      url: 'https://oauth.vk.com/authorize?client_id=6249018' +
       '&state=permission%3d{{permission}}%3BclientId%3d{{client_id}}%3Bauth_token%3d{{auth_token}}' +
       '&redirect_uri={{api_url}}%2fauth%2fvk%2Ftasks' +
       '&display=popup',
