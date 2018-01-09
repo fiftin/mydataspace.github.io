@@ -11,9 +11,12 @@
         if (!document.getElementById('profile_button')) {
           return;
         }
-        document.getElementById('profile_button').style.backgroundImage = 'url(' + data.avatar + ')';
+
+        var avatar = MDSCommon.isPresent(data.avatar) ? data.avatar : '/images/no_avatar_small.png';
+
+        document.getElementById('profile_button').style.backgroundImage = 'url(' + avatar + ')';
         document.getElementById('profile_button__dropdown_name').innerText = data.name;
-        document.getElementById('profile_button__dropdown_profile').style.backgroundImage = 'url(' + data.avatar + ')';
+        document.getElementById('profile_button__dropdown_profile').style.backgroundImage = 'url(' + avatar + ')';
         if (typeof $ !== 'undefined') {
           $('#signin_modal').modal('hide');
         }
