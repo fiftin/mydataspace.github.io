@@ -1826,9 +1826,13 @@ EntityForm.prototype.addRootField = function(data) {
 			});
 			break;
 		case 'category':
-		case 'language':
-		case 'country':
 			$$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.categories));
+			break;
+		case 'language':
+			$$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.languages));
+			break;
+		case 'country':
+			$$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.countries));
 			break;
 		default:
 			$$('entity_form').addView(UIControls.getRootFieldView('text', data, STRINGS.categories));
