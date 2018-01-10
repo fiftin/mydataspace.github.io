@@ -42,9 +42,6 @@ UIControls = {
 			required: true,
 			name: name,
 			value: value,
-			template: function(obj) {
-				return '<i class="fa fa-' + UIConstants.CATEGORY_ICONS[obj.id] + '"></i>' + obj.value;
-			},
 			options: options
 		};
   },
