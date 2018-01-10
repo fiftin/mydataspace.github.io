@@ -232,6 +232,25 @@ UIHelper = {
     'view': 'file-image-o'
   },
 
+  ROOT_FIELDS: [
+		'avatar',
+		'name',
+		'tags',
+		'websiteURL',
+		'description'
+  ],
+
+  HIDDEN_ROOT_FIELDS: [
+    'vk',
+    'isVKAuth',
+    'facebook',
+    'isFacebookAuth',
+    'twitter',
+    'isTwitterAuth',
+    'odnoklassniki',
+    'isOdnoklassnikiAuth'
+  ],
+
   IGNORED_PATHS: [
     // 'comments',
     // 'views',
@@ -1553,22 +1572,15 @@ EntityForm.prototype.addFields = function(fields, setDirty, isProto) {
     if (field.name.indexOf('$') === 0) {
       continue;
     }
+
     this.addField(field, setDirty, isProto);
   }
 };
 
 EntityForm.prototype.addRootFields = function(fields, setDirty) {
-  var ROOT_FIELDS = [
-    'avatar',
-    'name',
-    'tags',
-    'websiteURL',
-    'description'
-  ];
-
   fields.sort (function(x, y) {
-    var xIndex = ROOT_FIELDS.indexOf(x.name);
-    var yIndex = ROOT_FIELDS.indexOf(y.name);
+    var xIndex = UIHelper.ROOT_FIELDS.indexOf(x.name);
+    var yIndex = UIHelper.ROOT_FIELDS.indexOf(y.name);
     if (xIndex >= 0 && yIndex < 0) {
       return -1;
     }
@@ -1598,7 +1610,10 @@ EntityForm.prototype.addRootFields = function(fields, setDirty) {
     if (field.name.indexOf('$') === 0) {
       continue;
     }
-    if (ROOT_FIELDS.indexOf(field.name) >= 0) {
+    if (UIHelper.HIDDEN_ROOT_FIELDS.indexOf(field.name) < 0) {
+      continue;
+    }
+    if (UIHelper.ROOT_FIELDS.indexOf(field.name) >= 0) {
       this.addRootField(field, setDirty);
     } else {
       this.addField(field, setDirty, false);

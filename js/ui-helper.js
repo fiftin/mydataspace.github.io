@@ -35,6 +35,25 @@ UIHelper = {
     'view': 'file-image-o'
   },
 
+  ROOT_FIELDS: [
+		'avatar',
+		'name',
+		'tags',
+		'websiteURL',
+		'description'
+  ],
+
+  HIDDEN_ROOT_FIELDS: [
+    'vk',
+    'isVKAuth',
+    'facebook',
+    'isFacebookAuth',
+    'twitter',
+    'isTwitterAuth',
+    'odnoklassniki',
+    'isOdnoklassnikiAuth'
+  ],
+
   IGNORED_PATHS: [
     // 'comments',
     // 'views',
