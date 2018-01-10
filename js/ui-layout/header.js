@@ -3,7 +3,7 @@ UILayout.header =
     cols: [
       { type: 'header' },
       { view: 'button',
-        width: 90,
+        width: 100,
         css: 'menu__language_button menu__language_button--get_started',
         id: 'FEATURES_LABEL',
         label: STRINGS.FEATURES,
