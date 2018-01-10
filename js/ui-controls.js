@@ -48,7 +48,7 @@ UIControls = {
 		}
 		return {
 			view: 'combo',
-			label: UIControls.getRootFieldLabel(name),
+			label: STRINGS.ROOT_FIELDS[name],
 			labelWidth: UIHelper.LABEL_WIDTH,
 			name: 'fields.' + name + '.value',
 			id: 'entity_form__' + name + '_value',
