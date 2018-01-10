@@ -796,12 +796,8 @@ UIControls = {
 		}
 		return {
 			view: 'combo',
-			required: true,
 			name: name,
 			value: value,
-			template: function(obj) {
-				return '<i class="fa fa-' + UIConstants.CATEGORY_ICONS[obj.id] + '"></i>' + obj.value;
-			},
 			options: options
 		};
   },
@@ -1797,18 +1793,7 @@ EntityForm.prototype.addRootField = function(data) {
 						name: 'fields.' + data.name + '.type',
 						hidden: true
 					},
-					{
-						view: 'combo',
-						label: STRINGS.ADD_RESOURCE_TYPE,
-						name: 'type',
-						value: 'file',
-						options: [
-							{ id: 'avatar', value: STRINGS.AVATAR },
-							{ id: 'image', value: STRINGS.IMAGE },
-							{ id: 'file', value: STRINGS.FILE }
-						],
-						labelWidth: UIHelper.LABEL_WIDTH
-					}
+					UIControls.getCategoriesSelectTemplate('fields.' + data.name + '.value', data.value)
 				]
 			});
 			break;

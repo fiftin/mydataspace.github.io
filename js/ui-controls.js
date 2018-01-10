@@ -39,7 +39,6 @@ UIControls = {
 		}
 		return {
 			view: 'combo',
-			required: true,
 			name: name,
 			value: value,
 			options: options
