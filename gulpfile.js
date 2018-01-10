@@ -51,6 +51,7 @@ gulp.task('ui', function() {
   return gulp.src([
       './js/ace.js',
       './js/router.js',
+			'./js/ui-constants.js',
       './js/ui-helper.js',
       './js/fields.js',
       './js/identity.js',
