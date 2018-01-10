@@ -852,7 +852,7 @@ EntityForm.prototype.addRootField = function(data) {
 						name: 'fields.' + data.name + '.type',
 						hidden: true
 					},
-					UIControls.getCategoriesSelectTemplate('fields.' + data.name + '.value')
+					UIControls.getCategoriesSelectTemplate('fields.' + data.name + '.value', data.value)
 				]
 			});
 			break;
