@@ -852,7 +852,18 @@ EntityForm.prototype.addRootField = function(data) {
 						name: 'fields.' + data.name + '.type',
 						hidden: true
 					},
-					UIControls.getCategoriesSelectTemplate('fields.' + data.name + '.value', data.value)
+					{
+						view: 'combo',
+						label: STRINGS.ADD_RESOURCE_TYPE,
+						name: 'type',
+						value: 'file',
+						options: [
+							{ id: 'avatar', value: STRINGS.AVATAR },
+							{ id: 'image', value: STRINGS.IMAGE },
+							{ id: 'file', value: STRINGS.FILE }
+						],
+						labelWidth: UIHelper.LABEL_WIDTH
+					}
 				]
 			});
 			break;
