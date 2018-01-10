@@ -42,7 +42,8 @@ UIControls = {
 			name: name,
 			value: value,
 			options: options,
-			label: label
+			label: label,
+			labelWidth: UIHelper.LABEL_WIDTH
 		};
   },
 
