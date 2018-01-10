@@ -1610,7 +1610,7 @@ EntityForm.prototype.addRootFields = function(fields, setDirty) {
     if (field.name.indexOf('$') === 0) {
       continue;
     }
-    if (UIHelper.HIDDEN_ROOT_FIELDS.indexOf(field.name) < 0) {
+    if (UIHelper.HIDDEN_ROOT_FIELDS.indexOf(field.name) >= 0) {
       continue;
     }
     if (UIHelper.ROOT_FIELDS.indexOf(field.name) >= 0) {
