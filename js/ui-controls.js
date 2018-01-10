@@ -32,7 +32,7 @@ UIControls = {
     };
   },
 
-  getCategoriesSelectTemplate: function() {
+  getCategoriesSelectTemplate: function(name) {
 		var options = [];
 		for (var id in STRINGS.categories) {
 			options.push({ id: id, value: STRINGS.categories[id] });
@@ -40,7 +40,7 @@ UIControls = {
 		return {
 			view: 'combo',
 			required: true,
-			name: 'type',
+			name: name,
 			value: 's',
 			template: function(obj) {
 				return '<i class="fa fa-' + UIConstants.CATEGORY_ICONS[obj.id] + '"></i>' + obj.value;

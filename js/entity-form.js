@@ -769,107 +769,128 @@ EntityForm.prototype.addRootField = function(data) {
     throw new Error('Field with this name already exists');
   }
   $$('NO_FIELDS_LABEL').hide();
-
-  if (data.name === 'avatar') {
-    $$('entity_form').addView({
-      id: 'entity_form__' + data.name,
-      css: 'entity_form__field entity_form__field--without-overflow',
-      cols: [
-        { view: 'text',
-          value: data.name,
-          name: 'fields.' + data.name + '.name',
-          hidden: true
-        },
-        { view: 'text',
-          value: data.type,
-          id: 'entity_form__' + data.name + '_type',
-          name: 'fields.' + data.name + '.type',
-          hidden: true
-        },
-        { view: 'text',
-          value: data.value,
-          name: 'fields.' + data.name + '.value',
-          id: 'entity_form__root_avatar_value',
-          hidden: true
-        },
-        {
-          view: 'label',
-          css: 'entity_form__field_label_avatar',
-          label: '<div style="visibility: hidden">fake</div>' +
-                 '<div class="entity_form__field_label">' +
-                  STRINGS.ROOT_FIELDS[data.name] +
-                 '</div>' +
-                 '<div class="entity_form__field_label_ellipse_right"></div>' +
-                 '<div class="entity_form__field_label_ellipse"></div>',
-          width: UIHelper.LABEL_WIDTH,
-          height: 38
-        },
-        {
-          borderless: true,
-          css: 'entity_form__root_img_template',
-          template: '<img id="entity_form__root_img" class="entity_form__root_img" src="' +
-                      (MDSCommon.isPresent(data.value) ? Mydataspace.options.cdnURL + '/avatars/sm/' + data.value + '.png' : '/images/icons/root.svg') +
-                    '" alt="Icon" />',
-          width: 32
-        },
-        { width: 16 },
-        {
-          borderless: true,
-          css: 'entity_form__root_img_upload_template',
-          template: '<label class="entity_form__root_img_upload_lbl">' +
-                    ' <input type="file" ' +
-                    '        onchange="UI.entityForm.onUploadAvatar(event);"' +
-                    '        required />' +
-                    ' <span>' + STRINGS.ROOT_AVATAR_UPLOAD + '</span>' +
-                    '</label>'
-        },
-        { width: 6 },
-        {
-          view: 'button',
-          label: STRINGS.ROOT_AVATAR_REMOVE,
-          id: 'ROOT_AVATAR_REMOVE_LABEL',
-          click: function() {
-            $$('entity_form__root_avatar_value').setValue('');
-            document.getElementById('entity_form__root_img').setAttribute('src', '/images/icons/root.svg');
-          }
-        }
-      ]
-    });
-    return;
-  }
-
-  $$('entity_form').addView({
-    id: 'entity_form__' + data.name,
-    css: 'entity_form__field',
-    cols: [
-      { view: 'text',
-        value: data.name,
-        name: 'fields.' + data.name + '.name',
-        hidden: true
-      },
-      { view: 'text',
-        value: data.type,
-        id: 'entity_form__' + data.name + '_type',
-        name: 'fields.' + data.name + '.type',
-        hidden: true
-      },
-      { view: 'text',
-        label: '<div style="visibility: hidden">fake</div>' +
-               '<div class="entity_form__field_label">' +
-                STRINGS.ROOT_FIELDS[data.name] +
-               '</div>' +
-               '<div class="entity_form__field_label_ellipse_right"></div>' +
-               '<div class="entity_form__field_label_ellipse"></div>',
-        labelWidth: UIHelper.LABEL_WIDTH,
-        name: 'fields.' + data.name + '.value',
-        id: 'entity_form__' + data.name + '_value',
-        value: data.value,
-        height: 38,
-        css: 'entity_form__text_label',
-        placeholder: STRINGS.ROOT_FIELD_PLACEHOLDERS[data.name]
-      }
-    ]
-  });
+  switch (data.name) {
+		case 'avatar':
+			$$('entity_form').addView({
+				id: 'entity_form__' + data.name,
+				css: 'entity_form__field entity_form__field--without-overflow',
+				cols: [
+					{ view: 'text',
+						value: data.name,
+						name: 'fields.' + data.name + '.name',
+						hidden: true
+					},
+					{ view: 'text',
+						value: data.type,
+						id: 'entity_form__' + data.name + '_type',
+						name: 'fields.' + data.name + '.type',
+						hidden: true
+					},
+					{ view: 'text',
+						value: data.value,
+						name: 'fields.' + data.name + '.value',
+						id: 'entity_form__root_avatar_value',
+						hidden: true
+					},
+					{
+						view: 'label',
+						css: 'entity_form__field_label_avatar',
+						label: '<div style="visibility: hidden">fake</div>' +
+						'<div class="entity_form__field_label">' +
+						STRINGS.ROOT_FIELDS[data.name] +
+						'</div>' +
+						'<div class="entity_form__field_label_ellipse_right"></div>' +
+						'<div class="entity_form__field_label_ellipse"></div>',
+						width: UIHelper.LABEL_WIDTH,
+						height: 38
+					},
+					{
+						borderless: true,
+						css: 'entity_form__root_img_template',
+						template: '<img id="entity_form__root_img" class="entity_form__root_img" src="' +
+						(MDSCommon.isPresent(data.value) ? Mydataspace.options.cdnURL + '/avatars/sm/' + data.value + '.png' : '/images/icons/root.svg') +
+						'" alt="Icon" />',
+						width: 32
+					},
+					{ width: 16 },
+					{
+						borderless: true,
+						css: 'entity_form__root_img_upload_template',
+						template: '<label class="entity_form__root_img_upload_lbl">' +
+						' <input type="file" ' +
+						'        onchange="UI.entityForm.onUploadAvatar(event);"' +
+						'        required />' +
+						' <span>' + STRINGS.ROOT_AVATAR_UPLOAD + '</span>' +
+						'</label>'
+					},
+					{ width: 6 },
+					{
+						view: 'button',
+						label: STRINGS.ROOT_AVATAR_REMOVE,
+						id: 'ROOT_AVATAR_REMOVE_LABEL',
+						click: function() {
+							$$('entity_form__root_avatar_value').setValue('');
+							document.getElementById('entity_form__root_img').setAttribute('src', '/images/icons/root.svg');
+						}
+					}
+				]
+			});
+			break;
+		case 'category':
+			$$('entity_form').addView({
+				id: 'entity_form__' + data.name,
+				css: 'entity_form__field',
+				cols: [
+					{ view: 'text',
+						value: data.name,
+						name: 'fields.' + data.name + '.name',
+						hidden: true
+					},
+					{ view: 'text',
+						value: data.type,
+						id: 'entity_form__' + data.name + '_type',
+						name: 'fields.' + data.name + '.type',
+						hidden: true
+					},
+					UIControls.getCategoriesSelectTemplate('fields.' + data.name + '.value')
+				]
+			});
+			break;
+		default:
+			$$('entity_form').addView({
+				id: 'entity_form__' + data.name,
+				css: 'entity_form__field',
+				cols: [
+					{ view: 'text',
+						value: data.name,
+						name: 'fields.' + data.name + '.name',
+						hidden: true
+					},
+					{ view: 'text',
+						value: data.type,
+						id: 'entity_form__' + data.name + '_type',
+						name: 'fields.' + data.name + '.type',
+						hidden: true
+					},
+					{ view: 'text',
+						label: '<div style="visibility: hidden">fake</div>' +
+						'<div class="entity_form__field_label">' +
+						STRINGS.ROOT_FIELDS[data.name] +
+						'</div>' +
+						'<div class="entity_form__field_label_ellipse_right"></div>' +
+						'<div class="entity_form__field_label_ellipse"></div>',
+						labelWidth: UIHelper.LABEL_WIDTH,
+						name: 'fields.' + data.name + '.value',
+						id: 'entity_form__' + data.name + '_value',
+						value: data.value,
+						height: 38,
+						css: 'entity_form__text_label',
+						placeholder: STRINGS.ROOT_FIELD_PLACEHOLDERS[data.name]
+					}
+				]
+			});
+			break;
+	}
 };
 
 /**
