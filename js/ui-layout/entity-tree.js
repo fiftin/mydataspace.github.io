@@ -74,7 +74,7 @@ UILayout.entityTree =
       select: true,
       template:function(obj, common) {
         var path = Identity.dataFromId(obj.id).path;
-        var isTopLevelEntity = path.indexOf('/') < 0 && UIHelper.SYSTEM_PATHS.indexOf(path) < 0;
+        var isTopLevelEntity = path.indexOf('/') < 0 && UIConstants.SYSTEM_PATHS.indexOf(path) < 0;
         if (path === '') { // root
           var ava = MDSCommon.findValueByName(obj.associatedData.fields, 'avatar');
           var name = MDSCommon.findValueByName(obj.associatedData.fields, 'name') || obj.value;

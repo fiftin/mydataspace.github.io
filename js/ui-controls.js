@@ -31,6 +31,33 @@ UIControls = {
       labelWidth: UIHelper.LABEL_WIDTH
     };
   },
+
+  getCategoriesSelectTemplate: function() {
+		var options = [];
+		for (var id in STRINGS.categories) {
+			options.push({ id: id, value: STRINGS.categories[id] });
+		}
+		return {
+			view: 'combo',
+			required: true,
+			name: 'type',
+			value: 's',
+			template: function(obj) {
+				return '<i class="fa fa-' + UIConstants.CATEGORY_ICONS[obj.id] + '"></i>' + obj.value;
+			},
+			label: UIConstants,
+			options: options
+		};
+  },
+
+  getLanguagesSelectTemplate: function() {
+
+  },
+
+  getCountriesSelectTemplate: function() {
+
+	},
+
   /**
    * Returns object with initialized event handlers for typical modal dialog.
    */

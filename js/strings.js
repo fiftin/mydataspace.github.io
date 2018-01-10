@@ -94,14 +94,18 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       tags: 'Tags',
       description: 'Description',
       websiteURL: 'Website URL',
-      readme: 'README'
+      readme: 'README',
+      category: 'Category',
+      country: 'Country'
     },
     ROOT_FIELD_PLACEHOLDERS: {
       name: 'Human readable name of your root',
       tags: 'Keywords describing root',
       description: 'Main about root',
       websiteURL: 'Website where data of root are used',
-      readme: 'Markdown-formatted text about the root'
+      readme: 'Markdown-formatted text about the root',
+      category: '',
+      language: ''
     },
     ROOT_AVATAR_UPLOAD: 'Upload',
     ROOT_AVATAR_BROWSE: 'Browse',
@@ -190,10 +194,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       state: 'State',
       tourism: 'Tourism'
     }
-
-
-
   },
+
   RU: {
     YES: 'Да',
     NO: 'Нет',
@@ -294,14 +296,20 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       tags: 'Теги',
       description: 'Описание',
       websiteURL: 'Вебсайт',
-      readme: 'README'
+      readme: 'README',
+      category: 'Категория',
+			country: 'Страна',
+      language: 'Язык'
     },
     ROOT_FIELD_PLACEHOLDERS: {
       name: 'Наименование проекта',
       tags: 'Ключевые слова описывающие проект',
       description: 'Коротко о проекте',
       websiteURL: 'Сайт на котором используются данные',
-      readme: 'Подробное описание в Markdown формате'
+      readme: 'Подробное описание в Markdown формате',
+			category: '',
+			country: 'К какой стране относятся данные?',
+			language: 'На каком языке'
     },
     ROOT_AVATAR_UPLOAD: 'Загрузить',
     ROOT_AVATAR_BROWSE: 'Обзор',

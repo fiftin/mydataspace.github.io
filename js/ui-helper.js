@@ -15,62 +15,6 @@ UIHelper = {
   ENTITY_TREE_DUMMY_ID: 'dummy_483__4734_47e4',
   ENTITY_LIST_SHOW_MORE_ID: 'show_more_47384_3338222',
 
-  ENTITY_ICONS: {
-    'root': 'database',
-    'protos': 'cubes',
-    'proto': 'cube',
-    'tasks': 'code',
-    'task': 'file-code-o',
-    'logs': 'history',
-    'log': 'file-movie-o',
-    'resources': 'diamond',
-    'resource': 'file-image-o',
-    'processes': 'cogs',
-    'process': 'cog',
-    'likes': 'heart',
-    'like': 'heart-o',
-    'comments': 'comments',
-    'comment': 'comment',
-    'views': 'photo',
-    'view': 'file-image-o'
-  },
-
-  ROOT_FIELDS: [
-		'avatar',
-		'name',
-		'tags',
-		'websiteURL',
-		'description'
-  ],
-
-  HIDDEN_ROOT_FIELDS: [
-    'vk',
-    'isVKAuth',
-    'facebook',
-    'isFacebookAuth',
-    'twitter',
-    'isTwitterAuth',
-    'odnoklassniki',
-    'isOdnoklassnikiAuth'
-  ],
-
-  IGNORED_PATHS: [
-    // 'comments',
-    // 'views',
-    // 'likes'
-    // 'processes'
-  ],
-
-  SYSTEM_PATHS: [
-    'resources',
-    'tasks',
-    'protos',
-    'comments',
-    'views',
-    'likes',
-    'processes'
-  ],
-
   setVisible: function(components, isVisible) {
     if (!Array.isArray(components)) {
       components = [components];
@@ -141,7 +85,7 @@ UIHelper = {
   },
 
   getIconByPath: function(path, isEmpty, isOpened) {
-    var icon = UIHelper.ENTITY_ICONS[UIHelper.getEntityTypeByPath(path)];
+    var icon = UIConstants.ENTITY_ICONS[UIHelper.getEntityTypeByPath(path)];
     if (icon) {
         return icon;
     }

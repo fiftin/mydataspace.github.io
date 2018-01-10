@@ -681,8 +681,8 @@ EntityForm.prototype.addFields = function(fields, setDirty, isProto) {
 
 EntityForm.prototype.addRootFields = function(fields, setDirty) {
   fields.sort (function(x, y) {
-    var xIndex = UIHelper.ROOT_FIELDS.indexOf(x.name);
-    var yIndex = UIHelper.ROOT_FIELDS.indexOf(y.name);
+    var xIndex = UIConstants.ROOT_FIELDS.indexOf(x.name);
+    var yIndex = UIConstants.ROOT_FIELDS.indexOf(y.name);
     if (xIndex >= 0 && yIndex < 0) {
       return -1;
     }
@@ -712,10 +712,10 @@ EntityForm.prototype.addRootFields = function(fields, setDirty) {
     if (field.name.indexOf('$') === 0) {
       continue;
     }
-    if (UIHelper.HIDDEN_ROOT_FIELDS.indexOf(field.name) >= 0) {
+    if (UIConstants.HIDDEN_ROOT_FIELDS.indexOf(field.name) >= 0) {
       continue;
     }
-    if (UIHelper.ROOT_FIELDS.indexOf(field.name) >= 0) {
+    if (UIConstants.ROOT_FIELDS.indexOf(field.name) >= 0) {
       this.addRootField(field, setDirty);
     } else {
       this.addField(field, setDirty, false);
@@ -823,15 +823,6 @@ EntityForm.prototype.addRootField = function(data) {
                     ' <span>' + STRINGS.ROOT_AVATAR_UPLOAD + '</span>' +
                     '</label>'
         },
-        // { width: 6 },
-        // {
-        //   view: 'button',
-        //   label: 'Browse',
-        //   on: {
-        //     onClick: function() {
-        //     }
-        //   }
-        // },
         { width: 6 },
         {
           view: 'button',

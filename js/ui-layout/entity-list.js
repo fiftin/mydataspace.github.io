@@ -48,7 +48,7 @@ UILayout.entityList =
       select: true,
       template: function(obj) {
         var path = Identity.dataFromId(obj.id).path;
-        var isTopLevelEntity = path.indexOf('/') < 0 && UIHelper.SYSTEM_PATHS.indexOf(path) < 0;
+        var isTopLevelEntity = path.indexOf('/') < 0 && UIConstants.SYSTEM_PATHS.indexOf(path) < 0;
         var icon =
           UIHelper.getIconByPath(path,
                                  obj.count === 0,

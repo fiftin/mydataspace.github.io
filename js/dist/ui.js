@@ -212,62 +212,6 @@ UIHelper = {
   ENTITY_TREE_DUMMY_ID: 'dummy_483__4734_47e4',
   ENTITY_LIST_SHOW_MORE_ID: 'show_more_47384_3338222',
 
-  ENTITY_ICONS: {
-    'root': 'database',
-    'protos': 'cubes',
-    'proto': 'cube',
-    'tasks': 'code',
-    'task': 'file-code-o',
-    'logs': 'history',
-    'log': 'file-movie-o',
-    'resources': 'diamond',
-    'resource': 'file-image-o',
-    'processes': 'cogs',
-    'process': 'cog',
-    'likes': 'heart',
-    'like': 'heart-o',
-    'comments': 'comments',
-    'comment': 'comment',
-    'views': 'photo',
-    'view': 'file-image-o'
-  },
-
-  ROOT_FIELDS: [
-		'avatar',
-		'name',
-		'tags',
-		'websiteURL',
-		'description'
-  ],
-
-  HIDDEN_ROOT_FIELDS: [
-    'vk',
-    'isVKAuth',
-    'facebook',
-    'isFacebookAuth',
-    'twitter',
-    'isTwitterAuth',
-    'odnoklassniki',
-    'isOdnoklassnikiAuth'
-  ],
-
-  IGNORED_PATHS: [
-    // 'comments',
-    // 'views',
-    // 'likes'
-    // 'processes'
-  ],
-
-  SYSTEM_PATHS: [
-    'resources',
-    'tasks',
-    'protos',
-    'comments',
-    'views',
-    'likes',
-    'processes'
-  ],
-
   setVisible: function(components, isVisible) {
     if (!Array.isArray(components)) {
       components = [components];
@@ -338,7 +282,7 @@ UIHelper = {
   },
 
   getIconByPath: function(path, isEmpty, isOpened) {
-    var icon = UIHelper.ENTITY_ICONS[UIHelper.getEntityTypeByPath(path)];
+    var icon = UIConstants.ENTITY_ICONS[UIHelper.getEntityTypeByPath(path)];
     if (icon) {
         return icon;
     }
@@ -586,7 +530,7 @@ var Identity = {
     if (!MDSCommon.isBlank(data.numberOfChildren) && data.numberOfChildren > 0) {
       if (MDSCommon.isPresent(data.children)) {
         children = data.children.filter(function(x) {
-          return (x.root !== 'root' || x.path !== '') && UIHelper.IGNORED_PATHS.indexOf(x.path) < 0;
+          return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS.indexOf(x.path) < 0;
         }).map(Identity.entityFromData);
       } else {
         children = [{
@@ -767,6 +711,33 @@ UIControls = {
       labelWidth: UIHelper.LABEL_WIDTH
     };
   },
+
+  getCategoriesSelectTemplate: function() {
+		var options = [];
+		for (var id in STRINGS.categories) {
+			options.push({ id: id, value: STRINGS.categories[id] });
+		}
+		return {
+			view: 'combo',
+			required: true,
+			name: 'type',
+			value: 's',
+			template: function(obj) {
+				return '<i class="fa fa-' + UIConstants.CATEGORY_ICONS[obj.id] + '"></i>' + obj.value;
+			},
+			label: UIConstants,
+			options: options
+		};
+  },
+
+  getLanguagesSelectTemplate: function() {
+
+  },
+
+  getCountriesSelectTemplate: function() {
+
+	},
+
   /**
    * Returns object with initialized event handlers for typical modal dialog.
    */
@@ -1579,8 +1550,8 @@ EntityForm.prototype.addFields = function(fields, setDirty, isProto) {
 
 EntityForm.prototype.addRootFields = function(fields, setDirty) {
   fields.sort (function(x, y) {
-    var xIndex = UIHelper.ROOT_FIELDS.indexOf(x.name);
-    var yIndex = UIHelper.ROOT_FIELDS.indexOf(y.name);
+    var xIndex = UIConstants.ROOT_FIELDS.indexOf(x.name);
+    var yIndex = UIConstants.ROOT_FIELDS.indexOf(y.name);
     if (xIndex >= 0 && yIndex < 0) {
       return -1;
     }
@@ -1610,10 +1581,10 @@ EntityForm.prototype.addRootFields = function(fields, setDirty) {
     if (field.name.indexOf('$') === 0) {
       continue;
     }
-    if (UIHelper.HIDDEN_ROOT_FIELDS.indexOf(field.name) >= 0) {
+    if (UIConstants.HIDDEN_ROOT_FIELDS.indexOf(field.name) >= 0) {
       continue;
     }
-    if (UIHelper.ROOT_FIELDS.indexOf(field.name) >= 0) {
+    if (UIConstants.ROOT_FIELDS.indexOf(field.name) >= 0) {
       this.addRootField(field, setDirty);
     } else {
       this.addField(field, setDirty, false);
@@ -1721,15 +1692,6 @@ EntityForm.prototype.addRootField = function(data) {
                     ' <span>' + STRINGS.ROOT_AVATAR_UPLOAD + '</span>' +
                     '</label>'
         },
-        // { width: 6 },
-        // {
-        //   view: 'button',
-        //   label: 'Browse',
-        //   on: {
-        //     onClick: function() {
-        //     }
-        //   }
-        // },
         { width: 6 },
         {
           view: 'button',
@@ -2098,7 +2060,7 @@ EntityList.prototype.refresh = function(newRootId) {
       Identity.childId(self.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
     var entityId = Identity.idFromData(data);
     var children = data.children.filter(function(x) {
-      return (x.root !== 'root' || x.path !== '') && UIHelper.IGNORED_PATHS.indexOf(x.path) < 0;
+      return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS.indexOf(x.path) < 0;
     }).map(Identity.entityFromData);
     if (self.getRootId() === entityId) {
       if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
@@ -2186,7 +2148,7 @@ EntityList.prototype.showMore = function() {
   $$('entity_list').disable();
   Mydataspace.request('entities.getChildren', req, function(data) {
     var children = data.children.filter(function(child) {
-      return UIHelper.IGNORED_PATHS.indexOf(child.path) < 0;
+      return UIConstants.IGNORED_PATHS.indexOf(child.path) < 0;
     }).map(Identity.entityFromData);
     self.addChildren(children);
     $$('entity_list').enable();
@@ -2389,7 +2351,7 @@ EntityTree.prototype.resolveChildren = function(id) {
     Mydataspace.request('entities.getChildren', Identity.dataFromId(id), function(data) {
       var entityId = Identity.idFromData(data);
       var children = data.children.filter(function(x) {
-        return (x.root !== 'root' || x.path !== '') && UIHelper.IGNORED_PATHS.indexOf(x.path) < 0;
+        return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS.indexOf(x.path) < 0;
       }).map(Identity.entityFromData);
       UI.entityTree.setChildren(entityId, children);
       resolve();
@@ -2700,7 +2662,7 @@ EntityTree.prototype.showMore = function(id) {
   Mydataspace.request('entities.getChildren', req, function(data) {
     var entityId = Identity.idFromData(data);
     var children = data.children.filter(function(child) {
-      return UIHelper.IGNORED_PATHS.indexOf(child.path) < 0;
+      return UIConstants.IGNORED_PATHS.indexOf(child.path) < 0;
     }).map(Identity.entityFromData);
     self.addChildren(entityId, children);
   });
@@ -4010,7 +3972,7 @@ UILayout.entityTree =
       select: true,
       template:function(obj, common) {
         var path = Identity.dataFromId(obj.id).path;
-        var isTopLevelEntity = path.indexOf('/') < 0 && UIHelper.SYSTEM_PATHS.indexOf(path) < 0;
+        var isTopLevelEntity = path.indexOf('/') < 0 && UIConstants.SYSTEM_PATHS.indexOf(path) < 0;
         if (path === '') { // root
           var ava = MDSCommon.findValueByName(obj.associatedData.fields, 'avatar');
           var name = MDSCommon.findValueByName(obj.associatedData.fields, 'name') || obj.value;
@@ -4124,7 +4086,7 @@ UILayout.entityList =
       select: true,
       template: function(obj) {
         var path = Identity.dataFromId(obj.id).path;
-        var isTopLevelEntity = path.indexOf('/') < 0 && UIHelper.SYSTEM_PATHS.indexOf(path) < 0;
+        var isTopLevelEntity = path.indexOf('/') < 0 && UIConstants.SYSTEM_PATHS.indexOf(path) < 0;
         var icon =
           UIHelper.getIconByPath(path,
                                  obj.count === 0,

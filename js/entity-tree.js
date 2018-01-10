@@ -180,7 +180,7 @@ EntityTree.prototype.resolveChildren = function(id) {
     Mydataspace.request('entities.getChildren', Identity.dataFromId(id), function(data) {
       var entityId = Identity.idFromData(data);
       var children = data.children.filter(function(x) {
-        return (x.root !== 'root' || x.path !== '') && UIHelper.IGNORED_PATHS.indexOf(x.path) < 0;
+        return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS.indexOf(x.path) < 0;
       }).map(Identity.entityFromData);
       UI.entityTree.setChildren(entityId, children);
       resolve();
@@ -491,7 +491,7 @@ EntityTree.prototype.showMore = function(id) {
   Mydataspace.request('entities.getChildren', req, function(data) {
     var entityId = Identity.idFromData(data);
     var children = data.children.filter(function(child) {
-      return UIHelper.IGNORED_PATHS.indexOf(child.path) < 0;
+      return UIConstants.IGNORED_PATHS.indexOf(child.path) < 0;
     }).map(Identity.entityFromData);
     self.addChildren(entityId, children);
   });

@@ -185,7 +185,7 @@ EntityList.prototype.refresh = function(newRootId) {
       Identity.childId(self.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
     var entityId = Identity.idFromData(data);
     var children = data.children.filter(function(x) {
-      return (x.root !== 'root' || x.path !== '') && UIHelper.IGNORED_PATHS.indexOf(x.path) < 0;
+      return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS.indexOf(x.path) < 0;
     }).map(Identity.entityFromData);
     if (self.getRootId() === entityId) {
       if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
@@ -273,7 +273,7 @@ EntityList.prototype.showMore = function() {
   $$('entity_list').disable();
   Mydataspace.request('entities.getChildren', req, function(data) {
     var children = data.children.filter(function(child) {
-      return UIHelper.IGNORED_PATHS.indexOf(child.path) < 0;
+      return UIConstants.IGNORED_PATHS.indexOf(child.path) < 0;
     }).map(Identity.entityFromData);
     self.addChildren(children);
     $$('entity_list').enable();
