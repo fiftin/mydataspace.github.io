@@ -789,27 +789,73 @@ UIControls = {
     };
   },
 
-  getCategoriesSelectTemplate: function(name, value, label) {
+	getRootFieldLabel: function(name) {
+  	return '<div style="visibility: hidden">fake</div>' +
+			'<div class="entity_form__field_label">' +
+			STRINGS.ROOT_FIELDS[name] +
+			'</div>' +
+			'<div class="entity_form__field_label_ellipse_right"></div>' +
+			'<div class="entity_form__field_label_ellipse"></div>';
+	},
+
+  getRootFieldSelectTemplate: function(name, value, values) {
 		var options = [];
-		for (var id in STRINGS.categories) {
-			options.push({ id: id, value: STRINGS.categories[id] });
+		for (var id in values) {
+			options.push({ id: id, value: values[id] });
 		}
 		return {
 			view: 'combo',
 			name: name,
 			value: value,
 			options: options,
-			label: label,
+			label: UIControls.getRootFieldLabel(name),
 			labelWidth: UIHelper.LABEL_WIDTH
 		};
   },
 
-  getLanguagesSelectTemplate: function() {
 
-  },
 
-  getCountriesSelectTemplate: function() {
+	getRootFieldTextTemplate: function(name, value) {
+  	return { view: 'text',
+			label: UIControls.getRootFieldLabel(name),
+			labelWidth: UIHelper.LABEL_WIDTH,
+			name: 'fields.' + name + '.value',
+			id: 'entity_form__' + name + '_value',
+			value: value,
+			height: 38,
+			css: 'entity_form__text_label',
+			placeholder: STRINGS.ROOT_FIELD_PLACEHOLDERS[name]
+		};
+	},
 
+	getRootFieldView: function(type, data, values) {
+  	var valueView;
+  	switch (type) {
+			case 'select':
+				valueView = UIControls.getRootFieldSelectTemplate('fields.' + data.name + '.value', data.value, values);
+				break;
+			case 'text':
+				valueView = UIControls.getRootFieldTextTemplate('fields.' + data.name + '.value', data.value);
+				break;
+		}
+		return {
+			id: 'entity_form__' + data.name,
+			css: 'entity_form__field',
+			cols: [
+				{ view: 'text',
+					value: data.name,
+					name: 'fields.' + data.name + '.name',
+					hidden: true
+				},
+				{ view: 'text',
+					value: data.type,
+					id: 'entity_form__' + data.name + '_type',
+					name: 'fields.' + data.name + '.type',
+					hidden: true
+				},
+				valueView
+			]
+		};
 	},
 
   /**
@@ -1780,64 +1826,12 @@ EntityForm.prototype.addRootField = function(data) {
 			});
 			break;
 		case 'category':
-			$$('entity_form').addView({
-				id: 'entity_form__' + data.name,
-				css: 'entity_form__field',
-				cols: [
-					{ view: 'text',
-						value: data.name,
-						name: 'fields.' + data.name + '.name',
-						hidden: true
-					},
-					{ view: 'text',
-						value: data.type,
-						id: 'entity_form__' + data.name + '_type',
-						name: 'fields.' + data.name + '.type',
-						hidden: true
-					},
-					UIControls.getCategoriesSelectTemplate('fields.' + data.name + '.value', data.value,
-						'<div style="visibility: hidden">fake</div>' +
-						'<div class="entity_form__field_label">' +
-						STRINGS.ROOT_FIELDS[data.name] +
-						'</div>' +
-						'<div class="entity_form__field_label_ellipse_right"></div>' +
-						'<div class="entity_form__field_label_ellipse"></div>')
-				]
-			});
+		case 'language':
+		case 'country':
+			$$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.categories));
 			break;
 		default:
-			$$('entity_form').addView({
-				id: 'entity_form__' + data.name,
-				css: 'entity_form__field',
-				cols: [
-					{ view: 'text',
-						value: data.name,
-						name: 'fields.' + data.name + '.name',
-						hidden: true
-					},
-					{ view: 'text',
-						value: data.type,
-						id: 'entity_form__' + data.name + '_type',
-						name: 'fields.' + data.name + '.type',
-						hidden: true
-					},
-					{ view: 'text',
-						label: '<div style="visibility: hidden">fake</div>' +
-						'<div class="entity_form__field_label">' +
-						STRINGS.ROOT_FIELDS[data.name] +
-						'</div>' +
-						'<div class="entity_form__field_label_ellipse_right"></div>' +
-						'<div class="entity_form__field_label_ellipse"></div>',
-						labelWidth: UIHelper.LABEL_WIDTH,
-						name: 'fields.' + data.name + '.value',
-						id: 'entity_form__' + data.name + '_value',
-						value: data.value,
-						height: 38,
-						css: 'entity_form__text_label',
-						placeholder: STRINGS.ROOT_FIELD_PLACEHOLDERS[data.name]
-					}
-				]
-			});
+			$$('entity_form').addView(UIControls.getRootFieldView('text', data, STRINGS.categories));
 			break;
 	}
 };
