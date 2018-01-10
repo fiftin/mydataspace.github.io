@@ -789,7 +789,7 @@ UIControls = {
     };
   },
 
-  getCategoriesSelectTemplate: function(name, value) {
+  getCategoriesSelectTemplate: function(name, value, label) {
 		var options = [];
 		for (var id in STRINGS.categories) {
 			options.push({ id: id, value: STRINGS.categories[id] });
@@ -798,7 +798,8 @@ UIControls = {
 			view: 'combo',
 			name: name,
 			value: value,
-			options: options
+			options: options,
+			label: label
 		};
   },
 
@@ -1793,7 +1794,13 @@ EntityForm.prototype.addRootField = function(data) {
 						name: 'fields.' + data.name + '.type',
 						hidden: true
 					},
-					UIControls.getCategoriesSelectTemplate('fields.' + data.name + '.value', data.value)
+					UIControls.getCategoriesSelectTemplate('fields.' + data.name + '.value', data.value,
+						'<div style="visibility: hidden">fake</div>' +
+						'<div class="entity_form__field_label">' +
+						STRINGS.ROOT_FIELDS[data.name] +
+						'</div>' +
+						'<div class="entity_form__field_label_ellipse_right"></div>' +
+						'<div class="entity_form__field_label_ellipse"></div>')
 				]
 			});
 			break;

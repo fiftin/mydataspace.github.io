@@ -852,7 +852,13 @@ EntityForm.prototype.addRootField = function(data) {
 						name: 'fields.' + data.name + '.type',
 						hidden: true
 					},
-					UIControls.getCategoriesSelectTemplate('fields.' + data.name + '.value', data.value)
+					UIControls.getCategoriesSelectTemplate('fields.' + data.name + '.value', data.value,
+						'<div style="visibility: hidden">fake</div>' +
+						'<div class="entity_form__field_label">' +
+						STRINGS.ROOT_FIELDS[data.name] +
+						'</div>' +
+						'<div class="entity_form__field_label_ellipse_right"></div>' +
+						'<div class="entity_form__field_label_ellipse"></div>')
 				]
 			});
 			break;
