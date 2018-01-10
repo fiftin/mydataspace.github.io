@@ -805,18 +805,18 @@ UIControls = {
 		}
 		return {
 			view: 'combo',
-			name: name,
-			value: value,
-			options: options,
 			label: UIControls.getRootFieldLabel(name),
-			labelWidth: UIHelper.LABEL_WIDTH
+			labelWidth: UIHelper.LABEL_WIDTH,
+			name: 'fields.' + name + '.value',
+			id: 'entity_form__' + name + '_value',
+			value: value,
+			options: options
 		};
   },
 
-
-
 	getRootFieldTextTemplate: function(name, value) {
-  	return { view: 'text',
+  	return {
+  		view: 'text',
 			label: UIControls.getRootFieldLabel(name),
 			labelWidth: UIHelper.LABEL_WIDTH,
 			name: 'fields.' + name + '.value',
@@ -832,10 +832,10 @@ UIControls = {
   	var valueView;
   	switch (type) {
 			case 'select':
-				valueView = UIControls.getRootFieldSelectTemplate('fields.' + data.name + '.value', data.value, values);
+				valueView = UIControls.getRootFieldSelectTemplate(data.name, data.value, values);
 				break;
 			case 'text':
-				valueView = UIControls.getRootFieldTextTemplate('fields.' + data.name + '.value', data.value);
+				valueView = UIControls.getRootFieldTextTemplate(data.name, data.value);
 				break;
 		}
 		return {
