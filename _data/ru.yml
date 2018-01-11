@@ -30,6 +30,7 @@ strings:
   top_roots: Топ-3 наборов данных
   view_doc: См. документацию
   explore_roots: Показать все
+  new_root_name: Имя нового корня
 header:
   input_search: Начните поиск или нажмите Esc
   input_search_fixed: Поиск...
