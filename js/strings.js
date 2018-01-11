@@ -96,7 +96,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       websiteURL: 'Website URL',
       readme: 'README',
       category: 'Category',
-      country: 'Country'
+      country: 'Country',
+			language: 'Language'
     },
     ROOT_FIELD_PLACEHOLDERS: {
       name: 'Human readable name of your root',
