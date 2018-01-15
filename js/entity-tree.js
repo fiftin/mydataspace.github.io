@@ -302,6 +302,12 @@ EntityTree.prototype.listen = function() {
     var newId = self.cloneItem(id, parentId, Identity.renameData.bind(null, data));
     self.setCurrentId(newId);
     $$('entity_tree').remove(id);
+
+		Mydataspace.entities.unsubscribe(MDSCommon.permit(data, 'root', 'path'));
+		Mydataspace.entities.subscribe({
+			root: data.root,
+			path: MDSCommon.getChildPath(MDSCommon.getParentPath(data.path), data.name)
+		});
   });
 };
 

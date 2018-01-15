@@ -91,7 +91,8 @@ EntityList.prototype.listen = function() {
     self.changeItems(Identity.renameData.bind(null, data));
 		Mydataspace.entities.unsubscribe(MDSCommon.permit(data, 'root', 'path'));
 		Mydataspace.entities.subscribe({
-
+			root: data.root,
+			path: MDSCommon.getChildPath(MDSCommon.getParentPath(data.path), data.name)
 		});
   });
 };
