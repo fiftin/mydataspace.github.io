@@ -283,12 +283,13 @@ language: en
             primaryKey: document.getElementById('finish_import__pk').value,
             grouping: document.getElementById('finish_import__grouping').checked,
             subitemPrimaryKey: document.getElementById('finish_import__subitem_pk').value,
-            subitemFirstColumn: document.getElementById('finish_import__subitem_first_column').value,
+            subitemFirstColumn: document.getElementById('finish_import__subitem_first_column').value
           }
         });
       }).then(function(data) {
         processData = data;
-        Mydataspace.entities.subscribe(MDSCommon.permit(data, ['root', 'path'])); document.getElementById('finish_import__create_root').style.display = 'none';
+        Mydataspace.entities.subscribe(MDSCommon.permit(data, ['root', 'path']));
+        document.getElementById('finish_import__create_root').style.display = 'none';
         document.getElementById('finish_import__progress').style.display = 'block';
         document.getElementById('finish_import__waiting_cloak').style.display = 'none';
       }, function(err) {

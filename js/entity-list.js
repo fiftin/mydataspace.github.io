@@ -89,6 +89,10 @@ EntityList.prototype.listen = function() {
 
   Mydataspace.on('entities.rename.res', function(data) {
     self.changeItems(Identity.renameData.bind(null, data));
+		Mydataspace.entities.unsubscribe(MDSCommon.permit(data, 'root', 'path'));
+		Mydataspace.entities.subscribe({
+
+		});
   });
 };
 
