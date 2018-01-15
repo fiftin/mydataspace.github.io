@@ -138,7 +138,9 @@ var Identity = {
     if (MDSCommon.isBlank(renameData.path)) {
       newItemData.root = renameData.name;
     } else {
-      var path = MDSCommon.getParentPath(renameData.path) + '/' + renameData.name;
+      var parentPath = MDSCommon.getParentPath(renameData.path);
+			var path = MDSCommon.isPresent(parentPath) ? parentPath + '/' + renameData.name : renameData.name;
+
       if (newItemData.path === renameData.path) {
         newItemData.path = path;
       } else {
