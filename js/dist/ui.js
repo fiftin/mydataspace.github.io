@@ -2619,15 +2619,15 @@ EntityTree.prototype.listen = function() {
 
     $$('entity_tree').remove(id);
 
-    var subscribeData = MDSCommon.permit(data, ['root', 'path']);
+    //var subscribeData = MDSCommon.permit(data, ['root', 'path']);
     //Mydataspace.entities.unsubscribe(subscribeData);
-    Mydataspace.entities.subscribe(MDSCommon.extend(subscribeData, { path: MDSCommon.getChildPath(MDSCommon.getParentPath(data.path), data.name) }));
-    if (subscribeData.path != '') {
-      subscribeData.path += '/';
-    }
-    subscribeData.path += '*';
+    //Mydataspace.entities.subscribe(MDSCommon.extend(subscribeData, { path: MDSCommon.getChildPath(MDSCommon.getParentPath(data.path), data.name) }));
+    //if (subscribeData.path != '') {
+    //  subscribeData.path += '/';
+    //}
+    //subscribeData.path += '*';
     //Mydataspace.entities.unsubscribe(subscribeData);
-    Mydataspace.entities.subscribe(MDSCommon.extend(subscribeData, { path: MDSCommon.getChildPath(MDSCommon.getParentPath(data.path), data.name) }));
+    //Mydataspace.entities.subscribe(MDSCommon.extend(subscribeData, { path: MDSCommon.getChildPath(MDSCommon.getParentPath(data.path), data.name) }));
   });
 };
 
