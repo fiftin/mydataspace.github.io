@@ -254,7 +254,8 @@ UIConstants = {
 		'comments',
 		'views',
 		'likes',
-		'processes'
+		'processes',
+    'website'
 	],
 
 	CATEGORY_ICONS: {
