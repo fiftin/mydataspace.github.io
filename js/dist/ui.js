@@ -213,7 +213,8 @@ UIConstants = {
 		'comments': 'comments',
 		'comment': 'comment',
 		'views': 'photo',
-		'view': 'file-image-o'
+		'view': 'file-image-o',
+    'website': 'globe'
 	},
 
 	ROOT_FIELDS: [
