@@ -34,15 +34,15 @@ EntityTree.prototype.getCurrentId = function() {
 
 
 EntityTree.prototype.setCurrentId = function(id) {
-  if (this.currentId != null) {
-    var unsubscribeData = MDSCommon.extend(Identity.dataFromId(this.currentId));
-    Mydataspace.request('entities.unsubscribe', unsubscribeData);
-    if (unsubscribeData.path !== '') {
-      unsubscribeData.path += '/';
-    }
-    unsubscribeData.path += '*';
-    Mydataspace.request('entities.unsubscribe', unsubscribeData);
-  }
+  // if (this.currentId != null) {
+  //   var unsubscribeData = MDSCommon.extend(Identity.dataFromId(this.currentId));
+  //   Mydataspace.request('entities.unsubscribe', unsubscribeData);
+  //   if (unsubscribeData.path !== '') {
+  //     unsubscribeData.path += '/';
+  //   }
+  //   unsubscribeData.path += '*';
+  //   Mydataspace.request('entities.unsubscribe', unsubscribeData);
+  // }
 
   this.currentId = id;
 
