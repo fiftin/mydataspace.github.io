@@ -134,7 +134,7 @@ var Identity = {
   },
 
 	/**
-	 *
+	 * Changes root or path of itemData according to renameData.
 	 * @param renameData
 	 * @param itemData
 	 * @returns {*}
@@ -150,9 +150,10 @@ var Identity = {
       if (newItemData.path === renameData.path) {
         newItemData.path = path;
       } else {
-        if (newItemData.path.indexOf(path + '/') !== 0) {
+        if (newItemData.path.indexOf(renameData.path + '/') !== 0) {
           throw new Error('Illegal path of destination item');
         }
+
         newItemData.path = path + newItemData.path.substr(renameData.path.length);
       }
     }
