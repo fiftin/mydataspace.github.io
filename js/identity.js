@@ -133,6 +133,12 @@ var Identity = {
     return data.root + version; 
   },
 
+	/**
+	 *
+	 * @param renameData
+	 * @param itemData
+	 * @returns {*}
+	 */
   renameData: function(renameData, itemData) {
     var newItemData = MDSCommon.copy(itemData);
     if (MDSCommon.isBlank(renameData.path)) {

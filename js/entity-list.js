@@ -21,21 +21,21 @@ EntityList.prototype.setReadOnly = function(isReadOnly) {
 
 
 
-EntityList.prototype.changeItems = function(applyForData) {
-  var nextId;
-  var id = $$('entity_list').getFirstId();
-  while (id) {
-    var index = $$('entity_list').getIndexById(id);
-    $$('entity_list').copy(id, index, null, {
-      newId: id === UIHelper.ENTITY_LIST_SHOW_MORE_ID
-                    ? UIHelper.ENTITY_LIST_SHOW_MORE_ID
-                    : Identity.idFromData(applyForData(Identity.dataFromId(id)))
-    });
-    nextId = $$('entity_list').getNextId(id);
-    $$('entity_list').remove(id);
-    id = nextId;
-  }
-};
+//EntityList.prototype.changeItems = function(applyForData) {
+//  var nextId;
+//  var id = $$('entity_list').getFirstId();
+//  while (id) {
+//    var index = $$('entity_list').getIndexById(id);
+//    $$('entity_list').copy(id, index, null, {
+//      newId: id === UIHelper.ENTITY_LIST_SHOW_MORE_ID
+//                    ? UIHelper.ENTITY_LIST_SHOW_MORE_ID
+//                    : Identity.idFromData(applyForData(Identity.dataFromId(id)))
+//    });
+//    nextId = $$('entity_list').getNextId(id);
+//    $$('entity_list').remove(id);
+//    id = nextId;
+//  }
+//};
 
 
 /**
@@ -88,12 +88,23 @@ EntityList.prototype.listen = function() {
   });
 
   Mydataspace.on('entities.rename.res', function(data) {
-    self.changeItems(Identity.renameData.bind(null, data));
-		Mydataspace.entities.unsubscribe(MDSCommon.permit(data, 'root', 'path'));
-		Mydataspace.entities.subscribe({
-			root: data.root,
-			path: MDSCommon.getChildPath(MDSCommon.getParentPath(data.path), data.name)
-		});
+    var id = Identity.idFromData(data);
+
+    if (self.currentId === id) { // can't rename ".." (current) entity, which children displayed in list
+      return;
+    }
+
+    var item = $$('entity_list').getItem(id);
+
+    if (!item) {
+      return;
+    }
+
+    var index = $$('entity_list').getIndexById(id);
+    $$('entity_list').copy(id, index, null, {
+      newId: Identity.idFromData(Identity.renameData(data, Identity.dataFromId(id)))
+    });
+    $$('entity_list').remove(id);
   });
 };
 
