@@ -100,10 +100,11 @@ EntityList.prototype.listen = function() {
     }
 
     var index = $$('entity_list').getIndexById(id);
-    $$('entity_list').copy(id, index, null, {
-      newId: Identity.idFromData(Identity.renameData(data, Identity.dataFromId(id))),
-      value: data.name
-    });
+    var entity = Identity.entityFromData(MDSCommon.extend(item.associatedData, {
+      path: MDSCommon.getChildPath(MDSCommon.getParentPath(item.associatedData.path), data.name)
+    }));
+
+    $$('entity_list').add(entity, index);
     $$('entity_list').remove(id);
   });
 };
