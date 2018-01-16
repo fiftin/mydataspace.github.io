@@ -117,19 +117,19 @@ EntityList.prototype.setRootIdWithoutRefresh = function(id) {
     return;
   }
 
-  if (this.rootId != null) {
-    Mydataspace.request('entities.unsubscribe', MDSCommon.extend(Identity.dataFromId(this.rootId), {
-      events: ['entities.rename.res']
-    }));
-  }
+  // if (this.rootId != null) {
+  //   Mydataspace.request('entities.unsubscribe', MDSCommon.extend(Identity.dataFromId(this.rootId), {
+  //     events: ['entities.rename.res']
+  //   }));
+  // }
 
   this.rootId = id;
 
-  if (id != null) {
-    Mydataspace.request('entities.subscribe', MDSCommon.extend(Identity.dataFromId(id), {
-      events: ['entities.rename.res']
-    }));
-  }
+  // if (id != null) {
+  //   Mydataspace.request('entities.subscribe', MDSCommon.extend(Identity.dataFromId(id), {
+  //     events: ['entities.rename.res']
+  //   }));
+  // }
 };
 
 
