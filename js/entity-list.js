@@ -89,8 +89,7 @@ EntityList.prototype.listen = function() {
 
   Mydataspace.on('entities.rename.res', function(data) {
     var id = Identity.idFromData(data);
-
-    if (self.currentId === id) { // can't rename ".." (current) entity, which children displayed in list
+    if ($$('entity_list').getFirstId() === id) { // can't rename ".." (current) entity, which children displayed in list
       return;
     }
 
