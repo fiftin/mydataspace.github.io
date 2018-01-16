@@ -308,8 +308,11 @@ EntityTree.prototype.listen = function() {
 
     var parentId = $$('entity_tree').getParentId(id);
     var newId = self.cloneItem(id, parentId, Identity.renameData.bind(null, data));
-    self.setCurrentId(newId);
-    $$('entity_tree').select(newId);
+    if (self.getCurrentId() === id) {
+      self.setCurrentId(newId);
+      $$('entity_tree').select(newId);
+    }
+
     $$('entity_tree').remove(id);
 
     var subscribeData = MDSCommon.permit(data, ['root', 'path']);
