@@ -316,11 +316,13 @@ EntityTree.prototype.listen = function() {
     $$('entity_tree').remove(id);
 
     var subscribeData = MDSCommon.permit(data, ['root', 'path']);
-    Mydataspace.entities.unsubscribe(subscribeData);
+    //Mydataspace.entities.unsubscribe(subscribeData);
     Mydataspace.entities.subscribe(MDSCommon.extend(subscribeData, { path: MDSCommon.getChildPath(MDSCommon.getParentPath(data.path), data.name) }));
-
-    subscribeData.path += '/*';
-    Mydataspace.entities.unsubscribe(subscribeData);
+    if (subscribeData.path != '') {
+      subscribeData.path += '/';
+    }
+    subscribeData.path += '*';
+    //Mydataspace.entities.unsubscribe(subscribeData);
     Mydataspace.entities.subscribe(MDSCommon.extend(subscribeData, { path: MDSCommon.getChildPath(MDSCommon.getParentPath(data.path), data.name) }));
   });
 };
