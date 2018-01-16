@@ -308,6 +308,7 @@ EntityTree.prototype.listen = function() {
 			root: data.root,
 			path: MDSCommon.getChildPath(MDSCommon.getParentPath(data.path), data.name)
 		});
+
   });
 };
 

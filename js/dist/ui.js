@@ -1611,7 +1611,9 @@ EntityForm.prototype.setDirty = function() {
 
 
 EntityForm.prototype.save = function() {
-  if (this.selectedId == null) {
+	var self = this;
+
+  if (self.selectedId == null) {
       return;
   }
 
@@ -1623,7 +1625,7 @@ EntityForm.prototype.save = function() {
         return ret;
       }, {}));
   var oldData = webix.CodeParser.expandNames($$('entity_form')._values);
-  MDSCommon.extendOf(dirtyData, Identity.dataFromId(this.selectedId));
+  MDSCommon.extendOf(dirtyData, Identity.dataFromId(self.selectedId));
 
   dirtyData.fields =
     Fields.expandFields(
@@ -1636,14 +1638,20 @@ EntityForm.prototype.save = function() {
   }
   Mydataspace.request('entities.change', dirtyData, function(res) {
     if (dirtyData.name != null) {
-      this.selectedId = Identity.idFromData(res);
+    	if (Identity.isRootId(self.selectedId)) {
+				self.selectedId = Identity.idFromData(MDSCommon.extend(res, { root: dirtyData.name }));
+			} else {
+				self.selectedId = Identity.idFromData(MDSCommon.extend(res, {
+					path: MDSCommon.getChildPath(MDSCommon.getParentPath(res.path), dirtyData.name)
+				}));
+			}
     }
-    this.refresh();
+		self.refresh();
     $$('entity_form').enable();
-  }.bind(this), function(err) {
+  }, function(err) {
     UI.error(err);
     $$('entity_form').enable();
-  }.bind(this));
+  });
 };
 
 /**
@@ -2585,6 +2593,7 @@ EntityTree.prototype.listen = function() {
 			root: data.root,
 			path: MDSCommon.getChildPath(MDSCommon.getParentPath(data.path), data.name)
 		});
+
   });
 };
 
