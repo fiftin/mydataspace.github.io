@@ -2338,26 +2338,26 @@ EntityTree.prototype.getCurrentId = function() {
 
 
 EntityTree.prototype.setCurrentId = function(id) {
-  // if (this.currentId != null) {
-  //   var unsubscribeData = MDSCommon.extend(Identity.dataFromId(this.currentId));
-  //   Mydataspace.request('entities.unsubscribe', unsubscribeData);
-  //   if (unsubscribeData.path !== '') {
-  //     unsubscribeData.path += '/';
-  //   }
-  //   unsubscribeData.path += '*';
-  //   Mydataspace.request('entities.unsubscribe', unsubscribeData);
-  // }
+  if (this.currentId != null) {
+    var unsubscribeData = MDSCommon.extend(Identity.dataFromId(this.currentId));
+    Mydataspace.entities.subscribe(unsubscribeData);
+    if (unsubscribeData.path !== '') {
+      unsubscribeData.path += '/';
+    }
+    unsubscribeData.path += '*';
+    Mydataspace.entities.subscribe(unsubscribeData);
+  }
 
   this.currentId = id;
 
   if (id != null) {
     var subscribeData = MDSCommon.extend(Identity.dataFromId(id));
-    Mydataspace.request('entities.subscribe', subscribeData);
+    Mydataspace.entities.subscribe( subscribeData);
     if (subscribeData.path !== '') {
       subscribeData.path += '/';
     }
     subscribeData.path += '*';
-    Mydataspace.request('entities.subscribe', subscribeData);
+    Mydataspace.entities.subscribe(subscribeData);
   }
 };
 
