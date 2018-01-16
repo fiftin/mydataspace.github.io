@@ -35,17 +35,19 @@ EntityTree.prototype.getCurrentId = function() {
 
 EntityTree.prototype.setCurrentId = function(id) {
   if (this.currentId != null) {
-    Mydataspace.request('entities.unsubscribe', MDSCommon.extend(Identity.dataFromId(this.currentId), {
-      events: ['entities.changes.res', 'entities.rename.res']
-    }));
+  	var unsubscribeData = MDSCommon.extend(Identity.dataFromId(this.currentId));
+    Mydataspace.request('entities.unsubscribe', unsubscribeData);
+		unsubscribeData.path += '/*';
+		Mydataspace.request('entities.unsubscribe', unsubscribeData);
   }
 
   this.currentId = id;
 
   if (id != null) {
-    Mydataspace.request('entities.subscribe', MDSCommon.extend(Identity.dataFromId(id), {
-      events: ['entities.changes.res', 'entities.rename.res']
-    }));
+  	var subscribeData = MDSCommon.extend(Identity.dataFromId(id));
+    Mydataspace.request('entities.subscribe', subscribeData);
+		subscribeData.path += '/*';
+		Mydataspace.request('entities.subscribe', subscribeData);
   }
 };
 
@@ -304,13 +306,13 @@ EntityTree.prototype.listen = function() {
 		$$('entity_tree').select(newId);
     $$('entity_tree').remove(id);
 
+		var subscribeData = MDSCommon.permit(data, 'root', 'path');
+		Mydataspace.entities.unsubscribe(subscribeData);
+		Mydataspace.entities.subscribe(MDSCommon.extend(subscribeData, { path: MDSCommon.getChildPath(MDSCommon.getParentPath(data.path), data.name) }));
 
-		Mydataspace.entities.unsubscribe(MDSCommon.permit(data, 'root', 'path'));
-		Mydataspace.entities.subscribe({
-			root: data.root,
-			path: MDSCommon.getChildPath(MDSCommon.getParentPath(data.path), data.name)
-		});
-
+		subscribeData.path += '/*';
+		Mydataspace.entities.unsubscribe(subscribeData);
+		Mydataspace.entities.subscribe(MDSCommon.extend(subscribeData, { path: MDSCommon.getChildPath(MDSCommon.getParentPath(data.path), data.name) }));
   });
 };
 
