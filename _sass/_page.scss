@@ -140,3 +140,9 @@
 
 .highlight__var_type--bool {
 }
+
+@media (max-width: $screen-xs-max) {
+  .page__title {
+    font-size: 40px !important;
+  }
+}
