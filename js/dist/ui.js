@@ -5057,32 +5057,36 @@ UI = {
       rows.push(UILayout.header);
     }
     rows.push(UILayout.apps);
+
+
+    var dataPanels = [];
+    dataPanels.push(UILayout.entityTree);
+
+    if (window.parent !== window || webix.without_header) {
+      dataPanels.push({
+        id: 'my_data_panel__resizer_1',
+        view: 'resizer'
+      });
+    }
+
+    dataPanels.push(UILayout.entityList);
+    dataPanels.push({
+      id: 'my_data_panel__resizer_2',
+      view: 'resizer'
+    });
+    dataPanels.push(UILayout.entityForm);
     rows.push({ id: 'my_data_panel',
       height: window.innerHeight - 46,
-      cols: [
-        UILayout.entityTree,
-        {
-          id: 'my_data_panel__resizer_1',
-          view: 'resizer'
-        },
-        UILayout.entityList,
-        {
-          id: 'my_data_panel__resizer_2',
-          view: 'resizer'
-        },
-        UILayout.entityForm
-      ]
+      cols: dataPanels
     });
+
+
     webix.ui({
       id: 'admin_panel',
       container: 'admin_panel',
       height: webix.without_header ? window.innerHeight - (50 + 85) : window.innerHeight,
       rows: rows
     });
-
-    if (window.parent !== window || webix.without_header) {
-      $$('my_data_panel__resizer_1').hide();
-    }
 
     UI.updateSizes();
 
