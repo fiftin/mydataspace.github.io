@@ -288,7 +288,7 @@ docs:
 root:
   about: Описание
   data: Данные
-  visualization: Представления
+  visualization: Предст<span class="hidden-xs">авления</span>
   new_view: Добавить
   no_views: Нет представлений
   no_comments: Нет комментариев

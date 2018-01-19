@@ -203,6 +203,7 @@ $side-panel-width: $side-width - $padding;
   .view__tabs {
     padding-top: 5px;
     width: 600px;
+    background: linear-gradient(to top, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
   }
 
   .view__tab, .view__tab--active {
@@ -232,6 +233,13 @@ $side-panel-width: $side-width - $padding;
 
   .view__info {
     width: calc(100% - #{$root-icon-size-lg + 50px});
+  }
+
+
+  @media (max-width: $screen-xs-min) {
+    .view__tabs {
+      margin-left: -90px ;
+    }
   }
 }
 
