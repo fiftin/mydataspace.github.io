@@ -457,7 +457,7 @@ UI = {
         {
           id: 'my_data_panel__resizer_1',
           view: 'resizer',
-          hidden: window.parent !== window
+          hidden: window.parent !== window || webix.without_header
         },
         UILayout.entityList,
         {
