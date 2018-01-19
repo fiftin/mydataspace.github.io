@@ -58,6 +58,9 @@ UIHelper = {
       case 'wizards':
         return path;
       default:
+          if (/^wizards\/[^\/]+$/.test(path)) {
+            return 'wizard';
+          }
           if (/^tasks\/[^\/]+$/.test(path)) {
               return 'task';
           }
