@@ -17,7 +17,9 @@ UIConstants = {
 		'comment': 'comment',
 		'views': 'photo',
 		'view': 'file-image-o',
-    'website': 'globe'
+    'website': 'globe',
+    'wizards': 'magic',
+    'wizard': 'magic'
 	},
 
 	ROOT_FIELDS: [
@@ -58,7 +60,8 @@ UIConstants = {
 		'views',
 		'likes',
 		'processes',
-    'website'
+    'website',
+    'wizards'
 	],
 
 	CATEGORY_ICONS: {

@@ -214,7 +214,9 @@ UIConstants = {
 		'comment': 'comment',
 		'views': 'photo',
 		'view': 'file-image-o',
-    'website': 'globe'
+    'website': 'globe',
+    'wizards': 'magic',
+    'wizard': 'magic'
 	},
 
 	ROOT_FIELDS: [
@@ -255,7 +257,8 @@ UIConstants = {
 		'views',
 		'likes',
 		'processes',
-    'website'
+    'website',
+    'wizards'
 	],
 
 	CATEGORY_ICONS: {
@@ -331,6 +334,7 @@ UIHelper = {
       case 'processes':
       case 'views':
       case 'website':
+      case 'wizards':
         return path;
       default:
           if (/^tasks\/[^\/]+$/.test(path)) {

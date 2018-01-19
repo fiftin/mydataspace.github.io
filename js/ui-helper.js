@@ -55,6 +55,7 @@ UIHelper = {
       case 'processes':
       case 'views':
       case 'website':
+      case 'wizards':
         return path;
       default:
           if (/^tasks\/[^\/]+$/.test(path)) {
