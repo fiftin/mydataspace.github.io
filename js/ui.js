@@ -455,7 +455,7 @@ UI = {
     var dataPanels = [];
     dataPanels.push(UILayout.entityTree);
 
-    if (window.parent !== window || webix.without_header) {
+    if (window.parent === window && !webix.without_header) {
       dataPanels.push({
         id: 'my_data_panel__resizer_1',
         view: 'resizer'
