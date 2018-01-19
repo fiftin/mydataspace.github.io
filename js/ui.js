@@ -456,8 +456,7 @@ UI = {
         UILayout.entityTree,
         {
           id: 'my_data_panel__resizer_1',
-          view: 'resizer',
-          hidden: window.parent !== window || webix.without_header
+          view: 'resizer'
         },
         UILayout.entityList,
         {
@@ -473,6 +472,10 @@ UI = {
       height: webix.without_header ? window.innerHeight - (50 + 85) : window.innerHeight,
       rows: rows
     });
+
+    if (window.parent !== window || webix.without_header) {
+      $$('my_data_panel__resizer_1').hide();
+    }
 
     UI.updateSizes();
 
