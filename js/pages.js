@@ -60,13 +60,13 @@ Pages.prototype.updatePageState = function(page) {
         $$('my_data_panel__right_panel').hide();
         $$('my_data_panel__resizer_2').hide();
         $$('my_data_panel__central_panel').hide();
-        $$('my_data_panel__resizer_1').hide();
+        if (window.parent === window && !webix.without_header) $$('my_data_panel__resizer_1').hide();
       } else {
         document.getElementById('no_items').style.display = 'none';
         $$('my_data_panel__right_panel').show();
         $$('my_data_panel__resizer_2').show();
         $$('my_data_panel__central_panel').show();
-        $$('my_data_panel__resizer_1').show();
+        if (window.parent === window && !webix.without_header) $$('my_data_panel__resizer_1').show();
         if ($$('entity_tree').getFirstId() == null) {
           if (Router.isRoot()) { // root not found
             UI.entityTree.refresh('notfound');
