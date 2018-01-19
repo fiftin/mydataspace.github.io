@@ -4279,10 +4279,15 @@ UILayout.entityList =
           if (id === 'root' || parentId === 'root') {
             return;
           }
-          UI.entityTree.resolveChildren(parentId).then(function() {
-            $$('entity_tree').open(parentId);
-            $$('entity_tree').select(id);
-          });
+
+          if (id === UI.entityTree.getCurrentId()) {
+            $$('entity_tree').select(parentId);
+          } else {
+            UI.entityTree.resolveChildren(parentId).then(function() {
+              $$('entity_tree').open(parentId);
+              $$('entity_tree').select(id);
+            });
+          }
         }
       }
     }
