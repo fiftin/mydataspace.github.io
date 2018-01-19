@@ -299,7 +299,7 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
 @media (max-width: $screen-xs-max) {
   .root_counters {
     top: initial;
-    bottom: -3px;
+    //bottom: -3px;
     transform: scale(0.9);
     right: -3px;
   }
