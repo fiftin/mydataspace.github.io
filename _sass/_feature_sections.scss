@@ -195,7 +195,19 @@ a.feature {
     fill: #be55a2;
   }
 }
+@media (max-width: $screen-xs-max) {
+  .feature--with-details:hover {
+    .feature__icon,
+    .feature__title,
+    .feature__description {
+      filter: none;
+    }
+  }
 
+  .feature__details {
+    display: none;
+  }
+}
 @media (max-width: $screen-sm-max) {
   .section--ease {
     background-attachment: fixed;
