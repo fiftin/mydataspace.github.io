@@ -46,6 +46,7 @@ function search_parseSearchString(search, useFilterTags) {
   var tags = [];
   var newSearch = '';
   var filters = {};
+  var type;
   var parts = search.split(/\s+/);
   for (var i in parts) {
     var part = parts[i];
@@ -54,9 +55,17 @@ function search_parseSearchString(search, useFilterTags) {
       if (filter2val.length === 1) {
         tags.push(part.substring(1));
       } else {
-        filter = useFilterTags ?filter2val[0].substring(1) : TAGS_TO_FILTERS[filter2val[0].substring(1)];
-        if (filter) {
-          filters[filter] = filter2val[1];
+        var filter = useFilterTags ?filter2val[0].substring(1) : TAGS_TO_FILTERS[filter2val[0].substring(1)];
+        switch (filter) {
+          case 'type':
+            type = filter2val[1];
+            break;
+          case null:
+          case undefined:
+            break;
+          default:
+            filters[filter] = filter2val[1];
+            break;
         }
       }
     } else {
@@ -70,7 +79,8 @@ function search_parseSearchString(search, useFilterTags) {
   return {
     search: newSearch,
     filters: filters,
-    tags: tags
+    tags: tags,
+    type: type
   }
 }
 
