@@ -41,7 +41,6 @@ UILayout.entityForm =
         id: 'RUN_SCRIPT_LABEL', label: STRINGS.RUN_SCRIPT,
         hidden: true,
         width: 80,
-        hidden: true,
         click: function() {
           UIHelper.popupCenter('/run-script.html', 'Run Script', 600, 400);
         }
@@ -83,8 +82,17 @@ UILayout.entityForm =
         label: STRINGS.EDIT_ENTITY,
         width: 60,
         click: function() {
-          UI.entityForm.setEditing(true);
-          UI.entityForm.refresh();
+          var url = UIHelper.getWizardUrlById(UI.entityForm.getSelectedId());
+          $.ajax({
+            url: url,
+            type: 'HEAD'
+          }).then(function() {
+            $('#wizard_modal__frame').attr('src', url);
+            $('#wizard_modal').modal('show');
+          }).catch(function() {
+            UI.entityForm.setEditing(true);
+            UI.entityForm.refresh();
+          });
         }
       },
       { view: 'button',

@@ -148,6 +148,16 @@ UIHelper = {
 
   isValidJWT: function(token) {
     return isValidJWT(token);
+  },
+
+  getWizardUrlById: function(id) {
+    var data = Identity.dataFromId(id);
+    if (MDSCommon.isPresent(data.path)) {
+      var path = MDSCommon.getParentPath(data.path);
+      return 'https://wizard.myda.space/' + data.root + (MDSCommon.isPresent(path) ? '/' + path : '') + '/' + 'item.html'
+    } else {
+      return 'https://wizard.myda.space/' + data.root + '/' + 'root.html'
+    }
   }
 
 };

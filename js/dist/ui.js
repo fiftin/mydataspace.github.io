@@ -427,6 +427,16 @@ UIHelper = {
 
   isValidJWT: function(token) {
     return isValidJWT(token);
+  },
+
+  getWizardUrlById: function(id) {
+    var data = Identity.dataFromId(id);
+    if (MDSCommon.isPresent(data.path)) {
+      var path = MDSCommon.getParentPath(data.path);
+      return 'https://wizard.myda.space/' + data.root + (MDSCommon.isPresent(path) ? '/' + path : '') + '/' + 'item.html'
+    } else {
+      return 'https://wizard.myda.space/' + data.root + '/' + 'root.html'
+    }
   }
 
 };
@@ -4344,7 +4354,6 @@ UILayout.entityForm =
         id: 'RUN_SCRIPT_LABEL', label: STRINGS.RUN_SCRIPT,
         hidden: true,
         width: 80,
-        hidden: true,
         click: function() {
           UIHelper.popupCenter('/run-script.html', 'Run Script', 600, 400);
         }
@@ -4386,8 +4395,17 @@ UILayout.entityForm =
         label: STRINGS.EDIT_ENTITY,
         width: 60,
         click: function() {
-          UI.entityForm.setEditing(true);
-          UI.entityForm.refresh();
+          var url = UIHelper.getWizardUrlById(UI.entityForm.getSelectedId());
+          $.ajax({
+            url: url,
+            type: 'HEAD'
+          }).then(function() {
+            $('#wizard_modal__frame').attr('src', url);
+            $('#wizard_modal').modal('show');
+          }).catch(function() {
+            UI.entityForm.setEditing(true);
+            UI.entityForm.refresh();
+          });
         }
       },
       { view: 'button',
