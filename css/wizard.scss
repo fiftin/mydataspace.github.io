@@ -8,3 +8,7 @@ body {
   background: $toolbar-bg;
   font-family: $font-family;
 }
+
+input, button, textarea, select {
+  font-family: $font-family;
+}
