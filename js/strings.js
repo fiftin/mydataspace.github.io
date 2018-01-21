@@ -194,6 +194,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       geo: 'Geo',
       state: 'State',
       tourism: 'Tourism'
+    },
+
+    types: {
+      template: 'Template',
+      dataset: 'Dataset'
     }
   },
 
@@ -392,11 +397,16 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       edu: 'Образование',
       ecology: 'Экология',
       culture: 'Культура',
-	  security: 'Безопасность',
+	    security: 'Безопасность',
       transport: 'Транспорт',
       geo: 'Геоданные',
       state: 'Государство',
       tourism: 'Туризм'
+    },
+
+    types: {
+      template: 'Шаблон',
+      dataset: 'Датасет'
     }
   }
 };
