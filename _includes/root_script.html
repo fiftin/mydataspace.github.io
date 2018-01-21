@@ -910,6 +910,10 @@
           }
         }
 
+        if (MDSCommon.findValueByName(root.fields, '$type') === 't') {
+          tags = '<span class="view__tag" onclick="openSearch_header__search(\'#type:template\'); return false;"><i class="view__tag_icon fa fa-copy"></i><span>' + tr$('types.template') + '</span></span> ' + tags;
+        }
+
 
         if (MDSCommon.isPresent(tags)) {
           document.getElementById('root__tags').innerHTML = tags;
