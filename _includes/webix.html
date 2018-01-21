@@ -111,6 +111,14 @@
                 fields: []
               }, function() {
                 document.getElementById('no_items__new_root_input').value = '';
+                var url = 'https://wizard.myda.space/' + root + '/root.html';
+                $.ajax({
+                  url: url,
+                  type: 'HEAD'
+                }).then(function() {
+                  $('#wizard_modal__frame').attr('src', url);
+                  $('#wizard_modal').modal('show');
+                });
               }, function(err) {
                 switch (err.name) {
                   case 'SequelizeValidationError':
