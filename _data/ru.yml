@@ -332,3 +332,7 @@ search:
   search_by_roots: "Поиск по корням"
   search_by_datasources: "Поиск по источникам"
   no_results: "Ничего не найдено"
+
+wizard:
+  save: Сохранить
+  cancel: Отмена

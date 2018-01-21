@@ -179,3 +179,8 @@ search:
   search_by_roots: "Search by roots"
   search_by_datasources: "Search by datasources"
   no_results: "No results found"
+
+
+wizard:
+  save: Save
+  cancel: Cancel
