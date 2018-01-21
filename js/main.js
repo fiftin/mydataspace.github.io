@@ -19,6 +19,11 @@ var CATEGORY_ICONS = {
   tourism: 'plane'
 };
 
+var TAGS_TO_TYPE = {
+  template: 't',
+  dataset: 'd'
+};
+
 function isEmptyPathnameIgnoreLanguage(pathname) {
   var pathnameParts = pathname.split('/').filter(function(part) { return part !== ''; });
   return pathnameParts.length === 0 || pathnameParts.length === 1 && pathnameParts[0].length <= 2;
@@ -55,7 +60,7 @@ function search_parseSearchString(search, useFilterTags) {
       if (filter2val.length === 1) {
         tags.push(part.substring(1));
       } else if (filter2val[0] === '#type') {
-        type = filter2val[1];
+        type = TAGS_TO_TYPE[filter2val[1]];
       } else {
         var filter = useFilterTags ? filter2val[0].substring(1) : TAGS_TO_FILTERS[filter2val[0].substring(1)];
         if (filter) {
@@ -213,7 +218,6 @@ function parseSingleScript(s, fields) {
             break;
           default:
             throw new Error('Unexpected char' + c + ' in state ' + state);
-            break;
         }
         break;
       case '"':
