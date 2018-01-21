@@ -19,6 +19,7 @@ module.exports = function(config) {
       'js/api/myda.js',
       'js/api/entities.js',
       'js/strings.js',
+      'js/ui-constants.js',
       'js/fields.js',
       'js/identity.js',
       'js/ui-helper.js',
