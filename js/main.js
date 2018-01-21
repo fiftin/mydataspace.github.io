@@ -54,18 +54,12 @@ function search_parseSearchString(search, useFilterTags) {
       var filter2val = part.split(':');
       if (filter2val.length === 1) {
         tags.push(part.substring(1));
+      } else if (filter2val[0] === 'type') {
+        type = filter2val[1];
       } else {
         var filter = useFilterTags ?filter2val[0].substring(1) : TAGS_TO_FILTERS[filter2val[0].substring(1)];
-        switch (filter) {
-          case 'type':
-            type = filter2val[1];
-            break;
-          case null:
-          case undefined:
-            break;
-          default:
-            filters[filter] = filter2val[1];
-            break;
+        if (filter) {
+          filters[filter] = filter2val[1];
         }
       }
     } else {
