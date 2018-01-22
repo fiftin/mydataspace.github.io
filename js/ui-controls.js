@@ -85,9 +85,9 @@ UIControls = {
       placeholder: STRINGS.ROOT_FIELD_PLACEHOLDERS[name],
       on: {
         onBlur: function() {
-          if (UI.entityForm.editScriptFieldId == 'entity_form__' + name + '_value') {
-            UI.entityForm.editScriptFieldId = null;
-          }
+          // if (UI.entityForm.editScriptFieldId == 'entity_form__' + name + '_value') {
+          //   UI.entityForm.editScriptFieldId = null;
+          // }
         },
 
         onFocus: function() {
