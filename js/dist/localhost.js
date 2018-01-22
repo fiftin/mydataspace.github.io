@@ -853,7 +853,7 @@ var MDSCommon = {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
   },
 
-  dateToString: function(date) {
+  dateToString: function(date, withSeconds) {
     if (typeof date === 'undefined') {
       date = new Date();
     }
@@ -861,7 +861,9 @@ var MDSCommon = {
       MDSCommon.intToFixedString(date.getMonth() + 1, 2) + '-' +
       MDSCommon.intToFixedString(date.getDate(), 2) + '_' +
       MDSCommon.intToFixedString(date.getHours(), 2) + '-' +
-      MDSCommon.intToFixedString(date.getMinutes(), 2));
+      MDSCommon.intToFixedString(date.getMinutes(), 2) +
+      (withSeconds ? '-' + MDSCommon.intToFixedString(date.getSeconds(), 2) : '')
+    );
   },
 
   intToFixedString: function(number, numberOfDigits) {
