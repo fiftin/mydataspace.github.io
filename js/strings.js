@@ -97,7 +97,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       readme: 'README',
       category: 'Category',
       country: 'Country',
-			language: 'Language'
+			language: 'Language',
+      interval: 'Interval'
     },
     ROOT_FIELD_PLACEHOLDERS: {
       name: 'Human readable name of your root',
@@ -194,6 +195,14 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       geo: 'Geo',
       state: 'State',
       tourism: 'Tourism'
+    },
+
+    intervals: {
+      minutely: 'Minutely',
+      hourly: 'Hourly',
+      daily: 'Daily',
+      weekly: 'Weekly',
+      monthly: 'Monthly'
     },
 
     types: {
@@ -305,7 +314,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       readme: 'README',
       category: 'Категория',
 			country: 'Страна',
-      language: 'Язык'
+      language: 'Язык',
+      interval: 'Интервал'
     },
     ROOT_FIELD_PLACEHOLDERS: {
       name: 'Наименование проекта',
@@ -402,6 +412,14 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       geo: 'Геоданные',
       state: 'Государство',
       tourism: 'Туризм'
+    },
+
+    intervals: {
+      minutely: 'Раз в минуту',
+      hourly: 'Раз в час',
+      daily: 'Раз в сутки',
+      weekly: 'Раз в неделю',
+      monthly: 'Раз в месяц'
     },
 
     types: {

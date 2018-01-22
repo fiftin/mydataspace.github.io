@@ -853,8 +853,14 @@ EntityForm.prototype.addRootField = function(data) {
 		case 'country':
 			$$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.countries));
 			break;
+    case 'interval':
+      $$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.intervals));
+      break;
+    case 'readme':
+      $$('entity_form').addView(UIControls.getRootFieldView('textarea', data));
+      break;
 		default:
-			$$('entity_form').addView(UIControls.getRootFieldView('text', data, STRINGS.categories));
+			$$('entity_form').addView(UIControls.getRootFieldView('text', data));
 			break;
 	}
 };

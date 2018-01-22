@@ -857,6 +857,20 @@ UIControls = {
 		};
 	},
 
+  getRootFieldTextAreaTemplate: function(name, value) {
+    return {
+      view: 'text',
+      label: UIControls.getRootFieldLabel(name),
+      labelWidth: UIHelper.LABEL_WIDTH,
+      name: 'fields.' + name + '.value',
+      id: 'entity_form__' + name + '_value',
+      value: value,
+      height: 38,
+      css: 'entity_form__text_label',
+      placeholder: STRINGS.ROOT_FIELD_PLACEHOLDERS[name]
+    };
+  },
+
 	getRootFieldView: function(type, data, values) {
   	var valueView;
   	switch (type) {
@@ -866,6 +880,11 @@ UIControls = {
 			case 'text':
 				valueView = UIControls.getRootFieldTextTemplate(data.name, data.value);
 				break;
+      case 'textarea':
+        valueView = UIControls.getRootFieldTextAreaTemplate(data.name, data.value);
+        break;
+      default:
+        throw new Error('Unknown root field type: ' + type);
 		}
 		return {
 			id: 'entity_form__' + data.name,
@@ -1871,8 +1890,14 @@ EntityForm.prototype.addRootField = function(data) {
 		case 'country':
 			$$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.countries));
 			break;
+    case 'interval':
+      $$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.intervals));
+      break;
+    case 'readme':
+      $$('entity_form').addView(UIControls.getRootFieldView('textarea', data));
+      break;
 		default:
-			$$('entity_form').addView(UIControls.getRootFieldView('text', data, STRINGS.categories));
+			$$('entity_form').addView(UIControls.getRootFieldView('text', data));
 			break;
 	}
 };

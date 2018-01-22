@@ -31,6 +31,7 @@ strings:
   view_doc: См. документацию
   explore_roots: Показать все
   new_root_name: Имя нового корня
+  click_to_select_version: Нажмине чтобы выбрать другую версию
 header:
   input_search: Начните поиск или нажмите Esc
   input_search_fixed: Поиск...

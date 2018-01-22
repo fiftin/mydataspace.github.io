@@ -24,6 +24,7 @@ strings:
   top_roots: Featured Roots
   explore_roots: Explore Roots
   new_root_name: New Root Name
+  click_to_select_version: Click to select other version
 header:
   input_search: Search... Press Esc to exit
   input_search_fixed: Search...
