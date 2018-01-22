@@ -111,6 +111,14 @@ UIHelper = {
    return depth;
   },
 
+  isTaskPath: function(path) {
+    if (path == null) {
+      return false;
+    }
+    return path.startsWith('tasks/') &&
+      UIHelper.getEntityDepthByPath(path) === 2;
+  },
+
   isProtoPath: function(path) {
     if (path == null) {
       return false;

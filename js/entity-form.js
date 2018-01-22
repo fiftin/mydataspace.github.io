@@ -501,7 +501,7 @@ EntityForm.prototype.setData = function(data) {
     this.addRootFields(data.fields);
   } else {
     $$('NO_FIELDS_LABEL').show();
-    this.addFields(data.fields, false, UIHelper.isProtoPath(data.path));
+    this.addFields(data.fields, false, UIHelper.getEntityTypeByPath(data.path));
   }
   this.setClean();
   $$('entity_view').hide();
@@ -676,14 +676,30 @@ EntityForm.prototype.clear = function() {
   }
 };
 
-EntityForm.prototype.addFields = function(fields, setDirty, isProto) {
+EntityForm.prototype.addFields = function(fields, setDirty, type) {
   for (var i in fields) {
     var field = fields[i];
     if (field.name.indexOf('$') === 0) {
       continue;
     }
-
-    this.addField(field, setDirty, isProto);
+    switch (type) {
+      case 'type':
+        switch (field.name) {
+          case 'status':
+          case 'statusText':
+            break;
+          case 'interval':
+            this.addTaskIntervalField(field, setDirty);
+            break;
+          default:
+            this.addField(field, setDirty, type === 'proto');
+            break;
+        }
+        break;
+      default:
+        this.addField(field, setDirty, type === 'proto');
+        break;
+    }
   }
 };
 
@@ -744,32 +760,14 @@ EntityForm.prototype.onUploadAvatar = function(event) {
       console.log(err);
     }
   );
-  // var formData = new FormData();
-  // var file = event.target.files[0];
-  // if (!file.type.match('image.*')) {
-  //   alert('Only images');
-  //   return;
-  // }
-  // formData.append('root', Identity.dataFromId(this.selectedId).root);
-  // formData.append('type', 'avatar');
-  // formData.append('file', file);
-  // $.ajax({
-  //   url: Mydataspace.options.apiURL + '/v1/entities/upload',
-  //   type: 'POST',
-  //   data: formData,
-  //   processData: false,
-  //   contentType: false,
-  //   cache: false,
-  //   headers: {
-  //     authorization: 'Bearer ' + localStorage.getItem('authToken')
-  //   }
-  // }).done(function(res) {
-  //   var entityName = res.resources[0];
-  //   $$('entity_form__root_avatar_value').setValue(entityName);
-  //   $('#entity_form__root_img').prop('src', Mydataspace.options.apiURL + '/avatars/sm/' + entityName + '.png');
-  // }).fail(function(err) {
-  //   console.log(err);
-  // });
+};
+
+EntityForm.prototype.addTaskIntervalField = function(data) {
+  if (typeof $$('entity_form__' + data.name) !== 'undefined') {
+    throw new Error('Field with this name already exists');
+  }
+  $$('NO_FIELDS_LABEL').hide();
+  $$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.intervals));
 };
 
 EntityForm.prototype.addRootField = function(data) {
@@ -853,9 +851,6 @@ EntityForm.prototype.addRootField = function(data) {
 		case 'country':
 			$$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.countries));
 			break;
-    case 'interval':
-      $$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.intervals));
-      break;
     case 'readme':
       $$('entity_form').addView(UIControls.getRootFieldView('textarea', data));
       break;
