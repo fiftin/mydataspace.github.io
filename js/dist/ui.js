@@ -1739,11 +1739,13 @@ EntityForm.prototype.clear = function() {
 };
 
 EntityForm.prototype.addFields = function(fields, setDirty, type) {
+
   for (var i in fields) {
     var field = fields[i];
     if (field.name.indexOf('$') === 0) {
       continue;
     }
+
     switch (type) {
       case 'task':
         switch (field.name) {
@@ -1829,7 +1831,7 @@ EntityForm.prototype.addTaskIntervalField = function(data) {
     throw new Error('Field with this name already exists');
   }
   $$('NO_FIELDS_LABEL').hide();
-  $$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.intervals));
+  $$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.intervals), 0);
 };
 
 EntityForm.prototype.addRootField = function(data) {
