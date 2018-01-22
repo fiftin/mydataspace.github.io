@@ -521,12 +521,12 @@ EntityForm.prototype.setData = function(data) {
 };
 
 EntityForm.prototype.refresh = function() {
+  const self = this;
 
   if (this.selectedId == null) {
       return;
   }
 
-  const self = this;
   const entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.selectedId).path);
   const isWithMeta = self.isEditing();
   $$('entity_form').disable();
