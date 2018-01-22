@@ -769,7 +769,7 @@ EntityForm.prototype.addTaskIntervalField = function(data) {
     throw new Error('Field with this name already exists');
   }
   $$('NO_FIELDS_LABEL').hide();
-  $$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.intervals), 0);
+  $$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.intervals), 1);
 };
 
 EntityForm.prototype.addRootField = function(data) {
