@@ -415,11 +415,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     },
 
     intervals: {
-      minutely: 'Раз в минуту',
-      hourly: 'Раз в час',
-      daily: 'Раз в сутки',
-      weekly: 'Раз в неделю',
-      monthly: 'Раз в месяц'
+      minutely: 'Минута',
+      hourly: 'Час',
+      daily: 'Сутки',
+      weekly: 'Неделя',
+      monthly: 'Месяц'
     },
 
     types: {
