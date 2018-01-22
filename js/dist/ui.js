@@ -1547,6 +1547,18 @@ EntityForm.prototype.setView = function(data) {
   $$('entity_view').show();
 };
 
+EntityForm.prototype.setNoFieldLabelVisible = function(visible) {
+  var label = $$('NO_FIELDS_LABEL');
+  if (!label) {
+    return;
+  }
+  if (visible) {
+    $$('NO_FIELDS_LABEL').show();
+  } else {
+    $$('NO_FIELDS_LABEL').hide();
+  }
+};
+
 EntityForm.prototype.setData = function(data) {
   var formData = {
     name: Identity.nameFromData(data),
@@ -1562,7 +1574,7 @@ EntityForm.prototype.setData = function(data) {
   if (MDSCommon.isBlank(data.path)) { // root entity
     this.addRootFields(data.fields);
   } else {
-    $$('NO_FIELDS_LABEL').show();
+    this.setNoFieldLabelVisible(true);
     this.addFields(data.fields, false, UIHelper.getEntityTypeByPath(data.path));
   }
   this.setClean();
@@ -1830,7 +1842,7 @@ EntityForm.prototype.addTaskIntervalField = function(data) {
   if (typeof $$('entity_form__' + data.name) !== 'undefined') {
     throw new Error('Field with this name already exists');
   }
-  $$('NO_FIELDS_LABEL').hide();
+  this.setNoFieldLabelVisible(false);
   $$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.intervals), 6);
 };
 
@@ -1838,7 +1850,7 @@ EntityForm.prototype.addRootField = function(data) {
   if (typeof $$('entity_form__' + data.name) !== 'undefined') {
     throw new Error('Field with this name already exists');
   }
-  $$('NO_FIELDS_LABEL').hide();
+  this.setNoFieldLabelVisible(false);
   switch (data.name) {
 		case 'avatar':
 			$$('entity_form').addView({
@@ -1936,7 +1948,7 @@ EntityForm.prototype.addField = function(data, setDirty, isProto) {
   if (typeof $$('entity_form__' + data.name) !== 'undefined') {
     throw new Error('Field with this name already exists');
   }
-  $$('NO_FIELDS_LABEL').hide();
+  this.setNoFieldLabelVisible(false);
   if (typeof setDirty === 'undefined') {
     setDirty = false;
   }
@@ -2054,7 +2066,7 @@ EntityForm.prototype.deleteField = function(name) {
   this.setDirty();
   var rows = $$('entity_form').getChildViews();
   if (rows.length === UIHelper.NUMBER_OF_FIXED_INPUTS_IN_FIELDS_FORM) {
-    $$('NO_FIELDS_LABEL').show();
+    this.setNoFieldLabelVisible(true);
   }
 };
 
