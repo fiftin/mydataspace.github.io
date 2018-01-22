@@ -73,15 +73,36 @@ UIControls = {
 
   getRootFieldTextAreaTemplate: function(name, value) {
     return {
-      view: 'text',
+      view: 'textarea',
       label: UIControls.getRootFieldLabel(name),
       labelWidth: UIHelper.LABEL_WIDTH,
       name: 'fields.' + name + '.value',
       id: 'entity_form__' + name + '_value',
       value: value,
       height: 38,
+      readonly: true,
       css: 'entity_form__text_label',
-      placeholder: STRINGS.ROOT_FIELD_PLACEHOLDERS[name]
+      placeholder: STRINGS.ROOT_FIELD_PLACEHOLDERS[name],
+      on: {
+        onBlur: function() {
+          if (UI.entityForm.editScriptFieldId == 'entity_form__' + data.name + '_value') {
+            UI.entityForm.editScriptFieldId = null;
+          }
+        },
+
+        onFocus: function() {
+          if (data.type === 'j') {
+            UI.entityForm.editScriptFieldId = 'entity_form__' + data.name + '_value';
+            $$('edit_script_window__editor').setValue($$(UI.entityForm.editScriptFieldId).getValue());
+            $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
+            if (!$$('edit_script_window').isVisible()) {
+              $$('edit_script_window').show();
+            }
+          } else {
+            $$('edit_script_window').hide();
+          }
+        }
+      }
     };
   },
 

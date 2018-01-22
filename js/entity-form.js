@@ -872,6 +872,8 @@ EntityForm.prototype.addRootField = function(data) {
  * @param {boolean} isProto   Is field of prototype-entity.
  */
 EntityForm.prototype.addField = function(data, setDirty, isProto) {
+  var self = this;
+
   if (typeof $$('entity_form__' + data.name) !== 'undefined') {
     throw new Error('Field with this name already exists');
   }
@@ -920,14 +922,14 @@ EntityForm.prototype.addField = function(data, setDirty, isProto) {
         readonly: data.type === 'j',
         on: {
           onBlur: function() {
-            if (this.editScriptFieldId == 'entity_form__' + data.name + '_value') {
-              this.editScriptFieldId = null;
+            if (self.editScriptFieldId == 'entity_form__' + data.name + '_value') {
+              self.editScriptFieldId = null;
             }
           },
 
           onFocus: function() {
             if (data.type === 'j') {
-              this.editScriptFieldId = 'entity_form__' + data.name + '_value';
+              self.editScriptFieldId = 'entity_form__' + data.name + '_value';
               $$('edit_script_window__editor').setValue($$(UI.entityForm.editScriptFieldId).getValue());
               $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
               if (!$$('edit_script_window').isVisible()) {
@@ -936,7 +938,7 @@ EntityForm.prototype.addField = function(data, setDirty, isProto) {
             } else {
               $$('edit_script_window').hide();
             }
-          }.bind(this)
+          }
         }
       },
       { view: 'button',
@@ -949,9 +951,9 @@ EntityForm.prototype.addField = function(data, setDirty, isProto) {
         id: 'entity_form__' + data.name + '_type_button',
         on: {
           onItemClick: function() {
-            this.currentFieldName = data.name;
+            self.currentFieldName = data.name;
             $$('entity_form__field_type_popup_list').unselectAll();
-          }.bind(this)
+          }
         }
       },
       { view: 'button',
@@ -960,8 +962,8 @@ EntityForm.prototype.addField = function(data, setDirty, isProto) {
         icon: 'remove',
         width: 10,
         click: function() {
-          this.deleteField(data.name);
-        }.bind(this)
+          self.deleteField(data.name);
+        }
       },
       { view: 'button',
         width: 10,
@@ -973,16 +975,16 @@ EntityForm.prototype.addField = function(data, setDirty, isProto) {
         id: 'entity_form__' + data.name + '_indexed_button',
         on: {
           onItemClick: function() {
-            this.currentFieldName = data.name;
+            self.currentFieldName = data.name;
             $$('entity_form__field_indexed_list').unselectAll();
-          }.bind(this)
+          }
         }
       }
     ]
   });
   if (setDirty) {
     $$('entity_form')._values = values;
-    this.updateToolbar();
+    self.updateToolbar();
   }
 };
 
