@@ -38,7 +38,7 @@ UILayout.popups.fieldType = {
                   on: {
                     onFocus: function() {
                       if (newv === 'j') {
-                        this.editScriptFieldId = 'entity_form__' + fieldName + '_value';
+                        UI.entityForm.editScriptFieldId = 'entity_form__' + fieldName + '_value';
                         $$('edit_script_window').show();
                       }
                     }

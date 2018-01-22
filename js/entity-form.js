@@ -558,13 +558,13 @@ EntityForm.prototype.refresh = function() {
       $$('entity_form').enable();
     }
     self.emitLoaded(data);
-    if ($$('edit_script_window').isVisible() && UI.entityForm.editScriptFieldId != null) {
-      const editedField = $$(UI.entityForm.editScriptFieldId);
+    if ($$('edit_script_window').isVisible() && self.editScriptFieldId != null) {
+      const editedField = $$(self.editScriptFieldId);
       if (editedField != null) {
         $$('edit_script_window__editor').setValue(editedField.getValue());
         $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
       } else {
-        UI.entityForm.editScriptFieldId = null;
+        self.editScriptFieldId = null;
       }
     }
   }, function(err) {
