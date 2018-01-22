@@ -3578,14 +3578,14 @@ UILayout.windows.editScript = {
               name: 'save',
               bindKey: { win: 'Ctrl-S' },
               exec: function(editor) {
-                if (UI.entityForm.editScriptFieldId) {
+                if (UI.entityForm.editScriptFieldId && $$(UI.entityForm.editScriptFieldId)) {
                   $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
                 }
                 UI.entityForm.save();
               }
             });
             editor.on('change', function() {
-              if (UI.entityForm.editScriptFieldId) {
+              if (UI.entityForm.editScriptFieldId && $$(UI.entityForm.editScriptFieldId)) {
                 $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
               }
             });
