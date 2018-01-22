@@ -491,9 +491,9 @@ EntityForm.prototype.setNoFieldLabelVisible = function(visible) {
     return;
   }
   if (visible) {
-    $$('NO_FIELDS_LABEL').show();
+    label.show();
   } else {
-    $$('NO_FIELDS_LABEL').hide();
+    label.hide();
   }
 };
 
@@ -781,7 +781,7 @@ EntityForm.prototype.addTaskIntervalField = function(data) {
     throw new Error('Field with this name already exists');
   }
   this.setNoFieldLabelVisible(false);
-  $$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.intervals), 6);
+  $$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.intervals), UIHelper.NUMBER_OF_FIXED_INPUTS_IN_FIELDS_FORM);
 };
 
 EntityForm.prototype.addRootField = function(data) {
