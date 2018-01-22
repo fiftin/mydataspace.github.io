@@ -1583,12 +1583,12 @@ EntityForm.prototype.setData = function(data) {
 };
 
 EntityForm.prototype.refresh = function() {
+  const self = this;
 
   if (this.selectedId == null) {
       return;
   }
 
-  const self = this;
   const entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.selectedId).path);
   const isWithMeta = self.isEditing();
   $$('entity_form').disable();
@@ -1993,9 +1993,9 @@ EntityForm.prototype.addField = function(data, setDirty, isProto) {
         readonly: data.type === 'j',
         on: {
           onBlur: function() {
-            if (self.editScriptFieldId == 'entity_form__' + data.name + '_value') {
-              self.editScriptFieldId = null;
-            }
+            // if (self.editScriptFieldId == 'entity_form__' + data.name + '_value') {
+            //   self.editScriptFieldId = null;
+            // }
           },
 
           onFocus: function() {

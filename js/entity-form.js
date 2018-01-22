@@ -931,9 +931,9 @@ EntityForm.prototype.addField = function(data, setDirty, isProto) {
         readonly: data.type === 'j',
         on: {
           onBlur: function() {
-            if (self.editScriptFieldId == 'entity_form__' + data.name + '_value') {
-              self.editScriptFieldId = null;
-            }
+            // if (self.editScriptFieldId == 'entity_form__' + data.name + '_value') {
+            //   self.editScriptFieldId = null;
+            // }
           },
 
           onFocus: function() {
