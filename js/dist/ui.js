@@ -1745,7 +1745,7 @@ EntityForm.prototype.addFields = function(fields, setDirty, type) {
       continue;
     }
     switch (type) {
-      case 'type':
+      case 'task':
         switch (field.name) {
           case 'status':
           case 'statusText':
