@@ -79,7 +79,7 @@ UIControls = {
       name: 'fields.' + name + '.value',
       id: 'entity_form__' + name + '_value',
       value: value,
-      height: 50,
+      height: 52,
       readonly: true,
       css: 'entity_form__text_label',
       placeholder: STRINGS.ROOT_FIELD_PLACEHOLDERS[name],
