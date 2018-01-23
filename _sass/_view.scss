@@ -274,7 +274,7 @@ $view-tag-flag-size: 16px;
     padding: 7px;
     vertical-align: top;
   }
-  &:first-child {
+  & > *:first-child {
     margin-top: 0;
   }
 }
