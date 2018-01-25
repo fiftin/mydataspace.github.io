@@ -68,7 +68,7 @@
       }
     }, 200);
 
-    loadEntityData('get', MDSCommon.extend(DATA, { children: true }), function(result) {
+    loadEntityData('get', MDSCommon.extend(DATA, { children: ['views','comments', 'likes'] }), function(result) {
       addJsonLD(result);
       setRootView(result);
     }, function() {});
