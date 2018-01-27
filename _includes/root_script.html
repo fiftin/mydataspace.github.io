@@ -228,7 +228,18 @@
           query += '&';
         }
         if (requestData[k] != null) {
-          query += k + '=' + requestData[k];
+          var v = '';
+          if (Array.isArray(requestData[k])) {
+            for (var i = 0; i < requestData[k].length; i++) {
+              if (v !== '') {
+                v += '&';
+              }
+              v += k + '[' + i + ']=' + requestData[k];
+            }
+          } else {
+            v = k + '=' + requestData[k];
+          }
+          query += v;
         }
       }
       xmlhttp.open('GET', '{{ api_url }}/v1/entities/' + method + '?' + query, true);
