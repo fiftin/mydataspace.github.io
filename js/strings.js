@@ -144,6 +144,10 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     new_task: 'New Task',
     new_proto: 'New Prototype',
 
+    blank_root_prompt: 'The root information is not filled. Add picture, name and description so that your root is easier to find',
+
+    blank_root_edit_button: 'Fill',
+
     no_items: {
       no_items__title: 'You have ho any data yet',
       no_items__explore__desc: 'Find data you need among a huge amount of existing data',
@@ -359,6 +363,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     new_resource: 'Новый ресурс',
     new_task: 'Новая задача',
     new_proto: 'Новый прототип',
+
+    blank_root_prompt: 'Информация о корне не заполнена. Добавьте картинку, название и короткое описание чтобы ваш корень ' +
+                       'было проще найти',
+
+    blank_root_edit_button: 'Заполнить',
 
     no_items: {
       no_items__title: 'У вас еще нет никаких данных',

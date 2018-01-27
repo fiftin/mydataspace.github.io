@@ -82,17 +82,7 @@ UILayout.entityForm =
         label: STRINGS.EDIT_ENTITY,
         width: 60,
         click: function() {
-          var url = UIHelper.getWizardUrlById(UI.entityForm.getSelectedId());
-          $.ajax({
-            url: url,
-            type: 'HEAD'
-          }).then(function() {
-            $('#wizard_modal__frame').attr('src', url);
-            $('#wizard_modal').modal('show');
-          }).catch(function() {
-            UI.entityForm.setEditing(true);
-            UI.entityForm.refresh();
-          });
+          UI.entityForm.startEditing();
         }
       },
       { view: 'button',

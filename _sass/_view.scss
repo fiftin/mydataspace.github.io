@@ -256,6 +256,22 @@ $view-tag-flag-size: 16px;
   text-decoration: none !important;
 }
 
+.prompt_button {
+  background: $selected-bg;
+  color: white;
+  font-size: 16px;
+  padding: 10px 30px;
+  border: 1px #27ae60;
+  border-bottom-color: #209150;
+  &:hover {
+    background-color: #239d57;
+  }
+}
+
+.view__blank_root_prompt {
+  font-size: 16px;
+  padding: 15px 15px 20px 15px;
+}
 
 .view__readme {
   padding-top: 20px;

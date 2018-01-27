@@ -1206,7 +1206,9 @@ EntityForm.prototype.setViewFields = function(fields,
     }
     for (var i in fields) {
       var field = fields[i];
-      if (field.name.indexOf('$') !== -1 || ignoredFieldNames.indexOf(field.name) >= 0) {
+      if (field.name.indexOf('$') !== -1 ||
+        ignoredFieldNames.indexOf(field.name) >= 0 ||
+        UIConstants.ROOT_FIELDS.indexOf(field.name) && MDSCommon.isBlank(field.value)) {
         continue;
       }
       numberOfChildren++;
@@ -1242,7 +1244,24 @@ EntityForm.prototype.setViewFields = function(fields,
   return viewFields;
 };
 
+EntityForm.prototype.startEditing = function () {
+  var self = this;
+  var url = UIHelper.getWizardUrlById(self.getSelectedId());
+  $.ajax({
+    url: url,
+    type: 'HEAD'
+  }).then(function() {
+    $('#wizard_modal__frame').attr('src', url);
+    $('#wizard_modal').modal('show');
+  }).catch(function() {
+    self.setEditing(true);
+    self.refresh();
+  });
+};
+
 EntityForm.prototype.setRootView = function(data) {
+  var completeness = MDSCommon.getRootDataCompleteness(data);
+
   $.ajax({ url: '/fragments/root-view.html', method: 'get' }).then(function(html) {
     var view = document.getElementById('view');
     var websiteURL = MDSCommon.findValueByName(data.fields, 'websiteURL');
@@ -1256,6 +1275,10 @@ EntityForm.prototype.setRootView = function(data) {
 
 
     view.innerHTML = html;
+
+    document.getElementById('view__blank_root').style.display = completeness > 0 ? 'none' : 'block';
+    document.getElementById('view__about').style.display = completeness > 0 ? 'block' : 'none';
+
     var ava = MDSCommon.findValueByName(data.fields, 'avatar');
     if (MDSCommon.isPresent(ava)) {
       ava = Mydataspace.options.cdnURL + '/avatars/sm/' + ava + '.png';
@@ -1295,13 +1318,11 @@ EntityForm.prototype.setRootView = function(data) {
     } else {
       document.getElementById('view__description').innerText = description;
     }
-          
-          
+
     document.getElementById('view__counters_likes_count').innerText =
       MDSCommon.findValueByName(data.fields, '$likes');
     document.getElementById('view__counters_comments_count').innerText =
       MDSCommon.findValueByName(data.fields, '$comments');
-
 
     if (data.root === 'nothing' || data.root === 'notfound') {
       document.getElementById('view__counters').style.display = 'none';
@@ -1319,7 +1340,11 @@ EntityForm.prototype.setRootView = function(data) {
                                          'description',
                                          'websiteURL',
                                          'readme',
-                                         'tags'],
+                                         'tags',
+                                         'category',
+                                         'country',
+                                         'language'
+                                        ],
                                         false);
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
@@ -1334,6 +1359,13 @@ EntityForm.prototype.setRootView = function(data) {
       }
       $(this).addClass('view__field--active');
     });
+
+
+    if (completeness === 0) {
+      $('#view__blank_root_prompt').text(STRINGS.blank_root_prompt);
+      $('#view__blank_root_edit_button').text(STRINGS.blank_root_edit_button);
+    }
+
   }.bind(this));
 };
 
@@ -4317,6 +4349,11 @@ UILayout.entityList =
         }
       ]
     },
+    { view: 'template',
+      hidden: true,
+      id: 'entity_list_blank_prompt',
+      template: ''
+    },
     { view: 'list',
       id: 'entity_list',
       select: true,
@@ -4456,17 +4493,7 @@ UILayout.entityForm =
         label: STRINGS.EDIT_ENTITY,
         width: 60,
         click: function() {
-          var url = UIHelper.getWizardUrlById(UI.entityForm.getSelectedId());
-          $.ajax({
-            url: url,
-            type: 'HEAD'
-          }).then(function() {
-            $('#wizard_modal__frame').attr('src', url);
-            $('#wizard_modal').modal('show');
-          }).catch(function() {
-            UI.entityForm.setEditing(true);
-            UI.entityForm.refresh();
-          });
+          UI.entityForm.startEditing();
         }
       },
       { view: 'button',

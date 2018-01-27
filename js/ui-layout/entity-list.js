@@ -43,6 +43,11 @@ UILayout.entityList =
         }
       ]
     },
+    { view: 'template',
+      hidden: true,
+      id: 'entity_list_blank_prompt',
+      template: ''
+    },
     { view: 'list',
       id: 'entity_list',
       select: true,
