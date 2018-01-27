@@ -94,7 +94,7 @@ MyDataSpace не просто хранилище данных, MyDataSpace &mdas
                     allowtransparency='true'
                     allowfullscreen='true'
                     style='width: 100%;'>
-              See the Pen <a href='https://codepen.io/mydataspace/pen/{{ demo.code_id }}/'>Reading data from service</a> by My Data Space (<a href='http://codepen.io/mydataspace'>@mydataspace</a>) on <a href='http://codepen.io'>CodePen</a>.
+              See the Pen <a href='https://codepen.io/mydataspace/pen/{{ demo.code_id }}/'>Reading data from service</a> by MyDataSpace (<a href='http://codepen.io/mydataspace'>@mydataspace</a>) on <a href='http://codepen.io'>CodePen</a>.
             </iframe>
             {% include waiter.html id=section_media_id %}
 

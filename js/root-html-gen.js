@@ -16,7 +16,7 @@ var RootHTMLGen = {
       case 'codepen':
         var codepenParts = MDSCommon.findValueByName(data.fields, 'id').split('/');
         return '<div data-look-path="'+ data.path + '" class="block snippet look_preview' + (isActive ? ' look_preview--active' : '') + '">' +
-          '<div class="look_preview__codepen_wrap"><p data-height="402" data-theme-id="0" data-slug-hash="' + codepenParts[1] + '" data-default-tab="result" data-user="'+ codepenParts[0] +'" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/' +  codepenParts[0] + '/pen/' + codepenParts[1] + '/">' + codepenParts[1] + '</a> by My Data Space (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p></div>' +
+          '<div class="look_preview__codepen_wrap"><p data-height="402" data-theme-id="0" data-slug-hash="' + codepenParts[1] + '" data-default-tab="result" data-user="'+ codepenParts[0] +'" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/' +  codepenParts[0] + '/pen/' + codepenParts[1] + '/">' + codepenParts[1] + '</a> by MyDataSpace (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p></div>' +
           '<div class="look_preview__overview look_preview__overview--codepen">' +
           '<div class="look_preview__header"><i class="fa fa-codepen"></i><span class="look_preview__title">' + MDSCommon.findValueByName(data.fields, 'title') + '</span></div>' +
           '</div>' +
