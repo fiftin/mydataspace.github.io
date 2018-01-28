@@ -519,8 +519,18 @@ UI = {
   },
 
   updateSizes: function() {
-
     var height = webix.without_header ? window.innerHeight - (50 + 85) : window.innerHeight;
+
+    var editScriptWindowWidth =
+      $$('admin_panel').$width -
+      $$('my_data_panel__right_panel').$width -
+      $$('my_data_panel__resizer_2').$width - 2;
+
+    $$('edit_script_window').define({
+      height: height,
+      width: editScriptWindowWidth
+    });
+
     $$('admin_panel').define({
       width: window.innerWidth,
       height: height

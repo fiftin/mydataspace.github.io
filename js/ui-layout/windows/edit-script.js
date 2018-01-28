@@ -114,7 +114,7 @@ UILayout.windows.editScript = {
             id: 'CLOSE_LABEL', label: STRINGS.CLOSE,
             width: 70,
             click: function() {
-              $$('edit_script_window').hide();
+              UI.entityForm.hideScriptEditWindow();
             }
           }
         ]

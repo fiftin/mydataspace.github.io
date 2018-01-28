@@ -22,7 +22,7 @@ EntityForm.prototype.setEditing = function(editing) {
   }
 
   this.editing = editing;
-  $$('edit_script_window').hide();
+  UI.entityForm.hideScriptEditWindow();
   var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(this.selectedId).path);
 
   UIHelper.setVisible('EDIT_ENTITY_LABEL', !editing);
@@ -64,7 +64,7 @@ EntityForm.prototype.setSelectedId = function(id) {
     return;
   }
   this.selectedId = id;
-  $$('edit_script_window').hide();
+  UI.entityForm.hideScriptEditWindow();
   this.refresh();
 };
 
@@ -290,10 +290,10 @@ EntityForm.prototype.setRootView = function(data) {
       if (value != null) {
         $$('edit_script_window__editor').setValue(value);
         if (!$$('edit_script_window').isVisible()) {
-          $$('edit_script_window').show();
+          UI.entityForm.showScriptEditWindow();
         }
       } else {
-        $$('edit_script_window').hide();
+        UI.entityForm.hideScriptEditWindow();
       }
       $(this).addClass('view__field--active');
     });
@@ -398,10 +398,10 @@ EntityForm.prototype.setTaskView = function(data) {
       if (value != null) {
         $$('edit_script_window__editor').setValue(value);
         if (!$$('edit_script_window').isVisible()) {
-          $$('edit_script_window').show();
+          UI.entityForm.showScriptEditWindow();
         }
       } else {
-        $$('edit_script_window').hide();
+        UI.entityForm.hideScriptEditWindow();
       }
       $(this).addClass('view__field--active');
     });
@@ -464,10 +464,10 @@ EntityForm.prototype.setEntityView = function(data) {
       if (value != null) {
         $$('edit_script_window__editor').setValue(value);
         if (!$$('edit_script_window').isVisible()) {
-          $$('edit_script_window').show();
+          UI.entityForm.showScriptEditWindow();
         }
       } else {
-        $$('edit_script_window').hide();
+        UI.entityForm.hideScriptEditWindow();
       }
       $(this).addClass('view__field--active');
     });
@@ -492,10 +492,10 @@ EntityForm.prototype.setLogView = function(data) {
       if (value != null) {
         $$('edit_script_window__editor').setValue(value);
         if (!$$('edit_script_window').isVisible()) {
-          $$('edit_script_window').show();
+          UI.entityForm.showScriptEditWindow();
         }
       } else {
-        $$('edit_script_window').hide();
+        UI.entityForm.hideScriptEditWindow();
       }
       $(this).addClass('view__field--active');
     });
@@ -974,10 +974,10 @@ EntityForm.prototype.addField = function(data, setDirty, isProto) {
               $$('edit_script_window__editor').setValue($$(UI.entityForm.editScriptFieldId).getValue());
               $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
               if (!$$('edit_script_window').isVisible()) {
-                $$('edit_script_window').show();
+                UI.entityForm.showScriptEditWindow();
               }
             } else {
-              $$('edit_script_window').hide();
+              UI.entityForm.hideScriptEditWindow();
             }
           }
         }
@@ -1038,4 +1038,12 @@ EntityForm.prototype.deleteField = function(name) {
   if (rows.length === UIHelper.NUMBER_OF_FIXED_INPUTS_IN_FIELDS_FORM) {
     this.setNoFieldLabelVisible(true);
   }
+};
+
+EntityForm.prototype.showScriptEditWindow = function() {
+  $$('edit_script_window').show();
+};
+
+EntityForm.prototype.hideScriptEditWindow = function() {
+  $$('edit_script_window').hide();
 };
