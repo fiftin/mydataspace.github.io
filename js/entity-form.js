@@ -1041,12 +1041,12 @@ EntityForm.prototype.deleteField = function(name) {
 };
 
 EntityForm.prototype.showScriptEditWindow = function() {
+  $$('edit_script_window').show();
   if (webix.without_header) {
     $('.edit_script_window').css('top', '137px');
   } else {
     $('.edit_script_window').css('top', '50px');
   }
-  $$('edit_script_window').show();
 };
 
 EntityForm.prototype.hideScriptEditWindow = function() {
