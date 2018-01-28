@@ -20,24 +20,6 @@ EntityList.prototype.setReadOnly = function(isReadOnly) {
 };
 
 
-
-//EntityList.prototype.changeItems = function(applyForData) {
-//  var nextId;
-//  var id = $$('entity_list').getFirstId();
-//  while (id) {
-//    var index = $$('entity_list').getIndexById(id);
-//    $$('entity_list').copy(id, index, null, {
-//      newId: id === UIHelper.ENTITY_LIST_SHOW_MORE_ID
-//                    ? UIHelper.ENTITY_LIST_SHOW_MORE_ID
-//                    : Identity.idFromData(applyForData(Identity.dataFromId(id)))
-//    });
-//    nextId = $$('entity_list').getNextId(id);
-//    $$('entity_list').remove(id);
-//    id = nextId;
-//  }
-//};
-
-
 /**
  * Listen delete/create/rename events to update items in list.
  */
@@ -114,23 +96,7 @@ EntityList.prototype.listen = function() {
  * Set Id of entity witch items displayed in list. This method reloading data.
  */
 EntityList.prototype.setRootIdWithoutRefresh = function(id) {
-  if (this.rootId === id) {
-    return;
-  }
-
-  // if (this.rootId != null) {
-  //   Mydataspace.request('entities.unsubscribe', MDSCommon.extend(Identity.dataFromId(this.rootId), {
-  //     events: ['entities.rename.res']
-  //   }));
-  // }
-
   this.rootId = id;
-
-  // if (id != null) {
-  //   Mydataspace.request('entities.subscribe', MDSCommon.extend(Identity.dataFromId(id), {
-  //     events: ['entities.rename.res']
-  //   }));
-  // }
 };
 
 
@@ -202,7 +168,9 @@ EntityList.prototype.refresh = function(newRootId) {
       Identity.childId(self.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
     var entityId = Identity.idFromData(data);
     var children = data.children.filter(function(x) {
-      return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS.indexOf(x.path) < 0;
+      return (x.root !== 'root' || x.path !== '') &&
+        UIConstants.IGNORED_PATHS.indexOf(x.path) < 0 &&
+        (UIConstants.IGNORED_WHEN_EMPTY_PATHS.indexOf(x.path) < 0 || x.children.length > 0);
     }).map(Identity.entityFromData);
     if (self.getRootId() === entityId) {
       if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
@@ -242,19 +210,6 @@ EntityList.prototype.fill = function(parentEntityId, children, data) {
   }
   $$('entity_list').add({ id: parentEntityId,  value: '.', count: data.numberOfChildren }, 0);
   $$('entity_list').select(parentEntityId);
-};
-
-
-/**
- * Creates new entity by data received from the 'New Entity' form.
- * @param formData data received from form by method getValues.
- */
-EntityList.prototype.createByFormData = function(formData) {
-  var newEntityId = Identity.childId(this.getRootId(), formData.name);
-  var data = Identity.dataFromId(newEntityId);
-  data.fields = [];
-  data.othersCan = formData.othersCan;
-  Mydataspace.emit('entities.create', data);
 };
 
 

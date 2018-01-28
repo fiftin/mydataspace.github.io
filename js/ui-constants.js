@@ -52,6 +52,16 @@ UIConstants = {
 		// 'processes'
 	],
 
+  IGNORED_WHEN_EMPTY_PATHS: [
+    'resources',
+    'tasks',
+    'protos',
+    'comments',
+    'views',
+    'likes',
+    'processes'
+  ],
+
 	SYSTEM_PATHS: [
 		'resources',
 		'tasks',
