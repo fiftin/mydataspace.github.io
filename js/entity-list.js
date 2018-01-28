@@ -170,7 +170,7 @@ EntityList.prototype.refresh = function(newRootId) {
     var children = data.children.filter(function(x) {
       return (x.root !== 'root' || x.path !== '') &&
         UIConstants.IGNORED_PATHS.indexOf(x.path) < 0 &&
-        (UIConstants.IGNORED_WHEN_EMPTY_PATHS.indexOf(x.path) < 0 || x.children && x.children.length > 0);
+        (UIConstants.IGNORED_WHEN_EMPTY_PATHS.indexOf(x.path) < 0 || x.numberOfChildren > 0);
     }).map(Identity.entityFromData);
     if (self.getRootId() === entityId) {
       if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
