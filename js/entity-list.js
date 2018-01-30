@@ -17,17 +17,21 @@ EntityList.prototype.setReadOnly = function(isReadOnly) {
   $$('entity_tree__new_root_version_list').parse(UIControls.getChangeVersionPopupData(isReadOnly));
   UIHelper.setVisible('ADD_ENTITY_LABEL', !isReadOnly);
   UIHelper.setVisible('NEW_VERSION_LABEL', !isReadOnly && Identity.isRootId(this.getRootId()));
+  this.isReadOnly = isReadOnly;
 };
 
 EntityList.prototype.updateBlankRootButtonsVisibility = function() {
-  if ($$('entity_list').count() <= 1) {
+  $('#entity_list__blank_root_buttons').remove();
+
+  if (!this.isReadOnly && $$('entity_list').count() <= 1) {
     $('*[view_id=entity_list]').append('<div id="entity_list__blank_root_buttons" class="entity_list__blank_root_buttons">' +
-      '<button onclick="$$(\'add_entity_window\').show();" type="button" class="prompt_button prompt_button--with-margin">' + STRINGS.blank_root.create + '</button>' +
-      '<button onclick="openRefineImportEntity = Identity.dataFromId(UI.entityTree.getCurrentId()); $(\'#import_data_modal\').modal(\'show\');" type="button" class="prompt_button prompt_button--with-margin">' + STRINGS.blank_root.import + '</button>' +
-      '<button onclick="$$(\'add_resource_window\').show();" type="button" class="prompt_button prompt_button--with-margin">' + STRINGS.blank_root.upload + '</button>' +
+      '<div class="view__blank_root_prompt">' + STRINGS.blank_root.text + '</div>' +
+      '<div>' +
+        '<button onclick="$$(\'add_entity_window\').show();" type="button" class="prompt_button">' + STRINGS.blank_root.create + '</button>' +
+        '<button onclick="openRefineImportEntity = Identity.dataFromId(UI.entityTree.getCurrentId()); $(\'#import_data_modal\').modal(\'show\');" type="button" class="prompt_button">' + STRINGS.blank_root.import + '</button>' +
+        //'<button onclick="$$(\'add_resource_window\').show();" type="button" class="prompt_button">' + STRINGS.blank_root.upload + '</button>' +
+      '</div>' +
       '</div>');
-  } else {
-    $('#entity_list__blank_root_buttons').remove();
   }
 };
 

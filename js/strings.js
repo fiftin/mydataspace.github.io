@@ -149,6 +149,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     blank_root_edit_button: 'Fill',
 
     blank_root: {
+      text: '',
       create: 'Create Element',
       import: 'Import Data',
       upload: 'Upload File'
@@ -376,6 +377,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     blank_root_edit_button: 'Заполнить',
 
     blank_root: {
+      text: 'Корень пока не содержит данных',
+      //'Создайте новый элемент данных вручную или импортируется данные из файла',
       create: 'Создать элемент',
       import: 'Импортировать данные',
       upload: 'Загрузить файл'
