@@ -174,6 +174,10 @@ UI = {
     console.error(err);
   },
 
+  info: function(message) {
+    webix.message({ type: 'info', text: message, expire: 10000 });
+  },
+
   refresh: function() {
     Mydataspace.emit('users.getMyProfile', {});
     UI.pages.refreshPage('apps', true);

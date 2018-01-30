@@ -1190,12 +1190,22 @@ EntityForm.prototype.setLogRecords = function(fields, ignoredFieldNames, addLabe
   return viewFields;
 };
 
+EntityForm.getNoFieldsLabel = function(isMine) {
+  return isMine ? '<div>' +
+  '<div class="view__blank_root_prompt">' + STRINGS.no_fields_prompt + '</div>' +
+  '<div class="text-center"><button onclick="UI.entityForm.startAddingField();" type="button" class="prompt_button">' + STRINGS.no_fields_add_button + '</button></div>' +
+  '</div>'
+  :
+  '<div class="view__no_fields_exists">' + STRINGS.NO_FIELDS + '</div>';
+};
 
-EntityForm.prototype.setViewFields = function(fields,
+
+EntityForm.prototype.setViewFields = function(data,
                                               ignoredFieldNames,
                                               addLabelIfNoFieldsExists,
                                               comparer,
                                               classResolver) {
+  var fields = data.fields;
   if (!Array.isArray(ignoredFieldNames)) {
     ignoredFieldNames = [];
   }
@@ -1204,10 +1214,7 @@ EntityForm.prototype.setViewFields = function(fields,
   }
   var viewFields = document.getElementById('view__fields');
   if (MDSCommon.isBlank(fields)) {
-    viewFields.innerHTML =
-      addLabelIfNoFieldsExists ?
-      '<div class="view__no_fields_exists">' + STRINGS.NO_FIELDS + '</div>' :
-      '';
+    viewFields.innerHTML = addLabelIfNoFieldsExists ? EntityForm.getNoFieldsLabel(data.mine) : '';
   } else {
     viewFields.innerHTML = '';
     var numberOfChildren = 0;
@@ -1246,12 +1253,14 @@ EntityForm.prototype.setViewFields = function(fields,
     }
   }
   if (numberOfChildren === 0) {
-    viewFields.innerHTML =
-      addLabelIfNoFieldsExists ?
-      '<div class="view__no_fields_exists">' + STRINGS.NO_FIELDS + '</div>' :
-      '';
+    viewFields.innerHTML = addLabelIfNoFieldsExists ? EntityForm.getNoFieldsLabel(data.mine) : '';
   }
   return viewFields;
+};
+
+EntityForm.prototype.startAddingField = function() {
+  this.startEditing();
+  $$('add_field_window').show();
 };
 
 EntityForm.prototype.startEditing = function () {
@@ -1344,7 +1353,7 @@ EntityForm.prototype.setRootView = function(data) {
       document.getElementById('view__readme').style.display = 'block';
     }
     document.getElementById('view__readme').innerHTML = md.render(readme);
-    var viewFields = this.setViewFields(data.fields,
+    var viewFields = this.setViewFields(data,
                                         ['name',
                                          'avatar',
                                          'description',
@@ -1398,7 +1407,7 @@ EntityForm.prototype.setTaskView = function(data) {
       $('#view__description').remove();
     }
     var viewFields =
-        this.setViewFields(data.fields,
+        this.setViewFields(data,
                            ['status', 'statusText', 'interval', 'description'],
                            description == null,
                            function(x, y) {
@@ -1519,7 +1528,7 @@ EntityForm.prototype.setEntityView = function(data) {
     var viewFields;
     if (entityType === 'proto') {
       $('#view__description').remove();
-      viewFields = this.setViewFields(data.fields);
+      viewFields = this.setViewFields(data);
     } else {
       const description = data.fields.filter(function(x) { return x.name === 'description'; })[0];
       if (description != null) {
@@ -1527,7 +1536,7 @@ EntityForm.prototype.setEntityView = function(data) {
       } else {
         $('#view__description').remove();
       }
-      viewFields = this.setViewFields(data.fields, ['description'], description == null);
+      viewFields = this.setViewFields(data, ['description'], description == null);
     }
 
     $(viewFields).on('click', '.view__field', function() {
@@ -3450,6 +3459,19 @@ UILayout.windows.addField = {
         setTimeout(function() {
           $$('add_field_window').hide();
         }, 100);
+
+        setTimeout(function() {
+          var n = window.localStorage.getItem('dont_forgot_to_save');
+          if (MDSCommon.isPresent(n) && parseInt(n) > 3) {
+            return;
+          } else if (MDSCommon.isInt(n)) {
+            n = parseInt(n) + 1;
+          } else {
+            n = 1;
+          }
+          window.localStorage.setItem('dont_forgot_to_save', n.toString());
+          UI.info(STRINGS.dont_forgot_to_save);
+        }, 600);
       }
     },
 
@@ -4426,8 +4448,9 @@ UILayout.entityForm =
         icon: 'save',
         id: 'SAVE_ENTITY_LABEL',
         label: STRINGS.SAVE_ENTITY,
+        css: 'menu__green_button',
         hidden: true,
-        width: 65,
+        width: 75,
         click: function() {
           UI.entityForm.save();
         }
@@ -4888,6 +4911,10 @@ UI = {
         break;
     }
     console.error(err);
+  },
+
+  info: function(message) {
+    webix.message({ type: 'info', text: message, expire: 10000 });
   },
 
   refresh: function() {

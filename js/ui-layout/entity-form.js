@@ -19,8 +19,9 @@ UILayout.entityForm =
         icon: 'save',
         id: 'SAVE_ENTITY_LABEL',
         label: STRINGS.SAVE_ENTITY,
+        css: 'menu__green_button',
         hidden: true,
-        width: 65,
+        width: 75,
         click: function() {
           UI.entityForm.save();
         }

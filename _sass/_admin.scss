@@ -435,6 +435,18 @@ input:read-only {
   width: 100%;
 }
 
+.entity_form__dont_forgot_to_save {
+  font-weight: bold;
+  text-transform: uppercase;
+  color: $selected-bg;
+}
+.menu__green_button {
+  button, .webix_icon_btn {
+    color: $selected-bg !important;
+    font-weight: bold;
+  }
+}
+
 *[view_id=entity_list] {
   position: relative;
 }

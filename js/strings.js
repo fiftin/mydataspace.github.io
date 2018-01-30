@@ -144,9 +144,14 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     new_task: 'New Task',
     new_proto: 'New Prototype',
 
+    no_fields_add_button: 'Add Field',
+    no_fields_prompt: 'Element has no fields yet. Fields used to store data in the element. Field can be text, number, geo-point or date.',
+
     blank_root_prompt: 'The root information is not filled. Add picture, name and description so that your root is easier to find',
 
     blank_root_edit_button: 'Fill',
+
+    dont_forgot_to_save: 'Do not forgot to save element after adding/changing field',
 
     blank_root: {
       text: '',
@@ -370,6 +375,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     new_resource: 'Новый ресурс',
     new_task: 'Новая задача',
     new_proto: 'Новый прототип',
+
+    no_fields_prompt: 'Элемент еще не содержит ни одного поля. Поля используются для хранения данных &mdash; текста, чисел, геокоординат и др.',
+    no_fields_add_button: 'Добавить поле',
+
+    dont_forgot_to_save: 'Не забудьте <span class="entity_form__dont_forgot_to_save"><i class="fa fa-save"></i> сохранить</span> элемент после добавления поля',
 
     blank_root_prompt: 'Информация о корне не заполнена. Добавьте картинку, название и короткое описание чтобы ваш корень ' +
                        'было проще найти',
