@@ -23,7 +23,7 @@ EntityList.prototype.setReadOnly = function(isReadOnly) {
 EntityList.prototype.updateBlankRootButtonsVisibility = function() {
   $('#entity_list__blank_root_buttons').remove();
 
-  if (!this.isReadOnly && $$('entity_list').count() <= 1) {
+  if (!this.isReadOnly && $$('entity_list').count() <= 1 && Identity.isRootId(this.getRootId())) {
     $('*[view_id=entity_list]').append('<div id="entity_list__blank_root_buttons" class="entity_list__blank_root_buttons">' +
       '<div class="view__blank_root_prompt">' + STRINGS.blank_root.text + '</div>' +
       '<div>' +
