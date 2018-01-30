@@ -428,6 +428,17 @@ input:read-only {
   position: relative !important;
 }
 
+.entity_list__blank_root_buttons {
+  position: absolute;
+  top: 50px;
+  text-align: center;
+  width: 100%;
+}
+
+*[view_id=entity_list] {
+  position: relative;
+}
+
 label {
   font-weight: normal !important;
 }

@@ -263,9 +263,15 @@ $view-tag-flag-size: 16px;
   padding: 10px 30px;
   border: 1px #27ae60;
   border-bottom-color: #209150;
+  margin: 0 10px;
+
   &:hover {
     background-color: #239d57;
   }
+}
+
+.prompt_button--with-margin {
+  margin: 10px;
 }
 
 .view__blank_root_prompt {

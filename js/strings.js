@@ -148,6 +148,12 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
 
     blank_root_edit_button: 'Fill',
 
+    blank_root: {
+      create: 'Create Element',
+      import: 'Import Data',
+      upload: 'Upload File'
+    },
+
     no_items: {
       no_items__title: 'You have ho any data yet',
       no_items__explore__desc: 'Find data you need among a huge amount of existing data',
@@ -368,6 +374,12 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
                        'было проще найти',
 
     blank_root_edit_button: 'Заполнить',
+
+    blank_root: {
+      create: 'Создать элемент',
+      import: 'Импортировать данные',
+      upload: 'Загрузить файл'
+    },
 
     no_items: {
       no_items__title: 'У вас еще нет никаких данных',
