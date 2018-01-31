@@ -161,6 +161,6 @@ var Identity = {
   },
 
   isRootId: function(id) {
-    return id.indexOf(':') < 0;
+    return MDSCommon.isPresent(id) && id.indexOf(':') < 0;
   }
 };
