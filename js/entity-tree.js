@@ -217,6 +217,11 @@ EntityTree.prototype.listen = function() {
     for (var i in dataArray) {
       var data = dataArray[i];
       var parentId = Identity.parentId(Identity.idFromData(data));
+
+      if ($('entity_tree').getItem(parentId) == null) {
+        continue;
+      }
+
       var entity = Identity.entityFromData(data);
       var oldVersion = MDSCommon.findValueByName(data.fields || [], '$oldVersion');
 
