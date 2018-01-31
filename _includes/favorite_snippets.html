@@ -23,7 +23,7 @@
             },
             limit: 3
           }, function(data) {
-            var rootsHtml = data.roots.map(function (root) {
+            var rootsHtml = data.roots.map(function (root, index) {
               var avatar = MDSCommon.findValueByName(root.fields, 'avatar');
               if (MDSCommon.isBlank(avatar)) {
                 avatar = '/images/icons/root.svg';
@@ -80,10 +80,10 @@
                 '<span class="root_counter"><i class="fa fa-heart" aria-hidden="true"></i><span class="root_counter__count root_counter__count--likes">' + nLikes + '</span></span>' +
                 '<span class="root_counter"><i class="fa fa-comments" aria-hidden="true"></i><span class="root_counter__count">' + nComments + '</span></span>' +
                 '</div>' +
-
                 '</div>' + // footer
-
-                '</a></div>';
+                '</a>' +
+                '<div class="snippet__medal snippet__medal--' + (index + 1) + '">' + (index + 1) + '</div>' +
+                '</div>';
             });
 
             document.getElementById('favorite_snippets').innerHTML = rootsHtml.join('');
