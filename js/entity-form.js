@@ -153,7 +153,7 @@ EntityForm.prototype.setViewFields = function(data,
       var field = fields[i];
       if (field.name.indexOf('$') !== -1 ||
         ignoredFieldNames.indexOf(field.name) >= 0 ||
-        UIConstants.ROOT_FIELDS.indexOf(field.name) && MDSCommon.isBlank(field.value)) {
+        MDSCommon.isBlank(data.path) && UIConstants.ROOT_FIELDS.indexOf(field.name) >= 0 && MDSCommon.isBlank(field.value)) {
         continue;
       }
       numberOfChildren++;
