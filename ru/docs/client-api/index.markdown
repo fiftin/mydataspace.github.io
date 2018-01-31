@@ -201,7 +201,7 @@ demo.login('google').then(function(args) {
     </div>
     <div class="col-md-8">
       <div class="highlighter-rouge">
-        <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--post">POST</span> /</code></pre>
+        <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--post">POST</span> /change</code></pre>
       </div>
       <div class="highlighter__params">Тело:</div>
       <div class="row">
@@ -269,7 +269,7 @@ demo.login('google').then(function(args) {
     </div>
     <div class="col-md-8">
       <div class="highlighter-rouge">
-        <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--put">PUT</span> /</code></pre>
+        <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--put">PUT</span> /create</code></pre>
       </div>
       <div class="row">
         <div class="col-md-4">
