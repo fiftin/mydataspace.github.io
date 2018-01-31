@@ -25,14 +25,21 @@
                 <li class="hidden">
                     <a href="#page-top"></a>
                 </li>
-                <li class="hidden-sm">
-                    <a href="{{ baseurl }}/features">{{ site.data[page.language].menu.features }}</a>
+                <li class="hidden-sm header__give_feedback_wrap">
+                    <a class="header__menu_item"
+                       href="javascript: void(0);"
+                       onclick="showFeedbackModal(true); return false;">
+                        <div class="header__give_feedback"><i class="fa fa-thumbs-up"></i> <span class="hidden-md" style="padding-left: 5px;">{{ site.data[page.language].menu.give_feedback_button }}</span></div>
+                    </a>
                 </li>
                 <li class="hidden-sm">
-                    <a href="{{ baseurl }}/demos">{{ site.data[page.language].menu.demos }}</a>
+                    <a class="header__menu_item" href="{{ baseurl }}/features">{{ site.data[page.language].menu.features }}</a>
                 </li>
                 <li class="hidden-sm">
-                    <a href="{{ baseurl }}/docs">{{ site.data[page.language].menu.docs }}</a>
+                    <a class="header__menu_item" href="{{ baseurl }}/demos">{{ site.data[page.language].menu.demos }}</a>
+                </li>
+                <li class="hidden-sm">
+                    <a class="header__menu_item" href="{{ baseurl }}/docs">{{ site.data[page.language].menu.docs }}</a>
                 </li>
                 <li>
                 {% if page.url != "/404.html" %}
@@ -144,3 +151,129 @@
 
 <div id="search" class="search">
 </div>
+
+<div id="give_feedback_modal"
+     class="modal"
+     role="dialog"
+     aria-labelledby="Give Feedback">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header look_modal__header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div class="modal-title">{{ site.data[page.language].menu.give_feedback }}</div>
+            </div>
+            <div class="modal-body look_modal__body">
+                <div>
+                    <textarea id="give_feedback_modal__text" rows="5" class="form-control" placeholder="{{ site.data[page.language].menu.give_feedback_placeholder }}"></textarea>
+                </div>
+                <div id="give_feedback_modal__error" class="give_feedback_modal__error"></div>
+            </div>
+            <div class="modal-footer look_modal__footer">
+                <button class="btn btn-primary" id="give_feedback_modal__send">{{ site.data[page.language].menu.send_feedback }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="give_feedback_sent_modal"
+     class="modal"
+     role="dialog"
+     aria-labelledby="Feedback Sent">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header look_modal__header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div class="modal-title">{{ site.data[page.language].menu.feedback_sent_title }}</div>
+            </div>
+            <div class="modal-body look_modal__body">
+                {{ site.data[page.language].menu.feedback_sent_message }}
+            </div>
+            <div class="modal-footer look_modal__footer">
+                <button class="btn btn-default" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  function showFeedbackModal(needClear) {
+    if (needClear) {
+      $('#give_feedback_modal__text').val('');
+      $('#give_feedback_modal__send').prop('disabled', false);
+      $('#give_feedback_modal__text').prop('disabled', false);
+      $('#give_feedback_modal__text').removeClass('new_comment__textarea--error');
+      $('#give_feedback_modal__error').text('');
+    }
+    $('#give_feedback_modal').modal('show');
+  }
+
+  $(function() {
+    var $textarea = $('#give_feedback_modal__text');
+    var $button = $('#give_feedback_modal__send');
+    var $error = $('#give_feedback_modal__error');
+
+
+    function giveFeedback() {
+      $textarea.removeClass('new_comment__textarea--error');
+
+      if ($textarea.val().trim() === '') {
+        $textarea.addClass('new_comment__textarea--error');
+        $error.text('{{ site.data[page.language].menu.feedback_cant_be_blank }}');
+        $textarea.focus();
+        return;
+      }
+
+      $button.prop('disabled', true);
+      $textarea.prop('disabled', true);
+
+      Mydataspace.request('entities.create', {
+        root: 'feedback',
+        path: 'data/' + MDSCommon.guid(),
+        fields: [
+          {
+            name: 'text',
+            value: $textarea.val().trim(),
+            type: 's'
+          },
+          {
+            name: 'rate',
+            value: '0',
+            type: 'i'
+          }
+        ]
+      }, function () {
+        $('#give_feedback_modal').modal('hide');
+        $('#give_feedback_sent_modal').modal('show');
+      }, function (err) {
+        $button.prop('disabled', false);
+        $textarea.prop('disabled', false);
+        console.log(err);
+        $error.text(err.message);
+        $textarea.focus();
+      });
+    }
+
+
+    $('#give_feedback_modal').on('shown.bs.modal', function () {
+      $textarea.focus();
+    });
+
+    $button.click(function () {
+
+      if (!Mydataspace.isLoggedIn()) {
+        Mydataspace.on('login', function () {
+          setTimeout(function() {
+            showFeedbackModal();
+            giveFeedback();
+          }, 300);
+        });
+        $('#give_feedback_modal').modal('hide');
+        setTimeout(function() {
+          $('#signin_modal').modal('show');
+        }, 300);
+        return;
+      }
+      giveFeedback();
+    });
+  });
+</script>

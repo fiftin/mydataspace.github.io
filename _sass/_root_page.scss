@@ -459,7 +459,7 @@ $follow-button-height: 40px;
 }
 
 .new_comment__textarea--error {
-  border-color: red !important;
+  border-color: $brand-danger !important;
   transition: border-color 300ms;
 }
 

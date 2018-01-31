@@ -7,6 +7,13 @@ menu:
   login: Войти
   logout: Выйти
   myData: Мои данные
+  give_feedback_button: Отзыв
+  give_feedback: Оставить отзыв
+  give_feedback_placeholder: Ваш отзыв
+  send_feedback: Отправить
+  feedback_cant_be_blank: Отзыв не может быть пустым
+  feedback_sent_title: Отзыв оправлени
+  feedback_sent_message: Спасибо за ваш отзыв!
 
 slogan: Сервис публикации данных
 slogan_description: Надежный доступ к данных из любой точки мира со скоростью близкой к реальному времени
@@ -32,6 +39,7 @@ strings:
   explore_roots: Показать все
   new_root_name: Имя нового корня
   click_to_select_version: Нажмине чтобы выбрать другую версию
+  cancel: Отмена
 header:
   input_search: Начните поиск или нажмите Esc
   input_search_fixed: Поиск...

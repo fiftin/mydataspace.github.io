@@ -7,6 +7,14 @@ menu:
   login: Sign In
   logout: Sign out
   myData: My Data
+  give_feedback_button: Review
+  give_feedback: Give Feedback
+  give_feedback_placeholder: Your feedback message
+  send_feedback: Send
+  feedback_cant_be_blank: Feedback can't be blank
+  feedback_sent_title: Feedback sent
+  feedback_sent_message: Thank you for your feedback!
+
 slogan: Data publishing <br /> service
 slogan_description: Reliable access to data over API from anywhere in the world at real time
 slogan_2: Incredibly fast backend of your website
@@ -25,6 +33,7 @@ strings:
   explore_roots: Explore Roots
   new_root_name: New Root Name
   click_to_select_version: Click to select other version
+  cancel: Cancel
 header:
   input_search: Search... Press Esc to exit
   input_search_fixed: Search...

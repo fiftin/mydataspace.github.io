@@ -4,6 +4,35 @@ $header-logo-size: $header-height;
 $header-toggle-btn-width: $header-height;
 $profile-button-size: 35px;
 
+@media (min-width: $screen-md-min) {
+  .header__menu_item {
+    font-size: 12px !important;
+    padding-left: 7px !important;
+    padding-right: 7px !important;
+  }
+}
+
+.give_feedback_modal__error {
+  color: $brand-danger;
+  line-height: 30px;
+}
+
+.header__give_feedback {
+  border-radius: 100px;
+  background: orange;
+  font-weight: bold;
+  color: white;
+  padding: 0 15px;
+  text-shadow: #a76700 1px 1px 1px;
+  display: inline-block;
+}
+
+@media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+  .header__give_feedback {
+    padding: 0 7px;
+  }
+}
+
 #profile_button_menu_item {
   display: none;
 }
@@ -129,15 +158,12 @@ $profile-button-size: 35px;
 
 .header__language {
   display: inline-block;
-  padding-top: 13px;
-  padding-bottom: 13px;
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 
 .header__language_button {
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-top: 13px;
-  padding-bottom: 13px;
+  padding: 13px 5px;
   line-height: 20px;
   color: white;
   &:hover, &:focus, &:active {
