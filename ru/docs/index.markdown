@@ -29,6 +29,6 @@ language: ru
         </p>
     </div>
     <div class="col-md-3">
-        <img src="/images/docs/tree-structure.png" style="width: 100%;" />
+        <img class="hidden-xs hidden-sm" src="/images/docs/tree-structure.png" style="width: 100%;" />
     </div>
 </div>
