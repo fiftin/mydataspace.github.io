@@ -3,6 +3,15 @@ UILayout.header =
     cols: [
       { type: 'header' },
       { view: 'button',
+        width: 120,
+        css: 'menu__language_button menu__language_button--feedback',
+        id: 'FEEDBACK_LABEL',
+        label: STRINGS.FEEDBACK,
+        click: function() {
+          showFeedbackModal(true);
+        }
+      },
+      { view: 'button',
         width: 100,
         css: 'menu__language_button menu__language_button--get_started',
         id: 'FEATURES_LABEL',

@@ -31,7 +31,8 @@ UIConstants = {
 		'country',
 		'language',
 		'category',
-		'readme'
+		'readme',
+    'datasource'
 	],
 
 	HIDDEN_ROOT_FIELDS: [

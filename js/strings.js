@@ -118,6 +118,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     VERSION_DESCRIPTION: 'Description',
     VERSION_CREATED_AT: 'Created At',
 
+    FEEDBACK: 'Feedback',
 
     switch_default_version: 'Switch Default Versin',
     view_other_version: 'View Other Version',
@@ -351,7 +352,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     ADD_VERSION: 'Новая версия',
     VERSION_DESCRIPTION: 'Описание',
     VERSION_CREATED_AT: 'Создана',
-
+    FEEDBACK: 'Отзыв',
 
     created: 'создан',
     ago: 'назад',

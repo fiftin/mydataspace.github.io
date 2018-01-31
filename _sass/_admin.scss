@@ -335,6 +335,7 @@ input:read-only {
   color: $header-text-color;
   transition-property: color;
   transition-duration: 0.3s;
+  font-size: 12px !important;
 }
 
 .menu__language_button button:hover,
@@ -348,6 +349,27 @@ input:read-only {
 
 .menu__language_button--selected button {
   font-weight: bold;
+}
+
+.menu__language_button--feedback {
+  button {
+    border-radius: 100px;
+    background: orange !important;
+    font-weight: bold;
+    color: white !important;
+    padding: 0 15px;
+    text-shadow: #a76700 1px 1px 1px;
+    display: inline-block;
+    margin-top: 9px;
+    height: 25px;
+    width: 80%;
+    opacity: 0.5;
+    transition-property: opacity;
+    transition-duration: 0.3s;
+    &:hover {
+      opacity: 1;
+    }
+  }
 }
 
 .menu_button .webix_icon {
