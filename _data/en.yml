@@ -11,7 +11,7 @@ menu:
   give_feedback: Give Feedback
   give_feedback_placeholder: Your feedback message
   send_feedback: Send
-  feedback_cant_be_blank: Feedback can't be blank
+  feedback_cant_be_blank: Feedback can not be blank
   feedback_sent_title: Feedback sent
   feedback_sent_message: Thank you for your feedback!
 
