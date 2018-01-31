@@ -29,8 +29,20 @@
                     <a class="header__menu_item"
                        href="javascript: void(0);"
                        onclick="showFeedbackModal(true); return false;">
-                        <div class="header__give_feedback"><i class="fa fa-thumbs-up"></i> <span class="hidden-md" style="padding-left: 5px;">{{ site.data[page.language].menu.give_feedback_button }}</span></div>
+                        <div class="header__give_feedback"><i id="header__give_feedback_icon" class="fa fa-thumbs-up"></i> <span class="hidden-md" style="padding-left: 5px;">{{ site.data[page.language].menu.give_feedback_button }}</span></div>
                     </a>
+                    <script>
+                      setInterval(function() {
+                        var icon = document.getElementById('header__give_feedback_icon');
+                        if (icon.classList.contains('fa-thumbs-up')) {
+                          icon.classList.remove('fa-thumbs-up');
+                          icon.classList.add('fa-thumbs-down');
+                        } else {
+                          icon.classList.remove('fa-thumbs-down');
+                          icon.classList.add('fa-thumbs-up');
+                        }
+                      }, 5000);
+                    </script>
                 </li>
                 <li class="hidden-sm">
                     <a class="header__menu_item" href="{{ baseurl }}/features">{{ site.data[page.language].menu.features }}</a>
