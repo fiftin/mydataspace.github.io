@@ -1,9 +1,7 @@
 @import "./vars";
 
 $snippet-image-size: 52px;
-
 $filter-item-height: 30px;
-
 $snippet-footer-height: 20px;
 $snippet-footer-height-with-gradient: 50px;
 
@@ -81,7 +79,7 @@ $snippet-footer-height-with-gradient: 50px;
   display: block;
   background: white;
   border-radius: $default-border-radius;
-  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
   position: relative;
 }
 
@@ -98,14 +96,14 @@ $snippet-footer-height-with-gradient: 50px;
   text-decoration: none !important;
   position: relative;
   &:hover {
-    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
   }
 }
 
 .snippet--no-pointer {
   cursor: initial;
   &:hover {
-    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
   }
 }
 
