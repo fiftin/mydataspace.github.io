@@ -1281,8 +1281,10 @@ EntityForm.prototype.startEditing = function () {
 
 EntityForm.prototype.setRootView = function(data) {
   var completeness = MDSCommon.getRootDataCompleteness(data);
-
-  (view.innerHTML === '%%root-page.html%%' ? $.ajax({ url: '/fragments/root-view.html', method: 'get' }) : Promise.resolve(view.innerHTML)).then(function(html) {
+  if (view.innerHTML === '%%root-page.html%%') {
+    view.innerHTML = '';
+  }
+  (view.innerHTML === '' ? $.ajax({ url: '/fragments/root-view.html', method: 'get' }) : Promise.resolve(view.innerHTML)).then(function(html) {
     var view = document.getElementById('view');
     var websiteURL = MDSCommon.findValueByName(data.fields, 'websiteURL');
     var description = MDSCommon.findValueByName(data.fields, 'description');
@@ -1293,7 +1295,7 @@ EntityForm.prototype.setRootView = function(data) {
       return '<a class="view__tag" href="/?q=%23' + tag + '" onclick="openSearch_webix__header__search(\'' + tag + '\'); return false;">' + tag + '</a>';
     }).join(' ');
 
-    if (view.innerHTML === '%%root-page.html%%') {
+    if (view.innerHTML === '') {
       view.innerHTML = html;
     }
 
