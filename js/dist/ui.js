@@ -1282,7 +1282,7 @@ EntityForm.prototype.startEditing = function () {
 EntityForm.prototype.setRootView = function(data) {
   var completeness = MDSCommon.getRootDataCompleteness(data);
 
-  $.ajax({ url: '/fragments/root-view.html', method: 'get' }).then(function(html) {
+  (view.innerHTML === '%%root-page.html%%' ? $.ajax({ url: '/fragments/root-view.html', method: 'get' }) : Promise.resolve(view.innerHTML)).then(function(html) {
     var view = document.getElementById('view');
     var websiteURL = MDSCommon.findValueByName(data.fields, 'websiteURL');
     var description = MDSCommon.findValueByName(data.fields, 'description');
@@ -1293,8 +1293,9 @@ EntityForm.prototype.setRootView = function(data) {
       return '<a class="view__tag" href="/?q=%23' + tag + '" onclick="openSearch_webix__header__search(\'' + tag + '\'); return false;">' + tag + '</a>';
     }).join(' ');
 
-
-    view.innerHTML = html;
+    if (view.innerHTML === '%%root-page.html%%') {
+      view.innerHTML = html;
+    }
 
     document.getElementById('view__blank_root').style.display = completeness > 0 ? 'none' : 'block';
     document.getElementById('view__about').style.display = completeness > 0 ? 'block' : 'none';
