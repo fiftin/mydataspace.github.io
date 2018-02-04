@@ -2642,7 +2642,7 @@ EntityTree.prototype.listen = function() {
       var data = dataArray[i];
       var parentId = Identity.parentId(Identity.idFromData(data));
 
-      if (parentId === 'root' || $$('entity_tree').getItem(parentId) == null) {
+      if (parentId !== 'root' && $$('entity_tree').getItem(parentId) == null) {
         continue;
       }
 
