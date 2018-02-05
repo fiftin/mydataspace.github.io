@@ -297,7 +297,7 @@ $follow-button-height: 40px;
 
 
 .user_snippet {
-  height: 150px;
+  height: 165px;
 }
 
 .user_snippet__cover {
@@ -322,6 +322,7 @@ $follow-button-height: 40px;
   height: $user-avatar-size;
   border-radius: $user-avatar-size / 2;
   border: 3px solid $block-bg;
+  background: white;
 }
 
 .user_snippet__name {
