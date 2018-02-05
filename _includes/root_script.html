@@ -865,7 +865,7 @@
       if (view.innerHTML === '%%root-page.html%%') {
         view.innerHTML = '';
       }
-      (view.innerHTML === '' ? $.ajax({ url: '/fragments/root-view.html', method: 'get' }) : Promise.resolve(view.innerHTML)).then(function(html) {
+      (view.innerHTML === '' ? $.ajax({ url: '/fragments/root-page.html', method: 'get' }) : Promise.resolve(view.innerHTML)).then(function(html) {
         var websiteURL = MDSCommon.findValueByName(data.fields, 'websiteURL');
         var description = MDSCommon.findValueByName(data.fields, 'description');
         var readme = MDSCommon.findValueByName(data.fields, 'readme');
