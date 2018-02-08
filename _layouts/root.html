@@ -2,7 +2,11 @@
 layout: hybrid_default
 ---
 <div id="root" class="root_page" style="padding-bottom: 30px">%%root-page.html%%</div>
-
+<script>
+  if (document.getElementById('root').innerText === '%%root-page.html%%') {
+    document.getElementById('root').innerText = '';
+  }
+</script>
 <div id="delete_look_modal"
      class="modal"
      tabindex="-1"
@@ -98,10 +102,6 @@ layout: hybrid_default
             </div>
           </div>
           <script>
-            if (document.getElementById('root').innerText === '%%root-page.html%%') {
-              document.getElementById('root').innerText = '';
-            }
-
             $(function() {
               $('#look_modal__codepen_tab_link').click(function() {
                 $('#look_modal__table_tab').removeClass('active');
