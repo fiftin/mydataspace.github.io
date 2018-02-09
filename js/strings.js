@@ -118,7 +118,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     VERSION_DESCRIPTION: 'Description',
     VERSION_CREATED_AT: 'Created At',
 
-    FEEDBACK: 'Review',
+    FEEDBACK: 'Feedback',
 
     switch_default_version: 'Switch Default Versin',
     view_other_version: 'View Other Version',

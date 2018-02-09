@@ -7,7 +7,7 @@ menu:
   login: Sign In
   logout: Sign out
   myData: My Data
-  give_feedback_button: Review
+  give_feedback_button: Feedback
   give_feedback: Give Feedback
   give_feedback_placeholder: Your feedback message
   send_feedback: Send
