@@ -24,8 +24,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="google-site-verification" content="5epqqtp_y7C0S59PlzBOt5CIfXRu7yMSc3iXjKqW7FE" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
-  <meta name="description" content="{{ site.data[page.language].slogan }}">
   <link rel="stylesheet" href="/css/main.css" type="text/css">
   <link rel="stylesheet" href="/vendor/fontawesome/css/font-awesome.css" type="text/css">
   {% if include.webix %}
@@ -56,12 +54,61 @@
 
   <script src="/js/main.js"></script>
 
+
+
+  {% if include.root %}
+  <title>%%name%%</title>
+  <meta name="description"               content="%%description%%">
+
+  <meta name="theme-color"               content="black" />
+
+  <meta property="og:url"                content="%%$url%%" />
+  <meta property="og:image"              content="%%avatar%%" />
+  <meta property='og:image:secure_url'   content="%%avatar%%" itemprop="thumbnailUrl" />
+  <meta property="og:image:type"         content="image/png" />
+  <meta property="og:image:width"        content="300" />
+  <meta property="og:image:height"       content="300" />
+  <meta property="og:site_name"          content="MyDataSpace" />
+  <meta property="og:locale"             content="%%$locale%%" />
+  <meta property="og:type"               content="article" />
+  <meta property="og:title"              content="%%name%%" />
+  <meta property="og:description"        content="{{ page.locale }}" />
+
+  <meta name="twitter:card"              content="summary_large_image" />
+  <meta name="twitter:url"               content="%%$url%%" />
+  <meta name="twitter:image"             content="%%avatar%%" />
+  <meta name="twitter:title"             content="%%name%%" />
+  <meta name="title"                     content="%%name%%" />
+  <meta name="img_src"                   content="%%avatar%%" />
+
+  <link rel="canonical"                  href="%%$url%%" />
+
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@id": "%%$url%%",
+      "@type": "Dataset",
+      "name": "%%name%%",
+      "description": "%%description%%",
+      "keywords": "%%tags%%"
+    }
+  </script>
+
+  {% else %}
+
+
+  <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
+  <meta name="description" content="{{ site.data[page.language].slogan }}">
+
   <meta name="theme-color" content="black" />
   <meta property="og:url"                content="https://myda.space" />
   <meta property="og:type"               content="article" />
   <meta property="og:title"              content="{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}" />
   <meta property="og:description"        content="{{ site.data[page.language].slogan }}" />
   <meta property="og:image"              content="https://myda.space/images/logo.png" />
+
+
+  {% endif %}
 
   <script>
     function parseJWT(token) {
