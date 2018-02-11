@@ -69,10 +69,10 @@
   <meta property="og:image:width"        content="300" />
   <meta property="og:image:height"       content="300" />
   <meta property="og:site_name"          content="MyDataSpace" />
-  <meta property="og:locale"             content="%%$locale%%" />
+  <meta property="og:locale"             content="{{ page.locale }}" />
   <meta property="og:type"               content="article" />
   <meta property="og:title"              content="%%name%%" />
-  <meta property="og:description"        content="{{ page.locale }}" />
+  <meta property="og:description"        content="%%description%%" />
 
   <meta name="twitter:card"              content="summary_large_image" />
   <meta name="twitter:url"               content="%%$url%%" />
@@ -90,7 +90,7 @@
       "@type": "Dataset",
       "name": "%%name%%",
       "description": "%%description%%",
-      "keywords": "%%tags%%"
+      "keywords": "%%$tags%%"
     }
   </script>
 
