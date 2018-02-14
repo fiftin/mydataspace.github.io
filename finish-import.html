@@ -177,7 +177,7 @@ language: en
     });
 
     document.getElementById('finish_import__cancel').addEventListener('click', function() {
-      window.location.href = 'https://refine.mydataspace.net/project?project=' + projectID;
+      window.location.href = '{{ site.refine_url }}/project?project=' + projectID;
     });
     
     document.getElementById('finish_import__close').addEventListener('click', function() {
