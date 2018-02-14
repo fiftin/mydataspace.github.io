@@ -94,8 +94,6 @@ var Identity = {
     
     if (MDSCommon.isInt(idVersionParts[1])) {
       ret.version = parseInt(idVersionParts[1]);
-    } else {
-      ret.version = 0;
     }
 
     return ret;
