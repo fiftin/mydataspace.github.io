@@ -310,11 +310,11 @@ UIHelper = {
    * @param {string} id
    */
   isTreeShowMore: function (id) {
-    return (new RegExp(UIHelper.ENTITY_TREE_SHOW_MORE_ID + '(\\$d+)?$')).test(id);
+    return (new RegExp(UIHelper.ENTITY_TREE_SHOW_MORE_ID + '(\\?d+)?$')).test(id);
   },
 
   isListShowMore: function (id) {
-    return (new RegExp(UIHelper.ENTITY_LIST_SHOW_MORE_ID + '(\\$d+)?$')).test(id);
+    return (new RegExp(UIHelper.ENTITY_LIST_SHOW_MORE_ID + '(\\?d+)?$')).test(id);
   },
 
   setVisible: function(components, isVisible) {
