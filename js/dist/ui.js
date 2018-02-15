@@ -305,6 +305,18 @@ UIHelper = {
   ENTITY_TREE_DUMMY_ID: 'dummy_483__4734_47e4',
   ENTITY_LIST_SHOW_MORE_ID: 'show_more_47384_3338222',
 
+  /**
+   *
+   * @param {string} id
+   */
+  isTreeShowMore: function (id) {
+    return (new RegExp(UIHelper.ENTITY_TREE_SHOW_MORE_ID + '(\\$d+)?$')).test(id);
+  },
+
+  isListShowMore: function (id) {
+    return (new RegExp(UIHelper.ENTITY_LIST_SHOW_MORE_ID + '(\\$d+)?$')).test(id);
+  },
+
   setVisible: function(components, isVisible) {
     if (!Array.isArray(components)) {
       components = [components];
@@ -732,6 +744,8 @@ var Identity = {
     
     if (MDSCommon.isInt(idVersionParts[1])) {
       ret.version = parseInt(idVersionParts[1]);
+    } else {
+      ret.version = 0;
     }
 
     return ret;
@@ -2412,7 +2426,7 @@ EntityList.prototype.showMore = function() {
 EntityList.prototype.count = function() {
   var lastId = $$('entity_list').getLastId();
   var lastIndex = $$('entity_list').getIndexById(lastId);
-  if (lastId.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID)) {
+  if (UIHelper.isListShowMore(lastId)) {
     return lastIndex - 1;
   }
   return lastIndex;
@@ -4315,7 +4329,7 @@ UILayout.entityTree =
         },
         onSelectChange: function(ids) {
           var id = ids[0];
-          if (id.endsWith(UIHelper.ENTITY_TREE_SHOW_MORE_ID)) {
+          if (UIHelper.isTreeShowMore(id)) {
             $$('entity_tree').select(UI.entityTree.getCurrentId());
           } else {
             UI.entityTree.setCurrentId(id);
@@ -4325,7 +4339,7 @@ UILayout.entityTree =
         },
         onBeforeSelect: function(id, selection) {
           // Request and add more items if "Show More" clicked
-          if (id.endsWith(UIHelper.ENTITY_TREE_SHOW_MORE_ID)) {
+          if (UIHelper.isTreeShowMore(id)) {
             UI.entityTree.showMore(Identity.parentId(id));
           }
         }
@@ -4394,7 +4408,7 @@ UILayout.entityList =
           UIHelper.getIconByPath(path,
                                  obj.count === 0,
                                  false);
-        return (obj.id.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID) ? '' :
+        return (UIHelper.isListShowMore(obj.id) ? '' :
                   '<div class="entity_list__item_icon fa fa-' + icon + '"></div>') +
                '<div class="entity_list__item">' +
                '<div class="entity_list__item_name' + (isTopLevelEntity ? ' entity_list__item_name--top' : '') + '">' + obj.value + '</div>' +
@@ -4405,7 +4419,7 @@ UILayout.entityList =
       },
       on: {
         onBeforeSelect: function(id, selection) {
-          if (id.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID)) {
+          if (UIHelper.isListShowMore(id)) {
             UI.entityList.showMore();
           } else {
             UI.entityList.setCurrentId(id);
@@ -4413,7 +4427,7 @@ UILayout.entityList =
         },
         onSelectChange: function (ids) {
           var id = ids[0];
-          if (id.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID)) {
+          if (UIHelper.isListShowMore(id)) {
             $$('entity_list').select(UI.entityList.getCurrentId());
           } else {
             UI.entityForm.setSelectedId(id);

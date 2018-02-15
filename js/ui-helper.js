@@ -15,6 +15,18 @@ UIHelper = {
   ENTITY_TREE_DUMMY_ID: 'dummy_483__4734_47e4',
   ENTITY_LIST_SHOW_MORE_ID: 'show_more_47384_3338222',
 
+  /**
+   *
+   * @param {string} id
+   */
+  isTreeShowMore: function (id) {
+    return (new RegExp(UIHelper.ENTITY_TREE_SHOW_MORE_ID + '(\\$d+)?$')).test(id);
+  },
+
+  isListShowMore: function (id) {
+    return (new RegExp(UIHelper.ENTITY_LIST_SHOW_MORE_ID + '(\\$d+)?$')).test(id);
+  },
+
   setVisible: function(components, isVisible) {
     if (!Array.isArray(components)) {
       components = [components];

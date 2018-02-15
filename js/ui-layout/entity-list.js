@@ -58,7 +58,7 @@ UILayout.entityList =
           UIHelper.getIconByPath(path,
                                  obj.count === 0,
                                  false);
-        return (obj.id.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID) ? '' :
+        return (UIHelper.isListShowMore(obj.id) ? '' :
                   '<div class="entity_list__item_icon fa fa-' + icon + '"></div>') +
                '<div class="entity_list__item">' +
                '<div class="entity_list__item_name' + (isTopLevelEntity ? ' entity_list__item_name--top' : '') + '">' + obj.value + '</div>' +
@@ -69,7 +69,7 @@ UILayout.entityList =
       },
       on: {
         onBeforeSelect: function(id, selection) {
-          if (id.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID)) {
+          if (UIHelper.isListShowMore(id)) {
             UI.entityList.showMore();
           } else {
             UI.entityList.setCurrentId(id);
@@ -77,7 +77,7 @@ UILayout.entityList =
         },
         onSelectChange: function (ids) {
           var id = ids[0];
-          if (id.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID)) {
+          if (UIHelper.isListShowMore(id)) {
             $$('entity_list').select(UI.entityList.getCurrentId());
           } else {
             UI.entityForm.setSelectedId(id);

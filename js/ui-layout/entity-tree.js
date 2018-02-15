@@ -119,7 +119,7 @@ UILayout.entityTree =
         },
         onSelectChange: function(ids) {
           var id = ids[0];
-          if (id.endsWith(UIHelper.ENTITY_TREE_SHOW_MORE_ID)) {
+          if (UIHelper.isTreeShowMore(id)) {
             $$('entity_tree').select(UI.entityTree.getCurrentId());
           } else {
             UI.entityTree.setCurrentId(id);
@@ -129,7 +129,7 @@ UILayout.entityTree =
         },
         onBeforeSelect: function(id, selection) {
           // Request and add more items if "Show More" clicked
-          if (id.endsWith(UIHelper.ENTITY_TREE_SHOW_MORE_ID)) {
+          if (UIHelper.isTreeShowMore(id)) {
             UI.entityTree.showMore(Identity.parentId(id));
           }
         }

@@ -279,7 +279,7 @@ EntityList.prototype.showMore = function() {
 EntityList.prototype.count = function() {
   var lastId = $$('entity_list').getLastId();
   var lastIndex = $$('entity_list').getIndexById(lastId);
-  if (lastId.endsWith(UIHelper.ENTITY_LIST_SHOW_MORE_ID)) {
+  if (UIHelper.isListShowMore(lastId)) {
     return lastIndex - 1;
   }
   return lastIndex;
