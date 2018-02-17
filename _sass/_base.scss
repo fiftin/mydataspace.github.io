@@ -113,6 +113,7 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
 }
 
 .signin_modal {
+  z-index: $fullscreen-zindex + 1;
   .modal-body  {
     padding: 20px 25px 15px 25px !important;
   }
