@@ -151,7 +151,7 @@
     <script>
         (function() {
             if (/^(\/\w+)?\/root.html$/.test('{{ url }}')) {
-              var m = location.pathname.match(/^(\/\w+)?\/([\w\d_\-]+)$/);
+              var m = location.pathname.match(/^(\/\w+)?\/([\w\d_\-]+)\/?$/);
               if (m) {
                 document.getElementById('header_language_button_ru').href = '/ru/' + m[2];
                 document.getElementById('header_language_button_en').href = '/' + m[2];
