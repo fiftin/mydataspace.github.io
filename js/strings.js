@@ -98,7 +98,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       category: 'Category',
       country: 'Country',
 			language: 'Language',
-      interval: 'Interval'
+      interval: 'Interval',
+      datasource: 'Source'
     },
     ROOT_FIELD_PLACEHOLDERS: {
       name: 'Human readable name of your root',
@@ -332,7 +333,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       category: 'Категория',
 			country: 'Страна',
       language: 'Язык',
-      interval: 'Интервал'
+      interval: 'Интервал',
+      datasource: 'Источник'
     },
     ROOT_FIELD_PLACEHOLDERS: {
       name: 'Наименование проекта',
