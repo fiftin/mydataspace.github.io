@@ -17,6 +17,23 @@ $profile-button-size: 35px;
   line-height: 30px;
 }
 
+.give_feedback_modal__send_mail {
+  font-size: 12px;
+  line-height: 16px;
+  margin-top: 10px;
+}
+
+
+.give_feedback_modal__view_all {
+  float: left;
+  line-height: $input-height-base;
+}
+
+
+.give_feedback_modal__send {
+  float: right;
+}
+
 .header__give_feedback {
   border-radius: 100px;
   background: orange;

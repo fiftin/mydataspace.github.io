@@ -14,6 +14,8 @@ menu:
   feedback_cant_be_blank: Отзыв не может быть пустым
   feedback_sent_title: Отзыв оправлени
   feedback_sent_message: Спасибо за ваш отзыв!
+  give_feedback_send_mail: или отправьте сообщение на
+  give_feedback_view_all: Смотреть все
 
 slogan: Сервис публикации данных
 slogan_description: Надежный доступ к данных из любой точки мира со скоростью близкой к реальному времени

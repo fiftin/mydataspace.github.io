@@ -14,6 +14,8 @@ menu:
   feedback_cant_be_blank: Feedback can not be blank
   feedback_sent_title: Feedback sent
   feedback_sent_message: Thank you for your feedback!
+  give_feedback_send_mail: or email directly to
+  give_feedback_view_all: See all
 
 slogan: Data publishing <br /> service
 slogan_description: Reliable access to data over API from anywhere in the world at real time
