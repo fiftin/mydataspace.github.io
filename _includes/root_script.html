@@ -830,6 +830,9 @@
         case 'VIEW_TAB_EXPLORE_LABEL':
           document.getElementById('bootstrap').style.display = 'block';
           document.getElementById('webix').style.display = 'block';
+          if (!UI.entityTree.getCurrentId()) {
+            UI.entityTree.refresh();
+          }
           break;
       }
 
