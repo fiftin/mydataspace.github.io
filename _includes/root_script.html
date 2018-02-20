@@ -323,10 +323,6 @@
       $('#root__looks__actions').find('.look__action--only-owner').css('display', lookMetaData.mine ? 'block' : 'none');
       var query = MDSCommon.parseQuery(window.location.search);
 
-      if (MDSCommon.isPresent(query.search)) {
-        $('#root__looks__search_input').css('display', 'block');
-      }
-
       if (window.parent !== window) { // in iframe hide close button
         $('#root__looks__actions').find('.look__action--non-embed').css('display', 'none');
       }
@@ -449,7 +445,7 @@
 
           if (MDSCommon.isPresent(query.search)) {
             $('#root__looks__search_input').val(query.search);
-            $('#root__looks__search_input').show();
+            $('#root__looks__header').addClass('look__header--search');
           }
 
           req = MDSCommon.extend(MDSCommon.extend(DATA, req), {
