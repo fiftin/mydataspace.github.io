@@ -442,11 +442,18 @@
           break;
         case 'list':
           showLookWaitingCloak();
-          var req = MDSCommon.extend(MDSCommon.extend(DATA, JSON.parse(MDSCommon.findValueByName(lookMetaData.fields, 'request'))), {
+
+          var req = JSON.parse(MDSCommon.findValueByName(lookMetaData.fields, 'request'));
+
+          req.offset = MDSCommon.isInt(req.offset) ? parseInt(req.offset) : 0;
+          $('#root__looks__search_input').val(query.search || '');
+
+          req = MDSCommon.extend(MDSCommon.extend(DATA, req), {
             children: true,
             search: $('#root__looks__search_input').val(),
             filter: MDSCommon.convertNameValueArrayToMap($('#root__looks__content').data('list-look-filters') || [])
           });
+
           Mydataspace.request('entities.get', req).then(function(data) {
             return Promise.all([data, Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
               path: lookMetaData.path + '/filters',
@@ -1057,7 +1064,6 @@
         $('#root__looks__previews').on('click', '.look_preview', function() {
           selectLook($(this).data('look-path'));
         });
-
 
         document.getElementById('root__looks__close').addEventListener('click', function() {
           unselectLook();
