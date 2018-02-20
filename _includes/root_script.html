@@ -1246,7 +1246,8 @@
                 });
                 break;
               case 'list':
-                $look.html('<iframe src="/' + DATA.root + '/' + lookMetaData.path + '"></iframe>');
+                $('#root__about__look_title').css('display', 'none');
+                $look.html('<iframe class="root__about__look_iframe" src="/' + DATA.root + '/' + lookMetaData.path + '"></iframe>');
                 break;
             }
           }

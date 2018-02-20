@@ -68,6 +68,12 @@ $side-panel-width: $side-width - $padding;
 .root__about__look {
 }
 
+.root__about__look_iframe {
+  border: 0;
+  width: 100%;
+  height: 600px;
+}
+
 .root__about__look_webix {
   border-top: 1px solid #b0cee3 !important;
 }
