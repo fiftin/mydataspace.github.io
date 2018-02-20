@@ -321,7 +321,11 @@
 
     function setLook(lookMetaData, preserveContent) {
       $('#root__looks__actions').find('.look__action--only-owner').css('display', lookMetaData.mine ? 'block' : 'none');
-      var search = MDSCommon.parseQuery(window.location.search);
+      var query = MDSCommon.parseQuery(window.location.search);
+
+      if (MDSCommon.isPresent(query.search)) {
+        $('#root__looks__search_input').css('display', 'block');
+      }
 
       if (window.parent !== window) { // in iframe hide close button
         $('#root__looks__actions').find('.look__action--non-embed').css('display', 'none');
@@ -1242,7 +1246,7 @@
                 });
                 break;
               case 'list':
-                throw new Error('Not supported on main page');
+                $look.html = '<iframe src="/' + DATA.root + '/' + lookMetaData.path + '"></iframe>';
                 break;
             }
           }
