@@ -445,8 +445,13 @@
 
           var req = JSON.parse(MDSCommon.findValueByName(lookMetaData.fields, 'request'));
 
-          req.offset = MDSCommon.isInt(req.offset) ? parseInt(req.offset) : 0;
-          $('#root__looks__search_input').val(query.search || '');
+          req.offset = MDSCommon.isInt(query.offset) ? parseInt(query.offset) : 0;
+
+          if (MDSCommon.isPresent(query.search)) {
+            $('#root__looks__search_input').val(query.search);
+            $('#root__looks__search_input').show();
+          }
+
 
           req = MDSCommon.extend(MDSCommon.extend(DATA, req), {
             children: true,
