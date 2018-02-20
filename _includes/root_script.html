@@ -537,6 +537,8 @@
               '</div>';
             });
 
+            var pagesHTML  = '';
+
             $('#root__looks__content').html('<div class="smoke smoke--fullscreen--opaque smoke--fullscreen smoke--fullscreen--fixed">' +
               '<div class="container search__content search__content--fixed">' +
                 (data.children.length > 0 ?
@@ -552,6 +554,7 @@
                     '<style>' + ls.css + '</style>' +
                     '<div class="row">' + itemsHTML.join('\n') + '</div>' +
                   '</div>' +
+                  '<div class="search__results__pages">' + pagesHTML + '</div>' +
                 '</div>' +
                 '<div class="search__filter_panel_wrap">' +
                   '<div class="search__filter_panel">' +
@@ -1252,7 +1255,7 @@
                 });
                 break;
               case 'list':
-                $('#root__about__look_title').css('display', 'none');
+                $('#root__about_look_content').find('.view__about__look_title').hide();
                 $look.html('<iframe class="root__about__look_iframe" src="/' + DATA.root + '/' + lookMetaData.path + '"></iframe>');
                 break;
             }
