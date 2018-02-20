@@ -561,7 +561,7 @@
                     RootHTMLGen.getListLookFilters(data.facets || {}, filtersMetaData) +
                   '</div>' +
                 '</div>' : '<div class="search__no_results">{{ site.data[page.language].search.no_results }}</div>') +
-                '<div class="search__results__waiting" id="search__results__waiting"></div>' +
+                '<div class="search__results__waiting ' + (data.facets == null ? '' : 'search__results__waiting--no-side-menu') + '" id="search__results__waiting"></div>' +
               '</div>' +
             '</div>');
 
