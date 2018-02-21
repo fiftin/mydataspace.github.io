@@ -537,7 +537,18 @@
               '</div>';
             });
 
-            var pagesHTML  = '';
+            var pageIndex = Math.floor(req.offset / req.limit);
+            var lastPageIndex = Math.floor(data.total / limit);
+
+            var pagesHTML = '<span class="search__results__page search__results__page--active" id="search__results__page_' + (pageIndex + 1) + '"></span>';
+
+            for (var i = pageIndex - 1; i >= Math.max(0, pageIndex - 4); i--) {
+              pagesHTML = '<a class="search__results__page" id="search__results__page_' + (i + 1) + '"></a>' + pagesHTML;
+            }
+
+            for (i = pageIndex + 1; i <= Math.min(lastPageIndex, pageIndex + 4); i++) {
+              pagesHTML += '<a class="search__results__page" id="search__results__page_' + (i + 1) + '"></a>';
+            }
 
             $('#root__looks__content').html('<div class="smoke smoke--fullscreen--opaque smoke--fullscreen smoke--fullscreen--fixed">' +
               '<div class="container search__content search__content--fixed">' +
