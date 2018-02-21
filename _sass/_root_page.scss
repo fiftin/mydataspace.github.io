@@ -836,12 +836,13 @@ $look-search-shadow-width: 100px;
 
 .search__results__pages {
   margin-bottom: 25px;
+  text-align: right;
 }
 
 .search__results__page {
-  margin-right: 5px;
-  padding: 5px 15px;
-  border-radius: 10px;
+  margin-left: 5px;
+  padding: 5px 20px;
+  border-radius: 100px;
   background: #85b4d4;
   color: white;
   border-bottom: 1px solid #2386c8;

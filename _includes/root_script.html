@@ -542,12 +542,15 @@
 
             var pagesHTML = '<span class="search__results__page search__results__page--active" id="search__results__page_' + (pageIndex + 1) + '">' + (pageIndex + 1) + '</span>';
 
+            var offset;
             for (var i = pageIndex - 1; i >= Math.max(0, pageIndex - 4); i--) {
-              pagesHTML = '<a class="search__results__page" id="search__results__page_' + (i + 1) + '">' + (i + 1) + '</a>' + pagesHTML;
+              offset = i * req.limit;
+              pagesHTML = '<a href="?offset=' + offset + '&search=' + encodeURIComponent(req.search || '') + '" data-offset="' + offset + '" class="search__results__page" id="search__results__page_' + (i + 1) + '">' + (i + 1) + '</a>' + pagesHTML;
             }
 
             for (i = pageIndex + 1; i <= Math.min(lastPageIndex, pageIndex + 4); i++) {
-              pagesHTML += '<a class="search__results__page" id="search__results__page_' + (i + 1) + '">' + (i + 1) + '</a>';
+              offset = i * req.limit;
+              pagesHTML += '<a href="?offset=' + offset + '&search=' + encodeURIComponent(req.search || '') + '" data-offset="' + offset + '" class="search__results__page" id="search__results__page_' + (i + 1) + '">' + (i + 1) + '</a>';
             }
 
             $('#root__looks__content').html('<div class="smoke smoke--fullscreen--opaque smoke--fullscreen smoke--fullscreen--fixed">' +
