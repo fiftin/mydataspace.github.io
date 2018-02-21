@@ -832,3 +832,29 @@ $look-search-shadow-width: 100px;
   padding-top: $small-padding;
   cursor: pointer;
 }
+
+
+.search__results__pages {
+  margin-bottom: 25px;
+}
+
+.search__results__page {
+  margin-right: 5px;
+  padding: 5px 15px;
+  border-radius: 10px;
+  background: #85b4d4;
+  color: white;
+  border-bottom: 1px solid #2386c8;
+  &:hover {
+    background: #268fd5;
+  }
+}
+
+.search__results__page--active {
+  background: #27ae60;
+  border-color: #27ae60;
+  border-bottom: 1px solid #209150;
+  &:hover {
+    background: #219552;
+  }
+}
