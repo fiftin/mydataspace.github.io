@@ -538,7 +538,7 @@
             });
 
             var pageIndex = Math.floor(req.offset / req.limit);
-            var lastPageIndex = Math.floor(data.total / limit);
+            var lastPageIndex = Math.floor(data.total / req.limit);
 
             var pagesHTML = '<span class="search__results__page search__results__page--active" id="search__results__page_' + (pageIndex + 1) + '"></span>';
 
