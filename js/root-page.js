@@ -633,7 +633,11 @@ function initRootPage(options) {
     currentLook = null;
 //      $('#root__looks__content').data('look-path', null);
     $('#root__looks__content').removeData();
-    history.pushState({}, null, lang + '/' + DATA.root + '/views' + window.location.search);
+
+    var q = MDSCommon.parseQuery(window.location.search);
+    delete q.offset;
+    delete q.search;
+    history.pushState({}, null, lang + '/' + DATA.root + '/views' + MDSCommon.toQuery(q));
   }
 
   function selectLook(path) {
