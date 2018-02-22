@@ -639,7 +639,6 @@ function initRootPage(options) {
   function selectLook(path) {
     if (path == null) {
       return;
-//        throw new Error('Look path cant be null');
     }
 
     var preview = getLookPreviewNode(path);
@@ -1077,6 +1076,7 @@ function initRootPage(options) {
       });
 
       $('#root__looks__previews').on('click', '.look_preview', function() {
+        showWaitingCloak();
         selectLook($(this).data('look-path'));
       });
 
