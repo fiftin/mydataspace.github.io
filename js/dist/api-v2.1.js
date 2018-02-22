@@ -7498,6 +7498,19 @@ var MDSCommon = {
     return i === -1 ? undefined : arr[i];
   },
 
+  toQuery: function(obj) {
+    var ret = '';
+    for (var k in obj) {
+      if (ret === '') {
+        ret = '?';
+      } else {
+        ret += '&';
+      }
+      ret += k + '=' + encodeURIComponent(obj[k]);
+    }
+    return ret;
+  },
+
   parseQuery: function (queryString) {
     var query = {};
     var pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&').filter(function (part) {
