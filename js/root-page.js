@@ -1,3 +1,7 @@
+/**
+ *
+ * @param options
+ */
 function initRootPage(options) {
 
   var API_URL = options.api_url;
