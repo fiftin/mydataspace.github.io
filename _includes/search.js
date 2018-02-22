@@ -1,3 +1,13 @@
+{% if jekyll.environment == "local" %}
+{% assign client_id = "my-data.space" %}
+{% assign api_url = site.local_api_url %}
+{% assign cdn_url = site.local_api_url %}
+{% else %}
+{% assign client_id = site.client_id %}
+{% assign api_url = site.api_url %}
+{% assign cdn_url = site.cdn_url %}
+{% endif %}
+
 var search_{{include.id}}_url = '';
 var search_{{include.id}}_pathname = MDSCommon.endsWith(window.location.pathname, '/datasources')  ? '{{ lang_prefix }}/datasources' : '{{ lang_prefix }}/search';
 var search_{{include.id}}_displayMode = localStorage.getItem('searchDisplayMode') || 'snippet';
