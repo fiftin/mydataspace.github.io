@@ -170,6 +170,7 @@ look_modal:
   field_title: Title
   field_description: Description
   button_create: Create View
+  editor_not_supported: Not supported yet
   codepen:
     title: Codepen
     field_url: Codepen URL
@@ -181,6 +182,8 @@ look_modal:
     button_add: Add
     button_remove: Remove
     button_reset: Reset
+  list:
+    title: List
 
 search:
   found_prefix: "Found"

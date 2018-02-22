@@ -571,3 +571,55 @@ function initFeedbackModal() {
     giveFeedback();
   });
 }
+
+
+
+
+
+
+
+function no_items__createNewRoot() {
+  var notices = document.getElementById('no_items__notice').childNodes[0].childNodes;
+  for (var i = 0; i < notices.length; i++) {
+    notices[i].classList.remove('no_items__notice--alert');
+  }
+  var root = document.getElementById('no_items__new_root_input').value;
+  if (MDSCommon.isBlank(root) || root.length < 3 || root.length > 50) {
+    notices[0].classList.add('no_items__notice--alert');
+    document.getElementById('no_items__new_root_input').focus();
+    return;
+  }
+  Mydataspace.request('entities.create', {
+    root: root,
+    path: '',
+    fields: []
+  }, function() {
+    document.getElementById('no_items__new_root_input').value = '';
+    var url = 'https://wizard.myda.space/' + root + '/root.html';
+    $.ajax({
+      url: url,
+      type: 'HEAD'
+    }).then(function() {
+      $('#wizard_modal__frame').attr('src', url);
+      $('#wizard_modal').modal('show');
+    });
+  }, function(err) {
+    switch (err.name) {
+      case 'SequelizeValidationError':
+        notices[1].classList.add('no_items__notice--alert');
+        break;
+      case 'SequelizeUniqueConstraintError':
+        notices[2].classList.add('no_items__notice--alert');
+        break;
+      default:
+    }
+    document.getElementById('no_items__new_root_input').focus();
+  });
+}
+
+function no_items__new_root_input__onKeyPress(e) {
+  if (e.keyCode === 13) {
+    no_items__createNewRoot();
+    return false;
+  }
+}

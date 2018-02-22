@@ -70,8 +70,13 @@ layout: hybrid_default
                   <i class="fa fa-table" aria-hidden="true"></i> {{ site.data[page.language].look_modal.table.title }}
                 </a>
               </li>
-              <!--<li role="presentation"><a href="javascript: void(0);"><i class="fa fa-bar-chart" aria-hidden="true"></i> Chart</a></li>-->
+              <li role="presentation" id="look_modal__list_tab">
+                  <a href="javascript: void(0);" id="look_modal__list_tab_link">
+                      <i class="fa fa-list" aria-hidden="true"></i> {{ site.data[page.language].look_modal.list.title }}
+                  </a>
+              </li>
               <!--<li role="presentation"><a href="javascript: void(0);"><i class="fa fa-map" aria-hidden="true"></i> Map</a></li>-->
+              <!--<li role="presentation"><a href="javascript: void(0);"><i class="fa fa-bar-chart" aria-hidden="true"></i> Chart</a></li>-->
               <!--<li role="presentation"><a href="javascript: void(0);"><i class="fa fa-pie-chart" aria-hidden="true"></i> Vega</a></li>-->
             </ul>
           </div>
@@ -100,67 +105,19 @@ layout: hybrid_default
                      placeholder="{{ site.data[page.language].look_modal.codepen.field_url }}" />
               <div class="bootstrap-form-error" id="look_modal__codepen_err"></div>
             </div>
+
+            <div class="form-group" id="look_modal__list_wrap">
+              <div>{{ site.data[page.language].look_modal.editor_not_supported }}</div>
+            </div>
           </div>
           <script>
             $(function() {
-              $('#look_modal__codepen_tab_link').click(function() {
-                $('#look_modal__table_tab').removeClass('active');
-                $('#look_modal__codepen_tab').addClass('active');
-                $('#look_modal__table_wrap').addClass('hidden');
-                $('#look_modal__codepen_wrap').removeClass('hidden');
-                $('#look_modal').data('look-type', 'codepen');
-                $('#look_modal__codepen').focus();
-              });
-
-              $('#look_modal__table_tab_link').click(function() {
-                $('#look_modal__table_tab').addClass('active');
-                $('#look_modal__codepen_tab').removeClass('active');
-                $('#look_modal__table_wrap').removeClass('hidden');
-                $('#look_modal__codepen_wrap').addClass('hidden');
-                $('#look_modal').data('look-type', 'table');
-                $('#look_modal__table_path').focus();
-              });
-
-              $('#look_modal').on('show.bs.modal', function () {
-                $('#look_modal__title_err').text('');
-                $('#look_modal__codepen_err').text('');
-
-                $('#look_modal__title').val('');
-                $('#look_modal__description').val('');
-                $('#look_modal__codepen').val('');
-                $('#look_modal__table_path').val('');
-
-                $$('look_modal__table').clearAll();
-
-                $('#look_modal__tabs').children().removeClass('active');
-                $('#look_modal__type_forms').children().addClass('hidden');
-
-
-                $('#look_modal').data('look-type', null);
-                $('#look_modal__locker').addClass('hidden');
-              });
-
-              $('#look_modal').on('shown.bs.modal', function () {
-                $('#look_modal__title').focus();
-              });
-
-              webix.ui({
-                view: 'datatable',
-                id: 'look_modal__table',
-                container: 'look_modal__table_webix',
-                columns:[
-                  { id: 'value', header: '{{ site.data[page.language].look_modal.table.column_value }}', width: 200, editor: 'text' },
-                  { id: 'title', header: '{{ site.data[page.language].look_modal.table.column_title }}', width: 345 - 17, editor: 'text' },
-                  { id: 'width', header: '{{ site.data[page.language].look_modal.table.column_width }}', hidden: true, editor: 'int' }
-                ],
-                height: 200,
-                select: 'multiselect',
-                headerRowHeight: 30,
-                autowidth: true,
-                drag: true,
-                scrollX: false,
-                editable: true,
-                editaction: 'dblclick'
+              initRootViewEditor({
+                table: {
+                  column_value: '{{ site.data[page.language].look_modal.table.column_value }}',
+                  column_title: '{{ site.data[page.language].look_modal.table.column_title }}',
+                  column_width: '{{ site.data[page.language].look_modal.table.column_width }}'
+                }
               });
             });
           </script>

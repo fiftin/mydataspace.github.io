@@ -193,3 +193,25 @@ function initHybridPage(webix_with_header) {
     highlight: function (/*str, lang*/) { return ''; }
   });
 }
+
+
+function adminPanel_startWaiting(duration) {
+  if (adminPanel_waiting) {
+    return;
+  }
+  adminPanel_waiting = true;
+  $('#admin_panel__loading').show();
+  $('#webix_preloaded_header').addClass('invisible');
+  $('#logo_link').addClass('invisible');
+  $('#no_items').addClass('invisible');
+  $('#admin_panel').addClass('invisible');
+
+  setTimeout(function() {
+    adminPanel_waiting = false;
+    $('#admin_panel__loading').hide();
+    $('#webix_preloaded_header').removeClass('invisible');
+    $('#logo_link').removeClass('invisible');
+    $('#no_items').removeClass('invisible');
+    $('#admin_panel').removeClass('invisible');
+  }, duration);
+}

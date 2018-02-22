@@ -321,6 +321,7 @@ look_modal:
   field_title: Заголовок
   field_description: Описание
   button_create: Создать
+  editor_not_supported: Еще не поддерживается
   codepen:
     title: Codepen
     field_url: Codepen URL
@@ -332,7 +333,8 @@ look_modal:
     button_add: Добавить
     button_remove: Удалить
     button_reset: Восстановить
-
+  list:
+    title: Список
 
 search:
   found_prefix: "Найдено"
