@@ -454,3 +454,120 @@ RootHelper = {
     return true;
   }
 };
+
+
+
+
+
+function parseJWT(token) {
+  if (token == null || token === '') {
+    throw new Error('JWT can\t be empty');
+  }
+  var parts = token.split('.');
+  var base64Url = parts[1];
+  if (base64Url == null) {
+    throw new Error('JWT has Illegal format');
+  }
+  var base64 = base64Url.replace(/\-/g, '+').replace(/_/g, '/');
+  // About niceties of window.btoa method.
+  // https://developer.mozilla.org/ru/docs/Web/API/WindowBase64/btoa
+  var json = decodeURIComponent(escape(window.atob(base64)));
+  return JSON.parse(json);
+}
+
+function isValidJWT(token) {
+  try {
+    var json = parseJWT(token);
+  } catch(e) {
+    return false;
+  }
+  return json.exp * 1000 >= Date.now();
+}
+
+
+
+
+
+function showFeedbackModal(needClear) {
+  if (needClear) {
+    $('#give_feedback_modal__text').val('');
+    $('#give_feedback_modal__send').prop('disabled', false);
+    $('#give_feedback_modal__text').prop('disabled', false);
+    $('#give_feedback_modal__text').removeClass('new_comment__textarea--error');
+    $('#give_feedback_modal__error').text('');
+  }
+  $('#give_feedback_modal').modal('show');
+}
+
+
+function initFeedbackModal() {
+  var $textarea = $('#give_feedback_modal__text');
+  var $button = $('#give_feedback_modal__send');
+  var $error = $('#give_feedback_modal__error');
+
+
+  function giveFeedback() {
+    $textarea.removeClass('new_comment__textarea--error');
+
+    if ($textarea.val().trim() === '') {
+      $textarea.addClass('new_comment__textarea--error');
+      $error.text('{{ site.data[page.language].menu.feedback_cant_be_blank }}');
+      $textarea.focus();
+      return;
+    }
+
+    $button.prop('disabled', true);
+    $textarea.prop('disabled', true);
+
+    Mydataspace.request('entities.create', {
+      root: 'feedback',
+      path: 'data/' + MDSCommon.guid(),
+      fields: [
+        {
+          name: 'text',
+          value: $textarea.val().trim(),
+          type: 's'
+        },
+        {
+          name: 'rate',
+          value: '0',
+          type: 'i'
+        }
+      ]
+    }, function () {
+      $('#give_feedback_modal').modal('hide');
+      $('#give_feedback_sent_modal').modal('show');
+    }, function (err) {
+      $button.prop('disabled', false);
+      $textarea.prop('disabled', false);
+      console.log(err);
+      $error.text(err.message);
+      $textarea.focus();
+    });
+  }
+
+
+  $('#give_feedback_modal').on('shown.bs.modal', function () {
+    setTimeout(function() {
+      $textarea.focus();
+    }, 300);
+  });
+
+  $button.click(function () {
+
+    if (!Mydataspace.isLoggedIn()) {
+      Mydataspace.on('login', function () {
+        setTimeout(function() {
+          showFeedbackModal();
+          giveFeedback();
+        }, 300);
+      });
+      $('#give_feedback_modal').modal('hide');
+      setTimeout(function() {
+        $('#signin_modal').modal('show');
+      }, 300);
+      return;
+    }
+    giveFeedback();
+  });
+}
