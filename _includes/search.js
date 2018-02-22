@@ -8,6 +8,14 @@
 {% assign cdn_url = site.cdn_url %}
 {% endif %}
 
+{% if page.language == 'en' %}
+{% assign lang_prefix = '' %}
+{% else %}
+{% assign lang_prefix = page.language|prepend:'/' %}
+{% endif %}
+
+
+
 var search_{{include.id}}_url = '';
 var search_{{include.id}}_pathname = MDSCommon.endsWith(window.location.pathname, '/datasources')  ? '{{ lang_prefix }}/datasources' : '{{ lang_prefix }}/search';
 var search_{{include.id}}_displayMode = localStorage.getItem('searchDisplayMode') || 'snippet';
