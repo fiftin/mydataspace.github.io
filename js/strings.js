@@ -230,6 +230,16 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     types: {
       template: 'Template',
       dataset: 'Dataset'
+    },
+
+    licenses: {
+      'cc-by-3': 'Creative Commons 3.0',
+      'cc-by-4': 'Creative Commons 4.0'
+    },
+
+    licensesShortTitles: {
+      'cc-by-3': 'Creative Commons 3.0',
+      'cc-by-4': 'CC BY 4.0'
     }
   },
 
@@ -470,6 +480,16 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     types: {
       template: 'Шаблон',
       dataset: 'Датасет'
+    },
+
+    licenses: {
+      'cc-by-3': 'Creative Commons 3.0',
+      'cc-by-4': 'Creative Commons 4.0'
+    },
+
+    licensesShortTitles: {
+      'cc-by-3': 'Creative Commons 3.0',
+      'cc-by-4': 'CC BY 4.0'
     }
   }
 };

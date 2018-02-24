@@ -896,6 +896,9 @@ EntityForm.prototype.addRootField = function(data) {
 				]
 			});
 			break;
+    case 'license':
+      $$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.licensesShortTitles));
+      break;
 		case 'category':
 			$$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.categories));
 			break;

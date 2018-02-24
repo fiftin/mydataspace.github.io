@@ -24,14 +24,10 @@ UIConstants = {
 
   LICENSES: {
     'cc-by-3': {
-      title: 'Creative Commons 3.0',
-      shortTitle: 'CC BY 3.0',
       icon: 'https://licensebuttons.net/l/by/4.0/88x31.png',
       url: 'https://creativecommons.org/licenses/by/3.0'
     },
 	  'cc-by-4': {
-	    title: 'Creative Commons 4.0',
-      shortTitle: 'CC BY 4.0',
       icon: 'https://licensebuttons.net/l/by/4.0/88x31.png',
       url: 'https://creativecommons.org/licenses/by/4.0'
     }
