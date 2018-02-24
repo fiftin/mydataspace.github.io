@@ -869,8 +869,8 @@ $look-search-shadow-width: 100px;
 }
 
 $root-page-tag-height: 27px;
-
-.view__tag--license--cc-by-3 {
+.view__tag--license--cc-by-3,
+.view__tag--license--cc-by-4 {
   width: floor(($root-page-tag-height / 31) * 88);
   background-image: url("https://licensebuttons.net/l/by/4.0/88x31.png");
 }

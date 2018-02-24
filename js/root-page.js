@@ -923,7 +923,7 @@ function initRootPage(options) {
       var tags = (MDSCommon.findValueByName(data.fields, 'tags') || '').split(' ').filter(function(tag) {
         return tag != null && tag !== '';
       }).map(function(tag) {
-        return '<a class="view__tag" href="/?q=%23' + tag + '" onclick="openSearch_header__search(\'' + tag + '\'); return false;">' + tag + '</a>';
+        return '<a class="view__tag" href="/search?q=%23' + tag + '" onclick="openSearch_header__search(\'' + tag + '\'); return false;">' + tag + '</a>';
       }).join(' ');
 
 
@@ -964,7 +964,7 @@ function initRootPage(options) {
 
       var license = MDSCommon.findValueByName(data.fields, 'license');
       if (MDSCommon.isPresent(license)) {
-        tags = '<span class="view__tag view__tag--license view__tag--license--' + license + '" onclick="openSearch_header__search(\'#license:' + license + '\'); return false;">&nbsp;</span> ' + tags;
+        tags = '<a href="/search?q=%23license:' + license + '" class="view__tag view__tag--license view__tag--license--' + license + '" onclick="openSearch_header__search(\'#license:' + license + '\'); return false;">&nbsp;</a> ' + tags;
       }
 
       if (MDSCommon.isPresent(tags)) {
