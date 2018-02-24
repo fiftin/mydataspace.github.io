@@ -233,12 +233,16 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     },
 
     licenses: {
+      '': 'No license',
+      'custom': 'Custom license',
       'cc-by-3': 'Creative Commons 3.0',
       'cc-by-4': 'Creative Commons 4.0'
     },
 
     licensesShortTitles: {
-      'cc-by-3': 'Creative Commons 3.0',
+      '': 'No license',
+      'custom': 'Custom license',
+      'cc-by-3': 'CC BY 3.0',
       'cc-by-4': 'CC BY 4.0'
     }
   },
@@ -360,9 +364,14 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       description: 'Коротко о проекте',
       websiteURL: 'Сайт на котором используются данные',
       readme: 'Подробное описание в Markdown формате',
-			category: '',
+			category: 'К какой категории относятся данные?',
 			country: 'К какой стране относятся данные?',
-			language: 'На каком языке'
+			language: 'На каком языке данные?',
+      datasource: '',
+      datasourceURL: 'Адрес сртаницы или файла источника',
+      license: 'Тим лицензионного соглашения',
+      licenseURL: 'Адрес страницы с лицензионными соглашением',
+      licenseText: 'Текст лицензионного соглашения или дополнения к основному соглашению'
     },
     ROOT_AVATAR_UPLOAD: 'Загрузить',
     ROOT_AVATAR_BROWSE: 'Обзор',
@@ -483,12 +492,16 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     },
 
     licenses: {
+      '': 'Нет лицензии',
+      'custom': 'Своя лицензия',
       'cc-by-3': 'Creative Commons 3.0',
       'cc-by-4': 'Creative Commons 4.0'
     },
 
     licensesShortTitles: {
-      'cc-by-3': 'Creative Commons 3.0',
+      '': 'Нет лицензии',
+      'custom': 'Своя лицензия',
+      'cc-by-3': 'CC BY 3.0',
       'cc-by-4': 'CC BY 4.0'
     }
   }

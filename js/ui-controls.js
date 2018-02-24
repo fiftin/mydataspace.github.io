@@ -53,7 +53,8 @@ UIControls = {
 			name: 'fields.' + name + '.value',
 			id: 'entity_form__' + name + '_value',
 			value: value,
-			options: options
+			options: options,
+      placeholder: STRINGS.ROOT_FIELD_PLACEHOLDERS[name]
 		};
   },
 

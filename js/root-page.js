@@ -1292,7 +1292,7 @@ function initRootPage(options) {
           .attr('onclick', 'openSearch_header__search(\'#src:' + datasource + ' \');');
 //            .click(function() { openSearch_header__search('#src:' + datasource) });
 
-        $('#root__datasource_icon').attr('src', CDN_URL + '/avatars/md/' + MDSCommon.findValueByName(datasourceData.fields, 'icon') + '.png');
+        $('#root__datasource_icon').attr('src', CDN_URL + '/avatars/md/' + MDSCommon.findValueByName(datasourceData.fields, 'avatar') + '.png');
         $('#root__datasource_title').text(MDSCommon.findValueByName(datasourceData.fields, 'name'));
         $('#root__datasource_name')
           .attr('href', 'http://' + MDSCommon.getPathName(datasourceData.path))

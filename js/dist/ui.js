@@ -233,19 +233,39 @@ UIConstants = {
 	ROOT_FIELDS: [
 		'avatar',
 		'name',
-		'tags',
-		'websiteURL',
-		'description',
-		'country',
-		'language',
-		'category',
-		'readme',
+    'description',
+    'websiteURL',
+    //
+    'tags',
+    'country',
+    'language',
+    'category',
+    'readme',
+    //
     'datasource',
     'datasourceURL',
+    //
     'license',
-    'licenseText',
-    'licenseURL'
+    'licenseURL',
+    'licenseText'
 	],
+
+  ROOT_FIELDS_TYPES: {
+    avatar:         's',
+    name:           's',
+    tags:           's',
+    websiteURL:     'u',
+    description:    's',
+    country:        's',
+    language:       's',
+    category:       's',
+    readme:         'j',
+    datasource:     's',
+    datasourceURL:  'u',
+    license:        's',
+    licenseText:    'j',
+    licenseURL:     'u'
+  },
 
 	HIDDEN_ROOT_FIELDS: [
 		'vk',
@@ -483,8 +503,26 @@ UIHelper = {
     } else {
       return 'https://wizard.myda.space/' + data.root + '/' + 'root.html'
     }
-  }
+  },
 
+  loadDatasourcesToCombo: function(id) {
+    Mydataspace.request('entities.get', {
+      root: 'datasources',
+      path: 'data',
+      children: true,
+      //fields: ['name']
+    }).then(function(data) {
+      var options = data.children.map(function(ds) {
+        var id = MDSCommon.getPathName(ds.path);
+        return {
+          id: id,
+          value: MDSCommon.findValueByName(ds.fields, 'name') || id
+        }
+      });
+      $$(id).getList().clearAll();
+      $$(id).getList().parse(options);
+    });
+  }
 };
 
 var Fields = {
@@ -713,8 +751,12 @@ var Identity = {
    */
   idFromData: function(data) {
     var v = MDSCommon.findValueByName(data.fields || [], '$version');
+    if (MDSCommon.isBlank(v) && MDSCommon.isBlank(data.path)) {
+      v = MDSCommon.findValueByName(data.fields, '$currentVersion');
+    }
+
     var version = '';
-    if (typeof v === 'number' && v > 0) {
+    if (typeof v === 'number') {
       version = '?' + v;
     }
     
@@ -759,8 +801,6 @@ var Identity = {
     
     if (MDSCommon.isInt(idVersionParts[1])) {
       ret.version = parseInt(idVersionParts[1]);
-    } else {
-      ret.version = 0;
     }
 
     return ret;
@@ -794,7 +834,7 @@ var Identity = {
 
   rootId: function(entityIdWithVersion) {
     var data = Identity.dataFromId(entityIdWithVersion);
-    var version = data.version && data.version > 0 ? '?' + data.version : '';
+    var version = typeof data.version === 'number' ? '?' + data.version : '';
     return data.root + version; 
   },
 
@@ -885,7 +925,8 @@ UIControls = {
 			name: 'fields.' + name + '.value',
 			id: 'entity_form__' + name + '_value',
 			value: value,
-			options: options
+			options: options,
+      placeholder: STRINGS.ROOT_FIELD_PLACEHOLDERS[name]
 		};
   },
 
@@ -1650,6 +1691,14 @@ EntityForm.prototype.setData = function(data) {
   $$('entity_form').setValues(formData);
 
   if (MDSCommon.isBlank(data.path)) { // root entity
+    // add fields from ROOT_FIELDS if not exists in data.fields
+    for (var i in UIConstants.ROOT_FIELDS) {
+      var field = UIConstants.ROOT_FIELDS[i];
+      if (!MDSCommon.findByName(data.fields, field)) {
+        data.fields.push({ name: field, value: '', type: UIConstants.ROOT_FIELDS_TYPES[field] });
+      }
+    }
+
     this.addRootFields(data.fields);
   } else {
     this.setNoFieldLabelVisible(true);
@@ -1996,6 +2045,14 @@ EntityForm.prototype.addRootField = function(data) {
 				]
 			});
 			break;
+    case 'datasource':
+      var datasourceInitialOptions = {};
+      if (MDSCommon.isPresent(data.value)) {
+        datasourceInitialOptions[data.value] = data.value;
+      }
+      $$('entity_form').addView(UIControls.getRootFieldView('select', data, datasourceInitialOptions));
+      UIHelper.loadDatasourcesToCombo('entity_form__' + data.name + '_value');
+      break;
     case 'license':
       $$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.licensesShortTitles));
       break;
@@ -2009,6 +2066,7 @@ EntityForm.prototype.addRootField = function(data) {
 			$$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.countries));
 			break;
     case 'readme':
+    case 'licenseText':
       $$('entity_form').addView(UIControls.getRootFieldView('textarea', data));
       break;
 		default:

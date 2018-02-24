@@ -48,8 +48,12 @@ var Identity = {
    */
   idFromData: function(data) {
     var v = MDSCommon.findValueByName(data.fields || [], '$version');
+    if (MDSCommon.isBlank(v) && MDSCommon.isBlank(data.path)) {
+      v = MDSCommon.findValueByName(data.fields, '$currentVersion');
+    }
+
     var version = '';
-    if (typeof v === 'number' && v > 0) {
+    if (typeof v === 'number') {
       version = '?' + v;
     }
     
@@ -94,8 +98,6 @@ var Identity = {
     
     if (MDSCommon.isInt(idVersionParts[1])) {
       ret.version = parseInt(idVersionParts[1]);
-    } else {
-      ret.version = 0;
     }
 
     return ret;
@@ -129,7 +131,7 @@ var Identity = {
 
   rootId: function(entityIdWithVersion) {
     var data = Identity.dataFromId(entityIdWithVersion);
-    var version = data.version && data.version > 0 ? '?' + data.version : '';
+    var version = typeof data.version === 'number' ? '?' + data.version : '';
     return data.root + version; 
   },
 

@@ -36,19 +36,39 @@ UIConstants = {
 	ROOT_FIELDS: [
 		'avatar',
 		'name',
-		'tags',
-		'websiteURL',
-		'description',
-		'country',
-		'language',
-		'category',
-		'readme',
+    'description',
+    'websiteURL',
+    //
+    'tags',
+    'country',
+    'language',
+    'category',
+    'readme',
+    //
     'datasource',
     'datasourceURL',
+    //
     'license',
-    'licenseText',
-    'licenseURL'
+    'licenseURL',
+    'licenseText'
 	],
+
+  ROOT_FIELDS_TYPES: {
+    avatar:         's',
+    name:           's',
+    tags:           's',
+    websiteURL:     'u',
+    description:    's',
+    country:        's',
+    language:       's',
+    category:       's',
+    readme:         'j',
+    datasource:     's',
+    datasourceURL:  'u',
+    license:        's',
+    licenseText:    'j',
+    licenseURL:     'u'
+  },
 
 	HIDDEN_ROOT_FIELDS: [
 		'vk',

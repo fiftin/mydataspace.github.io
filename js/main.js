@@ -358,15 +358,19 @@ if (typeof Handlebars !== 'undefined') {
  * @param {Object} data - Data received for root from MyDataSpace backend.
  */
 function addJsonLD(data) {
-  var script = document.createElement('script');
+  var script = document.querySelector('script[type="application/ld+json"]');
+  if (!script) {
+    script = document.createElement('script');
+  }
+  var fields = data.fields;
   script.type = 'application/ld+json';
   script.text = JSON.stringify({
     "@context": "http://schema.org",
     "@id": "https://myda.space/" + data.root,
     "@type": "Dataset",
-    "name":  MDSCommon.findValueByName(data.fields, 'name'),
-    "description": MDSCommon.findValueByName(data.fields, 'description'),
-    "keywords": MDSCommon.findValueByName(data.fields, 'tags')
+    "name":  MDSCommon.findValueByName(fields, 'name'),
+    "description": MDSCommon.findValueByName(fields, 'description'),
+    "keywords": MDSCommon.findValueByName(fields, 'tags')
   });
   document.querySelector('head').appendChild(script);
 }

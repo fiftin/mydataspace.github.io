@@ -304,7 +304,7 @@ function startSearch_{{include.id}}(search) {
       datasourceInfoHTML = '<div class="search__datasource datasource" id="search_{{include.id}}__datasource"></div>';
       Mydataspace.request('entities.get', { root: 'datasources', path: 'data/' + searchOptions.filters.datasource }).then(function(datasourceData) {
         document.getElementById('search_{{include.id}}__datasource').innerHTML =
-          '<img class="datasource__img" src="{{ cdn_url }}/avatars/md/' + MDSCommon.findValueByName(datasourceData.fields, 'icon') + '.png" />' +
+          '<img class="datasource__img" src="{{ cdn_url }}/avatars/md/' + MDSCommon.findValueByName(datasourceData.fields, 'avatar') + '.png" />' +
           '<div class="datasource__title">' + MDSCommon.findValueByName(datasourceData.fields, 'name') + '</div>' +
           '<div class="datasource__name"><a href="http://' + MDSCommon.getPathName(datasourceData.path) + '">' +
           MDSCommon.getPathName(datasourceData.path) + '</a></div>';

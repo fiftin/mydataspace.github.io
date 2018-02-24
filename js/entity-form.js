@@ -550,6 +550,14 @@ EntityForm.prototype.setData = function(data) {
   $$('entity_form').setValues(formData);
 
   if (MDSCommon.isBlank(data.path)) { // root entity
+    // add fields from ROOT_FIELDS if not exists in data.fields
+    for (var i in UIConstants.ROOT_FIELDS) {
+      var field = UIConstants.ROOT_FIELDS[i];
+      if (!MDSCommon.findByName(data.fields, field)) {
+        data.fields.push({ name: field, value: '', type: UIConstants.ROOT_FIELDS_TYPES[field] });
+      }
+    }
+
     this.addRootFields(data.fields);
   } else {
     this.setNoFieldLabelVisible(true);
@@ -896,6 +904,14 @@ EntityForm.prototype.addRootField = function(data) {
 				]
 			});
 			break;
+    case 'datasource':
+      var datasourceInitialOptions = {};
+      if (MDSCommon.isPresent(data.value)) {
+        datasourceInitialOptions[data.value] = data.value;
+      }
+      $$('entity_form').addView(UIControls.getRootFieldView('select', data, datasourceInitialOptions));
+      UIHelper.loadDatasourcesToCombo('entity_form__' + data.name + '_value');
+      break;
     case 'license':
       $$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.licensesShortTitles));
       break;
@@ -909,6 +925,7 @@ EntityForm.prototype.addRootField = function(data) {
 			$$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.countries));
 			break;
     case 'readme':
+    case 'licenseText':
       $$('entity_form').addView(UIControls.getRootFieldView('textarea', data));
       break;
 		default:

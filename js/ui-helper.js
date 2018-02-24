@@ -178,6 +178,24 @@ UIHelper = {
     } else {
       return 'https://wizard.myda.space/' + data.root + '/' + 'root.html'
     }
-  }
+  },
 
+  loadDatasourcesToCombo: function(id) {
+    Mydataspace.request('entities.get', {
+      root: 'datasources',
+      path: 'data',
+      children: true,
+      //fields: ['name']
+    }).then(function(data) {
+      var options = data.children.map(function(ds) {
+        var id = MDSCommon.getPathName(ds.path);
+        return {
+          id: id,
+          value: MDSCommon.findValueByName(ds.fields, 'name') || id
+        }
+      });
+      $$(id).getList().clearAll();
+      $$(id).getList().parse(options);
+    });
+  }
 };
