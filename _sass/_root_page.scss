@@ -3,6 +3,21 @@
 $side-width: 300px;
 $side-panel-width: $side-width - $padding;
 
+$root-page-tag-height: 27px;
+$snippet-tag-height: 23px;
+
+
+.view__tag--license {
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.view__tag--license--cc-by-3,
+.view__tag--license--cc-by-4 {
+  width: floor(($snippet-tag-height / 31) * 88);
+  background-image: url("https://licensebuttons.net/l/by/4.0/88x31.png");
+}
+
 .look_preview__overview {
   position: absolute;
   top: 0;
@@ -246,6 +261,11 @@ $side-panel-width: $side-width - $padding;
     .view__tabs {
       margin-left: -90px ;
     }
+  }
+
+  .view__tag--license--cc-by-3,
+  .view__tag--license--cc-by-4 {
+    width: floor(($root-page-tag-height / 31) * 88);
   }
 }
 
@@ -860,17 +880,4 @@ $look-search-shadow-width: 100px;
   &:hover {
     background: #219552;
   }
-}
-
-
-.view__tag--license {
-  background: no-repeat center;
-  background-size: cover;
-}
-
-$root-page-tag-height: 27px;
-.view__tag--license--cc-by-3,
-.view__tag--license--cc-by-4 {
-  width: floor(($root-page-tag-height / 31) * 88);
-  background-image: url("https://licensebuttons.net/l/by/4.0/88x31.png");
 }

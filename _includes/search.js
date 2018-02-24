@@ -194,6 +194,11 @@ function startSearch_{{include.id}}(search) {
         tags = '<span class="view__tag" onclick="openSearch_{{include.id}}(\'#type:template\'); return false;"><i class="view__tag_icon fa fa-copy"></i><span>' + tr$('types.template') + '</span></span> ' + tags;
       }
 
+      var license = MDSCommon.findValueByName(root.fields, 'license');
+      if (MDSCommon.isPresent(license)) {
+        tags = '<span class="view__tag view__tag--license view__tag--license--' + license + '" onclick="openSearch_{{include.id}}(\'#license:' + license + '\'); return false;">&nbsp;</span> ' + tags;
+      }
+
       var nLikes = MDSCommon.findValueByName(root.fields, '$likes') || MDSCommon.findValueByName(root.fields, 'totalLikes') || 0;
       var nComments = MDSCommon.findValueByName(root.fields, '$comments') || MDSCommon.findValueByName(root.fields, 'totalComments') || 0;
 
