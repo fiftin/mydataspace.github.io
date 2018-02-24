@@ -962,6 +962,10 @@ function initRootPage(options) {
         tags = '<span class="view__tag" onclick="openSearch_header__search(\'#type:template\'); return false;"><i class="view__tag_icon fa fa-copy"></i><span>' + tr$('types.template') + '</span></span> ' + tags;
       }
 
+      var license = MDSCommon.findValueByName(data.fields, 'license');
+      if (MDSCommon.isPresent(license)) {
+        tags = '<span class="view__tag view__tag--license view__tag--license--' + license + '" onclick="openSearch_header__search(\'#license:' + license + '\'); return false;">&nbsp;</span> ' + tags;
+      }
 
       if (MDSCommon.isPresent(tags)) {
         document.getElementById('root__tags').innerHTML = tags;

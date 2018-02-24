@@ -861,3 +861,16 @@ $look-search-shadow-width: 100px;
     background: #219552;
   }
 }
+
+
+.view__tag--license {
+  background: no-repeat center;
+  background-size: cover;
+}
+
+$root-page-tag-height: 27px;
+
+.view__tag--license--cc-by-3 {
+  width: floor(($root-page-tag-height / 31) * 88);
+  background-image: url("https://licensebuttons.net/l/by/4.0/88x31.png");
+}
