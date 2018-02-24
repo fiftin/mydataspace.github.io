@@ -29,13 +29,15 @@ UILayout.windows.editScript = {
       if (UI.entityForm.editScriptFieldId == null) {
         return;
       }
-      $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
+      var field = $$(UI.entityForm.editScriptFieldId);
+      if (field) {
+        field.setValue($$('edit_script_window__editor').getValue());
+      }
     },
 
     onHide: function() {
       $$('edit_script_window').$view.classList.remove('animated');
       $$('edit_script_window').$view.classList.remove('fadeInUp');
-      // $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
       $$('my_data_panel__resizer_2').enable();
     },
   },

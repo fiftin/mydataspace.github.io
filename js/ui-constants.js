@@ -22,6 +22,21 @@ UIConstants = {
     'wizard': 'magic'
 	},
 
+  LICENSES: {
+    'cc-by-3': {
+      title: 'Creative Commons 3.0',
+      shortTitle: 'CC BY 3.0',
+      icon: 'https://licensebuttons.net/l/by/4.0/88x31.png',
+      url: 'https://creativecommons.org/licenses/by/3.0'
+    },
+	  'cc-by-4': {
+	    title: 'Creative Commons 4.0',
+      shortTitle: 'CC BY 4.0',
+      icon: 'https://licensebuttons.net/l/by/4.0/88x31.png',
+      url: 'https://creativecommons.org/licenses/by/4.0'
+    }
+  },
+
 	ROOT_FIELDS: [
 		'avatar',
 		'name',
@@ -32,7 +47,11 @@ UIConstants = {
 		'language',
 		'category',
 		'readme',
-    'datasource'
+    'datasource',
+    'datasourceURL',
+    'license',
+    'licenseText',
+    'licenseURL'
 	],
 
 	HIDDEN_ROOT_FIELDS: [

@@ -99,7 +99,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       country: 'Country',
 			language: 'Language',
       interval: 'Interval',
-      datasource: 'Source'
+      datasource: 'Source',
+      datasourceURL: 'Source URL',
+      license: 'License',
+      licenseText: 'License Text',
+      licenseURL: 'License URL'
     },
     ROOT_FIELD_PLACEHOLDERS: {
       name: 'Human readable name of your root',
@@ -334,7 +338,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
 			country: 'Страна',
       language: 'Язык',
       interval: 'Интервал',
-      datasource: 'Источник'
+      datasource: 'Источник',
+      datasourceURL: 'URL источника',
+      license: 'Лицензия',
+      licenseText: 'Текст лицензии',
+      licenseURL: 'URL лицензии'
     },
     ROOT_FIELD_PLACEHOLDERS: {
       name: 'Наименование проекта',

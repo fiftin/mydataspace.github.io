@@ -219,6 +219,21 @@ UIConstants = {
     'wizard': 'magic'
 	},
 
+  LICENSES: {
+    'cc-by-3': {
+      title: 'Creative Commons 3.0',
+      shortTitle: 'CC BY 3.0',
+      icon: 'https://licensebuttons.net/l/by/4.0/88x31.png',
+      url: 'https://creativecommons.org/licenses/by/3.0'
+    },
+	  'cc-by-4': {
+	    title: 'Creative Commons 4.0',
+      shortTitle: 'CC BY 4.0',
+      icon: 'https://licensebuttons.net/l/by/4.0/88x31.png',
+      url: 'https://creativecommons.org/licenses/by/4.0'
+    }
+  },
+
 	ROOT_FIELDS: [
 		'avatar',
 		'name',
@@ -229,7 +244,11 @@ UIConstants = {
 		'language',
 		'category',
 		'readme',
-    'datasource'
+    'datasource',
+    'datasourceURL',
+    'license',
+    'licenseText',
+    'licenseURL'
 	],
 
 	HIDDEN_ROOT_FIELDS: [
@@ -3541,13 +3560,15 @@ UILayout.windows.editScript = {
       if (UI.entityForm.editScriptFieldId == null) {
         return;
       }
-      $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
+      var field = $$(UI.entityForm.editScriptFieldId);
+      if (field) {
+        field.setValue($$('edit_script_window__editor').getValue());
+      }
     },
 
     onHide: function() {
       $$('edit_script_window').$view.classList.remove('animated');
       $$('edit_script_window').$view.classList.remove('fadeInUp');
-      // $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
       $$('my_data_panel__resizer_2').enable();
     },
   },
