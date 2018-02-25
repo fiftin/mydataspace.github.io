@@ -236,14 +236,20 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       '': 'No license',
       'custom': 'Custom license',
       'cc-by-3': 'Creative Commons 3.0',
-      'cc-by-4': 'Creative Commons 4.0'
+      'cc-by-4': 'Creative Commons 4.0',
+      'ogl-1': 'Open Government Licence v1.0',
+      'ogl-2': 'Open Government Licence v2.0',
+      'ogl-3': 'Open Government Licence v3.0'
     },
 
     licensesShortTitles: {
       '': 'No license',
       'custom': 'Custom license',
       'cc-by-3': 'CC BY 3.0',
-      'cc-by-4': 'CC BY 4.0'
+      'cc-by-4': 'CC BY 4.0',
+      'ogl-1': 'OGL v1.0',
+      'ogl-2': 'OGL v2.0',
+      'ogl-3': 'OGL v3.0'
     }
   },
 
@@ -495,14 +501,20 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       '': 'Нет лицензии',
       'custom': 'Своя лицензия',
       'cc-by-3': 'Creative Commons 3.0',
-      'cc-by-4': 'Creative Commons 4.0'
+      'cc-by-4': 'Creative Commons 4.0',
+      'ogl-1': 'Open Government Licence v1.0',
+      'ogl-2': 'Open Government Licence v2.0',
+      'ogl-3': 'Open Government Licence v3.0'
     },
 
     licensesShortTitles: {
       '': 'Нет лицензии',
       'custom': 'Своя лицензия',
       'cc-by-3': 'CC BY 3.0',
-      'cc-by-4': 'CC BY 4.0'
+      'cc-by-4': 'CC BY 4.0',
+      'ogl-1': 'OGL v1.0',
+      'ogl-2': 'OGL v2.0',
+      'ogl-3': 'OGL v3.0'
     }
   }
 };
