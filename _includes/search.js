@@ -255,7 +255,7 @@ function startSearch_{{include.id}}(search) {
     });
 
     function getFilterHTML(items, itemTitlesCollection, prefix, filters, opts) {
-      if (!items) {
+      if (MDSCommon.isBlank(items) || MDSCommon.isEmptyObject(items)) {
         return '';
       }
       var options = MDSCommon.extend({

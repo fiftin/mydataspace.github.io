@@ -8434,6 +8434,14 @@ var MDSCommon = {
       total += gravity;
     }
     return filled / total;
+  },
+
+  isEmptyObject: function(obj) {
+    var name;
+    for ( name in obj ) {
+      return false;
+    }
+    return true;
   }
 };
 
