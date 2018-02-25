@@ -11,8 +11,10 @@ $cc-icon-height: 30px;
 .view__tag--license {
   background-repeat: no-repeat;
   background-size: cover;
+  opacity: 0.8;
   &:hover {
     text-decoration: none !important;
+    opacity: 1;
   }
 }
 

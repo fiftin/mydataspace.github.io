@@ -2,7 +2,8 @@ var TAGS_TO_FILTERS = {
   lang: 'language',
   ctry: 'country',
   cat: 'category',
-  src: 'datasource'
+  src: 'datasource',
+  license: 'license'
 };
 
 var CATEGORY_ICONS = {
