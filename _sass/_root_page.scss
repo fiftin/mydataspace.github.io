@@ -5,17 +5,21 @@ $side-panel-width: $side-width - $padding;
 
 $root-page-tag-height: 27px;
 $snippet-tag-height: 23px;
-
+$cc-icon-width: 86px;
+$cc-icon-height: 30px;
 
 .view__tag--license {
   background-repeat: no-repeat;
   background-size: cover;
+  &:hover {
+    text-decoration: none !important;
+  }
 }
 
 .view__tag--license--cc-by-3,
 .view__tag--license--cc-by-4 {
-  width: floor(($snippet-tag-height / 31) * 88);
-  background-image: url("https://licensebuttons.net/l/by/4.0/88x31.png");
+  width: floor(($snippet-tag-height / $cc-icon-height) * $cc-icon-width);
+  background-image: url("/images/licenses/cc-by-86x30.png");
 }
 
 .look_preview__overview {
@@ -265,7 +269,7 @@ $snippet-tag-height: 23px;
 
   .view__tag--license--cc-by-3,
   .view__tag--license--cc-by-4 {
-    width: floor(($root-page-tag-height / 31) * 88);
+    width: floor(($root-page-tag-height / $cc-icon-height) * $cc-icon-width);
   }
 }
 
