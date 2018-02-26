@@ -966,7 +966,7 @@ function initRootPage(options) {
       if (MDSCommon.isPresent(license)) {
         license = getLicenseWithoutVersion(license);
         if (license === 'none') {
-          tags = '<a href="/search?q=%23license:' + license + '" class="view__tag view__tag--license-none" onclick="openSearch_header__search(\'#license:' + license + '\'); return false;">' + STRINGS.licenses.none + '</a> ' + tags;
+          tags = '<a href="/search?q=%23license:' + license + '" class="view__tag view__tag--license-none" onclick="openSearch_header__search(\'#license:' + license + '\'); return false;">' + tr$('licenses.none') + '</a> ' + tags;
         } else {
           tags = '<a href="/search?q=%23license:' + license + '" class="view__tag view__tag--license view__tag--license--' + license + '" onclick="openSearch_header__search(\'#license:' + license + '\'); return false;">&nbsp;</a> ' + tags;
         }
