@@ -11,8 +11,8 @@ $ogl-icon-width: 24px;
 $ogl-icon-height: 10px;
 
 
-$standard-terms-of-use-width: 193px;
-$standard-terms-of-use-height: 60px;
+$standard-terms-of-use-width: 42px;
+$standard-terms-of-use-height: 12px;
 
 
 $no-license-width: 193px;
@@ -46,6 +46,7 @@ $custom-license-height: 60px;
     bottom: 0;
     top: 0;
     opacity: 0;
+    border-radius: 2px;
   }
 }
 
@@ -60,9 +61,9 @@ $custom-license-height: 60px;
 
 .view__tag--license--standard-terms-of-use {
   width: floor(($snippet-tag-height / $standard-terms-of-use-height) * $standard-terms-of-use-width);
-  background-image: url("/images/licenses/standard-terms-of-use-193x60.png");
+  background-image: url("/images/licenses/standard-terms-of-use.svg");
   &:after {
-    background-image: url("/images/licenses/standard-terms-of-use-193x60-hover.png");
+    background-image: url("/images/licenses/standard-terms-of-use.svg");
   }
 }
 
