@@ -2,6 +2,10 @@ $root-page-tag-height: 27px;
 $snippet-tag-height: 23px;
 
 
+//$no-license-width: 193px;
+//$no-license-height: 60px;
+
+
 
 $cc-icon-width: 120px;
 $cc-icon-height: 42px;
@@ -15,14 +19,16 @@ $standard-terms-of-use-width: 42px;
 $standard-terms-of-use-height: 12px;
 
 
-$no-license-width: 193px;
-$no-license-height: 60px;
-
-
 $custom-license-width: 35px;
 $custom-license-height: 12px;
 
-
+.view__tag--license-none {
+  background: #f36767;
+  color: white;
+  &:hover {
+    background: #f36767;
+  }
+}
 
 .view__tag--license {
   background-repeat: no-repeat;
@@ -50,13 +56,13 @@ $custom-license-height: 12px;
   }
 }
 
-.view__tag--license--none {
-  width: floor(($snippet-tag-height / $no-license-height) * $no-license-width);
-  background-image: url("/images/licenses/none.png");
-  &:after {
-    background-image: url("/images/licenses/none-hover.png");
-  }
-}
+//.view__tag--license--none {
+//  width: floor(($snippet-tag-height / $no-license-height) * $no-license-width);
+//  background-image: url("/images/licenses/none.png");
+//  &:after {
+//    background-image: url("/images/licenses/none-hover.png");
+//  }
+//}
 
 
 .view__tag--license--standard-terms-of-use {
@@ -94,9 +100,9 @@ $custom-license-height: 12px;
 
 
 .root_page {
-  .view__tag--license--none {
-    width: floor(($root-page-tag-height / $no-license-height) * $no-license-width);
-  }
+  //.view__tag--license--none {
+  //  width: floor(($root-page-tag-height / $no-license-height) * $no-license-width);
+  //}
 
   .view__tag--license--standard-terms-of-use {
     width: floor(($root-page-tag-height / $standard-terms-of-use-height) * $standard-terms-of-use-width);
@@ -111,6 +117,6 @@ $custom-license-height: 12px;
   }
 
   .view__tag--license--custom {
-    width: floor(($snippet-tag-height / $custom-license-height) * $custom-license-width);
+    width: floor(($root-page-tag-height / $custom-license-height) * $custom-license-width);
   }
 }
