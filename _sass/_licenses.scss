@@ -49,6 +49,15 @@ $custom-license-height: 60px;
   }
 }
 
+.view__tag--license--none {
+  width: floor(($snippet-tag-height / $no-license-height) * $no-license-width);
+  background-image: url("/images/licenses/none.png");
+  &:after {
+    background-image: url("/images/licenses/none-hover.png");
+  }
+}
+
+
 .view__tag--license--standard-terms-of-use {
   width: floor(($snippet-tag-height / $standard-terms-of-use-height) * $standard-terms-of-use-width);
   background-image: url("/images/licenses/standard-terms-of-use-193x60.png");
@@ -76,6 +85,10 @@ $custom-license-height: 60px;
 
 
 .root_page {
+  .view__tag--license--none {
+    width: floor(($root-page-tag-height / $no-license-height) * $no-license-width);
+  }
+
   .view__tag--license--standard-terms-of-use {
     width: floor(($root-page-tag-height / $standard-terms-of-use-height) * $standard-terms-of-use-width);
   }
