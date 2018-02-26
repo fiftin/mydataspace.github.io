@@ -22,14 +22,6 @@ $standard-terms-of-use-height: 12px;
 $custom-license-width: 35px;
 $custom-license-height: 12px;
 
-.view__tag--license-none {
-  background: #f36767;
-  color: white;
-  &:hover {
-    background: #f36767;
-  }
-}
-
 .view__tag--license {
   background-repeat: no-repeat;
   background-size: cover;
@@ -53,6 +45,14 @@ $custom-license-height: 12px;
     top: 0;
     opacity: 0;
     border-radius: 2px;
+  }
+}
+
+.view__tag--license-none {
+  background-color: #f36767 !important;
+  color: white !important;
+  &:hover {
+    background-color: #a94442 !important;
   }
 }
 

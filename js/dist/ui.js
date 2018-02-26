@@ -537,31 +537,6 @@ UIHelper = {
       $$(id).getList().clearAll();
       $$(id).getList().parse(options);
     });
-  },
-
-  /**
-   *
-   * @param {string} license
-   */
-  getLicenseWithoutVersion: function (license) {
-    var i = license.lastIndexOf('-');
-    if (i < 0) {
-      return license;
-    }
-    var v = license.substr(i + 1);
-    if (!MDSCommon.isNumber(v)) {
-      return license;
-    }
-    license.substr(0, i);
-  },
-
-  getLicenseVersion: function (license) {
-    var i = license.lastIndexOf('-');
-    if (i < 0) {
-      return null;
-    }
-    var v = license.substr(i + 1);
-    return MDSCommon.isNumber(v) ? v : null;
   }
 };
 
