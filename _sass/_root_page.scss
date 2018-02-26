@@ -4,43 +4,6 @@ $side-width: 300px;
 $side-panel-width: $side-width - $padding;
 
 
-$root-page-tag-height: 27px;
-$snippet-tag-height: 23px;
-
-
-
-$cc-icon-width: 86px;
-$cc-icon-height: 30px;
-$ogl-icon-width: 80px;
-$ogl-icon-height: 33px;
-
-
-.view__tag--license {
-  background-repeat: no-repeat;
-  background-size: cover;
-  opacity: 0.8;
-  text-decoration: none !important;
-  &:hover {
-    text-decoration: none !important;
-    opacity: 1;
-  }
-}
-
-.view__tag--license--ogl-1,
-.view__tag--license--ogl-2,
-.view__tag--license--ogl-3 {
-  width: floor(($snippet-tag-height / $ogl-icon-height) * $ogl-icon-width);
-  background-image: url("/images/licenses/ogl-80x33.png");
-}
-
-.view__tag--license--cc-by-3,
-.view__tag--license--cc-by-4 {
-  width: floor(($snippet-tag-height / $cc-icon-height) * $cc-icon-width);
-  background-image: url("/images/licenses/cc-by-86x30.png");
-}
-
-
-
 .look_preview__overview {
   position: absolute;
   top: 0;
@@ -286,16 +249,7 @@ $ogl-icon-height: 33px;
     }
   }
 
-  .view__tag--license--cc-by-3,
-  .view__tag--license--cc-by-4 {
-    width: floor(($root-page-tag-height / $cc-icon-height) * $cc-icon-width);
-  }
 
-  .view__tag--license--ogl-1,
-  .view__tag--license--ogl-2,
-  .view__tag--license--ogl-3 {
-    width: floor(($root-page-tag-height / $ogl-icon-height) * $ogl-icon-width);
-  }
 
 }
 

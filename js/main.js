@@ -579,10 +579,6 @@ function initFeedbackModal() {
 
 
 
-
-
-
-
 function no_items__createNewRoot() {
   var notices = document.getElementById('no_items__notice').childNodes[0].childNodes;
   for (var i = 0; i < notices.length; i++) {
@@ -651,4 +647,30 @@ function adminPanel_startWaiting(duration) {
     $('#no_items').removeClass('invisible');
     $('#admin_panel').removeClass('invisible');
   }, duration);
+}
+
+
+/**
+ *
+ * @param {string} license
+ */
+function getLicenseWithoutVersion(license) {
+  var i = license.lastIndexOf('-');
+  if (i < 0) {
+    return license;
+  }
+  var v = license.substr(i + 1);
+  if (!MDSCommon.isNumber(v)) {
+    return license;
+  }
+  return license.substr(0, i);
+}
+
+function getLicenseVersion(license) {
+  var i = license.lastIndexOf('-');
+  if (i < 0) {
+    return null;
+  }
+  var v = license.substr(i + 1);
+  return MDSCommon.isNumber(v) ? v : null;
 }

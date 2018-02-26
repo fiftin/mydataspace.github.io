@@ -1,0 +1,90 @@
+$root-page-tag-height: 27px;
+$snippet-tag-height: 23px;
+
+
+
+$cc-icon-width: 120px;
+$cc-icon-height: 42px;
+
+
+$ogl-icon-width: 24px;
+$ogl-icon-height: 10px;
+
+
+$standard-terms-of-use-width: 193px;
+$standard-terms-of-use-height: 60px;
+
+
+$no-license-width: 193px;
+$no-license-height: 60px;
+
+
+$custom-license-width: 193px;
+$custom-license-height: 60px;
+
+
+
+.view__tag--license {
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-decoration: none !important;
+  &:hover {
+    text-decoration: none !important;
+    background-image: none !important;
+    &:after {
+      opacity: 1;
+    }
+  }
+  position: relative;
+  &:after {
+    background-repeat: no-repeat;
+    background-size: cover;
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    opacity: 0;
+  }
+}
+
+.view__tag--license--standard-terms-of-use {
+  width: floor(($snippet-tag-height / $standard-terms-of-use-height) * $standard-terms-of-use-width);
+  background-image: url("/images/licenses/standard-terms-of-use-193x60.png");
+  &:after {
+    background-image: url("/images/licenses/standard-terms-of-use-193x60-hover.png");
+  }
+}
+
+.view__tag--license--ogl {
+  width: floor(($snippet-tag-height / $ogl-icon-height) * $ogl-icon-width);
+  background-image: url("/images/licenses/ogl.svg");
+  &:after {
+    background-image: url("/images/licenses/ogl-hover.svg");
+  }
+}
+
+
+.view__tag--license--cc-by {
+  width: floor(($snippet-tag-height / $cc-icon-height) * $cc-icon-width);
+  background-image: url("/images/licenses/cc-by.svg");
+  &:after {
+    background-image: url("/images/licenses/cc-by-hover.svg");
+  }
+}
+
+
+.root_page {
+  .view__tag--license--standard-terms-of-use {
+    width: floor(($root-page-tag-height / $standard-terms-of-use-height) * $standard-terms-of-use-width);
+  }
+
+  .view__tag--license--cc-by {
+    width: floor(($root-page-tag-height / $cc-icon-height) * $cc-icon-width);
+  }
+
+  .view__tag--license--ogl {
+    width: floor(($root-page-tag-height / $ogl-icon-height) * $ogl-icon-width);
+  }
+}

@@ -27,7 +27,7 @@ UIHelper = {
     return (new RegExp(UIHelper.ENTITY_LIST_SHOW_MORE_ID + '(\\?\\d+)?$')).test(id);
   },
 
-  setVisible: function(components, isVisible) {
+  setVisible: function (components, isVisible) {
     if (!Array.isArray(components)) {
       components = [components];
     }
@@ -48,13 +48,13 @@ UIHelper = {
    * User can only view entities. All buttons for manipulations is hidden in
    * this mode.
    */
-  isViewOnly: function() {
+  isViewOnly: function () {
     return window.location.hash != null &&
-           window.location.hash !== '' &&
-           window.location.hash !== '#';
+      window.location.hash !== '' &&
+      window.location.hash !== '#';
   },
 
-  getEntityTypeByPath: function(path) {
+  getEntityTypeByPath: function (path) {
     var depth = UIHelper.getEntityDepthByPath(path);
     switch (path) {
       case '':
@@ -70,41 +70,41 @@ UIHelper = {
       case 'wizards':
         return path;
       default:
-          if (/^wizards\/[^\/]+$/.test(path)) {
-            return 'wizard';
-          }
-          if (/^tasks\/[^\/]+$/.test(path)) {
-              return 'task';
-          }
-          if (/^tasks\/[^\/]+\/logs$/.test(path)) {
-              return 'logs';
-          }
-          if (/^tasks\/[^\/]+\/logs\/[^\/]+$/.test(path)) {
-              return 'log';
-          }
-          if (path.startsWith('protos/') && depth === 2) {
-            return 'proto';
-          }
-          if (path.startsWith('likes/') && depth === 2) {
-            return 'like';
-          }
-          if (path.startsWith('comments/') && depth === 2) {
-            return 'comment';
-          }
-          if (path.startsWith('views/') && depth === 2) {
-            return 'view';
-          }
-          if (path.startsWith('resources/')) {
-            return 'resource';
-          }
+        if (/^wizards\/[^\/]+$/.test(path)) {
+          return 'wizard';
+        }
+        if (/^tasks\/[^\/]+$/.test(path)) {
+          return 'task';
+        }
+        if (/^tasks\/[^\/]+\/logs$/.test(path)) {
+          return 'logs';
+        }
+        if (/^tasks\/[^\/]+\/logs\/[^\/]+$/.test(path)) {
+          return 'log';
+        }
+        if (path.startsWith('protos/') && depth === 2) {
+          return 'proto';
+        }
+        if (path.startsWith('likes/') && depth === 2) {
+          return 'like';
+        }
+        if (path.startsWith('comments/') && depth === 2) {
+          return 'comment';
+        }
+        if (path.startsWith('views/') && depth === 2) {
+          return 'view';
+        }
+        if (path.startsWith('resources/')) {
+          return 'resource';
+        }
     }
     return 'none';
   },
 
-  getIconByPath: function(path, isEmpty, isOpened) {
+  getIconByPath: function (path, isEmpty, isOpened) {
     var icon = UIConstants.ENTITY_ICONS[UIHelper.getEntityTypeByPath(path)];
     if (icon) {
-        return icon;
+      return icon;
     }
     if (isEmpty) {
       return 'file-o';
@@ -113,17 +113,17 @@ UIHelper = {
     }
   },
 
-  getEntityDepthByPath: function(path) {
-   var depth = 1;
-   for (var i = 0; i < path.length; i++) {
-     if (path[i] === '/') {
-       depth++;
-     }
-   }
-   return depth;
+  getEntityDepthByPath: function (path) {
+    var depth = 1;
+    for (var i = 0; i < path.length; i++) {
+      if (path[i] === '/') {
+        depth++;
+      }
+    }
+    return depth;
   },
 
-  isTaskPath: function(path) {
+  isTaskPath: function (path) {
     if (path == null) {
       return false;
     }
@@ -131,15 +131,15 @@ UIHelper = {
       UIHelper.getEntityDepthByPath(path) === 2;
   },
 
-  isProtoPath: function(path) {
+  isProtoPath: function (path) {
     if (path == null) {
       return false;
     }
     return path.startsWith('protos/') &&
-           UIHelper.getEntityDepthByPath(path) === 2;
+      UIHelper.getEntityDepthByPath(path) === 2;
   },
 
-  isProto: function(id) {
+  isProto: function (id) {
     if (id == null) {
       return false;
     }
@@ -147,7 +147,7 @@ UIHelper = {
     return UIHelper.isProtoPath(identity.path);
   },
 
-  popupCenter: function(url, title, w, h) {
+  popupCenter: function (url, title, w, h) {
     // Fixes dual-screen position                         Most browsers      Firefox
     var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
     var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
@@ -161,16 +161,16 @@ UIHelper = {
 
     // Puts focus on the newWindow
     if (window.focus) {
-        newWindow.focus();
+      newWindow.focus();
     }
     return newWindow;
   },
 
-  isValidJWT: function(token) {
+  isValidJWT: function (token) {
     return isValidJWT(token);
   },
 
-  getWizardUrlById: function(id) {
+  getWizardUrlById: function (id) {
     var data = Identity.dataFromId(id);
     if (MDSCommon.isPresent(data.path)) {
       var path = MDSCommon.getParentPath(data.path);
@@ -180,14 +180,14 @@ UIHelper = {
     }
   },
 
-  loadDatasourcesToCombo: function(id) {
+  loadDatasourcesToCombo: function (id) {
     Mydataspace.request('entities.get', {
       root: 'datasources',
       path: 'data',
       children: true,
       //fields: ['name']
-    }).then(function(data) {
-      var options = data.children.map(function(ds) {
+    }).then(function (data) {
+      var options = data.children.map(function (ds) {
         var id = MDSCommon.getPathName(ds.path);
         return {
           id: id,

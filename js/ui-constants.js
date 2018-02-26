@@ -22,28 +22,31 @@ UIConstants = {
     'wizard': 'magic'
 	},
 
-  LICENSES: {
-    'cc-by-3': {
-      icon: 'https://licensebuttons.net/l/by/4.0/88x31.png',
-      url: 'https://creativecommons.org/licenses/by/3.0'
-    },
-	  'cc-by-4': {
-      icon: 'https://licensebuttons.net/l/by/4.0/88x31.png',
-      url: 'https://creativecommons.org/licenses/by/4.0'
-    },
-    'ogl-1': {
-      icon: 'http://www.nationalarchives.gov.uk/images/infoman/ogl-symbol-41px-retina-black.png',
-      url: 'http://www.nationalarchives.gov.uk/doc/open-government-licence/version/1/'
-    },
-    'ogl-2': {
-      icon: 'http://www.nationalarchives.gov.uk/images/infoman/ogl-symbol-41px-retina-black.png',
-      url: 'http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/'
-    },
-    'ogl-3': {
-      icon: 'http://www.nationalarchives.gov.uk/images/infoman/ogl-symbol-41px-retina-black.png',
-      url: 'http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/'
-    }
-  },
+  //LICENSES: {
+  //  'cc-by-3': {
+  //    icon: 'https://licensebuttons.net/l/by/4.0/88x31.png',
+  //    url: 'https://creativecommons.org/licenses/by/3.0'
+  //  },
+	//  'cc-by-4': {
+  //    icon: 'https://licensebuttons.net/l/by/4.0/88x31.png',
+  //    url: 'https://creativecommons.org/licenses/by/4.0'
+  //  },
+  //  'ogl-1': {
+  //    icon: 'http://www.nationalarchives.gov.uk/images/infoman/ogl-symbol-41px-retina-black.png',
+  //    url: 'http://www.nationalarchives.gov.uk/doc/open-government-licence/version/1/'
+  //  },
+  //  'ogl-2': {
+  //    icon: 'http://www.nationalarchives.gov.uk/images/infoman/ogl-symbol-41px-retina-black.png',
+  //    url: 'http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/'
+  //  },
+  //  'ogl-3': {
+  //    icon: 'http://www.nationalarchives.gov.uk/images/infoman/ogl-symbol-41px-retina-black.png',
+  //    url: 'http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/'
+  //  },
+  //  'standard-terms-of-use': {
+  //    url: 'http://data.gov.ru/information-usage'
+  //  }
+  //},
 
 	ROOT_FIELDS: [
 		'avatar',

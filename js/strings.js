@@ -232,24 +232,26 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       dataset: 'Dataset'
     },
 
-    licenses: {
-      '': 'No license',
-      'custom': 'Custom license',
-      'cc-by-3': 'Creative Commons 3.0',
-      'cc-by-4': 'Creative Commons 4.0',
-      'ogl-1': 'Open Government Licence v1.0',
-      'ogl-2': 'Open Government Licence v2.0',
-      'ogl-3': 'Open Government Licence v3.0'
-    },
+    //licenses: {
+    //  'none': 'No license',
+    //  'custom': 'Custom license',
+    //  'cc-by-3': 'Creative Commons 3.0',
+    //  'cc-by-4': 'Creative Commons 4.0',
+    //  'ogl-1': 'Open Government Licence v1.0',
+    //  'ogl-2': 'Open Government Licence v2.0',
+    //  'ogl-3': 'Open Government Licence v3.0',
+    //  'standard-terms-of-use': 'Standard Open Data terms of use'
+    //},
 
-    licensesShortTitles: {
-      '': 'No license',
+    licenses: {
+      'none': 'No license',
       'custom': 'Custom license',
       'cc-by-3': 'CC BY 3.0',
       'cc-by-4': 'CC BY 4.0',
-      'ogl-1': 'OGL v1.0',
-      'ogl-2': 'OGL v2.0',
-      'ogl-3': 'OGL v3.0'
+      'ogl-1': 'OGL 1.0',
+      'ogl-2': 'OGL 2.0',
+      'ogl-3': 'OGL 3.0',
+      'standard-terms-of-use': 'Standard OD terms of use'
     }
   },
 
@@ -497,24 +499,26 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       dataset: 'Датасет'
     },
 
-    licenses: {
-      '': 'Нет лицензии',
-      'custom': 'Своя лицензия',
-      'cc-by-3': 'Creative Commons 3.0',
-      'cc-by-4': 'Creative Commons 4.0',
-      'ogl-1': 'Open Government Licence v1.0',
-      'ogl-2': 'Open Government Licence v2.0',
-      'ogl-3': 'Open Government Licence v3.0'
-    },
+    //licenses: {
+    //  'none': 'Нет лицензии',
+    //  'custom': 'Своя лицензия',
+    //  'cc-by-3': 'Creative Commons 3.0',
+    //  'cc-by-4': 'Creative Commons 4.0',
+    //  'ogl-1': 'Open Government Licence v1.0',
+    //  'ogl-2': 'Open Government Licence v2.0',
+    //  'ogl-3': 'Open Government Licence v3.0',
+    //  'standard-terms-of-use': 'Типовые условия использования открытых данных'
+    //},
 
-    licensesShortTitles: {
-      '': 'Нет лицензии',
+    licenses: {
+      'none': 'Нет лицензии',
       'custom': 'Своя лицензия',
       'cc-by-3': 'CC BY 3.0',
       'cc-by-4': 'CC BY 4.0',
-      'ogl-1': 'OGL v1.0',
-      'ogl-2': 'OGL v2.0',
-      'ogl-3': 'OGL v3.0'
+      'ogl-1': 'OGL 1.0',
+      'ogl-2': 'OGL 2.0',
+      'ogl-3': 'OGL 3.0',
+      'standard-terms-of-use': 'Типовые условия использования ОД'
     }
   }
 };

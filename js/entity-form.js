@@ -913,7 +913,7 @@ EntityForm.prototype.addRootField = function(data) {
       UIHelper.loadDatasourcesToCombo('entity_form__' + data.name + '_value');
       break;
     case 'license':
-      $$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.licensesShortTitles));
+      $$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.licenses));
       break;
 		case 'category':
 			$$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.categories));

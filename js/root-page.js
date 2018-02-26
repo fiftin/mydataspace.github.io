@@ -964,6 +964,7 @@ function initRootPage(options) {
 
       var license = MDSCommon.findValueByName(data.fields, 'license');
       if (MDSCommon.isPresent(license)) {
+        license = getLicenseWithoutVersion(license);
         tags = '<a href="/search?q=%23license:' + license + '" class="view__tag view__tag--license view__tag--license--' + license + '" onclick="openSearch_header__search(\'#license:' + license + '\'); return false;">&nbsp;</a> ' + tags;
       }
 
