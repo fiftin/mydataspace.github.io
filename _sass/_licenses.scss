@@ -19,8 +19,8 @@ $no-license-width: 193px;
 $no-license-height: 60px;
 
 
-$custom-license-width: 193px;
-$custom-license-height: 60px;
+$custom-license-width: 35px;
+$custom-license-height: 12px;
 
 
 
@@ -75,6 +75,14 @@ $custom-license-height: 60px;
   }
 }
 
+.view__tag--license--custom {
+  width: floor(($snippet-tag-height / $custom-license-height) * $custom-license-width);
+  background-image: url("/images/licenses/custom.svg");
+  &:after {
+    background-image: url("/images/licenses/custom.svg");
+  }
+}
+
 
 .view__tag--license--cc-by {
   width: floor(($snippet-tag-height / $cc-icon-height) * $cc-icon-width);
@@ -100,5 +108,9 @@ $custom-license-height: 60px;
 
   .view__tag--license--ogl {
     width: floor(($root-page-tag-height / $ogl-icon-height) * $ogl-icon-width);
+  }
+
+  .view__tag--license--custom {
+    width: floor(($snippet-tag-height / $custom-license-height) * $custom-license-width);
   }
 }
