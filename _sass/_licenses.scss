@@ -73,6 +73,13 @@ $custom-license-height: 12px;
   }
 }
 
+.view__tag--license--standard-terms-of-use--ru {
+  background-image: url("/images/licenses/standard-terms-of-use-ru.svg");
+  &:after {
+    background-image: url("/images/licenses/standard-terms-of-use-ru.svg");
+  }
+}
+
 .view__tag--license--ogl {
   width: floor(($snippet-tag-height / $ogl-icon-height) * $ogl-icon-width);
   background-image: url("/images/licenses/ogl.svg");

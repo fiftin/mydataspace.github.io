@@ -197,10 +197,14 @@ function startSearch_{{include.id}}(search) {
       var license = MDSCommon.findValueByName(root.fields, 'license');
       if (MDSCommon.isPresent(license)) {
         license = getLicenseWithoutVersion(license);
+
         if (license === 'none') {
           tags = '<span class="view__tag view__tag--license-none" onclick="openSearch_{{include.id}}(\'#license:none\'); return false;">' + tr$('licenses.none') + '</span> ' + tags;
         } else {
-          tags = '<span class="view__tag view__tag--license view__tag--license--' + license + '" onclick="openSearch_{{include.id}}(\'#license:' + license + '\'); return false;">&nbsp;</span> ' + tags;
+          tags = '<span class="view__tag view__tag--license' +
+            ' view__tag--license--' + license +
+            ' view__tag--license--' + license + '--' + (getCurrentLanguage() || 'en').toLowerCase() +
+            '" onclick="openSearch_{{include.id}}(\'#license:' + license + '\'); return false;">&nbsp;</span> ' + tags;
         }
       }
 

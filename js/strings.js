@@ -542,7 +542,8 @@ var LANGUAGE;
 
 var STRINGS = STRINGS_ON_DIFFERENT_LANGUAGES[LANGUAGE];
 
-function tr$(key) {
+
+function getCurrentLanguage() {
   var lang;
   var languageMatch = location.pathname.match(/^\/(\w\w)(\/.*)?$/);
   if (languageMatch) {
@@ -550,6 +551,11 @@ function tr$(key) {
   } else {
     lang = 'EN';
   }
+  return lang;
+}
+
+function tr$(key) {
+  var lang = getCurrentLanguage();
   var parts = key.split('.');
   var ret = STRINGS_ON_DIFFERENT_LANGUAGES[lang];
   for (var i in parts) {
