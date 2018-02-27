@@ -96,6 +96,12 @@ $custom-license-height: 12px;
   }
 }
 
+.view__tag--license--custom {
+  background-image: url("/images/licenses/custom-ru.svg");
+  &:after {
+    background-image: url("/images/licenses/custom-ru.svg");
+  }
+}
 
 .view__tag--license--cc-by {
   width: floor(($snippet-tag-height / $cc-icon-height) * $cc-icon-width);

@@ -9,18 +9,15 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="10mm"
-   height="10mm"
-   viewBox="0 0 10 10"
+   width="35mm"
+   height="12mm"
+   viewBox="0 0 35 12"
    version="1.1"
-   id="svg4528"
-   inkscape:version="0.92.1 r15371"
-   sodipodi:docname="license.svg"
-   inkscape:export-filename="D:\license.png"
-   inkscape:export-xdpi="1158.71"
-   inkscape:export-ydpi="1158.71">
+   id="svg8"
+   sodipodi:docname="custom-ru.svg"
+   inkscape:version="0.92.1 r15371">
   <defs
-     id="defs4522" />
+     id="defs2" />
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -28,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.959798"
-     inkscape:cx="18.081903"
-     inkscape:cy="-19.899825"
+     inkscape:zoom="4"
+     inkscape:cx="31.80265"
+     inkscape:cy="-9.595462"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -38,16 +35,17 @@
      inkscape:window-height="1051"
      inkscape:window-x="69"
      inkscape:window-y="-9"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1"
+     showguides="false" />
   <metadata
-     id="metadata4525">
+     id="metadata5">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -55,10 +53,32 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-287)">
+     transform="translate(0,-285)">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="49.703869"
+       y="31.660713"
+       id="text4498"><tspan
+         sodipodi:role="line"
+         id="tspan4496"
+         x="49.703869"
+         y="34.838375"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial;stroke-width:0.26458332" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.12693071px;line-height:1.25;font-family:'Showcard Gothic';-inkscape-font-specification:'Showcard Gothic';letter-spacing:0px;word-spacing:0px;fill:#337ab7;fill-opacity:1;stroke:none;stroke-width:0.38451982"
+       x="11.772784"
+       y="290.19455"
+       id="text4502"><tspan
+         sodipodi:role="line"
+         x="11.772784"
+         y="290.19455"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial;fill:#337ab7;fill-opacity:1;stroke-width:0.38451982"
+         id="tspan5242">Своя</tspan></text>
     <g
        id="g4512"
-       transform="matrix(0.75597078,0,0,0.75597078,0.12365567,72.046008)">
+       transform="matrix(0.75597078,0,0,0.75597078,1.3064279,70.968615)">
       <path
          inkscape:connector-curvature="0"
          id="path5257"
@@ -72,7 +92,7 @@
       <path
          inkscape:connector-curvature="0"
          id="path5261"
-         d="m 9.4250129,296.44651 c -0.0098,-0.0292 -0.033925,-0.10724 -0.053609,-0.17344 -0.019684,-0.0662 -0.044906,-0.14566 -0.056049,-0.17656 -0.011145,-0.0309 -0.0362,-0.11034 -0.055683,-0.17655 -0.019484,-0.0662 -0.041363,-0.13482 -0.048622,-0.15248 -0.00725,-0.0177 -0.023853,-0.0682 -0.036877,-0.11235 -0.046794,-0.15859 -0.1429336,-0.46806 -0.1869794,-0.60189 -0.024696,-0.075 -0.071987,-0.2231 -0.1050934,-0.32903 -0.033106,-0.10593 -0.08098,-0.25537 -0.1063865,-0.33209 -0.052809,-0.15947 -0.054261,-0.16807 -0.024183,-0.1431 0.012108,0.01 0.060494,0.0297 0.1075279,0.0437 0.079233,0.0235 0.092342,0.0233 0.1784252,-0.003 0.1111322,-0.0336 0.1812694,-0.0982 0.2530026,-0.23275 0.027954,-0.0524 0.053016,-0.0954 0.055691,-0.0954 0.00267,0 0.052651,0.0217 0.111059,0.0482 0.062425,0.0283 0.13321,0.0482 0.171742,0.0482 0.100071,0 0.230002,-0.069 0.291623,-0.15476 0.02933,-0.0408 0.05444,-0.0631 0.05759,-0.0511 0.0031,0.0117 0.01165,0.0357 0.01903,0.0534 0.0074,0.0177 0.03268,0.0971 0.0562,0.17655 0.02352,0.0795 0.04854,0.1589 0.0556,0.17655 0.0071,0.0177 0.0291,0.0863 0.04899,0.15248 0.01988,0.0662 0.05235,0.17094 0.07215,0.23273 0.0198,0.0618 0.063,0.19903 0.096,0.30496 0.033,0.10593 0.07996,0.25399 0.104362,0.32903 0.0244,0.075 0.07122,0.2231 0.104057,0.32903 0.03283,0.10593 0.08071,0.25515 0.106385,0.3316 0.02568,0.0765 0.04669,0.14655 0.04669,0.15578 0,0.017 -0.02511,0.009 -0.208654,-0.0622 -0.04855,-0.019 -0.113555,-0.0418 -0.144453,-0.0507 -0.0309,-0.009 -0.06304,-0.0228 -0.07142,-0.0308 -0.0084,-0.008 -0.02535,-0.0146 -0.0377,-0.0146 -0.01235,0 -0.04521,-0.0101 -0.07303,-0.0225 -0.08703,-0.0388 -0.2651785,-0.0973 -0.2721435,-0.0894 -0.0037,0.004 -0.06725,0.10365 -0.141318,0.22108 -0.07407,0.11744 -0.156334,0.24785 -0.182817,0.2898 -0.02648,0.042 -0.0628,0.0961 -0.08071,0.12042 l -0.032563,0.0442 z"
+         d="m 9.4250129,296.44651 c -0.0098,-0.0292 -0.033925,-0.10724 -0.053609,-0.17344 -0.019684,-0.0662 -0.044906,-0.14566 -0.056049,-0.17656 -0.011145,-0.0309 -0.0362,-0.11034 -0.055683,-0.17655 -0.019484,-0.0662 -0.041363,-0.13482 -0.048622,-0.15248 -0.00725,-0.0177 -0.023853,-0.0682 -0.036877,-0.11235 -0.046794,-0.15859 -0.1429336,-0.46806 -0.1869794,-0.60189 -0.024696,-0.075 -0.071987,-0.2231 -0.1050934,-0.32903 -0.033106,-0.10593 -0.08098,-0.25537 -0.1063865,-0.33209 -0.052809,-0.15947 -0.054261,-0.16807 -0.024183,-0.1431 0.012108,0.01 0.060494,0.0297 0.1075279,0.0437 0.079233,0.0235 0.092342,0.0233 0.1784252,-0.003 0.1111322,-0.0336 0.1812694,-0.0982 0.2530026,-0.23275 0.027954,-0.0524 0.053016,-0.0954 0.055691,-0.0954 0.00267,0 0.052651,0.0217 0.111059,0.0482 0.062425,0.0283 0.13321,0.0482 0.171742,0.0482 0.100071,0 0.230002,-0.069 0.291623,-0.15476 0.02933,-0.0408 0.05444,-0.0631 0.05759,-0.0511 0.0031,0.0117 0.01165,0.0357 0.01903,0.0534 0.0074,0.0177 0.03268,0.0971 0.0562,0.17655 0.02352,0.0795 0.04854,0.1589 0.0556,0.17655 0.0071,0.0177 0.0291,0.0863 0.04899,0.15248 0.01988,0.0662 0.05235,0.17094 0.07215,0.23273 0.0198,0.0618 0.063,0.19903 0.096,0.30496 0.033,0.10593 0.07996,0.25399 0.104362,0.32903 0.0244,0.075 0.07122,0.2231 0.104057,0.32903 0.03283,0.10593 0.08071,0.25515 0.106385,0.3316 0.02568,0.0765 0.04669,0.14655 0.04669,0.15578 0,0.017 -0.02511,0.009 -0.208654,-0.0622 -0.04855,-0.019 -0.113555,-0.0418 -0.144453,-0.0507 -0.0309,-0.009 -0.06304,-0.0228 -0.07142,-0.0308 -0.0084,-0.008 -0.02535,-0.0146 -0.0377,-0.0146 -0.01235,0 -0.04521,-0.0101 -0.07303,-0.0225 -0.08703,-0.0388 -0.2651839,-0.0973 -0.2721489,-0.0894 -0.0037,0.004 -0.06725,0.10365 -0.141318,0.22108 -0.07407,0.11744 -0.156334,0.24785 -0.182817,0.2898 -0.02648,0.042 -0.0628,0.0961 -0.08071,0.12042 l -0.032563,0.0442 z"
          style="opacity:1;fill:#337ab7;fill-opacity:1;stroke:none;stroke-width:0.0606625;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <path
          inkscape:connector-curvature="0"
@@ -120,5 +140,16 @@
          d="m 3.1600701,294.10635 v -0.16058 h 1.7334308 c 0.953387,0 1.7334309,0.006 1.7334309,0.0131 0,0.007 -0.020634,0.0777 -0.045854,0.15649 l -0.045854,0.14335 -1.6875772,0.004 -1.6875771,0.004 z"
          style="opacity:1;fill:#337ab7;fill-opacity:1;stroke:none;stroke-width:0.0606625;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     </g>
+    <text
+       id="text5315"
+       y="294.98917"
+       x="11.772784"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.12693071px;line-height:1.25;font-family:'Showcard Gothic';-inkscape-font-specification:'Showcard Gothic';letter-spacing:0px;word-spacing:0px;fill:#337ab7;fill-opacity:1;stroke:none;stroke-width:0.38451982"
+       xml:space="preserve"><tspan
+         id="tspan5313"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial;fill:#337ab7;fill-opacity:1;stroke-width:0.38451982"
+         y="294.98917"
+         x="11.772784"
+         sodipodi:role="line">Лицензия</tspan></text>
   </g>
 </svg>
