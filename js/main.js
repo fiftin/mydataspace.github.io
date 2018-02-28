@@ -706,7 +706,7 @@ function createLicenseDrop(options) {
   var ret = [];
   for (var i = 0; i < items.length; i++) {
     var drop = new Drop({
-      target: document.querySelector(options.selector),
+      target: items[i],
       openDelay: options.openDelay || 0,
       content: function() {
         var $target = $(this.target);
