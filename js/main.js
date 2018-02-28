@@ -702,34 +702,40 @@ function getLicenseDropContent(data, language, isCustomLicense) {
 
 function createLicenseDrop(options) {
   var language = options.language || 'en';
-  return new Drop({
-    target: document.querySelector(options.selector),
-    openDelay: options.openDelay || 0,
-    content: function() {
-      var $target = $(this.target);
-      return new Promise(function(resolve, reject) {
-        var license = $target.data('license');
-        if (license === 'custom') {
-          var root = $target.data('root');
+  var items = document.querySelectorAll(options.selector);
+  var ret = [];
+  for (var i = 0; i < items.length; i++) {
+    var drop = new Drop({
+      target: document.querySelector(options.selector),
+      openDelay: options.openDelay || 0,
+      content: function() {
+        var $target = $(this.target);
+        return new Promise(function(resolve, reject) {
+          var license = $target.data('license');
+          if (license === 'custom') {
+            var root = $target.data('root');
+            Mydataspace.request('entities.get', {
+              root: root,
+              path: '',
+              fields: ['licenseText', 'licenseURL']
+            }).then(function(data) {
+              resolve(getLicenseDropContent(data, language, true));
+            });
+            return;
+          }
           Mydataspace.request('entities.get', {
-            root: root,
-            path: '',
-            fields: ['licenseText', 'licenseURL']
+            root: 'licenses',
+            path: 'data/' + license
           }).then(function(data) {
-            resolve(getLicenseDropContent(data, language, true));
+            resolve(getLicenseDropContent(data, language));
           });
-          return;
-        }
-        Mydataspace.request('entities.get', {
-          root: 'licenses',
-          path: 'data/' + license
-        }).then(function(data) {
-          resolve(getLicenseDropContent(data, language));
         });
-      });
-    },
-    classes: 'drop-theme-arrows-bounce drop-hero',
-    //position: 'bottom left',
-    openOn: 'hover'
-  });
+      },
+      classes: 'drop-theme-arrows-bounce drop-hero',
+      //position: 'bottom left',
+      openOn: 'hover'
+    });
+    ret.push(drop);
+  }
+  return ret;
 }
