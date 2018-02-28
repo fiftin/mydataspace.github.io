@@ -557,6 +557,7 @@ $slogan-animation-offset-mobile: 400px;
   height: 100%;
   background: rgba(240, 243, 245, 0.7);
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
   z-index: $fullscreen-zindex;
 }
 
