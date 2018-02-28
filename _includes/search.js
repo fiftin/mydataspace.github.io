@@ -204,7 +204,10 @@ function startSearch_{{include.id}}(search) {
           tags = '<span class="view__tag view__tag--license' +
             ' view__tag--license--' + license +
             ' view__tag--license--' + license + '--' + (getCurrentLanguage() || 'en').toLowerCase() +
-            '" onclick="openSearch_{{include.id}}(\'#license:' + license + '\'); return false;">&nbsp;</span> ' + tags;
+            '" onclick="openSearch_{{include.id}}(\'#license:' + license + '\'); return false;"' +
+            ' data-license="' + license + '"' +
+            ' data-root="' + root.root + '"' +
+            '>&nbsp;</span> ' + tags;
         }
       }
 
@@ -367,6 +370,19 @@ function startSearch_{{include.id}}(search) {
     '</div>' +
     '</div>' +
     '</div>' : '<div class="container search__content"><div class="search__no_results">{{ site.data[page.language].search.no_results }}</div></div>';
+
+    var searchSnippetLicenseTagDrop = new Drop({
+      target: document.querySelector('#{{include.resultContainer}} .view__tag--license'),
+      content: function() {
+        return new Promise(function(resolve, reject) {
+          resolve('Welcome to the future');
+        });
+      },
+      classes: 'drop-theme-arrows-bounce drop-hero',
+      //position: 'bottom left',
+      openDelay: 400,
+      openOn: 'hover'
+    });
   }, function(err) {
     console.log(err);
   });

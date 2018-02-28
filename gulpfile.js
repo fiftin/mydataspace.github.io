@@ -169,7 +169,10 @@ gulp.task('vendor:tether', function() {
     ['bower_components/tether/dist/js/tether.min.js',
       'bower_components/tether/dist/js/tether.js',
       'bower_components/tether/dist/css/tether.css',
-      'bower_components/tether/dist/css/tether-theme-arrows-dark.css']
+      'bower_components/tether/dist/css/tether-theme-arrows-dark.css',
+      'bower_components/tether-drop/dist/js/drop.min.js',
+      'bower_components/tether-drop/dist/js/drop.js',
+      'bower_components/tether-drop/dist/css/*.css']
   ).pipe(gulp.dest('vendor/tether'));
 });
 

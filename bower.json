@@ -25,7 +25,8 @@
     "remarkable": "^1.7.1",
     "nanoscroller": "^0.8.7",
     "flag-icon-css": "^2.8.0",
-    "handlebars": "^4.0.11"
+    "handlebars": "^4.0.11",
+    "tether-drop": "^1.4.2"
   },
   "devDependencies": {
     "socket.io-client": "https://github.com/socketio/socket.io-client.git#^1.4.5"

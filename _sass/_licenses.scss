@@ -133,3 +133,36 @@ $custom-license-height: 12px;
     width: floor(($root-page-tag-height / $custom-license-height) * $custom-license-width);
   }
 }
+
+.drop {
+  z-index: $fullscreen-zindex + 1;
+}
+
+.license-drop {
+  color: black;
+  max-width: 400px;
+  font-size: 16px;
+}
+
+.license-drop__text {
+  line-height: 22px;
+  max-height: 300px;
+  overflow: hidden;
+}
+
+.license-drop__title {
+  font-weight: bold;
+}
+
+.license-drop__footer {
+  text-align: right;
+  margin: 10px 0 10px 0;
+}
+
+.license-drop__link {
+  //margin-left: 5px;
+}
+
+.drop-content {
+  padding: 10px 20px !important;
+}

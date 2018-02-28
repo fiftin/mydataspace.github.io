@@ -143,6 +143,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     view_other_version_window_title: 'View Other Version',
     new_empty_root: 'New Empty Root',
     import_root: 'Import Root',
+    open_license_page: 'Open License Page',
 
     new_entity: 'New Entity',
     import_entity: 'Import Entity',
@@ -421,6 +422,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
 
     blank_root_prompt: 'Информация о корне не заполнена. Добавьте картинку, название и короткое описание чтобы ваш корень ' +
                        'было проще найти',
+
+    open_license_page: 'Открыть страницу лицензии',
 
     blank_root_edit_button: 'Заполнить',
 
