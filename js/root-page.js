@@ -983,8 +983,7 @@ function initRootPage(options) {
       if (MDSCommon.isPresent(tags)) {
         document.getElementById('root__tags').innerHTML = tags;
         createLicenseDrop({
-          selector: '#root__tags .view__tag--license',
-          language: language
+          selector: '#root__tags .view__tag--license'
         });
       } else {
         document.getElementById('root__tags').style.display = 'none';

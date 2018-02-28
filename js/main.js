@@ -701,7 +701,7 @@ function getLicenseDropContent(data, language, isCustomLicense) {
 }
 
 function createLicenseDrop(options) {
-  var language = options.language || 'en';
+  var language = (options.language || getCurrentLanguage() || 'en').toLowerCase();
   var items = document.querySelectorAll(options.selector);
   var ret = [];
   for (var i = 0; i < items.length; i++) {
