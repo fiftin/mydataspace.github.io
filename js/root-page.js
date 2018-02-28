@@ -888,29 +888,6 @@ function initRootPage(options) {
     }
   }
 
-  function getLicenseDropContent(data, isCustomLicense) {
-    var suffix = language === '' || language === 'en' ? '': '_' + language;
-
-    var title = isCustomLicense ? tr$('licenses.custom') : (MDSCommon.findValueByName(data.fields, 'name' + suffix) || MDSCommon.findValueByName(data.fields, 'name'));
-    var text = MDSCommon.findValueByName(data.fields, isCustomLicense ? 'licenseText' + suffix : 'text' + suffix);
-
-    if (!text) {
-      text = MDSCommon.findValueByName(data.fields, isCustomLicense ? 'licenseText' : 'text');
-    }
-
-    text = md.render(text || '');
-
-    var url = MDSCommon.findValueByName(data.fields, isCustomLicense ? 'licenseURL' : 'url');
-
-    return '<div class="license-drop">' +
-      '<div class="license-drop__title">' + title + '</div>' +
-      '<div class="license-drop__description">' + text + '</div>' +
-      '<div class="license-drop__footer">' +
-      //'  <a class="btn btn-success license-drop__link" href="javascript: void(0);" onclick="openLicense();">See More</a>' +
-      '  <a class="btn btn-primary license-drop__link" target="_blank" href="' + url + '">' + tr$('open_license_page') + '</a>' +
-      '</div>' +
-      '</div>';
-  }
 
   /**
    * Render root page for received data.
@@ -1005,34 +982,9 @@ function initRootPage(options) {
 
       if (MDSCommon.isPresent(tags)) {
         document.getElementById('root__tags').innerHTML = tags;
-        var rootPageLicenseTagDrop = new Drop({
-          target: document.querySelector('#root__tags .view__tag--license'),
-          content: function() {
-            var $target = $(this.target);
-            return new Promise(function(resolve, reject) {
-              var license = $target.data('license');
-              if (license === 'custom') {
-                var root = $target.data('root');
-                Mydataspace.request('entities.get', {
-                  root: root,
-                  path: '',
-                  fields: ['licenseText', 'licenseURL']
-                }).then(function(data) {
-                  resolve(getLicenseDropContent(data, true));
-                });
-                return;
-              }
-              Mydataspace.request('entities.get', {
-                root: 'licenses',
-                path: 'data/' + license
-              }).then(function(data) {
-                resolve(getLicenseDropContent(data));
-              });
-            });
-          },
-          classes: 'drop-theme-arrows-bounce drop-hero',
-          //position: 'bottom left',
-          openOn: 'hover'
+        createLicenseDrop({
+          selector: '#root__tags .view__tag--license',
+          language: language
         });
       } else {
         document.getElementById('root__tags').style.display = 'none';

@@ -196,6 +196,7 @@ function startSearch_{{include.id}}(search) {
 
       var license = MDSCommon.findValueByName(root.fields, 'license');
       if (MDSCommon.isPresent(license)) {
+        var licenseOrig = license;
         license = getLicenseWithoutVersion(license);
 
         if (license === 'none') {
@@ -205,7 +206,7 @@ function startSearch_{{include.id}}(search) {
             ' view__tag--license--' + license +
             ' view__tag--license--' + license + '--' + (getCurrentLanguage() || 'en').toLowerCase() +
             '" onclick="openSearch_{{include.id}}(\'#license:' + license + '\'); return false;"' +
-            ' data-license="' + license + '"' +
+            ' data-license="' + licenseOrig + '"' +
             ' data-root="' + root.root + '"' +
             '>&nbsp;</span> ' + tags;
         }
@@ -371,17 +372,10 @@ function startSearch_{{include.id}}(search) {
     '</div>' +
     '</div>' : '<div class="container search__content"><div class="search__no_results">{{ site.data[page.language].search.no_results }}</div></div>';
 
-    var searchSnippetLicenseTagDrop = new Drop({
-      target: document.querySelector('#{{include.resultContainer}} .view__tag--license'),
-      content: function() {
-        return new Promise(function(resolve, reject) {
-          resolve('Welcome to the future');
-        });
-      },
-      classes: 'drop-theme-arrows-bounce drop-hero',
-      //position: 'bottom left',
-      openDelay: 400,
-      openOn: 'hover'
+    createLicenseDrop({
+      selector: '#{{include.resultContainer}} .view__tag--license',
+      language: '{{ page.language }}',
+      openDelay: 400
     });
   }, function(err) {
     console.log(err);
