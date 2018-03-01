@@ -912,8 +912,9 @@ function initRootPage(options) {
         ava = Mydataspace.options.cdnURL + '/avatars/sm/' + ava + '.png';
       }
       document.getElementById('root__overview_image').src = ava || '/images/icons/root.svg';
-      document.getElementById('root__title').innerText =
-        MDSCommon.findValueByName(data.fields, 'name') || MDSCommon.getPathName(data.root);
+      var title = MDSCommon.findValueByName(data.fields, 'name') || MDSCommon.getPathName(data.root);
+      document.getElementById('root__title').innerText = title;
+      document.title = title;
 
       document.getElementById('root__version').innerText = '#' +
         (MDSCommon.findValueByName(data.fields, '$version') || 0);
