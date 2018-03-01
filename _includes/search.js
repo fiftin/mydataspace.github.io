@@ -20,6 +20,7 @@ var search_{{include.id}}_url = '';
 var search_{{include.id}}_pathname = MDSCommon.endsWith(window.location.pathname, '/datasources')  ? '{{ lang_prefix }}/datasources' : '{{ lang_prefix }}/search';
 var search_{{include.id}}_displayMode = localStorage.getItem('searchDisplayMode') || 'snippet';
 var isAdmin_{{include.id}} = {{include.admin}};
+var search_{{include.id}}_license_drops = [];
 
 if (MDSCommon.endsWith(window.location.pathname, search_{{include.id}}_pathname)) {
   document.getElementById('{{include.id}}_input').classList.add('header__search_input--focus');
@@ -372,7 +373,11 @@ function startSearch_{{include.id}}(search) {
     '</div>' +
     '</div>' : '<div class="container search__content"><div class="search__no_results">{{ site.data[page.language].search.no_results }}</div></div>';
 
-    createLicenseDrop({
+    var search_{{include.id}}_license_drops.forEach(function(drop) {
+      drop.destroy();
+    });
+
+    search_{{include.id}}_license_drops = createLicenseDrop({
       selector: '#{{include.resultContainer}} .view__tag--license',
       language: '{{ page.language }}',
       openDelay: 400
