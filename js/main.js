@@ -731,7 +731,7 @@ function createLicenseDrop(options) {
           });
         });
       },
-      classes: 'drop-theme-arrows-bounce drop-hero',
+      classes: 'drop-theme-arrows',
       //position: 'bottom left',
       openOn: 'hover'
     });
