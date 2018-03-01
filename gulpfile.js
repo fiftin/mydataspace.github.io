@@ -171,7 +171,8 @@ gulp.task('vendor:tether', function() {
       'bower_components/tether/dist/css/tether.css',
       'bower_components/tether/dist/css/tether-theme-arrows-dark.css',
       'bower_components/tether-drop/dist/js/drop.min.js',
-      'bower_components/tether-drop/dist/js/drop.js']
+      'bower_components/tether-drop/dist/js/drop.js',
+      'bower_components/tether/src/css/helpers/*.sass']
   ).pipe(gulp.dest('vendor/tether'));
 });
 
