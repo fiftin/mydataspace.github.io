@@ -148,6 +148,11 @@ $custom-license-height: 12px;
   line-height: 22px;
   max-height: 300px;
   overflow: hidden;
+  padding-top: 10px;
+  & > *:first-child {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
 }
 
 .license-drop__title {
