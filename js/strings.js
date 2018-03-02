@@ -203,7 +203,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       gb: 'Great Britain',
       us: 'USA',
       kz: 'Kazakhstan',
-      by: 'Belarus'
+      by: 'Belarus',
+      in: 'India'
     },
 
     categories: {
@@ -472,7 +473,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       gb: 'Великобритания',
       us: 'США',
       kz: 'Казахстан',
-      by: 'Беларусь'
+      by: 'Беларусь',
+      in: 'Индия'
     },
 
     categories: {
