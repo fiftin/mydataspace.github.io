@@ -307,7 +307,7 @@ EntityForm.prototype.setRootView = function(data) {
     });
 
 
-    if (completeness === 0) {
+    if (completeness === 0 && data.mine) {
       $('#view__blank_root_prompt').text(STRINGS.blank_root_prompt);
       $('#view__blank_root_edit_button').text(STRINGS.blank_root_edit_button);
     }
