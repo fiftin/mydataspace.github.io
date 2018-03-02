@@ -239,6 +239,9 @@ function createContext() {
             }
 
             contentElementOrHTML.then(function(res) {
+              if (!_this.content) {
+                return;
+              }
               if (typeof res === 'string') {
                 _this.content.innerHTML = res;
               } else if (typeof res === 'object') {
