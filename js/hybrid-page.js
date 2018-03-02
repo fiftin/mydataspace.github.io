@@ -2,7 +2,7 @@
  *
  * @param webix_with_header
  */
-function initHybridPage(webix_with_header) {
+function initHybridPage(webix_with_header, refine_url) {
 
   webix.proxy.look = {
     $proxy: true,
@@ -97,7 +97,7 @@ function initHybridPage(webix_with_header) {
     $('#import_data_modal').on('show.bs.modal', function () {
       document.getElementById('import_data_modal__refine__waiting_cloak').style.display = 'block';
 
-      document.getElementById('import_data_modal__refine').src = '{{ refine_url }}';
+      document.getElementById('import_data_modal__refine').src = refine_url;
       setTimeout(function() {
         document.getElementById('import_data_modal__refine__waiting_cloak').style.display = 'none';
       }, 3000);
