@@ -222,7 +222,7 @@ EntityForm.prototype.setRootView = function(data) {
 
     view.innerHTML = html;
 
-    document.getElementById('view__blank_root').style.display = !data.mine && completeness > 0 ? 'none' : 'block';
+    document.getElementById('view__blank_root').style.display = !data.mine || completeness > 0 ? 'none' : 'block';
     document.getElementById('view__about').style.display = completeness > 0 ? 'block' : 'none';
 
     var ava = MDSCommon.findValueByName(data.fields, 'avatar');
