@@ -908,7 +908,7 @@ webix.html={
 		} else{
 			var ev = document.createEvent(type);
 			ev.initEvent(name, true, true);
-			if (node.dispatchEvent)
+			if (node && node.dispatchEvent)
 				node.dispatchEvent(ev);
 		}
 	},
