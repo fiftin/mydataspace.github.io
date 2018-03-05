@@ -3966,24 +3966,26 @@ UILayout.popups.fieldType = {
                 case '*':
                   $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').enable();
                   $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS[fieldIndexed || 'off']);
-                  $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('type', 'password');
                   $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').refresh();
+
+                  $$('entity_form__' + fieldName + '_value').define('type', 'password');
+                  $$('entity_form__' + fieldName + '_value').refresh();
                   break;
                 default:
                   $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').enable();
                   $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS[fieldIndexed || 'off']);
-                  $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('type', 'text');
                   $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').refresh();
+
+                  $$('entity_form__' + fieldName + '_value').define('type', 'text');
+                  $$('entity_form__' + fieldName + '_value').refresh();
                   break;
               }
             } else if (newv === '*') {
-              $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').enable();
-              $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('type', 'password');
-              $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').refresh();
+              $$('entity_form__' + fieldName + '_value').define('type', 'password');
+              $$('entity_form__' + fieldName + '_value').refresh();
             } else if (oldv === '*') {
-              $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').enable();
-              $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('type', 'text');
-              $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').refresh();
+              $$('entity_form__' + fieldName + '_value').define('type', 'text');
+              $$('entity_form__' + fieldName + '_value').refresh();
             }
             $$('entity_form')._values = oldValues;
           }
