@@ -975,7 +975,7 @@ EntityForm.prototype.addField = function(data, setDirty, isProto) {
         name: 'fields.' + data.name + '.indexed',
         hidden: true
       },
-      { view: data.type === 'j' ? 'textarea' : 'text',
+      { view: data.type === 'j' ? 'textarea' : (data.type === '*' ? 'password': 'text'),
         label: '<div style="visibility: hidden">fake</div>' +
                '<div class="entity_form__field_label">' +
                 data.name +
