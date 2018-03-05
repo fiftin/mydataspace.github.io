@@ -67,6 +67,14 @@ UILayout.popups.fieldType = {
                   $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').refresh();
                   break;
               }
+            } else if (newv === '*') {
+              $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').enable();
+              $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('type', 'password');
+              $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').refresh();
+            } else if (oldv === '*') {
+              $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').enable();
+              $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('type', 'text');
+              $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').refresh();
             }
             $$('entity_form')._values = oldValues;
           }
