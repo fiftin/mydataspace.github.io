@@ -146,6 +146,7 @@ docs:
     title: Client API
 
 root:
+  show_older_comments: Show More
   about: About
   data: Data
   visualization: Views

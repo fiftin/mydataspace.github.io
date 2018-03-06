@@ -664,6 +664,27 @@ function initRootPage(options) {
     history.pushState({}, '', lang + '/' + DATA.root + '/' + path + window.location.search);
   }
 
+  function loadComments(reload) {
+    var $list = $('#root__comments__list');
+    Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
+      children: true,
+      path: 'comments',
+      limit: 30,
+      offset: reload ? 0 : $list.find('>.view__comment').length,
+      orderChildrenBy: '$createdAt DESC'
+    })).then(function(data) {
+      $list.html('');
+      var html = '';
+      for (var i in data.children) {
+        html = RootHTMLGen.getCommentHTML(data.children[i]) + html;
+      }
+      $list.prepend(html);
+      if($list.html() === '') {
+        document.getElementById('root__comments__empty').style.display = 'block';
+      }
+    });
+  }
+
   function postComment() {
     if (!Mydataspace.isLoggedIn()) {
       $('#signin_modal').modal('show');
@@ -839,18 +860,7 @@ function initRootPage(options) {
         break;
       case 'VIEW_TAB_COMMENTS_LABEL':
         document.getElementById('root__new_look').classList.add('hidden');
-        Mydataspace.entities.request('entities.get', MDSCommon.extend(DATA, { children: true, path: 'comments', limit: 7, orderChildrenBy: '$createdAt DESC' })).then(function(data) {
-          var comments = document.getElementById('root__comments__list');
-          comments.innerHTML = '';
-          var html = '';
-          for (var i in data.children) {
-            html = RootHTMLGen.getCommentHTML(data.children[i]) + html;
-          }
-          comments.innerHTML = html;
-          if(html === '') {
-            document.getElementById('root__comments__empty').style.display = 'block';
-          }
-        });
+        loadComments();
         break;
       case 'VIEW_TAB_README_LABEL':
         //document.getElementById('root__data_link').classList.remove('hidden');
@@ -1085,6 +1095,8 @@ function initRootPage(options) {
           selectLook(currentLook.path);
         }
       });
+
+      $('#root__comments_show_older').on('click', loadComments);
 
       $('#root__comments__list').on('click', '.view__comment__delete', function() {
         var commentPath = this.parentNode.getAttribute('data-comment-path');

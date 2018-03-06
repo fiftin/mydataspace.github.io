@@ -296,6 +296,7 @@ docs:
     title: Клиентский API
 
 root:
+  show_older_comments: Показать еще
   about: Описание
   data: Данные
   visualization: Предст<span class="hidden-xs">авления</span>
