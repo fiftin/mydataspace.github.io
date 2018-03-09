@@ -4181,6 +4181,7 @@ UILayout.sideMenu =
         },
         { view: 'template',
           borderless: true,
+          hidden: true,
           id: 'profile__authorizations',
           css: 'profile__authorizations',
           height: 40,
