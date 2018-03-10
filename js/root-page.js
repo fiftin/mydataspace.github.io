@@ -681,6 +681,9 @@ function initRootPage(options) {
       $list.prepend(html);
       if($list.html() === '') {
         document.getElementById('root__comments__empty').style.display = 'block';
+        $list.hide();
+      } else {
+        $list.show();
       }
     });
   }
