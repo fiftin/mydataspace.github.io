@@ -243,9 +243,14 @@ a.feature {
 
 .how-it-works-wrap {
   display: flex;
+
   & > svg {
     margin: auto;
     width: 700px;
     height: 550px;
   }
+}
+
+.how-it-works-wrap--stopped {
+  margin-left: 280px;
 }
