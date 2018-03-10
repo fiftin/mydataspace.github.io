@@ -664,13 +664,13 @@ function initRootPage(options) {
     history.pushState({}, '', lang + '/' + DATA.root + '/' + path + window.location.search);
   }
 
-  function loadComments(reload) {
+  function loadComments() {
     var $list = $('#root__comments__list');
     Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
       children: true,
       path: 'comments',
       limit: 30,
-      offset: reload ? 0 : $list.find('>.view__comment').length,
+      offset: $list.find('>.view__comment').length,
       orderChildrenBy: '$createdAt DESC'
     })).then(function(data) {
       $list.html('');
