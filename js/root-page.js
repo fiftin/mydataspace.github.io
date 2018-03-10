@@ -673,7 +673,6 @@ function initRootPage(options) {
       offset: $list.find('>.view__comment').length,
       orderChildrenBy: '$createdAt DESC'
     })).then(function(data) {
-      $list.html('');
       var html = '';
       for (var i in data.children) {
         html = RootHTMLGen.getCommentHTML(data.children[i]) + html;
