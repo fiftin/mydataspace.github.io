@@ -680,7 +680,7 @@ function initRootPage(options) {
       }
       $list.prepend(html);
       if (data.children.length < 30) {
-        $('#root__new_comment').hide();
+        $('#root__comments_show_older').hide();
       }
       if($list.html() === '') {
         document.getElementById('root__comments__empty').style.display = 'block';
