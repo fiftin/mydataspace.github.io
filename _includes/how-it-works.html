@@ -5,7 +5,8 @@
     <button id="how-it-works-start-button" class="btn btn-success btn-lg sub_footer__button sub_footer__button--how-it-works" type="button">{{ site.data[page.language].how_it_works.run_presentation }}</button>
 
     <div id="how-it-works-wrap" class="how-it-works-wrap">
-        {% include svg/how-it-works.svg %}
+        {% assign presentation_svg_name = "svg/how-it-works-" | append:page.language %}
+        {% include {{ presentation_svg_name | append:".svg" }} %}
     </div>
 
 
