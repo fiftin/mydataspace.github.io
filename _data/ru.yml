@@ -154,6 +154,13 @@ sections:
         details: |
           Ваши данные всегда будут доступны благодаря
           защиты от DDoS-атак компании Cloudflare.
+
+
+how_it_works:
+  title: Как это работает
+  run_presentation: Смотреть презентацию
+
+
 demos_title: Примеры
 demos:
   - id: hello-world

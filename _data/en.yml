@@ -89,6 +89,11 @@ sections:
         title: Availability 99.95%
       - id: security
         title: DDoS Protection
+
+how_it_works:
+  title: How it works
+  run_presentation: Start Presentation
+
 demos:
   - id: hello-world
     title: Hello, World!

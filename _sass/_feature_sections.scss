@@ -229,3 +229,23 @@ a.feature {
     margin-top: -30px;
   }
 }
+
+.section--how-it-works {
+  position: relative;
+}
+
+.sub_footer__button--how-it-works {
+  position: absolute;
+  top: 220px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.how-it-works-wrap {
+  display: flex;
+  & > svg {
+    margin: auto;
+    width: 700px;
+    height: 550px;
+  }
+}

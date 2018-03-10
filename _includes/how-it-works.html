@@ -1,0 +1,107 @@
+<section class="section section--how-it-works">
+    <script src="/vendor/svg.min.js"></script>
+
+    <h2 class="section__title section__title--how-it-works">{{ site.data[page.language].how_it_works.title }}</h2>
+    <button id="how-it-works-start-button" class="btn btn-success btn-lg sub_footer__button sub_footer__button--how-it-works" type="button">{{ site.data[page.language].how_it_works.run_presentation }}</button>
+
+    <div id="how-it-works-wrap" class="how-it-works-wrap">
+        {% include svg/how-it-works.svg %}
+    </div>
+
+
+    <script>
+      (function() {
+
+        document.getElementById('how-it-works-start-button').addEventListener('click', function() {
+          document.getElementById('how-it-works-start-button').style.display = 'none';
+          startPresentation();
+        });
+
+        function startPresentation() {
+
+          var you = SVG.select('#hiw-you');
+          var yourSmile = SVG.select('#hiw-your-smile');
+          var yourMessage = SVG.select('#hiw-your-message');
+          var yourData = SVG.select('#hiw-your-data');
+
+          var denis = SVG.select('#hiw-denis');
+          var denisSmile = SVG.select('#hiw-denis-smile');
+          var denisMessage = SVG.select('#hiw-denis-message');
+          var denisMessage2 = SVG.select('#hiw-denis-message-2');
+          var denisLamp = SVG.select('#hiw-denis-lamp');
+
+          var elen = SVG.select('#hiw-elen');
+          var elenSmile = SVG.select('#hiw-elen-smile');
+          var elenMessage = SVG.select('#hiw-elen-message');
+          var elen1 = SVG.select('#hiw-elen-1');
+          var elen2 = SVG.select('#hiw-elen-2');
+          var elen3 = SVG.select('#hiw-elen-3');
+          var elen4 = SVG.select('#hiw-elen-4');
+          var elenLamp = SVG.select('#hiw-elen-lamp');
+
+          var chartLineInternal = SVG.select('#hiw-chart-line-internal');
+          var chartLineExternal = SVG.select('#hiw-chart-line-external');
+
+
+          var websiteLineInternal = SVG.select('#hiw-website-line-internal');
+          var websiteLineExternal = SVG.select('#hiw-website-line-external');
+
+
+          var chart = SVG.select('#hiw-chart');
+          var website = SVG.select('#hiw-website');
+
+          denisLamp.style('opacity', 0);
+          elenLamp.style('opacity', 0);
+
+          you.animate({ delay: '1s' }).move(75);
+          yourData.animate({ delay: '1s' }).move(1);
+
+          yourData.animate({ delay: '1s' }).move(1, 205);
+
+          you.animate({ delay: '2s' }).move(100);
+
+          denis.animate({ delay: '7s' }).move(-75);
+
+          denisMessage.animate({ delay: '9s' }).style('opacity', 1);
+          denisMessage.animate({ delay: '2s' }).style('opacity', 0);
+
+          denisMessage2.animate({ duration: 0.6, delay: '10.5s' }).style('opacity', 1);
+          denisLamp.animate({ delay: '10s' }).style('opacity', 1);
+          denisLamp.animate({ delay: '1.5s' }).style('opacity', 0);
+
+
+          chart.animate({ delay: '12s' }).move(-112);
+
+          chartLineInternal.animate({ delay: '13s' }).style('opacity', 1);
+          chartLineExternal.animate({ delay: '13s' }).style('opacity', 1);
+
+          elen.animate({ delay: '16s' }).move(-5);
+
+
+          elenMessage.animate({ delay: '19s' }).style('opacity', 1);
+          elenMessage.animate({ delay: '2s' }).style('opacity', 0);
+
+
+          website.animate({ delay: '22s' }).move(-113);
+
+          websiteLineInternal.animate({ delay: '23s' }).style('opacity', 1);
+          websiteLineExternal.animate({ delay: '23s' }).style('opacity', 1);
+
+          elen.animate({ delay: '6s' }).move(-5, 114);
+          elen.animate().move(-45, 114);
+
+          elen1.animate({ delay: '25s' }).move(-8);
+          elen2.animate({ delay: '26s' }).move(3);
+          elen3.animate({ delay: '26.5s' }).move(-7);
+          elen4.animate({ delay: '27.5s' }).move(5);
+
+          yourMessage.animate({ delay: '29s' }).style('opacity', 1);
+
+          yourSmile.animate({ delay: '30s' }).style('opacity', 1);
+          denisSmile.animate({ delay: '30s' }).style('opacity', 1);
+          elenSmile.animate({ delay: '30s' }).style('opacity', 1);
+        }
+
+      })();
+    </script>
+</section>
