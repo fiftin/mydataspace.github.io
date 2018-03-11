@@ -243,6 +243,8 @@ a.feature {
 
 .how-it-works-wrap {
   display: flex;
+  margin-left: 0;
+  transition: all 0.3s;
 
   & > svg {
     margin: auto;

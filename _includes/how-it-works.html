@@ -52,6 +52,7 @@
           var chart = SVG.select('#hiw-chart');
           var website = SVG.select('#hiw-website');
 
+          SVG.select('#hiw-data').style('display', 'none');
           denisLamp.style('opacity', 0);
           elenLamp.style('opacity', 0);
 
@@ -92,10 +93,10 @@
           elen.animate({ delay: '6s' }).move(-5, 114);
           elen.animate().move(-45, 114);
 
-          elen1.animate({ delay: '25s' }).move(-8);
-          elen2.animate({ delay: '26s' }).move(3);
-          elen3.animate({ delay: '26.5s' }).move(-7);
-          elen4.animate({ delay: '27.5s' }).move(5);
+          elen1.animate({ delay: '25s' }).move(35);
+          elen2.animate({ delay: '26s' }).move(55);
+          elen3.animate({ delay: '26.5s' }).move(35);
+          elen4.animate({ delay: '27.5s' }).move(55);
 
           yourMessage.animate({ delay: '29s' }).style('opacity', 1);
 

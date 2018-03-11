@@ -13,7 +13,7 @@
    version="1.1"
    id="how-it-works"
    inkscape:version="0.92.1 r15371"
-   sodipodi:docname="how-it-works.svg">
+   sodipodi:docname="how-it-works-en.svg">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -24,8 +24,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="415.025"
-     inkscape:cy="418.00385"
+     inkscape:cx="1165.4165"
+     inkscape:cy="449.88491"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -43,7 +43,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -433,7 +433,7 @@
     <g
        id="hiw-elen-1"
        inkscape:label="elen"
-       transform="translate(141.99871,167.94808)">
+       transform="matrix(0.79237802,0,0,0.79237802,188.54183,165.67214)">
       <g
          transform="translate(222.24988,-111.12501)"
          id="g19091-8-6">
@@ -470,7 +470,7 @@
     <g
        id="hiw-elen-2"
        inkscape:label="elen"
-       transform="translate(142.87185,224.93422)">
+       transform="matrix(0.79237802,0,0,0.79237802,189.23369,214.18112)">
       <g
          transform="translate(222.24988,-111.12501)"
          id="g19091-8-6-3">
@@ -507,7 +507,7 @@
     <g
        id="hiw-elen-4"
        inkscape:label="elen"
-       transform="translate(169.33018,181.46696)">
+       transform="matrix(0.79237802,0,0,0.79237802,210.19868,176.80351)">
       <g
          transform="translate(222.24988,-111.12501)"
          id="g19091-8-6-9">
@@ -544,7 +544,7 @@
     <g
        id="hiw-elen-3"
        inkscape:label="elen"
-       transform="translate(165.05522,225.13468)">
+       transform="matrix(0.79237802,0,0,0.79237802,208.48851,221.88741)">
       <g
          transform="translate(222.24988,-111.12501)"
          id="g19091-8-6-2">
@@ -797,7 +797,7 @@
          id="hiw-denis-message-2"
          y="138.62708"
          x="69.234673"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;opacity:0"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;line-height:1.25;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;opacity:0;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
          xml:space="preserve"
          inkscape:label="denis-message-2"><tspan
            style="font-size:6.3499999px;line-height:1;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
@@ -873,14 +873,14 @@
        id="hiw-elen-message"
        inkscape:label="elen-message"
        style="opacity:0"
-       transform="translate(31.220847,13.758336)">
+       transform="translate(32.279181,16.404171)">
       <path
          inkscape:label="elen-message"
          sodipodi:nodetypes="sssssscccccsss"
          inkscape:connector-curvature="0"
          id="hiw-elen-message-222"
          d="m 204.36776,117.23434 c 0,-1.69308 -1.89979,-3.05615 -4.25953,-3.05615 h -39.75458 c -2.35973,0 -4.25953,1.36307 -4.25953,3.05615 v 26.68105 c 0,1.69308 1.90037,3.10828 4.25953,3.05615 h 23.94595 l 2.03037,2.52284 2.39337,2.97501 2.39409,-2.97501 2.03036,-2.52284 h 6.96044 c 2.35974,0 4.25953,-1.36307 4.25953,-3.05615 z"
-         style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+         style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.9;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <text
          id="text5233-9-0"
          y="124.17008"
@@ -902,6 +902,50 @@
            y="140.04507"
            x="160.62413"
            sodipodi:role="line">my website!</tspan></text>
+    </g>
+    <g
+       id="hiw-data"
+       inkscape:label="data"
+       transform="translate(1.359484,-1.1236748)">
+      <rect
+         y="227.52031"
+         x="25.658756"
+         height="30.577671"
+         width="32.448555"
+         id="rect4489-3-2-0"
+         style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect4665"
+         width="32.448555"
+         height="30.577671"
+         x="28.732357"
+         y="231.12845" />
+      <rect
+         y="235.51787"
+         x="32.31715"
+         height="30.577671"
+         width="32.448555"
+         id="rect4667"
+         style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect4669"
+         width="32.448555"
+         height="30.577671"
+         x="35.390751"
+         y="239.25964" />
+      <text
+         id="text4506-8-3-2-8"
+         y="258.48306"
+         x="41.113583"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.88587856px;line-height:1;font-family:'Showcard Gothic';-inkscape-font-specification:'Showcard Gothic';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.18444316"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.87777805px;font-family:Arial;-inkscape-font-specification:Arial;stroke-width:0.18444316"
+           y="258.48306"
+           x="41.113583"
+           sodipodi:role="line"
+           id="tspan4643-4">Data</tspan></text>
     </g>
   </g>
 </svg>
