@@ -64,7 +64,7 @@ sections:
         description: Quick access from anywhere
   - id: ease
     title: Ease
-    see_more: View Examples
+    see_more: '<i class="fa fa-codepen"></i> View Examples'
     see_more_url: https://codepen.io/mydataspace
     features:
       - id: coding
@@ -96,7 +96,7 @@ sections:
 
 how_it_works:
   title: How it works
-  run_presentation: Start Presentation
+  run_presentation: '<i class="fa fa-play-circle"></i> Start Animation'
 
 demos:
   - id: hello-world

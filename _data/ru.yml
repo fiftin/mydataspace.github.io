@@ -100,7 +100,7 @@ sections:
   - id: ease
     title: Простота
     subtitle: Веб-приложение за три шага
-    see_more: Смотреть примеры
+    see_more: '<i class="fa fa-codepen"></i> Смотреть примеры'
     see_more_url: https://codepen.io/mydataspace
     features:
       - id: open_data
@@ -162,7 +162,7 @@ sections:
 
 how_it_works:
   title: Как это работает
-  run_presentation: Смотреть анимацию
+  run_presentation: '<i class="fa fa-play-circle"></i> Смотреть анимацию'
 
 
 demos_title: Примеры
