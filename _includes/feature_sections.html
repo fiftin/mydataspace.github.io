@@ -43,6 +43,12 @@
         {% endfor %}
       </div>
 
+      {% if feature.see_more %}
+      <div class="text-center favorite_snippets__button_wrap">
+        <a class="btn btn-success sub_footer__button" href="{{ section.see_more_url }}">{{ section.see_more }}</a>
+      </div>
+      {% endif %}
+
       {% if section.id == "ease"%}
         <!--
         <div class="section__code_simple_description">

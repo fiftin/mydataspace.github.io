@@ -50,6 +50,8 @@ buttons:
 sections:
   - id: speed
     title: Speed
+    see_more: View Other Features
+    see_more_url: /features
     features:
       - id: websocket
         title: WebSockets
@@ -62,6 +64,8 @@ sections:
         description: Quick access from anywhere
   - id: ease
     title: Ease
+    see_more: View Examples
+    see_more_url: https://codepen.io/mydataspace
     features:
       - id: coding
         title: HTML/CSS/JS

@@ -60,6 +60,8 @@ sections:
   - id: speed
     title: Скорость
     subtitle: Современные решения позволяют обеспечить высокую скорость доступа к данным
+    see_more: Посмотреть возможности
+    see_more_url: /ru/features
     features:
       - id: websocket
         title: WebSocket-ы
@@ -98,6 +100,8 @@ sections:
   - id: ease
     title: Простота
     subtitle: Веб-приложение за три шага
+    see_more: Смотреть примеры
+    see_more_url: https://codepen.io/mydataspace
     features:
       - id: open_data
         title: Открытые данные
