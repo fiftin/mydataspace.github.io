@@ -60,7 +60,7 @@ sections:
   - id: speed
     title: Скорость
     subtitle: Современные решения позволяют обеспечить высокую скорость доступа к данным
-    see_more: Посмотреть возможности
+    see_more: Смотреть возможности
     see_more_url: /ru/features
     features:
       - id: websocket
