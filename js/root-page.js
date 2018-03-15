@@ -678,9 +678,9 @@ function initRootPage(options) {
         html = RootHTMLGen.getCommentHTML(data.children[i]) + html;
       }
       $list.prepend(html);
-      if (data.children.length < 30) {
-        $('#root__comments_show_older').hide();
-      }
+
+      $('#root__comments_show_older').css('display', data.children.length < 30 ? 'none' : 'block');
+
       if($list.html() === '') {
         document.getElementById('root__comments__empty').style.display = 'block';
         $list.hide();
