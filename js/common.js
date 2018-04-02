@@ -1200,6 +1200,14 @@ var MDSCommon = {
       return false;
     }
     return true;
+  },
+
+  timestampToDate: function(timestamp) {
+    var ts = typeof timestamp === 'string' ? parseInt(timestamp) : timestamp;
+    if (ts < 20000000000) {
+      ts *= 1000;
+    }
+    return new Date(ts);
   }
 };
 

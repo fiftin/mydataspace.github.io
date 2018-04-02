@@ -7854,10 +7854,10 @@ var MDSCommon = {
     if (value == null || typeof value !== 'string') {
       return false;
     }
-    const m = value.match(/^-?(\d+(\.\d+)?),-?(\d+(\.\d+)?)$/);
+    var m = value.match(/^-?(\d+(\.\d+)?),-?(\d+(\.\d+)?)$/);
     if (m) {
-      const lat = parseFloat(m[1]);
-      const lon = parseFloat(m[3]);
+      var lat = parseFloat(m[1]);
+      var lon = parseFloat(m[3]);
       if (lat <= 90 && lon <= 90) {
         return true;
       }
@@ -7902,8 +7902,8 @@ var MDSCommon = {
   },
 
   getVersionOf: function (root) {
-    const parts = root.split('$');
-    const version = parts[1] ? parseInt(parts[1]) : 0;
+    var parts = root.split('$');
+    var version = parts[1] ? parseInt(parts[1]) : 0;
     return version;
   },
 
@@ -8141,6 +8141,13 @@ var MDSCommon = {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
   },
 
+
+  /**
+   * Converts date to unix like format.
+   * @param {Date} date
+   * @param {boolean} withSeconds
+   * @returns {string}
+   */
   dateToString: function (date, withSeconds) {
     if (typeof date === 'undefined') {
       date = new Date();
@@ -8442,6 +8449,14 @@ var MDSCommon = {
       return false;
     }
     return true;
+  },
+
+  timestampToDate: function(timestamp) {
+    var ts = typeof timestamp === 'string' ? parseInt(timestamp) : timestamp;
+    if (ts < 20000000000) {
+      ts *= 1000;
+    }
+    return new Date(ts);
   }
 };
 
@@ -8676,12 +8691,14 @@ Entities.prototype.onCreate = function(callback) {
 /**
  * Client for MyDataSpace service.
  * Version 2.1
- * @param optionsOrRoot
+ * @param {object|string} optionsOrRoot
  * @param {boolean} [optionsOrRoot.import] Must be true if you want import large amount of data.
  *                                   If this option is true:
  *                                   - Subscribers will not receive messages
  *                                   - More requests per second can be send
  * @param {string} [optionsOrRoot.root]
+ * @param {string} [optionsOrRoot.clientId]
+ * @param {string} [optionsOrRoot.permission]
  * @constructor
  */
 function Myda(optionsOrRoot) {
