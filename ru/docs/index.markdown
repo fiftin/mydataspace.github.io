@@ -3,7 +3,15 @@ layout: docs/index
 title: Документация
 language: ru
 ---
+<p>
+    MyDataSpace &mdash; это облачное хранилище открытых данных.
+</p>
+<p>
+    Структура данных в MyDataSpace похожа на файловую систему. Но в отличае от нее папки в MyDataSpace так же как и файлы могут
+    содержать данные.
+</p>
 
+<!--
 <div class="row">
     <div class="col-md-9">
         <p>
@@ -32,3 +40,4 @@ language: ru
         <img class="hidden-xs hidden-sm" src="/images/docs/tree-structure.png" style="width: 100%;" />
     </div>
 </div>
+-->

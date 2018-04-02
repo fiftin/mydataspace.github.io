@@ -892,6 +892,13 @@ var MDSCommon = {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
   },
 
+
+  /**
+   * Converts date to unix like format.
+   * @param {Date} date
+   * @param {boolean} withSeconds
+   * @returns {string}
+   */
   dateToString: function (date, withSeconds) {
     if (typeof date === 'undefined') {
       date = new Date();

@@ -306,6 +306,38 @@ Handlescripts.registerSource('vk', 'https://vk.com/js/api/openapi.js?150');
 Handlescripts.registerSource('ok', 'https://connect.ok.ru/connect.js');
 Handlescripts.registerSource('ymaps', 'https://api-maps.yandex.ru/2.1/?lang=en_RU');
 
+Handlescripts.registerHelper("date", function(timestamp) {
+  var date = new Date(timestamp);
+  return String(date.getFullYear() + '-' +
+    MDSCommon.intToFixedString(date.getMonth() + 1, 2) + '-' +
+    MDSCommon.intToFixedString(date.getDate(), 2) + ' ' +
+    MDSCommon.intToFixedString(date.getHours(), 2) + ':' +
+    MDSCommon.intToFixedString(date.getMinutes(), 2)
+  );
+});
+
+Handlescripts.registerHelper("date_us", function(timestamp) {
+  var date = new Date(timestamp);
+  return String(
+    MDSCommon.intToFixedString(date.getMonth() + 1, 2) + '/' +
+    MDSCommon.intToFixedString(date.getDate(), 2) + '/' +
+    date.getFullYear() + ' ' +
+    MDSCommon.intToFixedString(date.getHours(), 2) + ':' +
+    MDSCommon.intToFixedString(date.getMinutes(), 2)
+  );
+});
+
+Handlescripts.registerHelper("date_ru", function(timestamp) {
+  var date = new Date(timestamp);
+  return String(
+    MDSCommon.intToFixedString(date.getDate(), 2) + '.' +
+    MDSCommon.intToFixedString(date.getMonth() + 1, 2) + '.' +
+    date.getFullYear() + ' ' +
+    MDSCommon.intToFixedString(date.getHours(), 2) + ':' +
+    MDSCommon.intToFixedString(date.getMinutes(), 2)
+  );
+});
+
 Handlescripts.registerHelper('ymapsAddr', function(options) {
   var address = encodeURIComponent(options[0] + ', ' + options[1]);
   return '<script>' +

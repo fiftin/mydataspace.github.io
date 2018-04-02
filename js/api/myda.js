@@ -3,12 +3,14 @@
 /**
  * Client for MyDataSpace service.
  * Version 2.1
- * @param optionsOrRoot
+ * @param {object|string} optionsOrRoot
  * @param {boolean} [optionsOrRoot.import] Must be true if you want import large amount of data.
  *                                   If this option is true:
  *                                   - Subscribers will not receive messages
  *                                   - More requests per second can be send
  * @param {string} [optionsOrRoot.root]
+ * @param {string} [optionsOrRoot.clientId]
+ * @param {string} [optionsOrRoot.permission]
  * @constructor
  */
 function Myda(optionsOrRoot) {

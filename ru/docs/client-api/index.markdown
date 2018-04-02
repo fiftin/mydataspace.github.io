@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Клиентский API
+title: Описание API
 language: ru
 ---
 
@@ -91,28 +91,18 @@ demo.login('google').then(function(args) {
 <br>
 <br>
 
-### Методы
+### API Endpoints
 
-<section class="page__send creates a browser window to render HTML. This is the app's **main process**.
-                                             - `index.html` - A web page to render. This is the app's **renderer process**.
-                                             
-                                             You can learn more about each of these components within the [Quick Start Guide](http://electron.atom.io/docs/tutorial/quick-start).
-                                             
-                                             ## To Use
-                                             
-                                             To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
-                                             
-                                             ```bashction">
+<section>
   <div class="row">
     <div class="col-md-4">
+      <div class="highlighter-rouge">
+        <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--get">GET</span>  /get</code></pre>
+      </div>
       <p class="feature__subtitle">Получить элемент/корень</p>
       <p></p>
     </div>
     <div class="col-md-8">
-      <div class="highlighter-rouge">
-        <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--get">GET</span>  /get</code></pre>
-      </div>
-      <div class="highlighter__params">Параметры:</div>
       <div class="row">
         <div class="col-md-4">
           <div class="highlighter__var">
@@ -189,6 +179,9 @@ demo.login('google').then(function(args) {
 <section class="page__section">
   <div class="row">
     <div class="col-md-4">
+      <div class="highlighter-rouge">
+        <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--post">POST</span> /change</code></pre>
+      </div>
       <p class="feature__subtitle">Создать элемент/корень</p>
       <p>Пример:</p>
       <div class="highlighter-rouge">
@@ -200,10 +193,6 @@ demo.login('google').then(function(args) {
 </code></pre></div>
     </div>
     <div class="col-md-8">
-      <div class="highlighter-rouge">
-        <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--post">POST</span> /change</code></pre>
-      </div>
-      <div class="highlighter__params">Тело:</div>
       <div class="row">
         <div class="col-md-4">
           <div class="highlighter__var">
@@ -264,13 +253,13 @@ demo.login('google').then(function(args) {
 <section class="page__section">
   <div class="row">
     <div class="col-md-4">
-        <p class="feature__subtitle">Изменить элемент/корень</p>
-        <p></p>
-    </div>
-    <div class="col-md-8">
       <div class="highlighter-rouge">
         <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--put">PUT</span> /create</code></pre>
       </div>
+      <p class="feature__subtitle">Изменить элемент/корень</p>
+      <p></p>
+    </div>
+    <div class="col-md-8">
       <div class="row">
         <div class="col-md-4">
           <div class="highlighter__var">
@@ -308,13 +297,13 @@ demo.login('google').then(function(args) {
 <section class="page__section">
   <div class="row">
     <div class="col-md-4">
-        <p class="feature__subtitle">Удалить элемент/корень</p>
-        <p></p>
-    </div>
-    <div class="col-md-8">
       <div class="highlighter-rouge">
         <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--delete">DELETE</span> /</code></pre>
       </div>
+      <p class="feature__subtitle">Удалить элемент/корень</p>
+      <p></p>
+    </div>
+    <div class="col-md-8">
       <div class="row">
         <div class="col-md-4">
           <div class="highlighter__var">
@@ -342,13 +331,13 @@ demo.login('google').then(function(args) {
 <section class="page__section">
   <div class="row">
     <div class="col-md-4">
-        <p class="feature__subtitle">Получит список корней</p>
-        <p></p>
-    </div>
-    <div class="col-md-8">
       <div class="highlighter-rouge">
         <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--get">GET</span> /getRoots</code></pre>
       </div>
+      <p class="feature__subtitle">Получит список корней</p>
+      <p></p>
+    </div>
+    <div class="col-md-8">
       <div class="row">
         <div class="col-md-4">
           <div class="highlighter__var">
@@ -386,13 +375,13 @@ demo.login('google').then(function(args) {
 <section class="page__section">
   <div class="row">
     <div class="col-md-4">
-        <p class="feature__subtitle">Получит список своих корней</p>
-        <p></p>
-    </div>
-    <div class="col-md-8">
       <div class="highlighter-rouge">
         <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--get">GET</span> /getMyRoots</code></pre>
       </div>
+      <p class="feature__subtitle">Получит список своих корней</p>
+      <p></p>
+    </div>
+    <div class="col-md-8">
       <div class="row">
         <div class="col-md-4">
           <div class="highlighter__var">

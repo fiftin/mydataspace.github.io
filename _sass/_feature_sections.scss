@@ -78,6 +78,7 @@
 .feature {
   text-align: center;
   display: block;
+  margin-bottom: 30px;
 }
 
 .feature__details {
@@ -159,6 +160,22 @@ a.feature {
   font-size: $font-size-h2;
   line-height: 1.05;
   word-wrap: break-word;
+}
+
+.feature__method_name {
+  font-size: 25px;
+}
+
+.feature__code_example {
+  text-align: right;
+  margin-bottom: -30px;
+  margin-right: 10px;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.feature__section {
+  margin-top: 30px;
 }
 
 .feature__subtitle {
