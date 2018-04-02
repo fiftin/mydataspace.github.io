@@ -306,7 +306,7 @@ Handlescripts.registerSource('vk', 'https://vk.com/js/api/openapi.js?150');
 Handlescripts.registerSource('ok', 'https://connect.ok.ru/connect.js');
 Handlescripts.registerSource('ymaps', 'https://api-maps.yandex.ru/2.1/?lang=en_RU');
 
-Handlescripts.registerHelper("date", function(timestamp) {
+Handlescripts.registerHelper("dateISO", function(timestamp) {
   var date = new Date(timestamp);
   return String(date.getFullYear() + '-' +
     MDSCommon.intToFixedString(date.getMonth() + 1, 2) + '-' +
@@ -316,7 +316,7 @@ Handlescripts.registerHelper("date", function(timestamp) {
   );
 });
 
-Handlescripts.registerHelper("date_us", function(timestamp) {
+Handlescripts.registerHelper("dateUS", function(timestamp) {
   var date = new Date(timestamp);
   return String(
     MDSCommon.intToFixedString(date.getMonth() + 1, 2) + '/' +
@@ -327,7 +327,7 @@ Handlescripts.registerHelper("date_us", function(timestamp) {
   );
 });
 
-Handlescripts.registerHelper("date_ru", function(timestamp) {
+Handlescripts.registerHelper("dateRU", function(timestamp) {
   var date = new Date(timestamp);
   return String(
     MDSCommon.intToFixedString(date.getDate(), 2) + '.' +
