@@ -605,10 +605,10 @@ var MDSCommon = {
     if (value == null || typeof value !== 'string') {
       return false;
     }
-    const m = value.match(/^-?(\d+(\.\d+)?),-?(\d+(\.\d+)?)$/);
+    var m = value.match(/^-?(\d+(\.\d+)?),-?(\d+(\.\d+)?)$/);
     if (m) {
-      const lat = parseFloat(m[1]);
-      const lon = parseFloat(m[3]);
+      var lat = parseFloat(m[1]);
+      var lon = parseFloat(m[3]);
       if (lat <= 90 && lon <= 90) {
         return true;
       }
@@ -653,8 +653,8 @@ var MDSCommon = {
   },
 
   getVersionOf: function (root) {
-    const parts = root.split('$');
-    const version = parts[1] ? parseInt(parts[1]) : 0;
+    var parts = root.split('$');
+    var version = parts[1] ? parseInt(parts[1]) : 0;
     return version;
   },
 
