@@ -317,7 +317,7 @@ Handlebars.registerHelper("dateISO", function(timestamp) {
 });
 
 Handlebars.registerHelper("dateUS", function(timestamp) {
-  var date = new Date(typeof timestamp === 'string' ? parseInt(timestamp) : timestamp));
+  var date = new Date(typeof timestamp === 'string' ? parseInt(timestamp) : timestamp);
   return String(
     MDSCommon.intToFixedString(date.getMonth() + 1, 2) + '/' +
     MDSCommon.intToFixedString(date.getDate(), 2) + '/' +
@@ -328,7 +328,7 @@ Handlebars.registerHelper("dateUS", function(timestamp) {
 });
 
 Handlebars.registerHelper("dateRU", function(timestamp) {
-  var date = new Date(typeof timestamp === 'string' ? parseInt(timestamp) : timestamp));
+  var date = new Date(typeof timestamp === 'string' ? parseInt(timestamp) : timestamp);
   return String(
     MDSCommon.intToFixedString(date.getDate(), 2) + '.' +
     MDSCommon.intToFixedString(date.getMonth() + 1, 2) + '.' +
