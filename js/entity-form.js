@@ -208,7 +208,7 @@ EntityForm.prototype.startEditing = function () {
 
 EntityForm.prototype.setRootView = function(data) {
   var completeness = MDSCommon.getRootDataCompleteness(data);
-  var language = (options.language || getCurrentLanguage() || 'en').toLowerCase();
+  var language = (getCurrentLanguage() || 'en').toLowerCase();
   var languagePrefix = language === 'en' ? '' : '/' + language;
 
   $.ajax({ url: languagePrefix + '/fragments/root-view.html', method: 'get' }).then(function(html) {
@@ -318,7 +318,7 @@ EntityForm.prototype.setRootView = function(data) {
 };
 
 EntityForm.prototype.setTaskView = function(data) {
-  var language = (options.language || getCurrentLanguage() || 'en').toLowerCase();
+  var language = (getCurrentLanguage() || 'en').toLowerCase();
   var languagePrefix = language === 'en' ? '' : '/' + language;
 
   $.ajax({ url: languagePrefix + '/fragments/task-view.html', method: 'get' }).then(function(html) {
@@ -428,7 +428,7 @@ EntityForm.prototype.setEntityView = function(data) {
 
   var self = this;
   var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.selectedId).path);
-  var language = (options.language || getCurrentLanguage() || 'en').toLowerCase();
+  var language = (getCurrentLanguage() || 'en').toLowerCase();
   var languagePrefix = language === 'en' ? '' : '/' + language;
 
   $.ajax({ url: languagePrefix + '/fragments/entity-view.html', method: 'get' }).then(function(html) {
@@ -490,7 +490,7 @@ EntityForm.prototype.setEntityView = function(data) {
 };
 
 EntityForm.prototype.setLogView = function(data) {
-  var language = (options.language || getCurrentLanguage() || 'en').toLowerCase();
+  var language = (getCurrentLanguage() || 'en').toLowerCase();
   var languagePrefix = language === 'en' ? '' : '/' + language;
 
   $.ajax({ url: languagePrefix + '/fragments/log-view.html', method: 'get' }).then(function(html) {

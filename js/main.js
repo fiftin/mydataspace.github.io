@@ -306,46 +306,47 @@ MDSView.registerSource('vk', 'https://vk.com/js/api/openapi.js?150');
 MDSView.registerSource('ok', 'https://connect.ok.ru/connect.js');
 MDSView.registerSource('ymaps', 'https://api-maps.yandex.ru/2.1/?lang=en_RU');
 
-Handlebars.registerHelper("dateHumanized", function(timestamp) {
-  var date = MDSCommon.timestampToDate(timestamp);
-  return MDSCommon.humanizeDate(date);
-});
+
+if (typeof Handlebars !== 'undefined') {
+
+  Handlebars.registerHelper("dateHumanized", function(timestamp) {
+    var date = MDSCommon.timestampToDate(timestamp);
+    return MDSCommon.humanizeDate(date);
+  });
 
 
-Handlebars.registerHelper("dateISO", function(timestamp) {
-  var date = MDSCommon.timestampToDate(timestamp);
+  Handlebars.registerHelper("dateISO", function(timestamp) {
+    var date = MDSCommon.timestampToDate(timestamp);
+    return String(date.getFullYear() + '-' +
+      MDSCommon.intToFixedString(date.getMonth() + 1, 2) + '-' +
+      MDSCommon.intToFixedString(date.getDate(), 2) + ' ' +
+      MDSCommon.intToFixedString(date.getHours(), 2) + ':' +
+      MDSCommon.intToFixedString(date.getMinutes(), 2)
+    );
+  });
 
-  return String(date.getFullYear() + '-' +
-    MDSCommon.intToFixedString(date.getMonth() + 1, 2) + '-' +
-    MDSCommon.intToFixedString(date.getDate(), 2) + ' ' +
-    MDSCommon.intToFixedString(date.getHours(), 2) + ':' +
-    MDSCommon.intToFixedString(date.getMinutes(), 2)
-  );
-});
+  Handlebars.registerHelper("dateUS", function(timestamp) {
+    var date = MDSCommon.timestampToDate(timestamp);
+    return String(
+      MDSCommon.intToFixedString(date.getMonth() + 1, 2) + '/' +
+      MDSCommon.intToFixedString(date.getDate(), 2) + '/' +
+      date.getFullYear() + ' ' +
+      MDSCommon.intToFixedString(date.getHours(), 2) + ':' +
+      MDSCommon.intToFixedString(date.getMinutes(), 2)
+    );
+  });
 
-Handlebars.registerHelper("dateUS", function(timestamp) {
-  var date = MDSCommon.timestampToDate(timestamp);
-
-  return String(
-    MDSCommon.intToFixedString(date.getMonth() + 1, 2) + '/' +
-    MDSCommon.intToFixedString(date.getDate(), 2) + '/' +
-    date.getFullYear() + ' ' +
-    MDSCommon.intToFixedString(date.getHours(), 2) + ':' +
-    MDSCommon.intToFixedString(date.getMinutes(), 2)
-  );
-});
-
-Handlebars.registerHelper("dateRU", function(timestamp) {
-  var date = MDSCommon.timestampToDate(timestamp);
-
-  return String(
-    MDSCommon.intToFixedString(date.getDate(), 2) + '.' +
-    MDSCommon.intToFixedString(date.getMonth() + 1, 2) + '.' +
-    date.getFullYear() + ' ' +
-    MDSCommon.intToFixedString(date.getHours(), 2) + ':' +
-    MDSCommon.intToFixedString(date.getMinutes(), 2)
-  );
-});
+  Handlebars.registerHelper("dateRU", function(timestamp) {
+    var date = MDSCommon.timestampToDate(timestamp);
+    return String(
+      MDSCommon.intToFixedString(date.getDate(), 2) + '.' +
+      MDSCommon.intToFixedString(date.getMonth() + 1, 2) + '.' +
+      date.getFullYear() + ' ' +
+      MDSCommon.intToFixedString(date.getHours(), 2) + ':' +
+      MDSCommon.intToFixedString(date.getMinutes(), 2)
+    );
+  });
+}
 
 MDSView.registerHelper('ymapsAddr', function(options) {
   var address = encodeURIComponent(options[0] + ', ' + options[1]);
