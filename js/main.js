@@ -306,6 +306,11 @@ MDSView.registerSource('vk', 'https://vk.com/js/api/openapi.js?150');
 MDSView.registerSource('ok', 'https://connect.ok.ru/connect.js');
 MDSView.registerSource('ymaps', 'https://api-maps.yandex.ru/2.1/?lang=en_RU');
 
+Handlebars.registerHelper("dateHumanized", function(timestamp) {
+  var date = MDSCommon.timestampToDate(timestamp);
+  return MDSCommon.humanizeDate(date);
+});
+
 
 Handlebars.registerHelper("dateISO", function(timestamp) {
   var date = MDSCommon.timestampToDate(timestamp);
