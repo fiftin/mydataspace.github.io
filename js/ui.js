@@ -446,6 +446,7 @@ UI = {
     webix.ui(UILayout.windows.addVersion);
     if (!withHeader) {
       UILayout.sideMenu.hidden = true;
+      UILayout.sideMenu.height = 100;
     }
     webix.ui(UILayout.sideMenu);
 
