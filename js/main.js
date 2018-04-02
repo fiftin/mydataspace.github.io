@@ -307,7 +307,7 @@ MDSView.registerSource('ok', 'https://connect.ok.ru/connect.js');
 MDSView.registerSource('ymaps', 'https://api-maps.yandex.ru/2.1/?lang=en_RU');
 
 Handlebars.registerHelper("dateISO", function(timestamp) {
-  var date = new Date(timestamp);
+  var date = new Date(typeof timestamp === 'string' ? parseInt(timestamp) : timestamp);
   return String(date.getFullYear() + '-' +
     MDSCommon.intToFixedString(date.getMonth() + 1, 2) + '-' +
     MDSCommon.intToFixedString(date.getDate(), 2) + ' ' +
@@ -317,7 +317,7 @@ Handlebars.registerHelper("dateISO", function(timestamp) {
 });
 
 Handlebars.registerHelper("dateUS", function(timestamp) {
-  var date = new Date(timestamp);
+  var date = new Date(typeof timestamp === 'string' ? parseInt(timestamp) : timestamp));
   return String(
     MDSCommon.intToFixedString(date.getMonth() + 1, 2) + '/' +
     MDSCommon.intToFixedString(date.getDate(), 2) + '/' +
@@ -328,7 +328,7 @@ Handlebars.registerHelper("dateUS", function(timestamp) {
 });
 
 Handlebars.registerHelper("dateRU", function(timestamp) {
-  var date = new Date(timestamp);
+  var date = new Date(typeof timestamp === 'string' ? parseInt(timestamp) : timestamp));
   return String(
     MDSCommon.intToFixedString(date.getDate(), 2) + '.' +
     MDSCommon.intToFixedString(date.getMonth() + 1, 2) + '.' +
