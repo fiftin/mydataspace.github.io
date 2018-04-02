@@ -15,7 +15,7 @@ describe('main', function() {
   });
   describe('#parseSingleScript', function() {
     it('Should return valid HTML', function() {
-      Handlescripts.registerHelper('test', function(options) {
+      MDSViews.registerHelper('test', function(options) {
         return options;
       });
       var res = parseSingleScript('test "test" test', { test: 123 });
