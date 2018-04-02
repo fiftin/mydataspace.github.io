@@ -189,7 +189,7 @@ function parseSnippetTemplate(template) {
 
   var parts = template.split(/^---$/gm);
   return {
-    scripts: MDSViews.compile(parts[0] || ''),
+    scripts: MDSView.compile(parts[0] || ''),
     css: parts[1],
     template: Handlebars.compile(parts[2] || '')
   };
@@ -259,7 +259,7 @@ function parseSingleScript(s, fields) {
         break;
     }
   }
-  return MDSViews.helpers[helperName] ? MDSViews.helpers[helperName](options) : '';
+  return MDSView.helpers[helperName] ? MDSView.helpers[helperName](options) : '';
 }
 
 function parseScripts(scripts, fields) {
@@ -268,16 +268,16 @@ function parseScripts(scripts, fields) {
   });
 }
 
-MDSViews = {
+MDSView = {
   helpers: {},
   registerHelper: function(name, fn) {
-    MDSViews.helpers[name] = fn;
+    MDSView.helpers[name] = fn;
   },
   registerSource: function(name, src) {
     if (typeof src !== 'string') {
       throw new Error('src must be string');
     }
-    MDSViews.helpers[name] = function() {
+    MDSView.helpers[name] = function() {
       return '<script>' +
       ' $.ajax({\n' +
       '    async: false,\n' +
@@ -287,7 +287,7 @@ MDSViews = {
       '</script>';
     };
 
-    // MDSViews.helpers[name] = function() {
+    // MDSView.helpers[name] = function() {
     //   return '<script>(function() {\n' +
     //     '    var req = new XMLHttpRequest();\n' +
     //     '    req.open("GET", "' + src + '", false);\n' +
@@ -298,13 +298,13 @@ MDSViews = {
   },
 
   compile: function(scripts) {
-    return parseScripts.bind(MDSViews, scripts);
+    return parseScripts.bind(MDSView, scripts);
   }
 };
 
-MDSViews.registerSource('vk', 'https://vk.com/js/api/openapi.js?150');
-MDSViews.registerSource('ok', 'https://connect.ok.ru/connect.js');
-MDSViews.registerSource('ymaps', 'https://api-maps.yandex.ru/2.1/?lang=en_RU');
+MDSView.registerSource('vk', 'https://vk.com/js/api/openapi.js?150');
+MDSView.registerSource('ok', 'https://connect.ok.ru/connect.js');
+MDSView.registerSource('ymaps', 'https://api-maps.yandex.ru/2.1/?lang=en_RU');
 
 Handlebars.registerHelper("dateISO", function(timestamp) {
   var date = new Date(timestamp);
@@ -338,7 +338,7 @@ Handlebars.registerHelper("dateRU", function(timestamp) {
   );
 });
 
-MDSViews.registerHelper('ymapsAddr', function(options) {
+MDSView.registerHelper('ymapsAddr', function(options) {
   var address = encodeURIComponent(options[0] + ', ' + options[1]);
   return '<script>' +
     '$.getJSON(\'https://geocode-maps.yandex.ru/1.x/?geocode=' + address + '&format=json\', function(data) {\n' +
@@ -352,7 +352,7 @@ MDSViews.registerHelper('ymapsAddr', function(options) {
     '</script>';
 });
 
-MDSViews.registerHelper('vkGroupWidget', function(options) {
+MDSView.registerHelper('vkGroupWidget', function(options) {
   var vk_id = options[0];
   if (MDSCommon.isBlank(vk_id)) {
     return '';
@@ -360,7 +360,7 @@ MDSViews.registerHelper('vkGroupWidget', function(options) {
   return  '<script>VK.Widgets.Group("vk_groups_' + vk_id + '", {mode: 3}, ' + vk_id + ');</script>';
 });
 
-MDSViews.registerHelper('vkGroupWidget', function(options) {
+MDSView.registerHelper('vkGroupWidget', function(options) {
   var vk_id = options[0];
   if (MDSCommon.isBlank(vk_id)) {
     return '';
@@ -368,7 +368,7 @@ MDSViews.registerHelper('vkGroupWidget', function(options) {
   return  '<script>VK.Widgets.Group("vk_groups_' + vk_id + '", {mode: 3}, ' + vk_id + ');</script>';
 });
 
-MDSViews.registerHelper('okGroupWidget', function(options) {
+MDSView.registerHelper('okGroupWidget', function(options) {
   var ok_id = options[0];
   if (MDSCommon.isBlank(ok_id)) {
     return '';
