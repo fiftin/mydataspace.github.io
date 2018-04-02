@@ -193,23 +193,25 @@ EntityForm.prototype.startAddingField = function() {
 
 EntityForm.prototype.startEditing = function () {
   var self = this;
-  var url = UIHelper.getWizardUrlById(self.getSelectedId());
-  $.ajax({
-    url: url,
-    type: 'HEAD'
-  }).then(function() {
-    $('#wizard_modal__frame').attr('src', url);
-    $('#wizard_modal').modal('show');
-  }).catch(function() {
-    self.setEditing(true);
-    self.refresh();
-  });
+  //var url = UIHelper.getWizardUrlById(self.getSelectedId());
+  //$.ajax({
+  //  url: url,
+  //  type: 'HEAD'
+  //}).then(function() {
+  //  $('#wizard_modal__frame').attr('src', url);
+  //  $('#wizard_modal').modal('show');
+  //}).catch(function() {
+  self.setEditing(true);
+  self.refresh();
+  //});
 };
 
 EntityForm.prototype.setRootView = function(data) {
   var completeness = MDSCommon.getRootDataCompleteness(data);
+  var language = (options.language || getCurrentLanguage() || 'en').toLowerCase();
+  var languagePrefix = language === 'en' ? '' : '/' + language;
 
-  $.ajax({ url: '/fragments/root-view.html', method: 'get' }).then(function(html) {
+  $.ajax({ url: languagePrefix + '/fragments/root-view.html', method: 'get' }).then(function(html) {
     var view = document.getElementById('view');
     var websiteURL = MDSCommon.findValueByName(data.fields, 'websiteURL');
     var description = MDSCommon.findValueByName(data.fields, 'description');
@@ -316,7 +318,10 @@ EntityForm.prototype.setRootView = function(data) {
 };
 
 EntityForm.prototype.setTaskView = function(data) {
-  $.ajax({ url: '/fragments/task-view.html', method: 'get' }).then(function(html) {
+  var language = (options.language || getCurrentLanguage() || 'en').toLowerCase();
+  var languagePrefix = language === 'en' ? '' : '/' + language;
+
+  $.ajax({ url: languagePrefix + '/fragments/task-view.html', method: 'get' }).then(function(html) {
     var view = document.getElementById('view');
     view.innerHTML = html;
     document.getElementById('view__overview_icon').className =
@@ -327,7 +332,7 @@ EntityForm.prototype.setTaskView = function(data) {
     document.getElementById('view__title').innerText =
       MDSCommon.getPathName(data.path);
 
-    const description = data.fields.filter(function(x) { return x.name === 'description'; })[0];
+    var description = data.fields.filter(function(x) { return x.name === 'description'; })[0];
     if (description != null) {
       $('#view__description').text(description.value);
     } else {
@@ -421,15 +426,17 @@ EntityForm.prototype.setEntityView = function(data) {
       return;
   }
 
-  const self = this;
-  const entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.selectedId).path);
+  var self = this;
+  var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.selectedId).path);
+  var language = (options.language || getCurrentLanguage() || 'en').toLowerCase();
+  var languagePrefix = language === 'en' ? '' : '/' + language;
 
-  $.ajax({ url: '/fragments/entity-view.html', method: 'get' }).then(function(html) {
+  $.ajax({ url: languagePrefix + '/fragments/entity-view.html', method: 'get' }).then(function(html) {
     var view = document.getElementById('view');
     view.innerHTML = html;
     if (entityType === 'resource') {
-      const resourceType = MDSCommon.findValueByName(data.fields, 'type');
-      const resourceName = MDSCommon.getPathName(data.path);
+      var resourceType = MDSCommon.findValueByName(data.fields, 'type');
+      var resourceName = MDSCommon.getPathName(data.path);
       switch (resourceType) {
         case 'avatar':
           document.getElementById('view__overview_icon').parentNode.innerHTML =
@@ -457,7 +464,7 @@ EntityForm.prototype.setEntityView = function(data) {
       $('#view__description').remove();
       viewFields = this.setViewFields(data);
     } else {
-      const description = data.fields.filter(function(x) { return x.name === 'description'; })[0];
+      var description = data.fields.filter(function(x) { return x.name === 'description'; })[0];
       if (description != null) {
         $('#view__description').text(description.value);
       } else {
@@ -483,7 +490,10 @@ EntityForm.prototype.setEntityView = function(data) {
 };
 
 EntityForm.prototype.setLogView = function(data) {
-  $.ajax({ url: '/fragments/log-view.html', method: 'get' }).then(function(html) {
+  var language = (options.language || getCurrentLanguage() || 'en').toLowerCase();
+  var languagePrefix = language === 'en' ? '' : '/' + language;
+
+  $.ajax({ url: languagePrefix + '/fragments/log-view.html', method: 'get' }).then(function(html) {
     var view = document.getElementById('view');
     view.innerHTML = html;
     document.getElementById('view__overview_icon').className =
@@ -569,16 +579,16 @@ EntityForm.prototype.setData = function(data) {
 };
 
 EntityForm.prototype.refresh = function() {
-  const self = this;
+  var self = this;
 
   if (this.selectedId == null) {
       return;
   }
 
-  const entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.selectedId).path);
-  const isWithMeta = self.isEditing();
+  var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.selectedId).path);
+  var isWithMeta = self.isEditing();
   $$('entity_form').disable();
-  const req = !isWithMeta ? 'entities.get' : 'entities.getWithMeta';
+  var req = !isWithMeta ? 'entities.get' : 'entities.getWithMeta';
   Mydataspace.request(req, MDSCommon.extend(Identity.dataFromId(self.selectedId), { children: true }), function(data) {
     if (!isWithMeta || entityType === 'resource') {
       self.setView(data);
@@ -607,7 +617,7 @@ EntityForm.prototype.refresh = function() {
     }
     self.emitLoaded(data);
     if ($$('edit_script_window').isVisible() && self.editScriptFieldId != null) {
-      const editedField = $$(self.editScriptFieldId);
+      var editedField = $$(self.editScriptFieldId);
       if (editedField != null) {
         $$('edit_script_window__editor').setValue(editedField.getValue());
         $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
