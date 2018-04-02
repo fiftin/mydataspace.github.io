@@ -444,9 +444,9 @@ UI = {
     webix.ui(UILayout.windows.addApp);
     webix.ui(UILayout.windows.changeVersion);
     webix.ui(UILayout.windows.addVersion);
-    try {
+    if (withHeader) {
       webix.ui(UILayout.sideMenu);
-    } catch (e) {}
+    }
 
     //
     // Admin panel
