@@ -1,7 +1,7 @@
 /**
- * Wrapper for Myda requests for work with entities.
+ * Wrapper for MDSClient requests for work with entities.
  * Version 2.1
- * @param parent Instance of Myda class.
+ * @param parent Instance of MDSClient class.
  * @param {string} [root] Root name if you want to work only with one root.
  * @constructor
  */
@@ -37,7 +37,7 @@ Entities.prototype.getRootPathData = function(pathOrData, options) {
 };
 
 /**
- * @deprecated Now this method equals to Myda.request.
+ * @deprecated Now this method equals to MDSClient.request.
  */
 Entities.prototype.request = function(eventName, data) {
   return this.parent.request(eventName, data);

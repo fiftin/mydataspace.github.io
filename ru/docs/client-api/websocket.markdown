@@ -7,6 +7,8 @@ language: ru
 <div class="page-tab-list">
     <a href="/ru/docs/client-api" class="page-tab">REST</a>
     <a href="/ru/docs/client-api/websocket" class="page-tab page-tab--active">WebSocket</a>
+    <a href="/ru/docs/client-api/sdk" class="page-tab">SDK</a>
+    <a href="/ru/docs/client-api/formatters" class="page-tab">Форматтеры</a>
 </div>
 
 Для доступа к API по Websocket существует библиотека JavaScript:
@@ -46,7 +48,6 @@ language: ru
           Полнотектовый поиск дочерних элементов
         </div>
       </div>
-
       <div class="feature__code_example">Пример</div>
 {% highlight javascript %}
 const data =
@@ -70,14 +71,6 @@ const data =
       </div>
       <p class="feature__subtitle">Отправляет запрос на сервер</p>
       <p></p>
-      <p>Пример:</p>
-{% highlight javascript %}
-Mydataspace.emit(
-  'entities.delete', {
-    root: 'hello-world',
-    path: 'data'
-  });
-{% endhighlight %}
     </div>
     <div class="col-md-8">
       <div class="row">
@@ -100,121 +93,14 @@ Mydataspace.emit(
           Полнотектовый поиск дочерних элементов
         </div>
       </div>
+      <div class="feature__code_example">Пример</div>
+{% highlight javascript %}
+Mydataspace.emit(
+  'entities.delete', {
+    root: 'hello-world',
+    path: 'data'
+  });
+{% endhighlight %}
     </div>
   </div>
 </section>
-
-
-
-### MDSConsole
-
-<section class="feature__section">
-  <div class="row">
-    <div class="col-md-4">
-      <div class="highlighter-rouge">
-        <pre class="highlight"><code class="feature__method_name">success(str)</code></pre>
-      </div>
-      <p class="feature__subtitle"></p>
-      <p></p>
-    </div>
-    <div class="col-md-8">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="highlighter__var">
-            <span class="highlight__var_type highlight__var_type--void">str</span> str
-          </div>
-        </div>
-        <div class="col-md-8">
-          Полнотектовый поиск дочерних элементов
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="feature__section">
-  <div class="row">
-    <div class="col-md-4">
-      <div class="highlighter-rouge">
-        <pre class="highlight"><code class="feature__method_name">error(str)</code></pre>
-      </div>
-      <p class="feature__subtitle"></p>
-      <p></p>
-    </div>
-    <div class="col-md-8">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="highlighter__var">
-            <span class="highlight__var_type highlight__var_type--array">str</span> str
-          </div>
-        </div>
-        <div class="col-md-8">
-          Полнотектовый поиск дочерних элементов
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-### MDSCommon
-
-<section class="feature__section">
-  <div class="row">
-    <div class="col-md-4">
-        <p class="feature__subtitle">permit</p>
-        <p></p>
-    </div>
-    <div class="col-md-8">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="highlighter__var">
-            <span class="highlight__var_type highlight__var_type--array">obj</span> src
-          </div>
-        </div>
-        <div class="col-md-8">
-          Полнотектовый поиск дочерних элементов
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="highlighter__var">
-            <span class="highlight__var_type highlight__var_type--array">arr|obj</span> format
-          </div>
-        </div>
-        <div class="col-md-8">
-          Полнотектовый поиск дочерних элементов
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="feature__section">
-  <div class="row">
-    <div class="col-md-4">
-        <p class="feature__subtitle">req</p>
-        <p></p>
-    </div>
-    <div class="col-md-8">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="highlighter__var">
-            <span class="highlight__var_type highlight__var_type--array">obj</span> src
-          </div>
-        </div>
-        <div class="col-md-8">
-          Полнотектовый поиск дочерних элементов
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="highlighter__var">
-            <span class="highlight__var_type highlight__var_type--array">arr|obj</span> format
-          </div>
-        </div>
-        <div class="col-md-8">
-          Полнотектовый поиск дочерних элементов
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-

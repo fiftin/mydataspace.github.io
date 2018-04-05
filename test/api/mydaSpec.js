@@ -1,6 +1,6 @@
-describe('Myda', function() {
+describe('MDSClient', function() {
   xit('#constructor', function() {
-    var myda = new Myda({
+    var myda = new MDSClient({
       apiURL: '',
       cdnURL: '',
       websocketURL: '',

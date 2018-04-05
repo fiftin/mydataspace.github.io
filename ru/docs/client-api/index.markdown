@@ -7,6 +7,8 @@ language: ru
 <div class="page-tab-list">
     <a href="/ru/docs/client-api" class="page-tab page-tab--active">REST</a>
     <a href="/ru/docs/client-api/websocket" class="page-tab">WebSocket</a>
+    <a href="/ru/docs/client-api/sdk" class="page-tab">SDK</a>
+    <a href="/ru/docs/client-api/formatters" class="page-tab">Форматтеры</a>
 </div>
 
 <br>
@@ -73,7 +75,7 @@ https://api.mydataspace.net/v1/entities/get?root=hello-world&path=
 {% endhighlight %}
 
 {% highlight javascript %}
-var demo = new Myda({
+var demo = new MDSClient({
   clientId: 'ключ_api_вашего_приложения',
   useLocalStorage: false // не хранить authToken в кеше браузреза
 });

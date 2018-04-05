@@ -14,7 +14,7 @@ gulp.task('nodejs', function() {
       './js/common.js',
       './js/formatters.js',
       './js/api/entities.js',
-      './js/api/myda.js',
+      './js/api/client.js',
       './js/api/node-end.js'
     ])
     .pipe(concat('mydataspace.js'))
@@ -27,9 +27,9 @@ gulp.task('api', function() {
       './js/common.js',
       './js/formatters.js',
       './js/api/entities.js',
-      './js/api/myda.js'
+      './js/api/client.js'
     ])
-    .pipe(concat('api-v2.1.js'))
+    .pipe(concat('api-v2.2.js'))
     .pipe(gulp.dest('./js/dist/'));
 });
 
@@ -38,7 +38,7 @@ gulp.task('mds', function() {
       './js/common.js',
       './js/formatters.js',
       './js/api/entities.js',
-      './js/api/myda.js',
+      './js/api/client.js',
       './js/api/localhost.js'
     ])
     .pipe(concat('localhost.js'))

@@ -16,7 +16,7 @@ module.exports = function(config) {
       'test/**/*Spec.js',
       'js/common.js',
       'js/formatters.js',
-      'js/api/myda.js',
+      'js/api/client.js',
       'js/api/entities.js',
       'js/strings.js',
       'js/ui-constants.js',

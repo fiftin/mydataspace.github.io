@@ -1,4 +1,4 @@
-Myda.prototype.loginByToken = function(token) {
+MDSClient.prototype.loginByToken = function(token) {
   var self = this;
   var url = self.options.apiURL + self.getAuthProvider('accessToken').url + '&accessToken=' + token;
   console.log(url);
@@ -22,4 +22,4 @@ Myda.prototype.loginByToken = function(token) {
 };
 
 module.exports.MDSCommon = MDSCommon;
-module.exports.Myda = Myda;
+module.exports.MDSClient = MDSClient;

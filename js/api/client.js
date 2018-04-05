@@ -13,7 +13,7 @@
  * @param {string} [optionsOrRoot.permission]
  * @constructor
  */
-function Myda(optionsOrRoot) {
+function MDSClient(optionsOrRoot) {
   var self = this;
   var options = typeof optionsOrRoot === 'string' ? { root: optionsOrRoot } : optionsOrRoot;
   var apiURL = options.import === true ? 'https://import.mydataspace.net' : 'https://api.mydataspace.net';
@@ -139,7 +139,7 @@ function Myda(optionsOrRoot) {
   });
 }
 
-Myda.prototype.getAuthProviders = function() {
+MDSClient.prototype.getAuthProviders = function() {
   var ret = MDSCommon.copy(this.authProviders);
   for (var providerName in ret) {
     ret[providerName].url =
@@ -154,7 +154,7 @@ Myda.prototype.getAuthProviders = function() {
   return ret;
 };
 
-Myda.prototype.getAuthProvider = function(providerName) {
+MDSClient.prototype.getAuthProvider = function(providerName) {
   var prov = this.authProviders[providerName];
   if (typeof prov === 'undefined') {
     return null;
@@ -167,7 +167,7 @@ Myda.prototype.getAuthProvider = function(providerName) {
   return ret;
 };
 
-Myda.prototype.connect = function(forceConnect) {
+MDSClient.prototype.connect = function(forceConnect) {
   var self = this;
   if (self.connecting || self.connected) {
     return;
@@ -226,7 +226,7 @@ Myda.prototype.connect = function(forceConnect) {
   });
 };
 
-Myda.prototype.callListeners = function(eventName, args) {
+MDSClient.prototype.callListeners = function(eventName, args) {
   var listeners = this.listeners[eventName];
   if (typeof listeners === 'undefined') {
     throw new Error('Listener not exists');
@@ -240,7 +240,7 @@ Myda.prototype.callListeners = function(eventName, args) {
  * Close the websocket.
  * You need re-initialize listeners after that!
  */
-Myda.prototype.disconnect = function() {
+MDSClient.prototype.disconnect = function() {
   if (this.socket) {
     this.socket.disconnect();
   }
@@ -248,7 +248,7 @@ Myda.prototype.disconnect = function() {
   this.socket = null;
 };
 
-Myda.prototype.popupCenter = function(url, title, w, h) {
+MDSClient.prototype.popupCenter = function(url, title, w, h) {
   // Fixes dual-screen position                         Most browsers      Firefox
   var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
   var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
@@ -267,7 +267,7 @@ Myda.prototype.popupCenter = function(url, title, w, h) {
   return newWindow;
 };
 
-Myda.prototype.authorizeTasks = function(providerName) {
+MDSClient.prototype.authorizeTasks = function(providerName) {
   var authProvider = this.getAuthProvider(providerName + '/tasks');
   var authWindow =
     this.popupCenter(authProvider.url, 'Login over ' + providerName, 640, authProvider.loginWindow.height);
@@ -277,7 +277,7 @@ Myda.prototype.authorizeTasks = function(providerName) {
   }, 1000);
 };
 
-Myda.prototype.login = function(providerName) {
+MDSClient.prototype.login = function(providerName) {
   var authProvider = this.getAuthProvider(providerName);
   var authWindow =
     this.popupCenter(authProvider.url, 'Login over ' + providerName, 640, authProvider.loginWindow.height);
@@ -291,22 +291,22 @@ Myda.prototype.login = function(providerName) {
   });
 };
 
-Myda.prototype.logout = function() {
+MDSClient.prototype.logout = function() {
   localStorage.removeItem('authToken');
   this.disconnect();
   this.connect();
   this.callListeners('logout');
 };
 
-Myda.prototype.isLoggedIn = function() {
+MDSClient.prototype.isLoggedIn = function() {
   return this.loggedIn;
 };
 
-Myda.prototype.isConnected = function() {
+MDSClient.prototype.isConnected = function() {
   return this.connected;
 };
 
-Myda.prototype.emit = function(eventName, data) {
+MDSClient.prototype.emit = function(eventName, data) {
   if (typeof this.socket === 'undefined') {
     throw new Error('You must connect to server before emit data');
   }
@@ -324,10 +324,10 @@ Myda.prototype.emit = function(eventName, data) {
   this.socket.emit(eventName, data);
 };
 
-Myda.prototype.off = function(eventName, callback) {
+MDSClient.prototype.off = function(eventName, callback) {
 };
 
-Myda.prototype.on = function(eventName, callback, ignoreRequestErrors) {
+MDSClient.prototype.on = function(eventName, callback, ignoreRequestErrors) {
   if (typeof this.listeners[eventName] !== 'undefined') {
     this.listeners[eventName].push(this.formatAndCallIgnoreRequestErrors.bind(this, eventName, callback, ignoreRequestErrors));
     return;
@@ -339,9 +339,9 @@ Myda.prototype.on = function(eventName, callback, ignoreRequestErrors) {
 };
 
 /**
- * Content dependent function to make request to the server over instance of Myda class.
- * Content must be instance of Myda class!
- * This function extracted from Myda.request method to implement 2 behaviors - callback or Promise.
+ * Content dependent function to make request to the server over instance of MDSClient class.
+ * Content must be instance of MDSClient class!
+ * This function extracted from MDSClient.request method to implement 2 behaviors - callback or Promise.
  */
 function request(eventName, data, resolve, reject) {
   var self = this;
@@ -387,7 +387,7 @@ function request(eventName, data, resolve, reject) {
  * @param {function} [failCallback]
  * @return Nothing if successCallback or failCallback passed. Promise if not callback functions passed.
  */
-Myda.prototype.request = function(eventName, data, successCallback, failCallback) {
+MDSClient.prototype.request = function(eventName, data, successCallback, failCallback) {
   if (successCallback || failCallback) {
     request.call(this, eventName, data, successCallback, failCallback);
   } else {
@@ -395,7 +395,7 @@ Myda.prototype.request = function(eventName, data, successCallback, failCallback
   }
 };
 
-Myda.prototype.formatAndCallIgnoreRequestErrors = function(eventName, callback, ignoreRequestErrors, data) {
+MDSClient.prototype.formatAndCallIgnoreRequestErrors = function(eventName, callback, ignoreRequestErrors, data) {
   if (ignoreRequestErrors == null) {
     ignoreRequestErrors = true;
   }
@@ -405,7 +405,7 @@ Myda.prototype.formatAndCallIgnoreRequestErrors = function(eventName, callback, 
   this.formatAndCall(eventName, callback, data);
 };
 
-Myda.prototype.formatAndCall = function(eventName, callback, data) {
+MDSClient.prototype.formatAndCall = function(eventName, callback, data) {
   var formatterArr = this.formatters[eventName];
   if (data != null && data.datas != null) {
     var requestId = data.requestId;
@@ -422,7 +422,7 @@ Myda.prototype.formatAndCall = function(eventName, callback, data) {
   callback(data);
 };
 
-Myda.prototype.handleResponse = function(data, callbackName) {
+MDSClient.prototype.handleResponse = function(data, callbackName) {
   if (typeof data.requestId === 'undefined') {
     return;
   }

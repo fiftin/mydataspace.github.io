@@ -691,6 +691,7 @@ $look-search-shadow-width: 100px;
 
 .look_preview--active {
   .look_preview__codepen_wrap {
+    background: white;
     position: fixed;
     transform: scale(1);
     width: 100%;
