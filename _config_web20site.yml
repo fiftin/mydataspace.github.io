@@ -1,0 +1,47 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely need to edit after that.
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+title: Web 2.0 site — Website builder made for developers
+email: webmaster@web20.site
+baseurl: ""
+
+url: "https://web20.site"
+enforce_ssl: web20.site
+
+local_api_url: "https://localhost:8443"
+local_api_websocket_url: "https://localhost:8443"
+local_refine_url: "http://localhost:3333/"
+
+api_url: "https://api.web20.site"
+cdn_url: "https://cdn.web20.site"
+api_websocket_url: "https://api.web20.site"
+refine_url: "https://refine.web20.site"
+
+client_id: "a56e6a0c-06ab-bca7-bb97-18c8898c68f9"
+github_username:  fiftin
+
+# Build settings
+markdown: kramdown
+
+default_language: en
+
+languages:
+  - ru
+
+exclude:
+  - test
+  - vendor/bootstrap/stylesheets
+  - vendor/fa/scss
+  - gulpfile.js
+  - package.json
+  - bower.json
+  - node_modules
+  - bower_components
+  - README.md
+  - jquery
+  - .git/*

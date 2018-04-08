@@ -71,7 +71,7 @@ https://api.mydataspace.net/v1/entities/get?root=hello-world&path=
 После этого вы можете использовать SDK для авторизации:
 
 {% highlight html %}
-<script src="https://myda.space/js/dist/api-v2.1.js"></script>
+<script src="https://myda.space/js/dist/api-v2.2.js"></script>
 {% endhighlight %}
 
 {% highlight javascript %}
