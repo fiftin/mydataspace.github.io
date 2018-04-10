@@ -1,7 +1,6 @@
 menu:
   features: Features
   get_started: Get Started
-  demos: Showcase
   docs: Documentation
   console: My Data
   login: Sign In
@@ -17,11 +16,17 @@ menu:
   give_feedback_send_mail: or email directly to
   give_feedback_view_all: See all
 
-slogan: Data publishing <br /> service
-slogan_description: Reliable access to data over API from anywhere in the world at real time
+slogan: Data publishing service
+slogan_description: ""
+
 slogan_2: Incredibly fast backend of your website
 slogan_description_2: You will be surprised how fast and responsive website can be
-mission: From the outset we wanted to create a simple, reliable and fast product.
+mission: |
+  <p>Open data is the idea that some data should be freely available to everyone to use and republish as they wish, without
+  restrictions from copyright, patents or other mechanisms of control.</p>
+
+  <p style="font-size: 30px;">The mission of MyDataSpace project is to make working with open data easy and enjoyable.</p>
+
 special_offer: Free now and <b>forever</b> for registered users
 final_prompt: ""
 get_started_now: Get Started!
@@ -48,10 +53,33 @@ buttons:
     title: GitHub
 
 sections:
-  - id: speed
-    title: Speed
+  - id: easy_to_publish
+    title: Easy to publish data
+    subtitle: Do you have data that can be useful to others? MyDataSpace is a suitable place for it
+    features:
+      - id: easy_to_import
+        title: Easy to upload data
+      - id: easy_to_versioning
+        title: Easy to control versions
+      - id: easy_to_sync
+        title: Easy to sync
+
+
+  - id: easy_to_use
+    title: Easy to use data
+    subtitle: With MyDataSpace find, explore and use data simply
     see_more: View Other Features
     see_more_url: /features
+    features:
+      - id: easy_to_find
+        title: Easy to find the right data
+      - id: easy_to_view
+        title: Easy to understand
+      - id: easy_to_use_over_api
+        title: Easy to use over API
+
+  - id: speed
+    title: Speed
     features:
       - id: websocket
         title: WebSockets
@@ -62,37 +90,6 @@ sections:
       - id: distribution
         title: Distributed data storage
         description: Quick access from anywhere
-  - id: ease
-    title: Ease
-    see_more: '<i class="fa fa-codepen"></i> View Examples'
-    see_more_url: https://codepen.io/mydataspace
-    features:
-      - id: coding
-        title: HTML/CSS/JS
-        description: All you need to know to create amazing website, desktop or mobile app
-      - id: open_data
-        title: Open Data
-        description: Use data of others and share data with others
-      - id: console
-        title: Easy maintenance
-        description: Unified data and code management tool
-    additional_features:
-      - Create UI of your website
-      - Upload data to backend
-      - Connect your UI to backend
-    code_simple_description: >
-      Example of using data from <a target="_blank" href="https://spreex.github.io">spreex.github.io</a>.
-    code_simple_post_description: >
-      More examples you can find in <a target="_blank" href="/get-started">Get Started</a> section.
-  - id: reliability
-    title: Reliability
-    features:
-      - id: cloud
-        title: Cloud Infrastructure
-      - id: availability
-        title: Availability 99.95%
-      - id: security
-        title: DDoS Protection
 
 how_it_works:
   title: How it works

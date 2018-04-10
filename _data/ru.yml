@@ -1,13 +1,13 @@
 menu:
   features: Возможности
   get_started: Для начала
-  demos: Примеры
+  #demos: Примеры
   docs: Документация
   console: Мои данные
   login: Войти
   logout: Выйти
   myData: Мои данные
-  give_feedback_button: Отзыв
+  give_feedback_button: Ост. отзыв
   give_feedback: Оставить отзыв
   give_feedback_placeholder: Ваш отзыв
   send_feedback: Отправить
@@ -18,15 +18,18 @@ menu:
   give_feedback_view_all: Смотреть все
 
 slogan: Сервис публикации данных
-slogan_description: Надежный доступ к данных из любой точки мира со скоростью близкой к реальному времени
-
+slogan_description: ""
+#Надежный доступ к данных из любой точки мира со скоростью близкой к реальному времени
 slogan_2: Загрузите данные и используйте их через API на свойм сайте
 #slogan_2: Невероятно быстрый бекенд вашего сайта
 slogan_description_2: <span class="hidden-xs">Вы поразитесь насколько быстрым и отзывчивым может быть веб-сайт</span>
-
-#mission: С самого начала мы создавали быстрый, простой и надежный продукт.
-#mission: MyDataSpace - это быстрый, простой и надежный доступ к открытым данным
-mission: Быстрый, простой и надежный доступ к данным через API
+mission: |
+  <p>Открытые данные &mdash; информация, размещенная в сети Интернет в машиночитаемом формате на условиях её свободного использования.</p>
+  <p>Пользователь может использовать открытые данные свободно, бесплатно, бессрочно, безвозмездно и без ограничения территории использования.</p>
+  <p style="font-size: 30px;">Цель проекта MyDataSpace &mdash; сделать работу с открытыми данными лекгой и приятной.</p>
+#, в том числе имеет право копировать,
+#публиковать, распространять открытые данные, видоизменять открытые данные и объединять их с другой информацией, использовать открытые данные в
+#некоммерческих и коммерческих целях, использовать для создания программ для ЭВМ и приложений.
 
 special_offer: Бесплатно <b>навсегда</b> для зарегистрированных пользователей
 final_prompt: ""
@@ -57,17 +60,41 @@ buttons:
 
 
 sections:
-  - id: speed
-    title: Скорость
-    subtitle: Современные решения позволяют обеспечить высокую скорость доступа к данным
+  - id: easy_to_publish
+    title: Легко разместить данные
+    subtitle: У вас есть данные которые могут быть полезны другим? MyDataSpace подходящее место для их размещения
+    features:
+      - id: easy_to_import
+        title: Легко загрузить данные
+      - id: easy_to_versioning
+        title: Легко управлять версиями
+      - id: easy_to_sync
+        title: Легко синхронизировать
+
+
+  - id: easy_to_use
+    title: Легко использовать данные
+    subtitle: С MyDataSpace находить, изучать и использовать данные просто
     see_more: Смотреть возможности
     see_more_url: /ru/features
+    features:
+      - id: easy_to_find
+        title: Легко найти нужные данные
+      - id: easy_to_view
+        title: Легко понять
+      - id: easy_to_use_over_api
+        title: Легко использовать через API
+
+
+  - id: speed
+    title: Скорость близкая к реальному времени
+    subtitle: Современные решения позволяют обеспечить невероятно высокую скорость доступа к данным из любой точки мира
     features:
       - id: websocket
         title: WebSocket-ы
         description: То что делает доступ реактивным
         details: |
-          WebSocket — протокол, позволяющий
+          <a href="https://ru.wikipedia.org/wiki/WebSocket">WebSocket</a> — протокол, позволяющий
           обмениваться сообщениями между браузером
           и веб-сервером в режиме реального времени.
           <br>
@@ -78,7 +105,7 @@ sections:
         title: Масштабируе<wbr>мость
         description: Позволяет справиться с любой нагрузкой
         details: |
-          MyDataSpace имеет микросервисную архитектуру.
+          MyDataSpace имеет <a href="https://ru.wikipedia.org/wiki/Микросервисы">микросервисную архитектуру</a>.
           <br>
           <br>
           Это позволяет легко справиться с увеличившейся
@@ -97,67 +124,6 @@ sections:
           Это позволяет сократить расстояние
           от сервера до конечного пользователя и
           обеспечить максимальную скорость доступа.
-  - id: ease
-    title: Простота
-    subtitle: Веб-приложение за три шага
-    see_more: '<i class="fa fa-codepen"></i> Смотреть примеры'
-    see_more_url: https://codepen.io/mydataspace
-    features:
-      - id: open_data
-        title: Открытые данные
-        description: Опубликованные данные доступны всем
-        details: |
-          Все данные в MyDataSpace доступны
-          любому желающему через простой и понятный API.
-          <br>
-          <br>
-          Используйте уже загруженные данные для своих целей.
-      - id: coding
-        title: HTML/CSS/JS
-        description: Все что нужно знать для создания приложения
-        details: |
-          Современные средства позволяют создать приложение для любой платформы используя только HTML/CSS/JS:
-          <ul>
-            <li><a href="https://electronjs.org" target="_blank">Electron</a> — для Desktop-приложений</li>
-            <li><a href="https://cordova.apache.org" target="_blank">Cordova</a> — для мобильных приложений</li>
-            <li><a href="https://nodejs.org" target="_blank">NodeJS</a> — для консольных и веб-приложений.</li>
-          </ul>
-      - id: console
-        title: Простота в обслуживание
-        description: Единый инструмент управления данными и кодом
-        details: |
-          Рутинную работу по администрированию баз данных и серверов
-          команда MyDataSpace берёт на себя.
-          <br>
-          <br>
-          Вам же предоставляется удобная панель управления для
-          решения основных задач.
-    additional_features:
-      - Создайте интерфейс вашего приложения
-      - Опубликуйте данные на MyDataSpace
-      - Подключите приложение к MyDataSpace через API
-    code_simple_description: >
-      После загрузки данных нужно всего несколько строк кода, чтобы отобразить их на сайте.
-      Пример использования данных <a target="_blank" href="https://spreex.github.io">spreex.github.io</a>
-  - id: reliability
-    title: Надежность
-    features:
-      - id: cloud
-        title: Облачная инфраструктура
-        details: |
-          Облачная инфраструктура обеспечивает надежное
-          хранение данных и бесперебойный доступ к ним.
-      - id: availability
-        title: Доступность 99.95%
-        details: |
-          Мы пользуемся услугами надежных провайдеров
-          облачных услуг, которые гарантируют
-          SLA на уровне 99.95%.
-      - id: security
-        title: Защита от DDoS
-        details: |
-          Ваши данные всегда будут доступны благодаря
-          защиты от DDoS-атак компании Cloudflare.
 
 
 how_it_works:
@@ -299,18 +265,18 @@ get_started:
         type: code
         height: 450
 docs:
-  - id: how-to-run-code
-    title: Выполнение кода на сервере
-  - id: how-to-create-website
-    title: Как создать веб-сайт
-  - id: how-to-upload-file
-    title: Хранение файлов на сервере
-  - id: backend
-    title: Как устроен бекенд
   - id: import-of-data
     title: Импорт данных
   - id: client-api
     title: Описание API
+  - id: how-to-upload-file
+    title: Хранение файлов
+  - id: how-to-run-code
+    title: Выполнение кода на сервере
+  - id: how-to-create-website
+    title: Как создать веб-сайт
+  - id: backend
+    title: Как устроен бекенд
 
 root:
   show_older_comments: Показать еще

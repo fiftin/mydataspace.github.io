@@ -6,7 +6,7 @@
   </script>
   <div class="container">
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-4">
         <a class="footer__link footer__link--section" href="{{ baseurl }}/features">{{ site.data[page.language].menu.features }}</a>
         {% for feature in site.data[page.language].features %}
         {% if feature.super_title %}
@@ -14,28 +14,22 @@
         {% endif %}
         {% endfor %}
       </div>
-      <div class="col-md-3">
-        <a class="footer__link footer__link--section" href="{{ baseurl }}/demos">{{ site.data[page.language].menu.demos }}</a>
-        {% for demo in site.data[page.language].demos %}
-          <a class="footer__link footer__link--subsection" href="{{ baseurl }}/demos#{{ demo.id }}">{{ demo.title }}</a>
-        {% endfor %}
-      </div>
-      <div class="col-md-3">
+      <div class="col-md-4">
         <a class="footer__link footer__link--section" href="{{ baseurl }}/docs">{{ site.data[page.language].menu.docs }}</a>
         {% for doc in site.data[page.language].docs %}
           <a class="footer__link footer__link--subsection" href="{{ baseurl }}/docs/{{ doc.id }}">{{ doc.title }}</a>
         {% endfor %}
       </div>
-      <div class="col-md-3">
+      <div class="col-md-4">
         <div class="clearfix footer__socials">
-          <a class="footer__link footer__link--social" href="{{ site.angellist_url }}" target="_blank"><i class="fa fa-angellist"></i></a>
+          <!--<a class="footer__link footer__link&#45;&#45;social" href="{{ site.angellist_url }}" target="_blank"><i class="fa fa-angellist"></i></a>-->
           <a class="footer__link footer__link--social" href="{{ site.codepen_url }}" target="_blank"><i class="fa fa-codepen"></i></a>
           <a class="footer__link footer__link--social" href="{{ site.github_url }}" target="_blank"><i class="fa fa-github"></i></a>
           <a class="footer__link footer__link--social" href="{{ site.twitter_url }}" target="_blank"><i class="fa fa-twitter"></i></a>
-          <a class="footer__link footer__link--social" href="{{ site.vk_url }}" target="_blank"><i class="fa fa-vk"></i></a>
-          <a class="footer__link footer__link--social" href="{{ site.google_plus_url }}" target="_blank"><i class="fa fa-google-plus"></i></a>
+          <!--<a class="footer__link footer__link&#45;&#45;social" href="{{ site.google_plus_url }}" target="_blank"><i class="fa fa-google-plus"></i></a>-->
           <a class="footer__link footer__link--social" href="{{ site.facebook_url }}" target="_blank"><i class="fa fa-facebook"></i></a>
           {% if page.language == 'ru' %}
+          <a class="footer__link footer__link--social" href="{{ site.vk_url }}" target="_blank"><i class="fa fa-vk"></i></a>
           <a class="footer__link footer__link--social" href="{{ site.zen_url }}" target="_blank"><i class="fa fa-align-left"></i></a>
           {% endif %}
         </div>

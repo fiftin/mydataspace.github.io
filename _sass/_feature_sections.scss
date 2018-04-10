@@ -14,13 +14,13 @@
   padding: 85px 0 110px 0;
 }
 
-.section--ease {
+.section--easy_to_use {
   background: url(/images/background_rocket_flat.jpg);
   background-size: cover;
   background-position: center;
 }
 
-.smoke--ease {
+.smoke--easy_to_use {
   display: block !important;
 }
 
@@ -36,7 +36,9 @@
   margin-top: 70px;
 }
 
-.section__title--speed {
+.section__title--speed,
+.section__title--easy_to_use,
+.section__title--easy_to_publish {
   margin-bottom: 40px;
 }
 
@@ -47,9 +49,12 @@
   word-wrap: break-word;
 }
 
-.section__subtitle--speed {
+.section__subtitle--speed,
+.section__subtitle--easy_to_use,
+.section__subtitle--easy_to_publish
+{
   margin: -20px auto 40px;
-  max-width: 900px;
+  max-width: 1000px;
 }
 
 .section__title--reliability {
@@ -99,7 +104,7 @@
   }
 }
 
-.section--ease {
+.section--easy_to_use {
   .feature_column:nth-child(2) .feature__details {
     top: 20px;
   }
@@ -108,7 +113,7 @@
     .feature__icon,
     .feature__title,
     .feature__description {
-      filter: blur(12px);
+      //filter: blur(12px);
     }
   }
 
@@ -126,7 +131,8 @@
 .feature__icon,
 .feature__title,
 .feature__description {
-  transition: filter 0.2s linear;
+  //transition: filter 0.2s linear;
+  transition: opacity 0.2s linear;
 }
 
 .feature--with-details {
@@ -138,7 +144,8 @@
     .feature__icon,
     .feature__title,
     .feature__description {
-      filter: blur(7px);
+      opacity: 0;
+      //filter: blur(7px);
     }
   }
 }
@@ -202,13 +209,16 @@ a.feature {
   }
 }
 
-.feature__icon--ease {
+.feature__icon--easy_to_publish {
   svg {
-    fill: #ff9126;
+    fill: #be55a2;
   }
 }
 
-.section--ease {
+.feature__icon--easy_to_use {
+  svg {
+    fill: #ff9126;
+  }
 }
 
 .feature__icon--reliability {
@@ -216,6 +226,7 @@ a.feature {
     fill: #be55a2;
   }
 }
+
 @media (max-width: $screen-xs-max) {
   .feature--with-details:hover {
     .feature__icon,
@@ -230,7 +241,7 @@ a.feature {
   }
 }
 @media (max-width: $screen-sm-max) {
-  .section--ease {
+  .section--easy_to_use {
     //background-attachment: fixed;
   }
 
@@ -246,7 +257,7 @@ a.feature {
 }
 
 @media (min-width: $screen-md-min) {
-  .feature__icon--coding {
+  .feature__icon--easy_to_use_over_api {
     margin-top: -30px;
   }
 }

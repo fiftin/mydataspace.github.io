@@ -403,11 +403,17 @@ $slogan-animation-offset-mobile: 400px;
 }
 
 .intro__slogan {
+  font-weight: bold;
   font-size: 80px;
   line-height: 1.01;
   margin-top: 0;
 }
 
+.landing--en {
+  .intro__slogan {
+    font-size: 90px;
+  }
+}
 
 .intro__slogan_wrap--2 {
   .intro__slogan {
