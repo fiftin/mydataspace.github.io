@@ -1,0 +1,32 @@
+---
+layout: page
+---
+{% for demo in site.data[page.language].demos %}
+  <section class="page__section">
+    <div class="row">
+      <div class="col-md-4">
+        <h2 id="{{ demo.id }}" class="margin-top-0"><a href="{{ demo.website }}" target="_blank">{{ demo.title }}</a></h2>
+        <p class="feature__description">{{ demo.description }}</p>
+        {% include links.html links=demo %}
+      </div>
+      <div class="col-md-8">
+        <div class="safari">
+          <div class="safari__header">
+              <div class="safari__buttons">
+                <div class="safari__button safari__button--red"></div>
+                <div class="safari__button safari__button--orange"></div>
+                <div class="safari__button safari__button--green"></div>
+              </div>
+            <div class="safari__address_bar">
+              <div class="safari__url">{{ demo.website | replace: "https://","<span class='safari__url__https'>https://</span>" }}</div>
+            </div>
+          </div>
+          <img class="safari__img" id="demo_{{ demo.id }}_screenshot" src="/images/demos/{{ demo.id }}-screenshot-preview.jpg" />
+          {% assign demo_screenshot = "demo_" | append:demo.id | append:"_screenshot" %}
+          {% assign demo_screenshot_url = "/images/demos/" | append:demo.id | append:"-screenshot.jpg" %}
+          {% include image_waiter.html id=demo_screenshot url=demo_screenshot_url width=demo.screenshot_width height=demo.screenshot_height %}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endfor %}

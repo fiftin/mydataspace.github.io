@@ -1,0 +1,26 @@
+{% if jekyll.environment == "local" %}
+  {% assign client_id = "my-data.space" %}
+  {% assign api_url = site.local_api_url %}
+  {% assign cdn_url = site.local_api_url %}
+{% else %}
+  {% assign client_id = site.client_id %}
+  {% assign api_url = site.api_url %}
+  {% assign cdn_url = site.cdn_url %}
+{% endif %}
+
+<script src="/vendor/remarkable.js"></script>
+<script src="/js/root-html-gen.js"></script>
+<script src="/js/root-page.js"></script>
+
+<script>
+  (function() {
+    initRootPage({
+      api_url: '{{ api_url }}',
+      cdn_url: '{{ cdn_url }}',
+      search_found_prefix: '{{ site.data[page.language].search.found_prefix }}',
+      search_found_items_suffix: '{{ site.data[page.language].search.found_items_suffix }}',
+      search_no_results: '{{ site.data[page.language].search.no_results }}',
+      language: '{{ include.language }}'
+    });
+  })();
+</script>

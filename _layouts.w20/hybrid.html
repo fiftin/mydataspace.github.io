@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+
+{% include head.html webix=true root=page.root %}
+
+<body style="height: 100%">
+
+{% include waiting_cloak.html %}
+{% include mydataspace_init_script.html %}
+
+{% include give_feedback_modal.html %}
+
+<div id="bootstrap" style="height: 100%">
+  <script type="text/javascript">
+    if (window.parent !== window) {
+      document.getElementById('bootstrap').style.overflow = 'auto';
+    }
+  </script>
+  {{ content }}
+</div>
+
+{% include signin_modal.html %}
+
+<div id="webix">
+  {% include webix.html with_header=page.webix_with_header %}
+</div>
+
+<script>
+  if (!isEmptyPathnameIgnoreLanguage(window.location.pathname)) {
+    document.getElementById('webix').style.display = 'none';
+  }
+  adminPanel_waiting  = false;
+  adminPanel_startWaiting(3000);
+</script>
+<script src="/vendor/webix/webix_debug.js"></script>
+<script src="/skins/flat/skin.js"></script>
+<script src="/vendor/remarkable.js"></script>
+<script src="/js/dist/ui.js"></script>
+<script src="/js/hybrid-page.js"></script>
+<script>
+  initHybridPage({{page.webix_with_header}}, '{{ refine_url }}');
+</script>
+
+
+<div id="import_data_modal"
+     class="modal"
+     role="dialog"
+     aria-labelledby="Importing Data">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="modal-title">Importing Data</div>
+      </div>
+      <div class="modal-body" style="position: relative">
+        <iframe id="import_data_modal__refine" class="import_data_model__refine"></iframe>
+        <div class="finish_import__waiting_cloak" id="import_data_modal__refine__waiting_cloak" style="background: white; display: block; border-radius: 6px;">
+          <div class="fa fa-cog fa-spin" style="
+              position: absolute;
+              color: #85b4d4;
+              font-size: 150px;
+              left: calc(50% - 75px);
+              top: calc(50% - 75px);
+          "></div>
+        </div>
+        <script>
+          document.getElementById('import_data_modal__refine').addEventListener('load', function() {
+            setTimeout(function() {
+              document.getElementById('import_data_modal__refine__waiting_cloak').style.display = 'none';
+            }, 1000);
+          });
+        </script>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="wizard_modal"
+     class="modal"
+     role="dialog"
+     aria-labelledby="Wizard">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div class="modal-title">Wizard</div>
+            </div>
+            <div class="modal-body wizard_modal__body">
+                <iframe id="wizard_modal__frame" class="wizard_modal__frame"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal">{{ site.data[page.language].wizard.save }}</button>
+                <button class="btn btn-default" data-dismiss="modal">{{ site.data[page.language].wizard.cancel }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

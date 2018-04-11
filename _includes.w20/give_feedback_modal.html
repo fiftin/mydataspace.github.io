@@ -1,0 +1,50 @@
+<div id="give_feedback_modal"
+     class="modal"
+     role="dialog"
+     aria-labelledby="Give Feedback">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header look_modal__header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div class="modal-title">{{ site.data[page.language].menu.give_feedback }}</div>
+            </div>
+            <div class="modal-body look_modal__body">
+                <div>
+                    <textarea id="give_feedback_modal__text" rows="5" class="form-control" placeholder="{{ site.data[page.language].menu.give_feedback_placeholder }}"></textarea>
+                </div>
+                <div id="give_feedback_modal__error" class="give_feedback_modal__error"></div>
+                <div class="give_feedback_modal__send_mail">{{ site.data[page.language].menu.give_feedback_send_mail }} <a href="mailto:support@myda.space">support@myda.space</a></div>
+            </div>
+            <div class="modal-footer look_modal__footer">
+                <a href="/feedback" target="_blank" class="give_feedback_modal__view_all">{{ site.data[page.language].menu.give_feedback_view_all }}</a>
+                <button class="btn btn-primary give_feedback_modal__send" id="give_feedback_modal__send">{{ site.data[page.language].menu.send_feedback }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="give_feedback_sent_modal"
+     class="modal"
+     role="dialog"
+     aria-labelledby="Feedback Sent">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header look_modal__header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div class="modal-title">{{ site.data[page.language].menu.feedback_sent_title }}</div>
+            </div>
+            <div class="modal-body look_modal__body">
+                {{ site.data[page.language].menu.feedback_sent_message }}
+            </div>
+            <div class="modal-footer look_modal__footer">
+                <button class="btn btn-default" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  $(function() {
+    initFeedbackModal();
+  });
+</script>

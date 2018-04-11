@@ -1,0 +1,13 @@
+<div class="sub_footer">
+  <div class="container">
+    {% if site.data[page.language].final_prompt != "" %}
+    <div class="sub_footer__prompt">{{ site.data[page.language].final_prompt }}</div>
+    {% endif %}
+    <button id="sub_footer__button" class="btn btn-success sub_footer__button">
+      {{ site.data[page.language].get_started_now }}
+    </button>
+  </div>
+  <div id="signin_popover" class="hidden">
+    {% include auth_prompt.html class_suffix="popover" %}
+  </div>
+</div>

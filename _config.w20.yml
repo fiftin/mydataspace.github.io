@@ -10,6 +10,15 @@ title: Web 2.0 site — Website builder made for developers
 email: webmaster@web20.site
 baseurl: ""
 
+destination:     ./_site.w20
+collections_dir: .
+plugins_dir:     _plugins.w20
+layouts_dir:     _layouts.w20
+data_dir:        _data.w20
+includes_dir:    _includes.w20
+
+
+
 url: "https://web20.site"
 enforce_ssl: web20.site
 

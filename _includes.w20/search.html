@@ -1,0 +1,23 @@
+{% if jekyll.environment == "local" %}
+{% assign cdn_url = site.local_api_url %}
+{% else %}
+{% assign cdn_url = site.cdn_url %}
+{% endif %}
+
+{% if page.language == 'en' %}
+{% assign lang_prefix = '' %}
+{% else %}
+{% assign lang_prefix = page.language|prepend:'/' %}
+{% endif %}
+
+<div class="navbar-form navbar-left header__search_wrap {%if include.id=='webix__header__search' %}hidden-xs hidden-sm{% endif %}" id="{{include.id}}">
+  <div class="form-group" id="{{include.id}}_input_wrap">
+    <input id="{{include.id}}_input"
+           type="text"
+           class="form-control header__search_input"
+           placeholder="{{ site.data[page.language].header.input_search }}"
+           spellcheck="false"
+    />
+  </div>
+  <script src="/js{{lang_prefix}}/{{include.resultContainer}}.js"></script>
+</div>

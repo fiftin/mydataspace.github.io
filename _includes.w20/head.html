@@ -1,0 +1,112 @@
+{% if page.language == site.default_language %}
+  {% assign baseurl = "" %}
+  {% assign baseurl_with_trailing_slash = baseurl | append:"/" %}
+{% else %}
+  {% assign baseurl = page.language | prepend:"/" %}
+  {% assign baseurl_with_trailing_slash = baseurl | append:"/" %}
+{% endif %}
+
+{% if jekyll.environment == "local" %}
+  {% assign client_id = "my-data.space" %}
+  {% assign api_url = site.local_api_url %}
+  {% assign cdn_url = site.local_api_url %}
+  {% assign api_websocket_url = site.local_api_websocket_url %}
+  {% assign refine_url = site.local_refine_url %}
+{% else %}
+  {% assign client_id = site.client_id %}
+  {% assign api_url = site.api_url %}
+  {% assign cdn_url = site.cdn_url %}
+  {% assign api_websocket_url = site.api_websocket_url %}
+  {% assign refine_url = site.refine_url %}
+{% endif %}
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="5epqqtp_y7C0S59PlzBOt5CIfXRu7yMSc3iXjKqW7FE" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/css/main.css" type="text/css">
+  <link rel="stylesheet" href="/vendor/fontawesome/css/font-awesome.css" type="text/css">
+  {% if include.webix %}
+    <link rel="stylesheet" href="/css/admin-panel.css" type="text/css">
+  {% endif %}
+  <link rel="stylesheet" href="/vendor/tether/tether.css" type="text/css" />
+
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.10/webfont.js"></script>
+  <script type="text/javascript">
+      WebFont.load({
+          custom: {
+              families: ['Raleway'],
+              urls: ['/css/fonts.css']
+          }
+      });
+  </script>
+  <script src="/vendor/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/bootstrap.min.js"></script>
+  <script src="/js/strings.js"></script>
+  <script src="/js/ui-constants.js"></script>
+
+  <script src="/js/dist/api-v2.2.js"></script>
+  <script src="/vendor/tether/tether.js"></script>
+  <script src="/vendor/tether/drop.js"></script>
+
+  {% if !include.webix %}
+  <script src="/vendor/handlebars.js"></script>
+  {% endif %}
+
+  <script src="/js/main.js"></script>
+
+
+
+  {% if include.root %}
+  <title>%%name%%</title>
+  <meta name="description"               content="%%description%%">
+
+  <meta name="theme-color"               content="black" />
+
+  <meta property="og:url"                content="%%$url%%" />
+  <meta property="og:image"              content="%%avatar%%" />
+  <meta property='og:image:secure_url'   content="%%avatar%%" itemprop="thumbnailUrl" />
+  <meta property="og:image:type"         content="image/png" />
+  <meta property="og:image:width"        content="300" />
+  <meta property="og:image:height"       content="300" />
+  <meta property="og:site_name"          content="MyDataSpace" />
+  <meta property="og:locale"             content="{{ page.locale }}" />
+  <meta property="og:type"               content="article" />
+  <meta property="og:title"              content="%%name%%" />
+  <meta property="og:description"        content="%%description%%" />
+
+  <meta name="twitter:card"              content="summary_large_image" />
+  <meta name="twitter:url"               content="%%$url%%" />
+  <meta name="twitter:image"             content="%%avatar%%" />
+  <meta name="twitter:title"             content="%%name%%" />
+  <meta name="title"                     content="%%name%%" />
+  <meta name="img_src"                   content="%%avatar%%" />
+
+  <link rel="canonical"                  href="%%$url%%" />
+
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@id": "%%$url%%",
+      "@type": "Dataset",
+      "name": "%%name%%",
+      "description": "%%description%%",
+      "keywords": "%%$tags%%"
+    }
+  </script>
+
+  {% else %}
+
+
+  <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
+  <meta name="description" content="{{ site.data[page.language].slogan }}">
+
+  <meta name="theme-color" content="black" />
+  <meta property="og:url"                content="https://myda.space" />
+  <meta property="og:type"               content="article" />
+  <meta property="og:title"              content="{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}" />
+  <meta property="og:description"        content="{{ site.data[page.language].slogan }}" />
+  <meta property="og:image"              content="https://myda.space/images/logo.png" />
+
+  {% endif %}
+</head>

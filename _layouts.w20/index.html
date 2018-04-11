@@ -1,0 +1,30 @@
+---
+layout: hybrid
+---
+<div class="landing landing--{{ page.language }}">
+  <script type="text/javascript">
+    if (isEmptyPathnameIgnoreLanguage(window.location.pathname) && isValidJWT(localStorage.getItem('authToken')) ||
+      window.location.hash && window.location.hash !== '' && window.location.hash !== '#') {
+      document.getElementById('bootstrap').style.display = 'none';
+    }
+  </script>
+
+  <div class="page_top page_top--landing-page">
+    <div class="smoke">
+      {% include nav.html %}
+      {% include header.html %}
+    </div>
+  </div>
+
+  {% include favorite_snippets.html %}
+
+  {% if site.data[page.language].mission %}
+  <div class="mission">
+    <div class="container">{{ site.data[page.language].mission }}</div>
+  </div>
+  {% endif %}
+
+  {% include feature_sections.html %}
+  {% include sub_footer.html %}
+  {% include footer.html %}
+</div>

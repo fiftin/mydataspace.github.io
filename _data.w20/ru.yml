@@ -1,0 +1,351 @@
+menu:
+  features: Возможности
+  get_started: Для начала
+  #demos: Примеры
+  docs: Документация
+  console: Мои данные
+  login: Войти
+  logout: Выйти
+  myData: Мои данные
+  give_feedback_button: Ост. отзыв
+  give_feedback: Оставить отзыв
+  give_feedback_placeholder: Ваш отзыв
+  send_feedback: Отправить
+  feedback_cant_be_blank: Отзыв не может быть пустым
+  feedback_sent_title: Отзыв оправлени
+  feedback_sent_message: Спасибо за ваш отзыв!
+  give_feedback_send_mail: или отправьте сообщение на
+  give_feedback_view_all: Смотреть все
+
+slogan: Сервис публикации данных
+slogan_description: ""
+#Надежный доступ к данных из любой точки мира со скоростью близкой к реальному времени
+slogan_2: Загрузите данные и используйте их через API на свойм сайте
+#slogan_2: Невероятно быстрый бекенд вашего сайта
+slogan_description_2: <span class="hidden-xs">Вы поразитесь насколько быстрым и отзывчивым может быть веб-сайт</span>
+mission: |
+  <p><a target="_blank" href="https://ru.wikipedia.org/wiki/%D0%9E%D1%82%D0%BA%D1%80%D1%8B%D1%82%D1%8B%D0%B5_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5">Открытые данные</a> &mdash; информация, размещенная в сети Интернет в машиночитаемом формате на условиях её свободного использования*.</p>
+  <p style="font-size: 30px;">Цель проекта MyDataSpace &mdash; сделать работу с открытыми данными легкой и приятной.</p>
+  <p style="font-size: 16px;">* Пользователь может использовать открытые данные свободно, бесплатно, бессрочно, безвозмездно и без ограничения
+  территории использования, в том числе имеет право копировать,
+  публиковать, распространять открытые данные, видоизменять открытые данные и объединять их с другой информацией, использовать открытые данные в
+  некоммерческих и коммерческих целях, использовать для создания программ для ЭВМ и приложений.</p>
+
+special_offer: Бесплатно <b>навсегда</b> для зарегистрированных пользователей
+final_prompt: ""
+get_started_now: Зарег<span class="hidden-xs">истрировать</span>ся!
+prompt: "Войти через:"
+waiting_cloak: "Загрузка..."
+strings:
+  view_source_code: См. код
+  view_data: См. данные
+  top_roots: Топ-3 наборов данных
+  view_doc: См. документацию
+  explore_roots: Показать все
+  new_root_name: Имя нового корня
+  click_to_select_version: Нажмине чтобы выбрать другую версию
+  cancel: Отмена
+header:
+  input_search: Начните поиск или нажмите Esc
+  input_search_fixed: Поиск...
+buttons:
+  - id: vk
+    title: ВКонтакте
+  - id: facebook
+    title: Facebook
+  - id: google
+    title: Google
+  - id: github
+    title: GitHub
+
+
+sections:
+  - id: easy_to_publish
+    title: Легко разместить данные
+    subtitle: У вас есть данные которые могут быть полезны другим? MyDataSpace подходящее место для их размещения
+    features:
+      - id: easy_to_import
+        title: Легко загрузить данные
+        details: |
+          Интегрированная система <a href="/ru/docs/import-of-data">OpenRefine</a> позвляет обрарабатывать и загружать данные
+          из XLS, CSV, JSON-файлов и файлов других форматов. <br /> <br />
+          Если этого будет недостаточно, всегда можно воспользоваться <a href="/ru/docs/import-of-data/programmatically">API</a> для импорта данных.
+      - id: easy_to_versioning
+        title: Легко управлять версиями
+        details: |
+          Версионирование позволяет хранить несколько версий данных в одном репозитории.
+      - id: easy_to_sync
+        title: Легко синхронизировать
+        details: |
+          MyDataSpace позволяет выполнять <a href="/ru/docs/how-to-run-code">пользовательские скрипты</a> на сервере по расписанию. <br /><br />
+          С помощью небольшой программы можно поддерживать данные в актуальном состоянии.
+
+
+  - id: easy_to_use
+    title: Легко использовать данные
+    subtitle: С MyDataSpace находить, изучать и использовать данные просто
+    see_more: Смотреть возможности
+    see_more_url: /ru/features
+    features:
+      - id: easy_to_find
+        title: Легко найти нужные данные
+        details: |
+          <a href="/ru/search">Поиск</a> по фразе в заголовке и в описании. Результаты отсортированы по релевантности.<br /><br />
+          Данные можно фильтровать по категории, языку, стране и тегам.
+      - id: easy_to_view
+        title: Легко изучать
+        details: |
+          Вы можете создавать графики, таблицы по своим данным, которые будут доступны всем пользователям.<br /><br />
+          А благодаря интеграции с <a href="https://codepen.io/mydataspace">CodePen</a> вы можете создавать любые представления для своих данных.
+      - id: easy_to_use_over_api
+        title: Легко использовать через API
+        details: |
+          Все данные, которые хранятся на MyDataSpace доступны любому желающему через <a href="/ru/docs/client-api">API</a>.<br /><br />
+          API <a href="/ru/features#api">позвляет</a> осуществлять полнотекстовый поиск, фильтровать, сортировать, группировать данные по любым полям.
+
+  - id: speed
+    title: Скорость близкая к реальному времени
+    subtitle: Современные решения позволяют обеспечить невероятно высокую скорость доступа к данным
+    features:
+      - id: websocket
+        title: WebSocket-ы
+        description: То что делает доступ реактивным
+        details: |
+          <a href="https://ru.wikipedia.org/wiki/WebSocket">WebSocket</a> — протокол, позволяющий
+          обмениваться сообщениями между браузером
+          и веб-сервером в режиме реального времени.
+          <br>
+          <br>
+          Это позволяет обеспечить отзывчивость веб-сайта
+          недостижимую другими средствами.
+      - id: scalability
+        title: Масштабируе<wbr>мость
+        description: Позволяет справиться с любой нагрузкой
+        details: |
+          MyDataSpace имеет <a href="https://ru.wikipedia.org/wiki/Микросервисы">микросервисную архитектуру</a>.
+          <br>
+          <br>
+          Это позволяет легко справиться с увеличившейся
+          нагрузкой путем автоматического добавления
+          виртуальных серверов.
+      - id: distribution
+        title: Распределенное хранение данных
+        description: Быстрый доступ из любой точки мира
+        details: |
+          Данные хранятся на серверах
+          расположенных в 5 датацентрах по всему миру.
+          <!-- расположенных в 5 датацентрах в Европе, Америке
+          и Азии. -->
+          <br>
+          <br>
+          Это позволяет сократить расстояние
+          от сервера до конечного пользователя и
+          обеспечить максимальную скорость доступа.
+
+
+how_it_works:
+  title: Как это работает
+  run_presentation: '<i class="fa fa-play-circle"></i> Смотреть анимацию'
+
+
+demos_title: Примеры
+demos:
+  - id: hello-world
+    title: Hello, World!
+    website: https://myda.space/get-started/hello-world
+    description: Простейшее приложение на MyDataSpace
+    screenshot_width: 1088
+    screenshot_height: 663
+  - id: spreex
+    title: Spreex
+    website: https://spreex.github.io
+    source_code_url: https://github.com/spreex/spreex.github.io
+    data_url: https://myda.space/spreex
+    description: Каталог расширений для Spree Commerce
+    screenshot_width: 1088
+    screenshot_height: 663
+  - id: ui
+    title: MyDataSpace
+    website: https://myda.space/#*
+    source_code_url: https://github.com/mydataspace/mydataspace.github.io
+    description: Административная панель <span class="nowrap">MyDataSpace</span>
+    screenshot_width: 1105
+    screenshot_height: 662
+
+
+features:
+  - id: api
+    super_title: API
+    title: Полнотекстовый поиск
+    description: Поиск документов по содержимому и сортировка их по релевантности
+    type: code
+    code_id: NwXRMB
+    height: 490
+
+  - id: geo-clastering
+    title: Кластеризация геоданных
+    type: code
+    code_id: GOyjyv
+    height: 450
+    description: Группировка близких друг к другу объектов на карте
+    content: "Пример: камеры дворового видеонаблюдения города Москвы на карте"
+
+  - id: facets
+    title: Фасеты
+    description: Группировка документов по значениям заданных полей
+    type: iframe
+    url: https://myda.space/reestrSTR/views/b3890fd4-c139-11e7-abc4-cec278b6b50a
+    height: 450
+    content: "Пример: панель фильтрации по городу реализована с помощью фасетов"
+
+  - id: events
+    title: События
+    description: Получение уведемлений об изменении данных
+    type: youtube
+    video_id: b5mw0xOK_YM
+    height: 445
+    content: "Пример: моментальное отображение новым комментариев у всех пользователей которые их просматривают"
+
+
+  - id: authorization
+    super_title: Авторизация
+    super_description: Авторизация пользователей через популярные соцсетей
+    content: |
+      MyDataSpace полностью берет на себя управление пользователями &mdash; регистрацию, аутентификацию и авторизацию
+      через соцсети.
+
+      Все пользователи MyDataSpace по-умолчанию анонимны, но могут создавать публичные профили.
+
+      Поддерживается авторизация через следующие социальные сети:
+
+      <a href="https://github.com/mydataspace"><img style="width: 150px; margin-right: 10px;" src="/images/logos/github.png" /></a>
+      <a href="https://vk.com/mydataspace"><img style="width: 80px; margin-right: 10px;" src="/images/logos/vk.png" /></a>
+      <!--<a href="https://ok.ru"><img style="width: 80px; margin-right: 10px;" src="/images/logos/ok.png" /></a>-->
+      <a href="https://facebook.com/mydataspace"><img style="width: 80px; margin-right: 10px;" src="/images/logos/fb.png" /></a>
+      <a href="https://plus.google.com/communities/107145683419072073269"><img style="width: 80px; margin-right: 10px;" src="/images/logos/g+.png" /></a>
+  - id: dashboard
+    super_title: Админ панель
+    super_description: Удобная панель управления данными и кодом
+    type: demo
+#    preview_url: /images/docs/import-of-data/create-root.gif
+    image_url: /images/docs/import-of-data/create-root.gif
+    website: https://myda.space
+
+  - id: import
+    super_title: Импорт данных
+    super_description: Обработка и импорт данных из файлов XLS, CSV, JSON, XML и файлов других форматов
+    doc_url: /docs/import-of-data
+    type: demo
+    image_url: /images/docs/import-of-data/openrefine.gif
+#    preview_url: /images/docs/import-of-data/openrefine.jpg
+    website: https://myda.space
+
+  - id: user-code
+    super_title: Пользовательский код
+    super_description: Выполнение пользовательского JavaScript на сервере по расписанию
+    doc_url: /docs/backend#docs__tasks
+    type: demo
+#    preview_url: /images/docs/backend/tasks-debug-ru.png
+    image_url: /images/docs/backend/tasks-debug-ru.png
+    website: https://myda.space
+    height: 750
+
+  - id: resources
+    super_title: Хранение файлов
+    super_description: Хранение пользовательский файлов на сервере
+    doc_url: /docs/backend#docs__resources
+    type: demo
+#    preview_url: /images/docs/backend/resources-ru.png
+    image_url: /images/docs/backend/resources-ru.png
+    website: https://myda.space
+    height: 750
+
+
+
+get_started:
+  - id: hello-world
+    title: Здравствуй, мир!
+    sections:
+      - id: backend
+        title: Бекенд
+        description: Добавляем необходимые данные через административную панель
+        type: demo
+        height: 612
+        width: 1045
+        website: https://myda.space
+        url: /images/get_started/hello_world.gif
+        preview_url: /images/get_started/hello_world.jpg
+        data_url: https://myda.space/hello-world
+      - id: jrPQwR
+        title: Клиент
+        description: Просто выводим на экран JSON полученный с бекенда
+        type: code
+        height: 450
+docs:
+  - id: import-of-data
+    title: Импорт данных
+  - id: client-api
+    title: Описание API
+  - id: how-to-upload-file
+    title: Хранение файлов
+  - id: how-to-run-code
+    title: Выполнение кода на сервере
+  - id: how-to-create-website
+    title: Как создать веб-сайт
+  - id: backend
+    title: Как устроен бекенд
+
+root:
+  show_older_comments: Показать еще
+  about: Описание
+  data: Данные
+  visualization: Предст<span class="hidden-xs">авления</span>
+  new_view: Добавить
+  no_views: Нет представлений
+  no_comments: Нет комментариев
+  post_comment: Отправить
+  write_a_comment: Написать комментарий...
+  delete_view: Удалить
+  delete_view_answer: Вы действительное хотите удалить данное представление?
+  new_view_title: Новое представление
+  create_view: Создать
+  cancel: Отмена
+  y: Да
+  comments: Комментарии
+  change_root_version: Изменить версию
+  version_created_at: Дата создания
+  version_description: Описание
+  version_select: Выбрать
+
+look_modal:
+  field_title: Заголовок
+  field_description: Описание
+  button_create: Создать
+  editor_not_supported: Еще не поддерживается
+  codepen:
+    title: Codepen
+    field_url: Codepen URL
+  table:
+    title: Таблица
+    field_path: Путь к данных
+    column_value: Поле/выражение
+    column_title: Заголовок
+    button_add: Добавить
+    button_remove: Удалить
+    button_reset: Восстановить
+  list:
+    title: Список
+
+search:
+  found_prefix: "Найдено"
+  found_suffix: "корней"
+  found_items_suffix: "элемент(ов)"
+  found_in_datasource_suffix: "источников"
+  found_in_datasource: "в источнике:"
+  search_by_roots: "Поиск по корням"
+  search_by_datasources: "Поиск по источникам"
+  no_results: "Ничего не найдено"
+
+wizard:
+  save: Сохранить
+  cancel: Отмена

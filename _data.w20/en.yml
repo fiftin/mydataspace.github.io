@@ -1,0 +1,183 @@
+menu:
+  features: Features
+  get_started: Get Started
+  docs: Documentation
+  console: My Data
+  login: Sign In
+  logout: Sign out
+  myData: My Data
+  give_feedback_button: Feedback
+  give_feedback: Give Feedback
+  give_feedback_placeholder: Your feedback message
+  send_feedback: Send
+  feedback_cant_be_blank: Feedback can not be blank
+  feedback_sent_title: Feedback sent
+  feedback_sent_message: Thank you for your feedback!
+  give_feedback_send_mail: or email directly to
+  give_feedback_view_all: See all
+
+slogan: Website builder for frontenders
+slogan_description: ""
+
+slogan_2: Incredibly fast backend of your website
+slogan_description_2: You will be surprised how fast and responsive website can be
+mission: |
+  <p>Open data is the idea that some data should be freely available to everyone to use and republish as they wish, without
+  restrictions from copyright, patents or other mechanisms of control.</p>
+
+  <p style="font-size: 30px;">The mission of MyDataSpace project is to make working with open data easy and enjoyable.</p>
+
+special_offer: Free now and <b>forever</b> for registered users
+final_prompt: ""
+get_started_now: Get Started!
+prompt: "Sign in with:"
+waiting_cloak: "Loading..."
+strings:
+  view_source_code: View Code
+  view_data: View Data
+  view_doc: View Docs
+  top_roots: Top Websites
+  explore_roots: Explore Websites
+  new_root_name: New Root Name
+  click_to_select_version: Click to select other version
+  cancel: Cancel
+header:
+  input_search: Search... Press Esc to exit
+  input_search_fixed: Search...
+buttons:
+  - id: facebook
+    title: Facebook
+  - id: google
+    title: Google
+  - id: github
+    title: GitHub
+
+sections:
+  - id: speed
+    title: Speed
+    features:
+      - id: websocket
+        title: WebSockets
+        description: What makes a website reactive
+      - id: scalability
+        title: Scalability
+        description: It allows to handle any load
+      - id: distribution
+        title: Distributed data storage
+        description: Quick access from anywhere
+
+how_it_works:
+  title: How it works
+  run_presentation: '<i class="fa fa-play-circle"></i> Start Animation'
+
+demos:
+  - id: hello-world
+    title: Hello, World!
+    website: https://myda.space/get-started/hello-world
+    description: Simplest MyDataSpace-based app
+    screenshot_width: 1088
+    screenshot_height: 663
+  - id: spreex
+    title: Spreex
+    website: https://spreex.github.io
+    source_code_url: https://github.com/spreex/spreex.github.io
+    data_url: https://myda.space/spreex
+    description: Spree Commerce extensions catalogue.
+    screenshot_width: 1088
+    screenshot_height: 663
+  - id: ui
+    title: MyDataSpace
+    website: https://myda.space
+    source_code_url: https://github.com/mydataspace/mydataspace.github.io
+    description: MyDataSpace administrative panel.
+    screenshot_width: 1105
+    screenshot_height: 662
+
+get_started:
+  - id: hello-world
+    title: Hello World!
+    # description: The &#8220;Hello world!&#8221; of the service is here.
+    sections:
+      - id: backend
+        title: Backend
+        description: Create demo data
+        type: demo
+        # type: video_demo
+        # height: 600
+        # width: 1034
+        height: 612
+        width: 1045
+        website: https://myda.space
+        url: /images/get_started/hello_world.gif
+        preview_url: /images/get_started/hello_world.jpg
+        data_url: https://myda.space/hello-world
+      - id: client
+        title: Client
+        description: Print JSON received from the backend
+        type: code
+        height: 400
+        id: jrPQwR
+
+docs:
+  - id: backend
+    title: Backend
+  - id: import-of-data
+    title: Import of data
+  - id: client-api
+    title: Client API
+
+root:
+  show_older_comments: Show More
+  about: About
+  data: Data
+  visualization: Views
+  new_view: New <span class="hidden-xs">View</span>
+  no_views: There are no views
+  no_comments: There are no comments
+  post_comment: Post comment
+  write_a_comment: Write a comment...
+  delete_view: Delete View
+  delete_view_answer: You really want to delete this view?
+  new_view_title: New View
+  create_view: Create View
+  y: "Yes"
+  cancel: Cancel
+  comments: Comments
+  change_root_version: Change Version
+  version_created_at: Created At
+  version_description: Description
+  version_select: Select
+
+look_modal:
+  field_title: Title
+  field_description: Description
+  button_create: Create View
+  editor_not_supported: Not supported yet
+  codepen:
+    title: Codepen
+    field_url: Codepen URL
+  table:
+    title: Table
+    field_path: Path to Data
+    column_value: Field Name/Statement
+    column_title: Title
+    button_add: Add
+    button_remove: Remove
+    button_reset: Reset
+  list:
+    title: List
+
+search:
+  found_prefix: "Found"
+  found_suffix: "root(s)"
+  found_items_suffix: "item(s)"
+  found_in_datasource_suffix: "datasource(s)"
+  found_in_datasource: "in datasource:"
+  search_by_roots: "Search by roots"
+  search_by_datasources: "Search by datasources"
+  no_results: "No results found"
+
+
+wizard:
+  save: Save
+  cancel: Cancel

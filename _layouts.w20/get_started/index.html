@@ -1,0 +1,25 @@
+---
+layout: page
+---
+{% if page.language == site.default_language %}
+  {% assign baseurl = "" %}
+  {% assign baseurl_with_trailing_slash = baseurl | append:"/" %}
+{% else %}
+  {% assign baseurl = page.language | prepend:"/" %}
+  {% assign baseurl_with_trailing_slash = baseurl | append:"/" %}
+{% endif %}
+<div class="row">
+  <div class="col-md-4"></div>
+  {% for example in site.data[page.language].get_started %}
+  <div class="col-md-4">
+    <a class="feature" href="{{ baseurl }}/get-started/{{ example.id }}">
+      <div class="feature__icon feature__icon--example">
+        {% assign icon_name = "icons/" | append:example.id | append:".svg"  %}
+        {% include {{icon_name}} %}
+      </div>
+      <h2 class="feature__title">{{ example.title }}</h2>
+      <div class="feature__description">{{ example.description }}</div>
+    </a>
+  </div>
+  {% endfor %}
+</div>

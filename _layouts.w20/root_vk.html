@@ -1,0 +1,73 @@
+---
+layout: hybrid_default
+---
+
+<div id="root" class="root_page" style="padding-bottom: 30px">
+</div>
+
+<div id="delete_look_modal"
+     class="modal"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="Delete View">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header look_modal__header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="modal-title">{{ site.data[page.language].root.delete_view }}</div>
+      </div>
+      <div class="modal-body look_modal__body">
+        {{ site.data[page.language].root.delete_view_answer }}
+      </div>
+      <div class="modal-footer look_modal__footer">
+        <button class="btn btn-danger" data-dismiss="modal" id="delete_look_modal_button">{{ site.data[page.language].root.yes }}</button>
+        <button class="btn btn-default" data-dismiss="modal">{{ site.data[page.language].root.cancel }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="look_modal"
+     class="modal"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="New View">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header look_modal__header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="modal-title" id="look_modal__header">{{ site.data[page.language].root.new_view_title }}</div>
+      </div>
+      <div class="modal-body look_modal__body">
+        <form class="bootstrap-form">
+          <div class="form-group">
+            <input type="text"
+                   id="look_modal__title"
+                   class="form-control"
+                   placeholder="{{ site.data[page.language].root.view_title }}"
+                   autofocus />
+            <div class="bootstrap-form-error" id="look_modal__title_err"></div>
+          </div>
+          <div class="form-group">
+            <input type="text"
+                   id="look_modal__codepen"
+                   class="form-control"
+                   placeholder="{{ site.data[page.language].root.codepen_url }}" />
+            <div class="bootstrap-form-error" id="look_modal__codepen_err"></div>
+          </div>
+          <div class="form-group">
+            <textarea id="look_modal__description"
+                      class="form-control"
+                      rows="3"
+                      placeholder="{{ site.data[page.language].root.view_description }}"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer look_modal__footer">
+        <button class="btn btn-success" id="look_modal__button">{{ site.data[page.language].root.create_view }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include root_script.html language=page.language %}
