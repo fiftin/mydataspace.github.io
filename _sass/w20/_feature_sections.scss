@@ -14,12 +14,12 @@
   padding: 85px 0 110px 0;
 }
 
-.section--easy_to_use {
+.section--ease {
   background-size: cover;
-  background: url(/images/background_rocket_flat.jpg) center;
+  background: url(/images/background_rocket_flat_blue.jpg) center;
 }
 
-.smoke--easy_to_use {
+.smoke--ease {
   display: block !important;
 }
 
@@ -202,29 +202,14 @@ a.feature {
   }
 }
 
-.feature__icon--speed {
+.feature__icon--speed,
+.section--ease,
+.feature__icon--reliability{
   svg {
-    fill: #294dd2; // 0069ff
+    fill: rgb(40, 111, 247); // 0069ff
   }
 }
 
-.feature__icon--easy_to_publish {
-  svg {
-    fill: #be55a2;
-  }
-}
-
-.feature__icon--easy_to_use {
-  svg {
-    fill: #ff9126;
-  }
-}
-
-.feature__icon--reliability {
-  svg {
-    fill: #be55a2;
-  }
-}
 
 @media (max-width: $screen-xs-max) {
   .feature--with-details:hover {

@@ -1,0 +1,85 @@
+@media (max-width: $screen-sm-max) {
+  .auth_buttons {
+    margin: 20px 0;
+  }
+}
+
+.auth_buttons--modal {
+  margin: 0 10px;
+}
+
+.auth_button {
+  display: block;
+  width: 100%;
+  margin: 10px 0 10px 0;
+  font-size: $font-size-large;
+  text-align: left;
+  .fa {
+    width: 30px;
+  }
+  transition: background 200ms, border 200ms;
+}
+
+.auth_buttons--popover {
+  margin: 0;
+  padding: 0;
+}
+
+
+.auth_button--popover {
+  padding-right: 30px !important;
+  &:last-child {
+    margin-bottom: 8px !important;
+  }
+  &:first-child {
+    margin-top: 15px !important;
+  }
+}
+
+.auth_button--vk {
+  &, &:focus {
+    background: #507299 !important;
+    border-color: #507299 !important;
+    color: white !important;
+  }
+  &:hover, &:active {
+    background: #486991 !important;
+    border-color: #486991 !important;
+  }
+}
+
+.auth_button--facebook {
+  &, &:focus {
+    background: #3b5998 !important;
+    border-color: #3b5998 !important;
+    color: white !important;
+  }
+  &:hover, &:active {
+    background: #2a3f6b !important;
+    border-color: #2a3f6b !important;
+  }
+}
+
+.auth_button--google {
+  &, &:hover, &:active, &:focus {
+    background: #d34836 !important;
+    border-color: #d34836 !important;
+    color: white !important;
+  }
+  &:hover, &:active {
+    background: #882f24 !important;
+    border-color: #882f24 !important;
+  }
+}
+
+.auth_button--github {
+  &, &:hover, &:active, &:focus {
+    background: #313131 !important;
+    border-color: #313131 !important;
+    color: white !important;
+  }
+  &:hover, &:active {
+    background: #1b1b1b !important;
+    border-color: #1b1b1b !important;
+  }
+}

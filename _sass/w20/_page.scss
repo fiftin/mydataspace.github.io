@@ -1,0 +1,163 @@
+@import "./vars";
+
+@media (min-width: $screen-md-min) {
+  .default_main {
+    min-height: calc(100% - #{$footer-height + $header-height});
+  }
+  .default_main--fullscreen {
+    min-height: calc(100% - #{$footer-height});
+  }
+}
+
+.default_main--gray {
+  background: $toolbar-bg;
+}
+
+.search--fullscreen {
+  background: transparent;
+}
+
+.default_main--fullscreen {
+  padding-top: $header-height;
+  filter: blur($fullscreen-blur);
+}
+
+.page__section:not(:first-child) {
+  margin-top: 70px;
+}
+
+.feature__icon--example {
+  fill: #ff9126;
+  margin: 0 100px;
+}
+
+.page__content {
+  margin-top: 70px;
+  margin-bottom: 50px;
+}
+
+.page__overview {
+  margin-bottom: 60px;
+  p {
+    margin: 5px 0 15px 0;
+  }
+
+  & > p {
+    font-size: 25px;
+  }
+
+  li {
+    margin: 10px 0;
+  }
+}
+
+.page__title {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.page__description {
+  text-align: center;
+  font-size: $font-size-h3;
+}
+
+.links {
+  margin-left: -15px;
+  padding-bottom: 15px;
+}
+
+.links__link {
+  font-size: $font-size-base;
+  float: left;
+  display: block;
+  padding: 10px 15px;
+}
+
+.links__link_text {
+  margin-left: 5px;
+  //font-weight: bold;
+}
+
+.root_page {
+  padding-bottom: 30px;
+
+  .view__description {
+    font-size: 18px !important;
+    padding-left: 0;
+    padding-right: 10px;
+  }
+
+  .view__readme {
+    font-size: 16px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.highlight__request_type {
+  color: white;
+  font-weight: bold;
+  line-height: 34px;
+  display: inline-block;
+  width: 80px;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.highlight__request_type--get {
+  background: #61affe;
+}
+
+.highlight__request_type--post {
+  background: #49cc90;
+}
+
+.highlight__request_type--put {
+  background: #fca130;
+}
+
+.highlight__request_type--delete {
+  background: #f93e3e;
+}
+
+.highlight--example {
+  background: #fafafa;
+}
+
+
+.highlighter__params {
+  margin: 15px 0 10px 13px;
+}
+
+.highlighter__var {
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  margin-left: 13px;
+  margin-bottom: 10px;
+}
+
+.highlight__var_type {
+  color: white;
+  font-weight: bold;
+  line-height: 30px;
+  display: inline-block;
+  width: 80px;
+  text-align: center;
+  border-radius: 4px;
+  background: #b0b0b0;
+}
+
+.highlight__var_type--str {
+}
+
+.highlight__var_type--bool {
+}
+
+@media (max-width: $screen-xs-max) {
+  .page__title {
+    font-size: 40px !important;
+  }
+}
+
+#root__comments_show_older {
+  border-radius: 0 !important;
+}

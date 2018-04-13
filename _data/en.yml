@@ -16,13 +16,15 @@ menu:
   give_feedback_send_mail: or email directly to
   give_feedback_view_all: See all
 
+title: MyDataSpace — data publishing service
+
 slogan: Data publishing service
 slogan_description: ""
 
 slogan_2: Incredibly fast backend of your website
 slogan_description_2: You will be surprised how fast and responsive website can be
 mission: |
-  <p>Open data is the idea that some data should be freely available to everyone to use and republish as they wish, without
+  <p><a href="https://en.wikipedia.org/wiki/Open_data">Open data</a> is the idea that some data should be freely available to everyone to use and republish as they wish, without
   restrictions from copyright, patents or other mechanisms of control.</p>
 
   <p style="font-size: 30px;">The mission of MyDataSpace project is to make working with open data easy and enjoyable.</p>

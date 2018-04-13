@@ -24,7 +24,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="google-site-verification" content="5epqqtp_y7C0S59PlzBOt5CIfXRu7yMSc3iXjKqW7FE" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/css/main.css" type="text/css">
+  <link rel="stylesheet" href="/css/main.w20.css" type="text/css">
   <link rel="stylesheet" href="/vendor/fontawesome/css/font-awesome.css" type="text/css">
   {% if include.webix %}
     <link rel="stylesheet" href="/css/admin-panel.css" type="text/css">
@@ -98,13 +98,13 @@
   {% else %}
 
 
-  <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
+  <title>{% if site.data[page.language].title %}{{ site.data[page.language].title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
   <meta name="description" content="{{ site.data[page.language].slogan }}">
 
   <meta name="theme-color" content="black" />
   <meta property="og:url"                content="https://myda.space" />
   <meta property="og:type"               content="article" />
-  <meta property="og:title"              content="{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}" />
+  <meta property="og:title"              content="{% if site.data[page.language].title %}{{ site.data[page.language].title | escape }}{% else %}{{ site.title | escape }}{% endif %}" />
   <meta property="og:description"        content="{{ site.data[page.language].slogan }}" />
   <meta property="og:image"              content="https://myda.space/images/logo.png" />
 

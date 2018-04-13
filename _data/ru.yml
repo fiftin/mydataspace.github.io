@@ -17,6 +17,7 @@ menu:
   give_feedback_send_mail: или отправьте сообщение на
   give_feedback_view_all: Смотреть все
 
+title: MyDataSpace — сервис публикации данных
 slogan: Сервис публикации данных
 slogan_description: ""
 #Надежный доступ к данных из любой точки мира со скоростью близкой к реальному времени
@@ -39,9 +40,9 @@ waiting_cloak: "Загрузка..."
 strings:
   view_source_code: См. код
   view_data: См. данные
-  top_roots: Топ-3 наборов данных
+  top_roots: Популярные наборы данных
   view_doc: См. документацию
-  explore_roots: Показать все
+  explore_roots: Смотреть все
   new_root_name: Имя нового корня
   click_to_select_version: Нажмине чтобы выбрать другую версию
   cancel: Отмена

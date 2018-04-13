@@ -1,0 +1,88 @@
+@import "./vars";
+
+$finish-import-progress-height: 35px;
+
+
+.finish_import__known_info {
+  margin-top: 5px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.finish_import__known_root_avatar {
+  width: 40px;
+  height: 40px;
+}
+
+.finish_import__known_root_name {
+  font-weight: bold;
+  line-height: 40px;
+}
+
+.finish_import__content_container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} 
+
+.finish_import__content {
+  width: 300px;
+  position: relative;
+}
+
+.finish_import__waiting_cloak {
+  position: absolute;
+  background: white; //rgba(255,255,255,0.6);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+.finish_import__buttons {
+  text-align: right;
+}
+
+.finish_import__button {
+  width: calc(50% - 2.5px);
+}
+
+.finish_import__progress_bar {
+  position: relative;
+  height: $finish-import-progress-height;
+  border: 1px solid $brand-success;
+  margin-bottom: 20px;
+}
+
+.finish_import__progress_label {
+  padding-bottom: 3px;
+}
+
+.finish_import__progress_indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: $finish-import-progress-height - 2px;
+  width: 0%;
+  background: $brand-success;
+  opacity: 0.5;
+}
+
+.finish_import__progress_num {
+  position: relative;
+  line-height: $finish-import-progress-height;
+  text-align: center;
+}
+
+
+.finish_import__result {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.finish_import__result_message {
+  padding-top: 10px;
+}

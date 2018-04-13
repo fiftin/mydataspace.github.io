@@ -16,7 +16,8 @@ menu:
   give_feedback_send_mail: or email directly to
   give_feedback_view_all: See all
 
-slogan: Website builder for frontenders
+title: Web 2.0 Site — website builder for developers
+slogan: Website builder for developers
 slogan_description: ""
 
 slogan_2: Incredibly fast backend of your website
@@ -36,7 +37,7 @@ strings:
   view_source_code: View Code
   view_data: View Data
   view_doc: View Docs
-  top_roots: Top Websites
+  top_roots: Popular Websites
   explore_roots: Explore Websites
   new_root_name: New Root Name
   click_to_select_version: Click to select other version

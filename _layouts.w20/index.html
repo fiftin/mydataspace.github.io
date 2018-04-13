@@ -16,8 +16,6 @@ layout: hybrid
     </div>
   </div>
 
-  {% include favorite_snippets.html %}
-
   {% if site.data[page.language].mission %}
   <div class="mission">
     <div class="container">{{ site.data[page.language].mission }}</div>
@@ -25,6 +23,12 @@ layout: hybrid
   {% endif %}
 
   {% include feature_sections.html %}
+
   {% include sub_footer.html %}
+
+  {% comment %}
+  {% include favorite_snippets.html %}
+  {% endcomment %}
+
   {% include footer.html %}
 </div>
