@@ -294,16 +294,16 @@ get_started:
 docs:
   - id: import-of-data
     title: Загрузка данных
-  - id: client-api
+  - id: api
     title: Описание API
-  - id: how-to-upload-file
+  - id: file-storage
     title: Хранение файлов
   - id: how-to-run-code
     title: Выполнение кода на сервере
-  - id: how-to-create-website
-    title: Как создать веб-сайт
   - id: backend
     title: Как устроен бекенд
+  - id: auth
+    title: Авторизация
 
 root:
   show_older_comments: Показать еще
