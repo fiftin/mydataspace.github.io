@@ -33,6 +33,21 @@ gulp.task('api', function() {
     .pipe(gulp.dest('./js/dist/'));
 });
 
+
+gulp.task('w20', function() {
+  return gulp.src([
+    './vendor/socket.io.js',
+    './js/common.js',
+    './js/formatters.js',
+    './js/api/entities.js',
+    './js/api/client.js',
+    './js/api/w20.js'
+  ])
+    .pipe(concat('web2.0.js'))
+    .pipe(gulp.dest('./js/dist/'));
+});
+
+
 gulp.task('mds', function() {
   return gulp.src([
       './js/common.js',
@@ -45,7 +60,7 @@ gulp.task('mds', function() {
     .pipe(gulp.dest('./js/dist/'));
 });
 
-gulp.task('a', ['api', 'nodejs', 'mds']);
+gulp.task('a', ['api', 'nodejs', 'mds', 'w20']);
 
 gulp.task('ui', function() {
   return gulp.src([

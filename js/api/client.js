@@ -16,11 +16,11 @@
 function MDSClient(optionsOrRoot) {
   var self = this;
   var options = typeof optionsOrRoot === 'string' ? { root: optionsOrRoot } : optionsOrRoot;
-  var apiURL = options.import === true ? 'https://import.mydataspace.net' : 'https://api.mydataspace.net';
+  var apiURL = options.import === true ? MDSClient.DEFAULT_URLS.importURL : MDSClient.DEFAULT_URLS.apiURL;
   this.options = MDSCommon.extend({
     useLocalStorage: true,
     apiURL:  apiURL,
-    cdnURL:  'https://cdn.mydataspace.net',
+    cdnURL:  MDSClient.DEFAULT_URLS.cdnURL,
     websocketURL: apiURL,
     connected: function() { }
   }, options);
@@ -138,6 +138,12 @@ function MDSClient(optionsOrRoot) {
     }
   });
 }
+
+MDSClient.DEFAULT_URLS = {
+  cdnURL:  'https://cdn.mydataspace.net',
+  apiURL:  'https://api.mydataspace.net',
+  importURL: 'https://import.mydataspace.net'
+};
 
 MDSClient.prototype.getAuthProviders = function() {
   var ret = MDSCommon.copy(this.authProviders);
