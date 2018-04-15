@@ -18,6 +18,11 @@
   filter: blur($fullscreen-blur);
 }
 
+.footer__copyright {
+  font-size: 16px;
+  padding: 15px 0;
+}
+
 .footer__link {
   display: block;
   opacity: 0.5;
