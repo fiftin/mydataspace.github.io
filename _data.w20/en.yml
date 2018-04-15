@@ -43,6 +43,7 @@ strings:
   click_to_select_version: Click to select other version
   cancel: Cancel
   privacy: Privacy
+  terms: Terms of Service
 
 header:
   input_search: Search... Press Esc to exit
