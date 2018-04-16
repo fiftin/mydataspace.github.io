@@ -293,7 +293,7 @@ UI = {
 
     Mydataspace.on('users.getMyProfile.res', function(data) {
       if (MDSCommon.isBlank(data['avatar'])) {
-        data['avatar'] = '/images/no_avatar.png';
+        data['avatar'] = '/images/no_avatar.svg';
       }
       $$('profile').setValues(data);
       $$('profile__authorizations').setValues(data);

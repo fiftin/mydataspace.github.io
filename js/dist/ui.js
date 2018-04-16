@@ -4185,7 +4185,7 @@ UILayout.sideMenu =
                       '</a>' +
                     '</div>',
           data: {
-            avatar: '/images/no_avatar.png',
+            avatar: '/images/no_avatar.svg',
             name: 'No name'
           }
         },
@@ -4243,7 +4243,7 @@ UILayout.header =
     cols: [
       { type: 'header' },
       { view: 'button',
-        width: 120,
+        width: 170,
         css: 'menu__language_button menu__language_button--feedback',
         id: 'FEEDBACK_LABEL',
         label: STRINGS.FEEDBACK,
@@ -5183,7 +5183,7 @@ UI = {
 
     Mydataspace.on('users.getMyProfile.res', function(data) {
       if (MDSCommon.isBlank(data['avatar'])) {
-        data['avatar'] = '/images/no_avatar.png';
+        data['avatar'] = '/images/no_avatar.svg';
       }
       $$('profile').setValues(data);
       $$('profile__authorizations').setValues(data);

@@ -3,7 +3,7 @@ UILayout.header =
     cols: [
       { type: 'header' },
       { view: 'button',
-        width: 120,
+        width: 170,
         css: 'menu__language_button menu__language_button--feedback',
         id: 'FEEDBACK_LABEL',
         label: STRINGS.FEEDBACK,

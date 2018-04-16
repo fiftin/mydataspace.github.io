@@ -363,7 +363,6 @@ input:read-only {
     margin-top: 9px;
     height: 25px;
     width: 80%;
-    opacity: 0.5;
     transition-property: opacity;
     transition-duration: 0.3s;
     &:hover {
@@ -373,15 +372,11 @@ input:read-only {
 }
 
 .menu_button .webix_icon {
-  color: #a9a9a9;
-  transition-property: color;
-  transition-duration: 0.3s;
+  color: white;
 }
 
 .menu_button:hover .webix_icon {
   color: white;
-  transition-property: color;
-  transition-duration: 0.3s;
 }
 
 .profile {
@@ -1000,6 +995,7 @@ input {
 
 #webix__header__search_input {
   width: 400px !important;
+  display: none !important;
 }
 
 #webix__header__search_input_wrap {
