@@ -6,6 +6,8 @@
 # 'jekyll serve'. If you change this file, please restart the server process.
 
 # Site settings
+project_name: w20
+
 title: Web 2.0 site — Website builder made for developers
 email: webmaster@web20.site
 baseurl: ""

@@ -27,10 +27,23 @@ UILayout.header =
         css: 'menu__language_button',
         id: 'PRICING_LABEL',
         label: STRINGS.PRICING,
+        hidden: PROJECT_NAME !== 'w20',
         click: function() {
           var currentLang = (localStorage.getItem('language') || 'en').toLowerCase();
           currentLang = currentLang === 'en' ? '' : '/' + currentLang;
           window.open(currentLang + '/pricing', '_blank');
+        }
+      },
+      { view: 'button',
+        width: 70,
+        css: 'menu__language_button',
+        id: 'DEMOS_LABEL',
+        label: STRINGS.DEMOS,
+        hidden: PROJECT_NAME !== 'mydataspace',
+        click: function() {
+          var currentLang = (localStorage.getItem('language') || 'en').toLowerCase();
+          currentLang = currentLang === 'en' ? '' : '/' + currentLang;
+          window.open(currentLang + '/demos', '_blank');
         }
       },
       { view: 'button',
