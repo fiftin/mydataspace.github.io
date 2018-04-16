@@ -354,11 +354,10 @@ input:read-only {
 .menu__language_button--feedback {
   button {
     border-radius: 100px;
-    background: orange !important;
+    background: white !important;
     font-weight: bold;
-    color: white !important;
+    color: $header-bg !important;
     padding: 0 15px;
-    text-shadow: #a76700 1px 1px 1px;
     display: inline-block;
     margin-top: 9px;
     height: 25px;
@@ -367,6 +366,7 @@ input:read-only {
     transition-duration: 0.3s;
     &:hover {
       opacity: 1;
+      color: $header-bg !important;
     }
   }
 }

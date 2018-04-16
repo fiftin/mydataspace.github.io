@@ -25,12 +25,12 @@ UILayout.header =
       { view: 'button',
         width: 70,
         css: 'menu__language_button',
-        id: 'DEMOS_LABEL',
-        label: STRINGS.DEMOS,
+        id: 'PRICING_LABEL',
+        label: STRINGS.PRICING,
         click: function() {
           var currentLang = (localStorage.getItem('language') || 'en').toLowerCase();
           currentLang = currentLang === 'en' ? '' : '/' + currentLang;
-          window.open(currentLang + '/demos', '_blank');
+          window.open(currentLang + '/pricing', '_blank');
         }
       },
       { view: 'button',

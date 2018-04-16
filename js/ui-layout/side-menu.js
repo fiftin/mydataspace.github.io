@@ -23,7 +23,7 @@ UILayout.sideMenu =
                     '</div>',
           data: {
             avatar: '/images/no_avatar.svg',
-            name: 'No name'
+            name: ''
           }
         },
         { view: 'template',

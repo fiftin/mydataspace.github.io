@@ -125,6 +125,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
 
     FEEDBACK: 'Give Feedback',
 
+    PRICING: 'Pricing',
+
     switch_default_version: 'Switch Default Versin',
     view_other_version: 'View Other Version',
 
@@ -392,6 +394,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     VERSION_DESCRIPTION: 'Описание',
     VERSION_CREATED_AT: 'Создана',
     FEEDBACK: 'Оставить отзыв',
+
+    PRICING: 'Цены',
 
     created: 'создан',
     ago: 'назад',
