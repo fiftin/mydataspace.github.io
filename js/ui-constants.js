@@ -96,12 +96,12 @@ UIConstants = {
 		'isOdnoklassnikiAuth'
 	],
 
-	IGNORED_PATHS: [
-		// 'comments',
-		// 'views',
-		// 'likes'
+	IGNORED_PATHS: PROJECT_NAME === 'w20' ? [
+		'comments',
+		'views',
+		'likes'
 		// 'processes'
-	],
+	] : [],
 
   IGNORED_WHEN_EMPTY_PATHS: [
     'resources',
