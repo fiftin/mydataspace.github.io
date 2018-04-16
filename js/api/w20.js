@@ -12,7 +12,7 @@ MDSClient.OAUTH_CLIENT_IDS = {
 };
 
 MDSClient.OAUTH_SCOPES = {
-  google: '',
+  google: 'https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile',
   facebook: '',
   github: '',
   vk: ''
