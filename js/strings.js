@@ -1,3 +1,10 @@
+---
+---
+
+var PROJECT_NAME = '{{ site.project_name }}';
+var PROJECT_ROOT_NAME_EN = (PROJECT_NAME === 'w20' ? 'Website' : 'Root');
+var PROJECT_ROOT_NAME_RU = (PROJECT_NAME === 'w20' ? 'сайт' : 'корень');
+
 var STRINGS_ON_DIFFERENT_LANGUAGES = {
   EN: {
     YES: 'Yes',
@@ -30,7 +37,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SECRET: 'Secret',
     DESCRIPTION: 'Description',
     NO_ENTITY: 'No field exists',
-    ADD_ROOT: 'New Root',
+    ADD_ROOT: 'New ' + PROJECT_ROOT_NAME_EN,
     ADD_FIELD: 'New Field',
     REFRESH: 'Refresh',
     SAVE: 'Save',
@@ -143,7 +150,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     no_description_provided: 'No description provided',
     switch_default_version_window_title: 'Switch Default Version',
     view_other_version_window_title: 'View Other Version',
-    new_empty_root: 'New Empty Root',
+    new_empty_root: 'New Empty ' + PROJECT_ROOT_NAME_EN,
     import_root: 'Import Root',
     open_license_page: 'Open License Page',
 
@@ -178,9 +185,9 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       no_items__import__button: 'Import',
       no_items__create__desc: 'Start from scratch &mdash; create an empty root',
       no_items__notice: [
-        'Root name should be 3..50 characters',
-        'Root name contains illegal characters',
-        'Root name must be unique among all existing roots'
+        PROJECT_ROOT_NAME_EN + ' name should be 3..50 characters',
+        PROJECT_ROOT_NAME_EN + ' name contains illegal characters',
+        PROJECT_ROOT_NAME_EN + ' name must be unique among all existing roots'
       ],
       no_items__create__button: 'Create'
     },
@@ -290,7 +297,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SECRET: 'Секрет',
     DESCRIPTION: 'Описание',
     NO_ENTITY: 'Нет полей',
-    ADD_ROOT: 'Нов. корень',
+    ADD_ROOT: 'Нов. ' + PROJECT_ROOT_NAME_RU,
     ADD_FIELD: 'Нов. поле',
     REFRESH: 'Обнов.',
     SAVE: 'Сохр.',
@@ -411,7 +418,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     no_description_provided: 'Нет описания',
     switch_default_version_window_title: 'Уст. версию по умолчанию',
     view_other_version_window_title: 'Смотреть другую версию',
-    new_empty_root: 'Пусктой корень',
+    new_empty_root: 'Пусктой ' + PROJECT_ROOT_NAME_EN,
     import_root: 'Импорт корня',
 
     new_entity: 'Новый элемент',
@@ -451,7 +458,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       no_items__notice: [
         'Имя должно быть длинной от 3 до 50 символов',
         'В имени допускаются только латинские бувы, цифры, знак тере и подчеркивания',
-        'Имя корня должно быть уникальным среди всех существующих корней',
+        'Имя корня должно быть уникальным среди всех существующих корней'
       ],
       //no_items__notice: 'Имя корня должно быть уникальным среди всех существующих корней. В имени допускаются только латинские бувы, цифры, знак тере и подчеркивания',
       no_items__create__button: 'Создать'

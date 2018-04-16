@@ -4128,7 +4128,7 @@ UILayout.popups.newRoot = {
 	view: 'popup',
 	id: 'entity_tree__new_root_popup',
   css: 'admin_context_menu entity_tree__new_root_popup',
-	width: 150,
+	width: PROJECT_NAME === 'w20' ? 200 : 150,
 	body: {
 		view: 'list',
     id: 'entity_tree__new_root_list',
@@ -4367,7 +4367,7 @@ UILayout.entityTree =
           icon: 'plus',
           id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
           hidden: true,
-          width: 110,
+          width: 130,
           popup: 'entity_tree__new_root_popup',
 //          click: function() {
 //            $$('add_root_window').show();

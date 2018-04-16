@@ -1,8 +1,6 @@
 ---
 ---
 
-var PROJECT_NAME = '{{ site.project_name }}';
-
 var TAGS_TO_FILTERS = {
   lang: 'language',
   ctry: 'country',
