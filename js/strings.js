@@ -151,7 +151,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     switch_default_version_window_title: 'Switch Default Version',
     view_other_version_window_title: 'View Other Version',
     new_empty_root: 'New Empty ' + PROJECT_ROOT_NAME_EN,
-    import_root: 'Import Root',
+    import_root: 'Import Data',
     open_license_page: 'Open License Page',
 
     new_entity: 'New Entity',
@@ -418,8 +418,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     no_description_provided: 'Нет описания',
     switch_default_version_window_title: 'Уст. версию по умолчанию',
     view_other_version_window_title: 'Смотреть другую версию',
-    new_empty_root: 'Пусктой ' + PROJECT_ROOT_NAME_EN,
-    import_root: 'Импорт корня',
+    new_empty_root: 'Пусктой ' + PROJECT_ROOT_NAME_RU,
+    import_root: 'Импорт данных',
 
     new_entity: 'Новый элемент',
     import_entity: 'Импорт элемента',
