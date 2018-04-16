@@ -66,7 +66,7 @@ function MDSClient(optionsOrRoot) {
     github: {
       title: 'Connect through GitHub',
       icon: 'github',
-      url: 'https://github.com/login/oauth/authorize?client_id={{oauth_client_id}}&scope=user:email' +
+      url: 'https://github.com/login/oauth/authorize?client_id={{oauth_client_id}}&scope={{scope}}' +
            '&state=permission%3d{{permission}}%3BclientId%3d{{client_id}}' +
            '&redirect_uri={{api_url}}%2fauth%2fgithub',
       loginWindow: {
@@ -76,7 +76,7 @@ function MDSClient(optionsOrRoot) {
     facebook: {
       title: 'Connect through Facebook',
       icon: 'facebook',
-      url: 'https://www.facebook.com/dialog/oauth?client_id={{oauth_client_id}}&scope=email' +
+      url: 'https://www.facebook.com/dialog/oauth?client_id={{oauth_client_id}}&scope={{scope}}' +
            '&state=permission%3d{{permission}}%3BclientId%3d{{client_id}}' +
            '&redirect_uri={{api_url}}%2fauth%2ffacebook' +
            '&display=popup',
@@ -88,7 +88,7 @@ function MDSClient(optionsOrRoot) {
       title: 'Connect through Google',
       icon: 'google-plus',
       url: 'https://accounts.google.com/o/oauth2/auth' +
-           '?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.me%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.profile.emails.read&response_type=code' +
+           '?access_type=offline&scope={{scope}}&response_type=code' +
            '&client_id={{oauth_client_id}}' +
            '&state=permission%3d{{permission}}%3BclientId%3d{{client_id}}' +
            '&redirect_uri={{api_url}}%2fauth%2fgoogle',
@@ -152,6 +152,12 @@ MDSClient.OAUTH_CLIENT_IDS = {
   vk: '6037091'
 };
 
+MDSClient.OAUTH_SCOPES = {
+  google: 'https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.me%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.profile.emails.read',
+  facebook: 'email',
+  github: 'user:email',
+  vk: ''
+};
 
 MDSClient.prototype.getAuthProviders = function() {
   var ret = MDSCommon.copy(this.authProviders);
@@ -166,6 +172,8 @@ MDSClient.prototype.getAuthProviders = function() {
       ret[providerName].url.replace('{{auth_token}}', localStorage.getItem('authToken'));
     ret[providerName].url =
       ret[providerName].url.replace('{{oauth_client_id}}', MDSClient.OAUTH_CLIENT_IDS[providerName]);
+    ret[providerName].url =
+      ret[providerName].url.replace('{{scope}}', MDSClient.OAUTH_SCOPES[providerName]);
   }
   return ret;
 };
@@ -181,6 +189,7 @@ MDSClient.prototype.getAuthProvider = function(providerName) {
   ret.url = ret.url.replace('{{client_id}}', this.options.clientId);
   ret.url = ret.url.replace('{{auth_token}}', localStorage.getItem('authToken'));
   ret.url = ret.url.replace('{{oauth_client_id}}', MDSClient.OAUTH_CLIENT_IDS[providerName]);
+  ret.url = ret.url.replace('{{scope}}', MDSClient.OAUTH_SCOPES[providerName]);
   return ret;
 };
 
