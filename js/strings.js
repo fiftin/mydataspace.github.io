@@ -134,7 +134,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
 
     PRICING: 'Pricing',
 
-    switch_default_version: 'Switch Default Versin',
+    switch_default_version: 'Switch Default Versin',root__new_comme
     view_other_version: 'View Other Version',
 
     created: 'created',
