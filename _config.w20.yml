@@ -25,12 +25,12 @@ url: "https://web20.site"
 enforce_ssl: web20.site
 
 local_api_url: "https://localhost:8443"
-local_cdn_url: "d10ztdrlkjcw7n.cloudfront.net"
+local_cdn_url: "https://d10ztdrlkjcw7n.cloudfront.net"
 local_api_websocket_url: "https://localhost:8443"
 local_refine_url: "http://localhost:3333/"
 
 api_url: "https://api.web20.site"
-cdn_url: "d74vncfm6779v.cloudfront.net"
+cdn_url: "https://d74vncfm6779v.cloudfront.net"
 api_websocket_url: "https://api.web20.site"
 refine_url: "https://refine.web20.site"
 
