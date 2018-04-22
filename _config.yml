@@ -30,7 +30,7 @@ local_api_websocket_url: "https://localhost:8443"
 local_refine_url: "http://localhost:3333/"
 
 api_url: "https://api.mydataspace.net"
-cdn_url: "https://d74vncfm6779v.cloudfront.net"
+cdn_url: "https://cdn.mydataspace.net"
 api_websocket_url: "https://api.mydataspace.net"
 refine_url: "https://refine.myda.space"
 
