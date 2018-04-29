@@ -31,28 +31,24 @@ function initRootPage(options) {
     return;
   }
 
-
   var md = new Remarkable({
-    html:         true,        // Enable HTML tags in source
-    xhtmlOut:     false,        // Use '/' to close single tags (<br />)
-    breaks:       false,        // Convert '\n' in paragraphs into <br>
-    langPrefix:   'language-',  // CSS language prefix for fenced blocks
-    linkify:      false,        // Autoconvert URL-like text to links
-    // Enable some language-neutral replacement + quotes beautification
-    typographer:  false,
-    // Double + single quotes replacement pairs, when typographer enabled,
-    // and smartquotes on. Set doubles to '«»' for Russian, '„“' for German.
+    html: true,
+    xhtmlOut: false,
+    breaks: false,
+    langPrefix: 'language-',
+    linkify: false,
+    typographer: false,
     quotes: '“”‘’',
-    // Highlighter function. Should return escaped HTML,
-    // or '' if the source string is not changed
-    highlight: function (/*str, lang*/) { return ''; }
+    highlight: function (/*str, lang*/) {
+      return '';
+    }
   });
 
   var currentLook;
   var lastLookSearchInputKeypressTime;
   var lastKeypressTime;
 
-  setInterval(function() {
+  setInterval(function () {
     var now = new Date().getTime();
     if (lastKeypressTime && now - lastKeypressTime > 500) {
       lastKeypressTime = null;
@@ -66,14 +62,19 @@ function initRootPage(options) {
     }
   }, 200);
 
-  loadEntityData('get', MDSCommon.extend(DATA, { children: ['views','comments', 'likes'] }), function(result) {
-    addJsonLD(result);
+
+  loadEntityData('get', MDSCommon.extend(DATA, {children: ['views', 'comments', 'likes']}), function (result) {
     setRootView(result);
-  }, function() {});
+  }, function () {
+    $.ajax({url: '/fragments/404.html', method: 'get'}).then(function (data) {
+      $('#root').html(data);
+    });
+  });
+
 
   //
   // Save view button
-  $('#look_modal__button').click(function() {
+  $('#look_modal__button').click(function () {
     if (!validateLookForm()) {
       return;
     }
@@ -88,22 +89,24 @@ function initRootPage(options) {
         Mydataspace.request(lookPath ? 'entities.change' : 'entities.create', MDSCommon.extend(DATA, {
           path: lookPath || 'views/' + MDSCommon.guid(),
           fields: [
-            { name: 'type', value: 'codepen', type: 's' },
-            { name: 'title', value: $('#look_modal__title').val(), type: 's' },
+            {name: 'type', value: 'codepen', type: 's'},
+            {name: 'title', value: $('#look_modal__title').val(), type: 's'},
             {
               name: 'id',
               value: getCodepenIDByURL($('#look_modal__codepen').val()),
               type: 's'
             },
-            { name: 'description', value: $('#look_modal__description').val(), type: 's' }
+            {name: 'description', value: $('#look_modal__description').val(), type: 's'}
           ]
-        })).then(function(data) {
+        })).then(function (data) {
           $('#look_modal').modal('hide');
           $('.modal-backdrop').css('opacity', null);
           if (!lookPath) {
-            setTimeout(function() { selectLook(data.path); }, 500);
+            setTimeout(function () {
+              selectLook(data.path);
+            }, 500);
           }
-        }, function(err) {
+        }, function (err) {
           $('.modal-backdrop').css('opacity', null);
           UI.error(err);
         });
@@ -112,45 +115,46 @@ function initRootPage(options) {
         Mydataspace.request(lookPath ? 'entities.change' : 'entities.create', MDSCommon.extend(DATA, {
           path: lookPath || 'views/' + MDSCommon.guid(),
           fields: [
-            { name: 'type', value: 'table', type: 's' },
-            { name: 'title', value: $('#look_modal__title').val(), type: 's' },
-            { name: 'description', value: $('#look_modal__description').val(), type: 's' },
-            { name: 'path', value: $('#look_modal__table_path').val(), type: 's' }
+            {name: 'type', value: 'table', type: 's'},
+            {name: 'title', value: $('#look_modal__title').val(), type: 's'},
+            {name: 'description', value: $('#look_modal__description').val(), type: 's'},
+            {name: 'path', value: $('#look_modal__table_path').val(), type: 's'}
           ]
-        })).then(function(data) {
+        })).then(function (data) {
           return Promise.all([data, Mydataspace.request('entities.delete', MDSCommon.extend(DATA, {
             path: data.path + '/columns'
-          })).catch(function() {})]);
-        }).then(function(res) {
+          })).catch(function () {
+          })]);
+        }).then(function (res) {
           var data = res[0];
           return Promise.all([data, Mydataspace.request('entities.create', MDSCommon.extend(DATA, {
             path: data.path + '/columns'
           }))]);
-        }).then(function(res) {
+        }).then(function (res) {
           var data = res[0];
           var columns = [];
           var i = 0;
-          $$('look_modal__table').data.each(function(obj) {
+          $$('look_modal__table').data.each(function (obj) {
             columns.push(MDSCommon.extend(DATA, {
               path: data.path + '/columns/' + MDSCommon.guid(),
               fields: [
-                { name: 'index', value: i, type: 'i' },
-                { name: 'title', value: obj.title, type: 's' },
-                { name: 'value', value: obj.value, type: 's' },
-                { name: 'width', value: obj.width, type: 'i' }
+                {name: 'index', value: i, type: 'i'},
+                {name: 'title', value: obj.title, type: 's'},
+                {name: 'value', value: obj.value, type: 's'},
+                {name: 'width', value: obj.width, type: 'i'}
               ]
             }));
             i++;
           });
           return Promise.all([data, Mydataspace.request('entities.create', columns)]);
-        }).then(function(res) {
+        }).then(function (res) {
           var data = res[0];
-          setTimeout(function() {
+          setTimeout(function () {
             $('.modal-backdrop').css('opacity', null);
             selectLook(data.path);
             $('#look_modal').modal('hide');
           }, 500);
-        }, function(err) {
+        }, function (err) {
           $('.modal-backdrop').css('opacity', null);
           UI.error(err);
         });
@@ -163,14 +167,16 @@ function initRootPage(options) {
 
   //
   // Delete view button
-  document.getElementById('delete_look_modal_button').addEventListener('click', function() {
+  document.getElementById('delete_look_modal_button').addEventListener('click', function () {
     var lookPath = $('#root__looks__content').data('look-path');
     Mydataspace.request('entities.delete', MDSCommon.extend(DATA, {
       path: lookPath
-    })).then(function(data) { }, function(err) {});
+    })).then(function (data) {
+    }, function (err) {
+    });
   });
 
-  Mydataspace.on('entities.change.res', function(data) {
+  Mydataspace.on('entities.change.res', function (data) {
     if (/^views\/[^\/]*$/.test(data.path)) {
       var preview = getLookPreviewNode(data.path);
       if (!preview) {
@@ -200,7 +206,7 @@ function initRootPage(options) {
     }
   });
 
-  $('#look_modal__table_path').keydown(function() {
+  $('#look_modal__table_path').keydown(function () {
     lastKeypressTime = new Date().getTime();
   });
 
@@ -210,8 +216,8 @@ function initRootPage(options) {
 
   function loadEntityData(method, requestData, success, fail) {
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-      if (xmlhttp.readyState === XMLHttpRequest.DONE ) {
+    xmlhttp.onreadystatechange = function () {
+      if (xmlhttp.readyState === XMLHttpRequest.DONE) {
         if (xmlhttp.status === 200) {
           var data = JSON.parse(xmlhttp.responseText);
           success(data);
@@ -246,7 +252,7 @@ function initRootPage(options) {
 
   function getLookPreviewNode(path) {
     var ret;
-    $('#root__looks__previews').find('.look_preview').each(function() {
+    $('#root__looks__previews').find('.look_preview').each(function () {
       if ($(this).data('look-path') === path) {
         ret = this;
         return false;
@@ -273,8 +279,11 @@ function initRootPage(options) {
           break;
         case 'table':
           $('#look_modal__table_path').val(MDSCommon.findValueByName(currentLook.fields, 'path'));
-          Mydataspace.request('entities.get', MDSCommon.extend(DATA, { path: currentLook.path + '/columns', children: true })).then(function(columnsData) {
-            var formattedData = columnsData.children.map(function(column) {
+          Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
+            path: currentLook.path + '/columns',
+            children: true
+          })).then(function (columnsData) {
+            var formattedData = columnsData.children.map(function (column) {
               return {
                 value: MDSCommon.findValueByName(column.fields, 'value'),
                 title: MDSCommon.findValueByName(column.fields, 'title'),
@@ -326,7 +335,8 @@ function initRootPage(options) {
     }
 
     var type = MDSCommon.findValueByName(lookMetaData.fields, 'type');
-    $('#root__looks__title_icon').attr('class', 'fa fa-' + type);MDSCommon.findValueByName(lookMetaData.fields, 'type')
+    $('#root__looks__title_icon').attr('class', 'fa fa-' + type);
+    MDSCommon.findValueByName(lookMetaData.fields, 'type')
     $('#root__looks__title').text(MDSCommon.findValueByName(lookMetaData.fields, 'title'));
     $('#root__looks__content').data('look-path', lookMetaData.path);
 
@@ -342,14 +352,17 @@ function initRootPage(options) {
 
     switch (type) {
       case 'codepen':
-        setTimeout(function() {
+        setTimeout(function () {
           hideLookWaitingCloak();
           hideWaitingCloak();
         }, 1000);
         break;
       case 'table':
-        Mydataspace.request('entities.get', MDSCommon.extend(DATA, { path: lookMetaData.path + '/columns', children: true })).then(function(columnsMetaData) {
-          var columns = columnsMetaData.children.map(function(column) {
+        Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
+          path: lookMetaData.path + '/columns',
+          children: true
+        })).then(function (columnsMetaData) {
+          var columns = columnsMetaData.children.map(function (column) {
             return {
               id: MDSCommon.getPathName(column.path),
               header: [MDSCommon.findValueByName(column.fields, 'title'), {
@@ -368,15 +381,17 @@ function initRootPage(options) {
             container: 'root__looks__content',
             id: 'root__looks__content_wrap',
             rows: [
-              { padding: 3,
+              {
+                padding: 3,
                 css: 'root__about__look_search',
                 cols: [
-                  { view: 'search',
+                  {
+                    view: 'search',
                     icon: 'search',
                     id: 'root__looks__content_search',
                     placeholder: 'Search...',
                     on: {
-                      onTimedKeyPress: function(code, e) {
+                      onTimedKeyPress: function (code, e) {
                         $$('root__looks__content').define('search', this.getValue());
                         $$('root__looks__content').load('look->');
                       }
@@ -384,7 +399,8 @@ function initRootPage(options) {
                   }
                 ]
               },
-              { view: 'datatable',
+              {
+                view: 'datatable',
                 id: 'root__looks__content',
                 css: 'root__about__look_webix',
                 columns: columns,
@@ -416,9 +432,11 @@ function initRootPage(options) {
                   }
                 }
               },
-              { css: 'root__about__look_pager_wrap',
+              {
+                css: 'root__about__look_pager_wrap',
                 cols: [
-                  { view: 'pager',
+                  {
+                    view: 'pager',
                     id: 'root__looks__content_pager',
                     size: 40,
                     group: 5,
@@ -452,20 +470,20 @@ function initRootPage(options) {
           filter: MDSCommon.convertNameValueArrayToMap($('#root__looks__content').data('list-look-filters') || [])
         });
 
-        Mydataspace.request('entities.get', req).then(function(data) {
+        Mydataspace.request('entities.get', req).then(function (data) {
           return Promise.all([data, Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
             path: lookMetaData.path + '/filters',
             children: true
           }))]);
-        }).then(function(res) {
-          var filtersReq = res[1].children.filter(function(filter) {
+        }).then(function (res) {
+          var filtersReq = res[1].children.filter(function (filter) {
             var name = MDSCommon.getPathName(filter.path);
             return MDSCommon.isPresent(res[0].facets[name]);
-          }).map(function(filter) {
-            return MDSCommon.extend(DATA, { path: filter.path, children: true });
+          }).map(function (filter) {
+            return MDSCommon.extend(DATA, {path: filter.path, children: true});
           });
           return Promise.all([res[0], Mydataspace.request('entities.get', filtersReq)]);
-        }).then(function(res) {
+        }).then(function (res) {
           var data = res[0];
           var filtersMetaData;
           if (Array.isArray(res[1])) {
@@ -526,7 +544,7 @@ function initRootPage(options) {
             snippetClass += ' snippet--no-pointer';
           }
 
-          var itemsHTML = data.children.map(function(item) {
+          var itemsHTML = data.children.map(function (item) {
             return '<div class="col-md-' + colWidth + '">' +
               '<div class="block snippet ' + snippetClass + ' clearfix" data-item-path="' + item.path + '">\n' +
               (MDSCommon.isPresent(sn.css) ? '<style>' + sn.css + '</style>\n' : '') +
@@ -577,18 +595,24 @@ function initRootPage(options) {
             '</div>' +
             '</div>');
 
-          var scriptsHTML =  ls.scripts({}) + '\n' + data.children.map(function(item) {
+          var scriptsHTML = ls.scripts({}) + '\n' + data.children.map(function (item) {
             return sn.scripts(MDSCommon.convertNameValueArrayToMap(item.fields || []));
-          }).filter(function(s) { return s !== ''; }).join('\n');
+          }).filter(function (s) {
+            return s !== '';
+          }).join('\n');
 
           $(scriptsHTML).appendTo('#root__looks__content');
 
-          $('#root__look__content__list_look_display_snippet').on('click', function() { updateListLook('snippet'); });
-          $('#root__look__content__list_look_display_line').on('click', function() { updateListLook('line'); });
-          $('#root__looks__content').find('.search_filter__items').on('click', '.search_filter__item', function() {
+          $('#root__look__content__list_look_display_snippet').on('click', function () {
+            updateListLook('snippet');
+          });
+          $('#root__look__content__list_look_display_line').on('click', function () {
+            updateListLook('line');
+          });
+          $('#root__looks__content').find('.search_filter__items').on('click', '.search_filter__item', function () {
             var currentFilters = $('#root__looks__content').data('list-look-filters') || [];
             var filter = MDSCommon.findByName(currentFilters, $(this).data('filter-name'));
-            var newFilter = { name: $(this).data('filter-name'), value: $(this).data('filter-value') };
+            var newFilter = {name: $(this).data('filter-name'), value: $(this).data('filter-value')};
             if (filter) {
               if (filter.value === newFilter.value) {
                 filter.value = null;
@@ -602,14 +626,17 @@ function initRootPage(options) {
             updateListLook('line');
           });
 
-          $('#root__looks__content').find('.search__results').on('click', '.snippet', function() {
+          $('#root__looks__content').find('.search__results').on('click', '.snippet', function () {
             if (!pageTemplate) {
               return;
             }
 
             var $this = $(this);
             var path = $this.data('item-path');
-            Mydataspace.request('entities.get', MDSCommon.extend(DATA, { path: path, children: true })).then(function(data) {
+            Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
+              path: path,
+              children: true
+            })).then(function (data) {
               var itemFields = MDSCommon.convertNameValueArrayToMap(data.fields || []);
               var $pageContent = $('#list_look_page_modal__content');
               $pageContent.html(pg.template(itemFields));
@@ -672,7 +699,7 @@ function initRootPage(options) {
       limit: 30,
       offset: $list.find('>.view__comment').length,
       orderChildrenBy: '$createdAt DESC'
-    })).then(function(data) {
+    })).then(function (data) {
       var html = '';
       for (var i in data.children) {
         html = RootHTMLGen.getCommentHTML(data.children[i]) + html;
@@ -681,7 +708,7 @@ function initRootPage(options) {
 
       $('#root__comments_show_older').css('display', data.children.length < 30 ? 'none' : 'inline');
 
-      if($list.html() === '') {
+      if ($list.html() === '') {
         document.getElementById('root__comments__empty').style.display = 'block';
         $list.hide();
       } else {
@@ -719,13 +746,13 @@ function initRootPage(options) {
           type: 's'
         }
       ]
-    }, function() {
+    }, function () {
       $textarea.val('');
       $button.prop('disabled', false);
       $textarea.prop('disabled', false);
       $textarea.focus();
       updateCommentFormTextareaHeight();
-    }, function(err) {
+    }, function (err) {
       $button.prop('disabled', false);
       $textarea.prop('disabled', false);
       console.log(err);
@@ -734,7 +761,7 @@ function initRootPage(options) {
 
   function updateCommentFormTextareaHeight() {
     var textarea = document.getElementById('root__comments__new_comment_textarea');
-    setTimeout(function(){
+    setTimeout(function () {
       textarea.style.cssText = 'height: auto; padding: 0';
       textarea.style.cssText = 'height: ' + textarea.scrollHeight + 'px';
     }, 0);
@@ -743,33 +770,33 @@ function initRootPage(options) {
   function initNewCommentForm() {
     var $newComment = $('#root__new_comment');
     var $textarea = $newComment.find('.new_comment__textarea');
-    $textarea.on('focus', function() {
+    $textarea.on('focus', function () {
       $(this).parent().parent().find('.new_comment__button').show();
       $(this).addClass('new_comment__textarea--extended');
       if ($textarea.hasClass('new_comment__textarea--error')) {
-        setTimeout(function() {
+        setTimeout(function () {
           $textarea.removeClass('new_comment__textarea--error')
         }, 200);
       }
     });
-    $textarea.on('keydown', function(event) {
+    $textarea.on('keydown', function (event) {
       if (event.ctrlKey && event.keyCode === 13) {
         postComment();
       }
       updateCommentFormTextareaHeight();
     });
-    $newComment.find('.new_comment__button').on('click', function() {
+    $newComment.find('.new_comment__button').on('click', function () {
       postComment();
     });
   }
 
   function initCounters() {
-    $('#root__counters_comments').click(function() {
+    $('#root__counters_comments').click(function () {
       selectTab('VIEW_TAB_COMMENTS_LABEL');
     });
 
     var likesElem = document.getElementById('root__counters_likes');
-    likesElem.addEventListener('click', function() {
+    likesElem.addEventListener('click', function () {
       if (!Mydataspace.isLoggedIn()) {
         $('#signin_modal').modal('show');
         return;
@@ -784,18 +811,18 @@ function initRootPage(options) {
       if (MDSCommon.isPresent(likesElem.getAttribute('data-like-path'))) {
         Mydataspace.entities.request('entities.delete', MDSCommon.extend(DATA, {
           path: likesElem.getAttribute('data-like-path')
-        })).then(function() {
+        })).then(function () {
           document.getElementById('root__counters_likes_icon').className = 'fa fa-heart';
-        }, function(err) {
+        }, function (err) {
           document.getElementById('root__counters_likes_icon').className = 'fa fa-heart';
           console.log(err);
         });
       } else {
         Mydataspace.entities.request('entities.create', MDSCommon.extend(DATA, {
           path: 'likes/' + MDSCommon.guid()
-        })).then(function() {
+        })).then(function () {
           document.getElementById('root__counters_likes_icon').className = 'fa fa-heart';
-        }, function(err) {
+        }, function (err) {
           document.getElementById('root__counters_likes_icon').className = 'fa fa-heart';
           console.log(err);
         });
@@ -812,11 +839,11 @@ function initRootPage(options) {
     $('#root__looks__empty').css('display', 'none');
 
     var previewsHTML = '';
-    $.each(looksData, function(i, val) {
+    $.each(looksData, function (i, val) {
       previewsHTML += RootHTMLGen.getLookPreviewHTML(val);
     });
 
-    $('#root__looks__previews').html(previewsHTML).find('.look_preview').each(function(i) {
+    $('#root__looks__previews').html(previewsHTML).find('.look_preview').each(function (i) {
       $(this).data('look-data', looksData[i]);
     });
 
@@ -856,7 +883,10 @@ function initRootPage(options) {
         } else {
           document.getElementById('root__looks__empty').style.display = 'none';
         }
-        Mydataspace.entities.request('entities.get', MDSCommon.extend(DATA, { children: true, path: 'views' })).then(function(data) {
+        Mydataspace.entities.request('entities.get', MDSCommon.extend(DATA, {
+          children: true,
+          path: 'views'
+        })).then(function (data) {
           updateLooks(data.children);
           if (itemID) {
             selectLook('views/' + itemID);
@@ -893,9 +923,9 @@ function initRootPage(options) {
 
   function initTabs() {
     for (var tabID in TABS) {
-      (function(tabID) {
+      (function (tabID) {
         var tab = document.getElementById(tabID);
-        tab.addEventListener('click', function(event) {
+        tab.addEventListener('click', function (event) {
           event.preventDefault();
           selectTab(tabID);
         });
@@ -913,7 +943,10 @@ function initRootPage(options) {
     if (view.innerHTML === '%%root-page.html%%') {
       view.innerHTML = '';
     }
-    (view.innerHTML === '' ? $.ajax({ url: '/fragments/root-page.html', method: 'get' }) : Promise.resolve(view.innerHTML)).then(function(html) {
+    (view.innerHTML === '' ? $.ajax({
+      url: '/fragments/root-page.html',
+      method: 'get'
+    }) : Promise.resolve(view.innerHTML)).then(function (html) {
       var websiteURL = MDSCommon.findValueByName(data.fields, 'websiteURL');
       var description = MDSCommon.findValueByName(data.fields, 'description');
       var readme = MDSCommon.findValueByName(data.fields, 'readme');
@@ -934,12 +967,12 @@ function initRootPage(options) {
       document.getElementById('root__version').innerText = '#' +
         (MDSCommon.findValueByName(data.fields, '$version') || 0);
 
-      $('#root__version').tooltip({ placement: 'bottom', container: 'body' });
+      $('#root__version').tooltip({placement: 'bottom', container: 'body'});
 
 
-      var tags = (MDSCommon.findValueByName(data.fields, 'tags') || '').split(' ').filter(function(tag) {
+      var tags = (MDSCommon.findValueByName(data.fields, 'tags') || '').split(' ').filter(function (tag) {
         return tag != null && tag !== '';
-      }).map(function(tag) {
+      }).map(function (tag) {
         return '<a class="view__tag" href="/search?q=%23' + tag + '" onclick="openSearch_header__search(\'' + tag + '\'); return false;">' + tag + '</a>';
       }).join(' ');
 
@@ -1094,7 +1127,7 @@ function initRootPage(options) {
         requestMyLike();
       }
 
-      Mydataspace.on('login', function() {
+      Mydataspace.on('login', function () {
         requestMyLike();
         if (currentLook) {
           selectLook(currentLook.path);
@@ -1103,51 +1136,51 @@ function initRootPage(options) {
 
       $('#root__comments_show_older').on('click', loadComments);
 
-      $('#root__comments__list').on('click', '.view__comment__delete', function() {
+      $('#root__comments__list').on('click', '.view__comment__delete', function () {
         var commentPath = this.parentNode.getAttribute('data-comment-path');
         $(this).find('i').addClass('fa-spin');
 
         Mydataspace.request('entities.delete', MDSCommon.extend(DATA, {
           path: commentPath
-        }, function() {
+        }, function () {
           $(this).find('i').removeClass('fa-spin');
-        }, function(err) {
+        }, function (err) {
           $(this).find('i').removeClass('fa-spin');
           console.log(err);
         }));
       });
 
-      $('#root__looks__previews').on('click', '.look_preview', function() {
+      $('#root__looks__previews').on('click', '.look_preview', function () {
         showWaitingCloak();
         selectLook($(this).data('look-path'));
       });
 
-      document.getElementById('root__looks__close').addEventListener('click', function() {
+      document.getElementById('root__looks__close').addEventListener('click', function () {
         unselectLook();
       });
 
-      document.getElementById('root__looks__edit').addEventListener('click', function() {
+      document.getElementById('root__looks__edit').addEventListener('click', function () {
         openLookEditModal(true);
       });
 
-      document.getElementById('root__looks__search').addEventListener('click', function() {
+      document.getElementById('root__looks__search').addEventListener('click', function () {
         document.getElementById('root__looks__header').classList.add('look__header--search');
         document.getElementById('root__looks__search_input').focus();
         this.style.display = 'none';
       });
 
-      document.getElementById('root__looks__search_input').addEventListener('blur', function() {
+      document.getElementById('root__looks__search_input').addEventListener('blur', function () {
         if (this.value === '') {
           document.getElementById('root__looks__header').classList.remove('look__header--search');
           document.getElementById('root__looks__search').style.display = 'block';
         }
       });
 
-      document.getElementById('root__looks__search_input').addEventListener('keydown', function() {
+      document.getElementById('root__looks__search_input').addEventListener('keydown', function () {
         lastLookSearchInputKeypressTime = new Date().getTime();
       });
 
-      document.getElementById('root__new_look').addEventListener('click', function() {
+      document.getElementById('root__new_look').addEventListener('click', function () {
         if (!Mydataspace.isLoggedIn()) {
           $('#signin_modal').modal('show');
           return;
@@ -1155,8 +1188,8 @@ function initRootPage(options) {
         openLookEditModal(false);
       });
 
-      document.getElementById('root__version').addEventListener('click', function() {
-        loadEntityData('getRootVersions', DATA, function(result) {
+      document.getElementById('root__version').addEventListener('click', function () {
+        loadEntityData('getRootVersions', DATA, function (result) {
           var table = document.getElementById('change_root_version_modal__table').tBodies[0];
 
           for (var i = table.rows.length - 1; i >= 0; i--) {
@@ -1185,7 +1218,8 @@ function initRootPage(options) {
             createdAt.appendChild(createdAtLink);
             description.appendChild(descriptionLink);
           }
-        }, function(err) { });
+        }, function (err) {
+        });
       });
 
       // Load data for root and render it on the page
@@ -1194,7 +1228,7 @@ function initRootPage(options) {
         children: true,
         limit: 1,
         orderChildrenBy: '$createdAt DESC'
-      })).then(function(result) {
+      })).then(function (result) {
         var $lookWrap = $('#root__about__look_wrap');
         var $look = $('#root__about__look');
 
@@ -1210,8 +1244,8 @@ function initRootPage(options) {
             case 'codepen':
               var codepenParts = MDSCommon.findValueByName(lookMetaData.fields, 'id').split('/');
               $look.html('<p data-height="402" data-theme-id="0" data-slug-hash="' + codepenParts[1] +
-                '" data-default-tab="result" data-user="'+ codepenParts[0] +
-                '" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/' +  codepenParts[0] +
+                '" data-default-tab="result" data-user="' + codepenParts[0] +
+                '" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/' + codepenParts[0] +
                 '/pen/' + codepenParts[1] + '/">' + codepenParts[1] +
                 '</a> by MyDataSpace (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p>');
 
@@ -1221,8 +1255,11 @@ function initRootPage(options) {
               break;
             case 'table':
               $look.html('');
-              Mydataspace.request('entities.get', MDSCommon.extend(DATA, { path: lookMetaData.path + '/columns', children: true })).then(function(columnsMetaData) {
-                var columns = columnsMetaData.children.map(function(column) {
+              Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
+                path: lookMetaData.path + '/columns',
+                children: true
+              })).then(function (columnsMetaData) {
+                var columns = columnsMetaData.children.map(function (column) {
                   return {
                     id: MDSCommon.getPathName(column.path),
                     header: [MDSCommon.findValueByName(column.fields, 'title'), {
@@ -1240,15 +1277,17 @@ function initRootPage(options) {
                 webix.ui({
                   container: 'root__about__look',
                   rows: [
-                    { padding: 3,
+                    {
+                      padding: 3,
                       css: 'root__about__look_search',
                       cols: [
-                        { view: 'search',
+                        {
+                          view: 'search',
                           icon: 'search',
                           placeholder: 'Search...',
                           id: 'root__about__look_search',
                           on: {
-                            onTimedKeyPress: function(code, e) {
+                            onTimedKeyPress: function (code, e) {
                               $$('root__about__look').define('search', this.getValue());
                               $$('root__about__look').load('look->');
                             }
@@ -1256,7 +1295,8 @@ function initRootPage(options) {
                         }
                       ]
                     },
-                    { view: 'datatable',
+                    {
+                      view: 'datatable',
                       borderless: true,
                       id: 'root__about__look',
                       css: 'root__about__look_webix',
@@ -1276,22 +1316,25 @@ function initRootPage(options) {
                       url: 'look->',
                       pager: 'root__about__look_pager',
                       on: {
-                        onColumnResize: function(id, newWidth, oldWidth, user_action) {
+                        onColumnResize: function (id, newWidth, oldWidth, user_action) {
                           if (!user_action) {
                             return;
                           }
                           Mydataspace.request('entities.change', MDSCommon.extend(DATA, {
                             path: lookMetaData.path + '/columns/' + id,
                             fields: [
-                              { name: 'width', value: newWidth, type: 'i' }
+                              {name: 'width', value: newWidth, type: 'i'}
                             ]
-                          })).catch(function() {});
+                          })).catch(function () {
+                          });
                         }
                       }
                     },
-                    { css: 'root__about__look_pager_wrap',
+                    {
+                      css: 'root__about__look_pager_wrap',
                       cols: [
-                        { view: 'pager',
+                        {
+                          view: 'pager',
                           id: 'root__about__look_pager',
                           size: 12,
                           group: 5,
@@ -1324,7 +1367,10 @@ function initRootPage(options) {
 
     var datasource = MDSCommon.findValueByName(data.fields, 'datasource');
     if (datasource) {
-      Mydataspace.request('entities.get', { root: 'datasources', path: 'data/' + datasource }).then(function(datasourceData) {
+      Mydataspace.request('entities.get', {
+        root: 'datasources',
+        path: 'data/' + datasource
+      }).then(function (datasourceData) {
         $('#root__datasource')
           .removeClass('hidden')
           .attr('onclick', 'openSearch_header__search(\'#src:' + datasource + ' \');');
@@ -1356,7 +1402,7 @@ function initRootPage(options) {
     path: 'views/*'
   }));
 
-  Mydataspace.on('entities.create.res', function(data) {
+  Mydataspace.on('entities.create.res', function (data) {
     if (/^likes\//.test(data.path)) {
       document.getElementById('root__counters_likes_count').innerText =
         parseInt(document.getElementById('root__counters_likes_count').innerText) + 1;
@@ -1398,7 +1444,7 @@ function initRootPage(options) {
     }
   });
 
-  Mydataspace.on('entities.delete.res', function(data) {
+  Mydataspace.on('entities.delete.res', function (data) {
     if (/^likes\//.test(data.path)) {
       document.getElementById('root__counters_likes_count').innerText =
         parseInt(document.getElementById('root__counters_likes_count').innerText) - 1;
@@ -1447,7 +1493,7 @@ function initRootPage(options) {
   }
 
   function requestMyLike() {
-    Mydataspace.request('entities.getMyChildren', MDSCommon.extend(DATA, { path: 'likes' })).then(function(result) {
+    Mydataspace.request('entities.getMyChildren', MDSCommon.extend(DATA, {path: 'likes'})).then(function (result) {
       var children = result.children;
       if (children.length > 0) {
         setMyLike(children[0]);
@@ -1457,14 +1503,14 @@ function initRootPage(options) {
     });
   }
 
-  $('#look_modal__table_reset').click(function() {
+  $('#look_modal__table_reset').click(function () {
     refreshLookTableColumns();
   });
-  $('#look_modal__table_remove').click(function() {
+  $('#look_modal__table_remove').click(function () {
     $$('look_modal__table').remove($$('look_modal__table').getSelectedId(true));
   });
-  $('#look_modal__table_add').click(function() {
-    var id = $$('look_modal__table').add({ value: '', title: '', width: 200 });
+  $('#look_modal__table_add').click(function () {
+    var id = $$('look_modal__table').add({value: '', title: '', width: 200});
     $$('look_modal__table').editCell(id, 'value');
   });
 
@@ -1473,11 +1519,11 @@ function initRootPage(options) {
     Mydataspace.entities.get(MDSCommon.extend(DATA, {
       path: $('#look_modal__table_path').val(),
       children: true
-    })).then(function(data) {
+    })).then(function (data) {
       var child = data.children[0];
-      var formattedData = child.fields.filter(function(field) {
+      var formattedData = child.fields.filter(function (field) {
         return field.name.indexOf('$') !== 0;
-      }).map(function(field) {
+      }).map(function (field) {
         return {
           value: field.name,
           title: field.name,

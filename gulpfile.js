@@ -3,10 +3,7 @@ var Server = require('karma').Server;
 var bower = require('gulp-bower');
 var runSequence = require('run-sequence');
 var del = require('del');
-var less = require('gulp-less');
 var concat = require('gulp-concat');
-var fs = require('fs');
-var uglify = require('gulp-uglifyjs');
 
 gulp.task('nodejs', function() {
   return gulp.src([
@@ -33,7 +30,6 @@ gulp.task('api', function() {
     .pipe(gulp.dest('./js/dist/'));
 });
 
-
 gulp.task('w20', function() {
   return gulp.src([
     './vendor/socket.io.js',
@@ -46,7 +42,6 @@ gulp.task('w20', function() {
     .pipe(concat('web2.0.js'))
     .pipe(gulp.dest('./js/dist/'));
 });
-
 
 gulp.task('mds', function() {
   return gulp.src([

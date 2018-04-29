@@ -2759,6 +2759,12 @@ EntityTree.prototype.listen = function() {
       }
 
       var entity = Identity.entityFromData(data);
+
+      if ($$('entity_tree').getItem(entity.id) != null) {
+        // already exists
+        continue;
+      }
+
       var oldVersion = MDSCommon.findValueByName(data.fields || [], '$oldVersion');
 
       if (oldVersion == null &&
