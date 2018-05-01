@@ -176,6 +176,15 @@ $side-panel-width: $side-width - $padding;
 }
 
 .root_page {
+  .root_page__root_not_exists {
+    position: absolute;
+    margin: 0;
+    background: white;
+    width: 100%;
+    top: $header-height;
+    bottom: $footer-height;
+  }
+
   .view__version {
     color: $selected-bg;
     opacity: 0;
