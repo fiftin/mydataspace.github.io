@@ -16,6 +16,7 @@ MDSClient.prototype.loginByToken = function(token) {
         }
         self.on('login', loginListener);
         self.emit('authenticate', { token: obj.jwt });
+        self.on('unauthorized', reject);
       });
     });
   });
