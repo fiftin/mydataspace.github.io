@@ -3,19 +3,17 @@
 /**
  * Client for MyDataSpace service.
  * Version 2.1
- * @param {object|string} optionsOrRoot
- * @param {boolean} [optionsOrRoot.import] Must be true if you want import large amount of data.
+ * @param {object|string} options
+ * @param {boolean} [options.import] Must be true if you want import large amount of data.
  *                                   If this option is true:
  *                                   - Subscribers will not receive messages
  *                                   - More requests per second can be send
- * @param {string} [optionsOrRoot.root]
- * @param {string} [optionsOrRoot.clientId]
- * @param {string} [optionsOrRoot.permission]
+ * @param {string} [options.clientId]
+ * @param {string} [options.permission]
  * @constructor
  */
-function MDSClient(optionsOrRoot) {
+function MDSClient(options) {
   var self = this;
-  var options = typeof optionsOrRoot === 'string' ? { root: optionsOrRoot } : optionsOrRoot;
   var apiURL = options.import === true ? MDSClient.DEFAULT_URLS.importURL : MDSClient.DEFAULT_URLS.apiURL;
   this.options = MDSCommon.extend({
     useLocalStorage: true,
@@ -116,7 +114,7 @@ function MDSClient(optionsOrRoot) {
     this.registerFormatter('entities.getMyRoots.res', new EntitySimplifier());
   }
 
-  this.entities = new Entities(this, options.root);
+  this.entities = new Entities(this);
   this.on('connected', this.options.connected);
 
 

@@ -26,7 +26,7 @@ gulp.task('api', function() {
       './js/api/entities.js',
       './js/api/client.js'
     ])
-    .pipe(concat('api-v2.2.js'))
+    .pipe(concat('api-v3.0.js'))
     .pipe(gulp.dest('./js/dist/'));
 });
 
