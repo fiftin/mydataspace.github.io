@@ -1348,7 +1348,7 @@ function Entities(client, root) {
   this.root = root;
 }
 
-Entities.prototype.request = function (data) {
+Entities.prototype.request = function (eventName, data) {
   var d;
   if (this.root) {
     if (data.root) {
@@ -1358,7 +1358,7 @@ Entities.prototype.request = function (data) {
   } else {
     d = data;
   }
-  return this.client.request(d);
+  return this.client.request(eventName, d);
 };
 
 Entities.prototype.create = function (data) {
