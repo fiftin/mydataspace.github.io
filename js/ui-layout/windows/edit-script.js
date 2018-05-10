@@ -1,3 +1,36 @@
+UILayout.editScriptTabs = {
+  text: {
+    aceMode: 'text',
+    icon: 'align-justify',
+    width: 70,
+    label: 'Text'
+  },
+  md: {
+    aceMode: 'markdown',
+    icon: 'bookmark',
+    width: 110,
+    label: 'Markdown'
+  },
+  pug: {
+    aceMode: 'jade',
+    icon: 'code',
+    width: 80,
+    label: 'Pug'
+  },
+  html: {
+    aceMode: 'html',
+    icon: 'code',
+    width: 70,
+    label: 'HTML'
+  },
+  js: {
+    aceMode: 'javascript',
+    icon: 'cog',
+    width: 110,
+    label: 'JavaScript'
+  }
+};
+
 UILayout.windows.editScript = {
   view: 'window',
   id: 'edit_script_window',
@@ -39,76 +72,28 @@ UILayout.windows.editScript = {
       $$('edit_script_window').$view.classList.remove('animated');
       $$('edit_script_window').$view.classList.remove('fadeInUp');
       $$('my_data_panel__resizer_2').enable();
-    },
+    }
   },
+
   body: {
     rows: [
       { view: 'toolbar',
         id: 'edit_script_window__toolbar',
-        elements: [
-          { view: 'button',
+        elements: Object.keys(UILayout.editScriptTabs).map(function (id) {
+          var tab = UILayout.editScriptTabs[id];
+          return {
+            view: 'button',
             type: 'icon',
-            icon: 'align-justify',
-            width: 70,
-            label: 'Text',
-            id: 'edit_script_window__toolbar_text_button',
+            icon: tab.icon,
+            width: tab.width,
+            label: tab.label,
+            css:   'webix_el_button',
+            id: 'edit_script_window__toolbar_' + id + '_button',
             click: function() {
-              $$('edit_script_window__toolbar_text_button').getNode().classList.add('webix_el_button--active');
-              $$('edit_script_window__toolbar_md_button').getNode().classList.remove('webix_el_button--active');
-              $$('edit_script_window__toolbar_html_button').getNode().classList.remove('webix_el_button--active');
-              $$('edit_script_window__toolbar_js_button').getNode().classList.remove('webix_el_button--active');
-              const editor = $$('edit_script_window__editor').getEditor();
-              editor.getSession().setMode('ace/mode/text');
+              UI.entityForm.selectEditScriptTab(id);
             }
-          },
-          { view: 'button',
-            type: 'icon',
-            icon: 'bookmark',
-            width: 110,
-            label: 'Markdown',
-            id: 'edit_script_window__toolbar_md_button',
-            click: function() {
-              $$('edit_script_window__toolbar_text_button').getNode().classList.remove('webix_el_button--active');
-              $$('edit_script_window__toolbar_md_button').getNode().classList.add('webix_el_button--active');
-              $$('edit_script_window__toolbar_html_button').getNode().classList.remove('webix_el_button--active');
-              $$('edit_script_window__toolbar_js_button').getNode().classList.remove('webix_el_button--active');
-              const editor = $$('edit_script_window__editor').getEditor();
-              editor.getSession().setMode('ace/mode/markdown');
-            }
-          },
-          { view: 'button',
-            type: 'icon',
-            icon: 'code',
-            width: 80,
-            label: 'HTML',
-            id: 'edit_script_window__toolbar_html_button',
-            click: function() {
-              $$('edit_script_window__toolbar_text_button').getNode().classList.remove('webix_el_button--active');
-              $$('edit_script_window__toolbar_md_button').getNode().classList.remove('webix_el_button--active');
-              $$('edit_script_window__toolbar_html_button').getNode().classList.add('webix_el_button--active');
-              $$('edit_script_window__toolbar_js_button').getNode().classList.remove('webix_el_button--active');
-              const editor = $$('edit_script_window__editor').getEditor();
-              editor.getSession().setMode('ace/mode/html');
-              editor.getValue();
-            }
-          },
-          { view: 'button',
-            type: 'icon',
-            icon: 'cog',
-            width: 110,
-            label: 'JavaScript',
-            css:   'webix_el_button--active',
-            id: 'edit_script_window__toolbar_js_button',
-            click: function() {
-              $$('edit_script_window__toolbar_text_button').getNode().classList.remove('webix_el_button--active');
-              $$('edit_script_window__toolbar_md_button').getNode().classList.remove('webix_el_button--active');
-              $$('edit_script_window__toolbar_html_button').getNode().classList.remove('webix_el_button--active');
-              $$('edit_script_window__toolbar_js_button').getNode().classList.add('webix_el_button--active');
-              const editor = $$('edit_script_window__editor').getEditor();
-              editor.getSession().setMode('ace/mode/javascript');
-              editor.getValue();
-            }
-          },
+          };
+        }).concat(
           {},
           { view: 'button',
             type: 'icon',
@@ -118,8 +103,7 @@ UILayout.windows.editScript = {
             click: function() {
               UI.entityForm.hideScriptEditWindow();
             }
-          }
-        ]
+          })
       },
       { view: 'ace-editor',
         id: 'edit_script_window__editor',

@@ -224,6 +224,11 @@ gulp.task('vendor:ace', function () {
     'bower_components/ace-builds/src-noconflict/theme-chrome.js',
     'bower_components/ace-builds/src-noconflict/mode-javascript.js',
     'bower_components/ace-builds/src-noconflict/mode-html.js',
+    'bower_components/ace-builds/src-noconflict/mode-jade.js',
+    'bower_components/ace-builds/src-noconflict/mode-json.js',
+    'bower_components/ace-builds/src-noconflict/mode-css.js',
+    'bower_components/ace-builds/src-noconflict/mode-less.js',
+    'bower_components/ace-builds/src-noconflict/mode-scss.js',
     'bower_components/ace-builds/src-noconflict/mode-text.js',
     'bower_components/ace-builds/src-noconflict/mode-markdown.js'
   ]).pipe(gulp.dest('vendor/ace/src-noconflict'));

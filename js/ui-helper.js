@@ -184,7 +184,7 @@ UIHelper = {
     Mydataspace.request('entities.get', {
       root: 'datasources',
       path: 'data',
-      children: true,
+      children: true
       //fields: ['name']
     }).then(function (data) {
       var options = data.children.map(function (ds) {
