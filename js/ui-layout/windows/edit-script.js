@@ -2,7 +2,7 @@ UILayout.editScriptTabs = {
   text: {
     aceMode: 'text',
     icon: 'align-justify',
-    width: 70,
+    width: 60,
     label: 'Text'
   },
   md: {
@@ -14,7 +14,7 @@ UILayout.editScriptTabs = {
   pug: {
     aceMode: 'jade',
     icon: 'code',
-    width: 80,
+    width: 60,
     label: 'Pug'
   },
   html: {
@@ -28,6 +28,18 @@ UILayout.editScriptTabs = {
     icon: 'cog',
     width: 110,
     label: 'JavaScript'
+  },
+  css: {
+    aceMode: 'css',
+    icon: 'css3',
+    width: 60,
+    label: 'CSS'
+  },
+  scss: {
+    aceMode: 'scss',
+    icon: 'css3',
+    width: 70,
+    label: 'SCSS'
   }
 };
 
@@ -98,6 +110,7 @@ UILayout.windows.editScript = {
           { view: 'button',
             type: 'icon',
             icon: 'times',
+            css: 'webix_el_button--right',
             id: 'CLOSE_LABEL', label: STRINGS.CLOSE,
             width: 70,
             click: function() {

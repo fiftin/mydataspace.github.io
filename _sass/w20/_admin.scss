@@ -742,6 +742,15 @@ $entity-form-field-type-button-width: 29px;
   }
 }
 
+.webix_el_button--hidden {
+  display: none !important;
+}
+
+.webix_el_button--right {
+  float: right;
+}
+
+
 input {
   box-shadow: none !important;
 }

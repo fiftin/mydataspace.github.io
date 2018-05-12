@@ -2235,13 +2235,20 @@ EntityForm.prototype.deleteField = function(name) {
   }
 };
 
-EntityForm.prototype.selectEditScriptTab = function (id) {
+EntityForm.prototype.selectEditScriptTab = function (id, hideOthers) {
   Object.keys(UILayout.editScriptTabs).forEach(function (id2) {
-    var classList = $$('edit_script_window__toolbar_' + id2 + '_button').getNode().classList;
+    var tab = $$('edit_script_window__toolbar_' + id2 + '_button');
+    var classList = tab.getNode().classList;
     if (id == id2) {
       classList.add('webix_el_button--active');
+      tab.show();
     } else {
       classList.remove('webix_el_button--active');
+      if (hideOthers) {
+        tab.hide();
+      } else {
+        tab.show();
+      }
     }
   });
   var editor = $$('edit_script_window__editor').getEditor();
@@ -2252,7 +2259,7 @@ EntityForm.prototype.selectEditScriptTab = function (id) {
 EntityForm.prototype.showScriptEditWindow = function () {
   var ext = UI.entityForm.editScriptFieldId && $$(UI.entityForm.editScriptFieldId) && UI.entityForm.editScriptFieldId.match(/\.([\w]+)_value$/);
   if (ext) {
-    this.selectEditScriptTab(ext[1]);
+    this.selectEditScriptTab(ext[1], true);
   }
   $$('edit_script_window').show();
   if (webix.without_header) {
@@ -3640,7 +3647,7 @@ UILayout.editScriptTabs = {
   text: {
     aceMode: 'text',
     icon: 'align-justify',
-    width: 70,
+    width: 60,
     label: 'Text'
   },
   md: {
@@ -3652,7 +3659,7 @@ UILayout.editScriptTabs = {
   pug: {
     aceMode: 'jade',
     icon: 'code',
-    width: 80,
+    width: 60,
     label: 'Pug'
   },
   html: {
@@ -3666,6 +3673,18 @@ UILayout.editScriptTabs = {
     icon: 'cog',
     width: 110,
     label: 'JavaScript'
+  },
+  css: {
+    aceMode: 'css',
+    icon: 'css3',
+    width: 60,
+    label: 'CSS'
+  },
+  scss: {
+    aceMode: 'scss',
+    icon: 'css3',
+    width: 70,
+    label: 'SCSS'
   }
 };
 
@@ -3736,6 +3755,7 @@ UILayout.windows.editScript = {
           { view: 'button',
             type: 'icon',
             icon: 'times',
+            css: 'webix_el_button--right',
             id: 'CLOSE_LABEL', label: STRINGS.CLOSE,
             width: 70,
             click: function() {
