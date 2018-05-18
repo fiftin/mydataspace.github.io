@@ -446,6 +446,10 @@ MDSClient.prototype.formatAndCall = function(eventName, callback, data) {
   callback(data);
 };
 
+MDSClient.prototype.getRoot = function (root) {
+  return new Entities(this, root);
+};
+
 MDSClient.prototype.handleResponse = function(data, callbackName) {
   if (typeof data.requestId === 'undefined') {
     return;

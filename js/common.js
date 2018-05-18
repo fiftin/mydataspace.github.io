@@ -855,9 +855,14 @@ var MDSCommon = {
   },
 
   /**
+   * @deprecated
    * Returns last part of the path.
    */
   getPathName: function (path) {
+    return MDSCommon.getEntityName(path);
+  },
+
+  getEntityName: function (path) {
     var i = path.lastIndexOf('/');
     if (i === -1) {
       i = path.lastIndexOf('\\');

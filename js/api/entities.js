@@ -31,6 +31,16 @@ Entities.prototype.get = function (data) {
   return this.request('entities.get', data);
 };
 
+Entities.prototype.getAll = function (data) {
+  if (typeof data === 'string') {
+    data = {
+      path: data
+    };
+  }
+  data.children = true;
+  return this.get(data);
+};
+
 Entities.prototype.delete = function (data) {
   return this.request('entities.delete', data);
 };

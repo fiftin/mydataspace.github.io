@@ -872,9 +872,14 @@ var MDSCommon = {
   },
 
   /**
+   * @deprecated
    * Returns last part of the path.
    */
   getPathName: function (path) {
+    return MDSCommon.getEntityName(path);
+  },
+
+  getEntityName: function (path) {
     var i = path.lastIndexOf('/');
     if (i === -1) {
       i = path.lastIndexOf('\\');
@@ -1369,6 +1374,16 @@ Entities.prototype.get = function (data) {
   return this.request('entities.get', data);
 };
 
+Entities.prototype.getAll = function (data) {
+  if (typeof data === 'string') {
+    data = {
+      path: data
+    };
+  }
+  data.children = true;
+  return this.get(data);
+};
+
 Entities.prototype.delete = function (data) {
   return this.request('entities.delete', data);
 };
@@ -1857,6 +1872,10 @@ MDSClient.prototype.formatAndCall = function(eventName, callback, data) {
     }
   }
   callback(data);
+};
+
+MDSClient.prototype.getRoot = function (root) {
+  return new Entities(this, root);
 };
 
 MDSClient.prototype.handleResponse = function(data, callbackName) {
