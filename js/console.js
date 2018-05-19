@@ -88,7 +88,7 @@ var MDSConsole = {
           });
         });
       }).then(function () {
-        return action();
+        return action(Mydataspace.getRoot(MDSConsole.root));
       }).then(function (res) {
         MDSConsole.success(res);
       }, function (err) {
