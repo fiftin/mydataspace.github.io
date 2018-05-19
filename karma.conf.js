@@ -18,13 +18,13 @@ module.exports = function(config) {
       'js/formatters.js',
       'js/api/client.js',
       'js/api/entities.js',
-      'js/strings.js',
+      'test/strings.js',
       'js/ui-constants.js',
       'js/fields.js',
       'js/identity.js',
       'js/ui-helper.js',
       'js/router.js',
-      'js/main.js'
+      'test/main.js'
     ],
 
 

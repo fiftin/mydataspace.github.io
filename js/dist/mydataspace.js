@@ -1355,11 +1355,18 @@ function Entities(client, root) {
 
 Entities.prototype.request = function (eventName, data) {
   var d;
-  if (this.root) {
+  var self = this;
+  if (self.root) {
     if (data.root) {
       throw new Error('You can not specify root in request because it already specified in object');
     }
-    d = MDSCommon.extend(data, {root: this.root });
+    if (Array.isArray(data)) {
+      d = data.map(function (item) {
+        return MDSCommon.extend(item, {root: self.root });
+      });
+    } else {
+      d = MDSCommon.extend(data, {root: self.root });
+    }
   } else {
     d = data;
   }

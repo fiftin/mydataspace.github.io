@@ -2,7 +2,7 @@ describe('main', function() {
   describe('#search_parseSearchString', function() {
     it('Should return template', function() {
       var res = search_parseSearchString('#type:template');
-      expect(res.type).to.eql('template');
+      expect(res.type).to.eql('t');
     });
   });
 

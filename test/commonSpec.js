@@ -28,7 +28,7 @@ describe('MDSCommon', function() {
 
   describe('#diff', function() {
     it('', function() {
-      const oldData = { root: 'test567',
+      var oldData = { root: 'test567',
         path: 'processes/02863847-0fe9-c517-1eb8-cec0100b4d87',
         othersCan: 'view_children',
         createdAt: '2017-05-30T06:07:47.000Z',
@@ -44,7 +44,7 @@ describe('MDSCommon', function() {
         maxNumberOfChildren: 1000000,
         mine: true };
 
-      const newData = { root: 'test567',
+      var newData = { root: 'test567',
         path: 'processes/02863847-0fe9-c517-1eb8-cec0100b4d87',
         othersCan: 'view_children',
         fields: 
@@ -62,7 +62,7 @@ describe('MDSCommon', function() {
         mine: true,
         requestId: 10001 };
 
-      const diff = MDSCommon.diff(newData, oldData);
+      var diff = MDSCommon.diff(newData, oldData);
       console.log(diff);
 
       expect(diff.fields.state).to.eq('progress');
