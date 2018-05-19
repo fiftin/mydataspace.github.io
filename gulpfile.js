@@ -158,7 +158,13 @@ gulp.task('vendor:bootstrap:css', function() {
   ).pipe(gulp.dest('vendor/bootstrap/stylesheets'));
 });
 
-gulp.task('vendor:bootstrap', ['vendor:bootstrap:js', 'vendor:bootstrap:css']);
+gulp.task('vendor:bootstrap:fonts', function() {
+  return gulp.src(
+    'bower_components/bootstrap-sass/assets/fonts/bootstrap/*'
+  ).pipe(gulp.dest('vendor/bootstrap/'));
+});
+
+gulp.task('vendor:bootstrap', ['vendor:bootstrap:js', 'vendor:bootstrap:css', 'vendor:bootstrap:fonts']);
 
 
 gulp.task('vendor:jquery', function() {
