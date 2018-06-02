@@ -23,6 +23,12 @@ UILayout.editScriptTabs = {
     width: 70,
     label: 'HTML'
   },
+  json: {
+    aceMode: 'json',
+    icon: 'cog',
+    width: 110,
+    label: 'JSON'
+  },
   js: {
     aceMode: 'javascript',
     icon: 'cog',

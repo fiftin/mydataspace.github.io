@@ -1096,7 +1096,8 @@ EntityForm.prototype.selectEditScriptTab = function (id, hideOthers) {
     }
   });
   var editor = $$('edit_script_window__editor').getEditor();
-  editor.getSession().setMode('ace/mode/' + UILayout.editScriptTabs[id].aceMode);
+  var editorTab = UILayout.editScriptTabs[id] || UILayout.editScriptTabs['text'];
+  editor.getSession().setMode('ace/mode/' + editorTab.aceMode);
   editor.getValue();
 };
 
