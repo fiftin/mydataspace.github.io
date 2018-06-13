@@ -123,6 +123,96 @@ demos:
     screenshot_width: 1105
     screenshot_height: 662
 
+
+features:
+  - id: api
+    super_title: API
+    title:  Full-text search
+    description: Search for documents by content and sort them by relevance
+    type: code
+    code_id: NwXRMB
+    height: 490
+
+  - id: geo-clastering
+    title: Clustering of geodata
+    type: code
+    code_id: GOyjyv
+    height: 450
+    description: Grouping of objects close to each other on the map
+    content: "Example: CCTV cameras in Moscow on the map"
+
+  - id: facets
+    title: Facets
+    description: Grouping documents by the values of the specified fields
+    type: iframe
+    url: https://myda.space/reestrSTR/views/b3890fd4-c139-11e7-abc4-cec278b6b50a
+    height: 450
+    content: "Example: the filtering panel is implemented using facets"
+
+  - id: events
+    title: Events
+    description: notifications about data changes
+    type: youtube
+    video_id: b5mw0xOK_YM
+    height: 445
+    content: "Example: instantly displaying new comments from all users who view them"
+
+
+  - id: authorization
+    super_title: Authorization
+    super_description: Authorization of users through popular social networks
+    content: |
+      MyDataSpace takes full control of users &mdash; registration, authentication and authorization through social networks.
+
+      All MyDataSpace users are anonymous by default, but they can create public profiles.
+
+      Authorization is supported through the following social networks:
+
+      <a href="https://github.com/mydataspace"><img style="width: 150px; margin-right: 10px;" src="/images/logos/github.png" /></a>
+      <a href="https://vk.com/mydataspace"><img style="width: 80px; margin-right: 10px;" src="/images/logos/vk.png" /></a>
+      <!--<a href="https://ok.ru"><img style="width: 80px; margin-right: 10px;" src="/images/logos/ok.png" /></a>-->
+      <a href="https://facebook.com/mydataspace"><img style="width: 80px; margin-right: 10px;" src="/images/logos/fb.png" /></a>
+      <a href="https://plus.google.com/communities/107145683419072073269"><img style="width: 80px; margin-right: 10px;" src="/images/logos/gplus.png" /></a>
+  - id: dashboard
+    super_title: Admin Dashboard
+    super_description: Convenient data and code management dashboard
+    type: demo
+#    preview_url: /images/docs/import-of-data/create-root.gif
+    image_url: /images/docs/import-of-data/create-root.gif
+    website: https://myda.space
+
+  - id: import
+    super_title: Data Import
+    super_description: Processing and importing data from XLS, CSV, JSON, XML files and other file formats
+    doc_url: /docs/import-of-data
+    type: demo
+    image_url: /images/docs/import-of-data/openrefine.gif
+#    preview_url: /images/docs/import-of-data/openrefine.jpg
+    website: https://myda.space
+
+  - id: user-code
+    super_title: User Code
+    super_description: Running user JavaScript on the server on a schedule
+    doc_url: /docs/backend#docs__tasks
+    type: demo
+#    preview_url: /images/docs/backend/tasks-debug-ru.png
+    image_url: /images/docs/backend/tasks-debug.png
+    website: https://myda.space
+    height: 750
+
+  - id: resources
+    super_title: File Storage
+    super_description: Storing user files on the server
+    doc_url: /docs/backend#docs__resources
+    type: demo
+#    preview_url: /images/docs/backend/resources-ru.png
+    image_url: /images/docs/backend/resources.png
+    website: https://myda.space
+    height: 750
+
+
+
+
 get_started:
   - id: hello-world
     title: Hello World!

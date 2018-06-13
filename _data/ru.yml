@@ -202,7 +202,7 @@ features:
 
   - id: events
     title: События
-    description: Получение уведемлений об изменении данных
+    description: Получение уведомлений об изменении данных
     type: youtube
     video_id: b5mw0xOK_YM
     height: 445
