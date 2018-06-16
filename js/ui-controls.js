@@ -2,16 +2,25 @@ UIControls = {
   getFieldTypeSelectTemplate: function() {
     var options = [];
     for (var id in Fields.FIELD_TYPES) {
-      options.push({ id: id, value: Fields.FIELD_TYPES[id].title });
+      options.push({
+        id: id,
+        value: Fields.FIELD_TYPES[id].title,
+        icon: Fields.FIELD_TYPE_ICONS[id]
+      });
     }
     return {
       view: 'combo',
       required: true,
       name: 'type',
       value: 's',
-      // template:"#name#",
       label: STRINGS.TYPE,
-      options: options
+      suggest: {
+        template: '<span class="webix_icon fa-#icon#"></span> #value#',
+        body: {
+          data: options,
+          template: '<span class="webix_icon fa-#icon#"></span> #value#'
+        }
+      }
     };
   },
 

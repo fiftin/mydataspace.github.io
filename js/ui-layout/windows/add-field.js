@@ -42,7 +42,24 @@ UILayout.windows.addField = {
 
     elements: [
       { view: 'text', required: true, id: 'NAME_LABEL_2', label: STRINGS.NAME, name: 'name' },
-      UIControls.getFieldTypeSelectTemplate(),
+      MDSCommon.extend(UIControls.getFieldTypeSelectTemplate(), {
+        on: {
+          onChange: function (newv, oldv) {
+            if (newv === '*') {
+              $$('VALUE_LABEL').show();
+              $$('VALUE_LABEL').define('type', 'password');
+              $$('VALUE_LABEL').refresh();
+            } else if (oldv === '*') {
+              $$('VALUE_LABEL').define('type', 'text');
+              $$('VALUE_LABEL').refresh();
+            } else if (newv === 'j') {
+              $$('VALUE_LABEL').hide();
+            } else {
+              $$('VALUE_LABEL').show();
+            }
+          }
+        }
+      }),
       { view: 'text', id: 'VALUE_LABEL', label: STRINGS.VALUE, name: 'value' },
       UIControls.getSubmitCancelForFormWindow('add_field', false)
     ],

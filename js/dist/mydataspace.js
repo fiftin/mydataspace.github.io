@@ -638,7 +638,7 @@ var MDSCommon = {
   },
 
   isEmail: function (t) {
-    if (t == null) {
+    if (MDSCommon.isBlank(t)) {
       return true;
     }
     if (t.length > 256) return false;
@@ -648,21 +648,21 @@ var MDSCommon = {
   },
 
   isURL: function (t) {
-    if (t == null) {
+    if (MDSCommon.isBlank(t)) {
       return true;
     }
-    return /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(t);
+    return /^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/=]*)$/.test(t);
   },
 
   isPhone: function (t) {
-    if (t == null) {
+    if (MDSCommon.isBlank(t)) {
       return true;
     }
     return /^\+?\d{3,15}$/.test(t);
   },
 
   isDate: function (t) {
-    if (t == null) {
+    if (MDSCommon.isBlank(t)) {
       return true;
     }
     var d = new Date(t);

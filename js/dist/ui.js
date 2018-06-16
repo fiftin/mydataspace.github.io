@@ -603,6 +603,12 @@ var Fields = {
       isValidValue: function(value) {
         return MDSCommon.isPhone(value);
       }
+    },
+    '*': {
+      title: STRINGS.SECRET,
+      isValidValue: function(value) {
+        return value.toString().length < Fields.MAX_STRING_FIELD_LENGTH;
+      }
     }
   },
 
@@ -629,7 +635,7 @@ var Fields = {
     d: 'calendar-o',
     e: 'envelope',
     p: 'phone',
-    '*': 'lock',
+    '*': 'lock'
   },
 
   expandFields: function(fields) {
@@ -889,16 +895,26 @@ UIControls = {
   getFieldTypeSelectTemplate: function() {
     var options = [];
     for (var id in Fields.FIELD_TYPES) {
-      options.push({ id: id, value: Fields.FIELD_TYPES[id].title });
+      options.push({
+        id: id,
+        value: Fields.FIELD_TYPES[id].title,
+        icon: Fields.FIELD_TYPE_ICONS[id]
+      });
     }
     return {
       view: 'combo',
       required: true,
       name: 'type',
       value: 's',
-      // template:"#name#",
       label: STRINGS.TYPE,
-      options: options
+      //options: options,
+      suggest: {
+        template: '<span class="webix_icon fa-#icon#"></span> #value#',
+        body: {
+          data: options,
+          template: '<span class="webix_icon fa-#icon#"></span> #value#'
+        }
+      }
     };
   },
 
@@ -3628,7 +3644,24 @@ UILayout.windows.addField = {
 
     elements: [
       { view: 'text', required: true, id: 'NAME_LABEL_2', label: STRINGS.NAME, name: 'name' },
-      UIControls.getFieldTypeSelectTemplate(),
+      MDSCommon.extend(UIControls.getFieldTypeSelectTemplate(), {
+        on: {
+          onChange: function (newv, oldv) {
+            if (newv === '*') {
+              $$('VALUE_LABEL').show();
+              $$('VALUE_LABEL').define('type', 'password');
+              $$('VALUE_LABEL').refresh();
+            } else if (oldv === '*') {
+              $$('VALUE_LABEL').define('type', 'text');
+              $$('VALUE_LABEL').refresh();
+            } else if (newv === 'j') {
+              $$('VALUE_LABEL').hide();
+            } else {
+              $$('VALUE_LABEL').show();
+            }
+          }
+        }
+      }),
       { view: 'text', id: 'VALUE_LABEL', label: STRINGS.VALUE, name: 'value' },
       UIControls.getSubmitCancelForFormWindow('add_field', false)
     ],

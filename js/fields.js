@@ -61,6 +61,12 @@ var Fields = {
       isValidValue: function(value) {
         return MDSCommon.isPhone(value);
       }
+    },
+    '*': {
+      title: STRINGS.SECRET,
+      isValidValue: function(value) {
+        return value.toString().length < Fields.MAX_STRING_FIELD_LENGTH;
+      }
     }
   },
 
@@ -87,7 +93,7 @@ var Fields = {
     d: 'calendar-o',
     e: 'envelope',
     p: 'phone',
-    '*': 'lock',
+    '*': 'lock'
   },
 
   expandFields: function(fields) {
