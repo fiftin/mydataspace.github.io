@@ -9,7 +9,7 @@ UIControls = {
       });
     }
     return {
-      view: 'combo',
+      view: 'richselect',
       required: true,
       name: 'type',
       value: 's',

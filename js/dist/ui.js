@@ -902,12 +902,11 @@ UIControls = {
       });
     }
     return {
-      view: 'combo',
+      view: 'richselect',
       required: true,
       name: 'type',
       value: 's',
       label: STRINGS.TYPE,
-      //options: options,
       suggest: {
         template: '<span class="webix_icon fa-#icon#"></span> #value#',
         body: {
