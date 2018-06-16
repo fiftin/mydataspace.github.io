@@ -1082,10 +1082,21 @@ UIControls = {
     }
     var formId = id + '_form';
     var windowId = id + '_window';
+    var createButtonTitle;
+
+    switch (id) {
+      case 'add_resource':
+        createButtonTitle = STRINGS.UPLOAD;
+        break;
+      default:
+        createButtonTitle = STRINGS.CREATE;
+        break;
+    }
+
     return { cols: [
         { view: 'button',
           id: windowId + '__create_button',
-          value: STRINGS.CREATE,
+          value: createButtonTitle,
           type: 'form',
           click: function() {
             if (isLongExecutable) {
@@ -1143,6 +1154,7 @@ UIControls = {
         return [
           {id: 'new_entity', value: STRINGS.new_entity, icon: 'file-o'},
           {id: 'import_wizard', value: STRINGS.import_entity},
+          {id: 'add_website', value: STRINGS.add_website, icon: 'globe'},
           {id: 'new_resource', value: STRINGS.new_resource, icon: 'diamond'},
           {id: 'new_task', value: STRINGS.new_task, icon: 'file-code-o'},
           {id: 'new_proto', value: STRINGS.new_proto, icon: 'cube'}
@@ -3582,16 +3594,22 @@ UILayout.windows.addResource = {
           ]
         },
         {
-          view: 'combo',
+          view: 'richselect',
           label: STRINGS.ADD_RESOURCE_TYPE,
           name: 'type',
           value: 'file',
-          options: [
-            { id: 'avatar', value: STRINGS.AVATAR },
-            { id: 'image', value: STRINGS.IMAGE },
-            { id: 'file', value: STRINGS.FILE }
-          ],
-          labelWidth: UIHelper.LABEL_WIDTH
+          labelWidth: UIHelper.LABEL_WIDTH,
+          suggest: {
+            template: '<span class="webix_icon fa-#icon#"></span> #value#',
+            body: {
+              data: [
+                { id: 'avatar', value: STRINGS.AVATAR, icon: 'user' },
+                { id: 'image', value: STRINGS.IMAGE, icon: 'image' },
+                { id: 'file', value: STRINGS.FILE, icon: 'file' }
+              ],
+              template: '<span class="webix_icon fa-#icon#"></span> #value#'
+            }
+          }
         },
         UIControls.getEntityTypeSelectTemplate(),
         UIControls.getSubmitCancelForFormWindow('add_resource')
@@ -3830,6 +3848,49 @@ UILayout.windows.editScript = {
           }
         }
       }
+    ]
+  }
+};
+
+UILayout.windows.addWebsite = {
+  view: 'window',
+  id: 'add_website_window',
+  width: 350,
+  position: 'center',
+  modal: true,
+  head: STRINGS.add_website,
+  on: UIControls.getOnForFormWindow('add_website'),
+  body: {
+    view: 'form',
+    id: 'add_website_form',
+    borderless: true,
+    on: {
+      onSubmit: function() {
+        if ($$('add_website_form').validate()) {
+          var formData = $$('add_website_form').getValues();
+          var newEntityId = Identity.childId(UI.entityList.getRootId(), formData.name);
+          var data = Identity.dataFromId(newEntityId);
+          data.path = 'website';
+          data.fields = [];
+          data.othersCan = formData.othersCan;
+          Mydataspace.request('entities.create', data, function() {
+            $$('add_website_window').hide();
+            UIControls.removeSpinnerFromWindow('add_website_window');
+          }, function(err) {
+            UIControls.removeSpinnerFromWindow('add_website_window');
+            if (err.name === 'SequelizeUniqueConstraintError') {
+              $$('add_website_form').elements.name.define('invalidMessage', 'Name already exists');
+              $$('add_website_form').markInvalid('name', true);
+            } else {
+              UI.error(err);
+            }
+          });
+        }
+      }
+    },
+    elements: [
+      UIControls.getEntityTypeSelectTemplate(),
+      UIControls.getSubmitCancelForFormWindow('add_website')
     ]
   }
 };
@@ -4122,6 +4183,9 @@ UILayout.popups.newEntity = {
     on: {
       onItemClick: function(newv) {
         switch (newv) {
+          case 'add_website':
+            $$('add_website_window').show();
+            break;
           case 'new_entity':
             $$('add_entity_window').show();
             break;
@@ -5061,7 +5125,7 @@ UI = {
 
 
     // Dialogs
-    var dialogs = ['ADD_ROOT', 'ADD_ENTITY', 'ADD_FIELD', 'ADD_VERSION'];
+    var dialogs = ['ADD_ROOT', 'ADD_ENTITY', 'ADD_FIELD', 'ADD_VERSION', 'ADD_WEBSITE'];
     for (var i in dialogs) {
       var dialogId = dialogs[i];
       var dialog = $$(dialogId.toLowerCase() + '_window');
@@ -5414,6 +5478,7 @@ UI = {
     webix.ui(UILayout.windows.addApp);
     webix.ui(UILayout.windows.changeVersion);
     webix.ui(UILayout.windows.addVersion);
+    webix.ui(UILayout.windows.addWebsite);
     if (!withHeader) {
       UILayout.sideMenu.hidden = true;
       UILayout.sideMenu.height = 100;

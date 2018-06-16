@@ -16,6 +16,9 @@ UILayout.popups.newEntity = {
     on: {
       onItemClick: function(newv) {
         switch (newv) {
+          case 'add_website':
+            $$('add_website_window').show();
+            break;
           case 'new_entity':
             $$('add_entity_window').show();
             break;

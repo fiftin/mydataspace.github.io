@@ -91,7 +91,7 @@ UI = {
 
 
     // Dialogs
-    var dialogs = ['ADD_ROOT', 'ADD_ENTITY', 'ADD_FIELD', 'ADD_VERSION'];
+    var dialogs = ['ADD_ROOT', 'ADD_ENTITY', 'ADD_FIELD', 'ADD_VERSION', 'ADD_WEBSITE'];
     for (var i in dialogs) {
       var dialogId = dialogs[i];
       var dialog = $$(dialogId.toLowerCase() + '_window');
@@ -444,6 +444,7 @@ UI = {
     webix.ui(UILayout.windows.addApp);
     webix.ui(UILayout.windows.changeVersion);
     webix.ui(UILayout.windows.addVersion);
+    webix.ui(UILayout.windows.addWebsite);
     if (!withHeader) {
       UILayout.sideMenu.hidden = true;
       UILayout.sideMenu.height = 100;

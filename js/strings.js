@@ -22,6 +22,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     CREATE_CHILDREN: 'Create Children',
     CREATE_ONE_CHILD: 'Create One Child',
     OTHERS_CAN: 'Others Can',
+    UPLOAD: 'Upload',
     CREATE: 'Create',
     CANCEL: 'Cancel',
     ALREADY_LOGGED_IN: 'Already logged in',
@@ -158,6 +159,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     import_entity: 'Import Entity',
     new_resource: 'New Resource',
     new_task: 'New Task',
+    add_website: 'Add Website',
     new_proto: 'New Prototype',
 
     no_fields_add_button: 'Add Field',
@@ -282,6 +284,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     CREATE_CHILDREN: 'Создавать дочерние элементы',
     CREATE_ONE_CHILD: 'Создать один дочерний элемент',
     OTHERS_CAN: 'Другие могут',
+    UPLOAD: 'Загрузить',
     CREATE: 'Создать',
     CANCEL: 'Отмена',
     ALREADY_LOGGED_IN: 'Уже в системе',
@@ -425,6 +428,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     import_entity: 'Импорт элемента',
     new_resource: 'Новый ресурс',
     new_task: 'Новая задача',
+    add_website: 'Добавить сайт',
     new_proto: 'Новый прототип',
 
     no_fields_prompt: 'Элемент еще не содержит ни одного поля. Поля используются для хранения данных &mdash; текста, чисел, геокоординат и др.',

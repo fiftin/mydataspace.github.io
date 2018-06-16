@@ -189,10 +189,21 @@ UIControls = {
     }
     var formId = id + '_form';
     var windowId = id + '_window';
+    var createButtonTitle;
+
+    switch (id) {
+      case 'add_resource':
+        createButtonTitle = STRINGS.UPLOAD;
+        break;
+      default:
+        createButtonTitle = STRINGS.CREATE;
+        break;
+    }
+
     return { cols: [
         { view: 'button',
           id: windowId + '__create_button',
-          value: STRINGS.CREATE,
+          value: createButtonTitle,
           type: 'form',
           click: function() {
             if (isLongExecutable) {
@@ -250,6 +261,7 @@ UIControls = {
         return [
           {id: 'new_entity', value: STRINGS.new_entity, icon: 'file-o'},
           {id: 'import_wizard', value: STRINGS.import_entity},
+          {id: 'add_website', value: STRINGS.add_website, icon: 'globe'},
           {id: 'new_resource', value: STRINGS.new_resource, icon: 'diamond'},
           {id: 'new_task', value: STRINGS.new_task, icon: 'file-code-o'},
           {id: 'new_proto', value: STRINGS.new_proto, icon: 'cube'}

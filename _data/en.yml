@@ -196,7 +196,7 @@ features:
     doc_url: /docs/backend#docs__tasks
     type: demo
 #    preview_url: /images/docs/backend/tasks-debug-ru.png
-    image_url: /images/docs/backend/tasks-debug.png
+    image_url: /images/docs/backend/tasks-debug-ru.png
     website: https://myda.space
     height: 750
 
@@ -206,7 +206,7 @@ features:
     doc_url: /docs/backend#docs__resources
     type: demo
 #    preview_url: /images/docs/backend/resources-ru.png
-    image_url: /images/docs/backend/resources.png
+    image_url: /images/docs/backend/resources-ru.png
     website: https://myda.space
     height: 750
 
