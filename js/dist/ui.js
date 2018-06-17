@@ -4739,6 +4739,11 @@ UILayout.entityList =
 UILayout.entityForm =
 { id: 'my_data_panel__right_panel',
   gravity: 0.3,
+  on: {
+    onResize: function () {
+      console.log('Resize.........');
+    }
+  },
   rows: [
   { view: 'toolbar',
     id: 'entity_form__toolbar',
