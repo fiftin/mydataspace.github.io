@@ -15,6 +15,15 @@ UIHelper = {
   ENTITY_TREE_DUMMY_ID: 'dummy_483__4734_47e4',
   ENTITY_LIST_SHOW_MORE_ID: 'show_more_47384_3338222',
 
+  escapeHTML: function (value) {
+    var escape = document.getElementById('script_edit_value_escape_textarea');
+    if (!escape) {
+      escape = document.createElement('textarea');
+      escape.setAttribute('id', 'script_edit_value_escape_textarea');
+    }
+    escape.textContent = value;
+    return escape.innerHTML;
+  },
   /**
    *
    * @param {string} id

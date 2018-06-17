@@ -298,7 +298,8 @@ EntityForm.prototype.setRootView = function(data) {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
       var value = $(this).data('value');
       if (value != null) {
-        $$('edit_script_window__editor').setValue(value);
+        UI.entityForm.setScriptEditValue(value);
+
         if (!$$('edit_script_window').isVisible()) {
           UI.entityForm.showScriptEditWindow();
         }
@@ -315,6 +316,10 @@ EntityForm.prototype.setRootView = function(data) {
     }
 
   }.bind(this));
+};
+
+EntityForm.prototype.setScriptEditValue = function (value) {
+  $$('edit_script_window__editor').setValue(value);
 };
 
 EntityForm.prototype.setTaskView = function(data) {
@@ -409,7 +414,7 @@ EntityForm.prototype.setTaskView = function(data) {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
       var value = $(this).data('value');
       if (value != null) {
-        $$('edit_script_window__editor').setValue(value);
+        UI.entityForm.setScriptEditValue(value);
         if (!$$('edit_script_window').isVisible()) {
           UI.entityForm.showScriptEditWindow();
         }
@@ -477,7 +482,7 @@ EntityForm.prototype.setEntityView = function(data) {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
       var value = $(this).data('value');
       if (value != null) {
-        $$('edit_script_window__editor').setValue(value);
+        UI.entityForm.setScriptEditValue(value);
         if (!$$('edit_script_window').isVisible()) {
           UI.entityForm.showScriptEditWindow();
         }
@@ -508,7 +513,7 @@ EntityForm.prototype.setLogView = function(data) {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
       var value = $(this).data('value');
       if (value != null) {
-        $$('edit_script_window__editor').setValue(value);
+        UI.entityForm.setScriptEditValue(value);
         if (!$$('edit_script_window').isVisible()) {
           UI.entityForm.showScriptEditWindow();
         }
@@ -619,7 +624,7 @@ EntityForm.prototype.refresh = function() {
     if ($$('edit_script_window').isVisible() && self.editScriptFieldId != null) {
       var editedField = $$(self.editScriptFieldId);
       if (editedField != null) {
-        $$('edit_script_window__editor').setValue(editedField.getValue());
+        UI.entityForm.setScriptEditValue(editedField.getValue());
         $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
       } else {
         self.editScriptFieldId = null;
@@ -996,7 +1001,7 @@ EntityForm.prototype.addField = function(data, setDirty, isProto) {
         labelWidth: UIHelper.LABEL_WIDTH,
         name: 'fields.' + data.name + '.value',
         id: 'entity_form__' + data.name + '_value',
-        value: data.value,
+        value: data.type === 'j' ? UIHelper.escapeHTML(data.value) : data.value,
         height: 32,
         css: 'entity_form__text_label',
         readonly: data.type === 'j',
@@ -1010,7 +1015,7 @@ EntityForm.prototype.addField = function(data, setDirty, isProto) {
           onFocus: function() {
             if (data.type === 'j') {
               self.editScriptFieldId = 'entity_form__' + data.name + '_value';
-              $$('edit_script_window__editor').setValue($$(UI.entityForm.editScriptFieldId).getValue());
+              UI.entityForm.setScriptEditValue($$(UI.entityForm.editScriptFieldId).getValue());
               $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
               if (!$$('edit_script_window').isVisible()) {
                 UI.entityForm.showScriptEditWindow();

@@ -102,7 +102,7 @@ UIControls = {
 
         onFocus: function() {
           UI.entityForm.editScriptFieldId = 'entity_form__' + name + '_value';
-          $$('edit_script_window__editor').setValue($$(UI.entityForm.editScriptFieldId).getValue());
+          UI.entityForm.setScriptEditValue($$(UI.entityForm.editScriptFieldId).getValue());
           $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
           if (!$$('edit_script_window').isVisible()) {
             UI.entityForm.showScriptEditWindow();
