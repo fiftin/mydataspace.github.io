@@ -27,7 +27,7 @@ UILayout.header =
         css: 'menu__language_button',
         id: 'PRICING_LABEL',
         label: STRINGS.PRICING,
-        hidden: PROJECT_NAME !== 'w20',
+        hidden: PROJECT_NAME !== 'web20',
         click: function() {
           var currentLang = (localStorage.getItem('language') || 'en').toLowerCase();
           currentLang = currentLang === 'en' ? '' : '/' + currentLang;

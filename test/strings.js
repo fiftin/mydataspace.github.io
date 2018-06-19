@@ -1,6 +1,6 @@
 var PROJECT_NAME = '{{ site.project_name }}';
-var PROJECT_ROOT_NAME_EN = (PROJECT_NAME === 'w20' ? 'Website' : 'Root');
-var PROJECT_ROOT_NAME_RU = (PROJECT_NAME === 'w20' ? 'сайт' : 'корень');
+var PROJECT_ROOT_NAME_EN = (PROJECT_NAME === 'web20' ? 'Website' : 'Root');
+var PROJECT_ROOT_NAME_RU = (PROJECT_NAME === 'web20' ? 'сайт' : 'корень');
 
 var STRINGS_ON_DIFFERENT_LANGUAGES = {
   EN: {

@@ -6,18 +6,18 @@
 # 'jekyll serve'. If you change this file, please restart the server process.
 
 # Site settings
-project_name: w20
+project_name: web20
 
 title: Web 2.0 site — Website builder made for developers
 email: webmaster@web20.site
 baseurl: ""
 
-destination:     ./_site.w20
+destination:     ./_site.web20
 collections_dir: .
-plugins_dir:     _plugins.w20
-layouts_dir:     _layouts.w20
-data_dir:        _data.w20
-includes_dir:    _includes.w20
+plugins_dir:     _plugins.web20
+layouts_dir:     _layouts.web20
+data_dir:        _data.web20
+includes_dir:    _includes.web20
 
 
 

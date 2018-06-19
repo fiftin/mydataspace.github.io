@@ -30,14 +30,14 @@ gulp.task('api', function() {
     .pipe(gulp.dest('./js/dist/'));
 });
 
-gulp.task('w20', function() {
+gulp.task('web20', function() {
   return gulp.src([
     './vendor/socket.io.js',
     './js/common.js',
     './js/formatters.js',
     './js/api/entities.js',
     './js/api/client.js',
-    './js/api/w20.js'
+    './js/api/web20.js'
   ])
     .pipe(concat('web2.0.js'))
     .pipe(gulp.dest('./js/dist/'));
@@ -55,7 +55,7 @@ gulp.task('mds', function() {
     .pipe(gulp.dest('./js/dist/'));
 });
 
-gulp.task('a', ['api', 'nodejs', 'mds', 'w20']);
+gulp.task('a', ['api', 'nodejs', 'mds', 'web20']);
 
 gulp.task('ui', function() {
   return gulp.src([

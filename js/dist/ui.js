@@ -293,7 +293,7 @@ UIConstants = {
 		'isOdnoklassnikiAuth'
 	],
 
-	IGNORED_PATHS: PROJECT_NAME === 'w20' ? [
+	IGNORED_PATHS: PROJECT_NAME === 'web20' ? [
 		'comments',
 		'views',
 		'likes'
@@ -4273,7 +4273,7 @@ UILayout.popups.newRoot = {
 	view: 'popup',
 	id: 'entity_tree__new_root_popup',
   css: 'admin_context_menu entity_tree__new_root_popup',
-	width: PROJECT_NAME === 'w20' ? 200 : 150,
+	width: PROJECT_NAME === 'web20' ? 200 : 150,
 	body: {
 		view: 'list',
     id: 'entity_tree__new_root_list',
@@ -4412,7 +4412,7 @@ UILayout.header =
         css: 'menu__language_button',
         id: 'PRICING_LABEL',
         label: STRINGS.PRICING,
-        hidden: PROJECT_NAME !== 'w20',
+        hidden: PROJECT_NAME !== 'web20',
         click: function() {
           var currentLang = (localStorage.getItem('language') || 'en').toLowerCase();
           currentLang = currentLang === 'en' ? '' : '/' + currentLang;

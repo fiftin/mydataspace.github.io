@@ -96,7 +96,7 @@ UIConstants = {
 		'isOdnoklassnikiAuth'
 	],
 
-	IGNORED_PATHS: PROJECT_NAME === 'w20' ? [
+	IGNORED_PATHS: PROJECT_NAME === 'web20' ? [
 		'comments',
 		'views',
 		'likes'
