@@ -171,7 +171,10 @@ UI = {
       case 'NotAuthorized':
         break;
       default:
-        webix.message({ type: 'error', text: err.message || err.name });
+        var txt = err.message || err.name;
+        if (txt) {
+          webix.message({ type: 'error', text: err.message || err.name });
+        }
         break;
     }
     console.error(err);
