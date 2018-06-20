@@ -173,7 +173,7 @@ UI = {
       default:
         var txt = err.message || err.name;
         if (txt) {
-          webix.message({ type: 'error', text: err.message || err.name });
+          webix.message({ type: 'error', text: txt });
         }
         break;
     }
