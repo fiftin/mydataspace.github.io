@@ -179,7 +179,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     },
 
     no_items: {
-      no_items__title: 'You have ho any data yet',
+      no_items__title: PROJECT_NAME === 'web20' ? 'You have ho any website yet' : 'You have ho any data yet',
       no_items__explore__desc: 'Find data you need among a huge amount of existing data',
       no_items__explore__button: 'Explore',
       no_items__import__desc: 'Import data from XLS, XML, CSV, JSON and many other formats',
@@ -452,19 +452,22 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     },
 
     no_items: {
-      no_items__title: 'У вас еще нет никаких данных',
+      no_items__title: PROJECT_NAME === 'web20' ? 'У вас еще нет ни одного сайта' : 'У вас еще нет никаких данных',
       no_items__explore__desc: 'Найдите нужные данные среди огромного количества уже загруженных данных',
       no_items__explore__button: 'Смотреть',
       no_items__import__desc: 'Импортируйте данные из файлов XLS, XML, CSV, JSON и файлов множества других форматов',
       no_items__import__refine_desc: 'OpenRefine &mdash; свободный инструмент для работы с наборами данных',
       no_items__import__button: 'Импортировать',
       no_items__create__desc: 'Или начните с чистого листа',
-      no_items__notice: [
+      no_items__notice: PROJECT_NAME === 'web20' ? [
+        'Имя сайта должно быть длинной от 3 до 50 символов',
+        'В имени допускаются только латинские бувы, цифры, знак тере и подчеркивания',
+        'Имя сайта должно быть уникальным среди всех существующих сайтов'
+      ] : [
         'Имя должно быть длинной от 3 до 50 символов',
         'В имени допускаются только латинские бувы, цифры, знак тере и подчеркивания',
         'Имя корня должно быть уникальным среди всех существующих корней'
       ],
-      //no_items__notice: 'Имя корня должно быть уникальным среди всех существующих корней. В имени допускаются только латинские бувы, цифры, знак тере и подчеркивания',
       no_items__create__button: 'Создать'
     },
 
