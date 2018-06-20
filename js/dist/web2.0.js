@@ -9133,9 +9133,9 @@ MDSClient.prototype.handleResponse = function(data, callbackName) {
 };
 
 MDSClient.DEFAULT_URLS = {
-  cdnURL:  'https://cdn.web20.site',
-  apiURL:  'https://api.web20.site',
-  importURL: 'https://import.web20.site'
+  cdnURL:  'https://cdn.web20site.com',
+  apiURL:  'https://api.web20site.com',
+  importURL: 'https://import.web20site.com'
 };
 
 MDSClient.OAUTH_CLIENT_IDS = {
