@@ -29,9 +29,9 @@ local_cdn_url: "https://d10ztdrlkjcw7n.cloudfront.net"
 local_api_websocket_url: "https://localhost:8443"
 local_refine_url: "http://localhost:3333/"
 
-api_url: "https://api.web20.site"
-cdn_url: "https://d74vncfm6779v.cloudfront.net"
-api_websocket_url: "https://api.web20.site"
+api_url: "https://api.web20site.com"
+cdn_url: "https://cdn.web20site.com"
+api_websocket_url: "https://api.web20site.com"
 refine_url: "https://refine.web20.site"
 
 client_id: "4c0190a6-3f38-a21b-4391-eaaed8c7e1e2"
