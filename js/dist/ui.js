@@ -5204,7 +5204,10 @@ UI = {
       } else {
         noItemsHTML = strings.no_items[no_item_id];
       }
-      document.getElementById(no_item_id).innerHTML = noItemsHTML;
+      var item = document.getElementById(no_item_id);
+      if (item) {
+        item.innerHTML = noItemsHTML;
+      }
     }
   },
 
