@@ -80,6 +80,9 @@ EntityList.prototype.listen = function() {
       var parentId = Identity.parentId(Identity.idFromData(data));
       var entity = Identity.entityFromData(data);
       if (self.getRootId() === parentId) {
+        if ($$('entity_list').getItem(entity.id)) {
+          continue;
+        }
         $$('entity_list').add(entity, 1);
         $$('entity_list').select(entity.id);
       }
