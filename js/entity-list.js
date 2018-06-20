@@ -185,8 +185,14 @@ EntityList.prototype.refresh = function(newRootId) {
   }
   $$('entity_list').disable();
   Mydataspace.request('entities.getChildren', req, function(data) {
+    if (!self.getRootId()) {
+      $$('entity_list').enable();
+      return;
+    }
     var showMoreChildId =
       Identity.childId(self.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
+
+
     var entityId = Identity.idFromData(data);
     var children = data.children.filter(function(x) {
       return (x.root !== 'root' || x.path !== '') &&
@@ -213,7 +219,10 @@ EntityList.prototype.refresh = function(newRootId) {
     self.updateBlankRootButtonsVisibility();
 
     $$('entity_list').enable();
-  }, function(err) { UI.error(err); });
+  }, function(err) {
+    $$('entity_list').enable();
+    UI.error(err);
+  });
 };
 
 
