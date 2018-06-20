@@ -4569,6 +4569,9 @@ UILayout.entityTree =
         var path = Identity.dataFromId(obj.id).path;
         var isTopLevelEntity = path.indexOf('/') < 0 && UIConstants.SYSTEM_PATHS.indexOf(path) < 0;
         if (path === '') { // root
+          if (!obj.associatedData) {
+            obj.associatedData = [];
+          }
           var ava = MDSCommon.findValueByName(obj.associatedData.fields, 'avatar');
           var name = MDSCommon.findValueByName(obj.associatedData.fields, 'name') || obj.value;
           var description = MDSCommon.findValueByName(obj.associatedData.fields, 'name') ? obj.associatedData.root : null;
