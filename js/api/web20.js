@@ -5,7 +5,7 @@ MDSClient.DEFAULT_URLS = {
 };
 
 MDSClient.OAUTH_CLIENT_IDS = {
-  google: '821397494321-s85oh989s0ip2msnock29bq1gpprk07f.apps.googleusercontent.com',
+  google: '283605428279-qu0c5khtr0p3s51j62l2baffvff9l730.apps.googleusercontent.com',
   facebook: '240104769899079',
   github: 'd771ecc50487a78eb47d',
   vk: '6449647'
