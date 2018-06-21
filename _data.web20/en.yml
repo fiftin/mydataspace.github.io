@@ -39,11 +39,13 @@ strings:
   view_doc: View Docs
   top_roots: Popular Websites
   explore_roots: Explore Websites
-  new_root_name: New Website Name
+  new_root_name: website-name
   click_to_select_version: Click to select other version
   cancel: Cancel
   privacy: Privacy
   terms: Terms of Service
+  select_template_title: Select Template
+  select_template_button: Select
 
 header:
   input_search: Search... Press Esc to exit

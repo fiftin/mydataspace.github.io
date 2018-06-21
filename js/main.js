@@ -447,7 +447,7 @@ function getRequestFromLocation(loc) {
   var pathnameParts = getPathnameParts(loc.pathname);
   var searchParams = MDSCommon.parseQuery(loc.search);
   return {
-    root: pathnameParts[0] === 'root' ? '11111' : pathnameParts[0],
+    root: pathnameParts[0] === 'root' ? 'SUPER-TEMPLATE' : pathnameParts[0],
     path: '',
     version: searchParams.v
   };
@@ -622,7 +622,44 @@ function initFeedbackModal() {
   });
 }
 
+function no_items__selectTemplate(root) {
+  Mydataspace.entities.get({
+    root: root,
+    path: ''
+  }).then(function (data) {
+    var avatar = MDSCommon.findValueByName(data.fields, 'avatar');
+    var name = MDSCommon.findValueByName(data.fields, 'name');
+    var description = MDSCommon.findValueByName(data.fields, 'description');
+    $('#no_items__template_img').attr('src', 'https://cdn.web20site.com/avatars/sm/' + avatar + '.png');
+    $('#no_items__template_title').text(name);
+    $('#no_items__template_description').text(description);
+    $('#no_items__template_wrap').data('root', data.root);
+    $('#no_items_select_template_modal').modal('hide');
+  });
+}
 
+function no_items__initTemplates() {
+  Mydataspace.request('entities.getRoots', {
+    type: 't'
+  }).then(function (data) {
+    var rootsHtml = data.roots.map(function (root, index) {
+      return '<div onclick="no_items__selectTemplate(\'' + root.root + '\')" class="block snippet snippet--line snippet--line--no-padding-bottom clearfix">' +
+          '<div class="snippet__overview">' +
+          '  <img class="snippet__image" src="https://cdn.web20site.com/avatars/sm/' + MDSCommon.findValueByName(root.fields, 'avatar') + '.png" />' +
+          '  <div class="snippet__info">' +
+          '    <div class="snippet__title">' + MDSCommon.findValueByName(root.fields, 'name') + '</div>' +
+          '    <div class="snippet__tags">' + '</div>' +
+          '  </div>' +
+          '</div>' +
+        '  <div class="snippet__description">' + MDSCommon.findValueByName(root.fields, 'description') + '</div>' +
+        '</div>';
+    });
+    $('#no_items_select_template_modal_templates').html(rootsHtml.join('\n'));
+    $('#no_items_select_template_modal').modal('show');
+  }, function (err) {
+
+  });
+}
 
 function no_items__createNewRoot() {
   var notices = document.getElementById('no_items__notice').childNodes[0].childNodes;
@@ -635,21 +672,26 @@ function no_items__createNewRoot() {
     document.getElementById('no_items__new_root_input').focus();
     return;
   }
+
+  var sourceRoot = $('#no_items__template_wrap').data('root');
+
   Mydataspace.request('entities.create', {
     root: root,
     path: '',
+    sourceRoot: sourceRoot,
+    sourcePath: sourceRoot ? '' : undefined,
     fields: []
-  }, function() {
+  }, function () {
     document.getElementById('no_items__new_root_input').value = '';
     var url = 'https://wizard.myda.space/' + root + '/root.html';
     $.ajax({
       url: url,
       type: 'HEAD'
-    }).then(function() {
+    }).then(function () {
       $('#wizard_modal__frame').attr('src', url);
       $('#wizard_modal').modal('show');
     });
-  }, function(err) {
+  }, function (err) {
     switch (err.name) {
       case 'SequelizeValidationError':
         notices[1].classList.add('no_items__notice--alert');
@@ -669,8 +711,6 @@ function no_items__new_root_input__onKeyPress(e) {
     return false;
   }
 }
-
-
 
 
 function adminPanel_startWaiting(duration) {

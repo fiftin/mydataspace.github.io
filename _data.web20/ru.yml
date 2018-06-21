@@ -40,11 +40,13 @@ strings:
   top_roots: Популярные сайты
   view_doc: См. документацию
   explore_roots: Смотреть все
-  new_root_name: Имя нового сайта
+  new_root_name: имя-сайта
   click_to_select_version: Нажмине чтобы выбрать другую версию
   cancel: Отмена
   privacy: Приватность
   terms: Условия использования
+  select_template_title: Выбор шаблона
+  select_template_button: Выбрать
 
 
 header:

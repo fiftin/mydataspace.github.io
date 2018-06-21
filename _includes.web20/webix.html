@@ -41,29 +41,30 @@
       <div class="row">
         <div class="col-xs-4"></div>
 
-        <!-- Import -->
-        <!--
-        <div class="col-xs-4 no_items__column">
-          <div id="no_items__import__desc" class="no_items__desc"></div>
-          <div style="display: none;" class="no_items__import" id="no_items__import__refine_desc"></div>
-
-          <a href="docs/import-of-data">
-          <img class="no_items__import_img" src="/images/docs/import-of-data/openrefine.gif" />
-          </a>
-          <button class="btn btn-primary btn-lg no_items__btn no_items__btn--bottom"
-                  data-toggle="modal"
-                  data-target="#import_data_modal" id="no_items__import__button"></button>
-        </div>
-        -->
-
         <!-- Create -->
         <div class="col-xs-4 no_items__column">
+
+          <div id="no_items__template_wrap" class="no_items__template_wrap" onclick="no_items__initTemplates()">
+            <div id="no_items__template" class="no_items__templates">
+              <img id="no_items__template_img" class="no_items__template_img" src="https://cdn.web20site.com/avatars/sm/HJNNhwFZm.png" />
+              <div id="no_items__template_title" class="no_items__template_title">Pug Website</div>
+            </div>
+            <div id="no_items__template_description" class="no_items__template_description">
+              Pug website with sadfas dasdf asdf asdf asdf asdf adsf.
+            </div>
+          </div>
+
+
           <div class="no_items__center no_items__center--right">
-            <input id="no_items__new_root_input"
-                   type="text"
-                   class="no_items__new_root_input form-control"
-                   onkeypress="no_items__new_root_input__onKeyPress(event)"
-                   placeholder="{{ site.data[page.language].strings.new_root_name }}" />
+            <div class="no_items__new_root clearfix">
+              <input id="no_items__new_root_input"
+                     type="text"
+                     class="no_items__new_root_input form-control"
+                     onkeypress="no_items__new_root_input__onKeyPress(event)"
+                     placeholder="{{ site.data[page.language].strings.new_root_name }}" />
+
+              <div class="no_items__new_root_domain">.{{ site.enforce_ssl }}</div>
+            </div>
 
             <div id="no_items__notice" class="no_items__notice"></div>
           </div>
@@ -76,6 +77,25 @@
     </div>
   </div>
 </div>
+
+<div id="no_items_select_template_modal"
+     class="modal"
+     role="dialog"
+     aria-labelledby="Select Template">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header look_modal__header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="modal-title">{{ site.data[page.language].strings.select_template_title }}</div>
+      </div>
+      <div class="modal-body look_modal__body" id="no_items_select_template_modal_templates"></div>
+      <div class="modal-footer look_modal__footer">
+        <button class="btn btn-default" data-dismiss="modal">{{ site.data[page.language].strings.cancel }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <div id="admin_panel" class="admin_panel invisible {% if include.with_header == false %}admin_panel--without-header{% endif %}"></div>
 
