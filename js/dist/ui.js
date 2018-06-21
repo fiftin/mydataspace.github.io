@@ -293,7 +293,17 @@ UIConstants = {
     licenseURL:     'u'
   },
 
-	HIDDEN_ROOT_FIELDS: [
+	HIDDEN_ROOT_FIELDS: PROJECT_NAME === 'web20' ? [
+    'vk',
+    'isVKAuth',
+    'facebook',
+    'isFacebookAuth',
+    'twitter',
+    'isTwitterAuth',
+    'odnoklassniki',
+    'isOdnoklassnikiAuth',
+    'license'
+  ] : [
 		'vk',
 		'isVKAuth',
 		'facebook',
