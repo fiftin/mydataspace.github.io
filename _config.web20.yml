@@ -39,7 +39,7 @@ github_username:  fiftin
 
 # Build settings
 markdown: kramdown
-x
+
 default_language: en
 
 languages:

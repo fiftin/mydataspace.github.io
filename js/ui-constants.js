@@ -105,6 +105,7 @@ UIConstants = {
     'isTwitterAuth',
     'odnoklassniki',
     'isOdnoklassnikiAuth',
+    'websiteURL',
     'license'
   ] : [
 		'vk',
