@@ -245,7 +245,18 @@ UIConstants = {
   //  }
   //},
 
-	ROOT_FIELDS: [
+	ROOT_FIELDS: PROJECT_NAME === 'web20' ? [
+    'avatar',
+    'name',
+    'description',
+    'websiteURL',
+    //
+    'tags',
+    'country',
+    'language',
+    'category',
+    'readme'
+  ] : [
 		'avatar',
 		'name',
     'description',
@@ -296,11 +307,11 @@ UIConstants = {
 	IGNORED_PATHS: PROJECT_NAME === 'web20' ? [
 		'comments',
 		'views',
-		'likes'
-		// 'processes'
+		'likes',
+		'processes'
 	] : [],
 
-  IGNORED_WHEN_EMPTY_PATHS: [
+  IGNORED_WHEN_EMPTY_PATHS: PROJECT_NAME === 'web20' ? [] : [
     'resources',
     'tasks',
     'protos',
