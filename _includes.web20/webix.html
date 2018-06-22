@@ -74,6 +74,15 @@
                   id="no_items__create__button"></button>
         </div>
       </div>
+      <script>
+        if (Mydataspace.isLoggedIn()) {
+          no_items__selectTemplate('basic-pug');
+        } else {
+          Mydataspace.on('login', function () {
+            no_items__selectTemplate('basic-pug');
+          });
+        }
+      </script>
     </div>
   </div>
 </div>

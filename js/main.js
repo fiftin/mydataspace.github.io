@@ -622,6 +622,8 @@ function initFeedbackModal() {
   });
 }
 
+
+
 function no_items__selectTemplate(root) {
   Mydataspace.entities.get({
     root: root,
@@ -638,17 +640,26 @@ function no_items__selectTemplate(root) {
   });
 }
 
+
+
 function no_items__initTemplates() {
   Mydataspace.request('entities.getRoots', {
     type: 't'
   }).then(function (data) {
-    var rootsHtml = data.roots.map(function (root, index) {
+    var rootsHtml = data.roots.map(function (root) {
+
+      var tags = (MDSCommon.findValueByName(data.fields, 'tags') || '').split(' ').filter(function (tag) {
+        return tag != null && tag !== '';
+      }).map(function (tag) {
+        return '<span class="view__tag">' + tag + '</span>';
+      }).join(' ');
+
       return '<div onclick="no_items__selectTemplate(\'' + root.root + '\')" class="block snippet snippet--line snippet--line--no-padding-bottom clearfix">' +
           '<div class="snippet__overview">' +
           '  <img class="snippet__image" src="https://cdn.web20site.com/avatars/sm/' + MDSCommon.findValueByName(root.fields, 'avatar') + '.png" />' +
           '  <div class="snippet__info">' +
           '    <div class="snippet__title">' + MDSCommon.findValueByName(root.fields, 'name') + '</div>' +
-          '    <div class="snippet__tags">' + '</div>' +
+          '    <div class="snippet__tags">' + tags + '</div>' +
           '  </div>' +
           '</div>' +
         '  <div class="snippet__description">' + MDSCommon.findValueByName(root.fields, 'description') + '</div>' +
