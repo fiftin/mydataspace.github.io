@@ -637,12 +637,17 @@ function no_items__selectTemplate(root) {
     var tags = (MDSCommon.findValueByName(data.fields, 'tags') || '').split(' ').filter(function (tag) {
       return tag != null && tag !== '';
     }).map(function (tag) {
-      return '<span class="view__tag">' + tag + '</span>';
+      return '<span class="view__tag view__tag--no-interactive">' + tag + '</span>';
     }).join(' ');
 
     $('#no_items__template_img').attr('src', 'https://cdn.web20site.com/avatars/sm/' + avatar + '.png');
     $('#no_items__template_title').text(name);
     $('#no_items__template_tags').html(tags);
+    if (!description) {
+      $('#no_items__template_description').hide();
+    } else {
+      $('#no_items__template_description').show();
+    }
     $('#no_items__template_description').text(description);
     $('#no_items__template_wrap').data('root', data.root);
     $('#no_items_select_template_modal').modal('hide');
@@ -660,18 +665,20 @@ function no_items__initTemplates() {
       var tags = (MDSCommon.findValueByName(root.fields, 'tags') || '').split(' ').filter(function (tag) {
         return tag != null && tag !== '';
       }).map(function (tag) {
-        return '<span class="view__tag">' + tag + '</span>';
+        return '<span class="view__tag view__tag--no-interactive">' + tag + '</span>';
       }).join(' ');
 
+      var description = MDSCommon.findValueByName(root.fields, 'description');
+
       return '<div onclick="no_items__selectTemplate(\'' + root.root + '\')" class="block snippet snippet--line snippet--line--no-padding-bottom clearfix">' +
-          '<div class="snippet__overview">' +
+          '<div class="snippet__overview snippet__overview--no-margin">' +
           '  <img class="snippet__image" src="https://cdn.web20site.com/avatars/sm/' + MDSCommon.findValueByName(root.fields, 'avatar') + '.png" />' +
           '  <div class="snippet__info">' +
           '    <div class="snippet__title">' + MDSCommon.findValueByName(root.fields, 'name') + '</div>' +
           '    <div class="snippet__tags">' + tags + '</div>' +
           '  </div>' +
           '</div>' +
-          '<div class="snippet__description">' + MDSCommon.findValueByName(root.fields, 'description') + '</div>' +
+        (description ? '<div class="snippet__description">' + description + '</div>' : '') +
         '</div>';
     });
     $('#no_items_select_template_modal_templates').html(rootsHtml.join('\n'));

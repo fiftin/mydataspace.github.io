@@ -113,6 +113,10 @@ $snippet-footer-height-with-gradient: 50px;
   margin-bottom: 9px;
 }
 
+.snippet__overview--no-margin {
+  margin-bottom: 0;
+}
+
 $snippet-medal-size: 50px;
 
 .snippet__medal {

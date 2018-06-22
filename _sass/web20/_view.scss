@@ -140,6 +140,7 @@ $view-tag-flag-size: 16px;
   margin: 7px 0 7px 0;
 }
 
+
 .view__tag_icon {
   margin-right: 5px;
 }
@@ -182,6 +183,14 @@ $view-tag-flag-size: 16px;
     }
   }
   cursor: pointer;
+}
+
+.view__tag--no-interactive {
+  &:hover {
+    background-color: #d2dee8;
+    color: #337ab7;
+    text-decoration: none;
+  }
 }
 
 .view__tag--multi_link {
