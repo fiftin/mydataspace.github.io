@@ -625,6 +625,7 @@ function initFeedbackModal() {
 
 
 function no_items__selectTemplate(root) {
+
   Mydataspace.entities.get({
     root: root,
     path: ''
@@ -632,8 +633,16 @@ function no_items__selectTemplate(root) {
     var avatar = MDSCommon.findValueByName(data.fields, 'avatar');
     var name = MDSCommon.findValueByName(data.fields, 'name');
     var description = MDSCommon.findValueByName(data.fields, 'description');
+
+    var tags = (MDSCommon.findValueByName(data.fields, 'tags') || '').split(' ').filter(function (tag) {
+      return tag != null && tag !== '';
+    }).map(function (tag) {
+      return '<span class="view__tag">' + tag + '</span>';
+    }).join(' ');
+
     $('#no_items__template_img').attr('src', 'https://cdn.web20site.com/avatars/sm/' + avatar + '.png');
     $('#no_items__template_title').text(name);
+    $('#no_items__template_tags').html(tags);
     $('#no_items__template_description').text(description);
     $('#no_items__template_wrap').data('root', data.root);
     $('#no_items_select_template_modal').modal('hide');
@@ -648,7 +657,7 @@ function no_items__initTemplates() {
   }).then(function (data) {
     var rootsHtml = data.roots.map(function (root) {
 
-      var tags = (MDSCommon.findValueByName(data.fields, 'tags') || '').split(' ').filter(function (tag) {
+      var tags = (MDSCommon.findValueByName(root.fields, 'tags') || '').split(' ').filter(function (tag) {
         return tag != null && tag !== '';
       }).map(function (tag) {
         return '<span class="view__tag">' + tag + '</span>';
@@ -662,7 +671,7 @@ function no_items__initTemplates() {
           '    <div class="snippet__tags">' + tags + '</div>' +
           '  </div>' +
           '</div>' +
-        '  <div class="snippet__description">' + MDSCommon.findValueByName(root.fields, 'description') + '</div>' +
+          '<div class="snippet__description">' + MDSCommon.findValueByName(root.fields, 'description') + '</div>' +
         '</div>';
     });
     $('#no_items_select_template_modal_templates').html(rootsHtml.join('\n'));
