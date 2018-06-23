@@ -131,7 +131,7 @@
 
 .highlighter__var {
   font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-  margin-left: 13px;
+  margin-left: 0;
   margin-bottom: 10px;
 }
 
@@ -140,10 +140,11 @@
   font-weight: bold;
   line-height: 30px;
   display: inline-block;
-  width: 80px;
+  width: 50px;
   text-align: center;
   border-radius: 4px;
   background: #b0b0b0;
+  opacity: 0.5;
 }
 
 .highlight__var_type--str {

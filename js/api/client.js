@@ -31,8 +31,7 @@ function MDSClient(options) {
   this.listeners = {
     login: [],
     logout: [],
-    connected: [],
-    tasksAuthorize: []
+    connected: []
   };
   this.authProviders = {
     accessToken: {
@@ -129,10 +128,6 @@ function MDSClient(options) {
         self.emit('authenticate', { token: authToken });
         e.source.close();
         break;
-      case 'taskAuthResult':
-        self.callListeners('tasksAuthorize', { result: authToken, provider: e.data.provider });
-        e.source.close();
-        break;
     }
   });
 }
@@ -191,13 +186,40 @@ MDSClient.prototype.getAuthProvider = function(providerName) {
   return ret;
 };
 
-MDSClient.prototype.connect = function(forceConnect) {
+MDSClient.prototype.trySendAuthRequest = function () {
   var self = this;
-  if (self.connecting || self.connected) {
-    return;
+
+  if (!self.options.useLocalStorage || !MDSCommon.isPresent(localStorage.getItem('authToken'))) {
+    return false;
   }
-  
+
+  self.emit('authenticate', { token: localStorage.getItem('authToken') });
+
+  return true;
+};
+
+
+/**
+ *
+ * @returns {Promise}
+ */
+MDSClient.prototype.connect = function() {
+  var self = this;
+
   return new Promise(function(resolve, reject) {
+    var root = self.options.resolveRootFromLocation ? self.getRoot() : undefined;
+    if (self.connected) {
+      resolve(root);
+      return;
+    }
+
+    if (self.connecting) {
+      self.once('connect', function () {
+        resolve(root);
+      });
+      return;
+    }
+
     self.connecting = true;
     self.socket = io(self.options.websocketURL, {
       secure: true,
@@ -209,11 +231,10 @@ MDSClient.prototype.connect = function(forceConnect) {
     });
 
     self.on('connect', function () {
-      self.connecting = false;
       self.connected = true;
-      if (self.options.useLocalStorage && MDSCommon.isPresent(localStorage.getItem('authToken'))) {
-        self.emit('authenticate', { token: localStorage.getItem('authToken') });
-      }
+      self.connecting = false;
+
+      self.trySendAuthRequest();
 
       self.subscriptions.forEach(function(subscription) {
         self.socket.on(subscription, function(data) {
@@ -222,7 +243,7 @@ MDSClient.prototype.connect = function(forceConnect) {
       });
 
       self.callListeners('connected');
-      resolve();
+      resolve(root);
     });
 
     self.on('authenticated', function() {
@@ -241,9 +262,11 @@ MDSClient.prototype.connect = function(forceConnect) {
     self.on('entities.err', function(data) {
       self.handleResponse(data, 'fail');
     }, false);
+
     self.on('apps.err', function(data) {
       self.handleResponse(data, 'fail');
     }, false);
+
     self.on('users.err', function(data) {
       self.handleResponse(data, 'fail');
     }, false);
@@ -256,7 +279,14 @@ MDSClient.prototype.callListeners = function(eventName, args) {
     throw new Error('Listener not exists');
   }
   for (var i in listeners) {
-    listeners[i](args);
+    if (!listeners.hasOwnProperty(i)) {
+      continue;
+    }
+    var listener = listeners[i];
+    if (listener.once) {
+      listeners.splice(i, 1);
+    }
+    listener(args);
   }
 };
 
@@ -291,17 +321,31 @@ MDSClient.prototype.popupCenter = function(url, title, w, h) {
   return newWindow;
 };
 
-MDSClient.prototype.authorizeTasks = function(providerName) {
-  var authProvider = this.getAuthProvider(providerName + '/tasks');
-  var authWindow =
-    this.popupCenter(authProvider.url, 'Login over ' + providerName, 640, authProvider.loginWindow.height);
-  authWindow.focus();
-  setInterval(function() {
-    authWindow.postMessage({ message: 'requestTaskAuthResult' }, '*');
-  }, 1000);
-};
-
 MDSClient.prototype.login = function(providerName) {
+  var self = this;
+
+  if (providerName === undefined) {
+    return new Promise(function (resolve, reject) {
+      if (self.isLoggedIn()) {
+        resolve();
+        return;
+      }
+
+      if (!self.trySendAuthRequest()) {
+        reject(new Error('Can not auth, not auth token provided'));
+        return;
+      }
+
+      self.once('login', function () {
+        resolve();
+      });
+
+      self.once('unauthorized', function () {
+        reject(new Error('Auth error'));
+      });
+    });
+  }
+
   var authProvider = this.getAuthProvider(providerName);
   var authWindow =
     this.popupCenter(authProvider.url, 'Login over ' + providerName, 640, authProvider.loginWindow.height);
@@ -309,7 +353,6 @@ MDSClient.prototype.login = function(providerName) {
   var authCheckInterval = setInterval(function() {
     authWindow.postMessage({ message: 'requestAuthResult' }, '*');
   }, 1000);
-  var self = this;
   return new Promise(function(resolve, reject) {
     self.on('login', function(args) { resolve(args); });
   });
@@ -348,18 +391,36 @@ MDSClient.prototype.emit = function(eventName, data) {
   this.socket.emit(eventName, data);
 };
 
-MDSClient.prototype.off = function(eventName, callback) {
-};
+MDSClient.prototype.once = function(eventName, callback, ignoreRequestErrors) {
+  var wrappedCallback = this.formatAndCallIgnoreRequestErrors.bind(this, eventName, callback, ignoreRequestErrors);
 
-MDSClient.prototype.on = function(eventName, callback, ignoreRequestErrors) {
   if (typeof this.listeners[eventName] !== 'undefined') {
-    this.listeners[eventName].push(this.formatAndCallIgnoreRequestErrors.bind(this, eventName, callback, ignoreRequestErrors));
+    wrappedCallback.once = true;
+    this.listeners[eventName].push(wrappedCallback);
     return;
   }
+
   if (typeof this.socket === 'undefined') {
     throw new Error('You must connect to server before subscribe to events');
   }
-  this.socket.on(eventName, this.formatAndCallIgnoreRequestErrors.bind(this, eventName, callback, ignoreRequestErrors));
+
+  this.socket.once(eventName, wrappedCallback);
+};
+
+
+MDSClient.prototype.on = function(eventName, callback, ignoreRequestErrors) {
+  var wrappedCallback = this.formatAndCallIgnoreRequestErrors.bind(this, eventName, callback, ignoreRequestErrors);
+
+  if (typeof this.listeners[eventName] !== 'undefined') {
+    this.listeners[eventName].push(wrappedCallback);
+    return;
+  }
+
+  if (typeof this.socket === 'undefined') {
+    throw new Error('You must connect to server before subscribe to events');
+  }
+
+  this.socket.on(eventName, wrappedCallback);
 };
 
 /**
@@ -447,6 +508,13 @@ MDSClient.prototype.formatAndCall = function(eventName, callback, data) {
 };
 
 MDSClient.prototype.getRoot = function (root) {
+  if (!root) {
+    var m = !this.options.resolveRootFromLocation || typeof window === 'undefined' ? null : window.location.hostname.match(/^(.*)\.web20\.site$/);
+    if (!m) {
+      throw new Error('Root can not be resolved automatically. Please specify root name.');
+    }
+    root = m[1];
+  }
   return new Entities(this, root);
 };
 

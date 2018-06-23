@@ -247,6 +247,7 @@ language: ru
     </div>
   </div>
 </section>
+
 <section class="feature__section">
   <div class="row">
     <div class="col-md-4">
@@ -277,4 +278,3 @@ language: ru
     </div>
   </div>
 </section>
-

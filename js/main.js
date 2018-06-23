@@ -688,7 +688,8 @@ function no_items__initTemplates() {
   });
 }
 
-function no_items__createNewRoot() {
+
+function no_items__createNewWebsite() {
   var notices = document.getElementById('no_items__notice').childNodes[0].childNodes;
   for (var i = 0; i < notices.length; i++) {
     notices[i].classList.remove('no_items__notice--alert');
@@ -708,7 +709,31 @@ function no_items__createNewRoot() {
     sourceRoot: sourceRoot,
     sourcePath: sourceRoot ? '' : undefined,
     fields: []
-  }, function () {
+  }).then(function () {
+    return Mydataspace.request('apps.create', {
+      name: root,
+      url: 'https://' + root + '.{{ site.enforce_ssl }}',
+      description: 'Automatically created application for website ' + root + '.{{ site.enforce_ssl }}. Please do not change it'
+    });
+  }).then(function (app) {
+    return Mydataspace.request('entities.change', {
+      root: root,
+      path: 'website/js',
+      fields: [{
+        name: 'client.js',
+        value: '//\n' +
+        '// This file generated automatically. Please do not edit it.\n' +
+        '//\n' +
+        '\n' +
+        'var MDSWebsite = new MDSClient({\n' +
+        '  clientId: \'' + app.clientId + '\',\n' +
+        '  // You can add your own options here.\n' +
+        '}).getRoot(\'' + root + '\');',
+        type: 'j'
+      }]
+    })
+  }).then(function () {
+
     document.getElementById('no_items__new_root_input').value = '';
     var url = 'https://wizard.myda.space/' + root + '/root.html';
     $.ajax({
@@ -731,6 +756,50 @@ function no_items__createNewRoot() {
     document.getElementById('no_items__new_root_input').focus();
   });
 }
+
+
+
+
+function no_items__createNewRoot() {
+  var notices = document.getElementById('no_items__notice').childNodes[0].childNodes;
+  for (var i = 0; i < notices.length; i++) {
+    notices[i].classList.remove('no_items__notice--alert');
+  }
+  var root = document.getElementById('no_items__new_root_input').value;
+  if (MDSCommon.isBlank(root) || root.length < 3 || root.length > 50) {
+    notices[0].classList.add('no_items__notice--alert');
+    document.getElementById('no_items__new_root_input').focus();
+    return;
+  }
+  Mydataspace.request('entities.create', {
+    root: root,
+    path: '',
+    fields: []
+  }, function() {
+    document.getElementById('no_items__new_root_input').value = '';
+    var url = 'https://wizard.myda.space/' + root + '/root.html';
+    $.ajax({
+      url: url,
+      type: 'HEAD'
+    }).then(function() {
+      $('#wizard_modal__frame').attr('src', url);
+      $('#wizard_modal').modal('show');
+    });
+  }, function(err) {
+    switch (err.name) {
+      case 'SequelizeValidationError':
+        notices[1].classList.add('no_items__notice--alert');
+        break;
+      case 'SequelizeUniqueConstraintError':
+        notices[2].classList.add('no_items__notice--alert');
+        break;
+      default:
+    }
+    document.getElementById('no_items__new_root_input').focus();
+  });
+}
+
+
 
 function no_items__new_root_input__onKeyPress(e) {
   if (e.keyCode === 13) {

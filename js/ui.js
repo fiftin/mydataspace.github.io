@@ -373,18 +373,6 @@ UI = {
 
     Mydataspace.on('apps.err', UI.error);
     Mydataspace.on('entities.err', UI.error);
-
-
-    Mydataspace.on('tasksAuthorize', function(data) {
-      switch (data.provider) {
-        case 'vk/tasks':
-          var currentData = MDSCommon.copy($$('profile__authorizations').data);
-          currentData.vk = data.result;
-          $$('profile__authorizations').define('data', currentData);
-          $$('profile__authorizations').refresh();
-          break;
-      }
-    });
   },
 
   /**
