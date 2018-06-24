@@ -66,7 +66,7 @@ buttons:
 sections:
   - id: ease
     title: Простота
-    subtitle: Вам доступны все технологии веб-разработки, Bootstrap, React, Angular, jQuery и сотни других.
+    subtitle: Вам доступны все технологии веб-разработки &mdash; Bootstrap, React, Angular, jQuery и сотни других.
     features:
       - id: coding
         title: HTML/CSS/JS
@@ -112,7 +112,7 @@ sections:
         title: Масштабируе<wbr>мость
         description: Позволяет справиться с любой нагрузкой
         details: |
-          MyDataSpace имеет <a href="https://ru.wikipedia.org/wiki/Микросервисы">микросервисную архитектуру</a>.
+          Web 2.0 Site имеет <a href="https://ru.wikipedia.org/wiki/Микросервисы">микросервисную архитектуру</a>.
           <br>
           <br>
           Это позволяет легко справиться с увеличившейся
