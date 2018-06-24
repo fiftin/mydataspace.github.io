@@ -344,7 +344,9 @@ UI = {
       if (nextId != null) {
         $$('app_list').select(nextId);
       }
-      $$('app_list').remove(data.clientId);
+      if ($$('app_list').getItem(data.clientId)) {
+        $$('app_list').remove(data.clientId);
+      }
       UI.pages.updatePageState('apps');
     });
 
