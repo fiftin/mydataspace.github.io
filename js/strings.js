@@ -111,7 +111,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       datasourceURL: 'Source URL',
       license: 'License',
       licenseText: 'License Text',
-      licenseURL: 'License URL'
+      licenseURL: 'License URL',
+      domain: 'Domain'
     },
     ROOT_FIELD_PLACEHOLDERS: {
       name: 'Human readable name of your root',
@@ -378,7 +379,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       datasourceURL: 'URL источника',
       license: 'Лицензия',
       licenseText: 'Текст лицензии',
-      licenseURL: 'URL лицензии'
+      licenseURL: 'URL лицензии',
+      domain: 'Домен'
     },
     ROOT_FIELD_PLACEHOLDERS: {
       name: 'Наименование проекта',

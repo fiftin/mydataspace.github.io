@@ -58,7 +58,9 @@ UIConstants = {
     'country',
     'language',
     'category',
-    'readme'
+    'readme',
+
+    'domain'
   ] : [
 		'avatar',
 		'name',
@@ -93,7 +95,8 @@ UIConstants = {
     datasourceURL:  'u',
     license:        's',
     licenseText:    'j',
-    licenseURL:     'u'
+    licenseURL:     'u',
+    domain:         's'
   },
 
 	HIDDEN_ROOT_FIELDS: PROJECT_NAME === 'web20' ? [
