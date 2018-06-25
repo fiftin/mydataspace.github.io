@@ -3,12 +3,15 @@ layout: docs/index
 title: Документация
 language: ru
 ---
+{% if site.project_name == 'mydataspace' %}
 <p>
     MyDataSpace &mdash; это облачное хранилище открытых данных.
 </p>
 <p>
     Данные хранятся в виде древовидной структуры &mdash; как файлы в файловой системе.
 </p>
+{% elsif site.project_name == 'web20' %}
+{% endif %}
 
 <!--
 <div class="row">

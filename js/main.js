@@ -799,8 +799,6 @@ function no_items__createNewRoot() {
   });
 }
 
-
-
 function no_items__new_root_input__onKeyPress(e) {
   if (e.keyCode === 13) {
     no_items__createNewRoot();
@@ -920,3 +918,15 @@ function createLicenseDrop(options) {
   }
   return ret;
 }
+
+
+function pricing_page__update() {
+  if (Mydataspace.isLoggedIn()) {
+    document.getElementById('pricing_block__personal').classList.add('pricing_block--active');
+    document.getElementById('pricing_list').classList.add('pricing_list--logged-in');
+  } else {
+    document.getElementById('pricing_block__personal').classList.remove('pricing_block--active');
+    document.getElementById('pricing_list').classList.remove('pricing_list--logged-in');
+  }
+}
+

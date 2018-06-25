@@ -407,7 +407,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     VERSION_CREATED_AT: 'Создана',
     FEEDBACK: 'Оставить отзыв',
 
-    PRICING: 'Цены',
+    PRICING: 'Тарифы',
 
     created: 'создан',
     ago: 'назад',
