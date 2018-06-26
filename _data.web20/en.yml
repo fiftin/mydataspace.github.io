@@ -1,6 +1,7 @@
 menu:
-  features: Features
+  #features: Features
   get_started: Get Started
+  pricing: Plans
   docs: Documentation
   console: My Websites
   login: Sign In

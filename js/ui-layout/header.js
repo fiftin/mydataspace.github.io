@@ -15,6 +15,7 @@ UILayout.header =
         width: 100,
         css: 'menu__language_button menu__language_button--get_started',
         id: 'FEATURES_LABEL',
+        hidden: PROJECT_NAME === 'web20',
         label: STRINGS.FEATURES,
         click: function() {
           var currentLang = (localStorage.getItem('language') || 'en').toLowerCase();

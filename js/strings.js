@@ -192,7 +192,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
         PROJECT_ROOT_NAME_EN + ' name contains illegal characters',
         PROJECT_ROOT_NAME_EN + ' name must be unique among all existing roots'
       ],
-      no_items__create__button: 'Create'
+      no_items__create__button: PROJECT_NAME === 'web20' ? 'Create Website' : 'Create'
     },
 
     language: 'Language',
@@ -471,7 +471,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
         'В имени допускаются только латинские бувы, цифры, знак тере и подчеркивания',
         'Имя корня должно быть уникальным среди всех существующих корней'
       ],
-      no_items__create__button: 'Создать'
+      no_items__create__button: PROJECT_NAME === 'web20' ? 'Создать сайт' : 'Создать'
     },
 
     language: 'Язык',

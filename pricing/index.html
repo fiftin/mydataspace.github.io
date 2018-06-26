@@ -1,64 +1,72 @@
 ---
 layout: page
-title: Тарифы
-language: ru
+title: Plans
+language: en
 ---
 
 <div id="pricing_list" class="row pricing_list">
   <div class="col-md-4">
     <div id="pricing_block__personal" class="pricing_block">
-      <div class="pricing_block__header">Персональный</div>
+      <div class="pricing_block__header">Personal</div>
       <div class="pricing_block__main">
         <div class="pricing_block__property">
-          3 сайта
-          <div class="pricing_block__property_addition">250 р. за каждый дополнительный сайт</div>
+          3 websites
+          <div class="pricing_block__property_addition">$6 for each additional website</div>
         </div>
         <div class="pricing_block__property">
-          5 Гб диск
-          <div class="pricing_block__property_addition">30 р. за каждый дополнительный гигабайт</div>
+          5 Gb storage
+          <div class="pricing_block__property_addition">$1 for each additional gigabyte</div>
         </div>
         <div class="pricing_block__property">
-          <div class="pricing_block__trial">2 месяца бесплатно</div>
+          <div class="pricing_block__trial">2 month free</div>
           <div id="pricing_block__trial_left" class="pricing_block__trial_left"></div>
         </div>
       </div>
-      <div class="pricing_block__pricing">300 руб.</div>
+      <div class="pricing_block__pricing">$8</div>
       <div class="pricing_block__footer">
-        <button type="button"data-toggle="modal" data-target="#signin_modal" class="btn btn-lg btn-success pricing_block__button pricing_block__button--create">Создать сайт</button>
-        <button type="button" class="btn btn-lg btn-success pricing_block__button pricing_block__button--current" disabled>Текущий тариф</button>
+        <button type="button"data-toggle="modal" data-target="#signin_modal" class="btn btn-lg btn-success pricing_block__button pricing_block__button--create">
+          Create Website
+        </button>
+        <button type="button" class="btn btn-lg btn-success pricing_block__button pricing_block__button--current" disabled>
+          Current Plan
+        </button>
       </div>
     </div>
   </div>
   <div class="col-md-4">
     <div id="pricing_block__professional" class="pricing_block">
-      <div class="pricing_block__header">Профессиональный</div>
+      <div class="pricing_block__header">Professional</div>
       <div class="pricing_block__main">
         <div class="pricing_block__property">
-          10 сайтов
-          <div class="pricing_block__property_addition">250 р. за каждый дополнительный сайт</div>
+          10 websites
+          <div class="pricing_block__property_addition">$6 for each additional website</div>
         </div>
         <div class="pricing_block__property">
-          15 Гб диск
-          <div class="pricing_block__property_addition">30 р. за каждый дополнительный гигабайт</div>
+          15 Gb storage
+          <div class="pricing_block__property_addition">$1 for each additional gigabyte</div>
         </div>
       </div>
-      <div class="pricing_block__pricing">1200 руб.</div>
+      <div class="pricing_block__pricing">$28</div>
       <div class="pricing_block__footer">
-        <button type="button" data-toggle="modal" data-target="#signin_modal" class="btn btn-lg btn-success pricing_block__button pricing_block__button--create">Создать сайт</button>
-        <button type="button" data-toggle="modal" data-target="#professional_plan_unavailable_modal" class="btn btn-lg btn-success pricing_block__button pricing_block__button--upgrade">Перейти</button>
+        <button type="button" data-toggle="modal" data-target="#signin_modal" class="btn btn-lg btn-success pricing_block__button pricing_block__button--create">
+          Create Website
+        </button>
+        <button type="button" data-toggle="modal" data-target="#professional_plan_unavailable_modal" class="btn btn-lg btn-success pricing_block__button pricing_block__button--upgrade">
+          Upgrade
+        </button>
       </div>
     </div>
   </div>
 
   <div id="pricing_block__unlimited" class="col-md-4">
     <div class="pricing_block">
-      <div class="pricing_block__header">Безлиминтный</div>
+      <div class="pricing_block__header">Unlimited</div>
       <div class="pricing_block__main">
-        <div class="pricing_block__property">10+ сайтов</div>
+        <div class="pricing_block__property">10+ websites</div>
       </div>
       <div class="pricing_block__pricing">&nbsp;</div>
       <div class="pricing_block__footer">
-        <button type="button" data-toggle="modal" data-target="#request_unlimited_modal" class="btn btn-lg btn-success pricing_block__button">Связаться с нами</button>
+        <button type="button" data-toggle="modal" data-target="#request_unlimited_modal" class="btn btn-lg btn-success pricing_block__button">Contact Us</button>
       </div>
     </div>
   </div>
@@ -76,7 +84,7 @@ language: ru
         <div class="modal-body look_modal__body">
         </div>
         <div class="modal-footer look_modal__footer">
-          <button class="btn btn-default">Закрыть</button>
+          <button class="btn btn-default">Close</button>
         </div>
       </div>
     </div>
@@ -91,7 +99,7 @@ language: ru
       <div class="modal-content">
         <div class="modal-header look_modal__header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <div class="modal-title">Отправить запрос</div>
+          <div class="modal-title">Send request</div>
         </div>
         <div class="modal-body look_modal__body">
           <div>
@@ -100,7 +108,7 @@ language: ru
           <div id="professional_plan_unavailable_modal__error" class="give_feedback_modal__error"></div>
         </div>
         <div class="modal-footer look_modal__footer">
-          <button class="btn btn-primary give_feedback_modal__send" onclick="pricing_page__requestUnlimited()">Отправить</button>
+          <button class="btn btn-primary give_feedback_modal__send" onclick="pricing_page__requestUnlimited()">Send</button>
         </div>
       </div>
     </div>
@@ -115,7 +123,7 @@ language: ru
       <div class="modal-content">
         <div class="modal-header look_modal__header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <div class="modal-title">Отправить запрос</div>
+          <div class="modal-title">Send request</div>
         </div>
         <div class="modal-body look_modal__body">
           <div>
@@ -125,7 +133,7 @@ language: ru
           <div class="give_feedback_modal__send_mail">или отправьте сообщение на <a href="mailto:support@web20.site">support@web20.site</a></div>
         </div>
         <div class="modal-footer look_modal__footer">
-          <button class="btn btn-primary give_feedback_modal__send" onclick="pricing_page__requestUnlimited()">Отправить</button>
+          <button class="btn btn-primary give_feedback_modal__send" onclick="pricing_page__requestUnlimited()">Send</button>
         </div>
       </div>
     </div>
