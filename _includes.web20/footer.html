@@ -6,6 +6,7 @@
   </script>
   <div class="container">
     <div class="row">
+      {% comment %}
       <div class="col-md-4">
         <a class="footer__link footer__link--section" href="{{ baseurl }}/features">{{ site.data[page.language].menu.features }}</a>
         {% for feature in site.data[page.language].features %}
@@ -14,16 +15,20 @@
         {% endif %}
         {% endfor %}
       </div>
+      {% endcomment %}
+
       <div class="col-md-4">
         <a class="footer__link footer__link--section" href="{{ baseurl }}/docs">{{ site.data[page.language].menu.docs }}</a>
         {% for doc in site.data[page.language].docs %}
           <a class="footer__link footer__link--subsection" href="{{ baseurl }}/docs/{{ doc.id }}">{{ doc.title }}</a>
         {% endfor %}
       </div>
-      <div class="col-md-4">
-          <!--<a class="footer__link footer__link&#45;&#45;subsection" href="/privacy">{{ site.data[page.language].strings.privacy }}</a>-->
 
-          <!--<a class="footer__link footer__link&#45;&#45;subsection" href="/terms">{{ site.data[page.language].strings.terms }}</a>-->
+      {% comment %}
+      <div class="col-md-4">
+          <a class="footer__link footer__link--subsection" href="/privacy">{{ site.data[page.language].strings.privacy }}</a>
+
+          <a class="footer__link footer__link--subsection" href="/terms">{{ site.data[page.language].strings.terms }}</a>
 
 
         <div class="clearfix footer__socials">
@@ -39,6 +44,7 @@
           -->
         </div>
       </div>
+      {% endcomment %}
     </div>
 
     <div class="footer__copyright">
