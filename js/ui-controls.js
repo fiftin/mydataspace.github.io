@@ -150,7 +150,7 @@ UIControls = {
   /**
    * Returns object with initialized event handlers for typical modal dialog.
    */
-  getOnForFormWindow: function(id) {
+  getOnForFormWindow: function(id, on) {
     var formId = id + '_form';
     var windowId = id + '_window';
     return {
@@ -162,6 +162,9 @@ UIControls = {
         $$(formId).focus();
         $$(formId).setDirty(false);
         $$(windowId + '__cancel_button').define('hotkey', 'escape');
+        if (on && typeof on.onShow === 'function') {
+          on.onShow(id);
+        }
       }
     };
   },
@@ -260,12 +263,11 @@ UIControls = {
       case '':
         return [
           {id: 'new_entity', value: STRINGS.new_entity, icon: 'file-o'},
-          {id: 'import_wizard', value: STRINGS.import_entity},
-          {id: 'add_website', value: STRINGS.add_website, icon: 'globe'},
+          //{id: 'import_wizard', value: STRINGS.import_entity},
+          //{id: 'add_website', value: STRINGS.add_website, icon: 'globe'},
           {id: 'new_resource', value: STRINGS.new_resource, icon: 'diamond'},
           {id: 'new_task', value: STRINGS.new_task, icon: 'file-code-o'},
           {id: 'new_proto', value: STRINGS.new_proto, icon: 'cube'}
-//      { id: 'import_csv', value: 'Import Entity from CSV As Is' }
         ];
       case 'tasks':
         return [
@@ -282,7 +284,7 @@ UIControls = {
       default:
         return [
           {id: 'new_entity', value: STRINGS.new_entity, icon: 'file-o'},
-          {id: 'import_wizard', value: STRINGS.import_entity}
+          //{id: 'import_wizard', value: STRINGS.import_entity}
         ];
     }
   }

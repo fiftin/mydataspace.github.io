@@ -20,10 +20,12 @@ UILayout.entityTree =
           id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
           hidden: true,
           width: 130,
-          popup: 'entity_tree__new_root_popup',
-//          click: function() {
-//            $$('add_root_window').show();
-//          }
+          popup: PROJECT_NAME === 'web20' ? undefined : 'entity_tree__new_root_popup',
+          click: function() {
+            if (PROJECT_NAME === 'web20') {
+              $$('add_root_window').show();
+            }
+          }
         },
 //        { view: 'button',
 //          type: 'icon',

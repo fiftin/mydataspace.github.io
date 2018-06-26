@@ -1077,7 +1077,7 @@ UIControls = {
   /**
    * Returns object with initialized event handlers for typical modal dialog.
    */
-  getOnForFormWindow: function(id) {
+  getOnForFormWindow: function(id, on) {
     var formId = id + '_form';
     var windowId = id + '_window';
     return {
@@ -1089,6 +1089,9 @@ UIControls = {
         $$(formId).focus();
         $$(formId).setDirty(false);
         $$(windowId + '__cancel_button').define('hotkey', 'escape');
+        if (on && typeof on.onShow === 'function') {
+          on.onShow(id);
+        }
       }
     };
   },
@@ -1187,12 +1190,11 @@ UIControls = {
       case '':
         return [
           {id: 'new_entity', value: STRINGS.new_entity, icon: 'file-o'},
-          {id: 'import_wizard', value: STRINGS.import_entity},
-          {id: 'add_website', value: STRINGS.add_website, icon: 'globe'},
+          //{id: 'import_wizard', value: STRINGS.import_entity},
+          //{id: 'add_website', value: STRINGS.add_website, icon: 'globe'},
           {id: 'new_resource', value: STRINGS.new_resource, icon: 'diamond'},
           {id: 'new_task', value: STRINGS.new_task, icon: 'file-code-o'},
           {id: 'new_proto', value: STRINGS.new_proto, icon: 'cube'}
-//      { id: 'import_csv', value: 'Import Entity from CSV As Is' }
         ];
       case 'tasks':
         return [
@@ -1209,7 +1211,7 @@ UIControls = {
       default:
         return [
           {id: 'new_entity', value: STRINGS.new_entity, icon: 'file-o'},
-          {id: 'import_wizard', value: STRINGS.import_entity}
+          //{id: 'import_wizard', value: STRINGS.import_entity}
         ];
     }
   }
@@ -3359,7 +3361,13 @@ UILayout.windows.addRoot = {
     position: 'center',
     modal: true,
     head: STRINGS.ADD_ROOT,
-    on: UIControls.getOnForFormWindow('add_root'),
+    on: UIControls.getOnForFormWindow('add_root', {
+      onShow: function (id) {
+        if (PROJECT_NAME === 'web20') {
+          no_items__selectTemplate('basic-pug', 2);
+        }
+      }
+    }),
     body: {
       view: 'form',
       id: 'add_root_form',
@@ -3369,10 +3377,19 @@ UILayout.windows.addRoot = {
           if (!$$('add_root_form').validate()) {
             return;
           }
+
+
           // Send request to create new root entity
           var data = $$('add_root_form').getValues();
           data.path = '';
           data.fields = [];
+
+          var sourceRoot = $('#no_items__template_wrap2').data('root');
+          if (sourceRoot) {
+            data.sourceRoot = sourceRoot;
+            data.sourceRoot = '';
+          }
+
           Mydataspace.request('entities.create', data, function() {
             $$('add_root_window').hide();
             UIControls.removeSpinnerFromWindow('add_root_window');
@@ -3398,6 +3415,23 @@ UILayout.windows.addRoot = {
         }
       },
       elements: [
+        { view: 'template',
+          borderless: true,
+          height: 150,
+          //autoheight: true,
+          hidden: PROJECT_NAME !== 'web20',
+          template: '' +
+          '<div id="no_items__template_wrap2" class="no_items__template_wrap" onclick="no_items__initTemplates(2)">\n' +
+          '  <div id="no_items__template2" class="snippet__overview snippet__overview--no-margin">\n' +
+          '    <img id="no_items__template_img2" class="snippet__image"  />\n' +
+          '    <div class="snippet__info">\n' +
+          '      <div id="no_items__template_title2" class="snippet__title"></div>\n' +
+          '      <div id="no_items__template_tags2" class="snippet__tags"></div>\n' +
+          '    </div>\n' +
+          '  </div>\n' +
+          '  <div id="no_items__template_description2" class="snippet__description"></div>\n' +
+          '</div>'
+        },
         { view: 'text', id: 'NAME_LABEL', label: STRINGS.NAME, required: true, name: 'root', labelWidth: UIHelper.LABEL_WIDTH },
         UIControls.getEntityTypeSelectTemplate(),
         UIControls.getSubmitCancelForFormWindow('add_root')
@@ -4551,10 +4585,12 @@ UILayout.entityTree =
           id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
           hidden: true,
           width: 130,
-          popup: 'entity_tree__new_root_popup',
-//          click: function() {
-//            $$('add_root_window').show();
-//          }
+          popup: PROJECT_NAME === 'web20' ? undefined : 'entity_tree__new_root_popup',
+          click: function() {
+            if (PROJECT_NAME === 'web20') {
+              $$('add_root_window').show();
+            }
+          }
         },
 //        { view: 'button',
 //          type: 'icon',

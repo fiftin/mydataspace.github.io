@@ -5,7 +5,13 @@ UILayout.windows.addRoot = {
     position: 'center',
     modal: true,
     head: STRINGS.ADD_ROOT,
-    on: UIControls.getOnForFormWindow('add_root'),
+    on: UIControls.getOnForFormWindow('add_root', {
+      onShow: function (id) {
+        if (PROJECT_NAME === 'web20') {
+          no_items__selectTemplate('basic-pug', 2);
+        }
+      }
+    }),
     body: {
       view: 'form',
       id: 'add_root_form',
@@ -15,10 +21,19 @@ UILayout.windows.addRoot = {
           if (!$$('add_root_form').validate()) {
             return;
           }
+
+
           // Send request to create new root entity
           var data = $$('add_root_form').getValues();
           data.path = '';
           data.fields = [];
+
+          var sourceRoot = $('#no_items__template_wrap2').data('root');
+          if (sourceRoot) {
+            data.sourceRoot = sourceRoot;
+            data.sourceRoot = '';
+          }
+
           Mydataspace.request('entities.create', data, function() {
             $$('add_root_window').hide();
             UIControls.removeSpinnerFromWindow('add_root_window');
@@ -44,6 +59,23 @@ UILayout.windows.addRoot = {
         }
       },
       elements: [
+        { view: 'template',
+          borderless: true,
+          height: 150,
+          //autoheight: true,
+          hidden: PROJECT_NAME !== 'web20',
+          template: '' +
+          '<div id="no_items__template_wrap2" class="no_items__template_wrap" onclick="no_items__initTemplates(2)">\n' +
+          '  <div id="no_items__template2" class="snippet__overview snippet__overview--no-margin">\n' +
+          '    <img id="no_items__template_img2" class="snippet__image"  />\n' +
+          '    <div class="snippet__info">\n' +
+          '      <div id="no_items__template_title2" class="snippet__title"></div>\n' +
+          '      <div id="no_items__template_tags2" class="snippet__tags"></div>\n' +
+          '    </div>\n' +
+          '  </div>\n' +
+          '  <div id="no_items__template_description2" class="snippet__description"></div>\n' +
+          '</div>'
+        },
         { view: 'text', id: 'NAME_LABEL', label: STRINGS.NAME, required: true, name: 'root', labelWidth: UIHelper.LABEL_WIDTH },
         UIControls.getEntityTypeSelectTemplate(),
         UIControls.getSubmitCancelForFormWindow('add_root')
