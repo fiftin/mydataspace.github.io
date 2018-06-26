@@ -104,13 +104,29 @@
   {% else %}
 
 
-  <title>{% if site.data[page.language].title %}{{ site.data[page.language].title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
+
+  {% if page.title %}
+    <title>{{ page.title }} | Web 2.0 Site</title>
+  {% elsif site.data[page.language].title %}
+    <title>{{ site.data[page.language].title | escape }}</title>
+  {$ else %}
+    <title>{{ site.title | escape }}</title>
+  {% endif %}
+
   <meta name="description" content="{{ site.data[page.language].slogan }}">
 
   <meta name="theme-color" content="black" />
   <meta property="og:url"                content="https://myda.space" />
   <meta property="og:type"               content="article" />
-  <meta property="og:title"              content="{% if site.data[page.language].title %}{{ site.data[page.language].title | escape }}{% else %}{{ site.title | escape }}{% endif %}" />
+
+  {% if page.title %}
+  <meta property="og:title"              content="{{ page.title }}" />
+  {% elsif site.data[page.language].title %}
+  <meta property="og:title"              content="{{ site.data[page.language].title | escape }}" />
+  {$ else %}
+  <meta property="og:title"              content="{{ site.title | escape }}" />
+  {% endif %}
+
   <meta property="og:description"        content="{{ site.data[page.language].slogan }}" />
   <meta property="og:image"              content="https://myda.space/images/logo.png" />
 
