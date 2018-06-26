@@ -47,8 +47,10 @@ strings:
   terms: Условия использования
   select_template_title: Выбор шаблона
   select_template_button: Выбрать
-
-
+  close: Закрыть
+  send: Отправить
+  send_request: Отправить запрос
+  request_sent: Запрос отправен
 header:
   input_search: Начните поиск или нажмите Esc
   input_search_fixed: Поиск...
@@ -360,3 +362,11 @@ search:
 wizard:
   save: Сохранить
   cancel: Отмена
+
+
+pricing_page:
+  plans:
+    personal: Персональный
+    professional: Профессиональный
+    unlimited: Безлимитный
+  request_unlimited:

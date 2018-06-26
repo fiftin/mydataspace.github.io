@@ -47,6 +47,10 @@ strings:
   terms: Terms of Service
   select_template_title: Select Template
   select_template_button: Select
+  close: Close
+  send: Send
+  send_request: Send Request
+  request_sent: Request sent
 
 header:
   input_search: Search... Press Esc to exit
