@@ -326,3 +326,29 @@ search:
 wizard:
   save: Save
   cancel: Cancel
+
+
+pricing_page:
+  thanks: Спасибо, мы свяжимся с вами в ближайшее время!
+  create_site: Create Website
+  current_plan: Current Plan
+  upgrade: Upgrade
+  contact_us: Contact Us
+  trial: 2 month free
+  sites_add: $6 for each additional website
+  disk_add: $1 for each additional gigabyte
+  personal:
+    title: Personal
+    sites: 3 Websites
+    disk: 5 Gb Storage
+    price: $8
+  pro:
+    plan_unavailable: Plan Professional currently unavailable. Subscribe to updated and we contact with you
+    title: Professional
+    sites: 10 Websites
+    disk: 15 Gb Storage
+    price: $28
+  unlim:
+    request_placeholder: Please, specify how many website you need and how we can contact with you
+    title: Unlimited
+    sites: 10+ Websites

@@ -365,8 +365,26 @@ wizard:
 
 
 pricing_page:
-  plans:
-    personal: Персональный
-    professional: Профессиональный
-    unlimited: Безлимитный
-  request_unlimited:
+  thanks: Спасибо, мы свяжимся с вами в ближайшее время!
+  create_site: Создать сайт
+  current_plan: Текущий тариф
+  upgrade: Перейти
+  contact_us: Связаться с нами
+  trial: 2 месяца бесплатно
+  sites_add: 250 р. за каждый дополнительный сайт
+  disk_add: 30 р. за каждый дополнительный гигабайт
+  personal:
+    title: Персональный
+    sites: 3 сайта
+    disk: 5 Гб диск
+    price: 300 руб.
+  pro:
+    plan_unavailable: План Профессиональный на данный момент недоступен.
+    title: Профессиональный
+    sites: 10 сайтов
+    disk: 15 Гб диск
+    price: 1200 руб.
+  unlim:
+    request_placeholder: Пожалуйста, укажите сколько сайтов вы хотите создать и как с вами связаться
+    title: Безлимитный
+    sites: 10+ сайтов
