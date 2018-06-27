@@ -243,7 +243,7 @@ docs:
     title: Backend
   - id: import-of-data
     title: Import of data
-  - id: client-api
+  - id: api
     title: Client API
 
 root:

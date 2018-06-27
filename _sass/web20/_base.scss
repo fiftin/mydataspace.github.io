@@ -188,11 +188,11 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
 .no_items__btn {
   padding-left: 30px;
   padding-right: 30px;
-  border-radius: 0;
   bottom: 0;
   position: absolute;
   left: $no-items-col-gap / 2;
   width: calc(100% - #{$no-items-col-gap});
+  border-radius: 100px;
 }
 
 .no_items__btn--center {
