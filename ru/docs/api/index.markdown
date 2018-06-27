@@ -107,85 +107,80 @@ demo.login('google').then(function(args) {
 ### API Endpoints
 
 <section>
+  <div class="highlighter-rouge">
+  <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--get">GET</span>  /get</code></pre>
+  </div>
+  <p class="feature__subtitle">Получить элемент/корень</p>
+  <p></p>
+
   <div class="row">
     <div class="col-md-4">
-      <div class="highlighter-rouge">
-        <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--get">GET</span>  /get</code></pre>
+      <div class="highlighter__var">
+        <span class="highlight__var_type highlight__var_type--str">str</span> root
       </div>
-      <p class="feature__subtitle">Получить элемент/корень</p>
-      <p></p>
     </div>
     <div class="col-md-8">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="highlighter__var">
-            <span class="highlight__var_type highlight__var_type--str">str</span> root
-          </div>
-        </div>
-        <div class="col-md-8">
-          Имя корня
-        </div>
+      Имя корня
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="highlighter__var">
+        <span class="highlight__var_type highlight__var_type--str">str</span> path
       </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="highlighter__var">
-            <span class="highlight__var_type highlight__var_type--str">str</span> path
-          </div>
-        </div>
-        <div class="col-md-8">
-          Путь к элементу
-        </div>
+    </div>
+    <div class="col-md-8">
+      Путь к элементу
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="highlighter__var">
+        <span class="highlight__var_type highlight__var_type--bool">bool</span> children
       </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="highlighter__var">
-            <span class="highlight__var_type highlight__var_type--bool">bool</span> children
-          </div>
-        </div>
-        <div class="col-md-8">
-          Загрузить дочерние элементы
-        </div>
+    </div>
+    <div class="col-md-8">
+      Загрузить дочерние элементы
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="highlighter__var">
+        <span class="highlight__var_type highlight__var_type--str">str</span> search
       </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="highlighter__var">
-            <span class="highlight__var_type highlight__var_type--str">str</span> search
-          </div>
-        </div>
-        <div class="col-md-8">
-          Полнотектовый поиск дочерних элементов
-        </div>
+    </div>
+    <div class="col-md-8">
+      Полнотектовый поиск дочерних элементов
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="highlighter__var">
+        <span class="highlight__var_type highlight__var_type--int">int</span> offset
       </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="highlighter__var">
-            <span class="highlight__var_type highlight__var_type--int">int</span> offset
-          </div>
-        </div>
-        <div class="col-md-8">
-          Полнотектовый поиск дочерних элементов
-        </div>
+    </div>
+    <div class="col-md-8">
+      Полнотектовый поиск дочерних элементов
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="highlighter__var">
+        <span class="highlight__var_type highlight__var_type--int">int</span> limit
       </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="highlighter__var">
-            <span class="highlight__var_type highlight__var_type--int">int</span> limit
-          </div>
-        </div>
-        <div class="col-md-8">
-          Максимальное количество загружаемых дочерних элементов
-        </div>
+    </div>
+    <div class="col-md-8">
+      Максимальное количество загружаемых дочерних элементов
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="highlighter__var">
+        <span class="highlight__var_type highlight__var_type--str">str</span> <span style="font-size: 15px; font-weight: bold;">orderChildrenBy</span>
       </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="highlighter__var">
-            <span class="highlight__var_type highlight__var_type--str">str</span> <span style="font-size: 15px; font-weight: bold;">orderChildrenBy</span>
-          </div>
-        </div>
-        <div class="col-md-8">
-          Сортировка дочерних элементов по значению поля
-        </div>
-      </div>
+    </div>
+    <div class="col-md-8">
+      Сортировка дочерних элементов по значению поля
     </div>
   </div>
 </section>
