@@ -180,7 +180,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     },
 
     no_items: {
-      no_items__title: PROJECT_NAME === 'web20' ? 'You have ho any website yet' : 'You have ho any data yet',
+      no_items__title: PROJECT_NAME === 'web20' ? 'You have no any website yet' : 'You have ho any data yet',
       no_items__explore__desc: 'Find data you need among a huge amount of existing data',
       no_items__explore__button: 'Explore',
       no_items__import__desc: 'Import data from XLS, XML, CSV, JSON and many other formats',
