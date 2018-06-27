@@ -25,7 +25,7 @@ UILayout.header =
       },
       { view: 'button',
         width: 70,
-        css: 'menu__language_button',
+        css: 'menu__language_button ' + (PROJECT_NAME === 'web20' ? ' menu__language_button--get_started' : ''),
         id: 'PRICING_LABEL',
         label: STRINGS.PRICING,
         hidden: PROJECT_NAME !== 'web20',
@@ -75,7 +75,6 @@ UILayout.header =
         css: 'menu__language_button ' + (LANGUAGE === 'RU' ? 'menu__language_button--selected' : ''),
         label: 'RU',
         click: function() {
-          // localStorage.setItem('language', 'RU');
           UI.updateLanguage('RU');
         }
       },

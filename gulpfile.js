@@ -43,6 +43,9 @@ gulp.task('web20', function() {
     .pipe(gulp.dest('./js/dist/'));
 });
 
+
+
+
 gulp.task('mds', function() {
   return gulp.src([
       './js/common.js',
@@ -98,7 +101,9 @@ gulp.task('ui', function() {
       './js/ui.js'
     ])
     .pipe(concat('ui.js'))
-    .pipe(gulp.dest('./js/dist'));
+    .pipe(gulp.dest('./js/dist'))
+    .pipe(gulp.dest('./_site/js/dist'))
+    .pipe(gulp.dest('./_site.web20/js/dist'));
 });
 
 gulp.task('test', function (done) {
