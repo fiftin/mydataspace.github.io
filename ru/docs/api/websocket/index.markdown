@@ -9,9 +9,25 @@ language: ru
     <a href="/ru/docs/api/websocket" class="page-tab page-tab--active">JavaScript SDK</a>
 </div>
 
-[https://web20.site/js/dist/web2.0.js](https://web20.site/js/dist/web2.0.js)
+<br />
 
-### MDSWebsite
+SDK включает следующий набор глобальных класснов и объектов:
+
+* Класс ```MDSClient```
+* Объект ```MDSWebsite```
+* Статический класс ```MDSCommon```
+
+<br />
+
+Подклюяение SDK:
+
+{% highlight html %}
+<script src="https://web20.site/js/dist/web2.0.js"></script>
+{% endhighlight %}
+
+<br />
+
+### Объект ```MDSWebsite```
 
 
 <section class="feature__section">
@@ -26,7 +42,7 @@ language: ru
     <div class="col-md-8">
       <div class="feature__code_example">Пример</div>
 {% highlight javascript %}
-const root = await MDSWebsite.connect();
+await MDSWebsite.connect();
 {% endhighlight %}
     </div>
   </div>
@@ -48,7 +64,7 @@ const root = await MDSWebsite.connect();
     <div class="col-md-8">
       <div class="feature__code_example">Пример</div>
 {% highlight javascript %}
-const root = await MDSWebsite.login();
+await MDSWebsite.login();
 {% endhighlight %}
     </div>
   </div>
