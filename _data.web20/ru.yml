@@ -295,18 +295,18 @@ get_started:
         type: code
         height: 450
 docs:
-  - id: import-of-data
-    title: Загрузка данных
+  #- id: import-of-data
+  #  title: Загрузка данных
   - id: api
     title: Описание API
   - id: file-storage
     title: Хранение файлов
   - id: how-to-run-code
     title: Выполнение кода на сервере
-  - id: backend
-    title: Как устроен бекенд
-  - id: auth
-    title: Авторизация
+  #- id: backend
+  #  title: Как устроен бекенд
+  #- id: auth
+  #  title: Авторизация
 
 root:
   show_older_comments: Показать еще
