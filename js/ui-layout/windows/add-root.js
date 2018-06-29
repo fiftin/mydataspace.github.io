@@ -31,7 +31,7 @@ UILayout.windows.addRoot = {
           var sourceRoot = $('#no_items__template_wrap2').data('root');
           if (sourceRoot) {
             data.sourceRoot = sourceRoot;
-            data.sourceRoot = '';
+            data.sourcePath = '';
           }
 
           Mydataspace.request('entities.create', data, function() {
