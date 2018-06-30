@@ -184,6 +184,8 @@ EntityList.prototype.refresh = function(newRootId) {
     }
   }
   req.children = true;
+  req.orderChildrenBy = '$createdAt DESC';
+
   $$('entity_list').disable();
   Mydataspace.request('entities.get', req, function(data) {
     if (!self.getRootId()) {

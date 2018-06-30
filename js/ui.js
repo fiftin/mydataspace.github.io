@@ -325,10 +325,12 @@ UI = {
 
     Mydataspace.on('apps.create.res', function(data) {
       $$('add_app_window').hide();
-      $$('app_list').add({
-        id: data.clientId,
-        value: data.name
-      });
+      if ($$('app_list').getItem(data.clientId) == null) {
+        $$('app_list').add({
+          id: data.clientId,
+          value: data.name
+        });
+      }
       UI.pages.updatePageState('apps');
       $$('app_list').select(data.clientId);
     });
