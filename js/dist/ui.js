@@ -3409,7 +3409,7 @@ UILayout.windows.addRoot = {
               return;
             }
             return Mydataspace.request('entities.change', {
-              root: root,
+              root: data.root,
               path: 'website/js',
               fields: [{
                 name: 'client.js',
@@ -3420,7 +3420,7 @@ UILayout.windows.addRoot = {
                 'var MDSWebsite = new MDSClient({\n' +
                 '  clientId: \'' + app.clientId + '\',\n' +
                 '  // You can add your own options here.\n' +
-                '}).getRoot(\'' + root + '\');',
+                '}).getRoot(\'' + data.root + '\');',
                 type: 'j'
               }]
             })
