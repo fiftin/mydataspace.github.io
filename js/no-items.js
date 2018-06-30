@@ -38,7 +38,6 @@ function no_items__initTemplates(suffix) {
     suffix = '';
   }
 
-
   Mydataspace.request('entities.getRoots', {
     type: 't'
   }).then(function (data) {
@@ -72,6 +71,7 @@ function no_items__initTemplates(suffix) {
 
 
 function no_items__createNewWebsite() {
+
   var notices = document.getElementById('no_items__notice').childNodes[0].childNodes;
   for (var i = 0; i < notices.length; i++) {
     notices[i].classList.remove('no_items__notice--alert');
@@ -84,6 +84,10 @@ function no_items__createNewWebsite() {
   }
 
   var sourceRoot = $('#no_items__template_wrap').data('root');
+
+  var $createButton = $('#no_items__create__button');
+  $createButton.attr('disabled', true);
+  $createButton.find('.fa-cog').removeClass('hidden').addClass('fa-spin');
 
   Mydataspace.request('entities.create', {
     root: root,
@@ -114,18 +118,19 @@ function no_items__createNewWebsite() {
         type: 'j'
       }]
     })
+  //}).then(function () {
+  //  document.getElementById('no_items__new_root_input').value = '';
+  //  var url = 'https://wizard.myda.space/' + root + '/root.html';
+  //  return $.ajax({ url: url, type: 'HEAD' });
   }).then(function () {
+    // $('#wizard_modal__frame').attr('src', url);
+    // $('#wizard_modal').modal('show');
+    $createButton.attr('disabled', false);
+    $createButton.find('.fa-cog').removeClass('fa-spin').addClass('hidden');
 
-    document.getElementById('no_items__new_root_input').value = '';
-    var url = 'https://wizard.myda.space/' + root + '/root.html';
-    $.ajax({
-      url: url,
-      type: 'HEAD'
-    }).then(function () {
-      $('#wizard_modal__frame').attr('src', url);
-      $('#wizard_modal').modal('show');
-    });
   }, function (err) {
+    $createButton.attr('disabled', false);
+    $createButton.find('.fa-cog').removeClass('fa-spin').addClass('hidden');
     switch (err.name) {
       case 'SequelizeValidationError':
         notices[1].classList.add('no_items__notice--alert');
