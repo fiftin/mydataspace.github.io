@@ -2272,10 +2272,10 @@ EntityForm.prototype.addField = function(data, setDirty, isProto) {
       { view: 'button',
         width: 10,
         type: 'iconButton',
-        icon: !isProto ? null : Fields.FIELD_INDEXED_ICONS[data.type === 'j' ? 'fulltext' : (data.indexed || 'off').toString()],
+        icon: !isProto ? null : Fields.FIELD_INDEXED_ICONS[(data.indexed || 'off').toString()],
         css: 'entity_form__field_indexed_button',
         popup: 'entity_form__field_indexed_popup',
-        disabled: !isProto || data.type === 'j',
+        disabled: !isProto,
         id: 'entity_form__' + data.name + '_indexed_button',
         on: {
           onItemClick: function() {
@@ -2526,8 +2526,9 @@ EntityList.prototype.refresh = function(newRootId) {
       req['search'] = search;
     }
   }
+  req.children = true;
   $$('entity_list').disable();
-  Mydataspace.request('entities.getChildren', req, function(data) {
+  Mydataspace.request('entities.get', req, function(data) {
     if (!self.getRootId()) {
       $$('entity_list').enable();
       return;
@@ -2616,8 +2617,9 @@ EntityList.prototype.showMore = function() {
     req['search'] = search;
   }
   req.offset = self.count();
+  req.children = true;
   $$('entity_list').disable();
-  Mydataspace.request('entities.getChildren', req, function(data) {
+  Mydataspace.request('entities.get', req, function(data) {
     var children = data.children.filter(function(child) {
       return UIConstants.IGNORED_PATHS.indexOf(child.path) < 0;
     }).map(Identity.entityFromData);
@@ -2827,7 +2829,7 @@ EntityTree.prototype.resolveChildren = function(id) {
       return;
     }
     // Load children to first time opened node.
-    Mydataspace.request('entities.getChildren', Identity.dataFromId(id), function(data) {
+    Mydataspace.request('entities.get', MDSCommon.extend(Identity.dataFromId(id), { children: true }), function(data) {
       var entityId = Identity.idFromData(data);
       var children = data.children.filter(function(x) {
         return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS.indexOf(x.path) < 0;
@@ -3163,7 +3165,8 @@ EntityTree.prototype.showMore = function(id) {
   var self = this;
   var req = Identity.dataFromId(id);
   req.offset = self.numberOfChildren(id);
-  Mydataspace.request('entities.getChildren', req, function(data) {
+  req.children = true;
+  Mydataspace.request('entities.get', req, function(data) {
     var entityId = Identity.idFromData(data);
     var children = data.children.filter(function(child) {
       return UIConstants.IGNORED_PATHS.indexOf(child.path) < 0;
@@ -3390,10 +3393,39 @@ UILayout.windows.addRoot = {
             data.sourcePath = '';
           }
 
-          Mydataspace.request('entities.create', data, function() {
+          Mydataspace.request('entities.create', data).then(function () {
+            if (!sourceRoot) {
+              return;
+            }
+            return Mydataspace.request('apps.create', {
+              name: root,
+              url: 'https://' + root + SITE_SUPER_DOMAIN,
+              description: 'Automatically created application for website ' + root + SITE_SUPER_DOMAIN + '. Please do not change it'
+            });
+          }).then(function (app) {
+            if (!app) {
+              return;
+            }
+            return Mydataspace.request('entities.change', {
+              root: root,
+              path: 'website/js',
+              fields: [{
+                name: 'client.js',
+                value: '//\n' +
+                '// This file generated automatically. Please do not edit it.\n' +
+                '//\n' +
+                '\n' +
+                'var MDSWebsite = new MDSClient({\n' +
+                '  clientId: \'' + app.clientId + '\',\n' +
+                '  // You can add your own options here.\n' +
+                '}).getRoot(\'' + root + '\');',
+                type: 'j'
+              }]
+            })
+          }).then(function () {
             $$('add_root_window').hide();
             UIControls.removeSpinnerFromWindow('add_root_window');
-          }, function(err) {
+          }).catch(function (err) {
             UIControls.removeSpinnerFromWindow('add_root_window');
             switch (err.name) {
               case 'SequelizeValidationError':
@@ -4106,7 +4138,6 @@ UILayout.popups.fieldIndexed = {
         class: 'entity_form__field_indexed_list',
         borderless: true,
 		data:[
-          // { id: 'on', value: 'Search &amp; Order', icon: Fields.FIELD_INDEXED_ICONS['on'] },
           { id: 'fulltext', value: 'Fulltext Search', icon: Fields.FIELD_INDEXED_ICONS['fulltext'] },
           { id: 'off', value: 'None', icon: Fields.FIELD_INDEXED_ICONS['off'] },
 		],
@@ -4180,15 +4211,15 @@ UILayout.popups.fieldType = {
                 $$('entity_form__' + fieldName + '_value')
               );
               switch (newv) {
-                case 'j':
-                  $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').disable();
-                  var fieldIndexed = $$(fieldId + '_indexed').getValue();
-                  $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS['fulltext']);
-                  $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').refresh();
-                  break;
+                //case 'j':
+                //  $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').enable();
+                //  var fieldIndexed = $$(fieldId + '_indexed').getValue();
+                //  $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS[fieldIndexed || 'off']);
+                //  $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').refresh();
+                //  break;
                 case '*':
-                  $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').enable();
-                  $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS[fieldIndexed || 'off']);
+                  $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').disable();
+                  $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS['off']);
                   $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').refresh();
 
                   $$('entity_form__' + fieldName + '_value').define('type', 'password');

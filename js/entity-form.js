@@ -1053,10 +1053,10 @@ EntityForm.prototype.addField = function(data, setDirty, isProto) {
       { view: 'button',
         width: 10,
         type: 'iconButton',
-        icon: !isProto ? null : Fields.FIELD_INDEXED_ICONS[data.type === 'j' ? 'fulltext' : (data.indexed || 'off').toString()],
+        icon: !isProto ? null : Fields.FIELD_INDEXED_ICONS[(data.indexed || 'off').toString()],
         css: 'entity_form__field_indexed_button',
         popup: 'entity_form__field_indexed_popup',
-        disabled: !isProto || data.type === 'j',
+        disabled: !isProto,
         id: 'entity_form__' + data.name + '_indexed_button',
         on: {
           onItemClick: function() {

@@ -34,10 +34,39 @@ UILayout.windows.addRoot = {
             data.sourcePath = '';
           }
 
-          Mydataspace.request('entities.create', data, function() {
+          Mydataspace.request('entities.create', data).then(function () {
+            if (!sourceRoot) {
+              return;
+            }
+            return Mydataspace.request('apps.create', {
+              name: root,
+              url: 'https://' + root + SITE_SUPER_DOMAIN,
+              description: 'Automatically created application for website ' + root + SITE_SUPER_DOMAIN + '. Please do not change it'
+            });
+          }).then(function (app) {
+            if (!app) {
+              return;
+            }
+            return Mydataspace.request('entities.change', {
+              root: root,
+              path: 'website/js',
+              fields: [{
+                name: 'client.js',
+                value: '//\n' +
+                '// This file generated automatically. Please do not edit it.\n' +
+                '//\n' +
+                '\n' +
+                'var MDSWebsite = new MDSClient({\n' +
+                '  clientId: \'' + app.clientId + '\',\n' +
+                '  // You can add your own options here.\n' +
+                '}).getRoot(\'' + root + '\');',
+                type: 'j'
+              }]
+            })
+          }).then(function () {
             $$('add_root_window').hide();
             UIControls.removeSpinnerFromWindow('add_root_window');
-          }, function(err) {
+          }).catch(function (err) {
             UIControls.removeSpinnerFromWindow('add_root_window');
             switch (err.name) {
               case 'SequelizeValidationError':

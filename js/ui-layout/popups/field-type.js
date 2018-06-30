@@ -48,15 +48,15 @@ UILayout.popups.fieldType = {
                 $$('entity_form__' + fieldName + '_value')
               );
               switch (newv) {
-                case 'j':
-                  $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').disable();
-                  var fieldIndexed = $$(fieldId + '_indexed').getValue();
-                  $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS['fulltext']);
-                  $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').refresh();
-                  break;
+                //case 'j':
+                //  $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').enable();
+                //  var fieldIndexed = $$(fieldId + '_indexed').getValue();
+                //  $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS[fieldIndexed || 'off']);
+                //  $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').refresh();
+                //  break;
                 case '*':
-                  $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').enable();
-                  $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS[fieldIndexed || 'off']);
+                  $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').disable();
+                  $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').define('icon', Fields.FIELD_INDEXED_ICONS['off']);
                   $$('entity_form__' + UI.entityForm.currentFieldName + '_indexed_button').refresh();
 
                   $$('entity_form__' + fieldName + '_value').define('type', 'password');

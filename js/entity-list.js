@@ -183,8 +183,9 @@ EntityList.prototype.refresh = function(newRootId) {
       req['search'] = search;
     }
   }
+  req.children = true;
   $$('entity_list').disable();
-  Mydataspace.request('entities.getChildren', req, function(data) {
+  Mydataspace.request('entities.get', req, function(data) {
     if (!self.getRootId()) {
       $$('entity_list').enable();
       return;
@@ -273,8 +274,9 @@ EntityList.prototype.showMore = function() {
     req['search'] = search;
   }
   req.offset = self.count();
+  req.children = true;
   $$('entity_list').disable();
-  Mydataspace.request('entities.getChildren', req, function(data) {
+  Mydataspace.request('entities.get', req, function(data) {
     var children = data.children.filter(function(child) {
       return UIConstants.IGNORED_PATHS.indexOf(child.path) < 0;
     }).map(Identity.entityFromData);
