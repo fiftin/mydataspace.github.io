@@ -3400,9 +3400,9 @@ UILayout.windows.addRoot = {
               return;
             }
             return Mydataspace.request('apps.create', {
-              name: root,
-              url: 'https://' + root + SITE_SUPER_DOMAIN,
-              description: 'Automatically created application for website ' + root + SITE_SUPER_DOMAIN + '. Please do not change it'
+              name: data.root,
+              url: 'https://' + data.root + SITE_SUPER_DOMAIN,
+              description: 'Automatically created application for website ' + data.root + SITE_SUPER_DOMAIN + '. Please do not change it'
             });
           }).then(function (app) {
             if (!app) {
