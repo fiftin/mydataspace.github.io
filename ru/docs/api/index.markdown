@@ -231,7 +231,7 @@ demo.login('google').then(function(args) {
       </div>
     </div>
     <div class="col-sm-8 col-md-9">
-      <p class="feature__subtitle">Создать элемент</p>
+      <p class="feature__subtitle endpoint_header__description">Создать элемент</p>
     </div>
   </div>
   <div class="row">
@@ -313,7 +313,7 @@ demo.login('google').then(function(args) {
       </div>
     </div>
     <div class="col-sm-8 col-md-9">
-      <p class="feature__subtitle">Изменить элемент</p>
+      <p class="feature__subtitle endpoint_header__description">Изменить элемент</p>
     </div>
   </div>
   
@@ -359,7 +359,7 @@ demo.login('google').then(function(args) {
       </div>
     </div>
     <div class="col-sm-8 col-md-9">
-      <p class="feature__subtitle">Удалить элемент</p>
+      <p class="feature__subtitle endpoint_header__description">Удалить элемент</p>
     </div>
   </div>
   
