@@ -139,6 +139,9 @@ UI = {
     // Change logo link
     document.getElementById('logo_link').href = '/' + newLang;
 
+
+
+
     // No items
     for (var no_item_id in strings.no_items) {
       var noItemsHTML;
@@ -156,6 +159,8 @@ UI = {
         item.innerHTML = noItemsHTML;
       }
     }
+
+
   },
 
   /**

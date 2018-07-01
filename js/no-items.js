@@ -32,14 +32,20 @@ function no_items__selectTemplate(root, suffix) {
   });
 }
 
-
+/**
+ * Fill New website template list.
+ * @param {string} [suffix] Suffix for all element IDs used inside this method.
+ */
 function no_items__initTemplates(suffix) {
   if (!suffix) {
     suffix = '';
   }
 
   Mydataspace.request('entities.getRoots', {
-    type: 't'
+    type: 't',
+    filter: {
+      language: (getCurrentLanguage() || 'EN').toLowerCase()
+    }
   }).then(function (data) {
     var rootsHtml = data.roots.map(function (root) {
 

@@ -3369,7 +3369,13 @@ UILayout.windows.addRoot = {
     on: UIControls.getOnForFormWindow('add_root', {
       onShow: function (id) {
         if (PROJECT_NAME === 'web20') {
-          no_items__selectTemplate('basic-pug', 2);
+          var languageSuffix = (getCurrentLanguage() || 'EN').toLowerCase();
+          if (languageSuffix === 'en') {
+            languageSuffix = '';
+          } else {
+            languageSuffix = '-' + languageSuffix;
+          }
+          no_items__selectTemplate('basic-pug' + languageSuffix, 2);
         }
       }
     }),
@@ -5302,6 +5308,9 @@ UI = {
     // Change logo link
     document.getElementById('logo_link').href = '/' + newLang;
 
+
+
+
     // No items
     for (var no_item_id in strings.no_items) {
       var noItemsHTML;
@@ -5319,6 +5328,8 @@ UI = {
         item.innerHTML = noItemsHTML;
       }
     }
+
+
   },
 
   /**

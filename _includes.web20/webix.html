@@ -78,13 +78,21 @@
         </div>
       </div>
       <script>
-        if (Mydataspace.isLoggedIn()) {
-          no_items__selectTemplate('basic-pug');
-        } else {
-          Mydataspace.on('login', function () {
-            no_items__selectTemplate('basic-pug');
-          });
-        }
+        (function () {
+          var languageSuffix = (getCurrentLanguage() || 'EN').toLowerCase();
+          if (languageSuffix === 'en') {
+            languageSuffix = '';
+          } else {
+            languageSuffix = '-' + languageSuffix;
+          }
+          if (Mydataspace.isLoggedIn()) {
+            no_items__selectTemplate('basic-pug' + languageSuffix);
+          } else {
+            Mydataspace.on('login', function () {
+              no_items__selectTemplate('basic-pug' + languageSuffix);
+            });
+          }
+        })();
       </script>
     </div>
   </div>
