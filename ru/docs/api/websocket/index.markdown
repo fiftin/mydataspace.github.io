@@ -11,14 +11,6 @@ language: ru
 
 <br />
 
-SDK включает следующий набор глобальных класснов и объектов:
-
-* Класс ```MDSClient```
-* Объект ```MDSWebsite```
-* Статический класс ```MDSCommon```
-
-<br />
-
 Подклюяение SDK:
 
 {% highlight html %}
@@ -27,25 +19,47 @@ SDK включает следующий набор глобальных клас
 
 <br />
 
+SDK включает следующий набор класснов и глобальных объектов:
+
+* Объект ```MDSWebsite```
+* Класс ```MDSClient```
+* Статический класс ```MDSCommon```
+
+<br />
+
 ### Объект ```MDSWebsite```
 
-
 <section class="feature__section">
-  <div class="row">
-    <div class="col-md-4">
+  <div class="row endpoint_header">
+    <div class="col-sm-4 col-md-3">
       <div class="highlighter-rouge">
         <pre class="highlight"><code class="feature__method_name">connect()</code></pre>
       </div>
-      <p class="feature__subtitle">Подключиться к серверу</p>
-      <p></p>
     </div>
-    <div class="col-md-8">
-      <div class="feature__code_example">Пример</div>
-{% highlight javascript %}
-await MDSWebsite.connect();
-{% endhighlight %}
+    <div class="col-sm-8 col-md-9">
+      <p class="feature__subtitle endpoint_header__description">Подключиться к серверу</p>
     </div>
   </div>
+  <p>
+    <div class="feature__code_example">Пример</div>
+{% highlight javascript %}
+// Подключение к серверу
+MDSWebsite.connect().then(function () {
+  // Чтение данных с сервера
+  return MDSWebsite.getAll({
+    path: 'path/to/data',
+    limit: 30,
+    offset: 60
+  });
+}).then(function (data) {
+  // Обработка данных
+  console.log(data.children);
+}, (function (err) {
+  // Обработка ошибок
+  console.error(err);
+});
+{% endhighlight %}
+  </p>
 </section>
 
 

@@ -30,7 +30,7 @@ https://api.web20site.com/v1/entities/метод?client_id=ид-приложен
 Пример ```GET``` запроса:
 
 ```
-https://api.web20site.com/v1/entities/get?client_id=234712341723841723&root=hello-world&path=
+https://api.web20site.com/v1/entities/get?client_id=adaa7639-7f7d-6060-9831-4432d004045f&root=hello-world&path=
 ```
 
 Этот запрос возвращает информацию с сайта ```hello-world```.
@@ -60,6 +60,24 @@ https://api.web20site.com/v1/entities/метод?client_id=ид-приложен
 ```
 Authorization: Barear токен-авторизации
 ```
+
+<br>
+
+Пример ```POST``` запроса в cURL:
+
+```
+curl -XPOST https://api.web20site.com/v1/entities/get?client_id=adaa7639-7f7d-6060-9831-4432d004045f -H 'Authorization: Barear ***' -d '{
+  "root": "hello-world",
+  "path": "translations",
+  "fields": [
+    "name": "english",
+    "value": "Hello, World!",
+    "type": "s"
+  ]
+}'
+```
+
+Этот запрос обновляет поле ```english``` элемента данных ```translations``` сайта ```hello-world```.
 
 <br>
 <br>
@@ -101,6 +119,9 @@ demo.login('google').then(function(args) {
 });
 {% endhighlight %}
 
+По-умолчанию, каждый сайт имеет объект ```MDSWebsite``` который уже инициализирован нужным ключём API. Подробнее от
+этом вы можете узнать в разделе [SDK](/ru/docs/api/websocket).
+
 <br>
 <br>
 
@@ -122,7 +143,7 @@ demo.login('google').then(function(args) {
       </div>
     </div>
     <div class="col-sm-8 col-md-9">
-     <div class="feature__subtitle endpoint_header__description">Получить элемент/корень</div>
+     <div class="feature__subtitle endpoint_header__description">Получить элемент</div>
     </div>
   </div>
   
@@ -206,11 +227,11 @@ demo.login('google').then(function(args) {
   <div class="row endpoint_header">
     <div class="col-sm-4 col-md-3">
       <div class="highlighter-rouge">
-        <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--post">POST</span> /change</code></pre>
+        <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--put">PUT</span> /change</code></pre>
       </div>
     </div>
     <div class="col-sm-8 col-md-9">
-      <p class="feature__subtitle">Создать элемент/корень</p>
+      <p class="feature__subtitle">Создать элемент</p>
     </div>
   </div>
   <div class="row">
@@ -281,15 +302,18 @@ demo.login('google').then(function(args) {
 
   </div>
 </section>
+
+
+
 <section class="page__section">
   <div class="row endpoint_header">
     <div class="col-sm-4 col-md-3">
       <div class="highlighter-rouge">
-        <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--put">PUT</span> /create</code></pre>
+        <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--post">PUT</span> /create</code></pre>
       </div>
     </div>
     <div class="col-sm-8 col-md-9">
-      <p class="feature__subtitle">Изменить элемент/корень</p>
+      <p class="feature__subtitle">Изменить элемент</p>
     </div>
   </div>
   
@@ -325,39 +349,46 @@ demo.login('google').then(function(args) {
   </div>
 </section>
 
+
+
 <section class="page__section">
-  <div class="row">
+  <div class="row endpoint_header">
     <div class="col-sm-4 col-md-3">
       <div class="highlighter-rouge">
-        <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--delete">DELETE</span> /</code></pre>
+        <pre class="highlight"><code><span class="highlight__request_type highlight__request_type--delete">DELETE</span> /create</code></pre>
       </div>
-      <p class="feature__subtitle">Удалить элемент/корень</p>
-      <p></p>
     </div>
     <div class="col-sm-8 col-md-9">
-      <div class="row">
-        <div class="col-sm-4 col-md-3">
-          <div class="highlighter__var">
-            <span class="highlight__var_type highlight__var_type--str">str</span> root
-          </div>
-        </div>
-        <div class="col-sm-8 col-md-9">
-          Имя корня
-        </div>
+      <p class="feature__subtitle">Удалить элемент</p>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-4 col-md-3">
+      <div class="highlighter__var">
+        <span class="highlight__var_type highlight__var_type--str">str</span> root
       </div>
-      <div class="row">
-        <div class="col-sm-4 col-md-3">
-          <div class="highlighter__var">
-            <span class="highlight__var_type highlight__var_type--str">str</span> path
-          </div>
-        </div>
-        <div class="col-sm-8 col-md-9">
-            Путь к элементу
-        </div>
+    </div>
+    <div class="col-sm-8 col-md-9">
+      Имя корня
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4 col-md-3">
+      <div class="highlighter__var">
+        <span class="highlight__var_type highlight__var_type--str">str</span> path
       </div>
+    </div>
+    <div class="col-sm-8 col-md-9">
+        Путь к элементу
     </div>
   </div>
 </section>
+
+
+
+
+{% comment %}
 
 <section class="page__section">
   <div class="row">
@@ -446,3 +477,5 @@ demo.login('google').then(function(args) {
     </div>
   </div>
 </section>
+
+{% endcomment %}
