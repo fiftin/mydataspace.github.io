@@ -318,6 +318,12 @@ $view-tag-flag-size: 16px;
   margin-top: 5px;
 }
 
+.view__description + .view__fields--filled,
+.view__description + .view__checks {
+  margin-top: 15px;
+  border-top: 1px solid #ebebeb;
+}
+
 .view__log_records {
   font-family: "Courier New";
   font-size: 16px;
@@ -482,7 +488,6 @@ $view-tag-flag-size: 16px;
   color: white;
   font-weight: bold;
   text-align: center;
-  margin-bottom: 5px;
 }
 
 .view__status--success {
@@ -496,8 +501,8 @@ $view-tag-flag-size: 16px;
 .view__checks {
   display: table;
   width: 100%;
-  padding: 0 5px;
   margin-bottom: 5px;
+  padding: 15px 5px 0;
 }
 
 .view__check-wrap {

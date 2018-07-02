@@ -1296,7 +1296,7 @@ EntityForm.prototype.setLogRecords = function(fields, ignoredFieldNames, addLabe
     addLabelIfNoFieldsExists = true;
   }
   var viewFields = document.getElementById('view__fields');
-  if (MDSCommon.isBlank(fields)) {
+  if (MDSCommon.isBlank(fields.filter(function (field) { return field.name.indexOf('$') != 0; }))) {
     viewFields.innerHTML =
       addLabelIfNoFieldsExists ?
       '<div class="view__no_fields_exists">' + STRINGS.NO_FIELDS + '</div>' :
@@ -1360,9 +1360,11 @@ EntityForm.prototype.setViewFields = function(data,
     addLabelIfNoFieldsExists = true;
   }
   var viewFields = document.getElementById('view__fields');
-  if (MDSCommon.isBlank(fields)) {
+  if (MDSCommon.isBlank(fields.filter(function (field) { return field.name !== 'description' && field.name.indexOf('$') != 0; }))) {
+    viewFields.classList.add('view__fields--empty');
     viewFields.innerHTML = addLabelIfNoFieldsExists ? EntityForm.getNoFieldsLabel(data.mine) : '';
   } else {
+    viewFields.classList.add('view__fields--filled');
     viewFields.innerHTML = '';
     var numberOfChildren = 0;
     if (comparer) {
