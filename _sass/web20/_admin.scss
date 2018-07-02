@@ -43,10 +43,15 @@
   top: 137px !important;
 }
 
-#view__page_link {
+#view__page_link, #view__website_link {
   position: absolute;
   right: 0;
   bottom: -7px;
+}
+
+#view__website_link {
+  padding: 0 10px !important;
+  margin-right: -10px;
 }
 
 .invisible {

@@ -1461,6 +1461,11 @@ EntityForm.prototype.setRootView = function(data) {
       document.getElementById('view__page_link').classList.remove('hidden');
     }
 
+    if (data.children.filter(function (child) { return child.path === 'website' }).length > 0) {
+      document.getElementById('view__website_link').href = 'https://' + data.root + SITE_SUPER_DOMAIN;
+      document.getElementById('view__website_link').classList.remove('hidden');
+    }
+
     if (tags && websiteURL) {
       document.getElementsByClassName('view__overview_image_wrap')[0].classList.add('view__overview_image_wrap--large');
       document.getElementById('view__overview_image').classList.add('view__overview_image--large');
