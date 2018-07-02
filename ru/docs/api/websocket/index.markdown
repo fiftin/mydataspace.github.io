@@ -21,9 +21,9 @@ language: ru
 
 SDK включает следующий набор класснов и глобальных объектов:
 
-* Объект ```MDSWebsite```
-* Класс ```MDSClient```
-* Статический класс ```MDSCommon```
+* Объект ```MDSWebsite``` &mdash; работа с сервером
+* Статический класс ```MDSConsole``` &mdash; работа с консолью из [кода выполняемого на сервере](/ru/docs/how-to-run-code).
+* Статический класс ```MDSCommon``` &mdash; вспомогательные методы
 
 <br />
 
@@ -287,3 +287,7 @@ MDSWebsite.once(
     </div>
   </div>
 </section>
+
+
+
+### Объект ```MDSConsole```
