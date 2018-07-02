@@ -23,38 +23,48 @@ page_content_class: page__content--800
     </div>
 </div>
 
-Вы можете хранить на сервере файлы размером до 100Мб.
+Вы можете хранить на сервере файлы размером до **100Мб**.
 
-Файлы в терминологии Web 2.0 Site называются ресурсами.
+Файлы в терминологии Web 2.0 Site называются **ресурсами**.
 
-Доступны 3 вида ресурсов:
+### Доступны 3 вида ресурсов:
 
-- <i class="fa fa-file"></i> **Файлы**
+- <i class="fa fa-file"></i> **Файлы** &mdash; любые файлы. После загрузки доступны по адресу сделующего формата:
 
   ```https://cdn.web20site.com/files/имя-ресурса.расширение-файла```
 
-- <i class="fa fa-image"></i> **Картинки**
+  Пример: [https://cdn.web20site.com/files/r14aBjDMX.json](https://cdn.web20site.com/files/r14aBjDMX.json)
 
-  файлы форматов jpg, png, bmp. Для них автоматичеси создаются уменьшенные копии 3 размеров:
+- <i class="fa fa-image"></i> **Картинки** &mdash; файлы форматов ```jpg```, ```png``` и ```bmp```. Для них автоматичеси создаются уменьшенные копии 3 размеров:
   
-  - ```ms```
-  - ```md```
-  - ```lg```
+  - ```ms``` &mdash; 100
+  - ```md``` &mdash; 500
+  - ```lg``` &mdash; 1000
+  
+  Все миниатюры не зависимо от исходного расширения имеют расширение ```jpg``` и доступны по адресу следующего формата:
   
   ```https://cdn.web20site.com/images/размер/имя-ресурса.jpg```
   
-  Пример: [https://cdn.web20site.com/images/md/U347344.jpg](https://cdn.web20site.com/images/md/U347344.jpg)
+  Пример: [https://cdn.web20site.com/images/md/HyrQl64fQ.jpg](https://cdn.web20site.com/images/md/HyrQl64fQ.jpg)
   
   
   
-- <i class="fa fa-user"></i> **Аватарки**
+- <i class="fa fa-user"></i> **Аватарки** &mdash; картинки, которые будут использоваться в качестве фотографии пользователя, продукта и т.п.
+    Для них автоматически создаются квадратные миниатюры 3 размеров:
     
-  - ```ms```
-  - ```md```
-  - ```lg```
+  - ```ms``` &mdash; 100x100 пикселей
+  - ```md``` &mdash; 200x100 пикселей
+  - ```lg``` &mdash; 300x100 пикселей
+  
+  Все миниатюры не зависимо от исходного расширения имеют расширение ```png``` и доступны по адресу следующего формата:
   
   ```https://cdn.web20site.com/avatars/размер/имя-ресурса.png```
+   
+  Пример: [https://cdn.web20site.com/avatars/md/HJ3pEM4z7.png](https://cdn.web20site.com/avatars/md/HJ3pEM4z7.png)
 
+<br>
+
+На скриншоте ниже показано как вы можете определить конечный URL ресурса:
 
 <div class="safari">
     <div class="safari__header">
@@ -69,3 +79,7 @@ page_content_class: page__content--800
     </div>
     <img class="safari__img" src="/images/docs/file-storage/resource-name-ru.png" />
 </div>
+
+<br>
+
+Для достижения высокой скорости загрузки используется [CDN](https://ru.wikipedia.org/wiki/Content_Delivery_Network).
