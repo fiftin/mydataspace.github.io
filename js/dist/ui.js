@@ -3507,7 +3507,7 @@ UILayout.windows.addRoot = {
           '</div>'
         },
         { view: 'text', id: 'NAME_LABEL', label: STRINGS.NAME, required: true, name: 'root', labelWidth: UIHelper.LABEL_WIDTH },
-        UIControls.getEntityTypeSelectTemplate(),
+        // UIControls.getEntityTypeSelectTemplate(),
         UIControls.getSubmitCancelForFormWindow('add_root')
       ]
     }
@@ -3646,7 +3646,7 @@ UILayout.windows.addTask = {
       },
       elements: [
         { view: 'text', required: true, id: 'NAME_LABEL_7', label: STRINGS.NAME, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
-        UIControls.getEntityTypeSelectTemplate(),
+        // UIControls.getEntityTypeSelectTemplate(),
         UIControls.getSubmitCancelForFormWindow('add_task')
       ]
     }
@@ -3770,7 +3770,7 @@ UILayout.windows.addResource = {
             }
           }
         },
-        UIControls.getEntityTypeSelectTemplate(),
+        // UIControls.getEntityTypeSelectTemplate(),
         UIControls.getSubmitCancelForFormWindow('add_resource')
       ]
     }

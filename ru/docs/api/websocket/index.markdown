@@ -21,8 +21,8 @@ language: ru
 
 SDK включает следующий набор класснов и глобальных объектов:
 
-* Объект ```MDSWebsite``` &mdash; работа с сервером
-* Статический класс ```MDSConsole``` &mdash; работа с консолью из [кода выполняемого на сервере](/ru/docs/how-to-run-code).
+* Объект ```MDSWebsite``` &mdash; работа с сервером: подключение, авторизация, доступ к данным.
+* Статический класс ```MDSConsole``` &mdash; Управление ходом выполнения программы из [кода выполняемого на сервере](/ru/docs/how-to-run-code).
 * Статический класс ```MDSCommon``` &mdash; вспомогательные методы
 
 <br />
@@ -32,7 +32,7 @@ SDK включает следующий набор класснов и глоб�
 Через него происходит взаимодействие с сервером:
 
 - Авторизация на сервере через социальные сети.
-- Запросы к данных через WebSocket.
+- Чтение и обновление данных на сервере через WebSocket.
 
 <section class="feature__section">
   <div class="row endpoint_header">
@@ -70,15 +70,26 @@ MDSWebsite.connect().then(function () {
 
 <section class="feature__section">
   <div class="row endpoint_header">
-    <div class="col-sm-4 col-md-3">
+    <div class="col-sm-5 col-md-4">
       <div class="highlighter-rouge">
-        <pre class="highlight"><code class="feature__method_name">login()</code></pre>
+        <pre class="highlight"><code class="feature__method_name">login([providerName])</code></pre>
       </div>
     </div>
-    <div class="col-sm-8 col-md-9">
+    <div class="col-sm-7 col-md-8">
       <p class="feature__subtitle endpoint_header__description">Подключиться к серверу и залогиниться</p>
     </div>
   </div>
+  <div class="row">
+    <div class="col-sm-4 col-md-3">
+      <div class="highlighter__var">
+        <span class="highlight__var_type highlight__var_type--str">str</span> [providerName]
+      </div>
+    </div>
+    <div class="col-sm-8 col-md-9">
+      Название метода
+    </div>
+  </div>
+  
   <p>
     <div class="feature__code_example">Пример</div>
 {% highlight javascript %}
@@ -104,146 +115,153 @@ MDSWebsite.login().then(function () {
 
 
 
-
 <section class="feature__section">
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-sm-5 col-md-4">
       <div class="highlighter-rouge">
         <pre class="highlight"><code class="feature__method_name">request(eventName, data)</code></pre>
       </div>
-      <p class="feature__subtitle">Отправить запрос на сервер</p>
-      <p></p>
     </div>
-    <div class="col-md-8">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="highlighter__var">
-            <span class="highlight__var_type highlight__var_type--str">str</span> eventName
-          </div>
-        </div>
-        <div class="col-md-8">
-          Название метода
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="highlighter__var">
-            <span class="highlight__var_type highlight__var_type--array">obj</span> data
-          </div>
-        </div>
-        <div class="col-md-8">
-          Полнотектовый поиск дочерних элементов
-        </div>
-      </div>
-      <div class="feature__code_example">Пример</div>
-{% highlight javascript %}
-const data =
-  await MDSWebsite.request(
-    'entities.get', {
-      root: 'hello-world',
-      path: 'data',
-      children: true
-    });
-{% endhighlight %}
+    <div class="col-sm-7 col-md-8">
+      <p class="feature__subtitle endpoint_header__description">Отправить запрос на сервер</p>
     </div>
   </div>
+  
+  <div class="row">
+    <div class="col-sm-4 col-md-3">
+      <div class="highlighter__var">
+        <span class="highlight__var_type highlight__var_type--str">str</span> eventName
+      </div>
+    </div>
+    <div class="col-sm-8 col-md-9">
+      Название метода
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-4 col-md-3">
+      <div class="highlighter__var">
+        <span class="highlight__var_type highlight__var_type--array">obj</span> data
+      </div>
+    </div>
+    <div class="col-sm-8 col-md-9">
+      Полнотектовый поиск дочерних элементов
+    </div>
+  </div>
+  <div class="feature__code_example">Пример</div>
+{% highlight javascript %}
+MDSWebsite.request('entities.get', {
+  root: 'hello-world',
+  path: 'data',
+  children: true
+}).then(function (data) {
+  console.log(data.childen);
+}, function (err) {
+  console.error(err);
+});
+{% endhighlight %}
 </section>
+
+
 
 <section class="feature__section">
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-sm-5 col-md-4">
       <div class="highlighter-rouge">
         <pre class="highlight"><code class="feature__method_name">emit(eventName, data)</code></pre>
       </div>
-      <p class="feature__subtitle">Отправить событие на сервер</p>
-      <p></p>
     </div>
-    <div class="col-md-8">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="highlighter__var">
-            <span class="highlight__var_type highlight__var_type--str">str</span> eventName
-          </div>
-        </div>
-        <div class="col-md-8">
-          Название метода
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="highlighter__var">
-            <span class="highlight__var_type highlight__var_type--array">obj</span> data
-          </div>
-        </div>
-        <div class="col-md-8">
-          Полнотектовый поиск дочерних элементов
-        </div>
-      </div>
-      <div class="feature__code_example">Пример</div>
-{% highlight javascript %}
-MDSWebsite.emit(
-  'entities.delete', {
-    root: 'hello-world',
-    path: 'data'
-  });
-{% endhighlight %}
+    <div class="col-sm-7 col-md-8">
+      <p class="feature__subtitle endpoint_header__description">Отправить событие на сервер</p>
     </div>
   </div>
+  
+  <div class="row">
+    <div class="col-sm-4 col-md-3">
+      <div class="highlighter__var">
+        <span class="highlight__var_type highlight__var_type--str">str</span> eventName
+      </div>
+    </div>
+    <div class="col-sm-8 col-md-9">
+      Название метода
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-4 col-md-3">
+      <div class="highlighter__var">
+        <span class="highlight__var_type highlight__var_type--array">obj</span> data
+      </div>
+    </div>
+    <div class="col-sm-8 col-md-9">
+      Полнотектовый поиск дочерних элементов
+    </div>
+  </div>
+  <div class="feature__code_example">Пример</div>
+{% highlight javascript %}
+MDSWebsite.emit('entities.delete', {
+  root: 'hello-world',
+  path: 'data'
+});
+{% endhighlight %}
 </section>
+
 
 <section class="feature__section">
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-sm-5 col-md-4">
       <div class="highlighter-rouge">
         <pre class="highlight"><code class="feature__method_name">on(eventName, callback)</code></pre>
       </div>
+    </div>
+    <div class="col-sm-7 col-md-5">
       <p class="feature__subtitle">Обрабатывать событие с сервера</p>
     </div>
-    <div class="col-md-8">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="highlighter__var">
-            <span class="highlight__var_type highlight__var_type--str">str</span> eventName
-          </div>
-        </div>
-        <div class="col-md-8">
-          Название события
-        </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-4 col-md-3">
+      <div class="highlighter__var">
+        <span class="highlight__var_type highlight__var_type--str">str</span> eventName
       </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="highlighter__var">
-            <span class="highlight__var_type highlight__var_type--function">fun</span> callback
-          </div>
-        </div>
-        <div class="col-md-8">
-          Фукция которая выполнится при выполнении события
-        </div>
-      </div>
-      <p>
-        Подписаться на получение события с сервера можно только
-        после того как соединение будет установлено. Подписываться на
-        получение события необходимо при каждом подключении к серверу.
-      </p>
-      <p>
-        Исключениями являются следующие события:
-        <ul>
-          <li><code>connected</code></li>
-          <li><code>login</code></li>
-          <li><code>logout</code></li>
-        </ul>
-        Начать обрабатывать эти события вы можете до подлючения к серверу и
-        подписаться на них достаточно один раз.
-      </p>
-      <div class="feature__code_example">Пример</div>
-{% highlight javascript %}
-MDSWebsite.on(
-  'entities.delete.res', function (data) {
-    
-  });
-{% endhighlight %}
+    </div>
+    <div class="col-sm-8 col-md-9">
+      Название события
     </div>
   </div>
+  
+  <div class="row">
+    <div class="col-sm-4 col-md-3">
+      <div class="highlighter__var">
+        <span class="highlight__var_type highlight__var_type--function">fun</span> callback
+      </div>
+    </div>
+    <div class="col-sm-8 col-md-9">
+      Фукция которая выполнится при выполнении события
+    </div>
+  </div>
+  <p>
+    Подписаться на получение события с сервера можно только
+    после того как соединение будет установлено. Подписываться на
+    получение события необходимо при каждом подключении к серверу.
+  </p>
+  <p>
+    Исключениями являются следующие события:
+    <ul>
+      <li><code>connected</code></li>
+      <li><code>login</code></li>
+      <li><code>logout</code></li>
+    </ul>
+    Начать обрабатывать эти события вы можете до подлючения к серверу и
+    подписаться на них достаточно один раз.
+  </p>
+  <div class="feature__code_example">Пример</div>
+{% highlight javascript %}
+MDSWebsite.on('entities.delete.res', function (data) {
+    console.log(data);
+});
+{% endhighlight %}
+
 </section>
 
 

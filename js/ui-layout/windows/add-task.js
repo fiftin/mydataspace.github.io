@@ -35,7 +35,7 @@ UILayout.windows.addTask = {
       },
       elements: [
         { view: 'text', required: true, id: 'NAME_LABEL_7', label: STRINGS.NAME, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
-        UIControls.getEntityTypeSelectTemplate(),
+        // UIControls.getEntityTypeSelectTemplate(),
         UIControls.getSubmitCancelForFormWindow('add_task')
       ]
     }

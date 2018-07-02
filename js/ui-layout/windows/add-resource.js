@@ -73,7 +73,7 @@ UILayout.windows.addResource = {
             }
           }
         },
-        UIControls.getEntityTypeSelectTemplate(),
+        // UIControls.getEntityTypeSelectTemplate(),
         UIControls.getSubmitCancelForFormWindow('add_resource')
       ]
     }
