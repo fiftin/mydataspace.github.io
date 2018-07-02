@@ -29,6 +29,11 @@ SDK включает следующий набор класснов и глоб�
 
 ### Объект ```MDSWebsite```
 
+Через него происходит взаимодействие с сервером:
+
+- Авторизация на сервере через социальные сети.
+- Запросы к данных через WebSocket.
+
 <section class="feature__section">
   <div class="row endpoint_header">
     <div class="col-sm-4 col-md-3">
@@ -63,26 +68,39 @@ MDSWebsite.connect().then(function () {
 </section>
 
 
-
-
-
 <section class="feature__section">
-  <div class="row">
-    <div class="col-md-4">
+  <div class="row endpoint_header">
+    <div class="col-sm-4 col-md-3">
       <div class="highlighter-rouge">
         <pre class="highlight"><code class="feature__method_name">login()</code></pre>
       </div>
-      <p class="feature__subtitle">Подключиться к серверу и залогиниться</p>
-      <p></p>
     </div>
-    <div class="col-md-8">
-      <div class="feature__code_example">Пример</div>
-{% highlight javascript %}
-await MDSWebsite.login();
-{% endhighlight %}
+    <div class="col-sm-8 col-md-9">
+      <p class="feature__subtitle endpoint_header__description">Подключиться к серверу и залогиниться</p>
     </div>
   </div>
+  <p>
+    <div class="feature__code_example">Пример</div>
+{% highlight javascript %}
+// Подключение к серверу
+MDSWebsite.login().then(function () {
+  // Обновление данных на сервера
+  return MDSWebsite.getAll({
+    path: 'path/to/data',
+    limit: 30,
+    offset: 60
+  });
+}).then(function (data) {
+  // Обработка результата
+  console.log(data.children);
+}, (function (err) {
+  // Обработка ошибок
+  console.error(err);
+});
+{% endhighlight %}
+  </p>
 </section>
+
 
 
 

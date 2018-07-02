@@ -295,6 +295,8 @@ get_started:
         type: code
         height: 450
 docs:
+  - id: dashboard
+    title: Панель управления
   #- id: import-of-data
   #  title: Загрузка данных
   - id: api

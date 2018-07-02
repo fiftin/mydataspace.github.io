@@ -171,3 +171,13 @@
 .endpoint_header__description {
   margin-top: 10px;
 }
+
+
+.page__content--800 {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  img {
+    max-width: 100%;
+  }
+}
