@@ -1426,9 +1426,15 @@ EntityForm.prototype.startEditing = function () {
 };
 
 EntityForm.prototype.setRootView = function(data) {
+  var self = this;
   var completeness = MDSCommon.getRootDataCompleteness(data);
   var language = (getCurrentLanguage() || 'en').toLowerCase();
   var languagePrefix = language === 'en' ? '' : '/' + language;
+
+  if (self.viewWebsiteLinkDisabledTimeout) {
+    clearTimeout(self.viewWebsiteLinkDisabledTimeout);
+    delete self.viewWebsiteLinkDisabledTimeout;
+  }
 
   $.ajax({ url: languagePrefix + '/fragments/root-view.html', method: 'get' }).then(function(html) {
     var view = document.getElementById('view');
@@ -1462,8 +1468,31 @@ EntityForm.prototype.setRootView = function(data) {
     }
 
     if (data.children.filter(function (child) { return child.path === 'website' }).length > 0) {
-      document.getElementById('view__website_link').href = 'https://' + data.root + SITE_SUPER_DOMAIN;
-      document.getElementById('view__website_link').classList.remove('hidden');
+      var websiteLink = document.getElementById('view__website_link');
+      websiteLink.href = 'https://' + data.root + SITE_SUPER_DOMAIN;
+      websiteLink.classList.remove('hidden');
+      websiteLink.setAttribute('data-root', data.root);
+      var rootTime = new Date().getTime() - new Date(data.createdAt).getTime();
+      if (rootTime < 60000) {
+        websiteLink.setAttribute('disabled', 'disabled');
+        websiteLink.classList.add('disabled');
+
+        document.getElementById('view__website_link__icon').classList.remove('fa-globe');
+        document.getElementById('view__website_link__icon').classList.add('fa-cog');
+        document.getElementById('view__website_link__icon').classList.add('fa-spin');
+
+        self.viewWebsiteLinkDisabledTimeout = setTimeout(function () {
+          var websiteLink2 = document.getElementById('view__website_link');
+          if (websiteLink2 && websiteLink2.getAttribute('data-root') === data.root) {
+            websiteLink.removeAttribute('disabled');
+            websiteLink.classList.remove('disabled');
+
+            document.getElementById('view__website_link__icon').classList.add('fa-globe');
+            document.getElementById('view__website_link__icon').classList.remove('fa-cog');
+            document.getElementById('view__website_link__icon').classList.remove('fa-spin');
+          }
+        }, rootTime);
+      }
     }
 
     if (tags && websiteURL) {
@@ -1506,7 +1535,7 @@ EntityForm.prototype.setRootView = function(data) {
       document.getElementById('view__readme').style.display = 'block';
     }
     document.getElementById('view__readme').innerHTML = md.render(readme);
-    var viewFields = this.setViewFields(data,
+    var viewFields = self.setViewFields(data,
                                         ['name',
                                          'avatar',
                                          'description',
@@ -1539,7 +1568,7 @@ EntityForm.prototype.setRootView = function(data) {
       $('#view__blank_root_edit_button').text(STRINGS.blank_root_edit_button);
     }
 
-  }.bind(this));
+  });
 };
 
 EntityForm.prototype.setScriptEditValue = function (value) {
@@ -5333,14 +5362,6 @@ UI = {
         item.innerHTML = noItemsHTML;
       }
     }
-
-    var languageSuffix = (getCurrentLanguage() || 'EN').toLowerCase();
-    if (languageSuffix === 'en') {
-      languageSuffix = '';
-    } else {
-      languageSuffix = '-' + languageSuffix;
-    }
-    no_items__selectTemplate('basic-pug' + languageSuffix);
   },
 
   /**

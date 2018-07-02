@@ -159,14 +159,6 @@ UI = {
         item.innerHTML = noItemsHTML;
       }
     }
-
-    var languageSuffix = (getCurrentLanguage() || 'EN').toLowerCase();
-    if (languageSuffix === 'en') {
-      languageSuffix = '';
-    } else {
-      languageSuffix = '-' + languageSuffix;
-    }
-    no_items__selectTemplate('basic-pug' + languageSuffix);
   },
 
   /**
