@@ -1493,7 +1493,7 @@ EntityForm.prototype.setRootView = function(data) {
             document.getElementById('view__website_link__icon').classList.remove('fa-cog');
             document.getElementById('view__website_link__icon').classList.remove('fa-spin');
           }
-        }, rootTime);
+        }, 60000 - rootTime);
       }
     }
 
