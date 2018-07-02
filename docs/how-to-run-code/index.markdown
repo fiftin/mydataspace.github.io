@@ -4,4 +4,4 @@ title: Running code on server
 language: en
 ---
 
-### Coming Soon
+<script>location.href = '/ru/docs/how-to-run-code';</script>

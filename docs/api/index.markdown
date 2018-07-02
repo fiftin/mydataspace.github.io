@@ -4,4 +4,4 @@ title: Client API
 language: en
 ---
 
-### Coming Soon
+<script>location.href = '/ru/docs/api';</script>

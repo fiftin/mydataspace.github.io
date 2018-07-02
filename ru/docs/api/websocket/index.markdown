@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Описание API
+title: JavaScript SDK
 language: ru
 ---
 

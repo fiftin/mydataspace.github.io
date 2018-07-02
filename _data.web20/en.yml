@@ -258,6 +258,8 @@ get_started:
         id: jrPQwR
 
 docs:
+  - id: dashboard
+    title: Dashboard
   #- id: import-of-data
   #  title: Data Import
   - id: api

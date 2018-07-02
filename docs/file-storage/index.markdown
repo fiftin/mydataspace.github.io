@@ -4,4 +4,4 @@ title: File Storage
 language: en
 ---
 
-### Coming Soon
+<script>location.href = '/ru/docs/file-storage';</script>

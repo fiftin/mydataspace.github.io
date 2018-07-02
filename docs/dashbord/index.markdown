@@ -4,4 +4,4 @@ title: Dashboard
 language: en
 ---
 
-### Coming Soon
+<script>location.href = '/ru/docs/dashboard';</script>
