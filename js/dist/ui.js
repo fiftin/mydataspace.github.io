@@ -389,6 +389,7 @@ UIHelper = {
     escape.textContent = value;
     return escape.innerHTML;
   },
+
   /**
    *
    * @param {string} id
@@ -481,7 +482,7 @@ UIHelper = {
       return icon;
     }
     if (isEmpty) {
-      return 'file-o';
+      return isOpened ? 'folder-open-o' : 'folder-o';
     } else {
       return isOpened ? 'folder-open' : 'folder';
     }
@@ -571,6 +572,15 @@ UIHelper = {
       $$(id).getList().clearAll();
       $$(id).getList().parse(options);
     });
+  },
+
+  isDataHasFiles: function (data) {
+    for (var i in data.fields) {
+      if (data.fields[i].name.indexOf('.') >= 0) {
+        return true;
+      }
+    }
+    return false;
   }
 };
 
@@ -763,7 +773,8 @@ var Identity = {
   entityFromData: function(data) {
     var entityId = Identity.idFromData(data);
     var children;
-    if (!MDSCommon.isBlank(data.numberOfChildren) && data.numberOfChildren > 0) {
+
+    if (!MDSCommon.isBlank(data.numberOfChildren) && data.numberOfChildren > 0 || UIHelper.isDataHasFiles(data)) {
       if (MDSCommon.isPresent(data.children)) {
         children = data.children.filter(function(x) {
           return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS.indexOf(x.path) < 0;
@@ -846,7 +857,14 @@ var Identity = {
     }
   },
 
-  dataFromId: function(id) {
+  dataFromId: function(id, options) {
+    if (!options) {
+      options = {};
+    }
+
+    var fileIdParts = id.split('#');
+    id = fileIdParts[0];
+
     var idVersionParts = id.split('?');
     var idParts = idVersionParts[0].split(':');
     var ret = {
@@ -856,6 +874,10 @@ var Identity = {
     
     if (MDSCommon.isInt(idVersionParts[1])) {
       ret.version = parseInt(idVersionParts[1]);
+    }
+
+    if (fileIdParts[1] && !options.ignoreField) {
+      ret.fields = [fileIdParts[1]];
     }
 
     return ret;
@@ -922,7 +944,28 @@ var Identity = {
 
   isRootId: function(id) {
     return MDSCommon.isPresent(id) && id.indexOf(':') < 0;
+  },
+
+  getFileNameFromId: function (id) {
+    var i = id.indexOf('#');
+    if (i === -1) {
+      throw new Error('Id has no file');
+    }
+    return id.substr(i + 1);
+  },
+
+  getEntityIdFromFileId: function (id) {
+    var i = id.indexOf('#');
+    if (i === -1) {
+      return id;
+    }
+    return id.substr(0, i);
+  },
+
+  isFileId: function (id) {
+    return id.indexOf('#') >= 0;
   }
+
 };
 
 UIControls = {
@@ -1189,7 +1232,7 @@ UIControls = {
     switch (path) {
       case '':
         return [
-          {id: 'new_entity', value: STRINGS.new_entity, icon: 'file-o'},
+          {id: 'new_entity', value: STRINGS.new_entity, icon: 'folder-o'},
           //{id: 'import_wizard', value: STRINGS.import_entity},
           //{id: 'add_website', value: STRINGS.add_website, icon: 'globe'},
           {id: 'new_resource', value: STRINGS.new_resource, icon: 'diamond'},
@@ -1210,7 +1253,7 @@ UIControls = {
         ];
       default:
         return [
-          {id: 'new_entity', value: STRINGS.new_entity, icon: 'file-o'},
+          {id: 'new_entity', value: STRINGS.new_entity, icon: 'folder-o'},
           //{id: 'import_wizard', value: STRINGS.import_entity}
         ];
     }
@@ -1352,7 +1395,9 @@ EntityForm.prototype.setViewFields = function(data,
                                               addLabelIfNoFieldsExists,
                                               comparer,
                                               classResolver) {
-  var fields = data.fields;
+
+  var fields = data.fields.filter(function (field) { return field.name.indexOf('.') === -1; });
+
   if (!Array.isArray(ignoredFieldNames)) {
     ignoredFieldNames = [];
   }
@@ -1819,19 +1864,21 @@ EntityForm.prototype.setData = function(data) {
   this.clear();
   $$('entity_form').setValues(formData);
 
+  var fields = data.fields.filter(function (field) { return field.name.indexOf('.') === -1; });
+
   if (MDSCommon.isBlank(data.path)) { // root entity
     // add fields from ROOT_FIELDS if not exists in data.fields
     for (var i in UIConstants.ROOT_FIELDS) {
       var field = UIConstants.ROOT_FIELDS[i];
       if (!MDSCommon.findByName(data.fields, field)) {
-        data.fields.push({ name: field, value: '', type: UIConstants.ROOT_FIELDS_TYPES[field] });
+        fields.push({ name: field, value: '', type: UIConstants.ROOT_FIELDS_TYPES[field] });
       }
     }
 
-    this.addRootFields(data.fields);
+    this.addRootFields(fields);
   } else {
     this.setNoFieldLabelVisible(true);
-    this.addFields(data.fields, false, UIHelper.getEntityTypeByPath(data.path));
+    this.addFields(fields, false, UIHelper.getEntityTypeByPath(data.path));
   }
   this.setClean();
   $$('entity_view').hide();
@@ -2010,7 +2057,7 @@ EntityForm.prototype.addFields = function(fields, setDirty, type) {
 
   for (var i in fields) {
     var field = fields[i];
-    if (field.name.indexOf('$') === 0) {
+    if (field.name.indexOf('$') === 0 || field.name.indexOf('.') >= 0) {
       continue;
     }
 
@@ -2869,10 +2916,24 @@ EntityTree.prototype.resolveChildren = function(id) {
     // Load children to first time opened node.
     Mydataspace.request('entities.get', MDSCommon.extend(Identity.dataFromId(id), { children: true }), function(data) {
       var entityId = Identity.idFromData(data);
+
+      var files = data.fields.filter(function (field) { return field.name.indexOf('.') >= 0; }).map(function (field) {
+        return {
+          id: entityId + '#' + field.name,
+          value: field.name,
+          associatedData: {},
+          data: {}
+        };
+      });
+
       var children = data.children.filter(function(x) {
         return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS.indexOf(x.path) < 0;
       }).map(Identity.entityFromData);
-      UI.entityTree.setChildren(entityId, children);
+
+
+
+      UI.entityTree.setChildren(entityId, files.concat(children));
+
       resolve();
     }, function(err) {
       reject(err);
@@ -4637,8 +4698,8 @@ UILayout.header =
     height: UILayout.HEADER_HEIGHT
   };
 
-UILayout.entityTree =
-{ id: 'my_data_panel__left_panel',
+UILayout.entityTree = {
+  id: 'my_data_panel__left_panel',
   gravity: 0.2,
   hidden: window.parent !== window || webix.without_header,
   rows: [
@@ -4715,8 +4776,15 @@ UILayout.entityTree =
       select: true,
       template:function(obj, common) {
         var path = Identity.dataFromId(obj.id).path;
+
         var isTopLevelEntity = path.indexOf('/') < 0 && UIConstants.SYSTEM_PATHS.indexOf(path) < 0;
-        if (path === '') { // root
+        if (obj.id.indexOf('#') >= 0) {
+
+          return common.icon(obj, common) +
+            '<div class="webix_tree_folder_open fa fa-file-o webix_tree_folder_open--file"></div>' +
+            '<span class="webix_tree_item__name webix_tree_item__name--file">' + obj.value + '</span>';
+
+        } else if (path === '') { // root
           if (!obj.associatedData.fields) {
             obj.associatedData.fields = [];
           }
@@ -4750,7 +4818,11 @@ UILayout.entityTree =
                '<div class="webix_tree_folder_open fa fa-' + icon + '"></div>' +
                '<span class="webix_tree_item__name ' + (isTopLevelEntity ? ' webix_tree_item__name--top' : '') + '">' + obj.value + '</span>';
       },
+
       on: {
+        onBeforeContextMenu: function (id) {
+          this.select(id);
+        },
         onAfterLoad: function() {
           if (!UI.entityTree.getCurrentId()) {
             UI.entityTree.setCurrentIdToFirst();
@@ -4765,6 +4837,59 @@ UILayout.entityTree =
           var id = ids[0];
           if (UIHelper.isTreeShowMore(id)) {
             $$('entity_tree').select(UI.entityTree.getCurrentId());
+          } else if (Identity.isFileId(id)) {
+            if (!$$('script_editor_' + id)) {
+              $$('$tabbar1').show();
+              $$('script_editor').addView({
+                header: Identity.getFileNameFromId(id),
+                close: true,
+                css: 'script_editor__tab',
+                body: {
+                  id: 'script_editor_' + id,
+                  view: 'ace-editor',
+                  mode: 'javascript',
+                  show_hidden: true,
+                  on: {
+                    onReady: function(editor) {
+                      editor.getSession().setTabSize(2);
+                      editor.getSession().setUseSoftTabs(true);
+                      // editor.setReadOnly(true);
+                      editor.getSession().setUseWorker(false);
+                      editor.commands.addCommand({
+                        name: 'save',
+                        bindKey: { win: 'Ctrl-S' },
+                        exec: function(editor) {
+                          // TODO: save file
+                          // TODO: lock editor
+                          var request = MDSCommon.extend(Identity.dataFromId(id, { ignoreField: true }), {
+                            fields: [{
+                              name: Identity.getFileNameFromId(id),
+                              type: 'j',
+                              value: editor.getValue()
+                            }]
+                          });
+                          Mydataspace.request('entities.change', request).then(function (data) {
+                            // TODO: unlock editor
+                          }, function (err) {
+                            // TODO: handle sating error
+                          });
+                        }
+                      });
+                    }
+                  }
+                }
+              });
+
+              Mydataspace.request('entities.get', Identity.dataFromId(id)).then(function (data) {
+                $$('script_editor_' + id).setValue(data.fields[0].value);
+              });
+            }
+            $$('script_editor').show();
+            $$('script_editor_' + id).show();
+            var fileParentId = Identity.getEntityIdFromFileId(id);
+            UI.entityTree.setCurrentId(fileParentId);
+            UI.entityList.setRootId(fileParentId);
+            UI.entityForm.setSelectedId(fileParentId);
           } else {
             UI.entityTree.setCurrentId(id);
             UI.entityList.setRootId(id);
@@ -4782,6 +4907,37 @@ UILayout.entityTree =
   ]
 };
 
+
+UILayout.entityTreeMenu = {
+  view: 'contextmenu',
+  id: 'entity_tree__menu',
+  css: 'entity_tree__menu',
+  data:[
+    //'New File',
+    //'New Entity',
+    'Rename',
+    'Delete'
+  ],
+  on: {
+    onShow: function () {
+      var id = $$('entity_tree').getSelectedId();
+      if (Identity.isRootId(id)) {
+
+      } else if (Identity.isFileId(id)) {
+
+      } else {
+
+      }
+    },
+
+    onItemClick: function (id) {
+      var context = this.getContext();
+      var list = context.obj;
+      var listId = context.id;
+      webix.message("List item: <i>" + list.getItem(listId).title + "</i> <br/>Context menu item: <i>" + this.getItem(id).value + "</i>");
+    }
+  }
+};
 UILayout.entityList =
 { id: 'my_data_panel__central_panel',
   gravity: 0.4,
@@ -4824,7 +4980,13 @@ UILayout.entityList =
               // UI.entityList.refresh();
             }
           }
-        }
+        },
+        { view: 'button',
+          type: 'icon',
+          icon: 'edit',
+          width: 40,
+          click: function() { $$('script_editor').show(); }
+        },
       ]
     },
     { view: 'template',
@@ -5651,6 +5813,9 @@ UI = {
     webix.ui(UILayout.windows.changeVersion);
     webix.ui(UILayout.windows.addVersion);
     webix.ui(UILayout.windows.addWebsite);
+
+    webix.ui(UILayout.entityTreeMenu);
+
     if (!withHeader) {
       UILayout.sideMenu.hidden = true;
       UILayout.sideMenu.height = 100;
@@ -5677,7 +5842,20 @@ UI = {
       });
     }
 
-    dataPanels.push(UILayout.entityList);
+    dataPanels.push({
+      view: 'tabview',
+      css: 'script_editor',
+      tabbar: {
+        height: 30,
+        hidden: true
+      },
+      id: 'script_editor',
+      cells: [{
+        header: 'Entities and Files',
+        body: UILayout.entityList
+      }]
+    });
+
     dataPanels.push({
       id: 'my_data_panel__resizer_2',
       view: 'resizer'
@@ -5688,13 +5866,14 @@ UI = {
       cols: dataPanels
     });
 
-
     webix.ui({
       id: 'admin_panel',
       container: 'admin_panel',
       height: webix.without_header ? window.innerHeight - (50 + 85) : window.innerHeight,
       rows: rows
     });
+
+    $$('entity_tree__menu').attachTo($$('entity_tree'));
 
     UI.updateSizes();
 
@@ -5707,25 +5886,24 @@ UI = {
       return false;
     });
 
-    function updateTreeSearchScope() {
-      // if (Router.isRoot() || Router.isFilterByName()) {
-      //   $$('entity_tree__root_scope').define('icon', 'database');
-      //   $$('entity_tree__search').setValue(Router.getSearch(true));
-      // } else if ((Router.isEmpty() || Router.isMe())) {
-      //   $$('entity_tree__root_scope').define('icon', 'user');
-      //   $$('entity_tree__search').setValue(Router.getSearch());
-      // } else {
-      //   $$('entity_tree__root_scope').define('icon', 'globe');
-      //   $$('entity_tree__search').setValue(Router.getSearch());
-      // }
-      // $$('entity_tree__root_scope').refresh();
-    }
-
-    updateTreeSearchScope();
+    //function updateTreeSearchScope() {
+    //  // if (Router.isRoot() || Router.isFilterByName()) {
+    //  //   $$('entity_tree__root_scope').define('icon', 'database');
+    //  //   $$('entity_tree__search').setValue(Router.getSearch(true));
+    //  // } else if ((Router.isEmpty() || Router.isMe())) {
+    //  //   $$('entity_tree__root_scope').define('icon', 'user');
+    //  //   $$('entity_tree__search').setValue(Router.getSearch());
+    //  // } else {
+    //  //   $$('entity_tree__root_scope').define('icon', 'globe');
+    //  //   $$('entity_tree__search').setValue(Router.getSearch());
+    //  // }
+    //  // $$('entity_tree__root_scope').refresh();
+    //}
+    //updateTreeSearchScope();
 
     $(window).on('hashchange', function() {
       UI.pages.refreshPage('data', true);
-      updateTreeSearchScope();
+      // updateTreeSearchScope();
     });
 
     if (withHeader) {

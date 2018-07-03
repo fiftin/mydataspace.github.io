@@ -262,7 +262,7 @@ UIControls = {
     switch (path) {
       case '':
         return [
-          {id: 'new_entity', value: STRINGS.new_entity, icon: 'file-o'},
+          {id: 'new_entity', value: STRINGS.new_entity, icon: 'folder-o'},
           //{id: 'import_wizard', value: STRINGS.import_entity},
           //{id: 'add_website', value: STRINGS.add_website, icon: 'globe'},
           {id: 'new_resource', value: STRINGS.new_resource, icon: 'diamond'},
@@ -283,7 +283,7 @@ UIControls = {
         ];
       default:
         return [
-          {id: 'new_entity', value: STRINGS.new_entity, icon: 'file-o'},
+          {id: 'new_entity', value: STRINGS.new_entity, icon: 'folder-o'},
           //{id: 'import_wizard', value: STRINGS.import_entity}
         ];
     }

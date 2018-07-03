@@ -154,6 +154,10 @@ input:read-only {
   color: $brand-bg !important;
 }
 
+.webix_tree_folder_open--file {
+  color: orange !important;
+}
+
 // .webix_tree_folder_open--root {
 //   background-image: url(/images/icons/root.svg);
 // }
@@ -699,6 +703,10 @@ $entity-form-field-type-button-width: 29px;
   font-weight: bold;
 }
 
+.webix_tree_item__name--file {
+  //color: orange;
+}
+
 .entity_list__show_more_item .entity_list__item_name {
   float: none;
 }
@@ -1032,4 +1040,44 @@ input {
 
 #view__counters {
   display: none !important;
+}
+
+
+.webix_point_top,
+.webix_point_bottom {
+  display: none;
+}
+
+.entity_tree__menu {
+  height: auto !important;
+  .webix_win_content {
+    padding: 0 !important;
+    a {
+      color: $text-color !important;
+    }
+  }
+}
+
+.script_editor {
+
+}
+.webix_view.webix_control.webix_el_tabbar {
+  background: #c8d1d8 !important;
+  margin-bottom: -1px;
+}
+
+.webix_item_tab {
+  max-width: 170px;
+  display: block;
+}
+
+.webix_item_tab.webix_selected {
+  //padding-bottom: 4px;
+}
+
+.webix_multiview {
+  background: $toolbar-bg !important;
+  .ace_editor {
+    margin-top: 2px;
+  }
 }

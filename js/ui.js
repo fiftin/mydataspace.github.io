@@ -446,6 +446,9 @@ UI = {
     webix.ui(UILayout.windows.changeVersion);
     webix.ui(UILayout.windows.addVersion);
     webix.ui(UILayout.windows.addWebsite);
+
+    webix.ui(UILayout.entityTreeMenu);
+
     if (!withHeader) {
       UILayout.sideMenu.hidden = true;
       UILayout.sideMenu.height = 100;
@@ -472,7 +475,20 @@ UI = {
       });
     }
 
-    dataPanels.push(UILayout.entityList);
+    dataPanels.push({
+      view: 'tabview',
+      css: 'script_editor',
+      tabbar: {
+        height: 30,
+        hidden: true
+      },
+      id: 'script_editor',
+      cells: [{
+        header: 'Entities and Files',
+        body: UILayout.entityList
+      }]
+    });
+
     dataPanels.push({
       id: 'my_data_panel__resizer_2',
       view: 'resizer'
@@ -483,13 +499,14 @@ UI = {
       cols: dataPanels
     });
 
-
     webix.ui({
       id: 'admin_panel',
       container: 'admin_panel',
       height: webix.without_header ? window.innerHeight - (50 + 85) : window.innerHeight,
       rows: rows
     });
+
+    $$('entity_tree__menu').attachTo($$('entity_tree'));
 
     UI.updateSizes();
 
@@ -502,25 +519,24 @@ UI = {
       return false;
     });
 
-    function updateTreeSearchScope() {
-      // if (Router.isRoot() || Router.isFilterByName()) {
-      //   $$('entity_tree__root_scope').define('icon', 'database');
-      //   $$('entity_tree__search').setValue(Router.getSearch(true));
-      // } else if ((Router.isEmpty() || Router.isMe())) {
-      //   $$('entity_tree__root_scope').define('icon', 'user');
-      //   $$('entity_tree__search').setValue(Router.getSearch());
-      // } else {
-      //   $$('entity_tree__root_scope').define('icon', 'globe');
-      //   $$('entity_tree__search').setValue(Router.getSearch());
-      // }
-      // $$('entity_tree__root_scope').refresh();
-    }
-
-    updateTreeSearchScope();
+    //function updateTreeSearchScope() {
+    //  // if (Router.isRoot() || Router.isFilterByName()) {
+    //  //   $$('entity_tree__root_scope').define('icon', 'database');
+    //  //   $$('entity_tree__search').setValue(Router.getSearch(true));
+    //  // } else if ((Router.isEmpty() || Router.isMe())) {
+    //  //   $$('entity_tree__root_scope').define('icon', 'user');
+    //  //   $$('entity_tree__search').setValue(Router.getSearch());
+    //  // } else {
+    //  //   $$('entity_tree__root_scope').define('icon', 'globe');
+    //  //   $$('entity_tree__search').setValue(Router.getSearch());
+    //  // }
+    //  // $$('entity_tree__root_scope').refresh();
+    //}
+    //updateTreeSearchScope();
 
     $(window).on('hashchange', function() {
       UI.pages.refreshPage('data', true);
-      updateTreeSearchScope();
+      // updateTreeSearchScope();
     });
 
     if (withHeader) {

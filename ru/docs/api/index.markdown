@@ -4,6 +4,8 @@ title: Описание API
 language: ru
 ---
 
+Web 2.0 Site как REST API, так и WebSocket API доступен через SDK
+
 <div class="page-tab-list">
     <a href="/ru/docs/api" class="page-tab page-tab--active">REST API</a>
     <a href="/ru/docs/api/websocket" class="page-tab">JavaScript SDK</a>
@@ -11,7 +13,7 @@ language: ru
 
 <br>
 
-Текущая версия API: ```https://api.web20site.com/v1```
+Текущая версия REST API: ```https://api.web20site.com/v1```
 
 <br>
 

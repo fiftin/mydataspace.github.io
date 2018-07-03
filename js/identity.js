@@ -5,7 +5,8 @@ var Identity = {
   entityFromData: function(data) {
     var entityId = Identity.idFromData(data);
     var children;
-    if (!MDSCommon.isBlank(data.numberOfChildren) && data.numberOfChildren > 0) {
+
+    if (!MDSCommon.isBlank(data.numberOfChildren) && data.numberOfChildren > 0 || UIHelper.isDataHasFiles(data)) {
       if (MDSCommon.isPresent(data.children)) {
         children = data.children.filter(function(x) {
           return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS.indexOf(x.path) < 0;
@@ -88,7 +89,14 @@ var Identity = {
     }
   },
 
-  dataFromId: function(id) {
+  dataFromId: function(id, options) {
+    if (!options) {
+      options = {};
+    }
+
+    var fileIdParts = id.split('#');
+    id = fileIdParts[0];
+
     var idVersionParts = id.split('?');
     var idParts = idVersionParts[0].split(':');
     var ret = {
@@ -98,6 +106,10 @@ var Identity = {
     
     if (MDSCommon.isInt(idVersionParts[1])) {
       ret.version = parseInt(idVersionParts[1]);
+    }
+
+    if (fileIdParts[1] && !options.ignoreField) {
+      ret.fields = [fileIdParts[1]];
     }
 
     return ret;
@@ -164,5 +176,26 @@ var Identity = {
 
   isRootId: function(id) {
     return MDSCommon.isPresent(id) && id.indexOf(':') < 0;
+  },
+
+  getFileNameFromId: function (id) {
+    var i = id.indexOf('#');
+    if (i === -1) {
+      throw new Error('Id has no file');
+    }
+    return id.substr(i + 1);
+  },
+
+  getEntityIdFromFileId: function (id) {
+    var i = id.indexOf('#');
+    if (i === -1) {
+      return id;
+    }
+    return id.substr(0, i);
+  },
+
+  isFileId: function (id) {
+    return id.indexOf('#') >= 0;
   }
+
 };

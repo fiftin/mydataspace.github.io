@@ -3,7 +3,7 @@ describe('UIHelper', function() {
       it('returns valid icons of paths', function() {
           expect(UIHelper.getIconByPath('tasks')).to.eq('code');
           expect(UIHelper.getIconByPath('tasks/test')).to.eq('file-code-o');
-          expect(UIHelper.getIconByPath('test/hello-world', true)).to.eq('file-o');
+          expect(UIHelper.getIconByPath('test/hello-world', true)).to.eq('folder-o');
       });
   });
 

@@ -40,7 +40,13 @@ UILayout.entityList =
               // UI.entityList.refresh();
             }
           }
-        }
+        },
+        { view: 'button',
+          type: 'icon',
+          icon: 'edit',
+          width: 40,
+          click: function() { $$('script_editor').show(); }
+        },
       ]
     },
     { view: 'template',

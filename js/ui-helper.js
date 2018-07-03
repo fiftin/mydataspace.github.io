@@ -24,6 +24,7 @@ UIHelper = {
     escape.textContent = value;
     return escape.innerHTML;
   },
+
   /**
    *
    * @param {string} id
@@ -116,7 +117,7 @@ UIHelper = {
       return icon;
     }
     if (isEmpty) {
-      return 'file-o';
+      return isOpened ? 'folder-open-o' : 'folder-o';
     } else {
       return isOpened ? 'folder-open' : 'folder';
     }
@@ -206,5 +207,14 @@ UIHelper = {
       $$(id).getList().clearAll();
       $$(id).getList().parse(options);
     });
+  },
+
+  isDataHasFiles: function (data) {
+    for (var i in data.fields) {
+      if (data.fields[i].name.indexOf('.') >= 0) {
+        return true;
+      }
+    }
+    return false;
   }
 };

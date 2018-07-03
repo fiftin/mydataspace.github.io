@@ -187,10 +187,24 @@ EntityTree.prototype.resolveChildren = function(id) {
     // Load children to first time opened node.
     Mydataspace.request('entities.get', MDSCommon.extend(Identity.dataFromId(id), { children: true }), function(data) {
       var entityId = Identity.idFromData(data);
+
+      var files = data.fields.filter(function (field) { return field.name.indexOf('.') >= 0; }).map(function (field) {
+        return {
+          id: entityId + '#' + field.name,
+          value: field.name,
+          associatedData: {},
+          data: {}
+        };
+      });
+
       var children = data.children.filter(function(x) {
         return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS.indexOf(x.path) < 0;
       }).map(Identity.entityFromData);
-      UI.entityTree.setChildren(entityId, children);
+
+
+
+      UI.entityTree.setChildren(entityId, files.concat(children));
+
       resolve();
     }, function(err) {
       reject(err);

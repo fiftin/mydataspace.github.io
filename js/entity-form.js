@@ -133,7 +133,9 @@ EntityForm.prototype.setViewFields = function(data,
                                               addLabelIfNoFieldsExists,
                                               comparer,
                                               classResolver) {
-  var fields = data.fields;
+
+  var fields = data.fields.filter(function (field) { return field.name.indexOf('.') === -1; });
+
   if (!Array.isArray(ignoredFieldNames)) {
     ignoredFieldNames = [];
   }
@@ -600,19 +602,21 @@ EntityForm.prototype.setData = function(data) {
   this.clear();
   $$('entity_form').setValues(formData);
 
+  var fields = data.fields.filter(function (field) { return field.name.indexOf('.') === -1; });
+
   if (MDSCommon.isBlank(data.path)) { // root entity
     // add fields from ROOT_FIELDS if not exists in data.fields
     for (var i in UIConstants.ROOT_FIELDS) {
       var field = UIConstants.ROOT_FIELDS[i];
       if (!MDSCommon.findByName(data.fields, field)) {
-        data.fields.push({ name: field, value: '', type: UIConstants.ROOT_FIELDS_TYPES[field] });
+        fields.push({ name: field, value: '', type: UIConstants.ROOT_FIELDS_TYPES[field] });
       }
     }
 
-    this.addRootFields(data.fields);
+    this.addRootFields(fields);
   } else {
     this.setNoFieldLabelVisible(true);
-    this.addFields(data.fields, false, UIHelper.getEntityTypeByPath(data.path));
+    this.addFields(fields, false, UIHelper.getEntityTypeByPath(data.path));
   }
   this.setClean();
   $$('entity_view').hide();
@@ -791,7 +795,7 @@ EntityForm.prototype.addFields = function(fields, setDirty, type) {
 
   for (var i in fields) {
     var field = fields[i];
-    if (field.name.indexOf('$') === 0) {
+    if (field.name.indexOf('$') === 0 || field.name.indexOf('.') >= 0) {
       continue;
     }
 
