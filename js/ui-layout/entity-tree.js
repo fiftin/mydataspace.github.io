@@ -254,19 +254,41 @@ UILayout.entityTreeMenu = {
     },
 
     onItemClick: function (id) {
-      var context = this.getContext();
-      var list = context.obj;
-      var listId = context.id;
 
       switch (id) {
         case 'edit':
           UI.entityForm.startEditing();
-          break;
+          return;
         case 'new-file':
+          $$('add_file_window').show();
           break;
         case 'delete-file':
+
+          webix.confirm({
+            title: STRINGS.DELETE_FILE,
+            text: STRINGS.REALLY_DELETE,
+            ok: STRINGS.YES,
+            cancel: STRINGS.NO,
+            callback: function(result) {
+              if (!result) {
+                return;
+              }
+
+              var fileId = $$('entity_tree').getSelectedId();
+              var req = MDSCommon.extend(Identity.dataFromId(fileId, {ignoreField: true}), {
+                fields: [{
+                  name: Identity.getFileNameFromId(fileId),
+                  value: null
+                }]
+              });
+
+              Mydataspace.emit('entities.change', req);
+            }
+          });
+
           break;
         case 'rename-file':
+          $$('add_file_window').show();
           break;
       }
     }

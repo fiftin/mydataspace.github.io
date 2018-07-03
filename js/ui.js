@@ -481,7 +481,15 @@ UI = {
       css: 'script_editor',
       tabbar: {
         height: 30,
-        hidden: true
+        hidden: true,
+        on: {
+          onOptionRemove: function () {
+            var tabbar  = $$('script_editor').getTabbar();
+            if ($(tabbar.$view).find('.webix_all_tabs > *').length === 3) {
+              tabbar.hide();
+            }
+          }
+        }
       },
       id: 'script_editor',
       cells: [{
