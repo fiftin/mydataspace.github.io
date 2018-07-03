@@ -442,6 +442,7 @@ UI = {
     webix.ui(UILayout.windows.addProto);
     webix.ui(UILayout.windows.addResource);
     webix.ui(UILayout.windows.addField);
+    webix.ui(UILayout.windows.addFile);
     webix.ui(UILayout.windows.addApp);
     webix.ui(UILayout.windows.changeVersion);
     webix.ui(UILayout.windows.addVersion);

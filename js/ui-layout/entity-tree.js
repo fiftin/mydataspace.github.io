@@ -153,7 +153,6 @@ UILayout.entityTree = {
                     onReady: function(editor) {
                       editor.getSession().setTabSize(2);
                       editor.getSession().setUseSoftTabs(true);
-                      // editor.setReadOnly(true);
                       editor.getSession().setUseWorker(false);
                       editor.commands.addCommand({
                         name: 'save',
@@ -161,6 +160,7 @@ UILayout.entityTree = {
                         exec: function(editor) {
                           // TODO: save file
                           // TODO: lock editor
+
                           var request = MDSCommon.extend(Identity.dataFromId(id, { ignoreField: true }), {
                             fields: [{
                               name: Identity.getFileNameFromId(id),
@@ -168,7 +168,9 @@ UILayout.entityTree = {
                               value: editor.getValue()
                             }]
                           });
+
                           Mydataspace.request('entities.change', request).then(function (data) {
+                            $('div[button_id="script_editor_' + id + '"]').removeClass('script_editor__tab--dirty');
                             // TODO: unlock editor
                           }, function (err) {
                             // TODO: handle sating error
@@ -182,6 +184,10 @@ UILayout.entityTree = {
 
               Mydataspace.request('entities.get', Identity.dataFromId(id)).then(function (data) {
                 $$('script_editor_' + id).setValue(data.fields[0].value);
+
+                $$('script_editor_' + id).editor.on('change', function() {
+                  $('div[button_id="script_editor_' + id + '"]').addClass('script_editor__tab--dirty');
+                });
               });
             }
             $$('script_editor').show();
@@ -212,21 +218,38 @@ UILayout.entityTreeMenu = {
   view: 'contextmenu',
   id: 'entity_tree__menu',
   css: 'entity_tree__menu',
-  data:[
-    //'New File',
-    //'New Entity',
-    'Rename',
-    'Delete'
-  ],
+  data:[],
   on: {
     onShow: function () {
+      this.data.clearAll();
       var id = $$('entity_tree').getSelectedId();
       if (Identity.isRootId(id)) {
-
+        this.data.add({
+          id: 'edit',
+          value: 'Edit'
+        });
+        this.data.add({
+          id: 'new-file',
+          value: 'New File'
+        });
       } else if (Identity.isFileId(id)) {
-
+        this.data.add({
+          id: 'rename-file',
+          value: 'Rename'
+        });
+        this.data.add({
+          id: 'delete-file',
+          value: 'Delete'
+        });
       } else {
-
+        this.data.add({
+          id: 'edit',
+          value: 'Edit'
+        });
+        this.data.add({
+          id: 'new-file',
+          value: 'New File'
+        });
       }
     },
 
@@ -234,7 +257,18 @@ UILayout.entityTreeMenu = {
       var context = this.getContext();
       var list = context.obj;
       var listId = context.id;
-      webix.message("List item: <i>" + list.getItem(listId).title + "</i> <br/>Context menu item: <i>" + this.getItem(id).value + "</i>");
+
+      switch (id) {
+        case 'edit':
+          UI.entityForm.startEditing();
+          break;
+        case 'new-file':
+          break;
+        case 'delete-file':
+          break;
+        case 'rename-file':
+          break;
+      }
     }
   }
 };

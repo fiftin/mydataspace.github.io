@@ -1081,3 +1081,21 @@ input {
     margin-top: 2px;
   }
 }
+
+
+.script_editor__tab {
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-right: 20px;
+  .webix_tab_close {
+    position: absolute;
+    right: 0;
+  }
+}
+
+.script_editor__tab--dirty {
+  color: #0d8bf2;
+  font-weight: bold;
+}

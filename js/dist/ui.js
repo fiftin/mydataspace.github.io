@@ -3916,6 +3916,61 @@ UILayout.windows.addField = {
   }
 };
 
+UILayout.windows.addFile = {
+  view: 'window',
+  id: 'add_file_window',
+  width: 300,
+  position: 'center',
+  modal: true,
+  head: STRINGS.ADD_FILE,
+  on: UIControls.getOnForFormWindow('add_file'),
+  body: {
+    view: 'form',
+    id: 'add_file_form',
+    borderless: true,
+    on: {
+      onSubmit: function() {
+        if (!$$('add_file_form').validate()) {
+          return;
+        }
+        
+        // TODO: add file
+
+        setTimeout(function() {
+          $$('add_file_window').hide();
+        }, 100);
+
+        setTimeout(function() {
+          var n = window.localStorage.getItem('dont_forgot_to_save');
+          if (MDSCommon.isPresent(n) && parseInt(n) > 3) {
+            return;
+          } else if (MDSCommon.isInt(n)) {
+            n = parseInt(n) + 1;
+          } else {
+            n = 1;
+          }
+          window.localStorage.setItem('dont_forgot_to_save', n.toString());
+          UI.info(STRINGS.dont_forgot_to_save);
+        }, 600);
+      }
+    },
+
+    elements: [
+      { view: 'text', required: true, id: 'NAME_LABEL_8', label: STRINGS.NAME, name: 'name' },
+      { view: 'text', id: 'VALUE_LABEL_2', label: STRINGS.VALUE, name: 'value' },
+      UIControls.getSubmitCancelForFormWindow('add_file', false)
+    ],
+
+    rules: {
+      name: function(value) { return typeof $$('entity_form__' + value) === 'undefined' },
+      value: function(value) {
+        var values = $$('add_file_form').getValues();
+        return typeof typeInfo !== 'undefined' && typeInfo.isValidValue(value);
+      }
+    }
+  }
+};
+
 UILayout.editScriptTabs = {
   text: {
     aceMode: 'text',
@@ -4853,7 +4908,6 @@ UILayout.entityTree = {
                     onReady: function(editor) {
                       editor.getSession().setTabSize(2);
                       editor.getSession().setUseSoftTabs(true);
-                      // editor.setReadOnly(true);
                       editor.getSession().setUseWorker(false);
                       editor.commands.addCommand({
                         name: 'save',
@@ -4861,6 +4915,7 @@ UILayout.entityTree = {
                         exec: function(editor) {
                           // TODO: save file
                           // TODO: lock editor
+
                           var request = MDSCommon.extend(Identity.dataFromId(id, { ignoreField: true }), {
                             fields: [{
                               name: Identity.getFileNameFromId(id),
@@ -4868,7 +4923,9 @@ UILayout.entityTree = {
                               value: editor.getValue()
                             }]
                           });
+
                           Mydataspace.request('entities.change', request).then(function (data) {
+                            $('div[button_id="script_editor_' + id + '"]').removeClass('script_editor__tab--dirty');
                             // TODO: unlock editor
                           }, function (err) {
                             // TODO: handle sating error
@@ -4882,6 +4939,10 @@ UILayout.entityTree = {
 
               Mydataspace.request('entities.get', Identity.dataFromId(id)).then(function (data) {
                 $$('script_editor_' + id).setValue(data.fields[0].value);
+
+                $$('script_editor_' + id).editor.on('change', function() {
+                  $('div[button_id="script_editor_' + id + '"]').addClass('script_editor__tab--dirty');
+                });
               });
             }
             $$('script_editor').show();
@@ -4912,21 +4973,38 @@ UILayout.entityTreeMenu = {
   view: 'contextmenu',
   id: 'entity_tree__menu',
   css: 'entity_tree__menu',
-  data:[
-    //'New File',
-    //'New Entity',
-    'Rename',
-    'Delete'
-  ],
+  data:[],
   on: {
     onShow: function () {
+      this.data.clearAll();
       var id = $$('entity_tree').getSelectedId();
       if (Identity.isRootId(id)) {
-
+        this.data.add({
+          id: 'edit',
+          value: 'Edit'
+        });
+        this.data.add({
+          id: 'new-file',
+          value: 'New File'
+        });
       } else if (Identity.isFileId(id)) {
-
+        this.data.add({
+          id: 'rename-file',
+          value: 'Rename'
+        });
+        this.data.add({
+          id: 'delete-file',
+          value: 'Delete'
+        });
       } else {
-
+        this.data.add({
+          id: 'edit',
+          value: 'Edit'
+        });
+        this.data.add({
+          id: 'new-file',
+          value: 'New File'
+        });
       }
     },
 
@@ -4934,7 +5012,18 @@ UILayout.entityTreeMenu = {
       var context = this.getContext();
       var list = context.obj;
       var listId = context.id;
-      webix.message("List item: <i>" + list.getItem(listId).title + "</i> <br/>Context menu item: <i>" + this.getItem(id).value + "</i>");
+
+      switch (id) {
+        case 'edit':
+          UI.entityForm.startEditing();
+          break;
+        case 'new-file':
+          break;
+        case 'delete-file':
+          break;
+        case 'rename-file':
+          break;
+      }
     }
   }
 };
@@ -5809,6 +5898,7 @@ UI = {
     webix.ui(UILayout.windows.addProto);
     webix.ui(UILayout.windows.addResource);
     webix.ui(UILayout.windows.addField);
+    webix.ui(UILayout.windows.addFile);
     webix.ui(UILayout.windows.addApp);
     webix.ui(UILayout.windows.changeVersion);
     webix.ui(UILayout.windows.addVersion);
