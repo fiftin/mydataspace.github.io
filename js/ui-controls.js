@@ -195,6 +195,9 @@ UIControls = {
     var createButtonTitle;
 
     switch (id) {
+      case 'rename_file':
+        createButtonTitle = STRINGS.RENAME;
+        break;
       case 'add_resource':
         createButtonTitle = STRINGS.UPLOAD;
         break;

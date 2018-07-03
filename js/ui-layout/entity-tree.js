@@ -254,16 +254,14 @@ UILayout.entityTreeMenu = {
     },
 
     onItemClick: function (id) {
-
       switch (id) {
         case 'edit':
           UI.entityForm.startEditing();
-          return;
+          break;
         case 'new-file':
           $$('add_file_window').show();
           break;
         case 'delete-file':
-
           webix.confirm({
             title: STRINGS.DELETE_FILE,
             text: STRINGS.REALLY_DELETE,
@@ -285,10 +283,9 @@ UILayout.entityTreeMenu = {
               Mydataspace.emit('entities.change', req);
             }
           });
-
           break;
         case 'rename-file':
-          $$('add_file_window').show();
+          $$('rename_file_window').show();
           break;
       }
     }

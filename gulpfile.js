@@ -83,6 +83,7 @@ gulp.task('ui', function() {
       './js/ui-layout/windows/add-resource.js',
       './js/ui-layout/windows/add-field.js',
       './js/ui-layout/windows/add-file.js',
+      './js/ui-layout/windows/rename-file.js',
       './js/ui-layout/windows/edit-script.js',
       './js/ui-layout/windows/add-website.js',
       './js/ui-layout/windows/change-version.js',

@@ -1165,6 +1165,9 @@ UIControls = {
     var createButtonTitle;
 
     switch (id) {
+      case 'rename_file':
+        createButtonTitle = STRINGS.RENAME;
+        break;
       case 'add_resource':
         createButtonTitle = STRINGS.UPLOAD;
         break;
@@ -4011,6 +4014,71 @@ UILayout.windows.addFile = {
   }
 };
 
+UILayout.windows.renameFile = {
+  view: 'window',
+  id: 'rename_file_window',
+  width: 300,
+  position: 'center',
+  modal: true,
+  head: STRINGS.RENAME_FILE,
+  on: UIControls.getOnForFormWindow('rename_file', {
+    onShow: function () {
+      $$('rename_file_form').setValues({
+        name: Identity.getFileNameFromId($$('entity_tree').getSelectedId())
+      });
+      webix.UIManager.setFocus($$('NAME_LABEL_9'));
+    }
+  }),
+  body: {
+    view: 'form',
+    id: 'rename_file_form',
+    borderless: true,
+    on: {
+
+      onSubmit: function() {
+        if (!$$('rename_file_form').validate()) {
+          return;
+        }
+        var formData = $$('rename_file_form').getValues();
+
+        var currentFileId = $$('entity_tree').getSelectedId();
+        Mydataspace.request('entities.get', Identity.dataFromId(currentFileId)).then(function (data) {
+          var req = MDSCommon.extend(Identity.dataFromId(UI.entityList.getRootId()), {
+            fields: [{
+              name: formData.name,
+              value: data.fields[0].value,
+              type: 'j'
+            }, {
+              name: Identity.getFileNameFromId(currentFileId),
+              value: null
+            }]
+          });
+
+          return Mydataspace.request('entities.change', req);
+        }).then(function (data) {
+          $$('rename_file_window').hide();
+          UIControls.removeSpinnerFromWindow('rename_file_window');
+        }, function (err) {
+          UIControls.removeSpinnerFromWindow('rename_file_window');
+        });
+      }
+    },
+
+    elements: [
+      { view: 'text', required: true, id: 'NAME_LABEL_9', label: STRINGS.NAME, name: 'name' },
+      UIControls.getSubmitCancelForFormWindow('rename_file', false)
+    ],
+
+    //rules: {
+    //  name: function(value) { return typeof $$('entity_form__' + value) === 'undefined' },
+    //  value: function(value) {
+    //    var values = $$('rename_file_form').getValues();
+    //    return typeof typeInfo !== 'undefined' && typeInfo.isValidValue(value);
+    //  }
+    //}
+  }
+};
+
 UILayout.editScriptTabs = {
   text: {
     aceMode: 'text',
@@ -5049,16 +5117,14 @@ UILayout.entityTreeMenu = {
     },
 
     onItemClick: function (id) {
-
       switch (id) {
         case 'edit':
           UI.entityForm.startEditing();
-          return;
+          break;
         case 'new-file':
           $$('add_file_window').show();
           break;
         case 'delete-file':
-
           webix.confirm({
             title: STRINGS.DELETE_FILE,
             text: STRINGS.REALLY_DELETE,
@@ -5080,10 +5146,9 @@ UILayout.entityTreeMenu = {
               Mydataspace.emit('entities.change', req);
             }
           });
-
           break;
         case 'rename-file':
-          $$('add_file_window').show();
+          $$('rename_file_window').show();
           break;
       }
     }
@@ -5961,6 +6026,7 @@ UI = {
     webix.ui(UILayout.windows.addResource);
     webix.ui(UILayout.windows.addField);
     webix.ui(UILayout.windows.addFile);
+    webix.ui(UILayout.windows.renameFile);
     webix.ui(UILayout.windows.addApp);
     webix.ui(UILayout.windows.changeVersion);
     webix.ui(UILayout.windows.addVersion);
