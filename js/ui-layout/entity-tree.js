@@ -225,12 +225,12 @@ UILayout.entityTreeMenu = {
       var id = $$('entity_tree').getSelectedId();
       if (Identity.isRootId(id)) {
         this.data.add({
-          id: 'edit',
-          value: 'Edit'
-        });
-        this.data.add({
           id: 'new-file',
           value: 'New File'
+        });
+        this.data.add({
+          id: 'edit',
+          value: 'Edit'
         });
       } else if (Identity.isFileId(id)) {
         this.data.add({
@@ -243,12 +243,12 @@ UILayout.entityTreeMenu = {
         });
       } else {
         this.data.add({
-          id: 'edit',
-          value: 'Edit'
-        });
-        this.data.add({
           id: 'new-file',
           value: 'New File'
+        });
+        this.data.add({
+          id: 'edit',
+          value: 'Edit'
         });
       }
     },
