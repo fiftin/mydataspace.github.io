@@ -480,6 +480,7 @@ UI = {
     dataPanels.push({
       view: 'tabview',
       css: 'script_editor',
+      gravity: 0.6,
       tabbar: {
         height: 30,
         hidden: true,

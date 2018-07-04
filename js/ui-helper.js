@@ -216,5 +216,13 @@ UIHelper = {
       }
     }
     return false;
+  },
+
+  getExtensionInfoForFile: function (fileName) {
+    var index = fileName.indexOf('.');
+    if (index === -1) {
+      return UIConstants.EDITOR_SUPPORTED_EXTENSIONS['txt'];
+    }
+    return UIConstants.EDITOR_SUPPORTED_EXTENSIONS[fileName.substr(index + 1)] || UIConstants.EDITOR_SUPPORTED_EXTENSIONS['txt'];
   }
 };

@@ -219,32 +219,6 @@ UIConstants = {
     'wizard': 'magic'
 	},
 
-  //LICENSES: {
-  //  'cc-by-3': {
-  //    icon: 'https://licensebuttons.net/l/by/4.0/88x31.png',
-  //    url: 'https://creativecommons.org/licenses/by/3.0'
-  //  },
-	//  'cc-by-4': {
-  //    icon: 'https://licensebuttons.net/l/by/4.0/88x31.png',
-  //    url: 'https://creativecommons.org/licenses/by/4.0'
-  //  },
-  //  'ogl-1': {
-  //    icon: 'http://www.nationalarchives.gov.uk/images/infoman/ogl-symbol-41px-retina-black.png',
-  //    url: 'http://www.nationalarchives.gov.uk/doc/open-government-licence/version/1/'
-  //  },
-  //  'ogl-2': {
-  //    icon: 'http://www.nationalarchives.gov.uk/images/infoman/ogl-symbol-41px-retina-black.png',
-  //    url: 'http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/'
-  //  },
-  //  'ogl-3': {
-  //    icon: 'http://www.nationalarchives.gov.uk/images/infoman/ogl-symbol-41px-retina-black.png',
-  //    url: 'http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/'
-  //  },
-  //  'standard-terms-of-use': {
-  //    url: 'http://data.gov.ru/information-usage'
-  //  }
-  //},
-
 	ROOT_FIELDS: PROJECT_NAME === 'web20' ? [
     'avatar',
     'name',
@@ -359,7 +333,37 @@ UIConstants = {
 		geo: 'map',
 		state: 'university',
 		tourism: 'plane'
-	}
+	},
+
+  EDITOR_SUPPORTED_EXTENSIONS: {
+	  'js': {
+	    mode: 'javascript'
+    },
+    'css': {
+      mode: 'css'
+    },
+    'scss': {
+      mode: 'scss'
+    },
+    'html': {
+      mode: 'html'
+    },
+    'pug': {
+      mode: 'jade'
+    },
+    'json': {
+      mode: 'json'
+    },
+    'yml': {
+      mode: 'yml'
+    },
+    'md': {
+      mode: 'markdown'
+    },
+    'txt': {
+      mode: 'text'
+    }
+  }
 };
 
 
@@ -581,6 +585,14 @@ UIHelper = {
       }
     }
     return false;
+  },
+
+  getExtensionInfoForFile: function (fileName) {
+    var index = fileName.indexOf('.');
+    if (index === -1) {
+      return UIConstants.EDITOR_SUPPORTED_EXTENSIONS['txt'];
+    }
+    return UIConstants.EDITOR_SUPPORTED_EXTENSIONS[fileName.substr(index + 1)] || UIConstants.EDITOR_SUPPORTED_EXTENSIONS['txt'];
   }
 };
 
@@ -4004,13 +4016,11 @@ UILayout.windows.addFile = {
       UIControls.getSubmitCancelForFormWindow('add_file', false)
     ],
 
-    //rules: {
-    //  name: function(value) { return typeof $$('entity_form__' + value) === 'undefined' },
-    //  value: function(value) {
-    //    var values = $$('add_file_form').getValues();
-    //    return typeof typeInfo !== 'undefined' && typeInfo.isValidValue(value);
-    //  }
-    //}
+    rules: {
+      name: function(value) {
+        return /^[\w_-]+(\.[\w_-]+)+$/.test(value);
+      }
+    }
   }
 };
 
@@ -4069,13 +4079,11 @@ UILayout.windows.renameFile = {
       UIControls.getSubmitCancelForFormWindow('rename_file', false)
     ],
 
-    //rules: {
-    //  name: function(value) { return typeof $$('entity_form__' + value) === 'undefined' },
-    //  value: function(value) {
-    //    var values = $$('rename_file_form').getValues();
-    //    return typeof typeInfo !== 'undefined' && typeInfo.isValidValue(value);
-    //  }
-    //}
+    rules: {
+      name: function(value) {
+        return /^[\w_-]+(\.[\w_-]+)+$/.test(value);
+      }
+    }
   }
 };
 
@@ -5001,16 +5009,20 @@ UILayout.entityTree = {
           if (UIHelper.isTreeShowMore(id)) {
             $$('entity_tree').select(UI.entityTree.getCurrentId());
           } else if (Identity.isFileId(id)) {
+
+            var fileName = Identity.getFileNameFromId(id);
+            var fileExtInfo = UIHelper.getExtensionInfoForFile(fileName);
+
             if (!$$('script_editor_' + id)) {
               $$('$tabbar1').show();
               $$('script_editor').addView({
-                header: Identity.getFileNameFromId(id),
+                header: fileName,
                 close: true,
                 css: 'script_editor__tab',
                 body: {
                   id: 'script_editor_' + id,
                   view: 'ace-editor',
-                  mode: 'javascript',
+                  mode: fileExtInfo.mode,
                   show_hidden: true,
                   on: {
                     onReady: function(editor) {
@@ -5021,9 +5033,6 @@ UILayout.entityTree = {
                         name: 'save',
                         bindKey: { win: 'Ctrl-S' },
                         exec: function(editor) {
-                          // TODO: save file
-                          // TODO: lock editor
-
                           var request = MDSCommon.extend(Identity.dataFromId(id, { ignoreField: true }), {
                             fields: [{
                               name: Identity.getFileNameFromId(id),
@@ -5088,12 +5097,12 @@ UILayout.entityTreeMenu = {
       var id = $$('entity_tree').getSelectedId();
       if (Identity.isRootId(id)) {
         this.data.add({
-          id: 'edit',
-          value: 'Edit'
-        });
-        this.data.add({
           id: 'new-file',
           value: 'New File'
+        });
+        this.data.add({
+          id: 'edit',
+          value: 'Edit'
         });
       } else if (Identity.isFileId(id)) {
         this.data.add({
@@ -5106,12 +5115,12 @@ UILayout.entityTreeMenu = {
         });
       } else {
         this.data.add({
-          id: 'edit',
-          value: 'Edit'
-        });
-        this.data.add({
           id: 'new-file',
           value: 'New File'
+        });
+        this.data.add({
+          id: 'edit',
+          value: 'Edit'
         });
       }
     },
@@ -5156,7 +5165,6 @@ UILayout.entityTreeMenu = {
 };
 UILayout.entityList =
 { id: 'my_data_panel__central_panel',
-  gravity: 0.4,
   rows: [
     { view: 'toolbar',
       cols: [
@@ -6063,6 +6071,7 @@ UI = {
     dataPanels.push({
       view: 'tabview',
       css: 'script_editor',
+      gravity: 0.6,
       tabbar: {
         height: 30,
         hidden: true,

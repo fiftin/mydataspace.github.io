@@ -42,12 +42,10 @@ UILayout.windows.addFile = {
       UIControls.getSubmitCancelForFormWindow('add_file', false)
     ],
 
-    //rules: {
-    //  name: function(value) { return typeof $$('entity_form__' + value) === 'undefined' },
-    //  value: function(value) {
-    //    var values = $$('add_file_form').getValues();
-    //    return typeof typeInfo !== 'undefined' && typeInfo.isValidValue(value);
-    //  }
-    //}
+    rules: {
+      name: function(value) {
+        return /^[\w_-]+(\.[\w_-]+)+$/.test(value);
+      }
+    }
   }
 };

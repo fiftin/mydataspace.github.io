@@ -138,16 +138,20 @@ UILayout.entityTree = {
           if (UIHelper.isTreeShowMore(id)) {
             $$('entity_tree').select(UI.entityTree.getCurrentId());
           } else if (Identity.isFileId(id)) {
+
+            var fileName = Identity.getFileNameFromId(id);
+            var fileExtInfo = UIHelper.getExtensionInfoForFile(fileName);
+
             if (!$$('script_editor_' + id)) {
               $$('$tabbar1').show();
               $$('script_editor').addView({
-                header: Identity.getFileNameFromId(id),
+                header: fileName,
                 close: true,
                 css: 'script_editor__tab',
                 body: {
                   id: 'script_editor_' + id,
                   view: 'ace-editor',
-                  mode: 'javascript',
+                  mode: fileExtInfo.mode,
                   show_hidden: true,
                   on: {
                     onReady: function(editor) {
@@ -158,9 +162,6 @@ UILayout.entityTree = {
                         name: 'save',
                         bindKey: { win: 'Ctrl-S' },
                         exec: function(editor) {
-                          // TODO: save file
-                          // TODO: lock editor
-
                           var request = MDSCommon.extend(Identity.dataFromId(id, { ignoreField: true }), {
                             fields: [{
                               name: Identity.getFileNameFromId(id),
