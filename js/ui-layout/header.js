@@ -30,7 +30,11 @@ UILayout.header =
         label: STRINGS.PRICING,
         hidden: PROJECT_NAME !== 'web20',
         click: function() {
-          var currentLang = (localStorage.getItem('language') || 'en').toLowerCase();
+
+          var currentLang = getCurrentLanguage().toLowerCase();
+
+
+
           currentLang = currentLang === 'en' ? '' : '/' + currentLang;
           window.open(currentLang + '/pricing', '_blank');
         }
@@ -53,7 +57,7 @@ UILayout.header =
         id: 'DOCS_LABEL',
         label: STRINGS.DOCS,
         click: function() {
-          var currentLang = (localStorage.getItem('language') || 'en').toLowerCase();
+          var currentLang = getCurrentLanguage().toLowerCase();
           currentLang = currentLang === 'en' ? '' : '/' + currentLang;
           window.open(currentLang + '/docs', '_blank');
         }
