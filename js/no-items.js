@@ -105,7 +105,7 @@ function no_items__createNewWebsite() {
       var entityId = Identity.idFromData(MDSCommon.extend(data, {
         path: 'website'
       }));
-      UI.entityTree.resolveChildren(entityId, true);
+      UI.entityTree.resolveChildren(entityId);
       $$('entity_tree').open(entityId);
     }, 500);
   }).then(function () {
