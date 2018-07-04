@@ -51,7 +51,7 @@ strings:
   send: Send
   send_request: Send Request
   request_sent: Request sent
-  select_template_label: Template
+  template: Template
   press_to_select_other_template: Click to select other template
 
 header:
