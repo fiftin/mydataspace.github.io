@@ -203,9 +203,16 @@ UILayout.entityTreeMenu = {
           value: STRINGS.context_menu.new_file
         });
         this.data.add({
+          id: 'delete_entity',
+          value: STRINGS.context_menu.delete_root
+        });
+        this.data.add({
           id: 'edit',
           value: STRINGS.context_menu.edit
         });
+
+
+
       } else if (Identity.isFileId(id)) {
         this.data.add({
           id: 'rename_file',
@@ -215,6 +222,8 @@ UILayout.entityTreeMenu = {
           id: 'delete_file',
           value: STRINGS.context_menu.delete_file
         });
+
+
       } else if (itemData.path === 'tasks') {
         this.data.add({
           id: 'new_task',
@@ -224,6 +233,8 @@ UILayout.entityTreeMenu = {
           id: 'edit',
           value: STRINGS.context_menu.edit
         });
+
+
       } else if (itemData.path === 'protos') {
         this.data.add({
           id: 'new_proto',
@@ -233,6 +244,8 @@ UILayout.entityTreeMenu = {
           id: 'edit',
           value: STRINGS.context_menu.edit
         });
+
+
       } else if (itemData.path === 'resources') {
         this.data.add({
           id: 'new_resource',
@@ -242,7 +255,9 @@ UILayout.entityTreeMenu = {
           id: 'edit',
           value: STRINGS.context_menu.edit
         });
-      } else {
+
+
+      } else if (itemData.path === 'website') {
         this.data.add({
           id: 'new_file',
           value: STRINGS.context_menu.new_file
@@ -255,6 +270,25 @@ UILayout.entityTreeMenu = {
           id: 'edit',
           value: STRINGS.context_menu.edit
         });
+
+
+      } else {
+        this.data.add({
+          id: 'delete_entity',
+          value: STRINGS.context_menu.delete_entity
+        });
+        this.data.add({
+          id: 'edit',
+          value: STRINGS.context_menu.edit
+        });
+        this.data.add({
+          id: 'new_file',
+          value: STRINGS.context_menu.new_file
+        });
+        this.data.add({
+          id: 'new_entity',
+          value: STRINGS.new_entity
+        });
       }
     },
 
@@ -262,6 +296,20 @@ UILayout.entityTreeMenu = {
       switch (id) {
         case 'edit':
           UI.entityForm.startEditing();
+          break;
+        case 'delete_root':
+        case 'delete_entity':
+          webix.confirm({
+            title: STRINGS.DELETE_ENTITY,
+            text: STRINGS.REALLY_DELETE,
+            ok: STRINGS.YES,
+            cancel: STRINGS.NO,
+            callback: function(result) {
+              if (result) {
+                UI.entityForm.delete();
+              }
+            }
+          });
           break;
         case 'new_entity':
           $$('add_entity_window').show();

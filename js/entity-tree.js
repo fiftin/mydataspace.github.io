@@ -175,9 +175,10 @@ EntityTree.prototype.viewRootVersion = function(rootId, version) {
 /**
  * Check if children of entity are loaded.
  * Load children from server if children didn't loaded yet.
- * @param id Parent entity ID
+ * @param {string} id Parent entity ID
+ * @param {boolean} [selectIndexFile]
  */
-EntityTree.prototype.resolveChildren = function(id) {
+EntityTree.prototype.resolveChildren = function(id, selectIndexFile) {
   return new Promise(function(resolve, reject) {
     var firstChildId = $$('entity_tree').getFirstChildId(id);
     if (firstChildId != null && firstChildId !== Identity.childId(id, UIHelper.ENTITY_TREE_DUMMY_ID)) {
@@ -201,9 +202,16 @@ EntityTree.prototype.resolveChildren = function(id) {
         return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS.indexOf(x.path) < 0;
       }).map(Identity.entityFromData);
 
-
-
       UI.entityTree.setChildren(entityId, files.concat(children));
+
+      if (selectIndexFile) {
+        for (var i in files) {
+          if (/^index\.[\w-]+$/.test(files[i].value)) {
+            $$('entity_tree').select(files[i].id);
+            break;
+          }
+        }
+      }
 
       resolve();
     }, function(err) {

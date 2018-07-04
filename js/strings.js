@@ -276,9 +276,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
 
     context_menu: {
       new_file: 'New File',
-      edit: 'Edit Element',
-      rename_file: 'Rename File',
-      delete_file: 'Delete File'
+      edit: 'Edit',
+      rename_file: 'Rename',
+      delete_file: 'Delete',
+      delete_root: 'Delete',
+      delete_entity: 'Delete'
     },
 
     select_template_label: 'Template:'
@@ -572,8 +574,10 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     context_menu: {
       new_file: 'Новый файл',
       edit: 'Ред. элемент',
-      rename_file: 'Переименовать файл',
-      delete_file: 'Удалить файл'
+      rename_file: 'Переименовать',
+      delete_file: 'Удалить',
+      delete_root: 'Удалить',
+      delete_entity: 'Удалить'
     },
     select_template_label: 'Шаблон:'
   }

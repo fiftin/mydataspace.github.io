@@ -47,9 +47,10 @@
         <div class="col-xs-4 no_items__column">
 
           <div class="no_items__change_template_pointer">
-            &lt;&lt; Нажмите чтобы выбрать другой шаблон
+            &lt;&lt; {{ site.data[page.language].strings.press_to_select_other_template }}
           </div>
 
+          <div style="margin-bottom: 5px;">{{ site.data[page.language].strings.template }}:</div>
           <div id="no_items__template_wrap" class="no_items__template_wrap" onclick="no_items__initTemplates()">
             <div id="no_items__template" class="snippet__overview snippet__overview--no-margin">
               <img id="no_items__template_img" class="snippet__image"  />

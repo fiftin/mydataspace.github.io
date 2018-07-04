@@ -77,7 +77,6 @@ function no_items__initTemplates(suffix) {
 
 
 function no_items__createNewWebsite() {
-
   var notices = document.getElementById('no_items__notice').childNodes[0].childNodes;
   for (var i = 0; i < notices.length; i++) {
     notices[i].classList.remove('no_items__notice--alert');
@@ -101,6 +100,14 @@ function no_items__createNewWebsite() {
     sourceRoot: sourceRoot,
     sourcePath: sourceRoot ? '' : undefined,
     fields: []
+  }).then(function (data) {
+    setTimeout(function () {
+      var entityId = Identity.idFromData(MDSCommon.extend(data, {
+        path: 'website'
+      }));
+      UI.entityTree.resolveChildren(entityId, true);
+      $$('entity_tree').open(entityId);
+    }, 500);
   }).then(function () {
     return Mydataspace.request('apps.create', {
       name: root,
@@ -124,17 +131,10 @@ function no_items__createNewWebsite() {
         '}).getRoot(\'' + root + '\');',
         type: 'j'
       }]
-    })
-  //}).then(function () {
-  //  document.getElementById('no_items__new_root_input').value = '';
-  //  var url = 'https://wizard.myda.space/' + root + '/root.html';
-  //  return $.ajax({ url: url, type: 'HEAD' });
-  }).then(function () {
-    // $('#wizard_modal__frame').attr('src', url);
-    // $('#wizard_modal').modal('show');
+    });
+  }).then(function (data) {
     $createButton.attr('disabled', false);
     $createButton.find('.fa-cog').removeClass('fa-spin').addClass('hidden');
-
   }, function (err) {
     $createButton.attr('disabled', false);
     $createButton.find('.fa-cog').removeClass('fa-spin').addClass('hidden');

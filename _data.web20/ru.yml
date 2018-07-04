@@ -51,6 +51,10 @@ strings:
   send: Отправить
   send_request: Отправить запрос
   request_sent: Запрос отправен
+  template: Шаблон
+  press_to_select_other_template: Нажмите чтобы выбрать другой шаблон
+
+
 header:
   input_search: Начните поиск или нажмите Esc
   input_search_fixed: Поиск...
