@@ -4,6 +4,7 @@
  */
 function PricingPage() {
   this.pricingList = document.getElementById('pricing_list');
+  this.free = document.getElementById('pricing_block__free');
   this.personal = document.getElementById('pricing_block__personal');
   this.contactUs = new ContactModal({
     errorLabel: 'give_feedback_modal__error',
@@ -38,10 +39,10 @@ PricingPage.instance = function () {
 
 PricingPage.prototype.update = function () {
   if (Mydataspace.isLoggedIn()) {
-    this.personal.classList.add('pricing_block--active');
+    this.free.classList.add('pricing_block--active');
     this.pricingList.classList.add('pricing_list--logged-in');
   } else {
-    this.personal.classList.remove('pricing_block--active');
+    this.free.classList.remove('pricing_block--active');
     this.pricingList.classList.remove('pricing_list--logged-in');
   }
 };

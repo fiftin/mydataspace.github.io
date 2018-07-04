@@ -341,6 +341,11 @@ pricing_page:
   trial: 2 month free
   sites_add: $6 for each additional website
   disk_add: $1 for each additional gigabyte
+  free:
+    title: Free
+    sites: 1 Website
+    disk: 1 Gb Storage
+    price: $0
   personal:
     title: Personal
     sites: 3 Websites
