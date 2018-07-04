@@ -6,7 +6,7 @@ UILayout.entityList =
         { view: 'button',
           type: 'icon',
           icon: 'refresh',
-          id: 'REFRESH_LABEL', label: STRINGS.REFRESH,
+          id: 'REFRESH_ENTITY_LABEL_1', label: STRINGS.REFRESH_ENTITY,
           width: 85,
           click: function() { UI.entityList.refresh(); }
         },

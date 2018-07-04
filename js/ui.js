@@ -495,7 +495,7 @@ UI = {
       },
       id: 'script_editor',
       cells: [{
-        header: 'Entities and Files',
+        header: STRINGS.entities_and_files,
         body: UILayout.entityList
       }]
     });

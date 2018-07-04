@@ -258,6 +258,8 @@ EntityForm.prototype.setRootView = function(data) {
       websiteLink.classList.remove('hidden');
       websiteLink.setAttribute('data-root', data.root);
       var rootTime = new Date().getTime() - new Date(data.createdAt).getTime();
+
+
       if (rootTime < 60000) {
         websiteLink.setAttribute('disabled', 'disabled');
         websiteLink.classList.add('disabled');
@@ -265,6 +267,11 @@ EntityForm.prototype.setRootView = function(data) {
         document.getElementById('view__website_link__icon').classList.remove('fa-globe');
         document.getElementById('view__website_link__icon').classList.add('fa-cog');
         document.getElementById('view__website_link__icon').classList.add('fa-spin');
+
+        $(websiteLink).tooltip({
+          placement: 'bottom',
+          title: STRINGS.site_dns_in_progress
+        });
 
         self.viewWebsiteLinkDisabledTimeout = setTimeout(function () {
           var websiteLink2 = document.getElementById('view__website_link');

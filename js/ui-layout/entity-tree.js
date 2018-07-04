@@ -8,8 +8,8 @@ UILayout.entityTree = {
         { view: 'button',
           type: 'icon',
           icon: 'refresh',
-          id: 'REFRESH_LABEL_2', label: STRINGS.REFRESH,
-          width: 85,
+          id: 'REFRESH_LABEL', label: STRINGS.REFRESH,
+          width: 60,
           click: function() {
             UI.entityTree.refresh();
           }
@@ -19,7 +19,7 @@ UILayout.entityTree = {
           icon: 'plus',
           id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
           hidden: true,
-          width: 130,
+          width: 100,
           popup: PROJECT_NAME === 'web20' ? undefined : 'entity_tree__new_root_popup',
           click: function() {
             if (PROJECT_NAME === 'web20') {
@@ -27,46 +27,15 @@ UILayout.entityTree = {
             }
           }
         },
-//        { view: 'button',
-//          type: 'icon',
-//          icon: 'cloud-upload',
-//          //hidden: true,
-//          id: 'IMPORT_ROOT_LABEL', label: STRINGS.IMPORT_ROOT_LABEL,
-//          width: 35,
-//          click: function() {
-//            $('#import_data_modal').modal('show');
-//          }
-//        },
-        
-        // { view: 'button',
-        //   width: 35,
-        //   type: 'iconButton',
-        //   icon: 'user',
-        //   css: 'entity_tree__search_button',
-        //   popup: 'entity_tree__root_scope_popup',
-        //   id: 'entity_tree__root_scope',
-        //   on: {
-        //     onItemClick: function() {
-        //       // this.currentFieldName = data.name;
-        //       // $$('entity_form__field_type_popup_list').select(data.type);
-        //     }.bind(this)
-        //   }
-        // },
-        // { view: 'search',
-        //   id: 'entity_tree__search',
-        //   css: 'entity_tree__search',
-        //   align: 'center',
-        //   icon: 'close',
-        //   placeholder: STRINGS.SEARCH_BY_ROOTS,
-        //   on: {
-        //     onAfterRender: function() {
-        //
-        //     },
-        //     onTimedKeyPress: function() {
-        //       UI.entityTree.updateRouteBySearch();
-        //     }
-        //   }
-        // }
+        { view: 'button',
+          type: 'icon',
+          icon: 'plus',
+          id: 'ADD_FILE_LABEL', label: STRINGS.ADD_FILE,
+          width: 100,
+          click: function() {
+            $$('add_file_window').show();
+          }
+        }
       ]
     },
     { view: 'tree',
@@ -223,33 +192,68 @@ UILayout.entityTreeMenu = {
   on: {
     onShow: function () {
       this.data.clearAll();
+
+
       var id = $$('entity_tree').getSelectedId();
+      var itemData = Identity.dataFromId(id);
+
       if (Identity.isRootId(id)) {
         this.data.add({
-          id: 'new-file',
-          value: 'New File'
+          id: 'new_file',
+          value: STRINGS.context_menu.new_file
         });
         this.data.add({
           id: 'edit',
-          value: 'Edit'
+          value: STRINGS.context_menu.edit
         });
       } else if (Identity.isFileId(id)) {
         this.data.add({
-          id: 'rename-file',
-          value: 'Rename'
+          id: 'rename_file',
+          value: STRINGS.context_menu.rename_file
         });
         this.data.add({
-          id: 'delete-file',
-          value: 'Delete'
+          id: 'delete_file',
+          value: STRINGS.context_menu.delete_file
         });
-      } else {
+      } else if (itemData.path === 'tasks') {
         this.data.add({
-          id: 'new-file',
-          value: 'New File'
+          id: 'new_task',
+          value: STRINGS.new_task
         });
         this.data.add({
           id: 'edit',
-          value: 'Edit'
+          value: STRINGS.context_menu.edit
+        });
+      } else if (itemData.path === 'protos') {
+        this.data.add({
+          id: 'new_proto',
+          value: STRINGS.new_proto
+        });
+        this.data.add({
+          id: 'edit',
+          value: STRINGS.context_menu.edit
+        });
+      } else if (itemData.path === 'resources') {
+        this.data.add({
+          id: 'new_resource',
+          value: STRINGS.new_resource
+        });
+        this.data.add({
+          id: 'edit',
+          value: STRINGS.context_menu.edit
+        });
+      } else {
+        this.data.add({
+          id: 'new_file',
+          value: STRINGS.context_menu.new_file
+        });
+        this.data.add({
+          id: 'new_entity',
+          value: STRINGS.new_entity
+        });
+        this.data.add({
+          id: 'edit',
+          value: STRINGS.context_menu.edit
         });
       }
     },
@@ -259,10 +263,22 @@ UILayout.entityTreeMenu = {
         case 'edit':
           UI.entityForm.startEditing();
           break;
-        case 'new-file':
+        case 'new_entity':
+          $$('add_entity_window').show();
+          break;
+        case 'new_resource':
+          $$('add_resource_window').show();
+          break;
+        case 'new_task':
+          $$('add_task_window').show();
+          break;
+        case 'new_proto':
+          $$('add_proto_window').show();
+          break;
+        case 'new_file':
           $$('add_file_window').show();
           break;
-        case 'delete-file':
+        case 'delete_file':
           webix.confirm({
             title: STRINGS.DELETE_FILE,
             text: STRINGS.REALLY_DELETE,
@@ -285,7 +301,7 @@ UILayout.entityTreeMenu = {
             }
           });
           break;
-        case 'rename-file':
+        case 'rename_file':
           $$('rename_file_window').show();
           break;
       }

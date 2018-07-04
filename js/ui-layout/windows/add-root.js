@@ -96,10 +96,9 @@ UILayout.windows.addRoot = {
       elements: [
         { view: 'template',
           borderless: true,
-          height: 150,
-          //autoheight: true,
+          height: 170,
           hidden: PROJECT_NAME !== 'web20',
-          template: '' +
+          template: '<div style="margin-bottom: 5px; margin-top: -5px;">' + STRINGS.select_template_label + '</div>' +
           '<div id="no_items__template_wrap2" class="no_items__template_wrap" onclick="no_items__initTemplates(2)">\n' +
           '  <div id="no_items__template2" class="snippet__overview snippet__overview--no-margin">\n' +
           '    <img id="no_items__template_img2" class="snippet__image"  />\n' +

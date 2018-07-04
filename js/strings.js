@@ -3,7 +3,7 @@
 
 var PROJECT_NAME = '{{ site.project_name }}';
 var PROJECT_ROOT_NAME_EN = (PROJECT_NAME === 'web20' ? 'Website' : 'Root');
-var PROJECT_ROOT_NAME_RU = (PROJECT_NAME === 'web20' ? 'сайт' : 'корень');
+var PROJECT_ROOT_NAME_RU = (PROJECT_NAME === 'web20' ? 'сайт' : 'кор.');
 
 var STRINGS_ON_DIFFERENT_LANGUAGES = {
   EN: {
@@ -40,11 +40,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SECRET: 'Secret',
     DESCRIPTION: 'Description',
     NO_ENTITY: 'No field exists',
-    ADD_ROOT: 'New ' + PROJECT_ROOT_NAME_EN,
+    ADD_ROOT: PROJECT_NAME === 'web20' ? 'New Site' : 'New Root',
     ADD_FIELD: 'New Field',
     ADD_FILE: 'New File',
     RENAME_FILE: 'Rename File',
-    REFRESH: 'Refresh',
+    REFRESH: 'Ref.',
     SAVE: 'Save',
     SAVE_APP: 'Save',
     REFRESH_APP: 'Refresh',
@@ -270,7 +270,18 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       'ogl-2': 'OGL 2.0',
       'ogl-3': 'OGL 3.0',
       'standard-terms-of-use': 'Standard OD terms of use'
-    }
+    },
+    site_dns_in_progress: 'Updating DNS records takes a minute',
+    entities_and_files: 'Entities',
+
+    context_menu: {
+      new_file: 'New File',
+      edit: 'Edit Element',
+      rename_file: 'Rename File',
+      delete_file: 'Delete File'
+    },
+
+    select_template_label: 'Template:'
   },
 
   RU: {
@@ -307,11 +318,12 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SECRET: 'Секрет',
     DESCRIPTION: 'Описание',
     NO_ENTITY: 'Нет полей',
-    ADD_ROOT: 'Нов. ' + PROJECT_ROOT_NAME_RU,
+    ADD_ROOT: PROJECT_ROOT_NAME_RU,
+    ADD_ROOT: PROJECT_NAME === 'web20' ? 'Нов. сайт' : 'Нов. корень',
     ADD_FIELD: 'Нов. поле',
     ADD_FILE: 'Нов. файл',
     RENAME_FILE: 'Переим. файл',
-    REFRESH: 'Обнов.',
+    REFRESH: 'Обн.',
     SAVE: 'Сохр.',
     SAVE_APP: 'Сохр.',
     REFRESH_APP: 'Обновить прил.',
@@ -553,7 +565,17 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       'ogl-2': 'OGL 2.0',
       'ogl-3': 'OGL 3.0',
       'standard-terms-of-use': 'Типовые условия использования ОД'
-    }
+    },
+
+    site_dns_in_progress: 'Пожалуйта, подождите, обновление записи DNS занимает 1 минуту',
+    entities_and_files: 'Элементы',
+    context_menu: {
+      new_file: 'Новый файл',
+      edit: 'Ред. элемент',
+      rename_file: 'Переименовать файл',
+      delete_file: 'Удалить файл'
+    },
+    select_template_label: 'Шаблон:'
   }
 };
 
