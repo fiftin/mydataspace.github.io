@@ -112,7 +112,6 @@ UILayout.windows.addRoot = {
           '</div>'
         },
         { view: 'text', id: 'NAME_LABEL', label: STRINGS.NAME, required: true, name: 'root', labelWidth: UIHelper.LABEL_WIDTH },
-        // UIControls.getEntityTypeSelectTemplate(),
         UIControls.getSubmitCancelForFormWindow('add_root')
       ]
     }

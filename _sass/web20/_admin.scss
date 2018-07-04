@@ -1004,6 +1004,14 @@ input {
   filter: blur(ceil($fullscreen-blur));
 }
 
+.no_items__change_template_pointer {
+  position: absolute;
+  right: -100px;
+  width: 100px;
+  color: red;
+  line-height: 1.2;
+}
+
 #webix_search {
   position: absolute;
   left: 0;
