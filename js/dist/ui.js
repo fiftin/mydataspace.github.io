@@ -5077,11 +5077,20 @@ UILayout.entityTreeMenu = {
     onShow: function () {
       this.data.clearAll();
 
-
       var id = $$('entity_tree').getSelectedId();
       var itemData = Identity.dataFromId(id);
 
-      if (Identity.isRootId(id)) {
+      if (Identity.isFileId(id)) {
+        this.data.add({
+          id: 'rename_file',
+          value: STRINGS.context_menu.rename_file
+        });
+        this.data.add({
+          id: 'delete_file',
+          value: STRINGS.context_menu.delete_file
+        });
+
+      } else if (Identity.isRootId(id)) {
         this.data.add({
           id: 'new_file',
           value: STRINGS.context_menu.new_file
@@ -5095,17 +5104,6 @@ UILayout.entityTreeMenu = {
           value: STRINGS.context_menu.edit
         });
 
-
-
-      } else if (Identity.isFileId(id)) {
-        this.data.add({
-          id: 'rename_file',
-          value: STRINGS.context_menu.rename_file
-        });
-        this.data.add({
-          id: 'delete_file',
-          value: STRINGS.context_menu.delete_file
-        });
 
 
       } else if (itemData.path === 'tasks') {
