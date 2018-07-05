@@ -6,6 +6,7 @@ function PricingPage() {
   this.pricingList = document.getElementById('pricing_list');
   this.free = document.getElementById('pricing_block__free');
   this.personal = document.getElementById('pricing_block__personal');
+  this.trialMonths = document.getElementById('pricing_block__trial');
   this.contactUs = new ContactModal({
     errorLabel: 'give_feedback_modal__error',
     modal: 'request_unlimited_modal',

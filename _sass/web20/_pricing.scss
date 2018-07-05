@@ -71,8 +71,34 @@
   text-align: center;
   font-weight: bold;
   font-size: 40px;
-  padding-top: 0;
+  // padding-top: 0;
 }
+
+.pricing_block__super_offer {
+  font-size: 16px;
+  margin: 5px auto auto;
+  max-width: 250px;
+}
+
+
+.pricing_block__trial--active {
+  display: none;
+}
+
+.pricing_block--active {
+  .pricing_block__super_offer {
+    display: none;
+  }
+
+  .pricing_block__trial {
+    display: none;
+  }
+
+  .pricing_block__trial--active {
+    display: block;
+  }
+}
+
 
 .pricing_block__property {
   margin: 20px 0;

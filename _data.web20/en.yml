@@ -338,7 +338,9 @@ pricing_page:
   current_plan: Current Plan
   upgrade: Upgrade
   contact_us: Contact Us
-  trial: 2 month free
+  trial: 3 month free
+  trial_active: 6 month free
+  super_offer:
   sites_add: $6 for each additional website
   disk_add: $1 for each additional gigabyte
   free:

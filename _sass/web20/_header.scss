@@ -456,9 +456,8 @@ $slogan-animation-offset-mobile: 400px;
 }
 
 .page_top {
-  background: url('/images/background.jpg');
   background-size: cover;
-  background-position: bottom;
+  background: url('/images/background.jpg') bottom;
   //background-attachment: fixed;
   //overflow: hidden;
 }
