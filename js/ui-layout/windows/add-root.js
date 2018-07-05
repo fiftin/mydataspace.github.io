@@ -14,7 +14,7 @@ UILayout.windows.addRoot = {
           } else {
             languageSuffix = '-' + languageSuffix;
           }
-          no_items__selectTemplate('basic-pug' + languageSuffix, 2);
+          no_items__selectTemplate('basic' + languageSuffix, 2);
         }
       }
     }),

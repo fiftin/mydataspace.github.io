@@ -46,9 +46,11 @@
         <!-- Create -->
         <div class="col-sm-7 col-md-5 col-lg-4 no_items__column">
 
+          <!--
           <div class="no_items__change_template_pointer hidden-xs">
             &lt;&lt; {{ site.data[page.language].strings.press_to_select_other_template }}
           </div>
+          -->
 
           <div style="margin-bottom: 5px;">{{ site.data[page.language].strings.template }}:</div>
           <div id="no_items__template_wrap" class="no_items__template_wrap" onclick="no_items__initTemplates()">
@@ -91,10 +93,10 @@
             languageSuffix = '-' + languageSuffix;
           }
           if (Mydataspace.isLoggedIn()) {
-            no_items__selectTemplate('basic-pug' + languageSuffix);
+            no_items__selectTemplate('basic' + languageSuffix);
           } else {
             Mydataspace.on('login', function () {
-              no_items__selectTemplate('basic-pug' + languageSuffix);
+              no_items__selectTemplate('basic' + languageSuffix);
             });
           }
         })();
