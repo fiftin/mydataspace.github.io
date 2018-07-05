@@ -39,10 +39,10 @@ PricingPage.instance = function () {
 
 PricingPage.prototype.update = function () {
   if (Mydataspace.isLoggedIn()) {
-    this.free.classList.add('pricing_block--active');
+    this.personal.classList.add('pricing_block--active');
     this.pricingList.classList.add('pricing_list--logged-in');
   } else {
-    this.free.classList.remove('pricing_block--active');
+    this.personal.classList.remove('pricing_block--active');
     this.pricingList.classList.remove('pricing_list--logged-in');
   }
 };
