@@ -32,6 +32,7 @@ mission: |
 special_offer: Бесплатно <b>навсегда</b> для зарегистрированных пользователей
 final_prompt: ""
 get_started_now: Зарег<span class="hidden-xs">истрировать</span>ся!
+view_docs: Смотреть документацию
 prompt: "Войти через:"
 waiting_cloak: "Загрузка..."
 strings:

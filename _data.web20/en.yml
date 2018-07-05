@@ -32,6 +32,7 @@ mission: |
 special_offer: Free now and <b>forever</b> for registered users
 final_prompt: ""
 get_started_now: Get Started!
+view_docs: View Docs
 prompt: "Sign in with:"
 waiting_cloak: "Loading..."
 strings:

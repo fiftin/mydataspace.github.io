@@ -50,17 +50,11 @@
       {% endif %}
 
       {% if section.id == "ease"%}
-        <!--
-        <div class="section__code_simple_description">
-          {{ section.code_simple_description }}
-        </div>
-        <div class="section__code_simple">
-          <p data-height="560" data-theme-id="0" data-slug-hash="PGwmgZ" data-default-tab="js,result" data-user="mydataspace" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/mydataspace/pen/PGwmgZ/">Search by spreex.github.io demo</a> by MyDataSpace (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p>
-          <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
-        </div>
-         <div class="section__code_simple_description">
-          {{ section.code_simple_post_description }}
-        </div> -->
+      <div style="text-align: center; margin-bottom: -20px; margin-top: 30px;">
+        <a href="/ru/docs" class="btn btn-success sub_footer__button">
+          {{ site.data[page.language].view_docs }}
+        </a>
+      </div>
       {% endif %}
     </div>
   </section>
