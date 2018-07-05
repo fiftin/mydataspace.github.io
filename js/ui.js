@@ -448,6 +448,7 @@ UI = {
     webix.ui(UILayout.windows.changeVersion);
     webix.ui(UILayout.windows.addVersion);
     webix.ui(UILayout.windows.addWebsite);
+    webix.ui(UILayout.windows.showMedia);
 
     webix.ui(UILayout.entityTreeMenu);
 
@@ -595,5 +596,10 @@ UI = {
 
   deleteEntity: function(entityId) {
 
+  },
+
+  showMedia: function (options) {
+    UI.mediaToShow = options;
+    $$('show_media_window').show();
   }
 };

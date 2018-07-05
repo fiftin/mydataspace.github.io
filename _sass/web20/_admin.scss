@@ -1109,3 +1109,16 @@ input {
   color: #0d8bf2;
   font-weight: bold;
 }
+.show_media_window {
+  .webix_win_head {
+    display: none !important;
+  }
+  height: auto !important;
+}
+.show_media_window_content {
+  .webix_template {
+    padding: 0 !important;
+  }
+}
+
+// #2f58bd
