@@ -1539,7 +1539,7 @@ EntityForm.prototype.setRootView = function(data) {
 
       if (rootTime < 60000) {
         websiteLink.setAttribute('disabled', 'disabled');
-        websiteLink.classList.add('disabled');
+        //websiteLink.classList.add('disabled');
 
         document.getElementById('view__website_link__icon').classList.remove('fa-globe');
         document.getElementById('view__website_link__icon').classList.add('fa-cog');
@@ -1547,19 +1547,22 @@ EntityForm.prototype.setRootView = function(data) {
 
         $(websiteLink).tooltip({
           placement: 'bottom',
-          title: STRINGS.site_dns_in_progress
+          title: STRINGS.site_dns_in_progress,
+          container: 'body',
+          trigger: 'hover'
         });
 
         self.viewWebsiteLinkDisabledTimeout = setTimeout(function () {
           var websiteLink2 = document.getElementById('view__website_link');
           if (websiteLink2 && websiteLink2.getAttribute('data-root') === data.root) {
             websiteLink.removeAttribute('disabled');
-            websiteLink.classList.remove('disabled');
+            //websiteLink.classList.remove('disabled');
 
             document.getElementById('view__website_link__icon').classList.add('fa-globe');
             document.getElementById('view__website_link__icon').classList.remove('fa-cog');
             document.getElementById('view__website_link__icon').classList.remove('fa-spin');
           }
+          $(websiteLink).tooltip('destroy');
         }, 60000 - rootTime);
       }
     }
