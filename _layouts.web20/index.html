@@ -26,6 +26,34 @@ layout: hybrid
 
   {% include feature_sections.html %}
 
+  <section style="padding-top: 0" class="section relative section--examples">
+    <div class="container relative">
+      <h2 class="section__title section__title--{{ section.id }}">{{ site.data[page.language].landing_examples.title }}</h2>
+      <div class="row">
+        {% for example in site.data[page.language].landing_examples.examples %}
+        <div class="col-md-6">
+          <a class="example" href="https://{{ example.url }}">
+            <div class="safari">
+              <div class="safari__header">
+                <div class="safari__buttons">
+                  <div class="safari__button safari__button--red"></div>
+                  <div class="safari__button safari__button--orange"></div>
+                  <div class="safari__button safari__button--green"></div>
+                </div>
+                <div class="safari__address_bar">
+                  <div class="safari__url">{{ example.url | prepend: "<span class='safari__url__https'>https://</span>" }}</div>
+                </div>
+              </div>
+              <img class="safari__img" src="/images/examples/{{ example.image }}" />
+            </div>
+            <div class="example__title">{{ example.title }}</div>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
   {% include sub_footer.html %}
 
   {% include footer.html %}

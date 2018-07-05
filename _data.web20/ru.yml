@@ -399,3 +399,14 @@ pricing_page:
     request_placeholder: Пожалуйста, укажите сколько сайтов вы хотите создать и как с вами связаться
     title: Безлимитный
     sites: 10+ сайтов
+
+
+landing_examples:
+  title: Примеры сайтов
+  examples:
+    - title: Сервис тестирования облачных серверов
+      image: cloudbench.png
+      url: cloudbench.io
+    - title: Каталог расширений для e-commerce движка
+      image: spreex.png
+      url: spreex.github.io

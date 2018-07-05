@@ -361,3 +361,15 @@ pricing_page:
     request_placeholder: Please, specify how many website you need and how we can contact with you
     title: Unlimited
     sites: 10+ Websites
+
+
+
+landing_examples:
+  title: Website Examples
+  examples:
+    - title: Service for cloud servers benchmarking
+      image: cloudbench.png
+      url: cloudbench.io
+    - title: Spree Commerce extension catalog
+      image: spreex.png
+      url: spreex.github.io
