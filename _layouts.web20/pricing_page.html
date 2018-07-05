@@ -53,6 +53,7 @@ layout: page
       <div class="pricing_block__footer">
         <button type="button" onclick="PricingPage.instance().createWebsite()" class="btn btn-lg btn-success pricing_block__button pricing_block__button--create">{{ site.data[page.language].pricing_page.create_site }}</button>
         <button type="button" onclick="PricingPage.instance().upgradeToPro.showModal(true)" class="btn btn-lg btn-success pricing_block__button pricing_block__button--upgrade">{{ site.data[page.language].pricing_page.upgrade }}</button>
+        <button type="button" class="btn btn-lg btn-success pricing_block__button pricing_block__button--current" disabled>{{ site.data[page.language].pricing_page.current_plan }}</button>
       </div>
     </div>
   </div>
