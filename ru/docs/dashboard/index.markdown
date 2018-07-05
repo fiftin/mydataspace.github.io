@@ -123,6 +123,11 @@ page_content_class: page__content--800
 - [CSS](https://ru.wikipedia.org/wiki/CSS)
 - [SCSS](https://sass-lang.com/)
 
+Пример редактирования кода сайта представлен на видео:
+
+<div class="safari">
+    <iframe width="100%" height="450" style="margin-bottom: -10px" src="https://www.youtube.com/embed/fBve_lUsWuc?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div>
 
 ## Код выполняющийся на сервере
 
