@@ -17,7 +17,7 @@ UILayout.windows.showMedia = {
       },
       { view: 'icon',
         icon: 'times',
-        click: '$$(\'show_media_window\').close();'
+        click: '$$(\'show_media_window\').hide();'
       }
     ]
   },

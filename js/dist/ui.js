@@ -3052,7 +3052,7 @@ EntityTree.prototype.listen = function() {
           $$('entity_tree').getParentId(entityId);
         if (nextId) {
           $$('entity_tree').select(nextId);
-    }
+        }
       }
 
       $$('entity_tree').remove(entityId);
@@ -3637,7 +3637,7 @@ UILayout.windows.addRoot = {
       elements: [
         { view: 'template',
           borderless: true,
-          height: 170,
+          height: 220,
           hidden: PROJECT_NAME !== 'web20',
           template: '<div style="margin-bottom: 5px; margin-top: -5px;">' + STRINGS.select_template_label + '</div>' +
           '<div id="no_items__template_wrap2" class="no_items__template_wrap" onclick="no_items__initTemplates(2)">\n' +
@@ -4068,7 +4068,7 @@ UILayout.windows.showMedia = {
       },
       { view: 'icon',
         icon: 'times',
-        click: '$$(\'show_media_window\').close();'
+        click: '$$(\'show_media_window\').hide();'
       }
     ]
   },
@@ -4957,47 +4957,52 @@ UILayout.entityTree = {
   gravity: 0.2,
   hidden: window.parent !== window || webix.without_header,
   rows: [
-    { view: 'toolbar',
+    {
+      view: 'toolbar',
       elements: [
-        { view: 'button',
+        {
+          view: 'button',
           type: 'icon',
           icon: 'refresh',
           id: 'REFRESH_LABEL', label: STRINGS.REFRESH,
           width: 60,
-          click: function() {
+          click: function () {
             UI.entityTree.refresh();
           }
         },
-        { view: 'button',
+        {
+          view: 'button',
           type: 'icon',
           icon: 'plus',
           id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
           hidden: true,
           width: 100,
           popup: PROJECT_NAME === 'web20' ? undefined : 'entity_tree__new_root_popup',
-          click: function() {
+          click: function () {
             if (PROJECT_NAME === 'web20') {
               $$('add_root_window').show();
             }
           }
         },
-        { view: 'button',
+        {
+          view: 'button',
           type: 'icon',
           icon: 'plus',
           id: 'ADD_FILE_LABEL', label: STRINGS.ADD_FILE,
           width: 100,
-          click: function() {
+          click: function () {
             $$('add_file_window').show();
           }
         }
       ]
     },
-    { view: 'tree',
+    {
+      view: 'tree',
       id: 'entity_tree',
       css: 'entity_tree',
       gravity: 0.4,
       select: true,
-      template:function(obj, common) {
+      template: function (obj, common) {
         var path = Identity.dataFromId(obj.id).path;
 
         var isTopLevelEntity = path.indexOf('/') < 0 && UIConstants.SYSTEM_PATHS.indexOf(path) < 0;
@@ -5014,10 +5019,10 @@ UILayout.entityTree = {
           var ava = MDSCommon.findValueByName(obj.associatedData.fields, 'avatar');
           var name = MDSCommon.findValueByName(obj.associatedData.fields, 'name') || obj.value;
           var description = MDSCommon.findValueByName(obj.associatedData.fields, 'name') ? obj.associatedData.root : null;
-          var avatarURL = MDSCommon.isBlank(ava) ? '/images/icons/root.svg' :  Mydataspace.options.cdnURL + '/avatars/sm/' + ava + '.png';
+          var avatarURL = MDSCommon.isBlank(ava) ? '/images/icons/root.svg' : Mydataspace.options.cdnURL + '/avatars/sm/' + ava + '.png';
           var folder =
             '<div class="webix_tree_folder_open entity_tree__root_icon_wrap">' +
-              '<img class="entity_tree__root_icon" src="' + avatarURL + '" />' +
+            '<img class="entity_tree__root_icon" src="' + avatarURL + '" />' +
             '</div>';
 
           var rootNameClass = 'entity_tree__root_name';
@@ -5025,38 +5030,106 @@ UILayout.entityTree = {
             rootNameClass += ' entity_tree__root_name--without-description';
           }
           return common.icon(obj, common) +
-                 folder +
-                 '<div class="entity_tree__root_wrap">' +
-                   '<span class="entity_tree__root">' +
-                     '<div class="' + rootNameClass + '">' + name + '</div>' +
-                     (MDSCommon.isBlank(description) ? '' : '<div class="entity_tree__root_description">' + description + '</div>') +
-                   '</span>' +
-                 '</div>';
+            folder +
+            '<div class="entity_tree__root_wrap">' +
+            '<span class="entity_tree__root">' +
+            '<div class="' + rootNameClass + '">' + name + '</div>' +
+            (MDSCommon.isBlank(description) ? '' : '<div class="entity_tree__root_description">' + description + '</div>') +
+            '</span>' +
+            '</div>';
         }
 
         var icon = UIHelper.getIconByPath(path,
-                                          obj.$count === 0,
-                                          obj.open);
+          obj.$count === 0,
+          obj.open);
         return common.icon(obj, common) +
-               '<div class="webix_tree_folder_open fa fa-' + icon + '"></div>' +
-               '<span class="webix_tree_item__name ' + (isTopLevelEntity ? ' webix_tree_item__name--top' : '') + '">' + obj.value + '</span>';
+          '<div class="webix_tree_folder_open fa fa-' + icon + '"></div>' +
+          '<span class="webix_tree_item__name ' + (isTopLevelEntity ? ' webix_tree_item__name--top' : '') + '">' + obj.value + '</span>';
       },
 
       on: {
         onBeforeContextMenu: function (id) {
           this.select(id);
         },
-        onAfterLoad: function() {
+        onAfterLoad: function () {
           if (!UI.entityTree.getCurrentId()) {
             UI.entityTree.setCurrentIdToFirst();
           }
           $$('entity_tree').select(UI.entityTree.getCurrentId());
           $$('entity_tree').open(UI.entityTree.getCurrentId());
         },
-        onBeforeOpen: function(id) {
+
+        onBeforeOpen: function (id) {
           UI.entityTree.resolveChildren(id);
         },
-        onSelectChange: function(ids) {
+
+        onItemClick: function (id) {
+
+          if (!Identity.isFileId(id)) {
+            return;
+          }
+
+          if ($$('script_editor_' + id)) {
+            return;
+          }
+          var fileName = Identity.getFileNameFromId(id);
+          var fileExtInfo = UIHelper.getExtensionInfoForFile(fileName);
+
+          $$('$tabbar1').show();
+          $$('script_editor').addView({
+            header: fileName,
+            close: true,
+            css: 'script_editor__tab',
+            body: {
+              id: 'script_editor_' + id,
+              view: 'ace-editor',
+              mode: fileExtInfo.mode,
+              show_hidden: true,
+              on: {
+                onReady: function (editor) {
+                  editor.getSession().setTabSize(2);
+                  editor.getSession().setUseSoftTabs(true);
+                  editor.getSession().setUseWorker(false);
+                  editor.commands.addCommand({
+                    name: 'save',
+                    bindKey: {win: 'Ctrl-S'},
+                    exec: function (editor) {
+                      var request = MDSCommon.extend(Identity.dataFromId(id, {ignoreField: true}), {
+                        fields: [{
+                          name: Identity.getFileNameFromId(id),
+                          type: 'j',
+                          value: editor.getValue()
+                        }]
+                      });
+
+                      Mydataspace.request('entities.change', request).then(function (data) {
+                        $('div[button_id="script_editor_' + id + '"]').removeClass('script_editor__tab--dirty');
+                        // TODO: unlock editor
+                      }, function (err) {
+                        // TODO: handle sating error
+                      });
+                    }
+                  });
+                }
+              }
+            }
+          });
+
+          Mydataspace.request('entities.get', Identity.dataFromId(id)).then(function (data) {
+            $$('script_editor_' + id).setValue(data.fields[0].value);
+
+            $$('script_editor_' + id).editor.on('change', function () {
+              $('div[button_id="script_editor_' + id + '"]').addClass('script_editor__tab--dirty');
+            });
+          });
+
+          $$('script_editor').show();
+          $$('script_editor_' + id).show();
+
+
+        },
+
+        onSelectChange: function (ids) {
           var id = ids[0];
           if (UIHelper.isTreeShowMore(id)) {
             $$('entity_tree').select(UI.entityTree.getCurrentId());
@@ -5077,15 +5150,15 @@ UILayout.entityTree = {
                   mode: fileExtInfo.mode,
                   show_hidden: true,
                   on: {
-                    onReady: function(editor) {
+                    onReady: function (editor) {
                       editor.getSession().setTabSize(2);
                       editor.getSession().setUseSoftTabs(true);
                       editor.getSession().setUseWorker(false);
                       editor.commands.addCommand({
                         name: 'save',
-                        bindKey: { win: 'Ctrl-S' },
-                        exec: function(editor) {
-                          var request = MDSCommon.extend(Identity.dataFromId(id, { ignoreField: true }), {
+                        bindKey: {win: 'Ctrl-S'},
+                        exec: function (editor) {
+                          var request = MDSCommon.extend(Identity.dataFromId(id, {ignoreField: true}), {
                             fields: [{
                               name: Identity.getFileNameFromId(id),
                               type: 'j',
@@ -5109,7 +5182,7 @@ UILayout.entityTree = {
               Mydataspace.request('entities.get', Identity.dataFromId(id)).then(function (data) {
                 $$('script_editor_' + id).setValue(data.fields[0].value);
 
-                $$('script_editor_' + id).editor.on('change', function() {
+                $$('script_editor_' + id).editor.on('change', function () {
                   $('div[button_id="script_editor_' + id + '"]').addClass('script_editor__tab--dirty');
                 });
               });
@@ -5126,7 +5199,7 @@ UILayout.entityTree = {
             UI.entityForm.setSelectedId(id);
           }
         },
-        onBeforeSelect: function(id, selection) {
+        onBeforeSelect: function (id, selection) {
           // Request and add more items if "Show More" clicked
           if (UIHelper.isTreeShowMore(id)) {
             UI.entityTree.showMore(Identity.parentId(id));

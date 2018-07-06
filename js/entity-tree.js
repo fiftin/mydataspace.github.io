@@ -298,7 +298,7 @@ EntityTree.prototype.listen = function() {
           $$('entity_tree').getParentId(entityId);
         if (nextId) {
           $$('entity_tree').select(nextId);
-    }
+        }
       }
 
       $$('entity_tree').remove(entityId);
