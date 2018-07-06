@@ -4,7 +4,23 @@ UILayout.windows.showMedia = {
   css: 'show_media_window',
   width: 900,
   position: 'center',
+  animate:{ type: 'flip', subtype:' vertical' },
+  autofit: true,
+  autofocus: true,
   modal: true,
+  head: {
+    view: 'toolbar',
+    margin: -4,
+    cols: [
+      { view: 'label',
+        label: 'Demo'
+      },
+      { view: 'icon',
+        icon: 'times',
+        click: '$$(\'show_media_window\').close();'
+      }
+    ]
+  },
   on: {
     onShow: function() {
       if (!UI.mediaToShow) {
@@ -28,27 +44,10 @@ UILayout.windows.showMedia = {
       }
     }
   },
-  body: {
-    rows: [
-      { template: '#media#',
-        css: 'show_media_window_content',
-        id: 'show_media_window_content',
-        borderless: true,
-        height: 506
-      },
-      { cols: [
-          {},
-          { view: 'button',
-            value: 'OK',
-            type: 'form',
-            width: 150,
-            click: function() {
-              $$('show_media_window').hide();
-            }
-          }
-        ],
-        padding: 17
-      }
-    ]
+  body: { template: '#media#',
+    css: 'show_media_window_content',
+    id: 'show_media_window_content',
+    borderless: true,
+    height: 506
   }
 };

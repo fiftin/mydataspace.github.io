@@ -325,6 +325,15 @@ EntityTree.prototype.listen = function() {
       }
       $$('entity_tree').updateItem(entity.id, entity);
 
+
+      // Update files in directory has been opened
+
+      var dummyChildId = Identity.childId(entity.id, UIHelper.ENTITY_TREE_DUMMY_ID);
+      var firstChildId = $$('entity_tree').getFirstChildId(entity.id);
+      if (firstChildId != null && firstChildId === dummyChildId) {
+        continue;
+      }
+
       var currentFileIds = self.getFileIds(entity.id);
 
       res.fields.forEach(function (field) {

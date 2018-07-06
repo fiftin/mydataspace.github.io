@@ -1110,9 +1110,9 @@ input {
   font-weight: bold;
 }
 .show_media_window {
-  .webix_win_head {
-    display: none !important;
-  }
+  //.webix_win_head {
+  //  display: none !important;
+  //}
   height: auto !important;
 }
 .show_media_window_content {
