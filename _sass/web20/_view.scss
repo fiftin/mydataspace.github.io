@@ -67,6 +67,7 @@ pre {
 .view__overview_image_wrap, .view__info {
   display: table-cell;
   vertical-align: top;
+  max-width: calc(100% - 60px);
 }
 
 .view__overview_image_wrap {
@@ -112,7 +113,10 @@ pre {
   font-size: 30px;
   font-weight: bold;
   display: block;
-  margin: 0 50px 0 0;
+  margin: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .view__title_link {

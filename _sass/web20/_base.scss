@@ -115,6 +115,9 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
 .mission {
   font-size: $font-size-large;
   padding-top: 95px;
+  @media (min-width: $screen-md) {
+    margin-top: 350px;
+  }
 }
 
 .signin_modal {

@@ -16,6 +16,29 @@
           {% include auth_prompt.html hide_prompt_on_xs=true %}
         </div>
       </div>
+
+      <div class="row intro__example hidden-xs hidden-sm">
+
+        <div class="col-md-8">
+          <div class="safari intro__example_window">
+            <div class="safari__header">
+              <div class="safari__buttons">
+                <div class="safari__button safari__button--red"></div>
+                <div class="safari__button safari__button--orange"></div>
+                <div class="safari__button safari__button--green"></div>
+              </div>
+              <div class="safari__address_bar">
+                <div class="safari__url">{{ 'https://web20.site/ru' | replace: "https://","<span class='safari__url__https'>https://</span>" }}</div>
+              </div>
+            </div>
+            <div class="intro__example_image_wrap">
+              <img class="safari__img intro__example_image" src="/images/landing/intro1.png" />
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 intro__example_description">{{ site.data[page.language].example_description }}</div>
+      </div>
     </div>
   </div>
   <script type="text/javascript">

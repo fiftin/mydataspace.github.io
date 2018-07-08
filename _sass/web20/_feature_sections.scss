@@ -169,32 +169,35 @@
 .feature--with-details {
   position: relative;
 
-  &:hover {
-    .feature__details {
-      opacity: 1;
-      transform: translate3d(0, 0, 0);
-      transition-delay: 0.3s;
-    }
+  @media (min-width: $screen-md-min) {
+    &:hover {
+      .feature__details {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+        transition-delay: 0.3s;
+      }
 
-    .feature__icon,
-    .feature__title,
-    .feature__description {
-      transform: translate3d(0, -470px, 0);
-    }
+      .feature__icon,
+      .feature__title,
+      .feature__description {
+        transform: translate3d(0, -470px, 0);
+      }
 
-    .feature__icon {
-      transition-delay: 0.15s;
-    }
+      .feature__icon {
+        transition-delay: 0.15s;
+      }
 
-    .feature__title {
-      transition-delay: 0.2s;
-    }
+      .feature__title {
+        transition-delay: 0.2s;
+      }
 
-    .feature__description {
-      transition-delay: 0.25s;
+      .feature__description {
+        transition-delay: 0.25s;
+      }
     }
   }
 }
+
 
 a.feature {
   &, &:focus, &:link {
