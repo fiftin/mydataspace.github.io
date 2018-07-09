@@ -47,7 +47,7 @@ mission: |
 
 example_description: |
   <ul style="margin-left: -20px;">
-    <li>Веб IDE</li>
+    <li>Онлайн редактор кода</li>
     <li>Поддерка Pug и SCSS</li>
     <li>Файловое хранилище с CDN</li>
     <li>Иерархическая структура данных</li>
