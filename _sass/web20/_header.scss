@@ -410,7 +410,7 @@ $slogan-animation-offset-mobile: 400px;
   .intro__slogan_wrap--2 {
     animation-name: slogan2Animation--mobile;
     .intro__slogan {
-      font-size: 40px !important;
+      font-size: 30px !important;
     }
   }
 }
@@ -772,6 +772,10 @@ $search-filter-panel-gap: 40px;
   position: absolute;
   right: 0;
   top: 100px;
+  font-size: 20px;
+  li {
+    margin-bottom: 5px;
+  }
 }
 
 .intro__example_image_wrap {
@@ -780,11 +784,20 @@ $search-filter-panel-gap: 40px;
 }
 
 .intro__example_image {
-  height: 435px;
-  @media (max-width: $screen-lg) {
+
+  @media (min-width: $screen-md-min) {
+    height: 319px;
+    .intro__example_description {
+      font-size: 16px;
+    }
+  }
+
+  @media (min-width: $screen-lg-min) {
     height: 392px;
   }
-  @media (max-width: $screen-md) {
-    height: 319px;
+
+  @media (min-width: 1400px) {
+    height: 435px;
   }
+
 }

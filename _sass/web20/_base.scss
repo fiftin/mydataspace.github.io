@@ -116,8 +116,16 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
   font-size: $font-size-large;
   padding-top: 95px;
   @media (min-width: $screen-md) {
-    margin-top: 350px;
+    margin-top: 320px;
   }
+  p, ul {
+    margin-bottom: 30px;
+  }
+}
+
+.mission__con {
+  display: inline-block;
+  width: 270px;
 }
 
 .signin_modal {
