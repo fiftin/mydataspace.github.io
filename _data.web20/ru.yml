@@ -38,9 +38,9 @@ mission: |
   </ul>
   <p>Каждое из этих решений имеет существенные недостатки:</p>
   <ul>
-    <li><span class="mission__con">Хостинг</span> &mdash; медленный и ненадежный</li>
-    <li><span class="mission__con">Виртуальные сервера</span> &mdash; необходимы навыки администрирования</li>
-    <li><span class="mission__con">Конструкторы сайтов</span> &mdash; шаблонные сайты</li>
+    <li><span class="mission__con">Хостинг</span> &mdash; медленный и ненадежный <img class="mission__con_icon" src="/images/landing/slow.png" /></li>
+    <li><span class="mission__con">Виртуальные сервера</span> &mdash; необходимы навыки администрирования <img style="height: 30px;" class="mission__con_icon" src="/images/landing/admin.png"</li>
+    <li><span class="mission__con">Конструкторы сайтов</span> &mdash; шаблонные сайты <img class="mission__con_icon" src="/images/landing/templates.png"</li>
   </ul>
   <p style="font-size: 30px;">Поэтому наша команда создала быстрый, простой и
   надежный конструктор сайтов для программистов.</p>
