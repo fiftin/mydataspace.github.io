@@ -48,10 +48,10 @@ mission: |
 example_description: |
   <ul style="margin-left: -20px;">
     <li>Онлайн редактор кода</li>
-    <li>Поддерка Pug и SCSS</li>
+    <li>Поддержка Pug и SCSS</li>
     <li>Файловое хранилище с CDN</li>
     <li>Иерархическая структура данных</li>
-    <li>Мощнейший Websocket API</li>
+    <li>Мощный Websocket API</li>
     <li>Выполнение кода на сервере</li>
     <li>Авторизация из коробки</li>
   </ul>
