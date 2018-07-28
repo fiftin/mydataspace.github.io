@@ -19,7 +19,8 @@ menu:
 
 title: Web 2.0 Site — конструктор сайтов для программистов
 slogan: Конструктор сайтов для программистов
-slogan_description: ""
+#slogan_description: Сфокусируйтесь на разработке, не отвлекайтесь на администрирование и инфраструктуру
+slogan_description: Не отвлекайтесь на администрирование и инфраструктуру, сфокусируйтесь на разработке
 #Надежный доступ к данных из любой точки мира со скоростью близкой к реальному времени
 slogan_2: Загрузите данные и используйте их через API на свойм сайте
 #slogan_2: Невероятно быстрый бекенд вашего сайта
@@ -30,7 +31,7 @@ slogan_description_2: <span class="hidden-xs">Вы поразитесь наск
 #   <p style="font-size: 30px;">Поэтому наша команда создала быстрый, простой и надежный конструктор сайтов для программистов.</p>
 
 mission: |
-  <p>Современный рынок предлагает следующие решения для размещения сайтов в интернете:</p>
+  <p>Современный рынок предлагает следующие решения для размещения сайта в интернете:</p>
   <ul>
     <li>Хостинг</li>
     <li>Виртуальные сервера</li>
@@ -39,7 +40,7 @@ mission: |
   <p>Каждое из этих решений имеет существенные недостатки:</p>
   <ul>
     <li><span class="mission__con">Хостинг</span> &mdash; медленный и ненадежный <img class="mission__con_icon" src="/images/landing/slow.png" /></li>
-    <li><span class="mission__con">Виртуальные сервера</span> &mdash; необходимы навыки администрирования <img style="height: 30px;" class="mission__con_icon" src="/images/landing/admin.png"</li>
+    <li><span class="mission__con">Виртуальные сервера</span> &mdash; необходимы навыки администрирования <img style="height: 20px;" class="mission__con_icon" src="/images/landing/admin.png"</li>
     <li><span class="mission__con">Конструкторы сайтов</span> &mdash; шаблонные сайты <img class="mission__con_icon" src="/images/landing/templates.png"</li>
   </ul>
   <p style="font-size: 30px;">Поэтому наша команда создала быстрый, простой и

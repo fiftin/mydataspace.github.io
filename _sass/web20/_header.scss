@@ -417,7 +417,7 @@ $slogan-animation-offset-mobile: 400px;
 
 .intro__slogan {
   font-weight: bold;
-  font-size: 80px;
+  font-size: 60px;
   line-height: 1.01;
   margin-top: 0;
 }
@@ -456,15 +456,15 @@ $slogan-animation-offset-mobile: 400px;
 }
 
 .page_top {
+  background: url('/images/background.jpg') no-repeat bottom;
   background-size: cover;
-  background: url('/images/background.jpg') bottom;
   //background-attachment: fixed;
   //overflow: hidden;
 }
 
 @media (max-width: $screen-md-max) {
   .intro__slogan {
-    font-size: 67px;
+    font-size: 60px;
   }
 }
 
@@ -477,8 +477,8 @@ $slogan-animation-offset-mobile: 400px;
   }
 
   .page_top {
+    background: url('/images/background.jpg') no-repeat bottom;
     background-size: cover;
-    background: url('/images/background.jpg') bottom;
   }
 }
 
@@ -525,8 +525,8 @@ $slogan-animation-offset-mobile: 400px;
     margin-left: 25px;
   }
   .page_top {
+    background: url('/images/landing/top.jpeg') no-repeat top;
     background-size: cover;
-    background: url('/images/background_short.jpg') top;
   }
 
   .header {
@@ -593,6 +593,10 @@ $slogan-animation-offset-mobile: 400px;
 }
 
 .page_top--landing-page {
+  .smoke {
+    background: rgba(77, 77, 77, 0.6) !important;
+  }
+
   .smoke--fullscreen {
     @extend .smoke--fullscreen--opaque;
   }
@@ -772,7 +776,10 @@ $search-filter-panel-gap: 40px;
   position: absolute;
   right: 0;
   top: 100px;
-  font-size: 20px;
+  font-size: 24px;
+  @media (max-width: 1400px) {
+    font-size: 20px;
+  }
   li {
     margin-bottom: 5px;
   }
@@ -787,9 +794,6 @@ $search-filter-panel-gap: 40px;
 
   @media (min-width: $screen-md-min) {
     height: 319px;
-    .intro__example_description {
-      font-size: 16px;
-    }
   }
 
   @media (min-width: $screen-lg-min) {
@@ -799,5 +803,4 @@ $search-filter-panel-gap: 40px;
   @media (min-width: 1400px) {
     height: 435px;
   }
-
 }
