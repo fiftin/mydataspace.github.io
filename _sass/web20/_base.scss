@@ -166,6 +166,7 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
   font-size: 35px;
   margin-top: 50px;
   color: black; //$text-color;
+  font-weight: bold;
 }
 
 .no_items__roots {
@@ -336,6 +337,7 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
   background: white;
   border-radius: 10px;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  padding-top: 20px;
 }
 
 .no_items__column--right {
