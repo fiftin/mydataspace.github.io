@@ -264,6 +264,9 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
   float: left;
   color: black;
   font-weight: bold;
+  &:focus {
+    border-color: $brand-success;
+  }
 }
 
 
@@ -276,8 +279,10 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
     background: #f0f3f5;
   }
   padding: 10px;
-  border: 1px solid lightgray;
+
+  border: 1px solid $brand-success;
   border-radius: 6px;
+  box-shadow: 0 1px 2px 0 $brand-success;
 }
 
 
