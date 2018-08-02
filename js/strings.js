@@ -477,7 +477,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     },
 
     no_items: {
-      no_items__title: PROJECT_NAME === 'web20' ? 'У вас еще нет ни одного сайта' : 'У вас еще нет никаких данных',
+      no_items__title: PROJECT_NAME === 'web20' ? 'Создайте свой первый сайт!' : 'У вас еще нет никаких данных',
       no_items__explore__desc: 'Найдите нужные данные среди огромного количества уже загруженных данных',
       no_items__explore__button: 'Смотреть',
       no_items__import__desc: 'Импортируйте данные из файлов XLS, XML, CSV, JSON и файлов множества других форматов',
