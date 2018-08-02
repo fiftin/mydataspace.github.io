@@ -70,7 +70,7 @@ strings:
   top_roots: Популярные сайты
   view_doc: См. документацию
   explore_roots: Смотреть все
-  new_root_name: имя-сайта
+  new_root_name: поддомен-сайта
   click_to_select_version: Нажмине чтобы выбрать другую версию
   cancel: Отмена
   privacy: Приватность
