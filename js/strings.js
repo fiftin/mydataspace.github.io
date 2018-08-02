@@ -569,7 +569,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       'standard-terms-of-use': 'Типовые условия использования ОД'
     },
 
-    site_dns_in_progress: 'Пожалуйта, подождите, обновление записи DNS занимает 1 минуту',
+    site_dns_in_progress: 'Пожалуйта, подождите, обновление записи DNS занимает ровно 1 минуту',
     entities_and_files: 'Элементы',
     context_menu: {
       new_file: 'Новый файл',
