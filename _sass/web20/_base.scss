@@ -151,7 +151,7 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
   top: 53px;
   bottom: 0;
   display: none;
-  background: white;
+  background: $toolbar-bg;
 }
 
 .no_items__notice_list {
@@ -165,7 +165,7 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
   text-align: center;
   font-size: 35px;
   margin-top: 40px;
-  color: $text-color;
+  color: black; //$text-color;
 }
 
 .no_items__roots {
@@ -205,7 +205,7 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
 .no_items__btn {
   padding-left: 30px;
   padding-right: 30px;
-  bottom: 0;
+  bottom: $no-items-col-gap / 2;
   position: absolute;
   left: $no-items-col-gap / 2;
   width: calc(100% - #{$no-items-col-gap});
@@ -326,8 +326,14 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
   height: $no-items-height - $no-items-col-top-spacing;
   position: relative;
 
-  padding-left: $no-items-col-gap / 2;
-  padding-right: $no-items-col-gap / 2;
+  // padding-left: $no-items-col-gap / 2;
+  // padding-right: $no-items-col-gap / 2;
+
+
+  padding: $no-items-col-gap / 2;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
 }
 
 .no_items__column--right {
