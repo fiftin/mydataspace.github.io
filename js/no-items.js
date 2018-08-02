@@ -84,7 +84,7 @@ function no_items__createNewWebsite() {
     notices[i].classList.remove('no_items__notice--alert');
   }
   var root = document.getElementById('no_items__new_root_input').value;
-  if (MDSCommon.isBlank(root) || root.length < 3 || root.length > 50) {
+  if (MDSCommon.isBlank(root) || root.length < 4 || root.length > 50) {
     notices[0].classList.add('no_items__notice--alert');
     document.getElementById('no_items__new_root_input').focus();
     return;
