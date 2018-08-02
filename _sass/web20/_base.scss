@@ -1,6 +1,6 @@
 $control-panel-height: 70px;
 $no-items-width: 700px;
-$no-items-height: 550px;
+$no-items-height: 580px;
 $no-items-col-top-spacing: 35px;
 $no-items-col-gap: 60px;
 $no-items-template-image-size: 60px;
@@ -199,7 +199,7 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
 }
 
 .no_items__center--right {
-  padding: 45px 0;
+  padding: 35px 0;
 }
 
 .no_items__btn {
@@ -253,7 +253,7 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
 }
 
 .no_items__new_root_input {
-  font-size: 16px;
+  font-size: 17px;
   border-radius: 0;
   border: 0;
   border-bottom: 2px solid gray;
@@ -261,6 +261,8 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
   text-align: center;
   width: 220px;
   float: left;
+  color: black;
+  font-weight: bold;
 }
 
 
@@ -313,7 +315,7 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
 
 .no_items__notice {
   font-size: 14px;
-  color: black; //#949494;
+  color: #6b6b6b; // #949494;
   padding-top: 15px;
 }
 
