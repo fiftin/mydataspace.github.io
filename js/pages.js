@@ -52,11 +52,18 @@ Pages.prototype.updatePageState = function(page) {
       }
       break;
     case 'data':
+
       if ($$('entity_tree').getFirstId() == null) { // && Router.isMe() && !Router.isSearch()) {
         document.getElementById('no_items__no_apps').style.display = 'none';
         document.getElementById('no_items__no_data').style.display = 'block';
         document.getElementById('no_items').style.display = 'block';
-        document.getElementById('no_items__new_root_input').focus();
+
+        [1,2,3].forEach(function (value) {
+          setTimeout(function () {
+            document.getElementById('no_items__new_root_input').focus();
+          }, value * 1000);
+        });
+
         $$('my_data_panel__right_panel').hide();
         $$('my_data_panel__resizer_2').hide();
         $$('my_data_panel__central_panel').hide();

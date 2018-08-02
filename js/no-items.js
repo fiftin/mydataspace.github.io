@@ -29,6 +29,8 @@ function no_items__selectTemplate(root, suffix) {
     $('#no_items__template_description' + suffix).text(description);
     $('#no_items__template_wrap' + suffix).data('root', data.root);
     $('#no_items_select_template_modal').modal('hide');
+
+    document.getElementById('no_items__new_root_input').focus();
   });
 }
 
