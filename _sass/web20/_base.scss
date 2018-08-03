@@ -124,6 +124,28 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
   }
 }
 
+.mission__title {
+  font-size: 30px;
+}
+
+.mission__text {
+  font-size: 35px;
+}
+
+.feature__icon--mission {
+  margin: 0 100px;
+}
+
+.feature__title--mission {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.feature__title--description {
+  font-size: 24px;
+}
+
+
 .mission__con {
   display: inline-block;
   width: 270px;

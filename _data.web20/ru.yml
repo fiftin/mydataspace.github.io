@@ -30,21 +30,20 @@ slogan_description_2: <span class="hidden-xs">Вы поразитесь наск
 #   Но мы, программисты, не любим шаблоны, мы любим делать всё по своему.</p>
 #   <p style="font-size: 30px;">Поэтому наша команда создала быстрый, простой и надежный конструктор сайтов для программистов.</p>
 
-mission: |
-  <p>Современный рынок предлагает следующие решения для размещения сайта в интернете:</p>
-  <ul>
-    <li>Хостинг</li>
-    <li>Виртуальные сервера</li>
-    <li>Конструкторы сайтов</li>
-  </ul>
-  <p>Каждое из этих решений имеет существенные недостатки:</p>
-  <ul>
-    <li><span class="mission__con">Хостинг</span> &mdash; медленный и ненадежный <img class="mission__con_icon" src="/images/landing/slow.png" /></li>
-    <li><span class="mission__con">Виртуальные сервера</span> &mdash; необходимы навыки администрирования <img style="height: 20px;" class="mission__con_icon" src="/images/landing/admin.png"</li>
-    <li><span class="mission__con">Конструкторы сайтов</span> &mdash; шаблонные сайты <img class="mission__con_icon" src="/images/landing/templates.png"</li>
-  </ul>
-  <p style="font-size: 30px;">Поэтому наша команда создала быстрый, простой и
-  надежный конструктор сайтов для программистов.</p>
+solutions:
+  - id: hosting
+    title: Хостинг
+    description: Медленный и ненадежный
+  - id: vps
+    title: Виртуальные сервера
+    description: Hеобходимы навыки администрирования
+  - id: builder
+    title: Конструкторы сайтов
+    description: Шаблонные сайты
+
+mission_title: "Современный рынок предлагает следующие решения для размещения сайта в интернете:"
+
+mission: "Мы создали конструктор сайтов который лишён этих недостатков: простой, быстрый и надежный. "
 
 example_description: |
   <ul style="margin-left: -20px;">
@@ -102,7 +101,7 @@ buttons:
 sections:
   - id: ease
     title: Простота
-    subtitle: Вам доступны все технологии веб-разработки &mdash; Bootstrap, React, Angular, jQuery и сотни других.
+    subtitle: Вам доступны все технологии веб-разработки &mdash; Bootstrap, React, Angular, jQuery и сотни других
     features:
       - id: coding
         title: HTML/CSS/JS
