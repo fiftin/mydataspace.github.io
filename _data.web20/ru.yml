@@ -35,10 +35,10 @@ solutions:
     title: Хостинг
     description: Медленный и ненадежный
   - id: vps
-    title: Виртуальные сервера
+    title: Виртуальный сервер
     description: Hеобходимы навыки администрирования
   - id: builder
-    title: Конструкторы сайтов
+    title: Конструктор сайтов
     description: Шаблонные сайты
 
 mission_title: "Современный рынок предлагает следующие решения для размещения сайта в интернете:"
@@ -59,7 +59,7 @@ example_description: |
 
 special_offer: Бесплатно <b>навсегда</b> для зарегистрированных пользователей
 final_prompt: ""
-get_started_now: Зарег<span class="hidden-xs">истрировать</span>ся!
+get_started_now: Создать сайт!
 view_docs: Смотреть док<span class="hidden-xs">ументацию</span>
 prompt: "Войти через:"
 waiting_cloak: "Загрузка..."
