@@ -77,16 +77,58 @@ function no_items__initTemplates(suffix) {
   });
 }
 
-
-function no_items__createNewWebsite() {
+function no_items__validateNewWebsiteDomain(ignoreLength, igoreUnique) {
   var notices = document.getElementById('no_items__notice').childNodes[0].childNodes;
   for (var i = 0; i < notices.length; i++) {
     notices[i].classList.remove('no_items__notice--alert');
   }
+
   var root = document.getElementById('no_items__new_root_input').value;
-  if (MDSCommon.isBlank(root) || root.length < 4 || root.length > 50) {
-    notices[0].classList.add('no_items__notice--alert');
+  if (MDSCommon.isBlank(root)) {
+    return true;
+  }
+
+  var ret = true;
+
+  if (root.length < 4 || root.length > 50) {
+    if (!ignoreLength) {
+      notices[0].classList.add('no_items__notice--alert');
+      document.getElementById('no_items__new_root_input').focus();
+    }
+    ret = false;
+  }
+
+  if (!/^[a-zA-Z0-9_-]+$/.test(root)) {
+    notices[1].classList.add('no_items__notice--alert');
     document.getElementById('no_items__new_root_input').focus();
+    ret = false;
+  }
+
+  if (!ret) {
+    return false;
+  }
+
+  if (igoreUnique) {
+    return true;
+  }
+
+  Mydataspace.request('entities.get', {
+    root: root,
+    path: ''
+  }).then(function () {
+    notices[2].classList.add('no_items__notice--alert');
+    document.getElementById('no_items__new_root_input').focus();
+  });
+
+  return true;
+}
+
+function no_items__createNewWebsite() {
+
+  var notices = document.getElementById('no_items__notice').childNodes[0].childNodes;
+  var root = document.getElementById('no_items__new_root_input').value;
+
+  if (!no_items__validateNewWebsiteDomain(false, true)) {
     return;
   }
 

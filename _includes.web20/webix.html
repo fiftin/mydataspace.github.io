@@ -70,6 +70,8 @@
               <input id="no_items__new_root_input"
                      type="text"
                      class="no_items__new_root_input form-control"
+                     onkeyup="no_items__validateNewWebsiteDomain(true)"
+                     onchange="no_items__validateNewWebsiteDomain()"
                      onkeypress="no_items__new_root_input__onKeyPress(event)"
                      placeholder="{{ site.data[page.language].strings.new_root_name }}" />
 
