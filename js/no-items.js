@@ -100,7 +100,6 @@ function no_items__validateNewWebsiteDomain(ignoreLength, igoreUnique) {
 
   if (!/^[a-zA-Z0-9_-]+$/.test(root)) {
     notices[1].classList.add('no_items__notice--alert');
-    document.getElementById('no_items__new_root_input').focus();
     ret = false;
   }
 
@@ -117,8 +116,7 @@ function no_items__validateNewWebsiteDomain(ignoreLength, igoreUnique) {
     path: ''
   }).then(function () {
     notices[2].classList.add('no_items__notice--alert');
-    document.getElementById('no_items__new_root_input').focus();
-  });
+  }, function (err) {});
 
   return true;
 }
@@ -129,6 +127,7 @@ function no_items__createNewWebsite() {
   var root = document.getElementById('no_items__new_root_input').value;
 
   if (!no_items__validateNewWebsiteDomain(false, true)) {
+    document.getElementById('no_items__new_root_input').focus();
     return;
   }
 
