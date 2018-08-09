@@ -84,7 +84,7 @@ function no_items__validateNewWebsiteDomain(ignoreLength, igoreUnique) {
   }
 
   var root = document.getElementById('no_items__new_root_input').value;
-  if (MDSCommon.isBlank(root)) {
+  if (ignoreLength && MDSCommon.isBlank(root)) {
     return true;
   }
 
@@ -98,7 +98,7 @@ function no_items__validateNewWebsiteDomain(ignoreLength, igoreUnique) {
     ret = false;
   }
 
-  if (!/^[a-zA-Z0-9_-]+$/.test(root)) {
+  if (!/^[a-zA-Z0-9_-]*$/.test(root)) {
     notices[1].classList.add('no_items__notice--alert');
     ret = false;
   }
