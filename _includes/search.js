@@ -17,7 +17,7 @@
 
 
 var search_{{include.id}}_url = '';
-var search_{{include.id}}_pathname = MDSCommon.endsWith(window.location.pathname, '/datasources')  ? '{{ lang_prefix }}/datasources' : '{{ lang_prefix }}/search';
+var search_{{include.id}}_pathname = /\/datasources\/?$/.test(window.location.pathname) ? '{{ lang_prefix }}/datasources' : '{{ lang_prefix }}/search';
 var search_{{include.id}}_displayMode = localStorage.getItem('searchDisplayMode') || 'snippet';
 var isAdmin_{{include.id}} = {{include.admin}};
 var search_{{include.id}}_license_drops = [];
@@ -139,7 +139,10 @@ function startSearch_{{include.id}}(search) {
   }
 
   // Try to get roots from server
-  Mydataspace.request(m, q, function(data) {
+
+  Mydataspace.connect().then(function () {
+    return Mydataspace.request(m, q);
+  }).then(function(data) {
     var items = data.root === 'datasources' ?  data.children : data.roots;
 
     var rootsHtml = items.map(function(root) {

@@ -2,6 +2,9 @@
 layout: hybrid
 ---
 <div>
+  {% if page.search_header__search_pathname %}
+  <script>search_header__search_pathname = '{{ page.search_header__search_pathname }}';</script>
+  {% endif %}
   <div class="page_top page_top--landing-page">
     <div class="smoke">
       {% include nav.html %}
