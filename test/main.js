@@ -409,7 +409,7 @@ function addJsonLD(data) {
   script.type = 'application/ld+json';
   script.text = JSON.stringify({
     "@context": "http://schema.org",
-    "@id": "https://myda.space/" + data.root,
+    "@id": "https://mydataspace.org/" + data.root,
     "@type": "Dataset",
     "name":  MDSCommon.findValueByName(fields, 'name'),
     "description": MDSCommon.findValueByName(fields, 'description'),

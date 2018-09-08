@@ -127,7 +127,7 @@ how_it_works:
 demos:
   - id: hello-world
     title: Hello, World!
-    website: https://myda.space/get-started/hello-world
+    website: https://mydataspace.org/get-started/hello-world
     description: Simplest MyDataSpace-based app
     screenshot_width: 1088
     screenshot_height: 663
@@ -135,13 +135,13 @@ demos:
     title: Spreex
     website: https://spreex.github.io
     source_code_url: https://github.com/spreex/spreex.github.io
-    data_url: https://myda.space/spreex
+    data_url: https://mydataspace.org/spreex
     description: Spree Commerce extensions catalogue.
     screenshot_width: 1088
     screenshot_height: 663
   - id: ui
     title: MyDataSpace
-    website: https://myda.space
+    website: https://mydataspace.org
     source_code_url: https://github.com/mydataspace/mydataspace.github.io
     description: MyDataSpace administrative panel.
     screenshot_width: 1105
@@ -169,7 +169,7 @@ features:
     title: Фасеты
     description: Группировка документов по значениям заданных полей
     type: iframe
-    url: https://myda.space/reestrSTR/views/b3890fd4-c139-11e7-abc4-cec278b6b50a
+    url: https://mydataspace.org/reestrSTR/views/b3890fd4-c139-11e7-abc4-cec278b6b50a
     height: 450
     content: "Пример: панель фильтрации по городу реализована с помощью фасетов"
 
@@ -204,7 +204,7 @@ features:
     type: demo
 #    preview_url: /images/docs/import-of-data/create-root.gif
     image_url: /images/docs/import-of-data/create-root.gif
-    website: https://myda.space
+    website: https://mydataspace.org
 
   - id: import
     super_title: Загрузка данных
@@ -213,7 +213,7 @@ features:
     type: demo
     image_url: /images/docs/import-of-data/openrefine.gif
 #    preview_url: /images/docs/import-of-data/openrefine.jpg
-    website: https://myda.space
+    website: https://mydataspace.org
 
   - id: user-code
     super_title: Пользовательский код
@@ -222,7 +222,7 @@ features:
     type: demo
 #    preview_url: /images/docs/backend/tasks-debug-ru.png
     image_url: /images/docs/backend/tasks-debug-ru.png
-    website: https://myda.space
+    website: https://mydataspace.org
     height: 750
 
   - id: resources
@@ -232,7 +232,7 @@ features:
     type: demo
 #    preview_url: /images/docs/backend/resources-ru.png
     image_url: /images/docs/backend/resources-ru.png
-    website: https://myda.space
+    website: https://mydataspace.org
     height: 750
 
 get_started:
@@ -249,10 +249,10 @@ get_started:
         # width: 1034
         height: 612
         width: 1045
-        website: https://myda.space
+        website: https://mydataspace.org
         url: /images/get_started/hello_world.gif
         preview_url: /images/get_started/hello_world.jpg
-        data_url: https://myda.space/hello-world
+        data_url: https://mydataspace.org/hello-world
       - id: client
         title: Client
         description: Print JSON received from the backend

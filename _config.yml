@@ -8,11 +8,11 @@
 # Site settings
 project_name: mydataspace
 title: MyDataSpace — Data Publishing Service
-email: webmaster@myda.space
+email: support@mydataspace.org
 baseurl: ""
 
-url: "https://myda.space"
-enforce_ssl: myda.space
+url: "https://mydataspace.org"
+enforce_ssl: mydataspace.org
 
 facebook_url: "https://www.facebook.com/mydataspace"
 google_plus_url: "https://plus.google.com/communities/107145683419072073269"
@@ -32,7 +32,7 @@ local_refine_url: "http://localhost:3333/"
 api_url: "https://api.mydataspace.net"
 cdn_url: "https://cdn.mydataspace.net"
 api_websocket_url: "https://api.mydataspace.net"
-refine_url: "https://refine.myda.space"
+refine_url: "https://refine.mydataspace.org"
 
 client_id: "a56e6a0c-06ab-bca7-bb97-18c8898c68f9"
 github_username:  fiftin

@@ -25,6 +25,7 @@
                 <li class="hidden">
                     <a href="#page-top"></a>
                 </li>
+                <!--
                 <li class="hidden-sm header__give_feedback_wrap">
                     <a class="header__menu_item"
                        href="javascript: void(0);"
@@ -44,6 +45,7 @@
                       }, 5000);
                     </script>
                 </li>
+                -->
                 <li class="hidden-sm">
                     <a class="header__menu_item" href="{{ baseurl }}/features">{{ site.data[page.language].menu.features }}</a>
                 </li>
@@ -96,7 +98,7 @@
                   </ul>
                 {% endif %}
                 </li>
-                {% if page.url != baseurl_with_trailing_slash %}
+
                 <li id="profile_button_menu_item">
                   <script>
                     if (isValidJWT(localStorage.getItem('authToken'))) {
@@ -144,7 +146,6 @@
                   {{ site.data[page.language].menu.login }}
                   </button>
                 </li>
-                {% endif %}
             </ul>
         </div>
     </div>

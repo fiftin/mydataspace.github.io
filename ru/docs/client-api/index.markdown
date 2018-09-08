@@ -66,12 +66,12 @@ https://api.mydataspace.net/v1/entities/get?root=hello-world&path=
 * Facebook
 
 Чтобы подключить авторизацию на вашем сайте нужно создать приложение через админпанель и указать с 
-кагого IP или хоста разршена авторизация ([см. здесь](https://myda.space/ru/docs/backend#docs__apps)).
+кагого IP или хоста разршена авторизация ([см. здесь](https://mydataspace.org/ru/docs/backend#docs__apps)).
 
 После этого вы можете использовать SDK для авторизации:
 
 {% highlight html %}
-<script src="https://myda.space/js/dist/api-v3.0.js"></script>
+<script src="https://mydataspace.org/js/dist/api-v3.0.js"></script>
 {% endhighlight %}
 
 {% highlight javascript %}

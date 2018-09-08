@@ -1206,9 +1206,9 @@ function initRootPage(options) {
             var createdAtLink = document.createElement('a');
             var descriptionLink = document.createElement('a');
 
-            numberLink.href = 'https://myda.space/' + DATA.root + '?v=' + version.version;
-            createdAtLink.href = 'https://myda.space/' + DATA.root + '?v=' + version.version;
-            descriptionLink.href = 'https://myda.space/' + DATA.root + '?v=' + version.version;
+            numberLink.href = 'https://mydataspace.org/' + DATA.root + '?v=' + version.version;
+            createdAtLink.href = 'https://mydataspace.org/' + DATA.root + '?v=' + version.version;
+            descriptionLink.href = 'https://mydataspace.org/' + DATA.root + '?v=' + version.version;
 
             numberLink.appendChild(document.createTextNode(version.version));
             createdAtLink.appendChild(document.createTextNode(version.createdAt));

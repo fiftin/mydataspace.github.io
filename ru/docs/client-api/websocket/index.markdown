@@ -12,7 +12,7 @@ language: ru
 </div>
 
 Для доступа к API по Websocket существует библиотека JavaScript:
-* [https://myda.space/js/dist/api-v3.0.js](https://myda.space/js/dist/api-v3.0.js) &mdash; версия для браузера
+* [https://mydataspace.org/js/dist/api-v3.0.js](https://mydataspace.org/js/dist/api-v3.0.js) &mdash; версия для браузера
 * [https://github.com/mydataspace/mydataspace](https://github.com/mydataspace/mydataspace) &mdash; версия для nodejs
 
 
