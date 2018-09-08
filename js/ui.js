@@ -127,6 +127,9 @@ UI = {
 
     var newLang = currentLang.toLowerCase() === 'en' ? '' : currentLang.toLowerCase();
     var pathWithoutLanguage = pathname.substring(index);
+    if (pathWithoutLanguage.indexOf('/') !== 0) {
+      pathWithoutLanguage = '/' + pathWithoutLanguage;
+    }
     a.pathname = newLang === '' ? pathWithoutLanguage : '/' + newLang + pathWithoutLanguage;
     if (a.pathname[a.pathname.length - 1] !== '/') {
       a.pathname += '/';
