@@ -22,7 +22,7 @@ var search_{{include.id}}_displayMode = localStorage.getItem('searchDisplayMode'
 var isAdmin_{{include.id}} = {{include.admin}};
 var search_{{include.id}}_license_drops = [];
 
-if (MDSCommon.endsWith(window.location.pathname, search_{{include.id}}_pathname)) {
+if (typeof search_{{include.id}}_isFixed !== 'undefined' && search_{{include.id}}_isFixed || MDSCommon.endsWith(window.location.pathname, search_{{include.id}}_pathname)) {
   document.getElementById('{{include.id}}_input').classList.add('header__search_input--focus');
   document.getElementsByClassName('smoke')[0].classList.add('smoke--fullscreen--opaque');
   document.getElementById('{{include.id}}_input').value = search_parseQuery();
@@ -434,10 +434,11 @@ document.getElementById('{{include.id}}_input').addEventListener('focus', functi
 //
 // Filter suggestions when search input text changed
 document.getElementById('{{include.id}}_input').addEventListener('keyup', function(event) {
+
   var url1 = search_{{include.id}}_url.split('?')[0];
   var url2 = window.location.href.split('?')[0];
 
-  if (event.keyCode === 27 && url1 !== '' && url1 != url2) {
+  if (event.keyCode === 27 && url1 !== '' && url1 != url2 && (typeof search_{{include.id}}_isFixed === 'undefined' || !search_{{include.id}}_isFixed)) {
     closeSearch_{{include.id}}();
     document.getElementById('{{include.id}}_input').blur();
     history.replaceState({}, '', search_{{include.id}}_url);
