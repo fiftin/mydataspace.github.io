@@ -46,6 +46,15 @@ languages:
   - ru
 
 exclude:
+  - js/search.js
+  - js/webix_search.js
+  - js/ru/search.js
+  - js/ru/webix_search.js
+  - search
+  - datasources
+  - ru/search
+  - ru/datasources
+  - ru/datasources
   - test
   - vendor/bootstrap/stylesheets
   - vendor/fa/scss
