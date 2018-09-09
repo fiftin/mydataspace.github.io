@@ -12,6 +12,19 @@ layout: hybrid
     </div>
   </div>
 
+  <script>
+    Mydataspace.connect();
+    Mydataspace.on('login', function() {
+      document.getElementById('login_button_menu_item').style.display = 'none';
+      document.getElementById('profile_button_menu_item').style.display = 'block';
+      Mydataspace.emit('users.getMyProfile', {});
+    });
+    Mydataspace.on('logout', function() {
+      document.getElementById('login_button_menu_item').style.display = 'block';
+      document.getElementById('profile_button_menu_item').style.display = 'none';
+    });
+  </script>
+
   <script type="text/javascript">
     document.getElementById('header__search_input').focus();
   </script>
