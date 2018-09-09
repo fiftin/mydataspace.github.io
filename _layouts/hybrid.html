@@ -10,6 +10,10 @@
 
 {% include give_feedback_modal.html %}
 
+{% if page.search_fixed %}
+<script>search_header__search_isFixed = true;</script>
+{% endif %}
+
 <div id="bootstrap" style="height: 100%">
   <script type="text/javascript">
     if (window.parent !== window) {
