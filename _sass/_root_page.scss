@@ -445,6 +445,13 @@ $follow-button-height: 40px;
   position: relative;
   font-size: 16px;
   line-height: 1.2;
+
+  border-top: 1px solid $border-color-light;
+
+  &:first-child {
+    border-top: 0;
+  }
+
   &:hover {
     .view__comment__delete {
       opacity: 0.7;
