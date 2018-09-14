@@ -4989,23 +4989,20 @@ UILayout.entityTree = {
           id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
           hidden: true,
           width: 100,
-          popup: PROJECT_NAME === 'web20' ? undefined : 'entity_tree__new_root_popup',
           click: function () {
-            if (PROJECT_NAME === 'web20') {
-              $$('add_root_window').show();
-            }
-          }
-        },
-        {
-          view: 'button',
-          type: 'icon',
-          icon: 'plus',
-          id: 'ADD_FILE_LABEL', label: STRINGS.ADD_FILE,
-          width: 100,
-          click: function () {
-            $$('add_file_window').show();
+            $$('add_root_window').show();
           }
         }
+        // {
+        //   view: 'button',
+        //   type: 'icon',
+        //   icon: 'plus',
+        //   id: 'ADD_FILE_LABEL', label: STRINGS.ADD_FILE,
+        //   width: 100,
+        //   click: function () {
+        //     $$('add_file_window').show();
+        //   }
+        // }
       ]
     },
     {
