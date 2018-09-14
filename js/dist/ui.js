@@ -6223,7 +6223,7 @@ UI = {
     window.addEventListener('message', function(e) {
       if (e.data.message === 'getScripts') {
 
-        Mydataspace.request('entities.get', Identity.dataFromId(UI.entityForm.getSelectedId())).then(function (data) {
+        Mydataspace.request('entities.getWithMeta', Identity.dataFromId(UI.entityForm.getSelectedId())).then(function (data) {
           data.fields.sort(function(a, b) {
             if (a.type === 'j' && b.type !== 'j') {
               return 1;
