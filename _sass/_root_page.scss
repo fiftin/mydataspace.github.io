@@ -442,7 +442,7 @@ $follow-button-height: 40px;
   overflow: hidden;
   position: relative;
   font-size: 16px;
-
+  line-height: 1.2;
   &:hover {
     .view__comment__delete {
       opacity: 0.7;
