@@ -401,27 +401,28 @@ UI = {
     //
     window.addEventListener('message', function(e) {
       if (e.data.message === 'getScripts') {
-        var fields = Fields.expandFields($$('entity_form').getValues().fields);
-        if (typeof fields === 'undefined') {
-          fields = {};
-        }
-        var values = Object.keys(fields).map(function(key) { return fields[key]; });
-        values.sort(function(a, b) {
-          if (a.type === 'j' && b.type !== 'j') {
-            return 1;
-          } else if (a.type !== 'j' && b.type === 'j') {
-            return -1;
-          } else if (a.type === 'j' && b.type === 'j') {
-            if (a.name === 'main.js') {
+
+        Mydataspace.request(Identity.dataFromId(UI.entityForm.getSelectedId())).then(function (data) {
+          data.fields.sort(function(a, b) {
+            if (a.type === 'j' && b.type !== 'j') {
               return 1;
-            } else if (b.name === 'main.js') {
+            } else if (a.type !== 'j' && b.type === 'j') {
               return -1;
+            } else if (a.type === 'j' && b.type === 'j') {
+              if (a.name === 'main.js') {
+                return 1;
+              } else if (b.name === 'main.js') {
+                return -1;
+              }
+              return 0;
             }
             return 0;
-          }
-          return 0;
+          });
+
+          e.source.postMessage(MDSCommon.extend(Identity.dataFromId(UI.entityForm.selectedId), { message: 'fields', fields: data.fields }), '*');
+        }, function (err) {
+          e.source.postMessage(MDSCommon.extend(Identity.dataFromId(UI.entityForm.selectedId), { message: 'error', error: err.message }), '*');
         });
-        e.source.postMessage(MDSCommon.extend(Identity.dataFromId(UI.entityForm.selectedId), { message: 'fields', fields: values }), '*');
       }
     });
 

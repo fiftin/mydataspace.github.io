@@ -96,6 +96,11 @@ var Fields = {
     '*': 'lock'
   },
 
+  /**
+   *
+   * @param {array|object} fields
+   * @returns {*}
+   */
   expandFields: function(fields) {
       if (fields == null || (!Array.isArray(fields) && typeof fields !== 'object')) {
           return fields;
