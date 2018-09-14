@@ -266,8 +266,7 @@ UIControls = {
       case '':
         return [
           {id: 'new_entity', value: STRINGS.new_entity, icon: 'folder-o'},
-          //{id: 'import_wizard', value: STRINGS.import_entity},
-          //{id: 'add_website', value: STRINGS.add_website, icon: 'globe'},
+          {id: 'import_wizard', value: STRINGS.import_entity},
           {id: 'new_resource', value: STRINGS.new_resource, icon: 'diamond'},
           {id: 'new_task', value: STRINGS.new_task, icon: 'file-code-o'},
           {id: 'new_proto', value: STRINGS.new_proto, icon: 'cube'}
