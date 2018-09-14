@@ -437,8 +437,11 @@ $follow-button-height: 40px;
 }
 
 .view__comment {
-  padding: 10px 0;
+  padding-top: 40px;
+  max-height: 200px;
+  overflow: hidden;
   position: relative;
+  font-size: 16px;
 
   &:hover {
     .view__comment__delete {
@@ -448,7 +451,7 @@ $follow-button-height: 40px;
 }
 
 .new_comment {
-  padding-top: 25px;
+  padding-top: 45px;
 }
 
 .new_comment__button {
