@@ -1316,10 +1316,19 @@ EntityFieldsUnsimplifier.prototype.format = function(data) {
       }
     } else {
       for (var key in data.fields) {
+        var type = 's';
+        if (typeof data.fields[key] === 'number') {
+          if (MDSCommon.isInt(data.fields[key])) {
+            type = 'i';
+          } else {
+            type = 'r';
+          }
+        }
+
         res.push({
           name: key,
           value: data.fields[key],
-          type: 's'
+          type: type
         });
       }
     }
