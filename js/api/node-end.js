@@ -24,3 +24,6 @@ MDSClient.prototype.loginByToken = function(token) {
 
 module.exports.MDSCommon = MDSCommon;
 module.exports.MDSClient = MDSClient;
+module.exports.EntityFieldsSimplifier = EntityFieldsSimplifier;
+module.exports.EntityChildrenSimplifier = EntityChildrenSimplifier;
+module.exports.EntityFieldsUnsimplifier = EntityFieldsUnsimplifier;

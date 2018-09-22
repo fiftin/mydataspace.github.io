@@ -76,6 +76,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     PROTO_IS_FIXED: 'Is Fixed',
     MAX_NUMBER_OF_CHILDREN: 'Children limit',
     EDIT_ENTITY: 'Edit',
+    EXPORT_ENTITY: 'Clone',
     CLONE_ENTITY: 'Clone',
 
     CLONE_ROOT_NAME: 'Root',
@@ -339,6 +340,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     PROTO_IS_FIXED: 'Зафиксирован',
     MAX_NUMBER_OF_CHILDREN: 'Доч. эл-тов',
     EDIT_ENTITY: 'Ред.',
+    EXPORT_ENTITY: 'Экспорт',
     CLONE_ENTITY: 'Копир.',
 
 

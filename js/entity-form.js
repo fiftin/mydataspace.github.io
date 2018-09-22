@@ -698,6 +698,10 @@ EntityForm.prototype.refresh = function() {
 //  Mydataspace.emit('entities.create', data);
 //};
 
+EntityForm.prototype.export = function () {
+  Mydataspace.request('entities.export', Identity.dataFromId(this.selectedId));
+};
+
 EntityForm.prototype.clone = function() {
   $$('clone_entity_window').show();
 };

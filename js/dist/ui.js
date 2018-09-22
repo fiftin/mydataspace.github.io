@@ -1979,6 +1979,10 @@ EntityForm.prototype.refresh = function() {
 //  Mydataspace.emit('entities.create', data);
 //};
 
+EntityForm.prototype.export = function () {
+  Mydataspace.request('entities.export', Identity.dataFromId(this.selectedId));
+};
+
 EntityForm.prototype.clone = function() {
   $$('clone_entity_window').show();
 };
@@ -5553,6 +5557,16 @@ UILayout.entityForm =
         }
       },
       {},
+      { view: 'button',
+        type: 'icon',
+        icon: 'download',
+        id: 'EXPORT_ENTITY_LABEL',
+        label: STRINGS.EXPORT_ENTITY,
+        width: 80,
+        click: function() {
+          UI.entityForm.export();
+        }
+      },
       { view: 'button',
         type: 'icon',
         icon: 'copy',
