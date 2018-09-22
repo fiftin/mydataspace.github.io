@@ -1381,6 +1381,10 @@ Entities.prototype.get = function (data) {
   return this.request('entities.get', data);
 };
 
+Entities.prototype.getWithMeta = function (data) {
+  return this.request('entities.getWithMeta', data);
+};
+
 Entities.prototype.getAll = function (data) {
   if (typeof data === 'string') {
     data = {
@@ -1889,7 +1893,7 @@ MDSClient.prototype.once = function(eventName, callback, ignoreRequestErrors) {
 
 MDSClient.prototype.on = function(eventName, callback, ignoreRequestErrors) {
   var wrappedCallback = this.formatAndCallIgnoreRequestErrors.bind(this, eventName, callback, ignoreRequestErrors);
-
+  wrappedCallback.orig = callback;
   if (typeof this.listeners[eventName] !== 'undefined') {
     this.listeners[eventName].push(wrappedCallback);
     return;
@@ -1901,6 +1905,28 @@ MDSClient.prototype.on = function(eventName, callback, ignoreRequestErrors) {
 
   this.socket.on(eventName, wrappedCallback);
 };
+
+
+MDSClient.prototype.off = function(eventName, callback) {
+  if (typeof this.listeners[eventName] !== 'undefined') {
+    var listeners = this.listeners[eventName];
+
+    for (var i = listeners.length - 1; i >= 0; i--) {
+      if (listeners[i].orig === callback) {
+        listeners.splice(i, 1);
+      }
+    }
+
+    return;
+  }
+
+  if (typeof this.socket === 'undefined') {
+    throw new Error('You must connect to server before subscribe to events');
+  }
+
+  // this.socket.off(eventName, callback);
+};
+
 
 /**
  * Content dependent function to make request to the server over instance of MDSClient class.

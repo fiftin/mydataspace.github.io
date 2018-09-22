@@ -38,6 +38,10 @@ Entities.prototype.get = function (data) {
   return this.request('entities.get', data);
 };
 
+Entities.prototype.getWithMeta = function (data) {
+  return this.request('entities.getWithMeta', data);
+};
+
 Entities.prototype.getAll = function (data) {
   if (typeof data === 'string') {
     data = {
