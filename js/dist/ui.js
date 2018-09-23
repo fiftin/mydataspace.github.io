@@ -5557,16 +5557,16 @@ UILayout.entityForm =
         }
       },
       {},
-      { view: 'button',
-        type: 'icon',
-        icon: 'download',
-        id: 'EXPORT_ENTITY_LABEL',
-        label: STRINGS.EXPORT_ENTITY,
-        width: 80,
-        click: function() {
-          UI.entityForm.export();
-        }
-      },
+      // { view: 'button',
+      //   type: 'icon',
+      //   icon: 'download',
+      //   id: 'EXPORT_ENTITY_LABEL',
+      //   label: STRINGS.EXPORT_ENTITY,
+      //   width: 80,
+      //   click: function() {
+      //     UI.entityForm.export();
+      //   }
+      // },
       { view: 'button',
         type: 'icon',
         icon: 'copy',
