@@ -20,5 +20,8 @@ layout: hybrid
       window.location.hash && window.location.hash !== '' && window.location.hash !== '#')) {
       document.getElementById('header__search_input').focus();
     }
+    Mydataspace.on('logout', function() {
+      document.getElementById('header__search_input').focus();
+    });
   </script>
 </div>
