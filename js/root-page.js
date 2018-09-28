@@ -464,10 +464,15 @@ function initRootPage(options) {
           $('#root__looks__header').addClass('look__header--search');
         }
 
+        var filter = MDSCommon.convertNameValueArrayToMap($('#root__looks__content').data('list-look-filters') || []);
+        for (var field in filter) {
+          filter[field] = { $eq: filter[field] };
+        }
+
         req = MDSCommon.extend(MDSCommon.extend(DATA, req), {
           children: true,
           search: $('#root__looks__search_input').val(),
-          filter: MDSCommon.convertNameValueArrayToMap($('#root__looks__content').data('list-look-filters') || [])
+          filter: filter
         });
 
         Mydataspace.request('entities.get', req).then(function (data) {
