@@ -21,7 +21,9 @@ layout: hybrid
       document.getElementById('header__search_input').focus();
     }
     Mydataspace.on('logout', function() {
-      document.getElementById('header__search_input').focus();
+      setTimeout(function () {
+        document.getElementById('header__search_input').focus();
+      }, 500);
     });
   </script>
 </div>
