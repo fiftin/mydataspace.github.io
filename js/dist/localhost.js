@@ -1403,6 +1403,10 @@ Entities.prototype.unsubscribe = function(data) {
   return this.request('entities.unsubscribe', data);
 };
 
+Entities.prototype.onLogin = function (callback) {
+  this.client.on('login', callback);
+};
+
 Entities.prototype.on = function(eventName, callback) {
   var self = this;
   var cb = self.root ? function (data) {
