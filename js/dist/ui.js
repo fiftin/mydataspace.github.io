@@ -2810,7 +2810,7 @@ EntityTree.prototype.setCurrentId = function(id) {
 
   if (id != null) {
     var subscribeData = MDSCommon.extend(Identity.dataFromId(id));
-    Mydataspace.entities.subscribe( subscribeData);
+    Mydataspace.entities.subscribe(subscribeData);
     if (subscribeData.path !== '') {
       subscribeData.path += '/';
     }
@@ -5115,10 +5115,23 @@ UILayout.entityTree = {
                       });
 
                       Mydataspace.request('entities.change', request).then(function (data) {
-                        $('div[button_id="script_editor_' + id + '"]').removeClass('script_editor__tab--dirty');
-                        // TODO: unlock editor
+                        var $tab = $('div[button_id="script_editor_' + id + '"]');
+                        $tab.removeClass('script_editor__tab--dirty');
+                        $tab.removeClass('script_editor__tab--error');
+                        editor.getSession().clearAnnotations();
                       }, function (err) {
-                        // TODO: handle sating error
+                        if (err.name === 'CodeError') {
+                          $('div[button_id="script_editor_' + id + '"]').addClass('script_editor__tab--error');
+                          editor.getSession().setAnnotations([{
+                            row: err.line - 1,
+                            column: err.column,
+                            text: err.message,
+                            type: 'error'
+                          }]);
+                        } else {
+                          $('div[button_id="script_editor_' + id + '"]').addClass('script_editor__tab--error');
+                          UI.error(err);
+                        }
                       });
                     }
                   });

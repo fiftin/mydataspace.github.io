@@ -1106,9 +1106,14 @@ input {
 }
 
 .script_editor__tab--dirty {
-  color: #0d8bf2;
+  color: #0d8bf2 !important;
   font-weight: bold;
 }
+
+.script_editor__tab--error {
+  color: $brand-danger !important;
+}
+
 .show_media_window {
   //.webix_win_head {
   //  display: none !important;
