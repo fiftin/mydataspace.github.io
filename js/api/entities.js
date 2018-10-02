@@ -106,14 +106,14 @@ Entities.prototype.subscribe = function(data) {
   if (typeof data === 'string') {
     data = { path: data };
   }
-  return this.request('entities.subscribe', this.prepareData(data));
+  return this.request('entities.subscribe', data);
 };
 
 Entities.prototype.unsubscribe = function(data) {
   if (typeof data === 'string') {
     data = { path: data };
   }
-  return this.request('entities.unsubscribe', this.prepareData(data));
+  return this.request('entities.unsubscribe', data);
 };
 
 Entities.prototype.onConnected = function (callback) {
