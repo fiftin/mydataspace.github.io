@@ -1462,6 +1462,10 @@ Entities.prototype.unsubscribe = function(data) {
   return this.request('entities.unsubscribe', this.prepareData(data));
 };
 
+Entities.prototype.onConnected = function (callback) {
+  this.client.on('connected', callback);
+};
+
 Entities.prototype.onLogin = function (callback) {
   this.client.on('login', callback);
 };
