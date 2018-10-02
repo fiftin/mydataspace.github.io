@@ -1438,10 +1438,16 @@ Entities.prototype.emitChange = function (data) {
  * @returns {Promise}
  */
 Entities.prototype.subscribe = function(data) {
+  if (typeof data === 'string') {
+    data = { path: data };
+  }
   return this.request('entities.subscribe', this.prepareData(data));
 };
 
 Entities.prototype.unsubscribe = function(data) {
+  if (typeof data === 'string') {
+    data = { path: data };
+  }
   return this.request('entities.unsubscribe', this.prepareData(data));
 };
 
