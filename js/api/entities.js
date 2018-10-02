@@ -120,6 +120,10 @@ Entities.prototype.onConnected = function (callback) {
   this.client.on('connected', callback);
 };
 
+Entities.prototype.onLogout = function (callback) {
+  this.client.on('logout', callback);
+};
+
 Entities.prototype.onLogin = function (callback) {
   this.client.on('login', callback);
 };
