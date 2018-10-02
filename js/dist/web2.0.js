@@ -8622,6 +8622,10 @@ Entities.prototype.request = function (eventName, data) {
   return this.client.request(eventName, this.prepareData(data));
 };
 
+Entities.prototype.emitCreate = function (data) {
+  return this.emit('entities.create', data);
+};
+
 Entities.prototype.create = function (data) {
   return this.request('entities.create', data);
 };
@@ -8662,8 +8666,19 @@ Entities.prototype.delete = function (data) {
   return this.request('entities.delete', data);
 };
 
+Entities.prototype.emitDelete = function (data) {
+  if (typeof data === 'string') {
+    data = { path: data };
+  }
+  return this.emit('entities.delete', data);
+};
+
 Entities.prototype.change = function(data) {
   return this.request('entities.change', data);
+};
+
+Entities.prototype.emitChange = function (data) {
+  return this.emit('entities.change', data);
 };
 
 /**
