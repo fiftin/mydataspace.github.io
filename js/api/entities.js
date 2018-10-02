@@ -30,6 +30,10 @@ Entities.prototype.prepareData = function (data) {
   return d;
 };
 
+Entities.prototype.emit = function (eventName, data) {
+  return this.client.emit(eventName, this.prepareData(data));
+};
+
 Entities.prototype.request = function (eventName, data) {
   return this.client.request(eventName, this.prepareData(data));
 };
