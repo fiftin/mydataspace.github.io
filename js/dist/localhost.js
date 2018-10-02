@@ -1345,7 +1345,7 @@ function Entities(client, root) {
   this.root = root;
 }
 
-Entities.prototype.request = function (eventName, data) {
+Entities.prototype.prepareData = function (data) {
   var d;
   var self = this;
   if (self.root) {
@@ -1362,7 +1362,11 @@ Entities.prototype.request = function (eventName, data) {
   } else {
     d = data;
   }
-  return this.client.request(eventName, d);
+  return d;
+};
+
+Entities.prototype.request = function (eventName, data) {
+  return this.client.request(eventName, this.prepareData(data));
 };
 
 Entities.prototype.create = function (data) {
@@ -1399,6 +1403,9 @@ Entities.prototype.getAll = function (data) {
 };
 
 Entities.prototype.delete = function (data) {
+  if (typeof data === 'string') {
+    data = { path: data };
+  }
   return this.request('entities.delete', data);
 };
 
@@ -1406,12 +1413,17 @@ Entities.prototype.change = function(data) {
   return this.request('entities.change', data);
 };
 
+/**
+ * Subscribe to events of entities.
+ * @param data
+ * @returns {Promise}
+ */
 Entities.prototype.subscribe = function(data) {
-  return this.request('entities.subscribe', data);
+  return this.request('entities.subscribe', this.prepareData(data));
 };
 
 Entities.prototype.unsubscribe = function(data) {
-  return this.request('entities.unsubscribe', data);
+  return this.request('entities.unsubscribe', this.prepareData(data));
 };
 
 Entities.prototype.onLogin = function (callback) {

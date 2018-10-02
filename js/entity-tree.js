@@ -48,7 +48,7 @@ EntityTree.prototype.setCurrentId = function(id) {
 
   if (id != null) {
     var subscribeData = MDSCommon.extend(Identity.dataFromId(id));
-    Mydataspace.entities.subscribe( subscribeData);
+    Mydataspace.entities.subscribe(subscribeData);
     if (subscribeData.path !== '') {
       subscribeData.path += '/';
     }
