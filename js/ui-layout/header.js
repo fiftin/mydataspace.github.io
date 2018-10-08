@@ -30,11 +30,7 @@ UILayout.header =
         label: STRINGS.PRICING,
         hidden: PROJECT_NAME !== 'web20',
         click: function() {
-
           var currentLang = getCurrentLanguage().toLowerCase();
-
-
-
           currentLang = currentLang === 'en' ? '' : '/' + currentLang;
           window.open(currentLang + '/pricing', '_blank');
         }
@@ -63,11 +59,13 @@ UILayout.header =
         }
       },
       { width: 10, css: 'menu__spacer' },
+
       { view: 'button',
         width: 30,
         id: 'menu__language_button_en',
         css: 'menu__language_button ' + (LANGUAGE === 'EN' ? 'menu__language_button--selected' : ''),
         label: 'EN',
+        hidden: PROJECT_NAME !== 'web20',
         click: function() {
           // localStorage.setItem('language', 'EN');
           UI.updateLanguage('EN');
@@ -78,10 +76,12 @@ UILayout.header =
         id: 'menu__language_button_ru',
         css: 'menu__language_button ' + (LANGUAGE === 'RU' ? 'menu__language_button--selected' : ''),
         label: 'RU',
+        hidden: PROJECT_NAME !== 'web20',
         click: function() {
           UI.updateLanguage('RU');
         }
       },
+
       { width: 10, css: 'menu__spacer' },
       { view: 'button',
         width: 90,
