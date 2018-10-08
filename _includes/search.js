@@ -340,12 +340,12 @@ function startSearch_{{include.id}}(search) {
     case 'search':
       xxx = '{{ site.data[page.language].search.search_by_datasources }}';
       xxx_pathname = '{{ lang_prefix }}/datasources';
-      found_suffix = ' {{ site.data[page.language].search.found_suffix }} '
+      found_suffix = ' {{ site.data[page.language].search.found_suffix }} ';
       break;
     case 'datasources':
       xxx = '{{ site.data[page.language].search.search_by_roots }}';
       xxx_pathname = '{{ lang_prefix }}/search';
-      found_suffix = ' {{ site.data[page.language].search.found_in_datasource_suffix }} '
+      found_suffix = ' {{ site.data[page.language].search.found_in_datasource_suffix }} ';
       break;
     }
     var foundInDatasourceSuffix = searchOptions.filters.datasource ? '{{ site.data[page.language].search.found_in_datasource }}' : '';

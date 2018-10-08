@@ -241,6 +241,8 @@ $snippet-medal-size: 50px;
 .snippet--line {
   height: auto;
   padding-bottom: $snippet-footer-height + $small-padding * 1.5;
+  margin-bottom: $small-padding;
+
   .snippet__footer {
     padding-top: 0;
     height: $snippet-footer-height + $small-padding / 2;
