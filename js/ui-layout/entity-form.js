@@ -65,7 +65,7 @@ UILayout.entityForm =
       { view: 'button',
         type: 'icon',
         icon: 'copy',
-        hidden: PROJECT_NAME === 'web20',
+        //hidden: PROJECT_NAME === 'web20',
         id: 'CLONE_ENTITY_LABEL',
         label: STRINGS.CLONE_ENTITY,
         width: 80,
