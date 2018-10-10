@@ -364,6 +364,7 @@ $slogan-animation-offset-mobile: 400px;
   animation-iteration-count: infinite;
   position: absolute;
   top: 50%;
+  padding-right: 20px;
 }
 
 .intro__slogan_offset {
@@ -400,7 +401,7 @@ $slogan-animation-offset-mobile: 400px;
 
 .landing--en {
   .intro__slogan {
-    font-size: 90px;
+    // font-size: 90px;
   }
 }
 
@@ -736,6 +737,10 @@ $search-filter-panel-gap: 40px;
 .intro__example {
   position: relative;
   color: black;
+}
+
+.intro__example--en {
+    margin-top: 60px;
 }
 
 .intro__example_window {

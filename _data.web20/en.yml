@@ -17,17 +17,42 @@ menu:
   give_feedback_send_mail: or email directly to
   give_feedback_view_all: See all
 
-title: Web 2.0 Site — website builder for developers
+title: Website builder for developers
 slogan: Website builder for developers
-slogan_description: ""
+slogan_description: Focus on development, not administration and infrastructure
+
 
 slogan_2: Incredibly fast backend of your website
 slogan_description_2: You will be surprised how fast and responsive website can be
-mission: |
-  <p>Open data is the idea that some data should be freely available to everyone to use and republish as they wish, without
-  restrictions from copyright, patents or other mechanisms of control.</p>
 
-  <p style="font-size: 30px;">The mission of MyDataSpace project is to make working with open data easy and enjoyable.</p>
+solutions:
+- id: hosting
+  title: Shared Hosting
+  description: Slow and unreliable
+- id: vps
+  title: Virtual Servers
+  description: Administration skills required
+- id: builder
+  title: Website Builder
+  description: Template sites
+
+mission_title: "The modern market offers the following solutions for placing a site on the internet:"
+
+mission: "We have created a website for free from those disadvantages: simple, fast and reliable. "
+
+
+example_description: |
+  <ul style="margin-left: -20px;">
+    <li>Online code editor</li>
+    <li>Pug and SCSS support</li>
+    <li>File storage with CDN</li>
+    <li>Tree data structures</li>
+    <li>Powerful Websocket API</li>
+    <li>Server side code execution</li>
+    <li>Out of the box authorization</li>
+  </ul>
+
+
 
 special_offer: Free now and <b>forever</b> for registered users
 final_prompt: ""
@@ -75,10 +100,10 @@ sections:
         title: HTML/CSS/JS
         description: All you need to know to create a site of any complexity
         details: |
-          Our platform is designed to simplify the process of developing the site, and not to limit the developers.<br /><br />
+          Our platform is designed to simplify the process of developing websites, not to limit the developers.<br /><br />
           All modern technologies for web development are available to you.
       - id: console
-        title: Useful admin dashboard
+        title: Useful dashboard
         description: A single data and code management tool
         details: |
           The routine work on the administration of databases and servers, our team takes on.
@@ -86,7 +111,7 @@ sections:
           <br>
           You also have a convenient data and code management panel for solving creative tasks.
       - id: api
-        title: A simple and understandable API
+        title: A simple and powerful API
         description: A powerful API that surprises you with its simplicity
         details: |
           Simple and intuitive, but at the same time an incredibly powerful API. <br /><br />
