@@ -395,9 +395,9 @@ pricing_page:
 landing_examples:
   title: Website Examples
   examples:
-    - title: Service for cloud servers benchmarking
+    - title: Cloud servers benchmarking service
       image: cloudbench.png
       url: cloudbench.io
-    - title: Spree Commerce extension catalog
-      image: spreex.png
-      url: spreex.github.io
+    - title: Blog
+      image: blog.web20.png
+      url: blog.web20.site

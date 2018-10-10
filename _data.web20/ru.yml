@@ -440,6 +440,6 @@ landing_examples:
     - title: Сервис тестирования облачных серверов
       image: cloudbench.png
       url: cloudbench.io
-    - title: Каталог расширений для e-commerce движка
-      image: spreex.png
-      url: spreex.github.io
+    - title: Блог
+      image: blog.web20.png
+      url: blog.web20.site
