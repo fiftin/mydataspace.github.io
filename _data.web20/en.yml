@@ -43,13 +43,13 @@ mission: "We created website builder without those disadvantages. It simple, fas
 
 example_description: |
   <ul style="margin-left: -20px;">
-    <li>Online code editor</li>
-    <li>Pug and SCSS support</li>
-    <li>File storage with CDN</li>
-    <li>Tree data structures</li>
+    <li>Online Code Editor</li>
+    <li>Pug and SCSS Support</li>
+    <li>File Storage with CDN</li>
+    <li>Tree Data Structures</li>
     <li>Powerful Websocket API</li>
-    <li>Server side code execution</li>
-    <li>Out of the box authorization</li>
+    <li>Running Serverless Code</li>
+    <li>Out of the Box Authorization</li>
   </ul>
 
 

@@ -807,13 +807,37 @@ var MDSCommon = {
     return ret;
   },
 
-  convertMapToNameValue: function (obj) {
+  /**
+   * Converts object to array of objects in format:
+   * [{
+   *   name: object-field-name,
+   *   value: object-field-value,
+   *   type: object-field-type
+   * }, ...]
+   * @param obj
+   * @param [addType] Is field "type" required?
+   * @returns {Array}
+   */
+  convertMapToNameValue: function (obj, addType) {
     var ret = [];
+    var value;
     for (var i in obj) {
-      ret.push({
+      value = {
         name: i,
         value: obj[i]
-      });
+      };
+      if (addType) {
+        if (MDSCommon.isInt(value)) {
+          value.type = 'i';
+        } else if (MDSCommon.isReal(value)) {
+          value.type = 'r';
+        } else if (MDSCommon.isBool(value)) {
+          value.type = 'b';
+        } else {
+          value.type = 's';
+        }
+      }
+      ret.push(value);
     }
     return ret;
   },
