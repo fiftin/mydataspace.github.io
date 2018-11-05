@@ -1,8 +1,8 @@
 menu:
   #features: Features
   get_started: Get Started
-  pricing: Plans
-  docs: Documentation
+  pricing: Pricing
+  docs: Docs
   console: My Websites
   login: Sign In
   logout: Sign out
@@ -36,21 +36,21 @@ solutions:
   title: Website Builder
   description: Template sites
 
-mission_title: "The modern market offers the following solutions for placing website on the internet:"
+mission_title: "The modern market offers the following solutions for placing dynamic website on the internet:"
 
-mission: "We created website builder without those disadvantages. It simple, fast and reliable. "
+# mission: "We created website builder without those disadvantages. It simple, fast and reliable. "
+mission: Instead of them, we offer simple, fast and reliable website builder for developers.
 
 
-example_description: |
-  <ul style="margin-left: -20px;">
-    <li>Online Code Editor</li>
-    <li>Pug and SCSS Support</li>
-    <li>File Storage with CDN</li>
-    <li>Tree Data Structures</li>
-    <li>Powerful Websocket API</li>
-    <li>Running Serverless Code</li>
-    <li>Out of the Box Authorization</li>
-  </ul>
+example_descriptions:
+  - id: live-pug-scss
+    title: Live Pug &amp; SCSS
+  - id: tree-data-structure
+    title: Tree Data Structure
+  - id: websocket-api
+    title: Websocket API
+  - id: file-storage
+    title: File Storage + CDN
 
 
 
@@ -93,55 +93,76 @@ buttons:
 
 sections:
   - id: ease
-    title: Ease
+    title: Ease to Start
     subtitle: You can use Bootstrap, React, Angular, jQuery and hundreds of others technologies of web development.
     features:
-      - id: coding
-        title: HTML/CSS/JS
+      - id: serverless
+        title: Serverless
         description: All you need to know to create a site of any complexity
         details: |
-          Our platform is designed to simplify the process of developing websites, not to limit the developers.<br /><br />
-          All modern technologies for web development are available to you.
+          No webservers. No databases. Only JavaScript, HTML and CSS.
+          <br />
+          <br />
+          All modern technologies for front-end web development are available to you.
       - id: console
-        title: Useful dashboard
+        title: Convenient Dashboard
         description: A single data and code management tool
         details: |
-          The routine work on the administration of databases and servers, our team takes on.
-          <br>
-          <br>
-          You also have a convenient data and code management panel for solving creative tasks.
+          Convenient data and code management dashborad for solving creative tasks.
       - id: api
-        title: A simple and powerful API
+        icon: cogs
+        title: Simple API
         description: A powerful API that surprises you with its simplicity
         details: |
-          Simple and intuitive, but at the same time an incredibly powerful API. <br /><br />
+          Simple and intuitive, but at the same time an incredibly powerful API.
+          <br />
+          <br />
           With it, you can perform full-text search for your data, filter, sort, grab data including geo-coordinates,
           and authorize users through social networks.
   - id: speed
-    title: Speed
+    title: Near Realtime Speed
     features:
       - id: websocket
-        title: WebSockets
+        icon: cubes
+        title: Fast Solutions
         description: What makes a website reactive
+        details: |
+          <div><img class="feature__details-icon" src="/images/icons/nodejs.svg" /> Node.js</div>
+          <div><img class="feature__details-icon" src="/images/icons/websocket.svg" /> Websocket</div>
+          <div><img class="feature__details-icon" src="/images/icons/elasticsearch.svg" /> ElasticSearch</div>
+          <div><img class="feature__details-icon" src="/images/icons/rabbitmq.svg" /> RabbitMQ</div>
       - id: scalability
-        title: Scalability
+        icon:  arrows-alt
+        title: Scalable Architecture
         description: It allows to handle any load
+        details: |
+          Our service designed to handle a workload that may change in scope; meaning that the architecture can
+          natively handle such growth, or that enlarging the architecture to handle growth is a trivial part of
+          the original design.
+
       - id: distribution
-        title: Distributed data storage
+        icon: sitemap
+        title: Distributed Data Storage
         description: Quick access from anywhere
   - id: reliability
-    title: Reliability
+    title: High Reliability
     features:
       - id: cloud
-        title: Cloud Infrastructure
+        title: Multicloud Infrastructure
         details: |
           Cloud infrastructure provides reliable data storage and uninterrupted access to them.
       - id: availability
-        title: SLA 99.95%
+        icon: certificate
+        title: Reliable Cloud Providers
         details: |
           We use the services of reliable providers of cloud services that guarantee SLA at the level of 99.95%.
+          <br />
+          <img class="features__provider-icon" style="height: 20px;" src="/images/icons/aws.svg" />
+          <img class="features__provider-icon" style="height: 25px;" src="/images/icons/ovh.svg" />
+          <img class="features__provider-icon" style="height: 16px;" src="/images/icons/hetzner.svg" />
       - id: security
-        title: DDoS Protaction
+        icon: users
+        title: Professional Team
         details: |
           Your data will always be available due to protection against DDoS-attacks by Cloudflare.
 

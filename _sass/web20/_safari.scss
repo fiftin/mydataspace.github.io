@@ -50,6 +50,14 @@
   border-bottom-right-radius: 5px;
 }
 
+.safari__video--windows {
+  margin-top: -1px;
+  width: calc(100% + 2px);
+  min-height: 453px;
+  background: white;
+  background-size: cover;
+}
+
 .safari__url {
   // position: absolute;
   // top: 0;

@@ -4,11 +4,16 @@ $header-logo-size: $header-height;
 $header-toggle-btn-width: $header-height;
 $profile-button-size: 35px;
 
+.header__menu_item {
+    font-weight: bold;
+    opacity: 0.7;
+}
+
 @media (min-width: $screen-md-min) {
   .header__menu_item {
-    font-size: 12px !important;
-    padding-left: 7px !important;
-    padding-right: 7px !important;
+    font-size: 16px !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
   }
 }
 
@@ -341,9 +346,9 @@ $slogan-animation-offset-mobile: 400px;
 
 
 .intro__login {
-  padding: 30px 40px;
+  padding: 25px 35px;
   background: white;
-  border-radius: 10px;
+  border-radius: 20px;
   color: black;
 }
 
@@ -401,7 +406,7 @@ $slogan-animation-offset-mobile: 400px;
 
 .landing--en {
   .intro__slogan {
-    // font-size: 90px;
+    font-size: 70px;
   }
 }
 
@@ -413,13 +418,18 @@ $slogan-animation-offset-mobile: 400px;
 
 .intro__description {
   margin-top: 20px;
-  font-size: $font-size-h3;
+  font-size: 30px;
+  font-weight: bold;
   line-height: 1.2;
+  opacity: 0.6;
 }
 
 .intro__prompt {
-  font-size: $font-size-large;
+  font-size: 20px;
   line-height: 1.01;
+  font-weight: bold;
+  margin-bottom: 15px;
+  margin-left: 10px;
 }
 
 .intro__special_offer {
@@ -570,9 +580,6 @@ $slogan-animation-offset-mobile: 400px;
 }
 
 .page_top--landing-page {
-  .smoke {
-    background: rgba(77, 77, 77, 0.6) !important;
-  }
 
   .smoke--fullscreen {
     @extend .smoke--fullscreen--opaque;
@@ -740,29 +747,16 @@ $search-filter-panel-gap: 40px;
 }
 
 .intro__example--en {
-    margin-top: 60px;
+    margin-top: 100px;
 }
 
 .intro__example_window {
-  margin-left: -100px;
+  // margin-left: -100px;
   transform: translateY(-60px);
-  width: 800px;
+  width: 700px;
   @media (max-width: 1400px) {
     margin-left: 0;
     width: calc(100% - 30px);
-  }
-}
-
-.intro__example_description {
-  position: absolute;
-  right: 0;
-  top: 100px;
-  font-size: 24px;
-  @media (max-width: 1400px) {
-    font-size: 20px;
-  }
-  li {
-    margin-bottom: 5px;
   }
 }
 

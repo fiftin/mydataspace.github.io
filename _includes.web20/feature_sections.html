@@ -25,18 +25,19 @@
         {% for feature in section.features %}
           <div class="col-md-4 feature_column">
             <div class="feature {% if feature.details %}feature--with-details{% endif %}">
-              {% if feature.details %}
-              <div class="feature__details">{{ feature.details }}</div>
-              {% endif %}
               <div class="feature__icon feature__icon--{{ section.id }} feature__icon--{{ feature.id }}">
-                {% assign icon_name = "icons/" | append:feature.id | append:".svg"  %}
-                {% include {{icon_name}} %}
+                {% if feature.icon %}
+                  <i class="fa fa-{{ feature.icon }}"></i>
+                {% else %}
+                  {% assign icon_name = "icons/" | append:feature.id | append:".svg"  %}
+                  {% include {{icon_name}} %}
+                {% endif %}
               </div>
               <h3 class="feature__title">
                 {{ feature.title }}
               </h3>
               <div class="feature__description">
-                {{ feature.description }}
+                {{ feature.details }}
               </div>
             </div>
           </div>

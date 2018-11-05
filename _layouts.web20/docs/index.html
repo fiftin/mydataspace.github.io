@@ -14,7 +14,7 @@ layout: page
 <div class="row">
   {% for example in site.data[page.language].docs %}
   <div class="col-md-4">
-    <a class="feature" href="{{ baseurl }}/docs/{{ example.id }}">
+    <a class="feature feature--center" href="{{ baseurl }}/docs/{{ example.id }}">
       <div class="feature__icon feature__icon--example">
         {% assign icon_name = "icons/" | append:example.id | append:".svg"  %}
         {% include {{icon_name}} %}

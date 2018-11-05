@@ -21,23 +21,37 @@
 
         <div class="col-md-8">
           <div class="safari intro__example_window">
-            <div class="safari__header">
-              <div class="safari__buttons">
-                <div class="safari__button safari__button--red"></div>
-                <div class="safari__button safari__button--orange"></div>
-                <div class="safari__button safari__button--green"></div>
-              </div>
-              <div class="safari__address_bar">
-                <div class="safari__url">{{ 'https://web20.site/ru' | replace: "https://","<span class='safari__url__https'>https://</span>" }}</div>
-              </div>
-            </div>
-            <div class="intro__example_image_wrap">
-              <img class="safari__img intro__example_image" src="/images/landing/intro1-{{ page.language }}.png" />
-            </div>
+            <video id="intro__example_video" class="safari__video safari__video--windows" src="/images/landing/file-storage.mp4" muted></video>
           </div>
         </div>
 
-        <div class="col-md-4 intro__example_description">{{ site.data[page.language].example_description }}</div>
+        <div class="col-md-4 intro__example_description">
+          <div id="intro__example_description_list" class="example-description-list">
+            {% for desc in site.data[page.language].example_descriptions %}
+              <div id="intro__example_description_{{ desc.id }}" class="example-description" onclick="intro_showDescription('{{ desc.id }}');">{{ desc.title }}</div>
+            {% endfor %}
+          </div>
+        </div>
+        <script>
+          function intro_showDescription(id) {
+            var video = document.getElementById('intro__example_video');
+            //video.style.backgroundImage = 'url(/images/landing/' + id + '.jpg)';
+            video.poster = '/images/landing/' + id + '.jpg';
+            video.src = '/images/landing/' + id + '.mp4';
+
+            var items = document.querySelectorAll('#intro__example_description_list > .example-description');
+
+            items.forEach(function (item) {
+              item.classList.remove('example-description--active');
+            });
+
+            document.getElementById('intro__example_description_' + id).classList.add('example-description--active');
+
+            video.play();
+          }
+
+          intro_showDescription('live-pug-scss');
+        </script>
       </div>
     </div>
   </div>

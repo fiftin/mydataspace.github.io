@@ -52,6 +52,9 @@
                 <li class="hidden-sm">
                     <a class="header__menu_item" href="{{ baseurl }}/docs">{{ site.data[page.language].menu.docs }}</a>
                 </li>
+
+
+                <!--
                 <li>
                 {% if page.url != "/404.html" %}
                   <ul class="header__languages">
@@ -95,7 +98,9 @@
                   </ul>
                 {% endif %}
                 </li>
-                {% if page.url != baseurl_with_trailing_slash %}
+                -->
+
+
                 <li id="profile_button_menu_item">
                   <script>
                     if (isValidJWT(localStorage.getItem('authToken'))) {
@@ -136,14 +141,14 @@
                       document.getElementById('login_button_menu_item').style.display = 'none';
                     }
                   </script>
-                  <button id="login_button"
-                          class="login_button btn btn-default"
-                          data-toggle="modal"
-                          data-target="#signin_modal">
-                  {{ site.data[page.language].menu.login }}
-                  </button>
+
+                  <a id="login_button"
+                     class="header__menu_item"
+                     href="javascript: void(0)"
+                     data-toggle="modal"
+                     data-target="#signin_modal">{{ site.data[page.language].menu.login }}</a>
                 </li>
-                {% endif %}
+
             </ul>
         </div>
     </div>

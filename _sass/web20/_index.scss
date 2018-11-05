@@ -1,0 +1,40 @@
+.example-description {
+  position: relative;
+  font-size: 20px;
+  line-height: 50px;
+  font-weight: bold;
+  padding-left: 30px;
+  cursor: pointer;
+  color: #6767eb;
+  text-transform: uppercase;
+  border-radius: 25px;
+  width: 300px;
+  margin-bottom: 3px;
+  &:hover {
+    background: lighten(#0d6df2, 35%);
+  }
+}
+
+.intro__example_description {
+  top: 110px;
+  font-size: 24px;
+  @media (max-width: 1400px) {
+    font-size: 20px;
+  }
+  li {
+    margin-bottom: 5px;
+  }
+}
+
+.example-description-list {
+  margin-left: -20px;
+}
+
+
+.example-description--active {
+  background: white;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  &:hover {
+    background: white;
+  }
+}
