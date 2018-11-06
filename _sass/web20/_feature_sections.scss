@@ -30,6 +30,8 @@
   background: white;
 }
 
+$section-icon-color: #6b6ba9;
+
 .section--speed {
   background-size: cover;
   color: white;
@@ -44,15 +46,14 @@
   }
 }
 
-
 .section--ease {
   color: white;
   background: #3b3e43 url(https://cdn.mydataspace.net/files/ryCHu9MlQ.png);
   .fa {
-    color: white !important;
+    color: $section-icon-color !important;
   }
   svg {
-    fill: white !important;
+    fill: $section-icon-color !important;
   }
 }
 
@@ -62,10 +63,10 @@
   color: white;
   background: #3b3e43 url(https://cdn.mydataspace.net/files/ryCHu9MlQ.png);
   .fa {
-    color: white !important;
+    color: $section-icon-color !important;
   }
   svg {
-    fill: white !important;
+    fill: $section-icon-color !important;
   }
 }
 
