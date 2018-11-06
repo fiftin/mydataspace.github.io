@@ -108,7 +108,7 @@ sections:
         description: A single data and code management tool
         details: |
           <p>Convenient data and code management dashborad for solving creative tasks.
-          <p>Create website, write code, import data, upload images. All you need is here.
+          <p>Create website, write code, import data, add content, upload images. All you need is here.
       - id: api
         icon: cogs
         title: Simple API
