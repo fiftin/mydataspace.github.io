@@ -110,6 +110,9 @@ sections:
         description: A single data and code management tool
         details: |
           Convenient data and code management dashborad for solving creative tasks.
+          <br />
+          <br />
+          Create website, write code, import data, upload images. All you need is here.
       - id: api
         icon: cogs
         title: Simple API
@@ -128,6 +131,7 @@ sections:
         title: Fast Solutions
         description: What makes a website reactive
         details: |
+          Our tech stack includes:
           <div><img class="feature__details-icon" src="/images/icons/nodejs-white.svg" /> Node.js</div>
           <div><img class="feature__details-icon" src="/images/icons/websocket-white.svg" /> Websocket</div>
           <div><img class="feature__details-icon" src="/images/icons/elasticsearch-white.svg" /> ElasticSearch</div>
@@ -137,21 +141,20 @@ sections:
         title: Scalable Architecture
         description: It allows to handle any load
         details: |
-          Our service designed to handle a workload that may change in scope; meaning that the architecture can
-          natively handle such growth, or that enlarging the architecture to handle growth is a trivial part of
-          the original design.
-
+          Our service designed to handle a workload that may change in scope
       - id: distribution
         icon: sitemap
         title: Distributed Data Storage
-        description: Quick access from anywhere
+        description:
   - id: reliability
     title: High Reliability
     features:
       - id: cloud
         title: Multicloud Infrastructure
         details: |
-          Cloud infrastructure provides reliable data storage and uninterrupted access to them.
+          We use multiple cloud computing and storage services. So we reducing reliance on any single vendor,
+          increasing flexibility through choice, and mitigating against disasters.
+
       - id: availability
         icon: certificate
         title: Reliable Cloud Providers
@@ -166,8 +169,8 @@ sections:
         icon: users
         title: Professional Team
         details: |
-          Your data will always be available due to protection against DDoS-attacks by Cloudflare.
-
+          Our developers and DevOps engineers are highly qualified with years of professional experience in highload systems.
+          They will reliably protect your data from any attacks and ensure uninterrupted access to your website.
 how_it_works:
   title: How it works
   run_presentation: '<i class="fa fa-play-circle"></i> Start Animation'
