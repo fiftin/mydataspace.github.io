@@ -14,11 +14,16 @@
   }
 }
 
+.footer__logo {
+  width: 40px;
+  opacity: 0.7;
+  margin-top: 15px;
+}
+
 .footer__copyright {
-  font-size: 12px;
-  text-align: center;
-  opacity: 0.3;
-  padding-top: 25px;
+  font-size: 16px;
+  opacity: 0.5;
+  padding-top: 15px;
 }
 
 .footer--fullscreen {
@@ -50,16 +55,13 @@
 }
 
 .footer__socials {
-  margin-right: -8px;
-  float: right;
+  margin-left: -8px;
   font-size: $font-size-large;
-  margin-top: -5px;
-  padding-left: 10px;
 }
 
 .footer__link--social {
   padding: 10px 10px;
-  float: right;
+  float: left;
 }
 
 .footer__link--subsection {

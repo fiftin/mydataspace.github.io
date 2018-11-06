@@ -6,16 +6,20 @@
   </script>
   <div class="container">
     <div class="row">
-      {% comment %}
       <div class="col-md-4">
-        <a class="footer__link footer__link--section" href="{{ baseurl }}/features">{{ site.data[page.language].menu.features }}</a>
-        {% for feature in site.data[page.language].features %}
-        {% if feature.super_title %}
-        <a class="footer__link footer__link--subsection" href="{{ baseurl }}/features#{{ feature.id }}">{{ feature.super_title }}</a>
-        {% endif %}
-        {% endfor %}
+        <img class="footer__logo" src="/images/logo_sq_150.web20.png" />
+        <div class="footer__copyright">© 2018 Web 2.0 Site. All rights reserved.</div>
+
+        <div class="clearfix footer__socials">
+          <a class="footer__link footer__link--social" href="{{ site.github_url }}" target="_blank"><i class="fa fa-github"></i></a>
+          <a class="footer__link footer__link--social" href="{{ site.twitter_url }}" target="_blank"><i class="fa fa-twitter"></i></a>
+          <a class="footer__link footer__link--social" href="{{ site.facebook_url }}" target="_blank"><i class="fa fa-facebook"></i></a>
+          {% if page.language == 'ru' %}
+          <a class="footer__link footer__link--social" href="{{ site.vk_url }}" target="_blank"><i class="fa fa-vk"></i></a>
+          <a class="footer__link footer__link--social" href="{{ site.zen_url }}" target="_blank"><i class="fa fa-align-left"></i></a>
+          {% endif %}
+        </div>
       </div>
-      {% endcomment %}
 
       <div class="col-md-4">
         <a class="footer__link footer__link--section" href="{{ baseurl }}/docs">{{ site.data[page.language].menu.docs }}</a>
@@ -27,28 +31,9 @@
       {% comment %}
       <div class="col-md-4">
           <a class="footer__link footer__link--subsection" href="/privacy">{{ site.data[page.language].strings.privacy }}</a>
-
           <a class="footer__link footer__link--subsection" href="/terms">{{ site.data[page.language].strings.terms }}</a>
-
-
-        <div class="clearfix footer__socials">
-            <!--
-          <a class="footer__link footer__link--social" href="{{ site.codepen_url }}" target="_blank"><i class="fa fa-codepen"></i></a>
-          <a class="footer__link footer__link--social" href="{{ site.github_url }}" target="_blank"><i class="fa fa-github"></i></a>
-          <a class="footer__link footer__link--social" href="{{ site.twitter_url }}" target="_blank"><i class="fa fa-twitter"></i></a>
-          <a class="footer__link footer__link--social" href="{{ site.facebook_url }}" target="_blank"><i class="fa fa-facebook"></i></a>
-          {% if page.language == 'ru' %}
-          <a class="footer__link footer__link--social" href="{{ site.vk_url }}" target="_blank"><i class="fa fa-vk"></i></a>
-          <a class="footer__link footer__link--social" href="{{ site.zen_url }}" target="_blank"><i class="fa fa-align-left"></i></a>
-          {% endif %}
-          -->
-        </div>
       </div>
       {% endcomment %}
-    </div>
-
-    <div class="footer__copyright">
-        © 2018 Web 2.0 Site
     </div>
   </div>
 

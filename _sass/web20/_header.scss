@@ -758,7 +758,14 @@ $search-filter-panel-gap: 40px;
 }
 
 .intro__example--en {
-    margin-top: 100px;
+  margin-top: 100px;
+}
+
+.intro__example--ru {
+  margin-top: 45px;
+  .example-description {
+    width: 350px;
+  }
 }
 
 .intro__example_window {
