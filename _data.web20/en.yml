@@ -167,7 +167,7 @@ sections:
         title: Professional Team
         details: |
           <p>Our developers and DevOps engineers are highly qualified with years of professional experience in highload systems.
-          <p>They will reliably protect your data from any attacks and ensure uninterrupted access to your website.
+          <p>They reliably protect your data from any attacks and ensure uninterrupted access to your website.
 how_it_works:
   title: How it works
   run_presentation: '<i class="fa fa-play-circle"></i> Start Animation'
