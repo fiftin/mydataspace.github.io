@@ -93,15 +93,3 @@ Pages, scripts and styles of the your website. Next file formats supported:
 <div class="safari">
     <iframe width="100%" height="520" style="margin-bottom: -10px" src="https://www.youtube.com/embed/I0O2h_34jhY?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 </div>
-
-## Server Code
-
- 
-
-Подробнее читайте в разделе [Выполнение кода на сервере](/ru/docs/how-to-run-code).
-
-
-## Website Resources
-
- 
-Подробнее читайте в разделе [Хранение файлов](/ru/docs/file-storage).
