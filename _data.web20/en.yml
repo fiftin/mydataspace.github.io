@@ -135,11 +135,14 @@ sections:
         title: Scalable Architecture
         description: It allows to handle any load
         details: |
-          Our service designed to handle a workload that may change in scope
+          <p>Our service designed to handle a workload that may change in scope.
+          <p>As the load increases, we automatically add servers to guarantee high speed access to the service.
       - id: distribution
         icon: sitemap
         title: Distributed Data Storage
-        description:
+        details: |
+          <p>Distributed data storage and replication provides a high speed data access at high workloads.
+          <p>We use CDN to distribute service spatially relative to end-users to provide high availability and high performance.
   - id: reliability
     title: High Reliability
     features:
