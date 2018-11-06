@@ -1,7 +1,7 @@
 ---
 layout: hybrid
 ---
-<div class="landing landing--{{ page.language }} default_main--gray">
+<div class="landing landing--{{ page.language }}">
   <script type="text/javascript">
     if (isEmptyPathnameIgnoreLanguage(window.location.pathname) && isValidJWT(localStorage.getItem('authToken')) ||
       window.location.hash && window.location.hash !== '' && window.location.hash !== '#') {
@@ -76,9 +76,8 @@ layout: hybrid
         {% endfor %}
       </div>
     </div>
+    {% include sub_footer.html %}
   </section>
-
-  {% include sub_footer.html %}
 
   {% include footer.html %}
 </div>

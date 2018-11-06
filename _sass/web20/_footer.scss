@@ -5,7 +5,7 @@
 }
 
 .footer {
-  background: #010e28;
+  background: #3b3e43 url(https://cdn.mydataspace.net/files/ryCHu9MlQ.png);
   color: white;
   padding: 50px 0;
   font-size: $font-size-base;
@@ -41,6 +41,14 @@
   }
 }
 
+.footer__link--section {
+  font-weight: bold;
+  opacity: 0.8;
+  &:hover, &:active {
+    opacity: 1;
+  }
+}
+
 .footer__socials {
   margin-right: -8px;
   float: right;
@@ -57,10 +65,6 @@
 .footer__link--subsection {
   font-size: $font-size-small;
   padding: 4px 0;
-  opacity: 0.3;
-  &:hover, &:active {
-    opacity: 0.5;
-  }
 }
 
 @media (max-width: $screen-sm-max) {

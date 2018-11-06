@@ -5,13 +5,13 @@
   font-weight: bold;
   padding-left: 30px;
   cursor: pointer;
-  color: #6767eb;
+  color: white;
   text-transform: uppercase;
   border-radius: 25px;
   width: 300px;
   margin-bottom: 3px;
   &:hover {
-    background: lighten(#0d6df2, 35%);
+    background: gray;
   }
 }
 
@@ -34,7 +34,9 @@
 .example-description--active {
   background: white;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  color: black;
   &:hover {
     background: white;
+    color: black;
   }
 }

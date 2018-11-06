@@ -39,6 +39,14 @@
   }
 }
 
+.footer__link--section {
+  font-weight: bold;
+  opacity: 0.8;
+  &:hover, &:active {
+    opacity: 1;
+  }
+}
+
 .footer__socials {
   margin-right: -8px;
   float: right;
@@ -55,9 +63,8 @@
 .footer__link--subsection {
   font-size: $font-size-small;
   padding: 4px 0;
-  opacity: 0.3;
   &:hover, &:active {
-    opacity: 0.5;
+    opacity: 0.7;
   }
 }
 

@@ -731,6 +731,17 @@ $search-filter-panel-gap: 40px;
   padding-top: 40px;
   display: block;
   color: black !important;
+
+  .safari {
+    opacity: 0.85;
+    transition: opacity 0.3s;
+  }
+
+  &:hover {
+    .safari {
+      opacity: 1;
+    }
+  }
 }
 
 .example__title {
