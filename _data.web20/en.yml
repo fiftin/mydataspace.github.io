@@ -101,27 +101,21 @@ sections:
         title: Serverless
         description: All you need to know to create a site of any complexity
         details: |
-          No webservers. No databases. Only JavaScript, HTML and CSS.
-          <br />
-          <br />
-          All modern technologies for front-end web development are available to you.
+          <p>No webservers. No databases. Only JavaScript, HTML and CSS.
+          <p>All modern technologies for front-end web development are available to you.
       - id: console
         title: Convenient Dashboard
         description: A single data and code management tool
         details: |
-          Convenient data and code management dashborad for solving creative tasks.
-          <br />
-          <br />
-          Create website, write code, import data, upload images. All you need is here.
+          <p>Convenient data and code management dashborad for solving creative tasks.
+          <p>Create website, write code, import data, upload images. All you need is here.
       - id: api
         icon: cogs
         title: Simple API
         description: A powerful API that surprises you with its simplicity
         details: |
-          Simple and intuitive, but at the same time an incredibly powerful API.
-          <br />
-          <br />
-          With it, you can perform full-text search for your data, filter, sort, grab data including geo-coordinates,
+          <p>Simple and intuitive, but at the same time an incredibly powerful API.
+          <p>With it, you can perform full-text search for your data, filter, sort, grab data including geo-coordinates,
           and authorize users through social networks.
   - id: speed
     title: Near Realtime Speed
@@ -152,8 +146,8 @@ sections:
       - id: cloud
         title: Multicloud Infrastructure
         details: |
-          We use multiple cloud computing and storage services. So we reducing reliance on any single vendor,
-          increasing flexibility through choice, and mitigating against disasters.
+          <p>We use multiple cloud computing and storage services.
+          <p>So we reducing reliance on any single vendor, increasing flexibility through choice, and mitigating against disasters.
 
       - id: availability
         icon: certificate
@@ -169,8 +163,8 @@ sections:
         icon: users
         title: Professional Team
         details: |
-          Our developers and DevOps engineers are highly qualified with years of professional experience in highload systems.
-          They will reliably protect your data from any attacks and ensure uninterrupted access to your website.
+          <p>Our developers and DevOps engineers are highly qualified with years of professional experience in highload systems.
+          <p>They will reliably protect your data from any attacks and ensure uninterrupted access to your website.
 how_it_works:
   title: How it works
   run_presentation: '<i class="fa fa-play-circle"></i> Start Animation'
