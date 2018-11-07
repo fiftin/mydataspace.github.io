@@ -107,7 +107,7 @@ sections:
         title: Serverless
         description: Все что нужно знать для создания сайта любой сложности
         details: |
-          <p>Забудьте об Apache, nginx, fastcgi, MySQL и др. Только JavaScript, HTML и CSS.
+          <p>Забудьте про Apache, nginx, fastcgi, MySQL и др. Только JavaScript, HTML и CSS.
           <p>Все современные технологии веб-разработки в вашем распоряжении.
       - id: console
         title: Панель управления

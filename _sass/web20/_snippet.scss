@@ -180,6 +180,11 @@ $snippet-medal-size: 50px;
   font-size: 14px;
   color: #424242;
   word-wrap: break-word;
+  margin-left: $snippet-image-size + $small-padding;
+}
+
+.snippet__description--full {
+  margin-left: 0;
 }
 
 .snippet__footer {

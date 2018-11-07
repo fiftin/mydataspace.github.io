@@ -107,7 +107,7 @@ UILayout.windows.addRoot = {
           '      <div id="no_items__template_tags2" class="snippet__tags"></div>\n' +
           '    </div>\n' +
           '  </div>\n' +
-          '  <div id="no_items__template_description2" class="snippet__description"></div>\n' +
+          '  <div id="no_items__template_description2" class="snippet__description snippet__description--full"></div>\n' +
           '</div>'
         },
         { view: 'text', id: 'NAME_LABEL', label: STRINGS.NAME, required: true, name: 'root', labelWidth: UIHelper.LABEL_WIDTH },
