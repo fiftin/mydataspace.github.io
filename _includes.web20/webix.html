@@ -88,17 +88,11 @@
       </div>
       <script>
         (function () {
-          var languageSuffix = (getCurrentLanguage() || 'EN').toLowerCase();
-          if (languageSuffix === 'en') {
-            languageSuffix = '';
-          } else {
-            languageSuffix = '-' + languageSuffix;
-          }
           if (Mydataspace.isLoggedIn()) {
-            no_items__selectTemplate('basic' + languageSuffix);
+            no_items__selectTemplate(STRINGS.default_template);
           } else {
             Mydataspace.on('login', function () {
-              no_items__selectTemplate('basic' + languageSuffix);
+              no_items__selectTemplate(STRINGS.default_template);
             });
           }
         })();

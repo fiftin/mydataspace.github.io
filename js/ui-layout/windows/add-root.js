@@ -8,13 +8,7 @@ UILayout.windows.addRoot = {
     on: UIControls.getOnForFormWindow('add_root', {
       onShow: function (id) {
         if (PROJECT_NAME === 'web20') {
-          var languageSuffix = (getCurrentLanguage() || 'EN').toLowerCase();
-          if (languageSuffix === 'en') {
-            languageSuffix = '';
-          } else {
-            languageSuffix = '-' + languageSuffix;
-          }
-          no_items__selectTemplate('basic' + languageSuffix, 2);
+          no_items__selectTemplate(STRINGS.default_template, 2);
         }
       }
     }),

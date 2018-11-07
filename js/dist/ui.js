@@ -3564,13 +3564,7 @@ UILayout.windows.addRoot = {
     on: UIControls.getOnForFormWindow('add_root', {
       onShow: function (id) {
         if (PROJECT_NAME === 'web20') {
-          var languageSuffix = (getCurrentLanguage() || 'EN').toLowerCase();
-          if (languageSuffix === 'en') {
-            languageSuffix = '';
-          } else {
-            languageSuffix = '-' + languageSuffix;
-          }
-          no_items__selectTemplate('basic' + languageSuffix, 2);
+          no_items__selectTemplate(STRINGS.default_template, 2);
         }
       }
     }),
@@ -3663,7 +3657,7 @@ UILayout.windows.addRoot = {
           '      <div id="no_items__template_tags2" class="snippet__tags"></div>\n' +
           '    </div>\n' +
           '  </div>\n' +
-          '  <div id="no_items__template_description2" class="snippet__description"></div>\n' +
+          '  <div id="no_items__template_description2" class="snippet__description snippet__description--full"></div>\n' +
           '</div>'
         },
         { view: 'text', id: 'NAME_LABEL', label: STRINGS.NAME, required: true, name: 'root', labelWidth: UIHelper.LABEL_WIDTH },

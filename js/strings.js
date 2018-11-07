@@ -283,7 +283,9 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       delete_entity: 'Delete'
     },
 
-    select_template_label: 'Template:'
+    select_template_label: 'Skeleton:',
+
+    default_template: 'angularjs-bootstrap-3'
   },
 
   RU: {
@@ -579,7 +581,9 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       delete_root: 'Удалить',
       delete_entity: 'Удалить'
     },
-    select_template_label: 'Шаблон:'
+    select_template_label: 'Каркас:',
+
+    default_template: 'angularjs-bootstrap-3-ru'
   }
 };
 

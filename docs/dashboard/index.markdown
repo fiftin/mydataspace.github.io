@@ -54,7 +54,7 @@ Examples of data:
 
 - Info about products of your online store
 - User comments and reviews
-- Posts of your blog
+- Posts of your personal blog
 
 Data is stored in a hierarchical form and available on your website via API. 
 
