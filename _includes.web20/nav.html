@@ -19,40 +19,19 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li class="hidden">
-                    <a href="#page-top"></a>
-                </li>
-                <!--
-                <li class="hidden-sm header__give_feedback_wrap">
-                    <a class="header__menu_item"
-                       href="javascript: void(0);"
-                       onclick="showFeedbackModal(true); return false;">
-                        <div class="header__give_feedback"><i id="header__give_feedback_icon" class="fa fa-thumbs-up"></i> <span class="hidden-md" style="padding-left: 5px;">{{ site.data[page.language].menu.give_feedback_button }}</span></div>
-                    </a>
-                    <script>
-                      setInterval(function() {
-                        var icon = document.getElementById('header__give_feedback_icon');
-                        if (icon.classList.contains('fa-thumbs-up')) {
-                          icon.classList.remove('fa-thumbs-up');
-                          icon.classList.add('fa-thumbs-down');
-                        } else {
-                          icon.classList.remove('fa-thumbs-down');
-                          icon.classList.add('fa-thumbs-up');
-                        }
-                      }, 5000);
-                    </script>
-                </li>
-                -->
-                <li class="hidden-sm">
-                    <a class="header__menu_item" href="{{ baseurl }}/features">{{ site.data[page.language].menu.features }}</a>
-                </li>
                 <li class="hidden-sm">
                     <a class="header__menu_item" href="{{ baseurl }}/pricing">{{ site.data[page.language].menu.pricing }}</a>
                 </li>
+
                 <li class="hidden-sm">
                     <a class="header__menu_item" href="{{ baseurl }}/docs">{{ site.data[page.language].menu.docs }}</a>
                 </li>
 
+                {% if page.language == 'ru' %}
+                <li class="hidden-sm">
+                  <a class="header__menu_item" href="{{ baseurl }}/blog">{{ site.data[page.language].menu.blog }}</a>
+                </li>
+                {% endif %}
 
                 <!--
                 <li>
@@ -100,7 +79,6 @@
                 </li>
                 -->
 
-
                 <li id="profile_button_menu_item">
                   <script>
                     if (isValidJWT(localStorage.getItem('authToken'))) {
@@ -124,7 +102,6 @@
                            id="profile_button__dropdown_profile_link">
                           <div class="profile_button__dropdown_profile" id="profile_button__dropdown_profile">
                             <div id="profile_button__dropdown_name" class="profile_button__dropdown_name profile_button__dropdown_name--no-login">Anonymous</div>
-                            <!--<div id="profile_button__dropdown_login" class="profile_button__dropdown_login">@fiftin</div>-->
                           </div>
                         </a>
                       </li>

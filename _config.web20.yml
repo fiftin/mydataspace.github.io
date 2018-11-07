@@ -13,7 +13,7 @@ email: webmaster@web20.site
 baseurl: ""
 
 destination:     ./_site.web20
-collections_dir: .
+#collections_dir: .
 plugins_dir:     _plugins.web20
 layouts_dir:     _layouts.web20
 data_dir:        _data.web20
