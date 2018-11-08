@@ -151,7 +151,7 @@ function startSearch_{{include.id}}(search) {
       if (MDSCommon.isBlank(avatar)) {
         avatar = '/images/icons/root.svg';
       } else {
-        avatar = 'https://cdn.web20site.com/avatars/sm/' + avatar + '.png';
+        avatar = 'https://cdn.web20site.com/avatars/md/' + avatar + '.png';
       }
 
       var tags = (MDSCommon.findValueByName(root.fields, 'tags') || '').split(' ').filter(function(tag) {
@@ -192,10 +192,6 @@ function startSearch_{{include.id}}(search) {
         }
       }
 
-      if (MDSCommon.findValueByName(root.fields, '$type') === 't') {
-        tags = '<span class="view__tag" onclick="openSearch_{{include.id}}(\'#type:template\'); return false;"><i class="view__tag_icon fa fa-copy"></i><span>' + tr$('types.template') + '</span></span> ' + tags;
-      }
-
       var license = MDSCommon.findValueByName(root.fields, 'license');
       if (MDSCommon.isPresent(license)) {
         var licenseOrig = license;
@@ -226,7 +222,7 @@ function startSearch_{{include.id}}(search) {
       if (root.profile && data.profiles[root.profile]) {
         var ds = MDSCommon.findValueByName(root.fields, 'datasource');
 
-        var authorAvatar = 'https://cdn.web20site.com/avatars/sm/' + (data.profiles[root.profile].avatar || 'HJYrGU87W') + '.png';
+        var authorAvatar = 'https://cdn.web20site.com/avatars/md/' + (data.profiles[root.profile].avatar || 'HJYrGU87W') + '.png';
         footer =
           '<div class="snippet__author">' +
           '  <img class="snippet__author_avatar" src="' + authorAvatar + '" />' +
@@ -246,10 +242,10 @@ function startSearch_{{include.id}}(search) {
       var colWidth = search_{{include.id}}_displayMode === 'snippet' ? 6 : 12;
       var snippetClass = search_{{include.id}}_displayMode === 'snippet' ? '' : 'snippet--line';
 
-      return '<div class="col-md-' + colWidth + '"><a class="block snippet ' + snippetClass + ' clearfix" href="/' + lang + itemUrlQuery + '">\n' +
+      return '<div class="col-md-' + colWidth + '"><a class="block snippet snippet--large-icon ' + snippetClass + ' clearfix" href="/' + lang + itemUrlQuery + '">\n' +
         '  <div class="snippet__overview">\n' +
-        '  <img class="snippet__image" src="' + avatar + '" />\n' +
-        '  <div class="snippet__info' + (MDSCommon.isBlank(tags) ? ' snippet__info--small' : '') + '">\n' +
+        '  <img class="snippet__image snippet__image--large-icon" src="' + avatar + '" />\n' +
+        '  <div class="snippet__info snippet__info--large-icon ' + (MDSCommon.isBlank(tags) ? ' snippet__info--small' : '') + '">\n' +
         '    <div class="snippet__title">' + (MDSCommon.findValueByName(root.fields, 'name') || itemId) + '</div>\n' +
         '    <div class="snippet__tags">' +
         (tags || '') +
@@ -257,9 +253,9 @@ function startSearch_{{include.id}}(search) {
         '</div>\n' + // info
 
         '</div>\n' + // overview
-        '  <div class="snippet__description">' + (MDSCommon.findValueByName(root.fields, 'description') || '') + '</div>\n' +
+        '  <div class="snippet__description snippet__description--large-icon">' + (MDSCommon.findValueByName(root.fields, 'description') || '') + '</div>\n' +
 
-        '<div class="snippet__footer">' +
+        '<div class="snippet__footer snippet__footer--large-icon">' +
         footer +
         '<div class="snippet__counters">' +
         '<span class="root_counter"><i class="fa fa-heart" aria-hidden="true"></i><span class="root_counter__count root_counter__count--likes">' + nLikes + '</span></span>' +

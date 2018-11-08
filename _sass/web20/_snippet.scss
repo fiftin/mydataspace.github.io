@@ -5,6 +5,9 @@ $filter-item-height: 30px;
 $snippet-footer-height: 20px;
 $snippet-footer-height-with-gradient: 50px;
 
+
+$snippet-image-size-lg: 100px;
+
 .search_filter {
   margin-bottom: 20px;
 }
@@ -38,6 +41,7 @@ $snippet-footer-height-with-gradient: 50px;
 .search_filter__item:hover, 
 .search_filter__item:active, 
 .search_filter__item--active {
+  border-radius: 2px;
   color: white !important;
   background: $selected-bg;
   .search_filter__item_count {
@@ -155,9 +159,19 @@ $snippet-medal-size: 50px;
   height: $snippet-image-size;
 }
 
+.snippet__image--large-icon {
+  width: $snippet-image-size-lg;
+  height: $snippet-image-size-lg;
+}
+
 .snippet__info {
   padding-left: $snippet-image-size + $small-padding;
 }
+
+.snippet__info--large-icon {
+  padding-left: $snippet-image-size-lg + $small-padding;
+}
+
 
 .snippet__info--small {
   padding-top: 15px;
@@ -183,6 +197,10 @@ $snippet-medal-size: 50px;
   margin-left: $snippet-image-size + $small-padding;
 }
 
+.snippet__description--large-icon {
+  margin-left: $snippet-image-size-lg + $small-padding;
+}
+
 .snippet__description--full {
   margin-left: 0;
 }
@@ -197,6 +215,11 @@ $snippet-medal-size: 50px;
   padding-top: $snippet-footer-height-with-gradient - $snippet-footer-height - $small-padding / 2;
   height: $snippet-footer-height-with-gradient;
 }
+
+.snippet__footer--large-icon {
+  margin-left: $snippet-image-size-lg + $small-padding;
+}
+
 
 .snippet__author {
   height: $snippet-footer-height;
