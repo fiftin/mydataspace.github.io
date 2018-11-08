@@ -6,10 +6,6 @@ layout: page
 
 <div id="pricing_list" class="row pricing_list">
 
-  <div class="col-md-2">
-  </div>
-
-  {% comment %}
   <div class="col-md-4">
     <div id="pricing_block__free" class="pricing_block">
       <div class="pricing_block__header">{{ site.data[page.language].pricing_page.free.title }}</div>
@@ -30,7 +26,6 @@ layout: page
       </div>
     </div>
   </div>
-  {% endcomment %}
 
   <div class="col-md-4">
     <div id="pricing_block__personal" class="pricing_block">
@@ -47,7 +42,7 @@ layout: page
         <div class="pricing_block__property">
           <div class="pricing_block__trial">{{ site.data[page.language].pricing_page.trial }}</div>
           <div class="pricing_block__trial pricing_block__trial--active">{{ site.data[page.language].pricing_page.trial_active }}</div>
-          <div id="pricing_block__super_offer" class="pricing_block__super_offer">{{ site.data[page.language].pricing_page.super_offer }}</div>
+          <div id="pricing_block__super_offer" class="pricing_block__super_offer hidden">{{ site.data[page.language].pricing_page.super_offer }}</div>
           <div id="pricing_block__trial_left" class="pricing_block__trial_left"></div>
         </div>
       </div>
@@ -196,3 +191,5 @@ layout: page
     PricingPage.instance().init();
   </script>
 </div>
+
+<div class="pricing-skeletons-notice">{{ site.data[page.language].pricing_page.free_skeletons }}</div>

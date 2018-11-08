@@ -19,16 +19,20 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li class="hidden-sm">
+                <li>
                     <a class="header__menu_item" href="{{ baseurl }}/pricing">{{ site.data[page.language].menu.pricing }}</a>
                 </li>
 
-                <li class="hidden-sm">
+                <li>
                     <a class="header__menu_item" href="{{ baseurl }}/docs">{{ site.data[page.language].menu.docs }}</a>
                 </li>
 
+                <li>
+                  <a class="header__menu_item" href="{{ baseurl }}/skeletons">{{ site.data[page.language].menu.skeletons }}</a>
+                </li>
+
                 {% if page.language == 'ru' %}
-                <li class="hidden-sm">
+                <li>
                   <a class="header__menu_item" href="{{ baseurl }}/blog">{{ site.data[page.language].menu.blog }}</a>
                 </li>
                 {% endif %}

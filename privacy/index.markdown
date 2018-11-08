@@ -1,11 +1,8 @@
 ---
-layout: page
+layout: post
 title: Privacy Policy
 language: en
 ---
-
-### Privacy Policy
-
 Last modified: April 15, 2018
 
 This page is used to inform website visitors regarding our policies with the collection, use, and disclosure of 

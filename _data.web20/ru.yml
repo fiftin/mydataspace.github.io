@@ -17,6 +17,7 @@ menu:
   give_feedback_send_mail: или отправьте сообщение на
   give_feedback_view_all: Смотреть все
   blog: Блог
+  skeletons: Каркасы
 
 title: Web 2.0 Site — конструктор сайтов для программистов
 slogan: Конструктор сайтов для программистов
@@ -54,7 +55,7 @@ example_descriptions:
 - id: websocket-api
   title: Websocket API
 - id: file-storage
-  title: Файлове хранилище
+  title: Файлове хранилище + CDN
 
 
 special_offer: Бесплатно <b>навсегда</b> для зарегистрированных пользователей
@@ -410,6 +411,7 @@ wizard:
 
 
 pricing_page:
+  free_skeletons: Вы можете создать до <strong>5 каркасов</strong> на любом тарифном плане
   thanks: Спасибо, мы свяжимся с вами в ближайшее время!
   create_site: Создать сайт
   current_plan: Текущий тариф

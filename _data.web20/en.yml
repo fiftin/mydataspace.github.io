@@ -17,6 +17,7 @@ menu:
   give_feedback_send_mail: or email directly to
   give_feedback_view_all: See all
   blog: Blog
+  skeletons: Skeletons
 
 title: Website builder for developers
 slogan: Website builder for developers
@@ -384,6 +385,7 @@ wizard:
 
 
 pricing_page:
+  free_skeletons: You can create up to <strong>5 skeletons</strong> on any plan
   thanks: Спасибо, мы свяжимся с вами в ближайшее время!
   create_site: Create Website
   current_plan: Current Plan
@@ -399,17 +401,20 @@ pricing_page:
     sites: 1 Website
     disk: 1 Gb Storage
     price: $0
+    skeletons: 3 Skeletons
   personal:
     title: Personal
     sites: 3 Websites
     disk: 5 Gb Storage
     price: $8
+    skeletons: 5 Skeletons
   pro:
     plan_unavailable: Plan Professional currently unavailable. Subscribe to updated and we contact with you
     title: Professional
     sites: 10 Websites
     disk: 15 Gb Storage
     price: $28
+    skeletons: 15 Skeletons
   unlim:
     request_placeholder: Please, specify how many website you need and how we can contact with you
     title: Unlimited

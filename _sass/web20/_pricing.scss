@@ -1,5 +1,4 @@
 .pricing_list {
-  margin-top: -20px;
 }
 
 .pricing_block {
@@ -9,6 +8,12 @@
   border: 1px solid white;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
   background: white;
+}
+
+
+.pricing-skeletons-notice {
+  text-align: center;
+  font-size: 25px;
 }
 
 .pricing_block__button--current {
@@ -43,7 +48,7 @@
 }
 
 .pricing_block__main {
-  height: 260px;
+  height: 220px;
   padding: 0 20px 20px;
   text-align: center;
 }
@@ -51,7 +56,7 @@
 .pricing_block__header {
   text-align: center;
   font-weight: bold;
-  font-size: 30px;
+  font-size: 32px;
   padding: 20px;
 }
 
@@ -103,14 +108,16 @@
 
 .pricing_block__property {
   margin: 20px 0;
-  font-size: 30px;
+  font-size: 25px;
   line-height: 1.1;
+  font-weight: bold;
 }
 
 .pricing_block__property_addition {
   font-size: 16px;
   max-width: 250px;
   margin: 10px auto auto;
+  font-weight: normal;
 }
 
 .pricing_block__button {
