@@ -150,10 +150,12 @@ function no_items__createNewWebsite() {
       }));
       UI.entityTree.resolveChildren(entityId);
       $$('entity_tree').open(entityId);
+
       UI.showMedia({
         type: 'youtube',
-        value: 'fBve_lUsWuc'
+        value: STRINGS.youtube_intro_video
       });
+
     }, 500);
   }).then(function () {
     return Mydataspace.request('apps.create', {
