@@ -497,15 +497,19 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
 
 .page-tab {
   font-size: 35px;
-  padding: 5px 15px;
+  margin-right: 30px;
   color: black !important;
+  text-decoration: none !important;
   font-weight: bold;
+  &:hover {
+    border-bottom: 4px solid black;
+  }
 }
 
 .page-tab--active {
-  color: white !important;
-  background: black;
-  text-decoration: none !important;
+  font-weight: bold;
+  border-bottom: 4px solid black;
+  color: black !important;
 }
 
 .wizard_modal__body {

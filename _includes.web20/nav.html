@@ -1,10 +1,15 @@
+{% assign page_url_parts = page.url | split: '/' %}
+
 {% if page.language == site.default_language %}
 {% assign baseurl = "" %}
 {% assign baseurl_with_trailing_slash = baseurl | append:"/" %}
+{% assign root_page_name = page_url_parts[1] %}
 {% else %}
 {% assign baseurl = page.language | prepend:"/" %}
 {% assign baseurl_with_trailing_slash = baseurl | append:"/" %}
+{% assign root_page_name = page_url_parts[2] %}
 {% endif %}
+
 <nav class="navbar navbar-inverse navbar-custom">
     <div class="container">
         <div class="navbar-header page-scroll">
@@ -16,24 +21,28 @@
             </button>
         </div>
 
+        {% if root_page_name == 'search' %}
+        {% include search.html id="header__search" admin=false resultContainer="search" %}
+        {% endif %}
+
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a class="header__menu_item" href="{{ baseurl }}/pricing">{{ site.data[page.language].menu.pricing }}</a>
+                    <a class="header__menu_item {% if root_page_name == 'pricing' %}header__menu_item--active{% endif %}" href="{{ baseurl }}/pricing">{{ site.data[page.language].menu.pricing }}</a>
                 </li>
 
                 <li>
-                    <a class="header__menu_item" href="{{ baseurl }}/docs">{{ site.data[page.language].menu.docs }}</a>
+                    <a class="header__menu_item {% if root_page_name == 'docs' %}header__menu_item--active{% endif %}" href="{{ baseurl }}/docs">{{ site.data[page.language].menu.docs }}</a>
                 </li>
 
                 <li>
-                  <a class="header__menu_item" href="{{ baseurl }}/search">{{ site.data[page.language].menu.skeletons }}</a>
+                  <a class="header__menu_item {% if root_page_name == 'search' %}header__menu_item--active{% endif %}" href="{{ baseurl }}/search">{{ site.data[page.language].menu.skeletons }}</a>
                 </li>
 
                 {% if page.language == 'ru' %}
                 <li>
-                  <a class="header__menu_item" href="{{ baseurl }}/blog">{{ site.data[page.language].menu.blog }}</a>
+                  <a class="header__menu_item {% if root_page_name == 'blog' %}header__menu_item--active{% endif %}" href="{{ baseurl }}/blog">{{ site.data[page.language].menu.blog }}</a>
                 </li>
                 {% endif %}
 
@@ -134,17 +143,24 @@
         </div>
     </div>
     <script>
-        (function() {
-            if (/^(\/\w+)?\/root.html$/.test('{{ url }}')) {
-              var m = location.pathname.match(/^(\/\w+)?\/([\w\d_\-]+)\/?$/);
-              if (m) {
-                document.getElementById('header_language_button_ru').href = '/ru/' + m[2];
-                document.getElementById('header_language_button_en').href = '/' + m[2];
-              }
-            }
-        })();
+        // (function() {
+        //     if (/^(\/\w+)?\/root.html$/.test('{{ url }}')) {
+        //       var m = location.pathname.match(/^(\/\w+)?\/([\w\d_\-]+)\/?$/);
+        //       if (m) {
+        //         document.getElementById('header_language_button_ru').href = '/ru/' + m[2];
+        //         document.getElementById('header_language_button_en').href = '/' + m[2];
+        //       }
+        //     }
+        // })();
     </script>
 </nav>
 
 <div id="search" class="search">
+  <div class="fa fa-cog fa-spin" style="
+          position: absolute;
+          color: #85b4d4;
+          font-size: 100px;
+          left: calc(50% - 75px);
+          top: calc(50% - 75px);
+      "></div>
 </div>

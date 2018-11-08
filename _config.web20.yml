@@ -52,9 +52,9 @@ languages:
   - ru
 
 exclude:
-  - js/search.js
+  #- js/search.js
   - js/webix_search.js
-  - js/ru/search.js
+  #- js/ru/search.js
   - js/ru/webix_search.js
   #- search
   #- ru/search

@@ -403,8 +403,8 @@ search:
   found_items_suffix: "элемент(ов)"
   found_in_datasource_suffix: "источников"
   found_in_datasource: "в источнике:"
-  search_by_roots: "Поиск по корням"
-  search_by_datasources: "Поиск по источникам"
+  search_by_roots: "Каркасы Web 2.0 Site"
+  search_by_datasources: "Каркасы от сообщества"
   no_results: "Ничего не найдено"
 
 wizard:

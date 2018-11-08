@@ -10,8 +10,17 @@ $profile-button-size: 35px;
 }
 
 .header__menu_item--active {
-  padding-bottom: 8px;
-  border-bottom: 4px solid white;
+  position: relative;
+  &:before {
+    content: "";
+    margin: 0 13px;
+    background: white;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    position: absolute;
+  }
 }
 
 @media (min-width: $screen-md-min) {
@@ -596,9 +605,15 @@ $slogan-animation-offset-mobile: 400px;
 .navbar--fixed {
   transform: translate3d(0, 0, 0);
   position: fixed;
-  background: black;
+  background: linear-gradient(180deg, rgba(24, 21, 91, 0.8), rgba(24, 21, 91, 0.8)),url('/images/landing/top.jpeg') no-repeat top;
+  background-size: cover;
   z-index: 10;
   width: calc(100% - 17px);
+}
+
+
+#header__search {
+  display: none;
 }
 
 $search-content-margin-top: 30px;
@@ -726,10 +741,6 @@ $search-filter-panel-gap: 40px;
   width: calc(100% + 140px);
   background: white;
   opacity: 0;
-}
-
-#header__search {
-  display: none;
 }
 
 .example {
