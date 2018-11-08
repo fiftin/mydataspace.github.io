@@ -28,12 +28,12 @@
         {% endfor %}
       </div>
 
-      {% comment %}
       <div class="col-md-4">
-          <a class="footer__link footer__link--subsection" href="/privacy">{{ site.data[page.language].strings.privacy }}</a>
-          <a class="footer__link footer__link--subsection" href="/terms">{{ site.data[page.language].strings.terms }}</a>
+        <a class="footer__link footer__link--section">{{ site.data[page.language].strings.security }}</a>
+        <a class="footer__link footer__link--subsection" href="/privacy">{{ site.data[page.language].strings.privacy }}</a>
+        <a class="footer__link footer__link--subsection" href="/terms">{{ site.data[page.language].strings.terms }}</a>
+        <a class="footer__link footer__link--subsection" href="/gdpr">GDPR</a>
       </div>
-      {% endcomment %}
     </div>
   </div>
 
@@ -57,8 +57,6 @@ if (window.parent === window) {
 
   gtag('config', 'UA-84590190-3');
 </script>
-
-
 
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript" >

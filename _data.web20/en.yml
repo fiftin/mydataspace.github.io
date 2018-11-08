@@ -81,6 +81,7 @@ strings:
   request_sent: Request sent
   template: Skeleton
   press_to_select_other_template: Click to select other skeleton
+  security: Security
 
 header:
   input_search: Search... Press Esc to exit

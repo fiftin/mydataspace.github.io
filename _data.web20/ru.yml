@@ -83,6 +83,7 @@ strings:
   request_sent: Запрос отправен
   template: Шаблон
   press_to_select_other_template: Нажмите чтобы выбрать другой шаблон
+  security: Безопасность
 
 
 header:
