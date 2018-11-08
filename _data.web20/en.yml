@@ -73,14 +73,14 @@ strings:
   cancel: Cancel
   privacy: Privacy
   terms: Terms of Service
-  select_template_title: Select Template
+  select_template_title: Select Skeleton
   select_template_button: Select
   close: Close
   send: Send
   send_request: Send Request
   request_sent: Request sent
-  template: Template
-  press_to_select_other_template: Click to select other template
+  template: Skeleton
+  press_to_select_other_template: Click to select other skeleton
 
 header:
   input_search: Search... Press Esc to exit
