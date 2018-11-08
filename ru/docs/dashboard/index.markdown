@@ -31,7 +31,7 @@ page_content_class: page__content--800
 
 <br>
 
-## Данные
+### Данные
 
 
 
@@ -95,7 +95,7 @@ page_content_class: page__content--800
 
 <br>
 
-## Исходный код сайта
+### Исходный код сайта
 
 <br>
 
@@ -129,14 +129,14 @@ page_content_class: page__content--800
     <iframe width="100%" height="450" style="margin-bottom: -10px" src="https://www.youtube.com/embed/fBve_lUsWuc?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 </div>
 
-## Код выполняющийся на сервере
+### Код выполняющийся на сервере
 
  
 
 Подробнее читайте в разделе [Выполнение кода на сервере](/ru/docs/how-to-run-code).
 
 
-## Ресурсы
+### Ресурсы
 
  
 Подробнее читайте в разделе [Хранение файлов](/ru/docs/file-storage).

@@ -107,6 +107,7 @@ $section-icon-color: #6b6ba9;
   font-size: $font-size-h3;
   word-wrap: break-word;
   margin-bottom: 70px;
+  font-weight: normal !important;
 }
 
 .section__subtitle--speed,
@@ -197,15 +198,18 @@ a.feature {
 }
 
 .feature__method_name {
-  font-size: 25px;
+  line-height: 34px;
+  font-size: 18px;
 }
 
 .feature__code_example {
-  text-align: right;
-  margin-bottom: -30px;
-  margin-right: 10px;
-  margin-top: 20px;
-  font-weight: bold;
+  // text-align: right;
+  // margin-bottom: -30px;
+  // margin-right: 10px;
+  // margin-top: 20px;
+  margin-bottom: 5px;
+  margin-top: 15px;
+  font-style: italic;
 }
 
 .feature__details-icon {
@@ -216,6 +220,9 @@ a.feature {
 
 .feature__section {
   margin-top: 50px;
+
+  figure.highlight {
+  }
 }
 
 .feature__subtitle {
@@ -318,4 +325,9 @@ a.feature {
 
 .how-it-works-wrap--stopped {
   margin-left: 280px;
+}
+
+figure.highlight > pre {
+  // background: transparent;
+  border: none;
 }

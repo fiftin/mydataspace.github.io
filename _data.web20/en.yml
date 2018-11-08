@@ -45,6 +45,8 @@ mission: Instead of them, we offer simple, fast and reliable website builder for
 
 
 example_descriptions:
+  - id: skeletons
+    title: Skeletons
   - id: live-pug-scss
     title: Live Pug &amp; SCSS
   - id: tree-data-structure

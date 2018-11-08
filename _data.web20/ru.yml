@@ -41,13 +41,15 @@ solutions:
     description: Hеобходимы навыки администрирования
   - id: builder
     title: Конструктор сайтов
-    description: Шаблонные сайты
+    description: Однообразные, шаблонные сайты
 
 mission_title: "Современный рынок предлагает следующие решения для размещения сайта в интернете:"
 
 mission: "Мы создали конструктор сайтов который лишён этих недостатков: простой, быстрый и надежный. "
 
 example_descriptions:
+- id: skeletons
+  title: Каркасы
 - id: live-pug-scss
   title: Поддержка Pug и SCSS
 - id: tree-data-structure
@@ -55,7 +57,7 @@ example_descriptions:
 - id: websocket-api
   title: Websocket API
 - id: file-storage
-  title: Файлове хранилище + CDN
+  title: Файлове хранилище с CDN
 
 
 special_offer: Бесплатно <b>навсегда</b> для зарегистрированных пользователей
