@@ -243,31 +243,13 @@ $profile-button-size: 35px;
 
 .header__search_input {
   border: 0;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 100px;
-  color: transparent;
+  border-radius: 2px;
+  color: black;
   padding-left: 20px !important;
   padding-right: 20px !important;
   width: 100% !important;
-  text-align: center;
-  transition: background-color 200ms;
-  background-image: url('/images/icons/search.svg');
-  background-position: center center;
-  background-repeat: no-repeat;
+  background: white url('/images/icons/search.svg') no-repeat center center;
   background-size: 25px 25px;
-  opacity: 0.5;
-
-  &::-webkit-input-placeholder {
-    color: transparent;
-  }
-
-  &:-ms-input-placeholder {
-    color: transparent;
-  }
-
-  &::-moz-placeholder {
-    color: transparent;
-  }
 }
 
 $slogan-animation-offset: 350px;
@@ -613,7 +595,7 @@ $slogan-animation-offset-mobile: 400px;
 
 
 #header__search {
-  display: none;
+  // display: none;
 }
 
 $search-content-margin-top: 30px;

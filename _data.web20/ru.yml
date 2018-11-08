@@ -90,7 +90,7 @@ strings:
 
 
 header:
-  input_search: Начните поиск или нажмите Esc
+  input_search: Поиск по каркасам...
   input_search_fixed: Поиск...
 buttons:
   - id: vk

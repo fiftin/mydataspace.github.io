@@ -1114,8 +1114,8 @@ function initRootPage(options) {
         } else {
           document.getElementById('root__user_about').style.display = 'none';
         }
-        var userAvatar = MDSCommon.isPresent(data.profile.avatar) ? 'https://cdn.mydataspace.net/avatars/lg/' + data.profile.avatar + '.png' : '/images/no_avatar.svg';
-        var userCover = MDSCommon.isPresent(data.profile.cover) ? 'https://cdn.mydataspace.net/images/md/' + data.profile.avatar + '.png' : '/images/default_cover_sm.jpg';
+        var userAvatar = MDSCommon.isPresent(data.profile.avatar) ? 'https://cdn.web20site.com/avatars/lg/' + data.profile.avatar + '.png' : '/images/no_avatar.svg';
+        var userCover = MDSCommon.isPresent(data.profile.cover) ? 'https://cdn.web20site.com/images/md/' + data.profile.avatar + '.png' : '/images/default_cover_sm.jpg';
         document.getElementById('root__user_avatar').src = userAvatar;
         document.getElementById('root__user_cover').style.backgroundImage = 'url("' + userCover + '")';
       }

@@ -151,7 +151,7 @@ function startSearch_{{include.id}}(search) {
       if (MDSCommon.isBlank(avatar)) {
         avatar = '/images/icons/root.svg';
       } else {
-        avatar = 'https://cdn.mydataspace.net/avatars/sm/' + avatar + '.png';
+        avatar = 'https://cdn.web20site.com/avatars/sm/' + avatar + '.png';
       }
 
       var tags = (MDSCommon.findValueByName(root.fields, 'tags') || '').split(' ').filter(function(tag) {
@@ -226,7 +226,7 @@ function startSearch_{{include.id}}(search) {
       if (root.profile && data.profiles[root.profile]) {
         var ds = MDSCommon.findValueByName(root.fields, 'datasource');
 
-        var authorAvatar = 'https://cdn.mydataspace.net/avatars/sm/' + (data.profiles[root.profile].avatar || 'HJYrGU87W') + '.png';
+        var authorAvatar = 'https://cdn.web20site.com/avatars/sm/' + (data.profiles[root.profile].avatar || 'HJYrGU87W') + '.png';
         footer =
           '<div class="snippet__author">' +
           '  <img class="snippet__author_avatar" src="' + authorAvatar + '" />' +
