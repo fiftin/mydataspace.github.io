@@ -104,6 +104,10 @@ $snippet-image-size-lg: 100px;
   }
 }
 
+.snippet--large-icon {
+  min-height: $snippet-image-size-lg + $padding;
+}
+
 .snippet--no-pointer {
   cursor: initial;
   &:hover {
@@ -274,7 +278,7 @@ $snippet-medal-size: 50px;
 
 .snippet--line {
   height: auto;
-  padding-bottom: $snippet-footer-height + $small-padding * 1.5;
+  // padding-bottom: $snippet-footer-height + $small-padding * 1.5;
   .snippet__footer {
     padding-top: 0;
     height: $snippet-footer-height + $small-padding / 2;
