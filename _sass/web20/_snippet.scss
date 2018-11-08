@@ -94,7 +94,7 @@ $snippet-image-size-lg: 100px;
 
 .snippet {
   cursor: pointer;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   padding: $small-padding;
   height: $snippet-height;
   text-decoration: none !important;
@@ -157,11 +157,13 @@ $snippet-medal-size: 50px;
   left: 0;
   width: $snippet-image-size;
   height: $snippet-image-size;
+  border-radius: 4px;
 }
 
 .snippet__image--large-icon {
   width: $snippet-image-size-lg;
   height: $snippet-image-size-lg;
+  border-radius: 6px;
 }
 
 .snippet__info {

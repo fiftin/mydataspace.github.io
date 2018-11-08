@@ -399,7 +399,7 @@ look_modal:
 
 search:
   found_prefix: "Найдено"
-  found_suffix: "корней"
+  found_suffix: "каркасов"
   found_items_suffix: "элемент(ов)"
   found_in_datasource_suffix: "источников"
   found_in_datasource: "в источнике:"

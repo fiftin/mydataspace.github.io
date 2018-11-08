@@ -886,7 +886,11 @@ EntityForm.prototype.onUploadAvatar = function(event) {
     function(res) {
       var entityName = res.resources[0];
       $$('entity_form__root_avatar_value').setValue(entityName);
-      $('#entity_form__root_img').prop('src', Mydataspace.options.cdnURL + '/avatars/sm/' + entityName + '.png');    },
+
+      setTimeout(function () {
+        $('#entity_form__root_img').prop('src', Mydataspace.options.cdnURL + '/avatars/sm/' + entityName + '.png');
+      }, 1000);
+    },
     function(err) {
       console.log(err);
     }

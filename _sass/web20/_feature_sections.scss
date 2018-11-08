@@ -327,7 +327,7 @@ a.feature {
   margin-left: 280px;
 }
 
-figure.highlight > pre {
-  // background: transparent;
-  border: none;
+figure.highlight > pre, pre.highlight {
+  border: 1px solid #eeeeee;
+  background-color: #f5f5f5;
 }
