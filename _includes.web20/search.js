@@ -353,7 +353,7 @@ function startSearch_{{include.id}}(search) {
         '<button type="button" class="btn btn-default ' + (search_{{include.id}}_displayMode === 'line' ? 'active' : '') + '" onclick="set_search_{{include.id}}_displayMode(\'line\'); startSearch_{{include.id}}(document.getElementById(\'{{include.id}}_input\').value);"><i class="fa fa-list"></i></button>' +
     '<button type="button" class="btn btn-default ' + (search_{{include.id}}_displayMode === 'snippet' ? 'active' : '') + '" onclick="set_search_{{include.id}}_displayMode(\'snippet\'); startSearch_{{include.id}}(document.getElementById(\'{{include.id}}_input\').value);"><i class="fa fa-th-large"></i></button>' +
     '</div>' +
-    '<div class="search__right_link"><a href="{{ lang_prefix }}/datasources" onclick="search_{{include.id}}_pathname = \'' + xxx_pathname + '\'; openSearch_{{include.id}}(\'\'); return false;">' + xxx + '</a></div>' +
+    '<div class="search__right_link"><a style="font-weight: bold;" href="{{ lang_prefix }}/datasources" onclick="search_{{include.id}}_pathname = \'' + xxx_pathname + '\'; openSearch_{{include.id}}(\'\'); return false;">' + xxx + '</a></div>' +
     '</div>' +
     datasourceInfoHTML +
     '<div class="row">' + rootsHtml.join('\n') + '</div>' +

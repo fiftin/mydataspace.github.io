@@ -87,7 +87,7 @@ strings:
   security: Security
 
 header:
-  input_search: Search... Press Esc to exit
+  input_search: Search by skeletons...
   input_search_fixed: Search...
 buttons:
   - id: facebook

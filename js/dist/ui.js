@@ -4857,27 +4857,6 @@ UILayout.header =
   { css: 'admin_panel__header',
     cols: [
       { type: 'header' },
-      // { view: 'button',
-      //   width: 170,
-      //   css: 'menu__language_button menu__language_button--feedback',
-      //   id: 'FEEDBACK_LABEL',
-      //   label: STRINGS.FEEDBACK,
-      //   click: function() {
-      //     showFeedbackModal(true);
-      //   }
-      // },
-      { view: 'button',
-        width: 100,
-        css: 'menu__language_button menu__language_button--get_started',
-        id: 'FEATURES_LABEL',
-        hidden: PROJECT_NAME === 'web20',
-        label: STRINGS.FEATURES,
-        click: function() {
-          var currentLang = (localStorage.getItem('language') || 'en').toLowerCase();
-          currentLang = currentLang === 'en' ? '' : '/' + currentLang;
-          window.open(currentLang + '/features', '_blank');
-        }
-      },
       { view: 'button',
         width: 70,
         css: 'menu__language_button ' + (PROJECT_NAME === 'web20' ? ' menu__language_button--get_started' : ''),
@@ -4891,18 +4870,6 @@ UILayout.header =
         }
       },
       { view: 'button',
-        width: 70,
-        css: 'menu__language_button',
-        id: 'DEMOS_LABEL',
-        label: STRINGS.DEMOS,
-        hidden: PROJECT_NAME !== 'mydataspace',
-        click: function() {
-          var currentLang = (localStorage.getItem('language') || 'en').toLowerCase();
-          currentLang = currentLang === 'en' ? '' : '/' + currentLang;
-          window.open(currentLang + '/demos', '_blank');
-        }
-      },
-      { view: 'button',
         width: 110,
         css: 'menu__language_button',
         id: 'DOCS_LABEL',
@@ -4911,6 +4878,18 @@ UILayout.header =
           var currentLang = getCurrentLanguage().toLowerCase();
           currentLang = currentLang === 'en' ? '' : '/' + currentLang;
           window.open(currentLang + '/docs', '_blank');
+        }
+      },
+      { view: 'button',
+        width: 70,
+        css: 'menu__language_button',
+        id: 'SKELETONS_LABEL',
+        label: STRINGS.SKELETONS,
+        hidden: PROJECT_NAME !== 'web20',
+        click: function() {
+          var currentLang = getCurrentLanguage().toLowerCase();
+          currentLang = currentLang === 'en' ? '' : '/' + currentLang;
+          window.open(currentLang + '/search', '_blank');
         }
       },
       { width: 10, css: 'menu__spacer' },

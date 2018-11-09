@@ -9,6 +9,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
   EN: {
     YES: 'Yes',
     NO: 'No',
+    SKELETONS: 'Skeletons',
     CLOSE: 'Close',
     SHOW_MORE: 'Show more...',
     EDIT_SCRIPT: 'Edit Script:',
@@ -292,6 +293,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
   RU: {
     YES: 'Да',
     NO: 'Нет',
+    SKELETONS: 'Каркасы',
     CLOSE: 'Закр.',
     SHOW_MORE: 'Показать ещё...',
     EDIT_SCRIPT: 'Ред. скрипта:',
