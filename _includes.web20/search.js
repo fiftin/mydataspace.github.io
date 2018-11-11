@@ -64,6 +64,8 @@ function openSearch_{{include.id}}(search, mode) {
   if (search == null) {
     search = search_parseQuery();
     document.getElementById('{{include.id}}_input').value = search_parseQuery();
+  } else if (search[search.length - 1] !== ' ') {
+    search += ' ';
   }
   document.getElementById('{{include.id}}_input').value = search;
   document.getElementById('{{include.id}}_input').focus();
@@ -84,15 +86,24 @@ function setSearchPart_{{include.id}}(part) {
   if (part[0] !== '#') { // search string
     search += part;
   } else {
-    var prefix = part.split(':')[0];
+    var partParts = part.split(':');
+    var prefix = partParts[0];
     if (prefix === part) { // tag
       if (search.indexOf(part) < 0) {
-        search += ' ' + part;
+        if (MDSCommon.isPresent(search) && search[search.length - 1] !== ' ') {
+          search += ' ';
+        }
+        search += part;
       }
     } else { // filter
-      var newSearch = search.replace(new RegExp(prefix + ':[^\\s#]\\b'), part);
+      var newSearch;
+      if (partParts[1] === '') {
+        newSearch = search.replace(new RegExp('\\s*' + prefix + ':[^\\s#]*\\b'),  '');
+      } else {
+        newSearch = search.replace(new RegExp(prefix + ':[^\\s#]*\\b'),  part);
+      }
       if (search === newSearch) {
-        if (MDSCommon.isPresent(search)) {
+        if (MDSCommon.isPresent(search) && search[search.length - 1] !== ' ') {
           search += ' ';
         }
         search += part;
@@ -316,7 +327,8 @@ function startSearch_{{include.id}}(search) {
 
     var datasourceInfoHTML = '';
 
-    if (searchOptions.filters.datasource) {
+    var xxx;
+    if (MDSCommon.isPresent(searchOptions.filters.datasource)) {
       datasourceInfoHTML = '<div class="search__datasource datasource" id="search_{{include.id}}__datasource"></div>';
       Mydataspace.request('entities.get', { root: 'datasources', path: 'data/' + searchOptions.filters.datasource }).then(function(datasourceData) {
         document.getElementById('search_{{include.id}}__datasource').innerHTML =
@@ -325,23 +337,28 @@ function startSearch_{{include.id}}(search) {
           '<div class="datasource__name"><a href="http://' + MDSCommon.getPathName(datasourceData.path) + '">' +
           MDSCommon.getPathName(datasourceData.path) + '</a></div>';
       });
+      other_src = '';
+      xxx = '{{ site.data[page.language].search.search_by_roots }}';
+    } else {
+      other_src = 'community';
+      xxx = '{{ site.data[page.language].search.search_by_datasources }}';
     }
 
-    var xxx;
     var xxx_pathname;
     var found_suffix;
     switch (MDSCommon.getPathName(search_{{include.id}}_pathname)) {
     case 'search':
-      xxx = '{{ site.data[page.language].search.search_by_datasources }}';
       xxx_pathname = '{{ lang_prefix }}/datasources';
       found_suffix = ' {{ site.data[page.language].search.found_suffix }} ';
       break;
     case 'datasources':
-      xxx = '{{ site.data[page.language].search.search_by_roots }}';
       xxx_pathname = '{{ lang_prefix }}/search';
       found_suffix = ' {{ site.data[page.language].search.found_in_datasource_suffix }} ';
       break;
     }
+
+    
+
     var foundInDatasourceSuffix = searchOptions.filters.datasource ? '{{ site.data[page.language].search.found_in_datasource }}' : '';
     document.getElementById('{{include.resultContainer}}').innerHTML =
       rootsHtml.length > 0 ?
@@ -353,7 +370,7 @@ function startSearch_{{include.id}}(search) {
         '<button type="button" class="btn btn-default ' + (search_{{include.id}}_displayMode === 'line' ? 'active' : '') + '" onclick="set_search_{{include.id}}_displayMode(\'line\'); startSearch_{{include.id}}(document.getElementById(\'{{include.id}}_input\').value);"><i class="fa fa-list"></i></button>' +
     '<button type="button" class="btn btn-default ' + (search_{{include.id}}_displayMode === 'snippet' ? 'active' : '') + '" onclick="set_search_{{include.id}}_displayMode(\'snippet\'); startSearch_{{include.id}}(document.getElementById(\'{{include.id}}_input\').value);"><i class="fa fa-th-large"></i></button>' +
     '</div>' +
-    '<div class="search__right_link"><a style="font-weight: bold;" href="{{ lang_prefix }}/datasources" onclick="search_{{include.id}}_pathname = \'' + xxx_pathname + '\'; openSearch_{{include.id}}(\'\'); return false;">' + xxx + '</a></div>' +
+    '<div class="search__right_link"><a style="font-weight: bold;" href="{{ lang_prefix }}/search?tags=src:' + other_src + '" onclick="setSearchPart_{{include.id}}(\'#src:'+ other_src + '\'); return false;">' + xxx + '</a></div>' +
     '</div>' +
     datasourceInfoHTML +
     '<div class="row">' + rootsHtml.join('\n') + '</div>' +
