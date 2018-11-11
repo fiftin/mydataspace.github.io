@@ -141,6 +141,12 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
 
     PRICING: 'Pricing',
 
+    ROOT_TYPE: 'Type',
+    root_types: {
+      d: 'Website',
+      t: 'Skeleton'
+    },
+
     switch_default_version: 'Switch Default Version',
     view_other_version: 'View Other Version',
 
@@ -435,6 +441,12 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     FEEDBACK: 'Оставить отзыв',
 
     PRICING: 'Тарифы',
+
+    ROOT_TYPE: 'Тип',
+    root_types: {
+      d: 'Веб-сайт',
+      t: 'Каркас'
+    },
 
     created: 'создан',
     ago: 'назад',

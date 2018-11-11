@@ -1011,6 +1011,20 @@ UIControls = {
     };
   },
 
+  getRootTypeSelectTemplate: function (id) {
+    return {
+      view: 'combo',
+      label: STRINGS.ROOT_TYPE,
+      name: 'type',
+      value: 'd',
+      options: [
+        { id: 'd', value: STRINGS.root_types.d },
+        { id: 't', value: STRINGS.root_types.t }
+      ],
+      labelWidth: UIHelper.LABEL_WIDTH
+    };
+  },
+
   getEntityTypeSelectTemplate: function() {
     return {
       view: 'combo',
@@ -3665,6 +3679,7 @@ UILayout.windows.addRoot = {
           '</div>'
         },
         { view: 'text', id: 'NAME_LABEL', label: STRINGS.NAME, required: true, name: 'root', labelWidth: UIHelper.LABEL_WIDTH },
+        UIControls.getRootTypeSelectTemplate('add_root'),
         UIControls.getSubmitCancelForFormWindow('add_root')
       ]
     }

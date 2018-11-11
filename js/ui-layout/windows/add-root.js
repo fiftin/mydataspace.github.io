@@ -22,7 +22,6 @@ UILayout.windows.addRoot = {
             return;
           }
 
-
           // Send request to create new root entity
           var data = $$('add_root_form').getValues();
           data.path = '';
@@ -105,6 +104,7 @@ UILayout.windows.addRoot = {
           '</div>'
         },
         { view: 'text', id: 'NAME_LABEL', label: STRINGS.NAME, required: true, name: 'root', labelWidth: UIHelper.LABEL_WIDTH },
+        UIControls.getRootTypeSelectTemplate(),
         UIControls.getSubmitCancelForFormWindow('add_root')
       ]
     }

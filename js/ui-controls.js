@@ -24,6 +24,20 @@ UIControls = {
     };
   },
 
+  getRootTypeSelectTemplate: function () {
+    return {
+      view: 'combo',
+      label: STRINGS.ROOT_TYPE,
+      name: 'type',
+      value: 'd',
+      options: [
+        { id: 'd', value: STRINGS.root_types.d },
+        { id: 't', value: STRINGS.root_types.t }
+      ],
+      labelWidth: UIHelper.LABEL_WIDTH
+    };
+  },
+
   getEntityTypeSelectTemplate: function() {
     return {
       view: 'combo',
