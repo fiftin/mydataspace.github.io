@@ -64,7 +64,7 @@ function openSearch_{{include.id}}(search, mode) {
   if (search == null) {
     search = search_parseQuery();
     document.getElementById('{{include.id}}_input').value = search_parseQuery();
-  } else if (search[search.length - 1] !== ' ') {
+  } else if (search[search.length - 1] !== ' ' && search !== '') {
     search += ' ';
   }
   document.getElementById('{{include.id}}_input').value = search;

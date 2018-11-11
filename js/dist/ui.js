@@ -4809,9 +4809,7 @@ UILayout.sideMenu =
           template: '<div class="profile__img_wrap"><img class="profile__img" src="#avatar#" /></div>' +
                     '<div class="profile__name">#name#</div>' +
                     '<div class="profile__access_key_wrap" id="profile__access_key_wrap">' +
-                      '<a class="profile__access_key_link" href="javascript: void(0)" onclick="return UI.showAccessToken()">' +
-                        STRINGS.SHOW_ACCESS_KEY +
-                      '</a>' +
+                      '<a class="profile__access_key_link" href="javascript: void(0)" onclick="return UI.showAccessToken()">' + STRINGS.SHOW_ACCESS_KEY + '</a>' +
                     '</div>',
           data: {
             avatar: '/images/no_avatar.svg',
@@ -6425,11 +6423,27 @@ UI = {
     $$('edit_script_window').resize();
   },
 
+  hideAccessToken: function () {
+    document.getElementById('profile__access_key_wrap').innerHTML =
+      '<a class="profile__access_key_link" href="javascript: void(0)" onclick="return UI.showAccessToken()">' + STRINGS.SHOW_ACCESS_KEY + '</a>';
+    clearTimeout(UI.accessTockenTimer);
+  },
+
   showAccessToken: function() {
     Mydataspace.request('users.getMyAccessToken', {}, function(data) {
-      document.getElementById('profile__access_key_wrap').innerHTML = '<div class="profile__access_key">' + data.accessToken + '</div>';
-    }, function(err) {
+      document.getElementById('profile__access_key_wrap').innerHTML =
+        '<a href="javascript: void(0)" onclick="UI.hideAccessToken();" class="profile__hide_access_key">' + STRINGS.HIDE_ACCESS_KEY + '</a>' +
+        '<div id="profile_access_key" class="profile__access_key">' + data.accessToken + '</div>';
 
+      var range = document.createRange();
+      range.selectNode(document.getElementById('profile_access_key'));
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+
+      UI.accessTockenTimer = setTimeout(function () {
+        UI.hideAccessToken();
+      }, 30000);
+    }, function(err) {
     });
   },
 

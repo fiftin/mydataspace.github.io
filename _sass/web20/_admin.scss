@@ -415,6 +415,7 @@ input:read-only {
   text-align: center;
   font-weight: bold;
   margin-top: 11px;
+  display: none;
 }
 
 .login_panel__providers {
@@ -934,7 +935,19 @@ input {
 .profile__access_key_wrap {
   padding-top: 4px;
   text-align: center;
+  position: relative;
 }
+
+.profile__hide_access_key {
+  position: absolute;
+  bottom: -13px;
+  text-transform: lowercase;
+  font-size: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  line-height: 1;
+}
+
 
 .profile__access_key_link {
   font-size: 12px;
