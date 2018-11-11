@@ -403,7 +403,7 @@ search:
   found_items_suffix: "элемент(ов)"
   found_in_datasource_suffix: "источников"
   found_in_datasource: "в источнике:"
-  search_by_roots: "Каркасы Web 2.0 Site"
+  search_by_roots: "Официальные каркасы"
   search_by_datasources: "Каркасы от сообщества"
   no_results: "Ничего не найдено"
 
@@ -413,6 +413,10 @@ wizard:
 
 
 pricing_page:
+  plan_changed: Тарифный план успешно изменён
+  approve_upgrade_to_personal: Вы действительно хотите перейти на тариф Персональный?
+  approve_downgrade_to_free: Вы действительно хотите перейти на тариф Бесплатный?
+  change_plan: Изменение тарифного плана
   free_skeletons: Вы можете создать до <strong>5 каркасов</strong> на любом тарифном плане
   thanks: Спасибо, мы свяжимся с вами в ближайшее время!
   create_site: Создать сайт

@@ -376,7 +376,7 @@ search:
   found_items_suffix: "item(s)"
   found_in_datasource_suffix: "datasource(s)"
   found_in_datasource: "in datasource:"
-  search_by_roots: "Web 2.0 Site Skeletons"
+  search_by_roots: "Official Skeletons"
   search_by_datasources: "Community Skeletons"
   no_results: "No results found"
 
@@ -387,6 +387,10 @@ wizard:
 
 
 pricing_page:
+  plan_changed: Plan changed
+  approve_upgrade_to_personal: Are you sure?
+  approve_downgrade_to_free: Are you sure want to downgrade to Free?
+  change_plan: Change Plan
   free_skeletons: You can create up to <strong>5 skeletons</strong> on any plan
   thanks: Спасибо, мы свяжимся с вами в ближайшее время!
   create_site: Create Website

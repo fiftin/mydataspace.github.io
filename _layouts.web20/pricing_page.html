@@ -22,6 +22,7 @@ layout: page
       <div class="pricing_block__pricing">{{ site.data[page.language].pricing_page.free.price }}</div>
       <div class="pricing_block__footer">
         <button type="button" onclick="PricingPage.instance().createWebsite()" class="btn btn-lg btn-success pricing_block__button pricing_block__button--create">{{ site.data[page.language].pricing_page.create_site }}</button>
+        <button type="button" onclick="PricingPage.instance().downgradeToFree.showModal(true)" class="btn btn-lg btn-success pricing_block__button pricing_block__button--upgrade">{{ site.data[page.language].pricing_page.upgrade }}</button>
         <button type="button" class="btn btn-lg btn-success pricing_block__button pricing_block__button--current" disabled>{{ site.data[page.language].pricing_page.current_plan }}</button>
       </div>
     </div>
@@ -49,7 +50,7 @@ layout: page
       <div class="pricing_block__pricing">{{ site.data[page.language].pricing_page.personal.price }}</div>
       <div class="pricing_block__footer">
         <button type="button" onclick="PricingPage.instance().createWebsite()" class="btn btn-lg btn-success pricing_block__button pricing_block__button--create">{{ site.data[page.language].pricing_page.create_site }}</button>
-        <button type="button" onclick="PricingPage.instance().upgradeToPro.showModal(true)" class="btn btn-lg btn-success pricing_block__button pricing_block__button--upgrade">{{ site.data[page.language].pricing_page.upgrade }}</button>
+        <button type="button" onclick="PricingPage.instance().upgradeToPersonal.showModal(true)" class="btn btn-lg btn-success pricing_block__button pricing_block__button--upgrade">{{ site.data[page.language].pricing_page.upgrade }}</button>
         <button type="button" class="btn btn-lg btn-success pricing_block__button pricing_block__button--current" disabled>{{ site.data[page.language].pricing_page.current_plan }}</button>
       </div>
     </div>
@@ -94,6 +95,27 @@ layout: page
   {% endcomment %}
 
 
+  <div id="pricing_page_changed_plan"
+       class="modal"
+       role="dialog"
+       aria-labelledby="Request Sent">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header look_modal__header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <div class="modal-title">{{ site.data[page.language].strings.request_sent }}</div>
+        </div>
+        <div class="modal-body look_modal__body">
+          {{ site.data[page.language].pricing_page.plan_changed }}
+        </div>
+        <div class="modal-footer look_modal__footer">
+          <button class="btn btn-default" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <div id="professional_plan_unavailable_sent_modal"
        class="modal"
        role="dialog"
@@ -118,7 +140,7 @@ layout: page
   <div id="professional_plan_unavailable_modal"
        class="modal"
        role="dialog"
-       aria-labelledby="Request Unlimited">
+       aria-labelledby="Request Pro">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header look_modal__header">
@@ -136,6 +158,49 @@ layout: page
         </div>
         <div class="modal-footer look_modal__footer">
           <button class="btn btn-primary give_feedback_modal__send" id="professional_plan_unavailable_modal__send">{{ site.data[page.language].strings.send }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="free_plan_downgrade_modal"
+       class="modal"
+       role="dialog"
+       aria-labelledby="Request Unlimited">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header look_modal__header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <div class="modal-title">{{ site.data[page.language].pricing_page.change_plan }}</div>
+        </div>
+        <div class="modal-body look_modal__body">
+          <div class="">{{ site.data[page.language].pricing_page.approve_downgrade_to_free }}</div>
+          <div id="free_plan_downgrade_modal__error" class="give_feedback_modal__error"></div>
+        </div>
+        <div class="modal-footer look_modal__footer">
+          <button class="btn btn-success give_feedback_modal__send" id="free_plan_downgrade_modal__send">{{ site.data[page.language].pricing_page.upgrade }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="personal_plan_upgrade_modal"
+       class="modal"
+       role="dialog"
+       aria-labelledby="Request Unlimited">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header look_modal__header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <div class="modal-title">{{ site.data[page.language].pricing_page.change_plan }}</div>
+        </div>
+        <div class="modal-body look_modal__body">
+          <div class="">{{ site.data[page.language].pricing_page.approve_upgrade_to_personal }}</div>
+          <div id="personal_plan_upgrade_modal__error" class="give_feedback_modal__error"></div>
+        </div>
+        <div class="modal-footer look_modal__footer">
+          <button class="btn btn-success give_feedback_modal__send" id="personal_plan_upgrade_modal__send">{{ site.data[page.language].pricing_page.upgrade }}</button>
         </div>
       </div>
     </div>
