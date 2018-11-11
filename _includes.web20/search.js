@@ -284,7 +284,7 @@ function fillResults_header__search(data, searchOptions, isPreload) {
     var colWidth = search_header__search_displayMode === 'snippet' ? 6 : 12;
     var snippetClass = search_header__search_displayMode === 'snippet' ? '' : 'snippet--line';
 
-    return '<div class="col-md-' + colWidth + '"><a class="block snippet snippet--large-icon ' + snippetClass + ' clearfix" href="/' + lang + itemUrlQuery + '">\n' +
+    return '<div class="col-md-' + colWidth + '"><a class="block snippet snippet--large-icon ' + snippetClass + ' clearfix" target="_blank" href="https://' + root.root + '.web20.site">\n' +
       '  <div class="snippet__overview">\n' +
       '  <img class="snippet__image snippet__image--large-icon" src="' + avatar + '" />\n' +
       '  <div class="snippet__info snippet__info--large-icon ' + (MDSCommon.isBlank(tags) ? ' snippet__info--small' : '') + '">\n' +
