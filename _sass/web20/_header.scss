@@ -599,6 +599,7 @@ $slogan-animation-offset-mobile: 400px;
 }
 
 $search-content-margin-top: 30px;
+
 .search__content {
   margin-top: $header-height + $search-content-margin-top;
 }
@@ -607,6 +608,38 @@ $search-content-margin-top: 30px;
   margin-top: $search-content-margin-top;
 }
 
+.search__content--preload {
+  .snippet__title {
+    color: transparent;
+    background: #efefef;
+    border-radius: 2px;
+  }
+
+  .view__tag {
+    color: transparent;
+  }
+
+  .snippet__description {
+    color: transparent;
+    background: #efefef;
+    border-radius: 2px;
+  }
+
+  .snippet__image {
+    background: #efefef;
+  }
+
+  .search__found_count {
+    visibility: hidden;
+  }
+
+  .snippet__counters {
+    color: transparent;
+    background: #efefef;
+    border-radius: 2px;
+    width: 100px;
+  }
+}
 
 $search-filter-panel-gap: 40px;
 .search__filter_panel {
