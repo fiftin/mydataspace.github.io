@@ -414,25 +414,26 @@ function startSearch_header__search(search) {
   }
 
   // fill by fake data
-  fillResults_header__search({
-    profiles: {},
-    facets: {},
-    roots: [1, 2, 3, 4].map(function () {
-      return {
-        root: '',
-        path: '',
-        numberOfChildren: 0,
-        fields: [
-          { name: 'name', value: 'Ad labores inciderint sea' },
-          { name: 'description', value: 'Te nam menandri atomorum, qui ad tota antiopam. His ad accumsan intellegat, ' +
-              'agam similique ex ius, ad case detracto conceptam sea.' },
-          { name: 'tags', value: 'eam, lorem, natum, principes, meis' },
-        ],
-        createdAt: '2018-11-11T10:27:38.000Z'
-      };
-    })
-  }, searchOptions, true);
-
+  if (document.getElementById('{{include.resultContainer}}').innerHTML === '') {
+    fillResults_header__search({
+      profiles: {},
+      facets: {},
+      roots: [1, 2, 3, 4].map(function () {
+        return {
+          root: '',
+          path: '',
+          numberOfChildren: 0,
+          fields: [
+            { name: 'name', value: 'Ad labores inciderint sea' },
+            { name: 'description', value: 'Te nam menandri atomorum, qui ad tota antiopam. His ad accumsan intellegat, ' +
+                'agam similique ex ius, ad case detracto conceptam sea.' },
+            { name: 'tags', value: 'eam, lorem, natum, principes, meis' },
+          ],
+          createdAt: '2018-11-11T10:27:38.000Z'
+        };
+      })
+    }, searchOptions, true);
+  }
 
   Mydataspace.connect().then(function () {
     return Mydataspace.request(m, q);
