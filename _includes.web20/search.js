@@ -117,8 +117,11 @@ function setSearchPart_{{include.id}}(part) {
 
 function startSearch_{{include.id}}(search) {
   var searchOptions = search_parseSearchString(search);
+  if (!searchOptions.filters) {
+    searchOptions.filters = {};
+  }
+  
   var filters = searchOptions.filters;
-
   var q;
   var m;
   switch (MDSCommon.getPathName(search_{{include.id}}_pathname)) {
@@ -126,7 +129,9 @@ function startSearch_{{include.id}}(search) {
     q = {
       search: searchOptions.search,
       profiles: true,
-      filter: searchOptions.filters,
+      filter: MDSCommon.extend(searchOptions.filters, MDSCommon.isBlank(searchOptions.filters.datasource) ? {
+        datasource: 'official'
+      } : {}),
       type: searchOptions.type
     };
     m = 'entities.getRoots';
@@ -356,8 +361,6 @@ function startSearch_{{include.id}}(search) {
       found_suffix = ' {{ site.data[page.language].search.found_in_datasource_suffix }} ';
       break;
     }
-
-    
 
     var foundInDatasourceSuffix = searchOptions.filters.datasource ? '{{ site.data[page.language].search.found_in_datasource }}' : '';
     document.getElementById('{{include.resultContainer}}').innerHTML =
