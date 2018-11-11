@@ -96,10 +96,9 @@ MDSWebsite.connect().then(function () {
 // Подключение к серверу
 MDSWebsite.login().then(function () {
   // Обновление данных на сервера
-  return MDSWebsite.getAll({
+  return MDSWebsite.change({
     path: 'path/to/data',
-    limit: 30,
-    offset: 60
+    fields: [{ name: 'version', value: 'Test 1.4', type: 's' }]
   });
 }).then(function (data) {
   // Обработка результата
@@ -278,7 +277,7 @@ MDSWebsite.on('entities.delete.res', function (data) {
     </div>
 
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-2">
           <div class="highlighter__var">
             <span class="highlight__var_type highlight__var_type--str">str</span> eventName
           </div>
@@ -288,7 +287,7 @@ MDSWebsite.on('entities.delete.res', function (data) {
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-2">
           <div class="highlighter__var">
             <span class="highlight__var_type highlight__var_type--function">fun</span> callback
           </div>

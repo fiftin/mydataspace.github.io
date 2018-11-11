@@ -292,7 +292,7 @@ input:read-only {
  */
 
  .webix_preloaded_header {
-   background: $header-bg;
+   background: linear-gradient(180deg, rgba(24, 21, 91, 0.8), rgba(24, 21, 91, 0.8)), url("/images/landing/top.jpeg") no-repeat top;
    position: absolute;
    left: 0;
    right: 0;
@@ -320,6 +320,11 @@ input:read-only {
 
 .menu_button {
   background: $header-bg;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .menu__spacer {
@@ -344,20 +349,23 @@ input:read-only {
   color: $header-text-color;
   transition-property: color;
   transition-duration: 0.3s;
-  font-size: 12px !important;
+  font-size: 16px !important;
+  font-weight: bold;
+  opacity: 0.7;
+  transition: opacity 0.3s;
 }
 
 .menu__language_button button:hover,
 .menu__language_button button:active {
-    border-color: $header-bg;
-    background: $header-bg;
-    color: $header-text-color;
-    transition-property: color;
-    transition-duration: 0.3s;
+  border-color: $header-bg;
+  background: $header-bg;
+  color: $header-text-color;
+  opacity: 1;
 }
 
 .menu__language_button--selected button {
   font-weight: bold;
+  opacity: 1 !important;
 }
 
 .menu__language_button--feedback {

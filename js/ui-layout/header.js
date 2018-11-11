@@ -3,7 +3,7 @@ UILayout.header =
     cols: [
       { type: 'header' },
       { view: 'button',
-        width: 70,
+        width: 85,
         css: 'menu__language_button ' + (PROJECT_NAME === 'web20' ? ' menu__language_button--get_started' : ''),
         id: 'PRICING_LABEL',
         label: STRINGS.PRICING,
@@ -15,7 +15,7 @@ UILayout.header =
         }
       },
       { view: 'button',
-        width: 110,
+        width: 140,
         css: 'menu__language_button',
         id: 'DOCS_LABEL',
         label: STRINGS.DOCS,
@@ -26,7 +26,7 @@ UILayout.header =
         }
       },
       { view: 'button',
-        width: 70,
+        width: 100,
         css: 'menu__language_button',
         id: 'SKELETONS_LABEL',
         label: STRINGS.SKELETONS,
@@ -40,7 +40,7 @@ UILayout.header =
       { width: 10, css: 'menu__spacer' },
 
       { view: 'button',
-        width: 30,
+        width: 35,
         id: 'menu__language_button_en',
         css: 'menu__language_button ' + (LANGUAGE === 'EN' ? 'menu__language_button--selected' : ''),
         label: 'EN',
@@ -51,7 +51,7 @@ UILayout.header =
         }
       },
       { view: 'button',
-        width: 30,
+        width: 35,
         id: 'menu__language_button_ru',
         css: 'menu__language_button ' + (LANGUAGE === 'RU' ? 'menu__language_button--selected' : ''),
         label: 'RU',
@@ -61,7 +61,7 @@ UILayout.header =
         }
       },
 
-      { width: 10, css: 'menu__spacer' },
+      { width: 20, css: 'menu__spacer' },
       { view: 'button',
         width: 90,
         id: 'SIGN_IN_LABEL',
