@@ -424,10 +424,10 @@ function startSearch_header__search(search) {
           path: '',
           numberOfChildren: 0,
           fields: [
-            { name: 'name', value: 'Ad labores inciderint sea' },
-            { name: 'description', value: 'Te nam menandri atomorum, qui ad tota antiopam. His ad accumsan intellegat, ' +
-                'agam similique ex ius, ad case detracto conceptam sea.' },
-            { name: 'tags', value: 'eam, lorem, natum, principes, meis' },
+            { name: 'name', value: 'Hello World' },
+            { name: 'description', value: 'Hello World is the first program one usually writes when learning a new ' +
+                'programming language. Having first been mentioned in Brian Kernighan' },
+            { name: 'tags', value: 'hello, world, first, program, programming' }
           ],
           createdAt: '2018-11-11T10:27:38.000Z'
         };
