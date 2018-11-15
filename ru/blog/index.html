@@ -6,7 +6,7 @@ language: ru
 
 <ul>
   {% for post in site.posts %}
-  <a href="{{ post.url }}">
+  <a class="blog-post-preview" href="{{ post.url }}">
     <h2>{{ post.title }}</h2>
     <div>
       {{ post.excerpt }}
