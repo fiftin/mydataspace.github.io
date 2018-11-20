@@ -441,6 +441,9 @@ function getCodepenURL(id) {
 }
 
 function getPathnameParts(pathname) {
+  if (pathname === '/root.html') {
+    return ['test'];
+  }
   var pathnameParts = pathname.split('/').filter(function(part) { return part !== ''; });
   if (pathnameParts[0].length <= 2) {
     pathnameParts.shift();
