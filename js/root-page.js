@@ -251,7 +251,7 @@ function initRootPage(options) {
     if (!itemID) {
       for (var u in URL_TABS) {
         if (URL_TABS[u] === tabID) {
-          var url = lang + 'skeletons/' + DATA.root + '/' + u + window.location.search;
+          var url = lang + '/skeletons/' + DATA.root + '/' + u + window.location.search;
           history.pushState({}, '', url);
           break;
         }
