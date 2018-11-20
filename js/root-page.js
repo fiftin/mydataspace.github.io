@@ -245,8 +245,6 @@ function initRootPage(options) {
         loadComments();
         break;
       case 'VIEW_TAB_README_LABEL':
-        //document.getElementById('root__data_link').classList.remove('hidden');
-        break;
         break;
     }
 
@@ -421,7 +419,7 @@ function initRootPage(options) {
 
       if (MDSCommon.isBlank(data.profile)) {
         document.getElementById('root__side_panel').style.display = 'none';
-        document.getElementById('root__about_content').style.width = '100%';
+
       } else if (document.getElementById('root__user')) {
         document.getElementById('root__user_name').innerText = data.profile.name;
         if (data.profile.verified) {
