@@ -15,11 +15,11 @@
         </h1>
 
         <div class="view__tabs cf" id="root__tabs">
-          <a href="./" class="view__tab view__tab--active" id="VIEW_TAB_README_LABEL">
+          <a href="%%$url%%/" class="view__tab view__tab--active" id="VIEW_TAB_README_LABEL">
             {{ site.data[page.language].root.about }}
           </a>
 
-          <a href="comments" class="view__tab" id="VIEW_TAB_COMMENTS_LABEL">
+          <a href="%%$url%%/comments" class="view__tab" id="VIEW_TAB_COMMENTS_LABEL">
             {{ site.data[page.language].root.comments }} <span class="view__tab__counter" id="root__tabs_comments_count">0</span>
           </a>
 
@@ -95,36 +95,6 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <div id="root__looks" style="margin-top: 20px; display: none;">
-    <div class="block block--padding" id="root__looks__empty" style="display: none;"><i>{{ site.data[page.language].root.no_views }}</i></div>
-
-    <div class="look" id="root__looks__content_wrap" style="display: none">
-      <div class="look__header" id="root__looks__header">
-        <div class="look__search_shadow look__search_shadow--left"></div>
-        <div class="look__search_shadow look__search_shadow--right"></div>
-        <div class="look__search">
-          <input type="text" class="look__search_input" id="root__looks__search_input" placeholder="Search..." />
-        </div>
-
-        <div class="look__title">
-          <i class="fa" id="root__looks__title_icon"></i> <span class="look__title_text" id="root__looks__title"></span>
-        </div>
-        <div class="look__actions" id="root__looks__actions">
-          <div class="look__action look__action--non-embed" id="root__looks__close"><i class="fa fa-2x fa-remove"></i></div>
-          <div class="look__action look__action--non-embed look__action--only-owner"
-               id="root__looks__delete"
-               data-toggle="modal"
-               data-target="#delete_look_modal"><i class="fa fa-2x fa-trash"></i></div>
-          <div class="look__action look__action--non-embed look__action--only-owner" id="root__looks__edit"><i class="fa fa-2x fa-pencil"></i></div>
-          <div class="look__action" id="root__looks__search"><i class="fa fa-2x fa-search"></i></div>
-        </div>
-      </div>
-      <div id="root__looks__content"></div>
-    </div>
-
-    <div class="row look_previews" id="root__looks__previews"></div>
   </div>
 
   <div id="root__comments" class="block view__page" style="display: none;">
