@@ -1,11 +1,13 @@
----
-layout: hybrid
----
-<div>
-  {% if page.search_header__search_pathname %}
-  <script>search_header__search_pathname = '{{ page.search_header__search_pathname }}';</script>
-  {% endif %}
+<!DOCTYPE html>
+<html style="height: 100%">
 
+{% include head.html webix=true root=page.root %}
+
+<body style="height: 100%">
+
+{% include mydataspace_init_script.html %}
+
+<div id="bootstrap" style="height: 100%">
   <div class="page_top page_top--landing-page">
     <div class="smoke">
       {% include nav.html %}
@@ -28,3 +30,8 @@ layout: hybrid
 
   {{ content }}
 </div>
+
+{% include signin_modal.html %}
+
+</body>
+</html>
