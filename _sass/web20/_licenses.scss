@@ -144,7 +144,10 @@ $custom-license-height: 12px;
     width: floor(($root-page-tag-height / $standard-terms-of-use-height) * $standard-terms-of-use-width);
   }
 
-  .view__tag--license--cc-by {
+  .view__tag--license--cc-by,
+  .view__tag--license--mit,
+  .view__tag--license--apache,
+  .view__tag--license--gpl {
     width: floor(($root-page-tag-height / $cc-icon-height) * $cc-icon-width);
   }
 
