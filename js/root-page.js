@@ -509,17 +509,6 @@ function initRootPage(options) {
 
       initNewCommentForm();
 
-      if (Mydataspace.isLoggedIn()) {
-        requestMyLike();
-      }
-
-      Mydataspace.on('login', function () {
-        requestMyLike();
-        if (currentLook) {
-          selectLook(currentLook.path);
-        }
-      });
-
       $('#root__comments_show_older').on('click', loadComments);
 
       $('#root__comments__list').on('click', '.view__comment__delete', function () {
@@ -534,44 +523,6 @@ function initRootPage(options) {
           $(this).find('i').removeClass('fa-spin');
           console.log(err);
         }));
-      });
-
-      $('#root__looks__previews').on('click', '.look_preview', function () {
-        showWaitingCloak();
-        selectLook($(this).data('look-path'));
-      });
-
-      document.getElementById('root__looks__close').addEventListener('click', function () {
-        unselectLook();
-      });
-
-      document.getElementById('root__looks__edit').addEventListener('click', function () {
-        openLookEditModal(true);
-      });
-
-      document.getElementById('root__looks__search').addEventListener('click', function () {
-        document.getElementById('root__looks__header').classList.add('look__header--search');
-        document.getElementById('root__looks__search_input').focus();
-        this.style.display = 'none';
-      });
-
-      document.getElementById('root__looks__search_input').addEventListener('blur', function () {
-        if (this.value === '') {
-          document.getElementById('root__looks__header').classList.remove('look__header--search');
-          document.getElementById('root__looks__search').style.display = 'block';
-        }
-      });
-
-      document.getElementById('root__looks__search_input').addEventListener('keydown', function () {
-        lastLookSearchInputKeypressTime = new Date().getTime();
-      });
-
-      document.getElementById('root__new_look').addEventListener('click', function () {
-        if (!Mydataspace.isLoggedIn()) {
-          $('#signin_modal').modal('show');
-          return;
-        }
-        openLookEditModal(false);
       });
 
       document.getElementById('root__version').addEventListener('click', function () {
@@ -606,143 +557,6 @@ function initRootPage(options) {
           }
         }, function (err) {
         });
-      });
-
-      // Load data for root and render it on the page
-      Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
-        path: 'views',
-        children: true,
-        limit: 1,
-        orderChildrenBy: '$createdAt DESC'
-      })).then(function (result) {
-        var $lookWrap = $('#root__about__look_wrap');
-        var $look = $('#root__about__look');
-
-        if (result.children.length > 0) {
-          $lookWrap.css('display', 'block');
-          var lookMetaData = result.children[0];
-          var type = MDSCommon.findValueByName(lookMetaData.fields, 'type');
-          $('#root__about__look_title').text(MDSCommon.findValueByName(lookMetaData.fields, 'title'));
-          $('#root__about__look_icon').attr('class', 'fa fa-' + type);
-          $look.attr('class', 'root__about__look root__about__look--' + type);
-
-          switch (type) {
-            case 'codepen':
-              var codepenParts = MDSCommon.findValueByName(lookMetaData.fields, 'id').split('/');
-              $look.html('<p data-height="402" data-theme-id="0" data-slug-hash="' + codepenParts[1] +
-                '" data-default-tab="result" data-user="' + codepenParts[0] +
-                '" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/' + codepenParts[0] +
-                '/pen/' + codepenParts[1] + '/">' + codepenParts[1] +
-                '</a> by MyDataSpace (<a href="http://codepen.io/mydataspace">@mydataspace</a>) on <a href="http://codepen.io">CodePen</a>.</p>');
-
-              var codepenScript = document.createElement('script');
-              codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
-              $lookWrap.append(codepenScript);
-              break;
-            case 'table':
-              $look.html('');
-              Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
-                path: lookMetaData.path + '/columns',
-                children: true
-              })).then(function (columnsMetaData) {
-                var columns = columnsMetaData.children.map(function (column) {
-                  return {
-                    id: MDSCommon.getPathName(column.path),
-                    header: [MDSCommon.findValueByName(column.fields, 'title'), {
-                      content: 'serverFilter',
-                      css: 'root__looks__table_header'
-                    }],
-                    width: parseInt(MDSCommon.findValueByName(column.fields, 'width')) || 200,
-                    sort: 'server'
-                  };
-                });
-                columns.push({
-                  header: '',
-                  fillspace: true
-                });
-                webix.ui({
-                  container: 'root__about__look',
-                  rows: [
-                    {
-                      padding: 3,
-                      css: 'root__about__look_search',
-                      cols: [
-                        {
-                          view: 'search',
-                          icon: 'search',
-                          placeholder: 'Search...',
-                          id: 'root__about__look_search',
-                          on: {
-                            onTimedKeyPress: function (code, e) {
-                              $$('root__about__look').define('search', this.getValue());
-                              $$('root__about__look').load('look->');
-                            }
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      view: 'datatable',
-                      borderless: true,
-                      id: 'root__about__look',
-                      css: 'root__about__look_webix',
-                      columns: columns,
-                      select: 'row',
-                      resizeColumn: true,
-                      headerRowHeight: 40,
-                      navigation: true,
-                      datafetch: 40,
-                      loadahead: 20,
-                      autoheight: true,
-                      minHeight: 430,
-                      clipboard: 'selection',
-                      lookMetaData: lookMetaData,
-                      columnsMetaData: columnsMetaData,
-                      DATA: DATA,
-                      url: 'look->',
-                      pager: 'root__about__look_pager',
-                      on: {
-                        onColumnResize: function (id, newWidth, oldWidth, user_action) {
-                          if (!user_action) {
-                            return;
-                          }
-                          Mydataspace.request('entities.change', MDSCommon.extend(DATA, {
-                            path: lookMetaData.path + '/columns/' + id,
-                            fields: [
-                              {name: 'width', value: newWidth, type: 'i'}
-                            ]
-                          })).catch(function () {
-                          });
-                        }
-                      }
-                    },
-                    {
-                      css: 'root__about__look_pager_wrap',
-                      cols: [
-                        {
-                          view: 'pager',
-                          id: 'root__about__look_pager',
-                          size: 12,
-                          group: 5,
-                          height: 40,
-                          css: 'root__about__look_pager',
-                          animate: {
-                            direction: 'top'
-                          },
-                          template: '<span class="root__about__look_pager_counter">#count# records</span> {common.pages()}'
-                        }
-                      ]
-                    }
-                  ]
-                });
-              });
-              break;
-            case 'list':
-              $('#root__about_look_content').find('.view__about__look_title').hide();
-              $look.html('<iframe class="root__about__look_iframe" src="/' + DATA.root + '/' + lookMetaData.path + '"></iframe>');
-              break;
-          }
-        }
       });
 
       var pathnameParts = getPathnameParts(location.pathname);
