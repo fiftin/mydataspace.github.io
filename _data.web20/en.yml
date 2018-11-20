@@ -123,7 +123,7 @@ sections:
           <p>With it, you can perform full-text search for your data, filter, sort, grab data including geo-coordinates,
           and authorize users through social networks.
   - id: speed
-    title: Near Realtime Speed
+    title: Realtime Performance
     features:
       - id: websocket
         icon: cubes
