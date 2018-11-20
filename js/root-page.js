@@ -6,9 +6,6 @@ function initRootPage(options) {
 
   var API_URL = options.api_url;
   var CDN_URL = options.cdn_url;
-  var SEARCH_FOUND_PREFIX = options.search_found_prefix;
-  var SEARCH_FOUND_ITEMS_SUFFIX = options.search_found_items_suffix;
-  var SEARCH_NO_RESULTS = options.search_no_results;
   var language = options.language;
   var lang = getURLLanguagePrefix(language);
   var DATA = getRequestFromLocation(window.location);
@@ -18,8 +15,7 @@ function initRootPage(options) {
   };
   var TABS = {
     VIEW_TAB_README_LABEL: 'root__about',
-    VIEW_TAB_COMMENTS_LABEL: 'root__comments',
-    VIEW_TAB_EXPLORE_LABEL: ''
+    VIEW_TAB_COMMENTS_LABEL: 'root__comments'
   };
 
 
@@ -47,36 +43,6 @@ function initRootPage(options) {
     $.ajax({url: '/fragments/404.html', method: 'get'}).then(function (data) {
       $('#root').html(data);
     });
-  });
-
-  Mydataspace.on('entities.change.res', function (data) {
-    if (/^views\/[^\/]*$/.test(data.path)) {
-      var preview = getLookPreviewNode(data.path);
-      if (!preview) {
-        throw new Error('Changed look is not exists');
-      }
-
-      $(preview).replaceWith(RootHTMLGen.getUnwrappedLookPreviewHTML(data, true));
-      preview = getLookPreviewNode(data.path);
-      $(preview).data('look-data', data);
-
-      switch (MDSCommon.findValueByName(data.fields, 'type')) {
-        case 'codepen':
-          var codepenScript = document.createElement('script');
-          codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
-          preview.appendChild(codepenScript);
-          break;
-        case 'table':
-          ;
-          break;
-        case 'list':
-          ;
-          break;
-      }
-      if (currentLook && currentLook.path === data.path) {
-        setLook(data);
-      }
-    }
   });
 
   function loadEntityData(method, requestData, success, fail) {
@@ -277,12 +243,10 @@ function initRootPage(options) {
     document.getElementById('webix').style.display = 'none';
     switch (tabID) {
       case 'VIEW_TAB_COMMENTS_LABEL':
-        document.getElementById('root__new_look').classList.add('hidden');
         loadComments();
         break;
       case 'VIEW_TAB_README_LABEL':
         //document.getElementById('root__data_link').classList.remove('hidden');
-        document.getElementById('root__new_look').classList.add('hidden');
         break;
       case 'VIEW_TAB_EXPLORE_LABEL':
         document.getElementById('bootstrap').style.display = 'block';
@@ -610,24 +574,6 @@ function initRootPage(options) {
           document.getElementById('root__comments__empty').style.display = 'none';
         }
       }
-    } else if (/^views\/[^\/]*$/.test(data.path)) {
-      $('#root__looks__previews').append(RootHTMLGen.getLookPreviewHTML(data));
-      var preview = getLookPreviewNode(data.path);
-      switch (MDSCommon.findValueByName(data.fields, 'type')) {
-        case 'codepen':
-          var codepenScript = document.createElement('script');
-          codepenScript.setAttribute('src', 'https://assets.codepen.io/assets/embed/ei.js');
-          preview.appendChild(codepenScript);
-          break;
-        case 'table':
-          break;
-      }
-      $(preview).data('look-data', data);
-      var viewsCount = parseInt(document.getElementById('root__tabs_views_count').innerText);
-      document.getElementById('root__tabs_views_count').innerText = viewsCount + 1;
-      if (viewsCount === 0) {
-        document.getElementById('root__looks__empty').style.display = 'none';
-      }
     }
   });
 
@@ -647,20 +593,6 @@ function initRootPage(options) {
         comment.parentNode.removeChild(comment);
         if (document.getElementById('root__comments__list').children.length === 0) {
           document.getElementById('root__comments__empty').style.display = 'block';
-        }
-      }
-    } else if (/^views\/[^\/]*$/.test(data.path)) {
-      $(getLookPreviewNode(data.path)).parent().remove();
-
-      var viewsCount = parseInt(document.getElementById('root__tabs_views_count').innerText);
-      document.getElementById('root__tabs_views_count').innerText = viewsCount - 1;
-      if (viewsCount <= 1) {
-        document.getElementById('root__looks__empty').style.display = 'block';
-        document.getElementById('root__looks__content_wrap').style.display = 'none';
-        $('body').css('overflow', '');
-      } else {
-        if (currentLook && currentLook.path === data.path) {
-          selectLook();
         }
       }
     }
@@ -689,75 +621,4 @@ function initRootPage(options) {
       }
     });
   }
-
-  $('#look_modal__table_reset').click(function () {
-    refreshLookTableColumns();
-  });
-  $('#look_modal__table_remove').click(function () {
-    $$('look_modal__table').remove($$('look_modal__table').getSelectedId(true));
-  });
-  $('#look_modal__table_add').click(function () {
-    var id = $$('look_modal__table').add({value: '', title: '', width: 200});
-    $$('look_modal__table').editCell(id, 'value');
-  });
-}
-
-function initRootViewEditor(options) {
-  var $look_modal = $('#look_modal');
-
-  var TYPES = ['codepen', 'table', 'list'];
-
-  TYPES.forEach(function(type) {
-    $('#look_modal__' + type + '_tab_link').click(function() {
-      TYPES.forEach(function(otherType) {
-        $('#look_modal__' + otherType + '_tab').removeClass('active');
-        $('#look_modal__' + otherType + '_wrap').addClass('hidden');
-      });
-      $look_modal.data('look-type', type);
-      $('#look_modal__' + type + '_tab').addClass('active');
-      $('#look_modal__' + type + '_wrap').removeClass('hidden');
-      $('#look_modal__' + type).focus();
-    });
-  });
-
-  $look_modal.on('show.bs.modal', function () {
-    $('#look_modal__title_err').text('');
-    $('#look_modal__codepen_err').text('');
-
-    $('#look_modal__title').val('');
-    $('#look_modal__description').val('');
-    $('#look_modal__codepen').val('');
-    $('#look_modal__table_path').val('');
-
-    $$('look_modal__table').clearAll();
-
-    $('#look_modal__tabs').children().removeClass('active');
-    $('#look_modal__type_forms').children().addClass('hidden');
-
-    $look_modal.data('look-type', null);
-    $('#look_modal__locker').addClass('hidden');
-  });
-
-  $look_modal.on('shown.bs.modal', function () {
-    $('#look_modal__title').focus();
-  });
-
-  webix.ui({
-    view: 'datatable',
-    id: 'look_modal__table',
-    container: 'look_modal__table_webix',
-    columns:[
-      { id: 'value', header: options.table.column_value, width: 200, editor: 'text' },
-      { id: 'title', header: options.table.column_title, width: 345 - 17, editor: 'text' },
-      { id: 'width', header: options.table.column_width, hidden: true, editor: 'int' }
-    ],
-    height: 200,
-    select: 'multiselect',
-    headerRowHeight: 30,
-    autowidth: true,
-    drag: true,
-    scrollX: false,
-    editable: true,
-    editaction: 'dblclick'
-  });
 }
