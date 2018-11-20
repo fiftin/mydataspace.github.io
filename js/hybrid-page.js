@@ -4,86 +4,6 @@
  */
 function initHybridPage(webix_with_header, refine_url) {
 
-  webix.proxy.look = {
-    $proxy: true,
-
-    load: function(view, callback, details) {
-      var state = view.getState();
-      var orderField;
-
-      var lookMetaData = view._settings.lookMetaData;
-      var columnsMetaData = view._settings.columnsMetaData;
-      var DATA = view._settings.DATA;
-      var search = view._settings.search;
-
-      var count = details ? details.count : Math.max(count, (view._settings.datafetch||view._settings.loadahead||0));
-      var start = details ? details.start : 0;
-
-      if (start === 0) {
-        view.clearAll();
-      }
-      if (state.sort) {
-        for (var i in columnsMetaData.children) {
-          if (MDSCommon.getPathName(columnsMetaData.children[i].path) === state.sort.id) {
-            orderField = MDSCommon.findValueByName(columnsMetaData.children[i].fields, 'value');
-            break;
-          }
-        }
-      }
-
-      var filter = {};
-      for (var columnID in state.filter) {
-        if (MDSCommon.isBlank(state.filter[columnID])) {
-          continue;
-        }
-        for (var k in columnsMetaData.children) {
-          if (MDSCommon.getPathName(columnsMetaData.children[k].path) === columnID) {
-            var filterField = MDSCommon.findValueByName(columnsMetaData.children[k].fields, 'value');
-            filter[filterField] = state.filter[columnID].toLowerCase();
-            break;
-          }
-        }
-      }
-
-      Mydataspace.request('entities.get', MDSCommon.extend(DATA, {
-        path: MDSCommon.findValueByName(lookMetaData.fields, 'path'),
-        children: true,
-        limit: count,
-        offset: start,
-        orderChildrenBy: orderField ? orderField + ' ' + state.sort.dir : undefined,
-        filter: filter,
-        search: search
-      })).then(function(rowsData) {
-        var rows = rowsData.children.map(function(rowData) {
-          var ret = { id: MDSCommon.getPathName(rowData.path) };
-          for (var i in columnsMetaData.children) {
-            var column = columnsMetaData.children[i];
-            var field = MDSCommon.findValueByName(column.fields, 'value');
-            ret[MDSCommon.getPathName(column.path)] = MDSCommon.findValueByName(rowData.fields, field);
-          }
-          return ret;
-        });
-
-        rows.pos = start;
-        rows.total_count = rowsData.total == null ? rowsData.numberOfChildren : rowsData.total;
-
-        for (var k in callback[k]) {
-          // text, response, loader
-          if (callback[k] && callback[k].before) {
-            callback[k].before.call(view, '', rows, -1);
-          }
-        }
-
-        for (var k in callback) {
-          // text, response, loader
-          if (callback[k] && callback[k].success) {
-            callback[k].success.call(view, '', rows, -1);
-          }
-        }
-      });
-    }
-  };
-
   $(function() {
     // Get Started large button
     $('#sub_footer__button').popover({
@@ -170,26 +90,4 @@ function initHybridPage(webix_with_header, refine_url) {
   if (!Mydataspace.connected) {
     Mydataspace.connect();
   }
-
-  //
-  // Init Markdown renderer
-  //
-  md = new Remarkable({
-    html:         true,        // Enable HTML tags in source
-    xhtmlOut:     false,        // Use '/' to close single tags (<br />)
-    breaks:       false,        // Convert '\n' in paragraphs into <br>
-    langPrefix:   'language-',  // CSS language prefix for fenced blocks
-    linkify:      false,        // Autoconvert URL-like text to links
-
-    // Enable some language-neutral replacement + quotes beautification
-    typographer:  false,
-
-    // Double + single quotes replacement pairs, when typographer enabled,
-    // and smartquotes on. Set doubles to '«»' for Russian, '„“' for German.
-    quotes: '“”‘’',
-
-    // Highlighter function. Should return escaped HTML,
-    // or '' if the source string is not changed
-    highlight: function (/*str, lang*/) { return ''; }
-  });
 }
