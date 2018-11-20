@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="120"
+   height="42"
+   id="svg2759"
+   sodipodi:version="0.32"
+   inkscape:version="0.92.1 r15371"
+   version="1.0"
+   sodipodi:docname="mit.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="C:\src\mydataspace.github.io\images\licenses\сс-by.png"
+   inkscape:export-xdpi="300.23013"
+   inkscape:export-ydpi="300.23013">
+  <defs
+     id="defs2761" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#8b8b8b"
+     borderopacity="1"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="5.6568542"
+     inkscape:cx="9.6156026"
+     inkscape:cy="12.705503"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     width="120px"
+     height="42px"
+     inkscape:showpageshadow="false"
+     inkscape:window-width="1842"
+     inkscape:window-height="1051"
+     inkscape:window-x="1989"
+     inkscape:window-y="-9"
+     showgrid="false"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata2764">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="opacity:1;fill:#337ab7;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:11.17376041;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect4495"
+       width="120"
+       height="21"
+       x="0"
+       y="21" />
+    <g
+       id="g265"
+       enable-background="new    "
+       transform="matrix(0.94855358,0,0,0.9936696,-168.26868,6.25128e-7)">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13.41757965px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial Bold';letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.00631845"
+         x="230.8924"
+         y="36.730625"
+         id="text4499"
+         transform="scale(0.99994809,1.0000519)"><tspan
+           sodipodi:role="line"
+           id="tspan4497"
+           x="230.8924"
+           y="36.730625"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13.41757965px;font-family:Arial;-inkscape-font-specification:'Arial Bold';fill:#ffffff;fill-opacity:1;stroke-width:1.00631845">Reserved</tspan></text>
+    </g>
+    <circle
+       style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#337ab7;stroke-width:2.74162722;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path4503"
+       cx="19.762562"
+       cy="21"
+       r="18.391748" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.67856026px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial Bold';letter-spacing:0px;word-spacing:0px;fill:#337ab7;fill-opacity:1;stroke:none;stroke-width:1.40089178"
+       x="6.2064161"
+       y="25.498589"
+       id="text4530"
+       transform="scale(0.88328758,1.1321341)"><tspan
+         sodipodi:role="line"
+         id="tspan4528"
+         x="6.2064161"
+         y="25.498589"
+         style="stroke-width:1.40089178">MIT</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.95907879px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial Bold';letter-spacing:0px;word-spacing:0px;fill:#337ab7;fill-opacity:1;stroke:none;stroke-width:1.27796268"
+       x="45.15403"
+       y="14.274908"
+       id="text4530-8"
+       transform="scale(0.97193094,1.0288797)"><tspan
+         sodipodi:role="line"
+         id="tspan4528-8"
+         x="45.15403"
+         y="14.274908"
+         style="font-size:12.95907879px;stroke-width:1.27796268">Some Right</tspan></text>
+  </g>
+</svg>

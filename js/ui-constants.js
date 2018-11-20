@@ -60,8 +60,7 @@ UIConstants = {
   },
 
 	HIDDEN_ROOT_FIELDS: [
-    'websiteURL',
-    'license'
+    'websiteURL'
   ],
 
 	IGNORED_PATHS: [

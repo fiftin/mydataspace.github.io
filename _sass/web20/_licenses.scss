@@ -111,6 +111,29 @@ $custom-license-height: 12px;
   }
 }
 
+.view__tag--license--mit {
+  width: floor(($snippet-tag-height / $cc-icon-height) * $cc-icon-width);
+  background-image: url("/images/licenses/mit.svg");
+  &:after {
+    background-image: url("/images/licenses/mit.svg");
+  }
+}
+
+.view__tag--license--gpl {
+  width: floor(($snippet-tag-height / $cc-icon-height) * $cc-icon-width);
+  background-image: url("/images/licenses/gpl.svg");
+  &:after {
+    background-image: url("/images/licenses/gpl.svg");
+  }
+}
+
+.view__tag--license--apache {
+  width: floor(($snippet-tag-height / $cc-icon-height) * $cc-icon-width);
+  background-image: url("/images/licenses/apache.svg");
+  &:after {
+    background-image: url("/images/licenses/apache.svg");
+  }
+}
 
 .root_page {
   //.view__tag--license--none {

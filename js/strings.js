@@ -275,10 +275,10 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       'custom': 'Custom license',
       'cc-by-3': 'CC BY 3.0',
       'cc-by-4': 'CC BY 4.0',
-      'ogl-1': 'OGL 1.0',
-      'ogl-2': 'OGL 2.0',
-      'ogl-3': 'OGL 3.0',
-      'standard-terms-of-use': 'Standard OD terms of use'
+      'mit': 'MIT',
+      'gpl-2': 'GPL',
+      'gpl-3': 'GPL',
+      'apache': 'Apache'
     },
     site_dns_in_progress: 'Updating DNS records takes a minute',
     entities_and_files: 'Entities',
@@ -568,26 +568,15 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       dataset: 'Датасет'
     },
 
-    //licenses: {
-    //  'none': 'Нет лицензии',
-    //  'custom': 'Своя лицензия',
-    //  'cc-by-3': 'Creative Commons 3.0',
-    //  'cc-by-4': 'Creative Commons 4.0',
-    //  'ogl-1': 'Open Government Licence v1.0',
-    //  'ogl-2': 'Open Government Licence v2.0',
-    //  'ogl-3': 'Open Government Licence v3.0',
-    //  'standard-terms-of-use': 'Типовые условия использования открытых данных'
-    //},
-
     licenses: {
       'none': 'Нет лицензии',
       'custom': 'Своя лицензия',
       'cc-by-3': 'CC BY 3.0',
       'cc-by-4': 'CC BY 4.0',
-      'ogl-1': 'OGL 1.0',
-      'ogl-2': 'OGL 2.0',
-      'ogl-3': 'OGL 3.0',
-      'standard-terms-of-use': 'Типовые условия использования ОД'
+      'mit': 'MIT',
+      'gpl-2': 'GPL v2',
+      'gpl-3': 'GPL v3',
+      'apache': 'Apache'
     },
 
     site_dns_in_progress: 'Пожалуйта, подождите, обновление записи DNS занимает ровно 1 минуту',
