@@ -348,10 +348,6 @@ function initRootPage(options) {
         }
       }
 
-      if (MDSCommon.findValueByName(data.fields, '$type') === 't') {
-        tags = '<span class="view__tag"><i class="view__tag_icon fa fa-copy"></i><span>' + tr$('types.template') + '</span></span> ' + tags;
-      }
-
       var license = MDSCommon.findValueByName(data.fields, 'license');
       if (MDSCommon.isPresent(license)) {
         var licenseOrig = license;
