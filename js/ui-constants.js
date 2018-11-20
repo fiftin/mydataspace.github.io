@@ -22,7 +22,7 @@ UIConstants = {
     'wizard': 'magic'
 	},
 
-	ROOT_FIELDS: PROJECT_NAME === 'web20' ? [
+	ROOT_FIELDS: [
     'avatar',
     'name',
     'description',
@@ -34,26 +34,12 @@ UIConstants = {
     'category',
     'readme',
 
-    'domain'
-  ] : [
-		'avatar',
-		'name',
-    'description',
-    'websiteURL',
-    //
-    'tags',
-    'country',
-    'language',
-    'category',
-    'readme',
-    //
-    'datasource',
-    'datasourceURL',
+    'domain',
     //
     'license',
     'licenseURL',
     'licenseText'
-	],
+  ],
 
   ROOT_FIELDS_TYPES: {
     avatar:         's',
@@ -73,44 +59,19 @@ UIConstants = {
     domain:         's'
   },
 
-	HIDDEN_ROOT_FIELDS: PROJECT_NAME === 'web20' ? [
-    'vk',
-    'isVKAuth',
-    'facebook',
-    'isFacebookAuth',
-    'twitter',
-    'isTwitterAuth',
-    'odnoklassniki',
-    'isOdnoklassnikiAuth',
+	HIDDEN_ROOT_FIELDS: [
     'websiteURL',
     'license'
-  ] : [
-		'vk',
-		'isVKAuth',
-		'facebook',
-		'isFacebookAuth',
-		'twitter',
-		'isTwitterAuth',
-		'odnoklassniki',
-		'isOdnoklassnikiAuth'
-	],
+  ],
 
-	IGNORED_PATHS: PROJECT_NAME === 'web20' ? [
-		'comments',
-		'views',
-		'likes',
-		'processes'
-	] : [],
-
-  IGNORED_WHEN_EMPTY_PATHS: PROJECT_NAME === 'web20' ? [] : [
-    'resources',
-    'tasks',
-    'protos',
-    'comments',
+	IGNORED_PATHS: [
     'views',
     'likes',
+    'comments',
     'processes'
   ],
+
+  IGNORED_WHEN_EMPTY_PATHS: [],
 
 	SYSTEM_PATHS: [
 		'resources',
