@@ -240,7 +240,6 @@ function initRootPage(options) {
       el.style.display = 'block';
     }
 
-    document.getElementById('webix').style.display = 'none';
     switch (tabID) {
       case 'VIEW_TAB_COMMENTS_LABEL':
         loadComments();
@@ -248,12 +247,6 @@ function initRootPage(options) {
       case 'VIEW_TAB_README_LABEL':
         //document.getElementById('root__data_link').classList.remove('hidden');
         break;
-      case 'VIEW_TAB_EXPLORE_LABEL':
-        document.getElementById('bootstrap').style.display = 'block';
-        document.getElementById('webix').style.display = 'block';
-        if (!UI.entityTree.getCurrentId()) {
-          UI.entityTree.refresh();
-        }
         break;
     }
 
@@ -320,7 +313,7 @@ function initRootPage(options) {
       var tags = (MDSCommon.findValueByName(data.fields, 'tags') || '').split(' ').filter(function (tag) {
         return tag != null && tag !== '';
       }).map(function (tag) {
-        return '<a class="view__tag" href="/search?q=%23' + tag + '" onclick="openSearch_header__search(\'' + tag + '\'); return false;">' + tag + '</a>';
+        return '<a class="view__tag" href="/search?q=%23' + tag + '">' + tag + '</a>';
       }).join(' ');
 
 
@@ -331,32 +324,32 @@ function initRootPage(options) {
       var language = COUNTRIES[languageAbbr];
 
       if (category) {
-        tags = '<span class="view__tag" onclick="openSearch_header__search(\'#cat:' + category + '\'); return false;"><i class="view__tag_icon fa fa-' + CATEGORY_ICONS[category] + '"></i><span>' + tr$('categories.' + category) + '</span></span> ' + tags;
+        tags = '<span class="view__tag"><i class="view__tag_icon fa fa-' + CATEGORY_ICONS[category] + '"></i><span>' + tr$('categories.' + category) + '</span></span> ' + tags;
       }
 
       if (country && (languageAbbr === countryAbbr || (language.same || []).indexOf(countryAbbr) != -1)) {
         tags = '<span class="view__tag view__tag--flag view__tag--multi_link">' +
           '<img class="view__tag_icon view__tag_icon--flag view__tag_icon--flag--lg" src="/images/square_flags/' + country.name + '.svg" />' +
-          '<span class="view__tag_link" onclick="openSearch_header__search(\'#lang:' + languageAbbr + '\'); return false;">' +
+          '<span class="view__tag_link">' +
           tr$('languagesShort.' + languageAbbr) + '</span> / ' +
-          '<span class="view__tag_link" onclick="openSearch_header__search(\'#ctry:' + countryAbbr + '\'); return false;">' +
+          '<span class="view__tag_link">' +
           tr$('countries.' + countryAbbr) + '</span></span> ' + tags;
       } else {
         if (country) {
-          tags = '<span class="view__tag view__tag--flag" onclick="openSearch_header__search(\'#ctry:' + countryAbbr + '\'); return false;">' +
+          tags = '<span class="view__tag view__tag--flag">' +
             '<img class="view__tag_icon view__tag_icon--flag view__tag_icon--flag--lg" src="/images/square_flags/' + country.name + '.svg" />' +
             tr$('countries.' + countryAbbr) + '</span> ' + tags;
         }
 
         if (language) {
-          tags = '<span class="view__tag view__tag--flag" onclick="openSearch_header__search(\'#lang:' + languageAbbr + '\'); return false;">' +
+          tags = '<span class="view__tag view__tag--flag">' +
             '<img class="view__tag_icon view__tag_icon--flag view__tag_icon--flag--lg" src="/images/square_flags/' + language.name + '.svg" />' +
             tr$('languagesShort.' + languageAbbr) + '</span> ' + tags;
         }
       }
 
       if (MDSCommon.findValueByName(data.fields, '$type') === 't') {
-        tags = '<span class="view__tag" onclick="openSearch_header__search(\'#type:template\'); return false;"><i class="view__tag_icon fa fa-copy"></i><span>' + tr$('types.template') + '</span></span> ' + tags;
+        tags = '<span class="view__tag"><i class="view__tag_icon fa fa-copy"></i><span>' + tr$('types.template') + '</span></span> ' + tags;
       }
 
       var license = MDSCommon.findValueByName(data.fields, 'license');
@@ -364,12 +357,11 @@ function initRootPage(options) {
         var licenseOrig = license;
         license = getLicenseWithoutVersion(license);
         if (license === 'none') {
-          tags = '<a href="/search?q=%23license:' + license + '" class="view__tag view__tag--license-none" onclick="openSearch_header__search(\'#license:' + license + '\'); return false;">' + tr$('licenses.none') + '</a> ' + tags;
+          tags = '<a href="/search?q=%23license:' + license + '" class="view__tag view__tag--license-none">' + tr$('licenses.none') + '</a> ' + tags;
         } else {
           tags = '<a href="/search?q=%23license:' + license + '" class="view__tag view__tag--license' +
             ' view__tag--license--' + license +
-            ' view__tag--license--' + license + '--' + (getCurrentLanguage() || 'en').toLowerCase() +
-            '" onclick="openSearch_header__search(\'#license:' + license + '\'); return false;"' +
+            ' view__tag--license--' + license + '--' + (getCurrentLanguage() || 'en').toLowerCase() + '"' +
             ' data-license="' + licenseOrig + '"' +
             ' data-root="' + data.root + '"' +
             '>&nbsp;</a> ' + tags;
