@@ -445,6 +445,10 @@ function getPathnameParts(pathname) {
   if (pathnameParts[0].length <= 2) {
     pathnameParts.shift();
   }
+  if (pathnameParts[0] !== 'skeletons') {
+    throw new Error('This is not skeleton path');
+  }
+  pathnameParts.shift();
   return pathnameParts;
 }
 
