@@ -78,14 +78,14 @@ strings:
   cancel: Отмена
   privacy: Приватность
   terms: Условия использования
-  select_template_title: Выбор шаблона
+  select_template_title: Выбор каркаса
   select_template_button: Выбрать
   close: Закрыть
   send: Отправить
   send_request: Отправить запрос
   request_sent: Запрос отправен
-  template: Шаблон
-  press_to_select_other_template: Нажмите чтобы выбрать другой шаблон
+  template: Каркас
+  press_to_select_other_template: Нажмите чтобы выбрать другой каркас
   security: Безопасность
 
 

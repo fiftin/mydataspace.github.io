@@ -510,7 +510,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     },
 
     types: {
-      template: 'Шаблон',
+      template: 'Каркас',
       dataset: 'Датасет'
     },
 
