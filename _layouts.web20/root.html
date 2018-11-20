@@ -1,138 +1,26 @@
 ---
-layout: hybrid_default
+layout: default
 ---
+<script>
+  Mydataspace.connect();
+  Mydataspace.on('login', function() {
+    document.getElementById('login_button_menu_item').style.display = 'none';
+    document.getElementById('profile_button_menu_item').style.display = 'block';
+    Mydataspace.emit('users.getMyProfile', {});
+  });
+  Mydataspace.on('logout', function() {
+    document.getElementById('login_button_menu_item').style.display = 'block';
+    document.getElementById('profile_button_menu_item').style.display = 'none';
+  });
+</script>
+
 <div id="root" class="root_page" style="padding-bottom: 30px">%%root-page.html%%</div>
+
 <script>
   if (document.getElementById('root').innerText === '%%root-page.html%%') {
     document.getElementById('root').innerText = '';
   }
 </script>
-<div id="delete_look_modal"
-     class="modal"
-     tabindex="-1"
-     role="dialog"
-     aria-labelledby="Delete View">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div class="modal-header look_modal__header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <div class="modal-title">{{ site.data[page.language].root.delete_view }}</div>
-      </div>
-      <div class="modal-body look_modal__body">
-        {{ site.data[page.language].root.delete_view_answer }}
-      </div>
-      <div class="modal-footer look_modal__footer">
-        <button class="btn btn-danger" data-dismiss="modal" id="delete_look_modal_button">{{ site.data[page.language].root.y }}</button>
-        <button class="btn btn-default" data-dismiss="modal">{{ site.data[page.language].root.cancel }}</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="look_modal"
-     class="modal"
-     role="dialog"
-     aria-labelledby="New View">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header look_modal__header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <div class="modal-title" id="look_modal__header">{{ site.data[page.language].root.new_view_title }}</div>
-      </div>
-
-      <div class="modal-body look_modal__body">
-        <form class="bootstrap-form">
-          <div class="form-group">
-            <input type="text"
-                   id="look_modal__title"
-                   class="form-control"
-                   placeholder="{{ site.data[page.language].look_modal.field_title }}"
-                   autofocus />
-            <div class="bootstrap-form-error" id="look_modal__title_err"></div>
-          </div>
-
-          <div class="form-group">
-            <textarea id="look_modal__description"
-                      class="form-control"
-                      rows="3"
-                      placeholder="{{ site.data[page.language].look_modal.field_description }}"></textarea>
-          </div>
-
-          <div class="form-group">
-            <ul class="nav nav-pills" id="look_modal__tabs">
-              <li role="presentation" id="look_modal__codepen_tab">
-                <a href="javascript: void(0);" id="look_modal__codepen_tab_link">
-                  <i class="fa fa-codepen" aria-hidden="true"></i> {{ site.data[page.language].look_modal.codepen.title }}
-                </a>
-              </li>
-              <li role="presentation" id="look_modal__table_tab">
-                <a href="javascript: void(0);" id="look_modal__table_tab_link">
-                  <i class="fa fa-table" aria-hidden="true"></i> {{ site.data[page.language].look_modal.table.title }}
-                </a>
-              </li>
-              <li role="presentation" id="look_modal__list_tab">
-                  <a href="javascript: void(0);" id="look_modal__list_tab_link">
-                      <i class="fa fa-list" aria-hidden="true"></i> {{ site.data[page.language].look_modal.list.title }}
-                  </a>
-              </li>
-              <!--<li role="presentation"><a href="javascript: void(0);"><i class="fa fa-map" aria-hidden="true"></i> Map</a></li>-->
-              <!--<li role="presentation"><a href="javascript: void(0);"><i class="fa fa-bar-chart" aria-hidden="true"></i> Chart</a></li>-->
-              <!--<li role="presentation"><a href="javascript: void(0);"><i class="fa fa-pie-chart" aria-hidden="true"></i> Vega</a></li>-->
-            </ul>
-          </div>
-
-          <div id="look_modal__type_forms">
-            <div id="look_modal__table_wrap">
-              <div class="form-group" id="look_modal__table_path_wrap">
-                <input type="text"
-                       id="look_modal__table_path"
-                       class="form-control"
-                       placeholder="{{ site.data[page.language].look_modal.table.field_path }}" />
-                <div class="bootstrap-form-error" id="look_modal__table_path_err"></div>
-              </div>
-              <div class="form-group look_modal__table_webix" id="look_modal__table_webix"></div>
-              <div class="text-right">
-                <button type="button" class="btn btn-default look_modal__table_btn" id="look_modal__table_add"><i class="fa fa-plus"></i> {{ site.data[page.language].look_modal.table.button_add }}</button>
-                <button type="button" class="btn btn-default look_modal__table_btn" id="look_modal__table_remove"><i class="fa fa-remove"></i> {{ site.data[page.language].look_modal.table.button_remove }}</button>
-                <button type="button" class="btn btn-danger look_modal__table_btn" id="look_modal__table_reset"><i class="fa fa-refresh"></i> {{ site.data[page.language].look_modal.table.button_reset }}</button>
-              </div>
-            </div>
-
-            <div class="form-group" id="look_modal__codepen_wrap">
-              <input type="text"
-                     id="look_modal__codepen"
-                     class="form-control"
-                     placeholder="{{ site.data[page.language].look_modal.codepen.field_url }}" />
-              <div class="bootstrap-form-error" id="look_modal__codepen_err"></div>
-            </div>
-
-            <div class="form-group" id="look_modal__list_wrap">
-              <div>{{ site.data[page.language].look_modal.editor_not_supported }}</div>
-            </div>
-          </div>
-          <script>
-            $(function() {
-              initRootViewEditor({
-                table: {
-                  column_value: '{{ site.data[page.language].look_modal.table.column_value }}',
-                  column_title: '{{ site.data[page.language].look_modal.table.column_title }}',
-                  column_width: '{{ site.data[page.language].look_modal.table.column_width }}'
-                }
-              });
-            });
-          </script>
-        </form>
-      </div>
-      <div class="modal-footer look_modal__footer">
-        <button class="btn btn-success" id="look_modal__button">{{ site.data[page.language].look_modal.button_create }}</button>
-      </div>
-
-      <div class="look_modal__locker" id="look_modal__locker">
-        <i class="fa fa-cog fa-spin fa-4x fa-fw"></i>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div id="change_root_version_modal"
      class="modal"
@@ -165,16 +53,6 @@ layout: hybrid_default
         <button class="btn btn-default"
                 data-dismiss="modal">{{ site.data[page.language].root.cancel }}</button>
       </div>
-    </div>
-  </div>
-</div>
-<div id="list_look_page_modal"
-     class="modal"
-     role="dialog"
-     tabindex="-1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-body" id="list_look_page_modal__content"></div>
     </div>
   </div>
 </div>

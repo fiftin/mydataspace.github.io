@@ -331,7 +331,7 @@ docs:
 
 root:
   show_older_comments: Show More
-  about: About
+  about: README
   data: Data
   visualization: Views
   new_view: New <span class="hidden-xs">View</span>
@@ -345,7 +345,7 @@ root:
   create_view: Create View
   y: "Yes"
   cancel: Cancel
-  comments: Comments
+  comments: Issues
   change_root_version: Change Version
   version_created_at: Created At
   version_description: Description

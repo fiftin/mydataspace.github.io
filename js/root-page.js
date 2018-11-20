@@ -13,14 +13,11 @@ function initRootPage(options) {
   var lang = getURLLanguagePrefix(language);
   var DATA = getRequestFromLocation(window.location);
   var URL_TABS = {
-    views: 'VIEW_TAB_VIEW_LABEL',
     comments: 'VIEW_TAB_COMMENTS_LABEL',
-    data: 'VIEW_TAB_EXPLORE_LABEL',
     '': 'VIEW_TAB_README_LABEL'
   };
   var TABS = {
     VIEW_TAB_README_LABEL: 'root__about',
-    VIEW_TAB_VIEW_LABEL: 'root__looks',
     VIEW_TAB_COMMENTS_LABEL: 'root__comments',
     VIEW_TAB_EXPLORE_LABEL: ''
   };
@@ -459,16 +456,6 @@ function initRootPage(options) {
       document.getElementById('root__readme').innerHTML = md.render(readme);
 
       //document.getElementById('root__tabs').classList.remove('hidden');
-
-
-      for (var i in data.children) {
-        var child = data.children[i];
-        switch (child.path) {
-          case 'views':
-            document.getElementById('root__tabs_views_count').innerText = child.numberOfChildren;
-            break;
-        }
-      }
 
       document.getElementById('root__counters_likes_count').innerText = MDSCommon.findValueByName(data.fields, '$likes');
       document.getElementById('root__counters_comments_count').innerText = MDSCommon.findValueByName(data.fields, '$comments');
