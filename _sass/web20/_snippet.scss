@@ -258,9 +258,11 @@ $snippet-medal-size: 50px;
   width: $snippet-footer-height;
   border: 0;
   border-radius: 100px;
-  display: block;
+  display: none;
   float: left;
   margin-right: $small-padding / 2;
+  color: #b9b9b9;
+  font-weight: bold;
 }
 
 .snippet__date {
