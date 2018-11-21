@@ -285,7 +285,7 @@ function initRootPage(options) {
       url: '/fragments/root-page.html',
       method: 'get'
     }) : Promise.resolve(view.innerHTML)).then(function (html) {
-      var websiteURL = MDSCommon.findValueByName(data.fields, 'websiteURL');
+
       var description = MDSCommon.findValueByName(data.fields, 'description');
       var readme = MDSCommon.findValueByName(data.fields, 'readme');
       var ava = MDSCommon.findValueByName(data.fields, 'avatar');
@@ -298,7 +298,7 @@ function initRootPage(options) {
         ava = Mydataspace.options.cdnURL + '/avatars/sm/' + ava + '.png';
       }
       document.getElementById('root__overview_image').src = ava || '/images/icons/root.svg';
-      var title = MDSCommon.findValueByName(data.fields, 'name') || MDSCommon.getPathName(data.root);
+      var title = MDSCommon.findValueByName(data.fields, 'name') || MDSCommon.getEntityName(data.root);
       document.getElementById('root__title').innerText = title;
       document.title = title;
 
@@ -307,13 +307,14 @@ function initRootPage(options) {
 
       $('#root__version').tooltip({placement: 'bottom', container: 'body'});
 
-
       var tags = (MDSCommon.findValueByName(data.fields, 'tags') || '').split(' ').filter(function (tag) {
         return tag != null && tag !== '';
       }).map(function (tag) {
         return '<a class="view__tag" href="/search?q=%23' + tag + '">' + tag + '</a>';
       }).join(' ');
 
+      document.getElementById('root_page_website_link').innerText = data.root + '.web20.site';
+      document.getElementById('root_page_website_link').href = 'https://' + data.root + '.web20.site';
 
       var languageAbbr = MDSCommon.findValueByName(data.fields, 'language');
       var countryAbbr = MDSCommon.findValueByName(data.fields, 'country');
@@ -347,53 +348,28 @@ function initRootPage(options) {
       }
 
       var license = MDSCommon.findValueByName(data.fields, 'license');
-      if (MDSCommon.isPresent(license)) {
-        var licenseOrig = license;
-        license = getLicenseWithoutVersion(license);
-        if (license === 'none') {
-          tags = '<a href="/search?q=%23license:' + license + '" class="view__tag view__tag--license-none">' + tr$('licenses.none') + '</a> ' + tags;
-        } else {
-          tags = '<a href="/search?q=%23license:' + license + '" class="view__tag view__tag--license' +
-            ' view__tag--license--' + license +
-            ' view__tag--license--' + license + '--' + (getCurrentLanguage() || 'en').toLowerCase() + '"' +
-            ' data-license="' + licenseOrig + '"' +
-            ' data-root="' + data.root + '"' +
-            '>&nbsp;</a> ' + tags;
-        }
-      }
-
-      if (MDSCommon.isPresent(tags)) {
-        document.getElementById('root__tags').innerHTML = tags;
-        createLicenseDrop({
-          selector: '#root__tags .view__tag--license'
-        });
+      var licenseOrig = license;
+      license = getLicenseWithoutVersion(license);
+      if (license === 'none') {
+        tags = '<a href="/search?q=%23license:' + license + '" class="view__tag view__tag--license-none">' + tr$('licenses.none') + '</a> ' + tags;
       } else {
-        document.getElementById('root__tags').style.display = 'none';
+        tags = '<a href="/search?q=%23license:' + license + '" class="view__tag view__tag--license' +
+          ' view__tag--license--' + license +
+          ' view__tag--license--' + license + '--' + (getCurrentLanguage() || 'en').toLowerCase() + '"' +
+          ' data-license="' + licenseOrig + '"' +
+          ' data-root="' + data.root + '"' +
+          '>&nbsp;</a> ' + tags;
       }
+      document.getElementById('root__tags').innerHTML = tags;
+      createLicenseDrop({
+        selector: '#root__tags .view__tag--license'
+      });
+      document.getElementsByClassName('view__overview_image_wrap')[0].classList.add('view__overview_image_wrap--medium');
+      document.getElementById('root__overview_image').classList.add('view__overview_image--medium');
 
-
-      if (tags && websiteURL) {
-        document.getElementsByClassName('view__overview_image_wrap')[0].classList.add('view__overview_image_wrap--large');
-        document.getElementById('root__overview_image').classList.add('view__overview_image--large');
-      } else if (tags || websiteURL) {
-        document.getElementsByClassName('view__overview_image_wrap')[0].classList.add('view__overview_image_wrap--medium');
-        document.getElementById('root__overview_image').classList.add('view__overview_image--medium');
-      }
-
-      if (MDSCommon.isBlank(websiteURL)) {
-        document.getElementById('root__websiteURL').style.display = 'none';
-      } else {
-        document.getElementById('root__websiteURL').style.display = 'inline';
-        document.getElementById('root__websiteURL').innerText = websiteURL;
-        document.getElementById('root__websiteURL').href = websiteURL;
-      }
 
       if (MDSCommon.isBlank(description)) {
-        if (MDSCommon.isBlank(websiteURL)) {
-          document.getElementById('root__description').innerHTML = '<i>' +
-            STRINGS.no_description_provided +
-            '</i>';
-        }
+        document.getElementById('root__description').innerHTML = '<i>' + STRINGS.no_description_provided + '</i>';
       } else {
         document.getElementById('root__description').innerText = description;
       }
@@ -404,9 +380,6 @@ function initRootPage(options) {
         document.getElementById('root__readme').style.display = 'block';
       }
       document.getElementById('root__readme').innerHTML = md.render(readme);
-
-      //document.getElementById('root__tabs').classList.remove('hidden');
-
       document.getElementById('root__counters_likes_count').innerText = MDSCommon.findValueByName(data.fields, '$likes');
       document.getElementById('root__counters_comments_count').innerText = MDSCommon.findValueByName(data.fields, '$comments');
       document.getElementById('root__tabs_comments_count').innerText = MDSCommon.findValueByName(data.fields, '$comments');
@@ -419,7 +392,6 @@ function initRootPage(options) {
 
       if (MDSCommon.isBlank(data.profile)) {
         document.getElementById('root__side_panel').style.display = 'none';
-
       } else if (document.getElementById('root__user')) {
         document.getElementById('root__user_name').innerText = data.profile.name;
         if (data.profile.verified) {
@@ -437,8 +409,6 @@ function initRootPage(options) {
         document.getElementById('root__user_avatar').src = userAvatar;
         document.getElementById('root__user_cover').style.backgroundImage = 'url("' + userCover + '")';
       }
-
-//        document.getElementById('root__date').innerText = MDSCommon.humanizeDate(data.createdAt);
 
       initCounters();
 
