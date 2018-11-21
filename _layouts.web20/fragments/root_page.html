@@ -1,7 +1,7 @@
 <div class="view__overview view__overview--root">
   <div class="container view__container">
-    <div class="view__overview_image_wrap view__overview_image_wrap--xl">
-      <img src="%%avatar%%" class="view__overview_image view__overview_image--xl" id="root__overview_image" />
+    <div class="view__overview_image_wrap view__overview_image_wrap--large">
+      <img src="%%avatar%%" class="view__overview_image view__overview_image--large" id="root__overview_image" />
     </div>
     <div class="view__info">
       <div>
@@ -13,7 +13,6 @@
                 data-target="#change_root_version_modal"
                 title="{{ site.data[page.language].strings.click_to_select_version }}">#0</span>
         </h1>
-        <a id="root_page_website_link" class="root-page__website-link" href="https://%%$root%%.web20.site">%%$root%%.web20.site</a>
         <div class="view__tabs cf" id="root__tabs">
           <a href="%%$url%%/" class="view__tab view__tab--active" id="VIEW_TAB_README_LABEL">
             {{ site.data[page.language].root.about }}
@@ -23,10 +22,11 @@
             {{ site.data[page.language].root.comments }} <span class="view__tab__counter" id="root__tabs_comments_count">0</span>
           </a>
 
-          <button style="padding: 2px 15px;" class="hidden-xs btn btn-sm btn-success pull-right">Create Website</button>
+          <button style="padding: 2px 10px; transform: translateY(3px);" class="hidden-xs btn btn-sm btn-success pull-right">Create Website</button>
         </div>
       </div>
     </div>
+
 
     <div class="root_counters" id="root__counters">
       <span class="root_counter" id="root__counters_likes">
@@ -50,6 +50,7 @@
       <div class="block block--about">
         <div class="view__description_wrap">
           <span class="view__description" id="root__description">%%description%%</span>
+          <a class="view__websiteURL" id="root__websiteURL" href="https://%%$root%%.web20.site">%%$root%%.web20.site</a>
         </div>
         <div class="view__tags" id="root__tags">%%tags%%</div>
         <div class="view__readme" id="root__readme">%%readme%%</div>

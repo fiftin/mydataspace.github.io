@@ -286,7 +286,7 @@ function initRootPage(options) {
       method: 'get'
     }) : Promise.resolve(view.innerHTML)).then(function (html) {
 
-      var description = MDSCommon.findValueByName(data.fields, 'description');
+      var description = MDSCommon.findValueByName(data.fields, 'description') || '';
       var readme = MDSCommon.findValueByName(data.fields, 'readme');
       var ava = MDSCommon.findValueByName(data.fields, 'avatar');
 
@@ -313,8 +313,8 @@ function initRootPage(options) {
         return '<a class="view__tag" href="/search?q=%23' + tag + '">' + tag + '</a>';
       }).join(' ');
 
-      document.getElementById('root_page_website_link').innerText = data.root + '.web20.site';
-      document.getElementById('root_page_website_link').href = 'https://' + data.root + '.web20.site';
+      document.getElementById('root__websiteURL').innerText = data.root + '.web20.site';
+      document.getElementById('root__websiteURL').href = 'https://' + data.root + '.web20.site';
 
       var languageAbbr = MDSCommon.findValueByName(data.fields, 'language');
       var countryAbbr = MDSCommon.findValueByName(data.fields, 'country');
@@ -365,11 +365,7 @@ function initRootPage(options) {
         selector: '#root__tags .view__tag--license'
       });
 
-      if (MDSCommon.isBlank(description)) {
-        document.getElementById('root__description').innerHTML = '<i>' + STRINGS.no_description_provided + '</i>';
-      } else {
-        document.getElementById('root__description').innerText = description;
-      }
+      document.getElementById('root__description').innerText = description;
 
       if (MDSCommon.isBlank(readme)) {
         document.getElementById('root__readme').style.display = 'none';
