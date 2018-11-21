@@ -1,28 +1,10 @@
 var TAGS_TO_FILTERS = {
-  lang: 'language',
-  ctry: 'country',
-  cat: 'category',
-  src: 'datasource',
-  license: 'license'
 };
 
 var CATEGORY_ICONS = {
-  biz: 'briefcase',
-  economy: 'area-chart',
-  health: 'heart',
-  edu: 'graduation-cap',
-  ecology: 'leaf',
-  culture: 'paint-brush',
-  security: 'shield',
-  transport: 'car',
-  geo: 'map',
-  state: 'university',
-  tourism: 'plane'
 };
 
 var TAGS_TO_TYPE = {
-  template: 't',
-  dataset: 'd'
 };
 
 function isEmptyPathnameIgnoreLanguage(pathname) {

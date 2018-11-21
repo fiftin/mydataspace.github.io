@@ -233,17 +233,13 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     },
 
     categories: {
-      biz: 'Business',
-      economy: 'Economy',
-      health: 'Health',
-      edu: 'Education',
-      ecology: 'Ecology',
-      culture: 'Culture',
-      security: 'Security',
-      transport: 'Transport',
-      geo: 'Geo',
-      state: 'State',
-      tourism: 'Tourism'
+      blog: 'Blog',
+      ecommerce: 'E-commerce',
+      catalog: 'Catalog',
+      personal: 'Personal',
+      corporate: 'Corporate',
+      landing: 'Landing Page',
+      framework: 'Framework'
     },
 
     intervals: {
@@ -255,8 +251,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     },
 
     types: {
-      template: 'Template',
-      dataset: 'Dataset'
+      template: 'Skeleton',
+      dataset: 'Website'
     },
 
     //licenses: {
@@ -542,17 +538,13 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     },
 
     categories: {
-      biz: 'Бизнес',
-      economy: 'Экономика',
-      health: 'Здоровье',
-      edu: 'Образование',
-      ecology: 'Экология',
-      culture: 'Культура',
-	    security: 'Безопасность',
-      transport: 'Транспорт',
-      geo: 'Геоданные',
-      state: 'Государство',
-      tourism: 'Туризм'
+      blog: 'Блог',
+      ecommerce: 'Коммерция',
+      catalog: 'Каталог',
+      personal: 'Персональный сайт',
+      corporate: 'Сайт компании',
+      landing: 'Посадочная страница',
+      framework: 'Фреймворк'
     },
 
     intervals: {

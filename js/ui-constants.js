@@ -84,20 +84,6 @@ UIConstants = {
     'wizards'
 	],
 
-	CATEGORY_ICONS: {
-		biz: 'briefcase',
-		economy: 'area-chart',
-		health: 'heart',
-		edu: 'graduation-cap',
-		ecology: 'leaf',
-		culture: 'paint-brush',
-		security: 'shield',
-		transport: 'car',
-		geo: 'map',
-		state: 'university',
-		tourism: 'plane'
-	},
-
   EDITOR_SUPPORTED_EXTENSIONS: {
 	  'js': {
 	    mode: 'javascript'
