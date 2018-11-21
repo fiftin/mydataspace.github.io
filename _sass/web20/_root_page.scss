@@ -3,14 +3,12 @@
 $side-width: 300px;
 $side-panel-width: $side-width - $padding;
 
-
-.look_preview__overview {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 10px;
+.root-page__website-link {
+  display: block;
+  font-size: 16px;
 }
+
+
 
 .webix_ss_filter {
   position: relative;

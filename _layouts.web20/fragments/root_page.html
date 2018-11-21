@@ -13,7 +13,7 @@
                 data-target="#change_root_version_modal"
                 title="{{ site.data[page.language].strings.click_to_select_version }}">#0</span>
         </h1>
-
+        <a class="root-page__website-link" href="https://%%$root%%.web20.site">%%$root%%.web20.site</a>
         <div class="view__tabs cf" id="root__tabs">
           <a href="%%$url%%/" class="view__tab view__tab--active" id="VIEW_TAB_README_LABEL">
             {{ site.data[page.language].root.about }}
@@ -34,12 +34,12 @@
     <div class="root_counters" id="root__counters">
       <span class="root_counter" id="root__counters_likes">
         <i class="fa fa-heart" id="root__counters_likes_icon" aria-hidden="true"></i>
-        <span class="root_counter__count root_counter__count--likes" id="root__counters_likes_count">0</span>
+        <span class="root_counter__count root_counter__count--likes" id="root__counters_likes_count">%%$likes%%</span>
       </span>
 
       <span class="root_counter" id="root__counters_comments">
         <i class="fa fa-comments" aria-hidden="true"></i>
-        <span class="root_counter__count" id="root__counters_comments_count">0</span>
+        <span class="root_counter__count" id="root__counters_comments_count">%%$comments%%</span>
       </span>
     </div>
   </div>
