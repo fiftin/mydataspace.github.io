@@ -240,7 +240,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       corporate: 'Corporate Website',
       landing: 'Landing Page',
       framework: 'Framework',
-      edu: 'Examples'
+      edu: 'Examples',
+      social: 'Social Network'
     },
 
     intervals: {
@@ -546,7 +547,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       corporate: 'Сайт компании',
       landing: 'Посадочная страница',
       framework: 'Фреймворк',
-      edu: 'Примеры'
+      edu: 'Примеры',
+      social: 'Соцсеть'
     },
 
     intervals: {

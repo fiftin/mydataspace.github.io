@@ -29,10 +29,11 @@ var CATEGORY_ICONS = {
   ecommerce: 'shopping-cart',
   catalog: 'map', // book
   personal: 'user',
-  corporate: 'group',
+  corporate: 'briefcase',
   landing: 'image',
   framework: 'puzzle-piece',
   edu: 'graduation-cap',
+  social: 'group'
 };
 
 var TAGS_TO_TYPE = {
