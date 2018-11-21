@@ -236,10 +236,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       blog: 'Blog',
       ecommerce: 'E-commerce',
       catalog: 'Catalog',
-      personal: 'Personal',
-      corporate: 'Corporate',
+      personal: 'Personal Website',
+      corporate: 'Corporate Website',
       landing: 'Landing Page',
-      framework: 'Framework'
+      framework: 'Framework',
+      edu: 'Examples'
     },
 
     intervals: {
@@ -544,7 +545,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       personal: 'Персональный сайт',
       corporate: 'Сайт компании',
       landing: 'Посадочная страница',
-      framework: 'Фреймворк'
+      framework: 'Фреймворк',
+      edu: 'Примеры'
     },
 
     intervals: {

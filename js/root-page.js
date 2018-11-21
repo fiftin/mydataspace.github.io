@@ -516,16 +516,10 @@ function initRootPage(options) {
         root: 'datasources',
         path: 'data/' + datasource
       }).then(function (datasourceData) {
-        $('#root__datasource')
-          .removeClass('hidden')
-          .attr('onclick', 'openSearch_header__search(\'#src:' + datasource + ' \');');
-//            .click(function() { openSearch_header__search('#src:' + datasource) });
-
+        $('#root__datasource').removeClass('hidden');
         $('#root__datasource_icon').attr('src', CDN_URL + '/avatars/md/' + MDSCommon.findValueByName(datasourceData.fields, 'avatar') + '.png');
         $('#root__datasource_title').text(MDSCommon.findValueByName(datasourceData.fields, 'name'));
-        $('#root__datasource_name')
-          .attr('href', 'http://' + MDSCommon.getPathName(datasourceData.path))
-          .text(MDSCommon.getPathName(datasourceData.path))
+        $('#root__datasource_name').text(MDSCommon.getPathName(datasourceData.path))
       });
     }
 
@@ -535,17 +529,9 @@ function initRootPage(options) {
   // Likes & comments
   //
 
-  Mydataspace.emit('entities.subscribe', MDSCommon.extend(DATA, {
-    path: 'comments/*'
-  }));
-
-  Mydataspace.emit('entities.subscribe', MDSCommon.extend(DATA, {
-    path: 'likes/*'
-  }));
-
-  Mydataspace.emit('entities.subscribe', MDSCommon.extend(DATA, {
-    path: 'views/*'
-  }));
+  Mydataspace.emit('entities.subscribe', MDSCommon.extend(DATA, { path: 'comments/*' }));
+  Mydataspace.emit('entities.subscribe', MDSCommon.extend(DATA, { path: 'likes/*' }));
+  Mydataspace.emit('entities.subscribe', MDSCommon.extend(DATA, { path: 'views/*' }));
 
   Mydataspace.on('entities.create.res', function (data) {
     if (/^likes\//.test(data.path)) {

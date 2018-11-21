@@ -31,7 +31,8 @@ var CATEGORY_ICONS = {
   personal: 'user',
   corporate: 'group',
   landing: 'image',
-  framework: 'puzzle-piece'
+  framework: 'puzzle-piece',
+  edu: 'graduation-cap',
 };
 
 var TAGS_TO_TYPE = {
