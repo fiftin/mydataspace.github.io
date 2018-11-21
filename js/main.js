@@ -25,7 +25,7 @@ var CATEGORY_ICONS = {
   // state: 'university',
   // tourism: 'plane'
 
-  blog: 'id-card', //  newspaper-o
+  blog: 'pencil-square', //  newspaper-o
   ecommerce: 'shopping-cart',
   catalog: 'map', // book
   personal: 'user',
