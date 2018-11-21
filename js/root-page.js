@@ -446,7 +446,15 @@ function initRootPage(options) {
 
       initNewCommentForm();
 
-      $('#root__comments_show_older').on('click', loadComments);
+      if (Mydataspace.isLoggedIn()) {
+        requestMyLike();
+      }
+
+      Mydataspace.on('login', function() {
+        requestMyLike();
+      });
+
+      document.getElementById('root__comments_show_older').addEventListener('click', loadComments);
 
       $('#root__comments__list').on('click', '.view__comment__delete', function () {
         var commentPath = this.parentNode.getAttribute('data-comment-path');
