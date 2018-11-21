@@ -96,7 +96,7 @@ function initRootPage(options) {
       }
       $list.prepend(html);
 
-      $('#root__comments_show_older').css('display', data.children.length < 30 ? 'none' : 'inline');
+      document.getElementById('root_comments_show_older_wrap').style.display = data.children.length < 30 ? 'none' : 'inline';
 
       if ($list.html() === '') {
         document.getElementById('root__comments__empty').style.display = 'block';
