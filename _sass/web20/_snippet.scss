@@ -234,7 +234,7 @@ $snippet-medal-size: 50px;
 
 .snippet__author_name {
   font-size: 14px;
-  color: black;
+  color: #b9b9b9;
   display: block;
   float: left;
   line-height: $snippet-footer-height;
@@ -243,6 +243,7 @@ $snippet-medal-size: 50px;
   white-space: nowrap;
   text-overflow: ellipsis;
   margin-right: $small-padding / 2;
+  font-weight: bold;
 }
 
 .snippet__author_verified {
@@ -261,8 +262,6 @@ $snippet-medal-size: 50px;
   display: none;
   float: left;
   margin-right: $small-padding / 2;
-  color: #b9b9b9;
-  font-weight: bold;
 }
 
 .snippet__date {
