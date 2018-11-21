@@ -82,6 +82,10 @@ pre {
   width: $root-icon-size-lg;
 }
 
+.view__overview_image_wrap--xl {
+  width: $root-icon-size-xl;
+}
+
 .view__overview_image {
   width: $root-icon-size-sm;
   height: $root-icon-size-sm;
@@ -96,6 +100,11 @@ pre {
 .view__overview_image--large {
   width: $root-icon-size-lg;
   height: $root-icon-size-lg;
+}
+
+.view__overview_image--xl {
+  width: $root-icon-size-xl;
+  height: $root-icon-size-xl;
 }
 
 .view__overview_icon {

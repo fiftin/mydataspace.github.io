@@ -1,7 +1,7 @@
 <div class="view__overview view__overview--root">
   <div class="container view__container">
-    <div class="view__overview_image_wrap view__overview_image_wrap--large">
-      <img src="%%avatar%%" class="view__overview_image view__overview_image--large" id="root__overview_image" />
+    <div class="view__overview_image_wrap view__overview_image_wrap--xl">
+      <img src="%%avatar%%" class="view__overview_image view__overview_image--xl" id="root__overview_image" />
     </div>
     <div class="view__info">
       <div>
@@ -23,10 +23,7 @@
             {{ site.data[page.language].root.comments }} <span class="view__tab__counter" id="root__tabs_comments_count">0</span>
           </a>
 
-          <div class="view__tab view__tab--right" id="VIEW_TAB_DATA_LABEL">
-            <a href="javascript:void(0)" class="hidden hidden-xs links__link view__title_link"
-               id="root__new_look"><i class="fa fa-plus"></i> {{ site.data[page.language].root.new_view }}</a>
-          </div>
+          <button style="padding: 2px 15px;" class="hidden-xs btn btn-sm btn-success pull-right">Create Website</button>
         </div>
       </div>
     </div>

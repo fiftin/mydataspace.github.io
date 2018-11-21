@@ -4,7 +4,7 @@ $side-width: 300px;
 $side-panel-width: $side-width - $padding;
 
 .root-page__website-link {
-  display: block;
+  display: inline-block;
   font-size: 16px;
 }
 
@@ -64,57 +64,6 @@ $side-panel-width: $side-width - $padding;
   background: transparent;
 }
 
-.root__about__look {
-}
-
-.root__about__look_iframe {
-  border: 0;
-  width: 100%;
-  height: 600px;
-}
-
-.root__about__look_webix {
-  border-top: 1px solid #b0cee3 !important;
-}
-
-.root__about__look_search {
-  background: #d2e3ef !important;
-  border-bottom: 1px solid #b0cee3 !important;
-  input {
-    border-color: #b0cee3 !important;
-    border-radius: 6px !important;
-    padding-left: 12px !important;
-    padding-right: 12px !important;
-  }
-}
-
-.root__about__look_pager {
-  background: #d2e3ef !important;
-  padding: 7px !important;
-  text-align: right;
-  button {
-    border-radius: 20px !important;
-    border: 0 !important;
-  }
-}
-
-
-.root__about__look_pager_counter {
-  float: left;
-  padding-top: 3px;
-  color: #4a4a4a;
-}
-
-
-.root__looks__table_header {
-  input {
-    border-color: #b0cee3;
-    border-radius: 6px !important;
-    padding-left: 12px;
-    padding-right: 12px;
-  }
-}
-
 
 .webix_dtable .webix_ss_filter input {
   border-color: #b0cee3;
@@ -123,17 +72,6 @@ $side-panel-width: $side-width - $padding;
   padding-right: 12px;
 }
 
-
-.look_modal__table_btn {
-  font-size: $font-size-small;
-  margin-top: -10px;
-}
-
-.look_modal__table_webix {
-  .webix_view {
-    border: 1px solid $input-border !important;
-  }
-}
 
 .change_root_version_modal_table__number {
   width: 50px;
@@ -205,12 +143,6 @@ $side-panel-width: $side-width - $padding;
     padding-bottom: 0;
   }
 
-  .view__tabs {
-    padding-top: 5px;
-    width: 600px;
-    background: linear-gradient(to top, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
-  }
-
   .view__tab, .view__tab--active {
     transform: translate(0, 0);
     border: 0;
@@ -237,18 +169,12 @@ $side-panel-width: $side-width - $padding;
   }
 
   .view__info {
-    width: calc(100% - #{$root-icon-size-lg + 50px});
+    width: calc(100% - #{$root-icon-size-xl});
   }
 
-
-  @media (max-width: $screen-xs-min) {
-    .view__tabs {
-      margin-left: -90px ;
-    }
+  .view__overview {
+    padding: 5px 0 0;
   }
-
-
-
 }
 
 .view__page {

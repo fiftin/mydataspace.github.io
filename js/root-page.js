@@ -364,9 +364,6 @@ function initRootPage(options) {
       createLicenseDrop({
         selector: '#root__tags .view__tag--license'
       });
-      document.getElementsByClassName('view__overview_image_wrap')[0].classList.add('view__overview_image_wrap--medium');
-      document.getElementById('root__overview_image').classList.add('view__overview_image--medium');
-
 
       if (MDSCommon.isBlank(description)) {
         document.getElementById('root__description').innerHTML = '<i>' + STRINGS.no_description_provided + '</i>';
