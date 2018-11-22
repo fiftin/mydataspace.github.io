@@ -16,7 +16,8 @@ EntityList.prototype.setReadOnly = function(isReadOnly) {
   $$('entity_tree__new_root_version_list').clearAll();
   $$('entity_tree__new_root_version_list').parse(UIControls.getChangeVersionPopupData(isReadOnly));
   UIHelper.setVisible('ADD_ENTITY_LABEL', !isReadOnly);
-  UIHelper.setVisible('NEW_VERSION_LABEL', !isReadOnly && Identity.isRootId(this.getRootId()));
+  // UIHelper.setVisible('NEW_VERSION_LABEL', !isReadOnly && Identity.isWebsiteId(this.getRootId()));
+
   this.isReadOnly = isReadOnly;
 };
 

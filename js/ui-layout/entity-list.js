@@ -7,7 +7,7 @@ UILayout.entityList =
           type: 'icon',
           icon: 'refresh',
           id: 'REFRESH_ENTITY_LABEL_1', label: STRINGS.REFRESH_ENTITY,
-          width: 85,
+          width: 65,
           click: function() { UI.entityList.refresh(); }
         },
         { view: 'button',
@@ -39,13 +39,7 @@ UILayout.entityList =
               // UI.entityList.refresh();
             }
           }
-        },
-        { view: 'button',
-          type: 'icon',
-          icon: 'edit',
-          width: 40,
-          click: function() { $$('script_editor').show(); }
-        },
+        }
       ]
     },
     { view: 'template',

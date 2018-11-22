@@ -83,9 +83,6 @@ EntityTree.prototype.createNewEmptyVersion = function(description) {
     var i = 0;
     if (oldId != null && $$('entity_tree').getItem(oldId)) {
       i = $$('entity_tree').getBranchIndex(oldId);
-    }
-
-    if (oldId) {
       $$('entity_tree').remove(oldId);
     }
 
@@ -134,7 +131,7 @@ EntityTree.prototype.changeCurrentRootVersion = function(rootId, version) {
 
 
 /**
- * View another version of passed root.
+ * View another version of passed website.
  * @param {string} rootId Existing Root ID which version you want to view.
  * @param {int} version Version you want to view.
  */
@@ -143,19 +140,17 @@ EntityTree.prototype.viewRootVersion = function(rootId, version) {
   var self = this;
   Mydataspace.entities.get({
     root: data.root,
-    path: '',
+    path: 'website',
     version: version,
     children: true
   }).then(function(data) {
     var entity = Identity.entityFromData(data);
-
 
     var i = $$('entity_tree').getBranchIndex(rootId);
 
     $$('entity_tree').remove(rootId);
 
     $$('entity_tree').add(entity, i, null);
-
 
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
       self.setChildren(entity.id, entity.data);

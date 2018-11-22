@@ -91,8 +91,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     CLONE_ENTITY_PATH: 'Path',
 
     SAVE_ENTITY: 'Save',
-    REFRESH_ENTITY: 'Refresh',
-    CANCEL_ENTITY: 'View',
+    REFRESH_ENTITY: 'Ref.',
+    CANCEL_ENTITY: 'Cancel',
     SEARCH_BY_ROOTS: 'Search roots',
     SEARCH_BY_ENTITIES: 'Search',
     ADD_RESOURCE_WINDOW: 'New Resource',
@@ -387,8 +387,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
 
 
     SAVE_ENTITY: 'Сохр.',
-    REFRESH_ENTITY: 'Обнов.',
-    CANCEL_ENTITY: 'Пр.',
+    REFRESH_ENTITY: 'Обн.',
+    CANCEL_ENTITY: 'Отмена',
     SEARCH_BY_ROOTS: 'Поиск по корням',
     SEARCH_BY_ENTITIES: 'Поиск по элементам',
     ADD_RESOURCE_WINDOW: 'Добавить ресурс',

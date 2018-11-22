@@ -25,8 +25,7 @@ EntityForm.prototype.setEditing = function(editing) {
   UI.entityForm.hideScriptEditWindow();
   var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(this.selectedId).path);
 
-  UIHelper.setVisible('EDIT_ENTITY_LABEL', !editing);
-  UIHelper.setVisible('RUN_SCRIPT_LABEL', editing && entityType === 'task');
+  UIHelper.setVisible('entity_form__toolbar', editing);
   UIHelper.setVisible(['SAVE_ENTITY_LABEL', 'CANCEL_ENTITY_LABEL', 'ADD_FIELD_LABEL'], editing);
 
   if (editing) {
@@ -289,15 +288,6 @@ EntityForm.prototype.setRootView = function(data) {
         }, 60000 - rootTime);
       }
     }
-
-    if (tags && websiteURL) {
-      document.getElementsByClassName('view__overview_image_wrap')[0].classList.add('view__overview_image_wrap--large');
-      document.getElementById('view__overview_image').classList.add('view__overview_image--large');
-    } else if (tags || websiteURL) {
-      document.getElementsByClassName('view__overview_image_wrap')[0].classList.add('view__overview_image_wrap--medium');
-      document.getElementById('view__overview_image').classList.add('view__overview_image--medium');
-    }
-
 
     if (MDSCommon.isBlank(websiteURL)) {
       document.getElementById('view__websiteURL').style.display = 'none';
@@ -623,7 +613,7 @@ EntityForm.prototype.setData = function(data) {
       }
     }
 
-    this.addRootFields(fields);
+    this.addRootFields({ fields: fields, type: data.type });
   } else {
     this.setNoFieldLabelVisible(true);
     this.addFields(fields, false, UIHelper.getEntityTypeByPath(data.path));
@@ -647,18 +637,6 @@ EntityForm.prototype.refresh = function() {
   Mydataspace.request(req, MDSCommon.extend(Identity.dataFromId(self.selectedId), { children: true }), function(data) {
     if (!isWithMeta || entityType === 'resource') {
       self.setView(data);
-
-      if (data.mine) {
-        $$('DELETE_ENTITY_SHORT_LABEL').show();
-      } else {
-        $$('DELETE_ENTITY_SHORT_LABEL').hide();
-      }
-
-      if (entityType === 'resource' || !data.mine) {
-        $$('EDIT_ENTITY_LABEL').hide();
-      } else {
-        $$('EDIT_ENTITY_LABEL').show();
-      }
     } else {
       self.setData(data);
       if (self.isProto()) {
@@ -834,7 +812,9 @@ EntityForm.prototype.addFields = function(fields, setDirty, type) {
   }
 };
 
-EntityForm.prototype.addRootFields = function(fields, setDirty) {
+EntityForm.prototype.addRootFields = function(options) {
+  var fields = options.fields;
+  var setDirty = options.setDirty;
   fields.sort (function(x, y) {
     var xIndex = UIConstants.ROOT_FIELDS.indexOf(x.name);
     var yIndex = UIConstants.ROOT_FIELDS.indexOf(y.name);
@@ -867,9 +847,15 @@ EntityForm.prototype.addRootFields = function(fields, setDirty) {
     if (field.name.indexOf('$') === 0) {
       continue;
     }
+
     if (UIConstants.HIDDEN_ROOT_FIELDS.indexOf(field.name) >= 0) {
       continue;
     }
+
+    if (options.type === 'd' && UIConstants.HIDDEN_WEBSITE_FIELDS.indexOf(field.name) >= 0) {
+      continue;
+    }
+
     if (UIConstants.ROOT_FIELDS.indexOf(field.name) >= 0) {
       this.addRootField(field, setDirty);
     } else {

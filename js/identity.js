@@ -178,6 +178,10 @@ var Identity = {
     return MDSCommon.isPresent(id) && id.indexOf(':') < 0;
   },
 
+  isWebsiteId: function(id) {
+    return Identity.dataFromId(id).path === 'website';
+  },
+
   getFileNameFromId: function (id) {
     var i = id.indexOf('#');
     if (i === -1) {

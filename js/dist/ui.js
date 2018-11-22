@@ -212,11 +212,20 @@ UIConstants = {
 		'like': 'heart-o',
 		'comments': 'comments',
 		'comment': 'comment',
-		'views': 'photo',
-		'view': 'file-image-o',
+		// 'views': 'photo',
+		// 'view': 'file-image-o',
     'website': 'globe',
     'wizards': 'magic',
-    'wizard': 'magic'
+    'wizard': 'magic',
+    'dev': 'keyboard-o',
+    'production': 'industry',
+    'generators': 'asterisk',
+    'generator': 'asterisk',
+    'cache': 'flash',
+    'migration': 'sign-out',
+    'includes': 'flash',
+    'scss': 'css3',
+    'public_html': 'html5'
 	},
 
 	ROOT_FIELDS: [
@@ -257,6 +266,19 @@ UIConstants = {
   },
 
 	HIDDEN_ROOT_FIELDS: [
+    'country',
+    'websiteURL'
+  ],
+
+  HIDDEN_WEBSITE_FIELDS: [
+    'tags',
+    'country',
+    'language',
+    'category',
+    'country',
+    'license',
+    'licenseURL',
+    'licenseText',
     'websiteURL'
   ],
 
@@ -280,20 +302,6 @@ UIConstants = {
     'website',
     'wizards'
 	],
-
-	CATEGORY_ICONS: {
-		biz: 'briefcase',
-		economy: 'area-chart',
-		health: 'heart',
-		edu: 'graduation-cap',
-		ecology: 'leaf',
-		culture: 'paint-brush',
-		security: 'shield',
-		transport: 'car',
-		geo: 'map',
-		state: 'university',
-		tourism: 'plane'
-	},
 
   EDITOR_SUPPORTED_EXTENSIONS: {
 	  'js': {
@@ -404,15 +412,34 @@ UIHelper = {
       case 'likes':
       case 'comments':
       case 'processes':
-      case 'views':
       case 'website':
       case 'wizards':
+      case 'generators':
+      case 'dev':
+      case 'production':
         return path;
+      case 'production/protos':
+      case 'production/resources':
+      case 'production/cache':
+      case 'dev/protos':
+      case 'dev/resources':
+      case 'dev/cache':
+      case 'website/tasks':
+      case 'website/wizards':
+      case 'website/generators':
+      case 'website/migration':
+      case 'website/includes':
+      case 'website/scss':
+      case 'website/public_html':
+        return path.split('/')[1];
       default:
-        if (/^wizards\/[^\/]+$/.test(path)) {
+        if (/^generators\/[^\/]+$/.test(path)) {
+          return 'generator';
+        }
+        if (/^wizards\/[^\/]+$/.test(path) || /^website\/wizards\/[^\/]+$/.test(path)) {
           return 'wizard';
         }
-        if (/^tasks\/[^\/]+$/.test(path)) {
+        if (/^tasks\/[^\/]+$/.test(path) || /^website\/tasks\/[^\/]+$/.test(path)) {
           return 'task';
         }
         if (/^tasks\/[^\/]+\/logs$/.test(path)) {
@@ -923,6 +950,10 @@ var Identity = {
     return MDSCommon.isPresent(id) && id.indexOf(':') < 0;
   },
 
+  isWebsiteId: function(id) {
+    return Identity.dataFromId(id).path === 'website';
+  },
+
   getFileNameFromId: function (id) {
     var i = id.indexOf('#');
     if (i === -1) {
@@ -1280,8 +1311,7 @@ EntityForm.prototype.setEditing = function(editing) {
   UI.entityForm.hideScriptEditWindow();
   var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(this.selectedId).path);
 
-  UIHelper.setVisible('EDIT_ENTITY_LABEL', !editing);
-  UIHelper.setVisible('RUN_SCRIPT_LABEL', editing && entityType === 'task');
+  UIHelper.setVisible('entity_form__toolbar', editing);
   UIHelper.setVisible(['SAVE_ENTITY_LABEL', 'CANCEL_ENTITY_LABEL', 'ADD_FIELD_LABEL'], editing);
 
   if (editing) {
@@ -1544,15 +1574,6 @@ EntityForm.prototype.setRootView = function(data) {
         }, 60000 - rootTime);
       }
     }
-
-    if (tags && websiteURL) {
-      document.getElementsByClassName('view__overview_image_wrap')[0].classList.add('view__overview_image_wrap--large');
-      document.getElementById('view__overview_image').classList.add('view__overview_image--large');
-    } else if (tags || websiteURL) {
-      document.getElementsByClassName('view__overview_image_wrap')[0].classList.add('view__overview_image_wrap--medium');
-      document.getElementById('view__overview_image').classList.add('view__overview_image--medium');
-    }
-
 
     if (MDSCommon.isBlank(websiteURL)) {
       document.getElementById('view__websiteURL').style.display = 'none';
@@ -1878,7 +1899,7 @@ EntityForm.prototype.setData = function(data) {
       }
     }
 
-    this.addRootFields(fields);
+    this.addRootFields({ fields: fields, type: data.type });
   } else {
     this.setNoFieldLabelVisible(true);
     this.addFields(fields, false, UIHelper.getEntityTypeByPath(data.path));
@@ -1902,18 +1923,6 @@ EntityForm.prototype.refresh = function() {
   Mydataspace.request(req, MDSCommon.extend(Identity.dataFromId(self.selectedId), { children: true }), function(data) {
     if (!isWithMeta || entityType === 'resource') {
       self.setView(data);
-
-      if (data.mine) {
-        $$('DELETE_ENTITY_SHORT_LABEL').show();
-      } else {
-        $$('DELETE_ENTITY_SHORT_LABEL').hide();
-      }
-
-      if (entityType === 'resource' || !data.mine) {
-        $$('EDIT_ENTITY_LABEL').hide();
-      } else {
-        $$('EDIT_ENTITY_LABEL').show();
-      }
     } else {
       self.setData(data);
       if (self.isProto()) {
@@ -2089,7 +2098,9 @@ EntityForm.prototype.addFields = function(fields, setDirty, type) {
   }
 };
 
-EntityForm.prototype.addRootFields = function(fields, setDirty) {
+EntityForm.prototype.addRootFields = function(options) {
+  var fields = options.fields;
+  var setDirty = options.setDirty;
   fields.sort (function(x, y) {
     var xIndex = UIConstants.ROOT_FIELDS.indexOf(x.name);
     var yIndex = UIConstants.ROOT_FIELDS.indexOf(y.name);
@@ -2122,9 +2133,15 @@ EntityForm.prototype.addRootFields = function(fields, setDirty) {
     if (field.name.indexOf('$') === 0) {
       continue;
     }
+
     if (UIConstants.HIDDEN_ROOT_FIELDS.indexOf(field.name) >= 0) {
       continue;
     }
+
+    if (options.type === 'd' && UIConstants.HIDDEN_WEBSITE_FIELDS.indexOf(field.name) >= 0) {
+      continue;
+    }
+
     if (UIConstants.ROOT_FIELDS.indexOf(field.name) >= 0) {
       this.addRootField(field, setDirty);
     } else {
@@ -2453,7 +2470,8 @@ EntityList.prototype.setReadOnly = function(isReadOnly) {
   $$('entity_tree__new_root_version_list').clearAll();
   $$('entity_tree__new_root_version_list').parse(UIControls.getChangeVersionPopupData(isReadOnly));
   UIHelper.setVisible('ADD_ENTITY_LABEL', !isReadOnly);
-  UIHelper.setVisible('NEW_VERSION_LABEL', !isReadOnly && Identity.isRootId(this.getRootId()));
+  // UIHelper.setVisible('NEW_VERSION_LABEL', !isReadOnly && Identity.isWebsiteId(this.getRootId()));
+
   this.isReadOnly = isReadOnly;
 };
 
@@ -2823,9 +2841,6 @@ EntityTree.prototype.createNewEmptyVersion = function(description) {
     var i = 0;
     if (oldId != null && $$('entity_tree').getItem(oldId)) {
       i = $$('entity_tree').getBranchIndex(oldId);
-    }
-
-    if (oldId) {
       $$('entity_tree').remove(oldId);
     }
 
@@ -2874,7 +2889,7 @@ EntityTree.prototype.changeCurrentRootVersion = function(rootId, version) {
 
 
 /**
- * View another version of passed root.
+ * View another version of passed website.
  * @param {string} rootId Existing Root ID which version you want to view.
  * @param {int} version Version you want to view.
  */
@@ -2883,19 +2898,17 @@ EntityTree.prototype.viewRootVersion = function(rootId, version) {
   var self = this;
   Mydataspace.entities.get({
     root: data.root,
-    path: '',
+    path: 'website',
     version: version,
     children: true
   }).then(function(data) {
     var entity = Identity.entityFromData(data);
-
 
     var i = $$('entity_tree').getBranchIndex(rootId);
 
     $$('entity_tree').remove(rootId);
 
     $$('entity_tree').add(entity, i, null);
-
 
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
       self.setChildren(entity.id, entity.data);
@@ -5364,7 +5377,7 @@ UILayout.entityList =
           type: 'icon',
           icon: 'refresh',
           id: 'REFRESH_ENTITY_LABEL_1', label: STRINGS.REFRESH_ENTITY,
-          width: 85,
+          width: 65,
           click: function() { UI.entityList.refresh(); }
         },
         { view: 'button',
@@ -5396,13 +5409,7 @@ UILayout.entityList =
               // UI.entityList.refresh();
             }
           }
-        },
-        { view: 'button',
-          type: 'icon',
-          icon: 'edit',
-          width: 40,
-          click: function() { $$('script_editor').show(); }
-        },
+        }
       ]
     },
     { view: 'template',
@@ -5476,28 +5483,17 @@ UILayout.entityForm =
   rows: [
   { view: 'toolbar',
     id: 'entity_form__toolbar',
+    hidden: true,
     cols: [
-      { view: 'button',
-        type: 'icon',
-        icon: 'refresh',
-        id: 'REFRESH_ENTITY_LABEL', label: STRINGS.REFRESH_ENTITY,
-        width: 80,
-        click: function() {
-          UI.entityForm.refresh();
-        }
-      },
-      { view: 'button',
-        type: 'icon',
-        icon: 'save',
-        id: 'SAVE_ENTITY_LABEL',
-        label: STRINGS.SAVE_ENTITY,
-        css: 'menu__green_button',
-        hidden: true,
-        width: 75,
-        click: function() {
-          UI.entityForm.save();
-        }
-      },
+      // { view: 'button',
+      //   type: 'icon',
+      //   icon: 'refresh',
+      //   id: 'REFRESH_ENTITY_LABEL', label: STRINGS.REFRESH_ENTITY,
+      //   width: 60,
+      //   click: function() {
+      //     UI.entityForm.refresh();
+      //   }
+      // },
       { view: 'button',
         type: 'icon',
         icon: 'plus',
@@ -5508,78 +5504,40 @@ UILayout.entityForm =
           $$('add_field_window').show();
         }
       },
-      { view: 'button',
-        type: 'icon',
-        icon: 'bug',
-        id: 'RUN_SCRIPT_LABEL', label: STRINGS.RUN_SCRIPT,
-        hidden: true,
-        width: 80,
-        click: function() {
-          UIHelper.popupCenter('/run-script.html', 'Run Script', 600, 400);
-        }
-      },
       {},
-      // { view: 'button',
-      //   type: 'icon',
-      //   icon: 'download',
-      //   id: 'EXPORT_ENTITY_LABEL',
-      //   label: STRINGS.EXPORT_ENTITY,
-      //   width: 80,
-      //   click: function() {
-      //     UI.entityForm.export();
-      //   }
-      // },
       { view: 'button',
         type: 'icon',
-        icon: 'copy',
-        //hidden: PROJECT_NAME === 'web20',
-        id: 'CLONE_ENTITY_LABEL',
-        label: STRINGS.CLONE_ENTITY,
-        width: 80,
+        icon: 'save',
+        id: 'SAVE_ENTITY_LABEL',
+        label: STRINGS.SAVE_ENTITY,
+        // css: 'menu__green_button',
+        hidden: true,
+        width: 65,
         click: function() {
-          UI.entityForm.clone();
+          UI.entityForm.save();
         }
       },
       { view: 'button',
         type: 'icon',
-        icon: 'remove',
-        id: 'DELETE_ENTITY_SHORT_LABEL', label: STRINGS.DELETE_ENTITY_SHORT,
-        width: 80,
-        click: function() {
-          webix.confirm({
-            title: STRINGS.DELETE_ENTITY,
-            text: STRINGS.REALLY_DELETE,
-            ok: STRINGS.YES,
-            cancel: STRINGS.NO,
-            callback: function(result) {
-              if (result) {
-                UI.entityForm.delete();
-              }
-            }
-          });
-        }
-      },
-      { view: 'button',
-        type: 'icon',
-        icon: 'pencil-square-o',
-        id: 'EDIT_ENTITY_LABEL',
-        label: STRINGS.EDIT_ENTITY,
-        width: 60,
-        click: function() {
-          UI.entityForm.startEditing();
-        }
-      },
-      { view: 'button',
-        type: 'icon',
-        icon: 'eye',
+        icon: 'times-circle',
         id: 'CANCEL_ENTITY_LABEL', label: STRINGS.CANCEL_ENTITY,
-        width: 60,
+        width: 80,
         hidden: true,
         click: function() {
           UI.entityForm.setEditing(false);
           UI.entityForm.refresh();
         }
-      }
+      },
+      // { view: 'button',
+      //   type: 'icon',
+      //   icon: 'pencil-square-o',
+      //   id: 'EDIT_ENTITY_LABEL',
+      //   label: STRINGS.EDIT_ENTITY,
+      //   width: 60,
+      //   click: function() {
+      //     UI.entityForm.startEditing();
+      //   }
+      // },
     ]
   },
   {

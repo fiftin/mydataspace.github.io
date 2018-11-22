@@ -75,15 +75,34 @@ UIHelper = {
       case 'likes':
       case 'comments':
       case 'processes':
-      case 'views':
       case 'website':
       case 'wizards':
+      case 'generators':
+      case 'dev':
+      case 'production':
         return path;
+      case 'production/protos':
+      case 'production/resources':
+      case 'production/cache':
+      case 'dev/protos':
+      case 'dev/resources':
+      case 'dev/cache':
+      case 'website/tasks':
+      case 'website/wizards':
+      case 'website/generators':
+      case 'website/migration':
+      case 'website/includes':
+      case 'website/scss':
+      case 'website/public_html':
+        return path.split('/')[1];
       default:
-        if (/^wizards\/[^\/]+$/.test(path)) {
+        if (/^generators\/[^\/]+$/.test(path)) {
+          return 'generator';
+        }
+        if (/^wizards\/[^\/]+$/.test(path) || /^website\/wizards\/[^\/]+$/.test(path)) {
           return 'wizard';
         }
-        if (/^tasks\/[^\/]+$/.test(path)) {
+        if (/^tasks\/[^\/]+$/.test(path) || /^website\/tasks\/[^\/]+$/.test(path)) {
           return 'task';
         }
         if (/^tasks\/[^\/]+\/logs$/.test(path)) {

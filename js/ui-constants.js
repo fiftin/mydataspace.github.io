@@ -15,11 +15,20 @@ UIConstants = {
 		'like': 'heart-o',
 		'comments': 'comments',
 		'comment': 'comment',
-		'views': 'photo',
-		'view': 'file-image-o',
+		// 'views': 'photo',
+		// 'view': 'file-image-o',
     'website': 'globe',
     'wizards': 'magic',
-    'wizard': 'magic'
+    'wizard': 'magic',
+    'dev': 'keyboard-o',
+    'production': 'industry',
+    'generators': 'asterisk',
+    'generator': 'asterisk',
+    'cache': 'flash',
+    'migration': 'sign-out',
+    'includes': 'flash',
+    'scss': 'css3',
+    'public_html': 'html5'
 	},
 
 	ROOT_FIELDS: [
@@ -60,6 +69,19 @@ UIConstants = {
   },
 
 	HIDDEN_ROOT_FIELDS: [
+    'country',
+    'websiteURL'
+  ],
+
+  HIDDEN_WEBSITE_FIELDS: [
+    'tags',
+    'country',
+    'language',
+    'category',
+    'country',
+    'license',
+    'licenseURL',
+    'licenseText',
     'websiteURL'
   ],
 

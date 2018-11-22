@@ -9,28 +9,17 @@ UILayout.entityForm =
   rows: [
   { view: 'toolbar',
     id: 'entity_form__toolbar',
+    hidden: true,
     cols: [
-      { view: 'button',
-        type: 'icon',
-        icon: 'refresh',
-        id: 'REFRESH_ENTITY_LABEL', label: STRINGS.REFRESH_ENTITY,
-        width: 80,
-        click: function() {
-          UI.entityForm.refresh();
-        }
-      },
-      { view: 'button',
-        type: 'icon',
-        icon: 'save',
-        id: 'SAVE_ENTITY_LABEL',
-        label: STRINGS.SAVE_ENTITY,
-        css: 'menu__green_button',
-        hidden: true,
-        width: 75,
-        click: function() {
-          UI.entityForm.save();
-        }
-      },
+      // { view: 'button',
+      //   type: 'icon',
+      //   icon: 'refresh',
+      //   id: 'REFRESH_ENTITY_LABEL', label: STRINGS.REFRESH_ENTITY,
+      //   width: 60,
+      //   click: function() {
+      //     UI.entityForm.refresh();
+      //   }
+      // },
       { view: 'button',
         type: 'icon',
         icon: 'plus',
@@ -41,78 +30,40 @@ UILayout.entityForm =
           $$('add_field_window').show();
         }
       },
-      { view: 'button',
-        type: 'icon',
-        icon: 'bug',
-        id: 'RUN_SCRIPT_LABEL', label: STRINGS.RUN_SCRIPT,
-        hidden: true,
-        width: 80,
-        click: function() {
-          UIHelper.popupCenter('/run-script.html', 'Run Script', 600, 400);
-        }
-      },
       {},
-      // { view: 'button',
-      //   type: 'icon',
-      //   icon: 'download',
-      //   id: 'EXPORT_ENTITY_LABEL',
-      //   label: STRINGS.EXPORT_ENTITY,
-      //   width: 80,
-      //   click: function() {
-      //     UI.entityForm.export();
-      //   }
-      // },
       { view: 'button',
         type: 'icon',
-        icon: 'copy',
-        //hidden: PROJECT_NAME === 'web20',
-        id: 'CLONE_ENTITY_LABEL',
-        label: STRINGS.CLONE_ENTITY,
-        width: 80,
+        icon: 'save',
+        id: 'SAVE_ENTITY_LABEL',
+        label: STRINGS.SAVE_ENTITY,
+        // css: 'menu__green_button',
+        hidden: true,
+        width: 65,
         click: function() {
-          UI.entityForm.clone();
+          UI.entityForm.save();
         }
       },
       { view: 'button',
         type: 'icon',
-        icon: 'remove',
-        id: 'DELETE_ENTITY_SHORT_LABEL', label: STRINGS.DELETE_ENTITY_SHORT,
-        width: 80,
-        click: function() {
-          webix.confirm({
-            title: STRINGS.DELETE_ENTITY,
-            text: STRINGS.REALLY_DELETE,
-            ok: STRINGS.YES,
-            cancel: STRINGS.NO,
-            callback: function(result) {
-              if (result) {
-                UI.entityForm.delete();
-              }
-            }
-          });
-        }
-      },
-      { view: 'button',
-        type: 'icon',
-        icon: 'pencil-square-o',
-        id: 'EDIT_ENTITY_LABEL',
-        label: STRINGS.EDIT_ENTITY,
-        width: 60,
-        click: function() {
-          UI.entityForm.startEditing();
-        }
-      },
-      { view: 'button',
-        type: 'icon',
-        icon: 'eye',
+        icon: 'times-circle',
         id: 'CANCEL_ENTITY_LABEL', label: STRINGS.CANCEL_ENTITY,
-        width: 60,
+        width: 80,
         hidden: true,
         click: function() {
           UI.entityForm.setEditing(false);
           UI.entityForm.refresh();
         }
-      }
+      },
+      // { view: 'button',
+      //   type: 'icon',
+      //   icon: 'pencil-square-o',
+      //   id: 'EDIT_ENTITY_LABEL',
+      //   label: STRINGS.EDIT_ENTITY,
+      //   width: 60,
+      //   click: function() {
+      //     UI.entityForm.startEditing();
+      //   }
+      // },
     ]
   },
   {

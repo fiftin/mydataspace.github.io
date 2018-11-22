@@ -50,15 +50,30 @@ $view-tag-flag-size: 16px;
 
 .view__overview {
   display: table;
-  padding: 10px;
+  padding: 5px;
   background: $toolbar-bg;
   width: 100%;
   table-layout: fixed;
   overflow: hidden;
-  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
-
-
+  box-shadow: none;
+  border-bottom: 1px solid #dddddd;
 }
+
+.view__overview-actions {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
+
+.view__overview-button {
+  background: transparent;
+  border: 0;
+  margin-top: 5px;
+  width: $root-icon-size-sm - 10px;
+  height: $root-icon-size-sm - 10px;
+  font-size: 18px;
+}
+
 
 pre {
   font-size: 16px !important;
@@ -118,14 +133,11 @@ pre {
 }
 
 .view__title {
-  padding: 0 10px 0 0;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
   display: block;
   margin: 0;
-  // text-overflow: ellipsis;
-  // overflow: hidden;
-  // white-space: nowrap;
+  line-height: $root-icon-size-sm;
 }
 
 .view__title_link {
