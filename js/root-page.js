@@ -302,10 +302,9 @@ function initRootPage(options) {
       document.getElementById('root__title').innerText = title;
       document.title = title;
 
-      document.getElementById('root__version').innerText = '#' +
-        (MDSCommon.findValueByName(data.fields, '$version') || 0);
-
-      $('#root__version').tooltip({placement: 'bottom', container: 'body'});
+      // document.getElementById('root__version').innerText = '#' +
+      //   (MDSCommon.findValueByName(data.fields, '$version') || 0);
+      // $('#root__version').tooltip({placement: 'bottom', container: 'body'});
 
       var tags = (MDSCommon.findValueByName(data.fields, 'tags') || '').split(' ').filter(function (tag) {
         return tag != null && tag !== '';
@@ -433,39 +432,39 @@ function initRootPage(options) {
         }));
       });
 
-      document.getElementById('root__version').addEventListener('click', function () {
-        loadEntityData('getRootVersions', DATA, function (result) {
-          var table = document.getElementById('change_root_version_modal__table').tBodies[0];
-
-          for (var i = table.rows.length - 1; i >= 0; i--) {
-            table.deleteRow(i);
-          }
-
-          for (var i = 0; i < result.versions.length; i++) {
-            var row = table.insertRow();
-            var version = result.versions[i];
-            var number = row.insertCell(0);
-            var createdAt = row.insertCell(1);
-            var description = row.insertCell(2);
-            var numberLink = document.createElement('a');
-            var createdAtLink = document.createElement('a');
-            var descriptionLink = document.createElement('a');
-
-            numberLink.href = 'https://mydataspace.org/' + DATA.root + '?v=' + version.version;
-            createdAtLink.href = 'https://mydataspace.org/' + DATA.root + '?v=' + version.version;
-            descriptionLink.href = 'https://mydataspace.org/' + DATA.root + '?v=' + version.version;
-
-            numberLink.appendChild(document.createTextNode(version.version));
-            createdAtLink.appendChild(document.createTextNode(version.createdAt));
-            descriptionLink.appendChild(document.createTextNode(version.versionDescription || ''));
-
-            number.appendChild(numberLink);
-            createdAt.appendChild(createdAtLink);
-            description.appendChild(descriptionLink);
-          }
-        }, function (err) {
-        });
-      });
+      // document.getElementById('root__version').addEventListener('click', function () {
+      //   loadEntityData('getRootVersions', DATA, function (result) {
+      //     var table = document.getElementById('change_root_version_modal__table').tBodies[0];
+      //
+      //     for (var i = table.rows.length - 1; i >= 0; i--) {
+      //       table.deleteRow(i);
+      //     }
+      //
+      //     for (var i = 0; i < result.versions.length; i++) {
+      //       var row = table.insertRow();
+      //       var version = result.versions[i];
+      //       var number = row.insertCell(0);
+      //       var createdAt = row.insertCell(1);
+      //       var description = row.insertCell(2);
+      //       var numberLink = document.createElement('a');
+      //       var createdAtLink = document.createElement('a');
+      //       var descriptionLink = document.createElement('a');
+      //
+      //       numberLink.href = 'https://mydataspace.org/' + DATA.root + '?v=' + version.version;
+      //       createdAtLink.href = 'https://mydataspace.org/' + DATA.root + '?v=' + version.version;
+      //       descriptionLink.href = 'https://mydataspace.org/' + DATA.root + '?v=' + version.version;
+      //
+      //       numberLink.appendChild(document.createTextNode(version.version));
+      //       createdAtLink.appendChild(document.createTextNode(version.createdAt));
+      //       descriptionLink.appendChild(document.createTextNode(version.versionDescription || ''));
+      //
+      //       number.appendChild(numberLink);
+      //       createdAt.appendChild(createdAtLink);
+      //       description.appendChild(descriptionLink);
+      //     }
+      //   }, function (err) {
+      //   });
+      // });
 
       var pathnameParts = getPathnameParts(location.pathname);
       if (pathnameParts[1]) {
