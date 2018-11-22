@@ -54,13 +54,12 @@ UILayout.windows.changeVersion = {
             width: 150,
             click: function() {
               var version = $$('change_version_window__table').getSelectedItem().version;
-              var rootId = Identity.rootId(UI.entityList.getRootId());
               switch ($$('change_version_window').mode) {
                 case 'switch':
-                  UI.entityTree.changeCurrentRootVersion(rootId, version);
+                  UI.entityTree.changeCurrentRootVersion(UI.entityList.getRootId(), version);
                   break;
                 case 'view':
-                  UI.entityTree.viewRootVersion(rootId, version);
+                  UI.entityTree.viewRootVersion(UI.entityList.getRootId(), version);
                   break;
               }
               $$('change_version_window').hide();

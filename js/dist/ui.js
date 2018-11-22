@@ -225,7 +225,8 @@ UIConstants = {
     'migration': 'sign-out',
     'includes': 'puzzle-piece',
     'scss': 'paint-brush',
-    'public_html': 'code'
+    'public_html': 'code',
+    'data': 'database'
 	},
 
 	ROOT_FIELDS: [
@@ -293,14 +294,30 @@ UIConstants = {
 
 	SYSTEM_PATHS: [
 		'resources',
-		'tasks',
 		'protos',
 		'comments',
 		'views',
 		'likes',
 		'processes',
     'website',
-    'wizards'
+    'tasks',
+    'wizards',
+    'production',
+    'production/data',
+    'production/resources',
+    'production/protos',
+    'production/cache',
+    'dev',
+    'dev/data',
+    'dev/resources',
+    'dev/protos',
+    'dev/cache',
+    'website/includes',
+    'website/public_html',
+    'website/migration',
+    'website/scss',
+    'website/wizards',
+    'website/generators',
 	],
 
   EDITOR_SUPPORTED_EXTENSIONS: {
@@ -417,10 +434,13 @@ UIHelper = {
       case 'generators':
       case 'dev':
       case 'production':
+      case 'data':
         return path;
+      case 'production/data':
       case 'production/protos':
       case 'production/resources':
       case 'production/cache':
+      case 'dev/data':
       case 'dev/protos':
       case 'dev/resources':
       case 'dev/cache':
@@ -826,7 +846,7 @@ var Identity = {
     }
 
     var version = '';
-    if (typeof v === 'number') {
+    if (typeof v === 'number' && v > 0) {
       version = '?' + v;
     }
     
@@ -915,8 +935,8 @@ var Identity = {
 
   rootId: function(entityIdWithVersion) {
     var data = Identity.dataFromId(entityIdWithVersion);
-    var version = typeof data.version === 'number' ? '?' + data.version : '';
-    return data.root + version; 
+    //var version = typeof data.version === 'number' ? '?' + data.version : '';
+    return data.root;// + version;
   },
 
 	/**
@@ -1403,8 +1423,14 @@ EntityForm.prototype.setLogRecords = function(fields, ignoredFieldNames, addLabe
   return viewFields;
 };
 
-EntityForm.getNoFieldsLabel = function(isMine) {
-  return isMine ? '<div>' +
+EntityForm.getNoFieldsLabel = function(data) {
+  if (STRINGS.path_descriptions[data.path]) {
+    return '<div>' +
+      '<div class="view__blank_root_prompt">' + STRINGS.path_descriptions[data.path] + '</div>' +
+    '</div>';
+  }
+
+  return data.mine && UIConstants.SYSTEM_PATHS.indexOf(data.path) === -1 ? '<div>' +
   '<div class="view__blank_root_prompt">' + STRINGS.no_fields_prompt + '</div>' +
   '<div class="text-center"><button onclick="UI.entityForm.startAddingField();" type="button" class="prompt_button">' + STRINGS.no_fields_add_button + '</button></div>' +
   '</div>'
@@ -1430,7 +1456,7 @@ EntityForm.prototype.setViewFields = function(data,
   var viewFields = document.getElementById('view__fields');
   if (MDSCommon.isBlank(fields.filter(function (field) { return field.name !== 'description' && field.name.indexOf('$') != 0; }))) {
     viewFields.classList.add('view__fields--empty');
-    viewFields.innerHTML = addLabelIfNoFieldsExists ? EntityForm.getNoFieldsLabel(data.mine) : '';
+    viewFields.innerHTML = addLabelIfNoFieldsExists ? EntityForm.getNoFieldsLabel(data) : '';
   } else {
     viewFields.classList.add('view__fields--filled');
     viewFields.innerHTML = '';
@@ -1470,7 +1496,7 @@ EntityForm.prototype.setViewFields = function(data,
     }
   }
   if (numberOfChildren === 0) {
-    viewFields.innerHTML = addLabelIfNoFieldsExists ? EntityForm.getNoFieldsLabel(data.mine) : '';
+    viewFields.innerHTML = addLabelIfNoFieldsExists ? EntityForm.getNoFieldsLabel(data) : '';
   }
   return viewFields;
 };
@@ -1751,11 +1777,12 @@ EntityForm.prototype.setTaskView = function(data) {
 };
 
 EntityForm.prototype.setEntityView = function(data) {
-  if (this.selectedId == null) {
+  var self = this;
+
+  if (self.selectedId == null) {
       return;
   }
 
-  var self = this;
   var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.selectedId).path);
   var language = (getCurrentLanguage() || 'en').toLowerCase();
   var languagePrefix = language === 'en' ? '' : '/' + language;
@@ -1791,7 +1818,7 @@ EntityForm.prototype.setEntityView = function(data) {
     var viewFields;
     if (entityType === 'proto') {
       $('#view__description').remove();
-      viewFields = this.setViewFields(data);
+      viewFields = self.setViewFields(data);
     } else {
       var description = data.fields.filter(function(x) { return x.name === 'description'; })[0];
       if (description != null) {
@@ -1799,12 +1826,12 @@ EntityForm.prototype.setEntityView = function(data) {
       } else {
         $('#view__description').remove();
       }
-      viewFields = this.setViewFields(data, ['description'], description == null);
+      viewFields = self.setViewFields(data, ['description'], description == null);
     }
 
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
-      var value = $(this).data('value');
+      var value = $(self).data('value');
       if (value != null) {
         UI.entityForm.setScriptEditValue(value);
         if (!$$('edit_script_window').isVisible()) {
@@ -1813,9 +1840,13 @@ EntityForm.prototype.setEntityView = function(data) {
       } else {
         UI.entityForm.hideScriptEditWindow();
       }
-      $(this).addClass('view__field--active');
+      $(self).addClass('view__field--active');
     });
-  }.bind(this));
+
+    if (UIConstants.SYSTEM_PATHS.indexOf(data.path) >= 0) {
+      document.getElementById('view_overview_actions').style.display = 'none';
+    }
+  });
 };
 
 EntityForm.prototype.setLogView = function(data) {
@@ -1968,6 +1999,20 @@ EntityForm.prototype.export = function () {
 
 EntityForm.prototype.clone = function() {
   $$('clone_entity_window').show();
+};
+
+EntityForm.prototype.askDelete = function() {
+  webix.confirm({
+    title: STRINGS.DELETE_ENTITY,
+    text: STRINGS.REALLY_DELETE,
+    ok: STRINGS.YES,
+    cancel: STRINGS.NO,
+    callback: function(result) {
+      if (result) {
+        UI.entityForm.delete();
+      }
+    }
+  });
 };
 
 EntityForm.prototype.delete = function() {
@@ -2470,7 +2515,7 @@ EntityList.prototype.setReadOnly = function(isReadOnly) {
   $$('entity_tree__new_root_version_list').clearAll();
   $$('entity_tree__new_root_version_list').parse(UIControls.getChangeVersionPopupData(isReadOnly));
   UIHelper.setVisible('ADD_ENTITY_LABEL', !isReadOnly);
-  // UIHelper.setVisible('NEW_VERSION_LABEL', !isReadOnly && Identity.isWebsiteId(this.getRootId()));
+  UIHelper.setVisible('NEW_VERSION_LABEL', !isReadOnly && Identity.isWebsiteId(this.getRootId()));
 
   this.isReadOnly = isReadOnly;
 };
@@ -2822,6 +2867,9 @@ EntityTree.prototype.createNewEmptyVersion = function(description) {
   var currentData = Identity.dataFromId(UI.entityTree.currentId);
 
   return Mydataspace.entities.create({
+    sourceRoot: currentData.root,
+    sourcePath: '',
+    sourceVersion: currentData.version,
     root: currentData.root,
     path: '',
     version: currentData.version,
@@ -2893,22 +2941,27 @@ EntityTree.prototype.changeCurrentRootVersion = function(rootId, version) {
  * @param {string} rootId Existing Root ID which version you want to view.
  * @param {int} version Version you want to view.
  */
-EntityTree.prototype.viewRootVersion = function(rootId, version) {
-  var data = Identity.dataFromId(rootId);
+EntityTree.prototype.viewRootVersion = function(oldWebsiteId, version) {
+  var rootData = Identity.dataFromId(oldWebsiteId);
   var self = this;
   Mydataspace.entities.get({
-    root: data.root,
+    root: rootData.root,
     path: 'website',
     version: version,
     children: true
   }).then(function(data) {
+    // var oldWebsiteId = Identity.idFromData(MDSCommon.extend(rootData, {
+    //   path: 'website',
+    //   fields: [{name: '$version', value: rootData.version}]
+    // }));
+
     var entity = Identity.entityFromData(data);
 
-    var i = $$('entity_tree').getBranchIndex(rootId);
+    var i = $$('entity_tree').getBranchIndex(oldWebsiteId);
 
-    $$('entity_tree').remove(rootId);
+    $$('entity_tree').remove(oldWebsiteId);
 
-    $$('entity_tree').add(entity, i, null);
+    $$('entity_tree').add(entity, i, Identity.rootId(oldWebsiteId));
 
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
       self.setChildren(entity.id, entity.data);
@@ -2955,7 +3008,7 @@ EntityTree.prototype.resolveChildren = function(id, selectIndexFile) {
         return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS.indexOf(x.path) < 0;
       }).map(Identity.entityFromData);
 
-      UI.entityTree.setChildren(entityId, files.concat(children));
+      UI.entityTree.setChildren(id, files.concat(children));
 
       if (selectIndexFile) {
         for (var i in files) {
@@ -3718,6 +3771,7 @@ UILayout.windows.cloneEntity = {
             var formData = $$('clone_entity_form').getValues();
             var selectedData = Identity.dataFromId(UI.entityForm.selectedId);
             var data = MDSCommon.extend(formData, {
+              root: selectedData.root,
               fields: [],
               sourceRoot: selectedData.root,
               sourcePath: selectedData.path,
@@ -3745,7 +3799,6 @@ UILayout.windows.cloneEntity = {
         }
       },
       elements: [
-        { view: 'text', required: true, id: 'CLONE_ROOT_NAME_LABEL', label: STRINGS.CLONE_ROOT_NAME, name: 'root', labelWidth: UIHelper.LABEL_WIDTH },
         { view: 'text', required: true, id: 'CLONE_ENTITY_PATH_LABEL', label: STRINGS.CLONE_ENTITY_PATH, name: 'path', labelWidth: UIHelper.LABEL_WIDTH },
         UIControls.getEntityTypeSelectTemplate(),
         UIControls.getSubmitCancelForFormWindow('clone_entity')
@@ -4423,13 +4476,12 @@ UILayout.windows.changeVersion = {
             width: 150,
             click: function() {
               var version = $$('change_version_window__table').getSelectedItem().version;
-              var rootId = Identity.rootId(UI.entityList.getRootId());
               switch ($$('change_version_window').mode) {
                 case 'switch':
-                  UI.entityTree.changeCurrentRootVersion(rootId, version);
+                  UI.entityTree.changeCurrentRootVersion(UI.entityList.getRootId(), version);
                   break;
                 case 'view':
-                  UI.entityTree.viewRootVersion(rootId, version);
+                  UI.entityTree.viewRootVersion(UI.entityList.getRootId(), version);
                   break;
               }
               $$('change_version_window').hide();
@@ -5510,7 +5562,6 @@ UILayout.entityForm =
         icon: 'save',
         id: 'SAVE_ENTITY_LABEL',
         label: STRINGS.SAVE_ENTITY,
-        // css: 'menu__green_button',
         hidden: true,
         width: 65,
         click: function() {
@@ -5527,17 +5578,7 @@ UILayout.entityForm =
           UI.entityForm.setEditing(false);
           UI.entityForm.refresh();
         }
-      },
-      // { view: 'button',
-      //   type: 'icon',
-      //   icon: 'pencil-square-o',
-      //   id: 'EDIT_ENTITY_LABEL',
-      //   label: STRINGS.EDIT_ENTITY,
-      //   width: 60,
-      //   click: function() {
-      //     UI.entityForm.startEditing();
-      //   }
-      // },
+      }
     ]
   },
   {

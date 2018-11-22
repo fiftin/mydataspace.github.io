@@ -64,6 +64,9 @@ EntityTree.prototype.createNewEmptyVersion = function(description) {
   var currentData = Identity.dataFromId(UI.entityTree.currentId);
 
   return Mydataspace.entities.create({
+    sourceRoot: currentData.root,
+    sourcePath: '',
+    sourceVersion: currentData.version,
     root: currentData.root,
     path: '',
     version: currentData.version,
@@ -135,22 +138,22 @@ EntityTree.prototype.changeCurrentRootVersion = function(rootId, version) {
  * @param {string} rootId Existing Root ID which version you want to view.
  * @param {int} version Version you want to view.
  */
-EntityTree.prototype.viewRootVersion = function(rootId, version) {
-  var data = Identity.dataFromId(rootId);
+EntityTree.prototype.viewRootVersion = function(oldWebsiteId, version) {
+  var rootData = Identity.dataFromId(oldWebsiteId);
   var self = this;
   Mydataspace.entities.get({
-    root: data.root,
+    root: rootData.root,
     path: 'website',
     version: version,
     children: true
   }).then(function(data) {
     var entity = Identity.entityFromData(data);
 
-    var i = $$('entity_tree').getBranchIndex(rootId);
+    var i = $$('entity_tree').getBranchIndex(oldWebsiteId);
 
-    $$('entity_tree').remove(rootId);
+    $$('entity_tree').remove(oldWebsiteId);
 
-    $$('entity_tree').add(entity, i, null);
+    $$('entity_tree').add(entity, i, Identity.rootId(oldWebsiteId));
 
     if (typeof entity.data !== 'undefined' && entity.data.length > 0) {
       self.setChildren(entity.id, entity.data);
@@ -197,7 +200,7 @@ EntityTree.prototype.resolveChildren = function(id, selectIndexFile) {
         return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS.indexOf(x.path) < 0;
       }).map(Identity.entityFromData);
 
-      UI.entityTree.setChildren(entityId, files.concat(children));
+      UI.entityTree.setChildren(id, files.concat(children));
 
       if (selectIndexFile) {
         for (var i in files) {

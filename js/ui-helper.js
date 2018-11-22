@@ -80,10 +80,13 @@ UIHelper = {
       case 'generators':
       case 'dev':
       case 'production':
+      case 'data':
         return path;
+      case 'production/data':
       case 'production/protos':
       case 'production/resources':
       case 'production/cache':
+      case 'dev/data':
       case 'dev/protos':
       case 'dev/resources':
       case 'dev/cache':

@@ -28,7 +28,8 @@ UIConstants = {
     'migration': 'sign-out',
     'includes': 'puzzle-piece',
     'scss': 'paint-brush',
-    'public_html': 'code'
+    'public_html': 'code',
+    'data': 'database'
 	},
 
 	ROOT_FIELDS: [
@@ -96,14 +97,30 @@ UIConstants = {
 
 	SYSTEM_PATHS: [
 		'resources',
-		'tasks',
 		'protos',
 		'comments',
 		'views',
 		'likes',
 		'processes',
     'website',
-    'wizards'
+    'tasks',
+    'wizards',
+    'production',
+    'production/data',
+    'production/resources',
+    'production/protos',
+    'production/cache',
+    'dev',
+    'dev/data',
+    'dev/resources',
+    'dev/protos',
+    'dev/cache',
+    'website/includes',
+    'website/public_html',
+    'website/migration',
+    'website/scss',
+    'website/wizards',
+    'website/generators',
 	],
 
   EDITOR_SUPPORTED_EXTENSIONS: {

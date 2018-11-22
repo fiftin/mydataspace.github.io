@@ -54,7 +54,7 @@ var Identity = {
     }
 
     var version = '';
-    if (typeof v === 'number') {
+    if (typeof v === 'number' && v > 0) {
       version = '?' + v;
     }
     
@@ -143,8 +143,8 @@ var Identity = {
 
   rootId: function(entityIdWithVersion) {
     var data = Identity.dataFromId(entityIdWithVersion);
-    var version = typeof data.version === 'number' ? '?' + data.version : '';
-    return data.root + version; 
+    //var version = typeof data.version === 'number' ? '?' + data.version : '';
+    return data.root;// + version;
   },
 
 	/**

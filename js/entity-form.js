@@ -117,8 +117,14 @@ EntityForm.prototype.setLogRecords = function(fields, ignoredFieldNames, addLabe
   return viewFields;
 };
 
-EntityForm.getNoFieldsLabel = function(isMine) {
-  return isMine ? '<div>' +
+EntityForm.getNoFieldsLabel = function(data) {
+  if (STRINGS.path_descriptions[data.path]) {
+    return '<div>' +
+      '<div class="view__blank_root_prompt">' + STRINGS.path_descriptions[data.path] + '</div>' +
+    '</div>';
+  }
+
+  return data.mine && UIConstants.SYSTEM_PATHS.indexOf(data.path) === -1 ? '<div>' +
   '<div class="view__blank_root_prompt">' + STRINGS.no_fields_prompt + '</div>' +
   '<div class="text-center"><button onclick="UI.entityForm.startAddingField();" type="button" class="prompt_button">' + STRINGS.no_fields_add_button + '</button></div>' +
   '</div>'
@@ -144,7 +150,7 @@ EntityForm.prototype.setViewFields = function(data,
   var viewFields = document.getElementById('view__fields');
   if (MDSCommon.isBlank(fields.filter(function (field) { return field.name !== 'description' && field.name.indexOf('$') != 0; }))) {
     viewFields.classList.add('view__fields--empty');
-    viewFields.innerHTML = addLabelIfNoFieldsExists ? EntityForm.getNoFieldsLabel(data.mine) : '';
+    viewFields.innerHTML = addLabelIfNoFieldsExists ? EntityForm.getNoFieldsLabel(data) : '';
   } else {
     viewFields.classList.add('view__fields--filled');
     viewFields.innerHTML = '';
@@ -184,7 +190,7 @@ EntityForm.prototype.setViewFields = function(data,
     }
   }
   if (numberOfChildren === 0) {
-    viewFields.innerHTML = addLabelIfNoFieldsExists ? EntityForm.getNoFieldsLabel(data.mine) : '';
+    viewFields.innerHTML = addLabelIfNoFieldsExists ? EntityForm.getNoFieldsLabel(data) : '';
   }
   return viewFields;
 };
@@ -465,11 +471,12 @@ EntityForm.prototype.setTaskView = function(data) {
 };
 
 EntityForm.prototype.setEntityView = function(data) {
-  if (this.selectedId == null) {
+  var self = this;
+
+  if (self.selectedId == null) {
       return;
   }
 
-  var self = this;
   var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.selectedId).path);
   var language = (getCurrentLanguage() || 'en').toLowerCase();
   var languagePrefix = language === 'en' ? '' : '/' + language;
@@ -505,7 +512,7 @@ EntityForm.prototype.setEntityView = function(data) {
     var viewFields;
     if (entityType === 'proto') {
       $('#view__description').remove();
-      viewFields = this.setViewFields(data);
+      viewFields = self.setViewFields(data);
     } else {
       var description = data.fields.filter(function(x) { return x.name === 'description'; })[0];
       if (description != null) {
@@ -513,12 +520,12 @@ EntityForm.prototype.setEntityView = function(data) {
       } else {
         $('#view__description').remove();
       }
-      viewFields = this.setViewFields(data, ['description'], description == null);
+      viewFields = self.setViewFields(data, ['description'], description == null);
     }
 
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
-      var value = $(this).data('value');
+      var value = $(self).data('value');
       if (value != null) {
         UI.entityForm.setScriptEditValue(value);
         if (!$$('edit_script_window').isVisible()) {
@@ -527,9 +534,13 @@ EntityForm.prototype.setEntityView = function(data) {
       } else {
         UI.entityForm.hideScriptEditWindow();
       }
-      $(this).addClass('view__field--active');
+      $(self).addClass('view__field--active');
     });
-  }.bind(this));
+
+    if (UIConstants.SYSTEM_PATHS.indexOf(data.path) >= 0) {
+      document.getElementById('view_overview_actions').style.display = 'none';
+    }
+  });
 };
 
 EntityForm.prototype.setLogView = function(data) {
@@ -682,6 +693,20 @@ EntityForm.prototype.export = function () {
 
 EntityForm.prototype.clone = function() {
   $$('clone_entity_window').show();
+};
+
+EntityForm.prototype.askDelete = function() {
+  webix.confirm({
+    title: STRINGS.DELETE_ENTITY,
+    text: STRINGS.REALLY_DELETE,
+    ok: STRINGS.YES,
+    cancel: STRINGS.NO,
+    callback: function(result) {
+      if (result) {
+        UI.entityForm.delete();
+      }
+    }
+  });
 };
 
 EntityForm.prototype.delete = function() {

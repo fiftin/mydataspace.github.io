@@ -160,9 +160,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
 
     no_fields_add_button: 'Add Field',
     no_fields_prompt: 'Element has no fields yet. Fields used to store data in the element. Field can be text, number, geo-point or date.',
-
     blank_root_prompt: 'The root information is not filled. Add picture, name and description so that your root is easier to find',
-
     blank_root_edit_button: 'Fill',
 
     dont_forgot_to_save: 'Do not forgot to save element after adding/changing field',
@@ -513,17 +511,6 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       template: 'Каркас',
       dataset: 'Датасет'
     },
-
-    //licenses: {
-    //  'none': 'Нет лицензии',
-    //  'custom': 'Своя лицензия',
-    //  'cc-by-3': 'Creative Commons 3.0',
-    //  'cc-by-4': 'Creative Commons 4.0',
-    //  'ogl-1': 'Open Government Licence v1.0',
-    //  'ogl-2': 'Open Government Licence v2.0',
-    //  'ogl-3': 'Open Government Licence v3.0',
-    //  'standard-terms-of-use': 'Типовые условия использования открытых данных'
-    //},
 
     licenses: {
       'none': 'Нет лицензии',

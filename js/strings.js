@@ -293,7 +293,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     select_template_label: 'Skeleton:',
 
     default_template: 'angularjs-bootstrap-3',
-    youtube_intro_video: 'I0O2h_34jhY'
+    youtube_intro_video: 'I0O2h_34jhY',
+
+    path_descriptions: {
+      'production/cache': 'There are dynamically generated pages here.',
+    }
   },
 
   RU: {
@@ -588,7 +592,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     select_template_label: 'Каркас:',
 
     default_template: 'angularjs-bootstrap-3-ru',
-    youtube_intro_video: 'fBve_lUsWuc'
+    youtube_intro_video: 'fBve_lUsWuc',
+
+    path_descriptions: {
+      'production/cache': 'Здесь хранятся динамически сгенерированные страницы.',
+    }
   }
 };
 

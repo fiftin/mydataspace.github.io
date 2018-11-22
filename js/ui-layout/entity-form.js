@@ -36,7 +36,6 @@ UILayout.entityForm =
         icon: 'save',
         id: 'SAVE_ENTITY_LABEL',
         label: STRINGS.SAVE_ENTITY,
-        // css: 'menu__green_button',
         hidden: true,
         width: 65,
         click: function() {
@@ -53,17 +52,7 @@ UILayout.entityForm =
           UI.entityForm.setEditing(false);
           UI.entityForm.refresh();
         }
-      },
-      // { view: 'button',
-      //   type: 'icon',
-      //   icon: 'pencil-square-o',
-      //   id: 'EDIT_ENTITY_LABEL',
-      //   label: STRINGS.EDIT_ENTITY,
-      //   width: 60,
-      //   click: function() {
-      //     UI.entityForm.startEditing();
-      //   }
-      // },
+      }
     ]
   },
   {

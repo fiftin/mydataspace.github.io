@@ -16,6 +16,7 @@ UILayout.windows.cloneEntity = {
             var formData = $$('clone_entity_form').getValues();
             var selectedData = Identity.dataFromId(UI.entityForm.selectedId);
             var data = MDSCommon.extend(formData, {
+              root: selectedData.root,
               fields: [],
               sourceRoot: selectedData.root,
               sourcePath: selectedData.path,
@@ -43,7 +44,6 @@ UILayout.windows.cloneEntity = {
         }
       },
       elements: [
-        { view: 'text', required: true, id: 'CLONE_ROOT_NAME_LABEL', label: STRINGS.CLONE_ROOT_NAME, name: 'root', labelWidth: UIHelper.LABEL_WIDTH },
         { view: 'text', required: true, id: 'CLONE_ENTITY_PATH_LABEL', label: STRINGS.CLONE_ENTITY_PATH, name: 'path', labelWidth: UIHelper.LABEL_WIDTH },
         UIControls.getEntityTypeSelectTemplate(),
         UIControls.getSubmitCancelForFormWindow('clone_entity')
