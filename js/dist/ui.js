@@ -200,11 +200,11 @@ UIConstants = {
 		'root': 'database',
 		'protos': 'cubes',
 		'proto': 'cube',
-		'tasks': 'code',
+		'tasks': 'tasks',
 		'task': 'file-code-o',
 		'logs': 'history',
 		'log': 'file-movie-o',
-		'resources': 'diamond',
+		'resources': 'files-o',
 		'resource': 'file-image-o',
 		'processes': 'cogs',
 		'process': 'cog',
@@ -221,11 +221,11 @@ UIConstants = {
     'production': 'industry',
     'generators': 'asterisk',
     'generator': 'asterisk',
-    'cache': 'flash',
+    'cache': 'clock-o',
     'migration': 'sign-out',
-    'includes': 'flash',
-    'scss': 'css3',
-    'public_html': 'html5'
+    'includes': 'puzzle-piece',
+    'scss': 'paint-brush',
+    'public_html': 'code'
 	},
 
 	ROOT_FIELDS: [
