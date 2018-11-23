@@ -1,5 +1,21 @@
 @import "./vars";
 
+$admin-view-vertical-gap: 15px;
+
+
+.view__description_wrap {
+  padding-top: $admin-view-vertical-gap;
+  padding-bottom: $admin-view-vertical-gap;
+}
+
+.view__buttons {
+  margin: $admin-view-vertical-gap 0;
+}
+
+.view__readme {
+  padding-top: $admin-view-vertical-gap;
+}
+
 .profile__authorizations_btn {
   border: 0;
   background: transparent;
@@ -41,17 +57,6 @@
 
 .admin_panel--without-header {
   top: 137px !important;
-}
-
-#view__page_link, #view__website_link {
-  position: absolute;
-  right: 0;
-  bottom: -7px;
-}
-
-#view__website_link {
-  padding: 0 10px !important;
-  margin-right: -10px;
 }
 
 .invisible {
@@ -986,6 +991,10 @@ input {
     margin-bottom: 0 !important;
   }
 
+  .view__description + .view__tags {
+    margin-top: 3px;
+  }
+
   .view__tag:last-child {
     margin-right: 100px;
   }
@@ -1007,8 +1016,6 @@ input {
   }
 
   .view__description {
-    padding-top: 20px;
-    font-size: 20px;
     line-height: 1.1;
   }
 

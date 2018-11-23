@@ -168,7 +168,6 @@ pre {
 .view__tags {
   color: gray;
   font-size: 14px;
-  margin: 7px 0 7px 0;
 }
 
 
@@ -202,7 +201,6 @@ pre {
   background-color: #d2dee8;
   border-radius: 2px;
   font-size: 12px;
-  margin-bottom: 3px;
   display: inline-block;
   color: #337ab7;
   &:hover {
@@ -352,6 +350,12 @@ pre {
   width: 100%;
   margin-top: 5px;
 }
+
+.view__container + .view__fields {
+  margin-top: 0;
+  border-top: 1px solid #ebebeb;
+}
+
 
 .view__description + .view__fields--filled,
 .view__description + .view__checks {

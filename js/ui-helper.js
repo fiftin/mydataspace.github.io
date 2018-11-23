@@ -246,5 +246,32 @@ UIHelper = {
       return UIConstants.EDITOR_SUPPORTED_EXTENSIONS['txt'];
     }
     return UIConstants.EDITOR_SUPPORTED_EXTENSIONS[fileName.substr(index + 1)] || UIConstants.EDITOR_SUPPORTED_EXTENSIONS['txt'];
+  },
+
+
+  /**
+   *
+   * @param {HTMLElement|string} element
+   * @param {string} str
+   * @param {string} contentType
+   */
+  setInnerContentOrRemove: function (element, str, contentType) {
+    if (typeof element === 'string') {
+      element = document.getElementById(element);
+    }
+    if (MDSCommon.isBlank(str)) {
+      element.parentNode.removeChild(element);
+    } {
+      switch (contentType) {
+        case 'html':
+          element.innerHTML = str;
+          break;
+        default:
+          element.innerText = str;
+          break;
+      }
+    }
   }
+
+
 };

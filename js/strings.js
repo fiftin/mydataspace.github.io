@@ -63,7 +63,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     CHILD_PROTO: 'Child Proto',
     FIELDS: 'Fields',
     NO_FIELDS: 'No fields exists',
-    NO_README: 'No description or README provided.',
+    NO_README: 'No description provided.',
     MY_APPS: 'My Apps',
     MY_DATA: PROJECT_NAME === 'web20' ? 'My Websites' : 'My Data',
     SIGN_OUT: 'Sign out',

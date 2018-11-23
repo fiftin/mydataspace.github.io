@@ -602,7 +602,34 @@ UIHelper = {
       return UIConstants.EDITOR_SUPPORTED_EXTENSIONS['txt'];
     }
     return UIConstants.EDITOR_SUPPORTED_EXTENSIONS[fileName.substr(index + 1)] || UIConstants.EDITOR_SUPPORTED_EXTENSIONS['txt'];
+  },
+
+
+  /**
+   *
+   * @param {HTMLElement|string} element
+   * @param {string} str
+   * @param {string} contentType
+   */
+  setInnerContentOrRemove: function (element, str, contentType) {
+    if (typeof element === 'string') {
+      element = document.getElementById(element);
+    }
+    if (MDSCommon.isBlank(str)) {
+      element.parentNode.removeChild(element);
+    } {
+      switch (contentType) {
+        case 'html':
+          element.innerHTML = str;
+          break;
+        default:
+          element.innerText = str;
+          break;
+      }
+    }
   }
+
+
 };
 
 var Fields = {
@@ -1558,12 +1585,7 @@ EntityForm.prototype.setRootView = function(data) {
     document.getElementById('view__title').innerText =
       MDSCommon.findValueByName(data.fields, 'name') || MDSCommon.getPathName(data.root);
 
-    document.getElementById('view__tags').innerHTML = tags || '';
-
-    if (data.root !== 'nothing' && data.root !== 'notfound') {
-      document.getElementById('view__page_link').href = '/' + data.root;
-      document.getElementById('view__page_link').classList.remove('hidden');
-    }
+    UIHelper.setInnerContentOrRemove('view__tags', tags, 'html');
 
     if (data.children.filter(function (child) { return child.path === 'website' }).length > 0) {
       var websiteLink = document.getElementById('view__website_link');
@@ -1603,30 +1625,17 @@ EntityForm.prototype.setRootView = function(data) {
       }
     }
 
-    if (MDSCommon.isBlank(websiteURL)) {
-      document.getElementById('view__websiteURL').style.display = 'none';
-    } else {
-      document.getElementById('view__websiteURL').style.display = 'inline';
-      document.getElementById('view__websiteURL').innerText = websiteURL;
-      document.getElementById('view__websiteURL').href = websiteURL;
-    }
-
-    if (MDSCommon.isBlank(description)) {
-      if (MDSCommon.isBlank(websiteURL)) {
-        document.getElementById('view__description').innerHTML = '<i>' + STRINGS.NO_README + '</i>';
-      }
+    if (MDSCommon.isBlank(description) && MDSCommon.isBlank(tags)) {
+      document.getElementById('view__description').innerHTML = '<i>' + STRINGS.NO_README + '</i>';
     } else {
       document.getElementById('view__description').innerText = description;
     }
 
-    document.getElementById('view__counters_likes_count').innerText =
-      MDSCommon.findValueByName(data.fields, '$likes');
-    document.getElementById('view__counters_comments_count').innerText =
-      MDSCommon.findValueByName(data.fields, '$comments');
-
-    if (data.root === 'nothing' || data.root === 'notfound') {
-      document.getElementById('view__counters').style.display = 'none';
-    }
+    // TODO: Uncomment for skeletons
+    // document.getElementById('view__counters_likes_count').innerText =
+    //   MDSCommon.findValueByName(data.fields, '$likes');
+    // document.getElementById('view__counters_comments_count').innerText =
+    //   MDSCommon.findValueByName(data.fields, '$comments');
 
     if (MDSCommon.isBlank(readme)) {
       document.getElementById('view__readme').style.display = 'none';

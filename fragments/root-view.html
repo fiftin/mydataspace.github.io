@@ -1,7 +1,6 @@
+
 <div class="view__overview view__overview--root">
-  <div class="view__overview_image_wrap">
-    <img src="" class="view__overview_image" id="view__overview_image" />
-  </div>
+  <div class="view__overview_image_wrap"><img class="view__overview_image" id="view__overview_image"/></div>
   <div class="view__info">
     <h1 class="view__title" id="view__title"></h1>
     <div class="view__overview-actions" id="view_overview_actions">
@@ -10,25 +9,46 @@
     </div>
   </div>
 </div>
-
 <div class="container view__container">
   <div id="view__blank_root">
-      <div id="view__blank_root_prompt" class="view__blank_root_prompt"></div>
-      <div class="text-center">
-          <button type="button" id="view__blank_root_edit_button" class="prompt_button" onclick="UI.entityForm.startEditing();"></button>
-      </div>
+    <div class="view__blank_root_prompt" id="view__blank_root_prompt"></div>
+    <div class="text-center">
+      <button class="prompt_button" id="view__blank_root_edit_button" onclick="UI.entityForm.startEditing();"></button>
+    </div>
   </div>
   <div id="view__about">
     <div class="view__description_wrap">
-      <span class="view__description" id="view__description"></span>
-      <a class="view__websiteURL" id="view__websiteURL" target="_blank"></a>
+      <div class="view__description" id="view__description"></div>
       <div class="view__tags" id="view__tags"></div>
-      <a href="/" class="hidden btn btn-success links__link view__title_link" target="_blank" id="view__website_link">
-        <i class="fa fa-globe" aria-hidden="true" id="view__website_link__icon"></i><span class="links__link_text">Open Website</span>
-      </a>
     </div>
-    <div class="view__readme" id="view__readme"></div>
+    <ul class="stats">
+      <li class="stats__stat-wrap">
+        <div class="stats__stat">
+          <div class="stats__stat-number">0</div>
+          <div class="stats__stat-title">views</div>
+        </div>
+      </li>
+      <li class="stats__stat-wrap">
+        <div class="stats__stat">
+          <div class="stats__stat-number">2</div>
+          <div class="stats__stat-title">visitors</div>
+        </div>
+      </li>
+      <li class="stats__stat-wrap">
+        <div class="stats__stat">
+          <div class="stats__stat-number">0</div>
+          <div class="stats__stat-title">API calls</div>
+        </div>
+      </li>
+      <li class="stats__stat-wrap">
+        <div class="stats__stat">
+          <div class="stats__stat-number">0</div>
+          <div class="stats__stat-title">users</div>
+        </div>
+      </li>
+    </ul>
   </div>
+  <div class="view__buttons"><a class="btn btn-success btn-xs" id="view__website_link">Open Website</a></div>
+  <div class="view__readme" id="view__readme"></div>
 </div>
-
 <div class="view__fields" id="view__fields"></div>

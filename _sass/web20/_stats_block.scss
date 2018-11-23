@@ -1,0 +1,35 @@
+.stats {
+  border: 1px solid #ebebeb;
+  border-radius: 2px;
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.stats__stat-wrap {
+  display: table-cell;
+  padding: 5px 0;
+  vertical-align: middle;
+}
+
+.stats__stat {
+  margin: auto;
+  width: 40px;
+  .fa {
+    margin-right: 5px;
+  }
+}
+
+.stats__stat-number {
+  font-weight: bold;
+  margin-right: 2px;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.stats__stat-title {
+  font-size: 10px;
+  line-height: 1;
+}

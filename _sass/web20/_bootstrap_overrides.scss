@@ -7,6 +7,11 @@
 //     margin: auto;
 // }
 
+.btn-xs {
+  padding: 2px 10px;
+  font-size: 14px;
+}
+
 @media (min-width: $screen-sm-min) {
   .navbar-form {
     margin-top: 5px !important;
