@@ -135,7 +135,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     COPY_ACCESS_KEY: 'Copy',
     SHOW_ACCESS_KEY: 'Show access key',
     NEW_VERSION: 'Version <span class="version_btn__version">0</span>',
-    ADD_VERSION: 'New Empty Version',
+    ADD_VERSION: 'New Version',
     VERSION_DESCRIPTION: 'Description',
     VERSION_CREATED_AT: 'Created At',
 
@@ -169,7 +169,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     import_root: 'Import Data',
     open_license_page: 'Open License Page',
 
-    new_entity: 'New Entity',
+    new_entity: 'New Folder',
     import_entity: 'Import Entity',
     new_resource: 'New Resource',
     new_task: 'New Task',

@@ -28,7 +28,7 @@ UILayout.windows.addRoot = {
           data.fields = [];
 
           var sourceRoot = $('#no_items__template_wrap2').data('root');
-          if (sourceRoot) {
+          if (sourceRoot && sourceRoot !== 'root') {
             data.sourceRoot = sourceRoot;
             data.sourcePath = '';
           }

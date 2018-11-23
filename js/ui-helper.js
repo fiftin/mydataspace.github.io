@@ -78,18 +78,18 @@ UIHelper = {
       case 'website':
       case 'wizards':
       case 'generators':
-      case 'dev':
-      case 'production':
       case 'data':
-        return path;
-      case 'production/data':
-      case 'production/protos':
-      case 'production/resources':
-      case 'production/cache':
-      case 'dev/data':
-      case 'dev/protos':
-      case 'dev/resources':
-      case 'dev/cache':
+      case 'cache':
+      case 'env/production':
+      case 'env/production/data':
+      case 'env/production/protos':
+      case 'env/production/resources':
+      case 'env/production/cache':
+      case 'env/dev':
+      case 'env/dev/data':
+      case 'env/dev/protos':
+      case 'env/dev/resources':
+      case 'env/dev/cache':
       case 'website/tasks':
       case 'website/wizards':
       case 'website/generators':
@@ -97,21 +97,21 @@ UIHelper = {
       case 'website/includes':
       case 'website/scss':
       case 'website/public_html':
-        return path.split('/')[1];
+        return path.split('/').slice(-1)[0];
       default:
-        if (/^generators\/[^\/]+$/.test(path)) {
+        if (/^website\/generators\/[^\/]+$/.test(path)) {
           return 'generator';
         }
-        if (/^wizards\/[^\/]+$/.test(path) || /^website\/wizards\/[^\/]+$/.test(path)) {
+        if (/^(website\/)?wizards\/[^\/]+$/.test(path) || /^website\/wizards\/[^\/]+$/.test(path)) {
           return 'wizard';
         }
-        if (/^tasks\/[^\/]+$/.test(path) || /^website\/tasks\/[^\/]+$/.test(path)) {
+        if (/^(website\/)?tasks\/[^\/]+$/.test(path) || /^website\/tasks\/[^\/]+$/.test(path)) {
           return 'task';
         }
-        if (/^tasks\/[^\/]+\/logs$/.test(path)) {
+        if (/^(website\/)?tasks\/[^\/]+\/logs$/.test(path)) {
           return 'logs';
         }
-        if (/^tasks\/[^\/]+\/logs\/[^\/]+$/.test(path)) {
+        if (/^(website\/)?tasks\/[^\/]+\/logs\/[^\/]+$/.test(path)) {
           return 'log';
         }
         if (path.startsWith('protos/') && depth === 2) {

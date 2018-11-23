@@ -96,6 +96,8 @@ UIConstants = {
   IGNORED_WHEN_EMPTY_PATHS: [],
 
 	SYSTEM_PATHS: [
+	  'data',
+    'cache',
 		'resources',
 		'protos',
 		'comments',

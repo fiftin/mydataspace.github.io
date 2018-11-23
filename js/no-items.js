@@ -1,13 +1,22 @@
+function no_items__getRootData() {
+  return {
+    root: 'root',
+    path: '',
+    fields: [
+      { name: 'name', value: 'Empty' },
+      { name: 'description', value: '' }
+    ]
+  }
+}
 
 function no_items__selectTemplate(root, suffix) {
   if (!suffix) {
     suffix = '';
   }
-
-  Mydataspace.entities.get({
+  (root === 'root' ? Promise.resolve(no_items__getRootData()) : Mydataspace.entities.get({
     root: root,
     path: ''
-  }).then(function (data) {
+  })).then(function (data) {
     var avatar = MDSCommon.findValueByName(data.fields, 'avatar');
     var name = MDSCommon.findValueByName(data.fields, 'name');
     var description = MDSCommon.findValueByName(data.fields, 'description');
@@ -18,7 +27,7 @@ function no_items__selectTemplate(root, suffix) {
       return '<span class="view__tag view__tag--no-interactive">' + tag + '</span>';
     }).join(' ');
 
-    $('#no_items__template_img' + suffix).attr('src', 'https://cdn.web20site.com/avatars/sm/' + avatar + '.png');
+    $('#no_items__template_img' + suffix).attr('src', avatar ? 'https://cdn.web20site.com/avatars/sm/' + avatar + '.png' : '/images/icons/root.svg');
     $('#no_items__template_title' + suffix).text(name);
     $('#no_items__template_tags' + suffix).html(tags);
     if (!description) {
@@ -46,8 +55,19 @@ function no_items__initTemplates(suffix) {
   Mydataspace.request('entities.getRoots', {
     type: 't',
     filter: {
-      language: (getCurrentLanguage() || 'EN').toLowerCase()
+      language: ''
     }
+  }).then(function (nonLangRoots) {
+    return Mydataspace.request('entities.getRoots', {
+      type: 't',
+      filter: {
+        language: (getCurrentLanguage() || 'EN').toLowerCase()
+      }
+    }).then(function (roots) {
+      return {
+        roots: [no_items__getRootData()].concat(nonLangRoots.roots).concat(roots.roots)
+      };
+    });
   }).then(function (data) {
     var rootsHtml = data.roots.map(function (root) {
 
@@ -59,9 +79,16 @@ function no_items__initTemplates(suffix) {
 
       var description = MDSCommon.findValueByName(root.fields, 'description');
 
+      var avatar = MDSCommon.findValueByName(root.fields, 'avatar');
+      if (avatar) {
+        avatar = 'https://cdn.web20site.com/avatars/sm/' + MDSCommon.findValueByName(root.fields, 'avatar') + '.png';
+      } else {
+        avatar = '/images/icons/root.svg';
+      }
+
       return '<div onclick="no_items__selectTemplate(\'' + root.root + '\', \'' + suffix + '\')" class="block snippet snippet--line snippet--line--no-padding-bottom clearfix">' +
         '<div class="snippet__overview snippet__overview--no-margin">' +
-        '  <img class="snippet__image" src="https://cdn.web20site.com/avatars/sm/' + MDSCommon.findValueByName(root.fields, 'avatar') + '.png" />' +
+        '  <img class="snippet__image" src="' + avatar + '" />' +
         '  <div class="snippet__info">' +
         '    <div class="snippet__title">' + MDSCommon.findValueByName(root.fields, 'name') + '</div>' +
         '    <div class="snippet__tags">' + tags + '</div>' +
@@ -132,6 +159,9 @@ function no_items__createNewWebsite() {
   }
 
   var sourceRoot = $('#no_items__template_wrap').data('root');
+  if (sourceRoot === 'root') {
+    sourceRoot = undefined;
+  }
 
   var $createButton = $('#no_items__create__button');
   $createButton.attr('disabled', true);

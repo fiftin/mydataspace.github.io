@@ -152,7 +152,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     import_root: 'Import Data',
     open_license_page: 'Open License Page',
 
-    new_entity: 'New Entity',
+    new_entity: 'New Folder',
     import_entity: 'Import Entity',
     new_resource: 'New Resource',
     new_task: 'New Task',
