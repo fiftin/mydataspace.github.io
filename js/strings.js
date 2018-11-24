@@ -460,8 +460,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     new_empty_root: 'Пусктой ' + PROJECT_ROOT_NAME_RU,
     import_root: 'Импорт данных',
 
-    new_entity: 'Новый элемент',
-    import_entity: 'Импорт элемента',
+    new_entity: 'Новая папка',
+    import_entity: 'Импортировать данные',
     new_resource: 'Новый ресурс',
     new_task: 'Новая задача',
     add_website: 'Добавить сайт',

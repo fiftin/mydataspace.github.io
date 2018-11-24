@@ -141,7 +141,8 @@ UIConstants = {
     'website/migration',
     'website/scss',
     'website/wizards',
-    'website/generators'
+    'website/generators',
+    'website/tasks'
 	],
 
   EDITOR_SUPPORTED_EXTENSIONS: {
