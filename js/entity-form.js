@@ -118,18 +118,7 @@ EntityForm.prototype.setLogRecords = function(fields, ignoredFieldNames, addLabe
 };
 
 EntityForm.getNoFieldsLabel = function(data) {
-  if (STRINGS.path_descriptions[data.path]) {
-    return '<div>' +
-      '<div class="view__blank_root_prompt">' + STRINGS.path_descriptions[data.path] + '</div>' +
-    '</div>';
-  }
-
-  return data.mine && UIConstants.SYSTEM_PATHS.indexOf(data.path) === -1 ? '<div>' +
-  '<div class="view__blank_root_prompt">' + STRINGS.no_fields_prompt + '</div>' +
-  '<div class="text-center"><button onclick="UI.entityForm.startAddingField();" type="button" class="prompt_button">' + STRINGS.no_fields_add_button + '</button></div>' +
-  '</div>'
-  :
-  '<div class="view__no_fields_exists">' + STRINGS.NO_FIELDS + '</div>';
+  return '<div class="view__no_fields_exists">' + STRINGS.NO_FIELDS + '</div>';
 };
 
 
@@ -239,7 +228,6 @@ EntityForm.prototype.setRootView = function(data) {
 
     view.innerHTML = html;
 
-    document.getElementById('view__blank_root').style.display = !data.mine || completeness > 0 ? 'none' : 'block';
     document.getElementById('view__about').style.display = completeness > 0 ? 'block' : 'none';
 
     var ava = MDSCommon.findValueByName(data.fields, 'avatar');
@@ -334,13 +322,6 @@ EntityForm.prototype.setRootView = function(data) {
       }
       $(this).addClass('view__field--active');
     });
-
-
-    if (data.mine && completeness === 0) {
-      $('#view__blank_root_prompt').text(STRINGS.blank_root_prompt);
-      $('#view__blank_root_edit_button').text(STRINGS.blank_root_edit_button);
-    }
-
   });
 };
 
@@ -520,7 +501,8 @@ EntityForm.prototype.setEntityView = function(data) {
     });
 
     if (UIConstants.SYSTEM_PATHS.indexOf(data.path) >= 0) {
-      document.getElementById('view_overview_actions').style.display = 'none';
+      document.getElementById('view_overview_delete_action').style.display = 'none';
+      document.getElementById('view_overview_clone_action').style.display = 'none';
     }
   });
 };

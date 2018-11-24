@@ -8,27 +8,32 @@
 </script>
 
 {% if include.with_header == true %}
-
 <div class="webix_preloaded_header invisible" id="webix_preloaded_header"></div>
-
 <a class="logo invisible" href="/" id="logo_link">
     <img class="header__logo_img_with_text header__logo_img_with_text--admin" src="/images/logo.web20.png" />
 </a>
 {% else %}
-<style>
-  #view__page_link {
-    display: none !important;
-  }
-  #view__counters {
-    display: none !important;
-  }
-</style>
 <script>
   webix.without_header = true;
 </script>
 {% endif %}
 
-<div id="admin_panel__loading"><i class="fa fa-cog fa-spin fa-fw"></i></div>
+<div id="admin_panel__loading">
+  <div class="page_top">
+    <div class="smoke">
+      {% include nav.html for_loader=true %}
+    </div>
+  </div>
+
+
+  <div class="lds-facebook">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+    <div class="rect5"></div>
+  </div>
+</div>
 
 <div id="no_items" class="no_items invisible">
   <div id="no_items__no_apps"></div>
@@ -36,22 +41,10 @@
   <div class="no_items__content" id="no_items__no_data">
     <div class="container">
       <div id="no_items__title" class="no_items__no_apps"></div>
-      <!--<div class="no_items__no_apps_description">-->
-      <!--Create empty root, import data from file or explore existing roots with using-->
-      <!--useful search-->
-      <!--</div>-->
       <div class="row">
         <div class="col-sm-2 col-md-3 col-lg-4"></div>
 
-        <!-- Create -->
         <div class="col-sm-7 col-md-5 col-lg-4 no_items__column">
-
-          <!--
-          <div class="no_items__change_template_pointer hidden-xs">
-            &lt;&lt; {{ site.data[page.language].strings.press_to_select_other_template }}
-          </div>
-          -->
-
           <div style="margin-bottom: 5px;">{{ site.data[page.language].strings.template }}:</div>
           <div id="no_items__template_wrap" class="no_items__template_wrap" onclick="no_items__initTemplates()">
             <div id="no_items__template" class="snippet__overview snippet__overview--no-margin">

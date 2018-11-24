@@ -312,7 +312,6 @@ function initRootPage(options) {
         return '<a class="view__tag" href="/search?q=%23' + tag + '">' + tag + '</a>';
       }).join(' ');
 
-      document.getElementById('root__websiteURL').innerText = data.root + '.web20.site';
       document.getElementById('root__websiteURL').href = 'https://' + data.root + '.web20.site';
 
       var languageAbbr = MDSCommon.findValueByName(data.fields, 'language');

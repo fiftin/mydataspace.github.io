@@ -3,7 +3,7 @@
 $admin-view-vertical-gap: 15px;
 
 
-.view__description_wrap {
+.view__description {
   padding-top: $admin-view-vertical-gap;
   padding-bottom: $admin-view-vertical-gap;
 }
@@ -215,18 +215,6 @@ input:read-only {
 .menu__login_button button:active {
   opacity: 1;
   transition: opacity 0.3s;
-}
-
-#admin_panel__loading {
-  text-align: center;
-  color: $brand-bg;
-  position: absolute;
-  width: 100%;
-  z-index: 100;
-  top: calc(50% - 100px);
-  i {
-    font-size: 150px;
-  }
 }
 
 .image-for-social-medias {
@@ -992,7 +980,7 @@ input {
   }
 
   .view__description + .view__tags {
-    margin-top: 3px;
+    margin-top: 10px;
   }
 
   .view__tag:last-child {
@@ -1001,10 +989,6 @@ input {
 
   #view__counters_likes {
     cursor: default !important;
-  }
-
-  .view__websiteURL {
-    font-size: 16px;
   }
 
   .links__link_text {
@@ -1066,14 +1050,6 @@ input {
   left: 200px;
   //width: 400px;
   z-index: 20;
-}
-
-#view__page_link {
-  display: none !important;
-}
-
-#view__counters {
-  display: none !important;
 }
 
 

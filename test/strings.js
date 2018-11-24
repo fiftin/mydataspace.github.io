@@ -54,7 +54,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     CHILD_PROTO: 'Child Proto',
     FIELDS: 'Fields',
     NO_FIELDS: 'No fields exists',
-    NO_README: 'No description or README provided.',
+    NO_README: 'No description provided',
     MY_APPS: 'My Apps',
     MY_DATA: 'My Data',
     SIGN_OUT: 'Sign out',
@@ -160,8 +160,6 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
 
     no_fields_add_button: 'Add Field',
     no_fields_prompt: 'Element has no fields yet. Fields used to store data in the element. Field can be text, number, geo-point or date.',
-    blank_root_prompt: 'The root information is not filled. Add picture, name and description so that your root is easier to find',
-    blank_root_edit_button: 'Fill',
 
     dont_forgot_to_save: 'Do not forgot to save element after adding/changing field',
 

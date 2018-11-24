@@ -112,10 +112,6 @@ $side-panel-width: $side-width - $padding;
 }
 
 .root_page {
-  .view__description + .view__websiteURL {
-    margin-left: 10px;
-  }
-
   .view__version {
     color: $selected-bg;
     opacity: 0;

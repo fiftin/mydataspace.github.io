@@ -11,7 +11,7 @@
 {% endif %}
 
 <nav class="navbar navbar-inverse navbar-custom">
-    <div class="container">
+    <div class="{%if include.for_loader %}loader-nav-container{% else %}container{% endif %}">
         <div class="navbar-header page-scroll">
             <a class="navbar-brand header__logo" href="{{ baseurl }}/">
               <img class="header__logo_img_with_text" src="/images/logo.web20.png" />
@@ -46,52 +46,11 @@
                 </li>
                 {% endif %}
 
-                <!--
+                {%if include.for_loader %}
                 <li>
-                {% if page.url != "/404.html" %}
-                  <ul class="header__languages">
-                  <li class="header__language">
-                    {% if page.language == site.default_language %}
-                      {% assign url = page.url %}
-                    {% else %}
-                      {% assign page_lang = page.language | prepend:'/' | append:'/' %}
-                      {% assign url = page.url | replace_first:page_lang,"/" %}
-                    {% endif %}
-                    {% if site.default_language == page.language %}
-                    <a id="header_language_button_en" class="header__language_button header__language_button--active" href="{{ url }}">{{ site.default_language | upcase }}</a>
-                    {% else %}
-                    <a id="header_language_button_en" class="header__language_button" href="{{ url }}">{{ site.default_language | upcase }}</a>
-                    {% endif %}
-                  </li>
-                  {% for lang in site.languages %}
-                    <li class="header__language">
-                      {% assign page_lang = page.language | prepend:'/' | append:'/' %}
-                      {% assign curr_lang = lang | prepend:'/' | append:'/' %}
-
-                      {% if lang == page.language %}
-                        {% assign url = page.url %}
-                      {% elsif page.language == site.default_language %}
-                        {% assign url = page.url | prepend:lang | prepend:'/' %}
-                      {% else %}
-                        {% assign url = page.url | replace_first:page_lang,curr_lang %}
-                      {% endif %}
-
-                      {% if lang == page.language %}
-                        <a id="header_language_button_{{lang}}" class="header__language_button header__language_button--active" href="{{ url }}">
-                          {{ lang | upcase }}
-                        </a>
-                      {% else %}
-                        <a id="header_language_button_{{lang}}" class="header__language_button" href="{{ url }}">
-                          {{ lang | upcase }}
-                        </a>
-                      {% endif %}
-                    </li>
-                  {% endfor %}
-                  </ul>
-                {% endif %}
+                  <a class="header__menu_item" style="margin-left: 20px;"><i class="fa fa-align-justify"></i></a>
                 </li>
-                -->
-
+                {% else %}
                 <li id="profile_button_menu_item">
                   <script>
                     if (isValidJWT(localStorage.getItem('authToken'))) {
@@ -138,7 +97,7 @@
                      data-toggle="modal"
                      data-target="#signin_modal">{{ site.data[page.language].menu.login }}</a>
                 </li>
-
+                {% endif %}
             </ul>
         </div>
     </div>

@@ -22,7 +22,10 @@
             {{ site.data[page.language].root.comments }} <span class="view__tab__counter" id="root__tabs_comments_count">0</span>
           </a>
 
-          <button style="padding: 2px 10px; transform: translateY(3px);" class="hidden-xs btn btn-sm btn-success pull-right">Create Website</button>
+          <button id="root__websiteURL" style="padding: 2px 10px; transform: translateY(3px);" class="hidden-xs btn btn-sm btn-success pull-right">Create Website</button>
+
+          <a href="https://%%$root%%.web20.site" style="padding: 2px 10px; transform: translateY(3px); margin-right: 10px;" class="hidden-xs btn btn-sm btn-primary pull-right" target="_blank">View Demo</a>
+
         </div>
       </div>
     </div>
@@ -48,10 +51,7 @@
 
     <div class="view__about" id="root__about_content">
       <div class="block block--about">
-        <div class="view__description_wrap">
-          <span class="view__description" id="root__description">%%description%%</span>
-          <a class="view__websiteURL" id="root__websiteURL" href="https://%%$root%%.web20.site">%%$root%%.web20.site</a>
-        </div>
+        <div class="view__description" id="root__description">%%description%%</div>
         <div class="view__tags" id="root__tags">%%tags%%</div>
         <div class="view__readme" id="root__readme">%%readme%%</div>
       </div>

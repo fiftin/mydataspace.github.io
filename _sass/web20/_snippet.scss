@@ -3,9 +3,6 @@
 $snippet-image-size: 52px;
 $filter-item-height: 30px;
 $snippet-footer-height: 20px;
-$snippet-footer-height-with-gradient: 50px;
-
-
 $snippet-image-size-lg: 100px;
 
 .search_filter {
@@ -158,8 +155,8 @@ $snippet-medal-size: 50px;
 
 .snippet__image {
   position: absolute;
-  top: 0;
-  left: 0;
+  //top: 0;
+  //left: 0;
   width: $snippet-image-size;
   height: $snippet-image-size;
   border-radius: 4px;
@@ -172,16 +169,18 @@ $snippet-medal-size: 50px;
 }
 
 .snippet__info {
-  padding-left: $snippet-image-size + $small-padding;
+  margin-left: $snippet-image-size + $small-padding;
+  padding-bottom: 23px;
+  position: relative;
 }
 
 .snippet__info--large-icon {
-  padding-left: $snippet-image-size-lg + $small-padding;
+  margin-left: $snippet-image-size-lg + $small-padding;
 }
 
 
 .snippet__info--small {
-  padding-top: 15px;
+  margin-top: 15px;
 }
 
 .snippet__title {
@@ -192,41 +191,25 @@ $snippet-medal-size: 50px;
 }
 
 .snippet__tags {
-  margin-top: $small-padding / 2;
+  margin-top: 3px;
   font-size: 13px;
   color: gray;
 }
 
 .snippet__description {
+  margin-top: 7px;
   font-size: 14px;
   color: #424242;
   word-wrap: break-word;
-  margin-left: $snippet-image-size + $small-padding;
-}
-
-.snippet__description--large-icon {
-  margin-left: $snippet-image-size-lg + $small-padding;
-}
-
-.snippet__description--full {
-  margin-left: 0;
 }
 
 .snippet__footer {
   position: absolute;
-  bottom: 0;
-  left: $small-padding;
-  right: $small-padding;
-  // background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%);
-  padding-bottom: $small-padding / 2;
-  padding-top: $snippet-footer-height-with-gradient - $snippet-footer-height - $small-padding / 2;
-  height: $snippet-footer-height-with-gradient;
+  bottom: -$small-padding;
+  left: 0;
+  right: 0;
+  height: $snippet-footer-height;
 }
-
-.snippet__footer--large-icon {
-  margin-left: $snippet-image-size-lg + $small-padding;
-}
-
 
 .snippet__author {
   height: $snippet-footer-height;
@@ -275,12 +258,13 @@ $snippet-medal-size: 50px;
   line-height: $snippet-footer-height;
   transform: scale(0.9);
   color: #b9b9b9;
+  font-weight: bold;
 }
+
 
 
 .snippet--line {
   height: auto;
-  // padding-bottom: $snippet-footer-height + $small-padding * 1.5;
   .snippet__footer {
     padding-top: 0;
     height: $snippet-footer-height + $small-padding / 2;

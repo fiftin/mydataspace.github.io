@@ -16,7 +16,6 @@
 
 var search_header__search_url = '';
 var search_header__search_pathname = /\/datasources\/?$/.test(window.location.pathname) ? '{{ lang_prefix }}/datasources' : '{{ lang_prefix }}/search';
-var search_header__search_displayMode = localStorage.getItem('searchDisplayMode') || 'snippet';
 var isAdmin_header__search = {{include.admin}};
 var search_header__search_license_drops = [];
 
@@ -25,11 +24,6 @@ if (typeof search_header__search_isFixed !== 'undefined' && search_header__searc
   document.getElementsByClassName('smoke')[0].classList.add('smoke--fullscreen--opaque');
   document.getElementById('header__search_input').value = search_parseQuery();
   document.getElementById('header__search_input').setAttribute('placeholder', '{{ site.data[page.language].header.input_search_fixed }}');
-}
-
-function set_search_header__search_displayMode(mode) {
-  search_header__search_displayMode = mode;
-  localStorage.setItem('searchDisplayMode', mode);
 }
 
 function closeSearch_header__search() {
@@ -221,7 +215,6 @@ function fillResults_header__search(data, searchOptions, isPreload) {
           '<img class="view__tag_icon view__tag_icon--flag" src="/images/square_flags/' + country.name + '.svg" />' +
           tr$('countries.' + countryAbbr) + '</span> ' + tags;
       }
-
       if (language) {
         tags = '<span class="view__tag view__tag--flag" onclick="openSearch_header__search(\'#lang:' + languageAbbr + '\'); return false;">' +
           '<img class="view__tag_icon view__tag_icon--flag" src="/images/square_flags/' + language.name + '.svg" />' +
@@ -249,9 +242,7 @@ function fillResults_header__search(data, searchOptions, isPreload) {
 
     var nLikes = MDSCommon.findValueByName(root.fields, '$likes') || MDSCommon.findValueByName(root.fields, 'totalLikes') || 0;
     var nComments = MDSCommon.findValueByName(root.fields, '$comments') || MDSCommon.findValueByName(root.fields, 'totalComments') || 0;
-
     var languageMatch = location.pathname.match(/^\/(\w\w)(\/.*)?$/);
-
     var lang = languageMatch ? languageMatch[1] + '/' : '';
 
     var footer;
@@ -281,30 +272,21 @@ function fillResults_header__search(data, searchOptions, isPreload) {
         '</div>';
     }
 
-    var colWidth = search_header__search_displayMode === 'snippet' ? 6 : 12;
-    var snippetClass = search_header__search_displayMode === 'snippet' ? '' : 'snippet--line';
-
-    return '<div class="col-md-' + colWidth + '"><a class="block snippet snippet--large-icon ' + snippetClass + ' clearfix" href="/skeletons/' + root.root + '/">\n' +
-      '  <div class="snippet__overview">\n' +
-      '  <img class="snippet__image snippet__image--large-icon" src="' + avatar + '" />\n' +
-      '  <div class="snippet__info snippet__info--large-icon ' + (MDSCommon.isBlank(tags) ? ' snippet__info--small' : '') + '">\n' +
-      '    <div class="snippet__title">' + (MDSCommon.findValueByName(root.fields, 'name') || itemId) + '</div>\n' +
-      '    <div class="snippet__tags">' +
-      (tags || '') +
-      '    </div>\n' +
+    return '<a class="block snippet snippet--large-icon snippet--line clearfix" href="/skeletons/' + root.root + '/">\n' +
+      '<img class="snippet__image snippet__image--large-icon" src="' + avatar + '" />\n' +
+      '<div class="snippet__info snippet__info--large-icon ' + (MDSCommon.isBlank(tags) ? ' snippet__info--small' : '') + '">\n' +
+        '<div class="snippet__title">' + (MDSCommon.findValueByName(root.fields, 'name') || itemId) + '</div>\n' +
+        '<div class="snippet__description">' + (MDSCommon.findValueByName(root.fields, 'description') || '') + '</div>\n' +
+        '<div class="snippet__tags">' + (tags || '') + '</div>\n' +
+        '<div class="snippet__footer">' +
+          footer +
+          '<div class="snippet__counters">' +
+          '<span class="root_counter"><i class="fa fa-heart" aria-hidden="true"></i><span class="root_counter__count root_counter__count--likes">' + nLikes + '</span></span>' +
+          '<span class="root_counter"><i class="fa fa-comments" aria-hidden="true"></i><span class="root_counter__count">' + nComments + '</span></span>' +
+          '</div>' +
+        '</div>' + // footer
       '</div>\n' + // info
-
-      '</div>\n' + // overview
-      '  <div class="snippet__description snippet__description--large-icon">' + (MDSCommon.findValueByName(root.fields, 'description') || '') + '</div>\n' +
-
-      '<div class="snippet__footer snippet__footer--large-icon">' +
-      footer +
-      '<div class="snippet__counters">' +
-      '<span class="root_counter"><i class="fa fa-heart" aria-hidden="true"></i><span class="root_counter__count root_counter__count--likes">' + nLikes + '</span></span>' +
-      '<span class="root_counter"><i class="fa fa-comments" aria-hidden="true"></i><span class="root_counter__count">' + nComments + '</span></span>' +
-      '</div>' +
-      '</div>' + // footer
-      '</a></div>';
+    '</a>';
   });
 
   var datasourceInfoHTML = '';
@@ -344,14 +326,10 @@ function fillResults_header__search(data, searchOptions, isPreload) {
       '<div class="search__results">' +
       '<div class="search__header ' + (searchOptions.filters.datasource ? 'search__header--found-in-datasource' : '') + ' clearfix">' +
       '<div class="search__found_count">{{ site.data[page.language].search.found_prefix }} ' + items.length + found_suffix + foundInDatasourceSuffix + '</div>' +
-      '<div class="btn-group search__display_modes" role="group">' +
-      '<button type="button" class="btn btn-default ' + (search_header__search_displayMode === 'line' ? 'active' : '') + '" onclick="set_search_header__search_displayMode(\'line\'); startSearch_header__search(document.getElementById(\'header__search_input\').value);"><i class="fa fa-list"></i></button>' +
-      '<button type="button" class="btn btn-default ' + (search_header__search_displayMode === 'snippet' ? 'active' : '') + '" onclick="set_search_header__search_displayMode(\'snippet\'); startSearch_header__search(document.getElementById(\'header__search_input\').value);"><i class="fa fa-th-large"></i></button>' +
-      '</div>' +
       '<div class="search__right_link"><a style="font-weight: bold;" href="{{ lang_prefix }}/search?tags=src:' + other_src + '" onclick="setSearchPart_header__search(\'#src:'+ other_src + '\'); return false;">' + xxx + '</a></div>' +
       '</div>' +
       datasourceInfoHTML +
-      '<div class="row">' + rootsHtml.join('\n') + '</div>' +
+      rootsHtml.join('\n') +
       '</div>' +
       '<div class="search__filter_panel_wrap">' +
       '<div class="search__filter_panel">' +

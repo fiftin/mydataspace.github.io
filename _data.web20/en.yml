@@ -391,7 +391,7 @@ pricing_page:
   approve_upgrade_to_personal: Are you sure?
   approve_downgrade_to_free: Are you sure want to downgrade to Free?
   change_plan: Change Plan
-  free_skeletons: You can create up to <strong>5 skeletons</strong> on any plan
+  free_skeletons: You can create <strong>unlimited number of skeletons</strong> on any plan
   thanks: Спасибо, мы свяжимся с вами в ближайшее время!
   create_site: Create Website
   current_plan: Current Plan

@@ -35,14 +35,14 @@ UI = {
 
     // Language switcher
 
-    for (var lang in STRINGS_ON_DIFFERENT_LANGUAGES) {
-      var langButton = $$('menu__language_button_' + lang.toLowerCase());
-      if (lang === currentLang) {
-        webix.html.addCss(langButton.getNode(), 'menu__language_button--selected');
-      } else {
-        webix.html.removeCss(langButton.getNode(), 'menu__language_button--selected');
-      }
-    }
+    // for (var lang in STRINGS_ON_DIFFERENT_LANGUAGES) {
+    //   var langButton = $$('menu__language_button_' + lang.toLowerCase());
+    //   if (lang === currentLang) {
+    //     webix.html.addCss(langButton.getNode(), 'menu__language_button--selected');
+    //   } else {
+    //     webix.html.removeCss(langButton.getNode(), 'menu__language_button--selected');
+    //   }
+    // }
 
     // Labels
 

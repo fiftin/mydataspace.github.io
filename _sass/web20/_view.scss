@@ -197,10 +197,12 @@ pre {
 
 
 .view__tag {
+  margin-right: 2px;
+  margin-top: 5px;
   padding: 3px 7px;
   background-color: #d2dee8;
   border-radius: 2px;
-  font-size: 12px;
+  font-size: 13px;
   display: inline-block;
   color: #337ab7;
   &:hover {
@@ -249,16 +251,9 @@ pre {
   opacity: 0.5;
 }
 
-.view__websiteURL {
-  display: inline;
-}
-
-.view__description_wrap {
+.view__description {
   padding-top: 20px;
   padding-bottom: 20px;
-}
-
-.view__description {
   font-size: 16px;
   border-top: 0;
 }
@@ -579,7 +574,6 @@ pre {
 .view__comment__date, .view__comment__author_bull {
   color: #b9b9b9;
   font-size: 14px;
-  display: none;
 }
 
 .view__comment__date--small {

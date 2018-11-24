@@ -63,7 +63,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     CHILD_PROTO: 'Child Proto',
     FIELDS: 'Fields',
     NO_FIELDS: 'No fields exists',
-    NO_README: 'No description provided.',
+    NO_README: 'No description provided',
     MY_APPS: 'My Apps',
     MY_DATA: PROJECT_NAME === 'web20' ? 'My Websites' : 'My Data',
     SIGN_OUT: 'Sign out',
@@ -152,7 +152,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     switch_default_version: 'Switch Default Version',
     view_other_version: 'View Other Version',
 
-    created: 'created',
+    created: 'Created',
     ago: 'ago',
     title_cant_be_blank: 'Title can\'t be blank',
     too_long_title: 'Too long title',
@@ -178,10 +178,6 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
 
     no_fields_add_button: 'Add Field',
     no_fields_prompt: 'Element has no fields yet. Fields used to store data in the element. Field can be text, number, geo-point or date.',
-
-    blank_root_prompt: 'The root information is not filled. Add picture, name and description so that your root is easier to find',
-
-    blank_root_edit_button: 'Fill',
 
     dont_forgot_to_save: 'Do not forgot to save element after adding/changing field',
 
@@ -482,10 +478,6 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     no_fields_add_button: 'Добавить поле',
 
     dont_forgot_to_save: 'Не забудьте <span class="entity_form__dont_forgot_to_save"><i class="fa fa-save"></i> сохранить</span> элемент после добавления поля',
-
-    blank_root_prompt: PROJECT_NAME === 'web20' ?
-      'Информация о сайте не заполнена. Добавьте картинку, название и короткое описание чтобы ваш сайт было проще найти' :
-      'Информация о корне не заполнена. Добавьте картинку, название и короткое описание чтобы ваш корень было проще найти',
 
     open_license_page: 'Открыть страницу лицензии',
 

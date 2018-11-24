@@ -1453,18 +1453,7 @@ EntityForm.prototype.setLogRecords = function(fields, ignoredFieldNames, addLabe
 };
 
 EntityForm.getNoFieldsLabel = function(data) {
-  if (STRINGS.path_descriptions[data.path]) {
-    return '<div>' +
-      '<div class="view__blank_root_prompt">' + STRINGS.path_descriptions[data.path] + '</div>' +
-    '</div>';
-  }
-
-  return data.mine && UIConstants.SYSTEM_PATHS.indexOf(data.path) === -1 ? '<div>' +
-  '<div class="view__blank_root_prompt">' + STRINGS.no_fields_prompt + '</div>' +
-  '<div class="text-center"><button onclick="UI.entityForm.startAddingField();" type="button" class="prompt_button">' + STRINGS.no_fields_add_button + '</button></div>' +
-  '</div>'
-  :
-  '<div class="view__no_fields_exists">' + STRINGS.NO_FIELDS + '</div>';
+  return '<div class="view__no_fields_exists">' + STRINGS.NO_FIELDS + '</div>';
 };
 
 
@@ -1574,7 +1563,6 @@ EntityForm.prototype.setRootView = function(data) {
 
     view.innerHTML = html;
 
-    document.getElementById('view__blank_root').style.display = !data.mine || completeness > 0 ? 'none' : 'block';
     document.getElementById('view__about').style.display = completeness > 0 ? 'block' : 'none';
 
     var ava = MDSCommon.findValueByName(data.fields, 'avatar');
@@ -1669,13 +1657,6 @@ EntityForm.prototype.setRootView = function(data) {
       }
       $(this).addClass('view__field--active');
     });
-
-
-    if (data.mine && completeness === 0) {
-      $('#view__blank_root_prompt').text(STRINGS.blank_root_prompt);
-      $('#view__blank_root_edit_button').text(STRINGS.blank_root_edit_button);
-    }
-
   });
 };
 
@@ -1855,7 +1836,8 @@ EntityForm.prototype.setEntityView = function(data) {
     });
 
     if (UIConstants.SYSTEM_PATHS.indexOf(data.path) >= 0) {
-      document.getElementById('view_overview_actions').style.display = 'none';
+      document.getElementById('view_overview_delete_action').style.display = 'none';
+      document.getElementById('view_overview_clone_action').style.display = 'none';
     }
   });
 };
@@ -2536,7 +2518,6 @@ EntityList.prototype.updateBlankRootButtonsVisibility = function() {
 
   if (!this.isReadOnly && $$('entity_list').count() <= 1 && Identity.isRootId(this.getRootId())) {
     $('*[view_id=entity_list]').append('<div id="entity_list__blank_root_buttons" class="entity_list__blank_root_buttons">' +
-      '<div class="view__blank_root_prompt">' + STRINGS.blank_root.text + '</div>' +
       '<div>' +
         '<button onclick="$$(\'add_entity_window\').show();" type="button" class="prompt_button">' + STRINGS.blank_root.create + '</button>' +
         '<button onclick="openRefineImportEntity = Identity.dataFromId(UI.entityTree.getCurrentId()); $(\'#import_data_modal\').modal(\'show\');" type="button" class="prompt_button">' + STRINGS.blank_root.import + '</button>' +
@@ -4935,29 +4916,6 @@ UILayout.header =
           window.open(currentLang + '/search', '_blank');
         }
       },
-      { width: 10, css: 'menu__spacer' },
-
-      { view: 'button',
-        width: 35,
-        id: 'menu__language_button_en',
-        css: 'menu__language_button ' + (LANGUAGE === 'EN' ? 'menu__language_button--selected' : ''),
-        label: 'EN',
-        hidden: PROJECT_NAME !== 'web20',
-        click: function() {
-          // localStorage.setItem('language', 'EN');
-          UI.updateLanguage('EN');
-        }
-      },
-      { view: 'button',
-        width: 35,
-        id: 'menu__language_button_ru',
-        css: 'menu__language_button ' + (LANGUAGE === 'RU' ? 'menu__language_button--selected' : ''),
-        label: 'RU',
-        hidden: PROJECT_NAME !== 'web20',
-        click: function() {
-          UI.updateLanguage('RU');
-        }
-      },
 
       { width: 20, css: 'menu__spacer' },
       { view: 'button',
@@ -5833,14 +5791,14 @@ UI = {
 
     // Language switcher
 
-    for (var lang in STRINGS_ON_DIFFERENT_LANGUAGES) {
-      var langButton = $$('menu__language_button_' + lang.toLowerCase());
-      if (lang === currentLang) {
-        webix.html.addCss(langButton.getNode(), 'menu__language_button--selected');
-      } else {
-        webix.html.removeCss(langButton.getNode(), 'menu__language_button--selected');
-      }
-    }
+    // for (var lang in STRINGS_ON_DIFFERENT_LANGUAGES) {
+    //   var langButton = $$('menu__language_button_' + lang.toLowerCase());
+    //   if (lang === currentLang) {
+    //     webix.html.addCss(langButton.getNode(), 'menu__language_button--selected');
+    //   } else {
+    //     webix.html.removeCss(langButton.getNode(), 'menu__language_button--selected');
+    //   }
+    // }
 
     // Labels
 
