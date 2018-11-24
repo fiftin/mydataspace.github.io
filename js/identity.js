@@ -49,9 +49,9 @@ var Identity = {
    */
   idFromData: function(data) {
     var v = MDSCommon.findValueByName(data.fields || [], '$version');
-    if (MDSCommon.isBlank(v) && MDSCommon.isBlank(data.path)) {
-      v = MDSCommon.findValueByName(data.fields || [], '$currentVersion');
-    }
+    // if (MDSCommon.isBlank(v) && MDSCommon.isBlank(data.path)) {
+    //   v = MDSCommon.findValueByName(data.fields || [], '$currentVersion');
+    // }
 
     var version = '';
     if (typeof v === 'number' && v > 0) {

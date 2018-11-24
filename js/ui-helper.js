@@ -253,7 +253,7 @@ UIHelper = {
    *
    * @param {HTMLElement|string} element
    * @param {string} str
-   * @param {string} contentType
+   * @param {string} [contentType]
    */
   setInnerContentOrRemove: function (element, str, contentType) {
     if (typeof element === 'string') {

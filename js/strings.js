@@ -181,13 +181,6 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
 
     dont_forgot_to_save: 'Do not forgot to save element after adding/changing field',
 
-    blank_root: {
-      text: '',
-      create: 'Create Element',
-      import: 'Import Data',
-      upload: 'Upload File'
-    },
-
     no_items: {
       no_items__title: PROJECT_NAME === 'web20' ? 'You have no any website yet' : 'You have ho any data yet',
       no_items__explore__desc: 'Find data you need among a huge amount of existing data',
@@ -480,16 +473,6 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     dont_forgot_to_save: 'Не забудьте <span class="entity_form__dont_forgot_to_save"><i class="fa fa-save"></i> сохранить</span> элемент после добавления поля',
 
     open_license_page: 'Открыть страницу лицензии',
-
-    blank_root_edit_button: 'Заполнить',
-
-    blank_root: {
-      text: 'Корень пока не содержит данных',
-      //'Создайте новый элемент данных вручную или импортируется данные из файла',
-      create: 'Создать элемент',
-      import: 'Импортировать данные',
-      upload: 'Загрузить файл'
-    },
 
     no_items: {
       no_items__title: PROJECT_NAME === 'web20' ? 'Создайте свой первый сайт!' : 'У вас еще нет никаких данных',

@@ -5,7 +5,7 @@ $admin-view-vertical-gap: 15px;
 
 .view__description {
   padding-top: $admin-view-vertical-gap;
-  padding-bottom: $admin-view-vertical-gap;
+  padding-bottom: 0;
 }
 
 .view__buttons {
@@ -965,26 +965,13 @@ input {
 }
 
 .admin_panel {
-
-  .root_counters {
-    top: -7px !important;
-    right: 0 !important;
-  }
-
   .view__container {
     width: 100%;
   }
 
   .view__tags {
-    margin-bottom: 0 !important;
-  }
-
-  .view__description + .view__tags {
-    margin-top: 10px;
-  }
-
-  .view__tag:last-child {
-    margin-right: 100px;
+    margin-top: $admin-view-vertical-gap - 5px;
+    margin-bottom: 0;
   }
 
   #view__counters_likes {

@@ -37,15 +37,12 @@ UIConstants = {
     'name',
     'description',
     'websiteURL',
-    //
     'tags',
     'country',
     'language',
     'category',
     'readme',
-
     'domain',
-    //
     'license',
     'licenseURL',
     'licenseText'
@@ -69,23 +66,42 @@ UIConstants = {
     domain:         's'
   },
 
-	HIDDEN_ROOT_FIELDS: [
+  // Unused obsolete root fields
+	OBSOLETE_ROOT_FIELDS: [
     'country',
     'websiteURL'
   ],
 
-  HIDDEN_WEBSITE_FIELDS: [
+  INVISIBLE_ROOT_FIELDS: ['name',
+    'avatar',
+    'description',
+    'websiteURL',
+    'readme',
     'tags',
-    'country',
-    'language',
     'category',
     'country',
+    'language',
     'license',
     'licenseURL',
-    'licenseText',
-    'websiteURL'
+    'licenseText'
   ],
 
+  // Root fields not used for websites, only for skeletons
+  // HIDDEN_WEBSITE_FIELDS: [
+  //   'tags',
+  //   'country',
+  //   'language',
+  //   'category',
+  //   'country',
+  //   'license',
+  //   'licenseURL',
+  //   'licenseText',
+  //   'websiteURL'
+  // ],
+
+  /**
+   * This paths not displayed in tree.
+   */
 	IGNORED_PATHS: [
     'views',
     'likes',
@@ -95,6 +111,9 @@ UIConstants = {
 
   IGNORED_WHEN_EMPTY_PATHS: [],
 
+  /**
+   *  This paths can't be deleted.
+   */
 	SYSTEM_PATHS: [
 	  'data',
     'cache',
@@ -122,7 +141,7 @@ UIConstants = {
     'website/migration',
     'website/scss',
     'website/wizards',
-    'website/generators',
+    'website/generators'
 	],
 
   EDITOR_SUPPORTED_EXTENSIONS: {
@@ -154,5 +173,7 @@ UIConstants = {
       mode: 'text'
     }
   }
+
+
 };
 

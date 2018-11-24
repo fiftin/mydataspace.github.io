@@ -206,7 +206,6 @@ EntityForm.prototype.startEditing = function () {
 
 EntityForm.prototype.setRootView = function(data) {
   var self = this;
-  var completeness = MDSCommon.getRootDataCompleteness(data);
   var language = (getCurrentLanguage() || 'en').toLowerCase();
   var languagePrefix = language === 'en' ? '' : '/' + language;
 
@@ -217,18 +216,15 @@ EntityForm.prototype.setRootView = function(data) {
 
   $.ajax({ url: languagePrefix + '/fragments/root-view.html', method: 'get' }).then(function(html) {
     var view = document.getElementById('view');
-    var websiteURL = MDSCommon.findValueByName(data.fields, 'websiteURL');
     var description = MDSCommon.findValueByName(data.fields, 'description');
     var readme = MDSCommon.findValueByName(data.fields, 'readme');
     var tags = (MDSCommon.findValueByName(data.fields, 'tags') || '').split(' ').filter(function(tag) {
       return tag != null && tag !== '';
     }).map(function(tag) {
-      return '<a class="view__tag" href="/?q=%23' + tag + '" onclick="openSearch_webix__header__search(\'' + tag + '\'); return false;">' + tag + '</a>';
+      return '<a class="view__tag" href="search?q=%23' + tag + '" target="_blank">' + tag + '</a>';
     }).join(' ');
 
     view.innerHTML = html;
-
-    document.getElementById('view__about').style.display = completeness > 0 ? 'block' : 'none';
 
     var ava = MDSCommon.findValueByName(data.fields, 'avatar');
     if (MDSCommon.isPresent(ava)) {
@@ -250,7 +246,6 @@ EntityForm.prototype.setRootView = function(data) {
 
       if (rootTime < 60000) {
         websiteLink.setAttribute('disabled', 'disabled');
-        //websiteLink.classList.add('disabled');
 
         document.getElementById('view__website_link__icon').classList.remove('fa-globe');
         document.getElementById('view__website_link__icon').classList.add('fa-cog');
@@ -267,7 +262,6 @@ EntityForm.prototype.setRootView = function(data) {
           var websiteLink2 = document.getElementById('view__website_link');
           if (websiteLink2 && websiteLink2.getAttribute('data-root') === data.root) {
             websiteLink.removeAttribute('disabled');
-            //websiteLink.classList.remove('disabled');
 
             document.getElementById('view__website_link__icon').classList.add('fa-globe');
             document.getElementById('view__website_link__icon').classList.remove('fa-cog');
@@ -282,6 +276,7 @@ EntityForm.prototype.setRootView = function(data) {
       document.getElementById('view__description').innerHTML = '<i>' + STRINGS.NO_README + '</i>';
     } else {
       document.getElementById('view__description').innerText = description;
+      UIHelper.setInnerContentOrRemove('view__description', description);
     }
 
     // TODO: Uncomment for skeletons
@@ -290,24 +285,16 @@ EntityForm.prototype.setRootView = function(data) {
     // document.getElementById('view__counters_comments_count').innerText =
     //   MDSCommon.findValueByName(data.fields, '$comments');
 
-    if (MDSCommon.isBlank(readme)) {
-      document.getElementById('view__readme').style.display = 'none';
-    } else {
-      document.getElementById('view__readme').style.display = 'block';
-    }
-    document.getElementById('view__readme').innerHTML = md.render(readme);
+    UIHelper.setInnerContentOrRemove('view__readme', md.render(readme || ''), 'html');
+
     var viewFields = self.setViewFields(data,
-                                        ['name',
-                                         'avatar',
-                                         'description',
-                                         'websiteURL',
-                                         'readme',
-                                         'tags',
-                                         'category',
-                                         'country',
-                                         'language'
-                                        ],
+                                        UIConstants.INVISIBLE_ROOT_FIELDS,
                                         false);
+
+    if (viewFields.childNodes.length === 0) {
+      viewFields.parentNode.removeChild(viewFields);
+    }
+
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
       var value = $(this).data('value');
@@ -837,13 +824,13 @@ EntityForm.prototype.addRootFields = function(options) {
       continue;
     }
 
-    if (UIConstants.HIDDEN_ROOT_FIELDS.indexOf(field.name) >= 0) {
+    if (UIConstants.OBSOLETE_ROOT_FIELDS.indexOf(field.name) >= 0) {
       continue;
     }
 
-    if (options.type === 'd' && UIConstants.HIDDEN_WEBSITE_FIELDS.indexOf(field.name) >= 0) {
-      continue;
-    }
+    // if (options.type === 'd' && UIConstants.HIDDEN_WEBSITE_FIELDS.indexOf(field.name) >= 0) {
+    //   continue;
+    // }
 
     if (UIConstants.ROOT_FIELDS.indexOf(field.name) >= 0) {
       this.addRootField(field, setDirty);
