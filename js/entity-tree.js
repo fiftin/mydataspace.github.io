@@ -57,8 +57,6 @@ EntityTree.prototype.setCurrentId = function(id) {
   }
 };
 
-
-
 EntityTree.prototype.createNewEmptyVersion = function(description) {
   var self = this;
   var currentData = Identity.dataFromId(UI.entityTree.currentId);

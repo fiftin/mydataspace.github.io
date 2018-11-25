@@ -3,12 +3,11 @@ UILayout.entityList =
   rows: [
     { view: 'toolbar',
       cols: [
-        { view: 'button',
-          type: 'icon',
-          icon: 'plus',
-          id: 'ADD_ENTITY_LABEL', label: STRINGS.ADD_ENTITY,
-          width: 70,
-          popup: 'entity_tree__new_entity_popup'
+        { view: 'template',
+          borderless: true,
+          id: 'entity_list_breadcrumbs',
+          css: 'entity_list__breadcrumbs',
+          template: '<div class="admin-breadcrumbs" id="entity_list_breadcrumbs"></div>'
         },
         { view: 'button',
           type: 'icon',
@@ -22,6 +21,7 @@ UILayout.entityList =
           css: 'entity_list__search',
           align: 'center',
           icon: 'search',
+          width: 200,
           placeholder: STRINGS.SEARCH_BY_ENTITIES,
           on: {
             onTimedKeyPress: function(code, e) {

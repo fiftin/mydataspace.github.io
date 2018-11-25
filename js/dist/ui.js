@@ -1586,11 +1586,11 @@ EntityForm.prototype.setRootView = function(data) {
     view.innerHTML = html;
 
 
-    document.getElementById('view_overview').addEventListener('contextmenu', function(e) {
-      var pos = $(this).offset();
-      $$('entity_form_menu').show(this, { x: e.pageX - pos.left, y: pos.top - e.pageY });
-      e.preventDefault();
-    }, false);
+    // document.getElementById('view_overview').addEventListener('contextmenu', function(e) {
+    //   var pos = $(this).offset();
+    //   $$('entity_form_menu').show(this, { x: e.pageX - pos.left, y: pos.top - e.pageY });
+    //   e.preventDefault();
+    // }, false);
 
 
     var ava = MDSCommon.findValueByName(data.fields, 'avatar');
@@ -1598,8 +1598,10 @@ EntityForm.prototype.setRootView = function(data) {
       ava = Mydataspace.options.cdnURL + '/avatars/sm/' + ava + '.png';
     }
     document.getElementById('view__overview_image').src = ava || '/images/icons/root.svg';
-    document.getElementById('view__title').innerText =
-      MDSCommon.findValueByName(data.fields, 'name') || MDSCommon.getPathName(data.root);
+    var viewTitle = document.getElementById('view__title');
+    viewTitle.innerText = MDSCommon.findValueByName(data.fields, 'name') || MDSCommon.getEntityName(data.root);
+    viewTitle.innerHTML += '<i style="margin-left: 5px;" class="fa fa-caret-down"></i>';
+    viewTitle.addEventListener('click', function () { $$('entity_form_menu').show(this) });
 
     UIHelper.setInnerContentOrRemove('view__tags', tags, 'html');
 
@@ -2520,14 +2522,46 @@ function EntityList() {
 
 }
 
+EntityList.prototype.updateBreadcrumbs = function () {
+  var breadcrumbs = document.getElementById('entity_list_breadcrumbs');
+  if (!breadcrumbs) {
+    return;
+  }
+
+  var data = Identity.dataFromId(this.getCurrentId());
+  var items = [data.root].concat(data.path === '' ? [] : data.path.split('/'));
+  var html = '';
+  var id = '';
+  for (var i = 0; i < items.length; i++) {
+    var item = items[i];
+
+    if (i === 0) {
+      id = item;
+    } else if (i === 1) {
+      id += ':' + item;
+    } else {
+      id += '/' + item;
+    }
+
+    var action = i === items.length - 1 ? '$$(\'entity_form_menu\').show(this);' : '$$(\'entity_tree\').select(\'' + id + '\'); return false;';
+
+    html += (i === 0 ? '' : '<span class="admin-breadcrumbs__separator"><i class="fa fa-angle-right"></i></span>') +
+      '<a href="javascript: void(0);" class="admin-breadcrumbs__link" onclick="' + action + '">' +
+        item +
+        (i === items.length - 1 ? '<i style="margin-left: 5px;" class="fa fa-caret-down"></i>' : '') +
+      '</a>';
+  }
+  breadcrumbs.innerHTML = html;
+};
+
 /**
  * Hide/show toolbar buttons according passed state - readonly or not.
  */
 EntityList.prototype.setReadOnly = function(isReadOnly) {
   $$('entity_tree__new_root_version_list').clearAll();
   $$('entity_tree__new_root_version_list').parse(UIControls.getChangeVersionPopupData(isReadOnly));
-  UIHelper.setVisible('ADD_ENTITY_LABEL', !isReadOnly);
   UIHelper.setVisible('NEW_VERSION_LABEL', !isReadOnly && Identity.isWebsiteId(this.getCurrentId()));
+  this.isReadOnly = isReadOnly;
 };
 
 /**
@@ -2661,6 +2695,8 @@ EntityList.prototype.refresh = function(newRootId) {
   if (self.getCurrentId() == null) {
     return;
   }
+
+  self.updateBreadcrumbs();
 
   $$('entity_tree__new_entity_list').clearAll();
   $$('entity_tree__new_entity_list').parse(UIControls.getNewEntityPopupData(self.getCurrentId()));
@@ -2850,8 +2886,6 @@ EntityTree.prototype.setCurrentId = function(id) {
     Mydataspace.entities.subscribe(subscribeData);
   }
 };
-
-
 
 EntityTree.prototype.createNewEmptyVersion = function(description) {
   var self = this;
@@ -5039,7 +5073,9 @@ UILayout.entityTree = {
           click: function () {
             $$('add_root_window').show();
           }
-        }, {}, {
+        },
+        {},
+        {
           view: 'button',
           type: 'icon',
           icon: 'refresh',
@@ -5580,12 +5616,11 @@ UILayout.entityList =
   rows: [
     { view: 'toolbar',
       cols: [
-        { view: 'button',
-          type: 'icon',
-          icon: 'plus',
-          id: 'ADD_ENTITY_LABEL', label: STRINGS.ADD_ENTITY,
-          width: 70,
-          popup: 'entity_tree__new_entity_popup'
+        { view: 'template',
+          borderless: true,
+          id: 'entity_list_breadcrumbs',
+          css: 'entity_list__breadcrumbs',
+          template: '<div class="admin-breadcrumbs" id="entity_list_breadcrumbs"></div>'
         },
         { view: 'button',
           type: 'icon',
@@ -5599,6 +5634,7 @@ UILayout.entityList =
           css: 'entity_list__search',
           align: 'center',
           icon: 'search',
+          width: 200,
           placeholder: STRINGS.SEARCH_BY_ENTITIES,
           on: {
             onTimedKeyPress: function(code, e) {

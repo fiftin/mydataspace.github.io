@@ -1,0 +1,28 @@
+.entity_list__breadcrumbs {
+  background: transparent;
+}
+
+.admin-breadcrumbs {
+  font-size: 14px;
+  color: #666666;
+}
+
+.admin-breadcrumbs__link {
+  padding: 5px;
+  line-height: 28px;
+  color: #666666;
+  &:hover, &:active, &:visited, &:focus {
+    color: #666666;
+    background: #e4e9ed;
+    text-decoration: none;
+  }
+  &:last-child {
+    &:after {
+      content: "";
+    }
+  }
+}
+
+.admin-breadcrumbs__separator {
+  padding: 0 5px;
+}

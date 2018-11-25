@@ -227,11 +227,11 @@ EntityForm.prototype.setRootView = function(data) {
     view.innerHTML = html;
 
 
-    document.getElementById('view_overview').addEventListener('contextmenu', function(e) {
-      var pos = $(this).offset();
-      $$('entity_form_menu').show(this, { x: e.pageX - pos.left, y: pos.top - e.pageY });
-      e.preventDefault();
-    }, false);
+    // document.getElementById('view_overview').addEventListener('contextmenu', function(e) {
+    //   var pos = $(this).offset();
+    //   $$('entity_form_menu').show(this, { x: e.pageX - pos.left, y: pos.top - e.pageY });
+    //   e.preventDefault();
+    // }, false);
 
 
     var ava = MDSCommon.findValueByName(data.fields, 'avatar');
@@ -239,8 +239,10 @@ EntityForm.prototype.setRootView = function(data) {
       ava = Mydataspace.options.cdnURL + '/avatars/sm/' + ava + '.png';
     }
     document.getElementById('view__overview_image').src = ava || '/images/icons/root.svg';
-    document.getElementById('view__title').innerText =
-      MDSCommon.findValueByName(data.fields, 'name') || MDSCommon.getPathName(data.root);
+    var viewTitle = document.getElementById('view__title');
+    viewTitle.innerText = MDSCommon.findValueByName(data.fields, 'name') || MDSCommon.getEntityName(data.root);
+    viewTitle.innerHTML += '<i style="margin-left: 5px;" class="fa fa-caret-down"></i>';
+    viewTitle.addEventListener('click', function () { $$('entity_form_menu').show(this) });
 
     UIHelper.setInnerContentOrRemove('view__tags', tags, 'html');
 
