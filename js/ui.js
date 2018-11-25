@@ -432,9 +432,34 @@ UI = {
 
     webix.protoUI({
       name: 'ModalDialog',
+
+      $init: function () {
+        this.attachEvent('onHide', function () {
+          this.clearShowData();
+        });
+      },
+
+      /**
+       *
+       * @param {object} data
+       */
       showWithData: function (data) {
-        this.showData = data;
+        if (data && typeof data !== 'object') {
+          throw new Error('Data must be object');
+        }
+        this._showData_ = data || {};
         this.show();
+      },
+
+      getShowData: function () {
+        if (!this._showData_) {
+          this._showData_ = {};
+        }
+        return this._showData_;
+      },
+
+      clearShowData: function () {
+        this._showData_ = {};
       }
     }, webix.ui.window);
 
@@ -465,6 +490,7 @@ UI = {
     webix.ui(MDSCommon.extend(UILayout.entityTreeMenu, { id: 'entity_list_menu' }));
     webix.ui(MDSCommon.extend(UILayout.entityTreeMenu, { id: 'entity_tree_menu' }));
     webix.ui(MDSCommon.extend(UILayout.entityTreeMenu, { id: 'entity_form_menu' }));
+    webix.ui(MDSCommon.extend(UILayout.entityTreeMenu, { id: 'entity_list_new_menu' }));
 
     if (!withHeader) {
       UILayout.sideMenu.hidden = true;
@@ -538,15 +564,14 @@ UI = {
       for (var i = 0; i < e.path.length; i++) {
         if (e.path[i].classList && e.path[i].classList.contains('webix_list_item')) {
           $$('entity_list').select(e.path[i].getAttribute('webix_l_id'));
-          break;
+          return;
         }
       }
+      $$('entity_list').select($$('entity_list').getFirstId());
     });
 
     $$('entity_list_menu').attachTo(entityListNode);
-
     $$('entity_tree_menu').attachTo($$('entity_tree'));
-
 
     UI.updateSizes();
 

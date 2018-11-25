@@ -12,26 +12,32 @@ UILayout.windows.addEntity = {
       borderless: true,
       on: {
         onSubmit: function() {
-          if ($$('add_entity_form').validate()) {
-            var formData = $$('add_entity_form').getValues();
-            var destFolderId = this.showData ? this.showData.destFolderId : UI.entityList.getCurrentId();
-            var newEntityId = Identity.childId(destFolderId, formData.name);
-            var data = Identity.dataFromId(newEntityId);
-            data.fields = [];
-            data.othersCan = formData.othersCan;
-            Mydataspace.request('entities.create', data, function() {
-              $$('add_entity_window').hide();
-              UIControls.removeSpinnerFromWindow('add_entity_window');
-            }, function(err) {
-              UIControls.removeSpinnerFromWindow('add_entity_window');
-              if (err.name === 'SequelizeUniqueConstraintError') {
-                $$('add_entity_form').elements.name.define('invalidMessage', 'Name already exists');
-                $$('add_entity_form').markInvalid('name', true);
-              } else {
-                UI.error(err);
-              }
-            });
+          var window = $$('add_entity_window');
+          var form = this;
+
+          if (!form.validate()) {
+            return;
           }
+
+          var formData = form.getValues();
+          var destFolderId = window.getShowData().destFolderId || UI.entityList.getCurrentId();
+          var newEntityId = Identity.childId(destFolderId, formData.name);
+          var data = Identity.dataFromId(newEntityId);
+
+          data.fields = [];
+          data.othersCan = formData.othersCan;
+          Mydataspace.request('entities.create', data, function() {
+            window.hide();
+            UIControls.removeSpinnerFromWindow('add_entity_window');
+          }, function(err) {
+            UIControls.removeSpinnerFromWindow('add_entity_window');
+            if (err.name === 'SequelizeUniqueConstraintError') {
+              form.elements.name.define('invalidMessage', 'Name already exists');
+              form.markInvalid('name', true);
+            } else {
+              UI.error(err);
+            }
+          });
         }
       },
       elements: [

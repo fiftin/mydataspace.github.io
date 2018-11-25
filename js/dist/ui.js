@@ -1089,13 +1089,12 @@ UIControls = {
 
   getEntityTypeSelectTemplate: function() {
     return {
-      view: 'combo',
+      view: 'richselect',
       label: STRINGS.OTHERS_CAN,
       name: 'othersCan',
       value: 'view_children',
       options: [
         // { id: 'nothing', value: STRINGS.NOTHING },
-        // { id: 'read', value: STRINGS.ONLY_READ },
         { id: 'view_children', value: STRINGS.ONLY_READ },
         { id: 'create_child', value: STRINGS.CREATE_ONE_CHILD },
         { id: 'create_children', value: STRINGS.CREATE_CHILDREN }
@@ -1113,13 +1112,13 @@ UIControls = {
 			'<div class="entity_form__field_label_ellipse"></div>';
 	},
 
-  getRootFieldSelectTemplate: function(name, value, values) {
+  getRootFieldSelectTemplate: function(name, value, values, fixed) {
 		var options = [];
 		for (var id in values) {
 			options.push({ id: id, value: values[id] });
 		}
 		return {
-			view: 'combo',
+			view: fixed ? 'richselect' : 'combo',
 			label: STRINGS.ROOT_FIELDS[name],
 			labelWidth: UIHelper.LABEL_WIDTH,
 			name: 'fields.' + name + '.value',
@@ -1178,8 +1177,11 @@ UIControls = {
 	getRootFieldView: function(type, data, values) {
   	var valueView;
   	switch (type) {
+      case 'list':
+        valueView = UIControls.getRootFieldSelectTemplate(data.name, data.value, values, true);
+        break;
 			case 'select':
-				valueView = UIControls.getRootFieldSelectTemplate(data.name, data.value, values);
+        valueView = UIControls.getRootFieldSelectTemplate(data.name, data.value, values);
 				break;
 			case 'text':
 				valueView = UIControls.getRootFieldTextTemplate(data.name, data.value);
@@ -1213,7 +1215,7 @@ UIControls = {
   /**
    * Returns object with initialized event handlers for typical modal dialog.
    */
-  getOnForFormWindow: function(id, on) {
+  getOnForFormWindow: function(id, on, focusedFieldId) {
     var formId = id + '_form';
     var windowId = id + '_window';
     return {
@@ -1222,11 +1224,11 @@ UIControls = {
         $$(formId).setValues($$(formId).getCleanValues());
       },
       onShow: function() {
-        $$(formId).focus();
+        setTimeout(function () { $$(formId).focus(focusedFieldId); }, 300);
         $$(formId).setDirty(false);
         $$(windowId + '__cancel_button').define('hotkey', 'escape');
         if (on && typeof on.onShow === 'function') {
-          on.onShow(id);
+          on.onShow.call($$(windowId), id);
         }
       }
     };
@@ -2313,7 +2315,7 @@ EntityForm.prototype.addRootField = function(data) {
       UIHelper.loadDatasourcesToCombo('entity_form__' + data.name + '_value');
       break;
     case 'license':
-      $$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.licenses));
+      $$('entity_form').addView(UIControls.getRootFieldView('list', data, STRINGS.licenses));
       break;
 		case 'category':
 			$$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.categories));
@@ -3708,26 +3710,32 @@ UILayout.windows.addEntity = {
       borderless: true,
       on: {
         onSubmit: function() {
-          if ($$('add_entity_form').validate()) {
-            var formData = $$('add_entity_form').getValues();
-            var destFolderId = this.showData ? this.showData.destFolderId : UI.entityList.getCurrentId();
-            var newEntityId = Identity.childId(destFolderId, formData.name);
-            var data = Identity.dataFromId(newEntityId);
-            data.fields = [];
-            data.othersCan = formData.othersCan;
-            Mydataspace.request('entities.create', data, function() {
-              $$('add_entity_window').hide();
-              UIControls.removeSpinnerFromWindow('add_entity_window');
-            }, function(err) {
-              UIControls.removeSpinnerFromWindow('add_entity_window');
-              if (err.name === 'SequelizeUniqueConstraintError') {
-                $$('add_entity_form').elements.name.define('invalidMessage', 'Name already exists');
-                $$('add_entity_form').markInvalid('name', true);
-              } else {
-                UI.error(err);
-              }
-            });
+          var window = $$('add_entity_window');
+          var form = this;
+
+          if (!form.validate()) {
+            return;
           }
+
+          var formData = form.getValues();
+          var destFolderId = window.getShowData().destFolderId || UI.entityList.getCurrentId();
+          var newEntityId = Identity.childId(destFolderId, formData.name);
+          var data = Identity.dataFromId(newEntityId);
+
+          data.fields = [];
+          data.othersCan = formData.othersCan;
+          Mydataspace.request('entities.create', data, function() {
+            window.hide();
+            UIControls.removeSpinnerFromWindow('add_entity_window');
+          }, function(err) {
+            UIControls.removeSpinnerFromWindow('add_entity_window');
+            if (err.name === 'SequelizeUniqueConstraintError') {
+              form.elements.name.define('invalidMessage', 'Name already exists');
+              form.markInvalid('name', true);
+            } else {
+              UI.error(err);
+            }
+          });
         }
       },
       elements: [
@@ -4042,21 +4050,61 @@ UILayout.windows.addFile = {
   position: 'center',
   modal: true,
   head: STRINGS.ADD_FILE,
-  on: UIControls.getOnForFormWindow('add_file'),
+  on: UIControls.getOnForFormWindow('add_file', {
+    onShow: function (id) {
+      var options;
+      switch (this.getShowData().fileType) {
+        case 'scss':
+          options = [
+            { id: 'scss', value: 'SCSS File (*.scss)' },
+            { id: 'css', value: 'CSS File (*.css)' }
+          ];
+          break;
+        case 'pug':
+          options = [
+            { id: 'pug', value: 'Pug File (*.pug)' },
+            { id: 'html', value: 'HTML File (*.html)' }
+          ];
+          break;
+        default:
+          options = [
+            { id: 'pug', value: 'Pug File (*.pug)' },
+            { id: 'html', value: 'HTML File (*.html)' },
+            { id: 'scss', value: 'SCSS File (*.scss)' },
+            { id: 'css', value: 'CSS File (*.css)' },
+            { id: 'xml', value: 'XML File (*.xml)' },
+            { id: 'json', value: 'JSON File (*.json)' },
+            { id: 'txt', value: 'Text File (*.txt)' }
+          ];
+          break;
+      }
+
+      $$('NAME_LABEL_8').define('placeholder', 'Example: test, test.' + (this.getShowData().fileType || 'html'));
+      $$('NAME_LABEL_8').refresh();
+
+      $$('FILE_TYPE_LABEL').define('options', options);
+      $$('FILE_TYPE_LABEL').refresh();
+    }
+  }, 'name'),
   body: {
     view: 'form',
     id: 'add_file_form',
     borderless: true,
     on: {
       onSubmit: function() {
-        if (!$$('add_file_form').validate()) {
+        var form = this;
+
+        if (!form.validate()) {
           return;
         }
-        var formData = $$('add_file_form').getValues();
+
+        var formData = form.getValues();
+
+        var filenameParts = formData.name.trim().split('.');
 
         var req = MDSCommon.extend(Identity.dataFromId(UI.entityList.getCurrentId()), {
           fields: [{
-            name: formData.name,
+            name: filenameParts[0] + '.' + formData.type,
             value: '',
             type: 'j'
           }]
@@ -4068,20 +4116,50 @@ UILayout.windows.addFile = {
           UIControls.removeSpinnerFromWindow('add_file_window');
         }, function (err) {
           UIControls.removeSpinnerFromWindow('add_file_window');
-
         });
-
       }
     },
 
     elements: [
-      { view: 'text', required: true, id: 'NAME_LABEL_8', label: STRINGS.NAME, name: 'name' },
+      { view: 'text',
+        required: true,
+        id: 'NAME_LABEL_8',
+        label: STRINGS.NAME,
+        name: 'name',
+        on: {
+          onChange: function () {
+            var filename = this.getValue();
+            var parts = filename.split('.');
+            if (parts.length > 2) {
+              return false;
+            }
+            $$('FILE_TYPE_LABEL').setValue(parts[1]);
+          },
+          onTimedKeyPress: function () {
+            var filenameParts = this.getValue().trim().split('.');
+            if (filenameParts.length > 2 || MDSCommon.isBlank(filenameParts[1])) {
+              return;
+            }
+            $$('FILE_TYPE_LABEL').setValue(filenameParts[1]);
+          }
+        }
+      },
+      {
+        view: 'richselect',
+        required: true,
+        id: 'FILE_TYPE_LABEL',
+        label: STRINGS.FILE_TYPE,
+        name: 'type',
+        placeholder: 'from extension...',
+        options: [
+        ]
+      },
       UIControls.getSubmitCancelForFormWindow('add_file', false)
     ],
 
     rules: {
       name: function(value) {
-        return /^[\w_-]+(\.[\w_-]+)+$/.test(value);
+        return /^[\w_-]+(\.[\w_-]+)?$/.test(value);
       }
     }
   }
@@ -4954,22 +5032,21 @@ UILayout.entityTree = {
         {
           view: 'button',
           type: 'icon',
-          icon: 'refresh',
-          id: 'REFRESH_LABEL', label: STRINGS.REFRESH,
-          width: 60,
-          click: function () {
-            UI.entityTree.refresh();
-          }
-        },
-        {
-          view: 'button',
-          type: 'icon',
           icon: 'plus',
           id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
           hidden: true,
-          width: 100,
+          width: 120,
           click: function () {
             $$('add_root_window').show();
+          }
+        }, {}, {
+          view: 'button',
+          type: 'icon',
+          icon: 'refresh',
+          id: 'REFRESH_LABEL', label: STRINGS.REFRESH,
+          width: 30,
+          click: function () {
+            UI.entityTree.refresh();
           }
         }
       ]
@@ -5213,171 +5290,207 @@ UILayout.entityTreeMenu = {
 
       var id = this._area && this._area.id ? this._area.id : UI.entityForm.getCurrentId();
       var itemData = Identity.dataFromId(id);
-      // this.data.add({
-      //   id: 'edit',
-      //   value: STRINGS.context_menu.edit
-      // });
+      var menuItems = [];
+
+      this.data.add({
+        id: 'edit',
+        value: STRINGS.context_menu.edit
+      });
+
       if (Identity.isFileId(id)) {
-        this.data.add({
+        menuItems.push({
           id: 'rename_file',
           value: STRINGS.context_menu.rename_file
         });
-        this.data.add({
+        menuItems.push({
           id: 'copy_file',
           value: STRINGS.context_menu.copy_file
         });
-        this.data.add({
+        menuItems.push({
           id: 'delete_file',
           value: STRINGS.context_menu.delete_file
         });
       } else if (Identity.isRootId(id)) {
-        this.data.add({
+        menuItems.push({
           id: 'regenerate_cache',
           value: STRINGS.context_menu.regenerate_cache
         });
-        this.data.add({
+        menuItems.push({
           id: 'new_resource',
-          value: STRINGS.new_resource
+          value: STRINGS.context_menu.new_resource
         });
-        this.data.add({
-          id: 'new_generator',
-          value: STRINGS.context_menu.new_generator
+        // menuItems.push({
+        //   id: 'new_generator',
+        //   value: STRINGS.context_menu.new_generator
+        // });
+        menuItems.push({
+          id: 'new_proto',
+          value: STRINGS.context_menu.new_proto
         });
 
-        this.data.add({
+        menuItems.push({
           id: 'delete_entity',
           value: STRINGS.context_menu.delete_root
         });
       } else if (itemData.path === 'tasks' || itemData.path === 'website/tasks') {
-        this.data.add({
+        menuItems.push({
           id: 'new_task',
-          value: STRINGS.new_task
+          value: STRINGS.context_menu.new_task
         });
       } else if (itemData.path === 'protos') {
-        this.data.add({
+        menuItems.push({
           id: 'new_proto',
-          value: STRINGS.new_proto
+          value: STRINGS.context_menu.new_proto
         });
       } else if (itemData.path === 'resources') {
-        this.data.add({
+        menuItems.push({
           id: 'new_resource',
-          value: STRINGS.new_resource
+          value: STRINGS.context_menu.new_resource
         });
       } else if (itemData.path === 'website') {
-        this.hide();
+        menuItems.push({
+          id: 'new_generator',
+          value: STRINGS.context_menu.new_generator
+        });
+        menuItems.push({
+          id: 'new_task',
+          value: STRINGS.context_menu.new_task
+        });
       } else if (itemData.path === 'data') {
-        this.data.add({
+        menuItems.push({
           id: 'new_entity',
-          value: STRINGS.new_entity
+          value: STRINGS.context_menu.new_entity
         });
       } else if (itemData.path === 'cache') {
-        this.data.add({
+        menuItems.push({
           id: 'regenerate_cache',
           value: STRINGS.context_menu.regenerate_cache
         });
       } else if (itemData.path === 'website/includes') {
-        this.data.add({
-          id: 'new_file',
+        menuItems.push({
+          id: 'new_pug',
           value: STRINGS.context_menu.new_pug
         });
-        this.data.add({
+        menuItems.push({
           id: 'new_entity',
-          value: STRINGS.new_entity
+          value: STRINGS.context_menu.new_entity
         });
       } else if (itemData.path === 'website/scss') {
-        this.data.add({
-          id: 'new_file',
+        menuItems.push({
+          id: 'new_scss',
+          type: 'scss',
           value: STRINGS.context_menu.new_scss
         });
-        this.data.add({
+        menuItems.push({
           id: 'new_entity',
-          value: STRINGS.new_entity
+          value: STRINGS.context_menu.new_entity
         });
       } else if (itemData.path === 'website/public_html') {
-        this.data.add({
+        menuItems.push({
           id: 'new_file',
           value: STRINGS.context_menu.new_file
         });
-        this.data.add({
+        menuItems.push({
           id: 'new_entity',
-          value: STRINGS.new_entity
+          value: STRINGS.context_menu.new_entity
         });
       } else if (itemData.path === 'website/generators') {
-        this.data.add({
+        menuItems.push({
           id: 'new_generator',
           value: STRINGS.context_menu.new_generator
         });
       } else if (itemData.path.indexOf('website/tasks/') === 0) {
-        this.data.add({
+        menuItems.push({
           id: 'delete_entity',
           value: STRINGS.context_menu.delete_entity
         });
       } else if (itemData.path.indexOf('website/generators/') === 0) {
-        this.data.add({
+        menuItems.push({
           id: 'delete_entity',
           value: STRINGS.context_menu.delete_entity
         });
       } else if (itemData.path.indexOf('website/includes/') === 0) {
-        this.data.add({
-          id: 'new_file',
+        menuItems.push({
+          id: 'new_pug',
           value: STRINGS.context_menu.new_pug
         });
-        this.data.add({
+        menuItems.push({
           id: 'new_entity',
-          value: STRINGS.new_entity
+          value: STRINGS.context_menu.new_entity
         });
-        this.data.add({
+        menuItems.push({
           id: 'delete_entity',
           value: STRINGS.context_menu.delete_entity
         });
       } else if (itemData.path.indexOf('website/public_html/') === 0) {
-        this.data.add({
+        menuItems.push({
           id: 'copy_entity',
           value: STRINGS.context_menu.copy_entity
         });
-        this.data.add({
+        menuItems.push({
           id: 'new_file',
           value: STRINGS.context_menu.new_file
         });
-        this.data.add({
+        menuItems.push({
           id: 'new_entity',
-          value: STRINGS.new_entity
+          value: STRINGS.context_menu.new_entity
         });
-        this.data.add({
+        menuItems.push({
           id: 'delete_entity',
           value: STRINGS.context_menu.delete_entity
         });
       } else if (itemData.path.indexOf('resources/') === 0) {
-        this.data.add({
+        menuItems.push({
           id: 'delete_entity',
           value: STRINGS.context_menu.delete_entity
         });
       } else if (itemData.path.indexOf('website/scss/') === 0) {
-        this.data.add({
-          id: 'new_file',
+        menuItems.push({
+          id: 'new_scss',
           value: STRINGS.context_menu.new_scss
         });
-        this.data.add({
+        menuItems.push({
           id: 'new_entity',
-          value: STRINGS.new_entity
+          value: STRINGS.context_menu.new_entity
         });
-        this.data.add({
+        menuItems.push({
           id: 'delete_entity',
           value: STRINGS.context_menu.delete_entity
         });
       } else if (itemData.path.indexOf('data/') === 0 || itemData.path.indexOf('protos/') === 0) {
-        this.data.add({
+        menuItems.push({
           id: 'copy_entity',
           value: STRINGS.context_menu.copy_entity
         });
-        this.data.add({
+        menuItems.push({
           id: 'new_entity',
-          value: STRINGS.new_entity
+          value: STRINGS.context_menu.new_entity
         });
-        this.data.add({
+        menuItems.push({
           id: 'delete_entity',
           value: STRINGS.context_menu.delete_entity
         });
+      }
+
+      var i;
+
+      switch (this.config.id) {
+        case 'entity_list_new_menu':
+          for (i = menuItems.length - 1; i >= 0; i--) {
+            switch (menuItems[i].id) {
+              case 'delete_entity':
+              case 'copy_entity':
+              case 'delete_file':
+              case 'edit':
+                menuItems.splice(i, 1);
+                break;
+            }
+          }
+          break;
+      }
+
+      for (i in menuItems) {
+        this.data.add(menuItems[i]);
       }
     },
 
@@ -5388,7 +5501,7 @@ UILayout.entityTreeMenu = {
           entityId = UI.entityForm.getCurrentId();
           break;
         default:
-          entityId = UI.entityList.getCurrentId();
+          entityId = UI.entityList.getSelectedId();
           break;
       }
 
@@ -5412,7 +5525,7 @@ UILayout.entityTreeMenu = {
           break;
         case 'new_entity':
           var window = $$('add_entity_window');
-          window.showWithData({ destFolderId: id });
+          window.showWithData({ destFolderId: entityId });
           break;
         case 'new_resource':
           $$('add_resource_window').show();
@@ -5422,6 +5535,12 @@ UILayout.entityTreeMenu = {
           break;
         case 'new_proto':
           $$('add_proto_window').show();
+          break;
+        case 'new_pug':
+          $$('add_file_window').showWithData({ fileType: 'pug' });
+          break;
+        case 'new_scss':
+          $$('add_file_window').showWithData({ fileType: 'scss' });
           break;
         case 'new_file':
           $$('add_file_window').show();
@@ -5463,13 +5582,6 @@ UILayout.entityList =
       cols: [
         { view: 'button',
           type: 'icon',
-          icon: 'refresh',
-          id: 'REFRESH_ENTITY_LABEL_1', label: STRINGS.REFRESH_ENTITY,
-          width: 65,
-          click: function() { UI.entityList.refresh(); }
-        },
-        { view: 'button',
-          type: 'icon',
           icon: 'plus',
           id: 'ADD_ENTITY_LABEL', label: STRINGS.ADD_ENTITY,
           width: 70,
@@ -5497,7 +5609,14 @@ UILayout.entityList =
               // UI.entityList.refresh();
             }
           }
-        }
+        },
+        { view: 'button',
+          type: 'icon',
+          icon: 'refresh',
+          id: 'REFRESH_ENTITY_LABEL_1', label: STRINGS.REFRESH_ENTITY,
+          width: 30,
+          click: function() { UI.entityList.refresh(); }
+        },
       ]
     },
     { view: 'template',
@@ -6260,9 +6379,34 @@ UI = {
 
     webix.protoUI({
       name: 'ModalDialog',
+
+      $init: function () {
+        this.attachEvent('onHide', function () {
+          this.clearShowData();
+        });
+      },
+
+      /**
+       *
+       * @param {object} data
+       */
       showWithData: function (data) {
-        this.showData = data;
+        if (data && typeof data !== 'object') {
+          throw new Error('Data must be object');
+        }
+        this._showData_ = data || {};
         this.show();
+      },
+
+      getShowData: function () {
+        if (!this._showData_) {
+          this._showData_ = {};
+        }
+        return this._showData_;
+      },
+
+      clearShowData: function () {
+        this._showData_ = {};
       }
     }, webix.ui.window);
 
@@ -6293,6 +6437,7 @@ UI = {
     webix.ui(MDSCommon.extend(UILayout.entityTreeMenu, { id: 'entity_list_menu' }));
     webix.ui(MDSCommon.extend(UILayout.entityTreeMenu, { id: 'entity_tree_menu' }));
     webix.ui(MDSCommon.extend(UILayout.entityTreeMenu, { id: 'entity_form_menu' }));
+    webix.ui(MDSCommon.extend(UILayout.entityTreeMenu, { id: 'entity_list_new_menu' }));
 
     if (!withHeader) {
       UILayout.sideMenu.hidden = true;
@@ -6366,15 +6511,14 @@ UI = {
       for (var i = 0; i < e.path.length; i++) {
         if (e.path[i].classList && e.path[i].classList.contains('webix_list_item')) {
           $$('entity_list').select(e.path[i].getAttribute('webix_l_id'));
-          break;
+          return;
         }
       }
+      $$('entity_list').select($$('entity_list').getFirstId());
     });
 
     $$('entity_list_menu').attachTo(entityListNode);
-
     $$('entity_tree_menu').attachTo($$('entity_tree'));
-
 
     UI.updateSizes();
 

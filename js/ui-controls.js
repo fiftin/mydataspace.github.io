@@ -40,13 +40,12 @@ UIControls = {
 
   getEntityTypeSelectTemplate: function() {
     return {
-      view: 'combo',
+      view: 'richselect',
       label: STRINGS.OTHERS_CAN,
       name: 'othersCan',
       value: 'view_children',
       options: [
         // { id: 'nothing', value: STRINGS.NOTHING },
-        // { id: 'read', value: STRINGS.ONLY_READ },
         { id: 'view_children', value: STRINGS.ONLY_READ },
         { id: 'create_child', value: STRINGS.CREATE_ONE_CHILD },
         { id: 'create_children', value: STRINGS.CREATE_CHILDREN }
@@ -64,13 +63,13 @@ UIControls = {
 			'<div class="entity_form__field_label_ellipse"></div>';
 	},
 
-  getRootFieldSelectTemplate: function(name, value, values) {
+  getRootFieldSelectTemplate: function(name, value, values, fixed) {
 		var options = [];
 		for (var id in values) {
 			options.push({ id: id, value: values[id] });
 		}
 		return {
-			view: 'combo',
+			view: fixed ? 'richselect' : 'combo',
 			label: STRINGS.ROOT_FIELDS[name],
 			labelWidth: UIHelper.LABEL_WIDTH,
 			name: 'fields.' + name + '.value',
@@ -129,8 +128,11 @@ UIControls = {
 	getRootFieldView: function(type, data, values) {
   	var valueView;
   	switch (type) {
+      case 'list':
+        valueView = UIControls.getRootFieldSelectTemplate(data.name, data.value, values, true);
+        break;
 			case 'select':
-				valueView = UIControls.getRootFieldSelectTemplate(data.name, data.value, values);
+        valueView = UIControls.getRootFieldSelectTemplate(data.name, data.value, values);
 				break;
 			case 'text':
 				valueView = UIControls.getRootFieldTextTemplate(data.name, data.value);
@@ -164,7 +166,7 @@ UIControls = {
   /**
    * Returns object with initialized event handlers for typical modal dialog.
    */
-  getOnForFormWindow: function(id, on) {
+  getOnForFormWindow: function(id, on, focusedFieldId) {
     var formId = id + '_form';
     var windowId = id + '_window';
     return {
@@ -173,11 +175,11 @@ UIControls = {
         $$(formId).setValues($$(formId).getCleanValues());
       },
       onShow: function() {
-        $$(formId).focus();
+        setTimeout(function () { $$(formId).focus(focusedFieldId); }, 300);
         $$(formId).setDirty(false);
         $$(windowId + '__cancel_button').define('hotkey', 'escape');
         if (on && typeof on.onShow === 'function') {
-          on.onShow(id);
+          on.onShow.call($$(windowId), id);
         }
       }
     };

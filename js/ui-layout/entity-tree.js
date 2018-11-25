@@ -9,22 +9,21 @@ UILayout.entityTree = {
         {
           view: 'button',
           type: 'icon',
-          icon: 'refresh',
-          id: 'REFRESH_LABEL', label: STRINGS.REFRESH,
-          width: 60,
-          click: function () {
-            UI.entityTree.refresh();
-          }
-        },
-        {
-          view: 'button',
-          type: 'icon',
           icon: 'plus',
           id: 'ADD_ROOT_LABEL', label: STRINGS.ADD_ROOT,
           hidden: true,
-          width: 100,
+          width: 120,
           click: function () {
             $$('add_root_window').show();
+          }
+        }, {}, {
+          view: 'button',
+          type: 'icon',
+          icon: 'refresh',
+          id: 'REFRESH_LABEL', label: STRINGS.REFRESH,
+          width: 30,
+          click: function () {
+            UI.entityTree.refresh();
           }
         }
       ]
@@ -268,171 +267,207 @@ UILayout.entityTreeMenu = {
 
       var id = this._area && this._area.id ? this._area.id : UI.entityForm.getCurrentId();
       var itemData = Identity.dataFromId(id);
-      // this.data.add({
-      //   id: 'edit',
-      //   value: STRINGS.context_menu.edit
-      // });
+      var menuItems = [];
+
+      this.data.add({
+        id: 'edit',
+        value: STRINGS.context_menu.edit
+      });
+
       if (Identity.isFileId(id)) {
-        this.data.add({
+        menuItems.push({
           id: 'rename_file',
           value: STRINGS.context_menu.rename_file
         });
-        this.data.add({
+        menuItems.push({
           id: 'copy_file',
           value: STRINGS.context_menu.copy_file
         });
-        this.data.add({
+        menuItems.push({
           id: 'delete_file',
           value: STRINGS.context_menu.delete_file
         });
       } else if (Identity.isRootId(id)) {
-        this.data.add({
+        menuItems.push({
           id: 'regenerate_cache',
           value: STRINGS.context_menu.regenerate_cache
         });
-        this.data.add({
+        menuItems.push({
           id: 'new_resource',
-          value: STRINGS.new_resource
+          value: STRINGS.context_menu.new_resource
         });
-        this.data.add({
-          id: 'new_generator',
-          value: STRINGS.context_menu.new_generator
+        // menuItems.push({
+        //   id: 'new_generator',
+        //   value: STRINGS.context_menu.new_generator
+        // });
+        menuItems.push({
+          id: 'new_proto',
+          value: STRINGS.context_menu.new_proto
         });
 
-        this.data.add({
+        menuItems.push({
           id: 'delete_entity',
           value: STRINGS.context_menu.delete_root
         });
       } else if (itemData.path === 'tasks' || itemData.path === 'website/tasks') {
-        this.data.add({
+        menuItems.push({
           id: 'new_task',
-          value: STRINGS.new_task
+          value: STRINGS.context_menu.new_task
         });
       } else if (itemData.path === 'protos') {
-        this.data.add({
+        menuItems.push({
           id: 'new_proto',
-          value: STRINGS.new_proto
+          value: STRINGS.context_menu.new_proto
         });
       } else if (itemData.path === 'resources') {
-        this.data.add({
+        menuItems.push({
           id: 'new_resource',
-          value: STRINGS.new_resource
+          value: STRINGS.context_menu.new_resource
         });
       } else if (itemData.path === 'website') {
-        this.hide();
+        menuItems.push({
+          id: 'new_generator',
+          value: STRINGS.context_menu.new_generator
+        });
+        menuItems.push({
+          id: 'new_task',
+          value: STRINGS.context_menu.new_task
+        });
       } else if (itemData.path === 'data') {
-        this.data.add({
+        menuItems.push({
           id: 'new_entity',
-          value: STRINGS.new_entity
+          value: STRINGS.context_menu.new_entity
         });
       } else if (itemData.path === 'cache') {
-        this.data.add({
+        menuItems.push({
           id: 'regenerate_cache',
           value: STRINGS.context_menu.regenerate_cache
         });
       } else if (itemData.path === 'website/includes') {
-        this.data.add({
-          id: 'new_file',
+        menuItems.push({
+          id: 'new_pug',
           value: STRINGS.context_menu.new_pug
         });
-        this.data.add({
+        menuItems.push({
           id: 'new_entity',
-          value: STRINGS.new_entity
+          value: STRINGS.context_menu.new_entity
         });
       } else if (itemData.path === 'website/scss') {
-        this.data.add({
-          id: 'new_file',
+        menuItems.push({
+          id: 'new_scss',
+          type: 'scss',
           value: STRINGS.context_menu.new_scss
         });
-        this.data.add({
+        menuItems.push({
           id: 'new_entity',
-          value: STRINGS.new_entity
+          value: STRINGS.context_menu.new_entity
         });
       } else if (itemData.path === 'website/public_html') {
-        this.data.add({
+        menuItems.push({
           id: 'new_file',
           value: STRINGS.context_menu.new_file
         });
-        this.data.add({
+        menuItems.push({
           id: 'new_entity',
-          value: STRINGS.new_entity
+          value: STRINGS.context_menu.new_entity
         });
       } else if (itemData.path === 'website/generators') {
-        this.data.add({
+        menuItems.push({
           id: 'new_generator',
           value: STRINGS.context_menu.new_generator
         });
       } else if (itemData.path.indexOf('website/tasks/') === 0) {
-        this.data.add({
+        menuItems.push({
           id: 'delete_entity',
           value: STRINGS.context_menu.delete_entity
         });
       } else if (itemData.path.indexOf('website/generators/') === 0) {
-        this.data.add({
+        menuItems.push({
           id: 'delete_entity',
           value: STRINGS.context_menu.delete_entity
         });
       } else if (itemData.path.indexOf('website/includes/') === 0) {
-        this.data.add({
-          id: 'new_file',
+        menuItems.push({
+          id: 'new_pug',
           value: STRINGS.context_menu.new_pug
         });
-        this.data.add({
+        menuItems.push({
           id: 'new_entity',
-          value: STRINGS.new_entity
+          value: STRINGS.context_menu.new_entity
         });
-        this.data.add({
+        menuItems.push({
           id: 'delete_entity',
           value: STRINGS.context_menu.delete_entity
         });
       } else if (itemData.path.indexOf('website/public_html/') === 0) {
-        this.data.add({
+        menuItems.push({
           id: 'copy_entity',
           value: STRINGS.context_menu.copy_entity
         });
-        this.data.add({
+        menuItems.push({
           id: 'new_file',
           value: STRINGS.context_menu.new_file
         });
-        this.data.add({
+        menuItems.push({
           id: 'new_entity',
-          value: STRINGS.new_entity
+          value: STRINGS.context_menu.new_entity
         });
-        this.data.add({
+        menuItems.push({
           id: 'delete_entity',
           value: STRINGS.context_menu.delete_entity
         });
       } else if (itemData.path.indexOf('resources/') === 0) {
-        this.data.add({
+        menuItems.push({
           id: 'delete_entity',
           value: STRINGS.context_menu.delete_entity
         });
       } else if (itemData.path.indexOf('website/scss/') === 0) {
-        this.data.add({
-          id: 'new_file',
+        menuItems.push({
+          id: 'new_scss',
           value: STRINGS.context_menu.new_scss
         });
-        this.data.add({
+        menuItems.push({
           id: 'new_entity',
-          value: STRINGS.new_entity
+          value: STRINGS.context_menu.new_entity
         });
-        this.data.add({
+        menuItems.push({
           id: 'delete_entity',
           value: STRINGS.context_menu.delete_entity
         });
       } else if (itemData.path.indexOf('data/') === 0 || itemData.path.indexOf('protos/') === 0) {
-        this.data.add({
+        menuItems.push({
           id: 'copy_entity',
           value: STRINGS.context_menu.copy_entity
         });
-        this.data.add({
+        menuItems.push({
           id: 'new_entity',
-          value: STRINGS.new_entity
+          value: STRINGS.context_menu.new_entity
         });
-        this.data.add({
+        menuItems.push({
           id: 'delete_entity',
           value: STRINGS.context_menu.delete_entity
         });
+      }
+
+      var i;
+
+      switch (this.config.id) {
+        case 'entity_list_new_menu':
+          for (i = menuItems.length - 1; i >= 0; i--) {
+            switch (menuItems[i].id) {
+              case 'delete_entity':
+              case 'copy_entity':
+              case 'delete_file':
+              case 'edit':
+                menuItems.splice(i, 1);
+                break;
+            }
+          }
+          break;
+      }
+
+      for (i in menuItems) {
+        this.data.add(menuItems[i]);
       }
     },
 
@@ -443,7 +478,7 @@ UILayout.entityTreeMenu = {
           entityId = UI.entityForm.getCurrentId();
           break;
         default:
-          entityId = UI.entityList.getCurrentId();
+          entityId = UI.entityList.getSelectedId();
           break;
       }
 
@@ -467,7 +502,7 @@ UILayout.entityTreeMenu = {
           break;
         case 'new_entity':
           var window = $$('add_entity_window');
-          window.showWithData({ destFolderId: id });
+          window.showWithData({ destFolderId: entityId });
           break;
         case 'new_resource':
           $$('add_resource_window').show();
@@ -477,6 +512,12 @@ UILayout.entityTreeMenu = {
           break;
         case 'new_proto':
           $$('add_proto_window').show();
+          break;
+        case 'new_pug':
+          $$('add_file_window').showWithData({ fileType: 'pug' });
+          break;
+        case 'new_scss':
+          $$('add_file_window').showWithData({ fileType: 'scss' });
           break;
         case 'new_file':
           $$('add_file_window').show();

@@ -5,13 +5,6 @@ UILayout.entityList =
       cols: [
         { view: 'button',
           type: 'icon',
-          icon: 'refresh',
-          id: 'REFRESH_ENTITY_LABEL_1', label: STRINGS.REFRESH_ENTITY,
-          width: 65,
-          click: function() { UI.entityList.refresh(); }
-        },
-        { view: 'button',
-          type: 'icon',
           icon: 'plus',
           id: 'ADD_ENTITY_LABEL', label: STRINGS.ADD_ENTITY,
           width: 70,
@@ -39,7 +32,14 @@ UILayout.entityList =
               // UI.entityList.refresh();
             }
           }
-        }
+        },
+        { view: 'button',
+          type: 'icon',
+          icon: 'refresh',
+          id: 'REFRESH_ENTITY_LABEL_1', label: STRINGS.REFRESH_ENTITY,
+          width: 30,
+          click: function() { UI.entityList.refresh(); }
+        },
       ]
     },
     { view: 'template',
