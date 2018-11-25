@@ -430,6 +430,7 @@ UI = {
     //
     //
     //
+
     webix.ui(UILayout.popups.fieldIndexed);
     webix.ui(UILayout.popups.fieldType);
     webix.ui(UILayout.popups.searchScope);
@@ -454,7 +455,9 @@ UI = {
     webix.ui(UILayout.windows.addWebsite);
     webix.ui(UILayout.windows.showMedia);
 
-    webix.ui(UILayout.entityTreeMenu);
+    webix.ui(MDSCommon.extend(UILayout.entityTreeMenu, { id: 'entity_list_menu' }));
+    webix.ui(MDSCommon.extend(UILayout.entityTreeMenu, { id: 'entity_tree_menu' }));
+    webix.ui(MDSCommon.extend(UILayout.entityTreeMenu, { id: 'entity_form_menu' }));
 
     if (!withHeader) {
       UILayout.sideMenu.hidden = true;
@@ -522,7 +525,20 @@ UI = {
       rows: rows
     });
 
-    $$('entity_tree__menu').attachTo($$('entity_tree'));
+    var entityListNode = $$('entity_list').getNode();
+    entityListNode.addEventListener('contextmenu', function (e) {
+      for (var i = 0; i < e.path.length; i++) {
+        if (e.path[i].classList && e.path[i].classList.contains('webix_list_item')) {
+          $$('entity_list').select(e.path[i].getAttribute('webix_l_id'));
+          break;
+        }
+      }
+    });
+
+    $$('entity_list_menu').attachTo(entityListNode);
+
+    $$('entity_tree_menu').attachTo($$('entity_tree'));
+
 
     UI.updateSizes();
 

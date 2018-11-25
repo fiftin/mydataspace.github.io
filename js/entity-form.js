@@ -226,6 +226,14 @@ EntityForm.prototype.setRootView = function(data) {
 
     view.innerHTML = html;
 
+
+    document.getElementById('view_overview').addEventListener('contextmenu', function(e) {
+      var pos = $(this).offset();
+      $$('entity_form_menu').show(this, { x: e.pageX - pos.left, y: pos.top - e.pageY });
+      e.preventDefault();
+    }, false);
+
+
     var ava = MDSCommon.findValueByName(data.fields, 'avatar');
     if (MDSCommon.isPresent(ava)) {
       ava = Mydataspace.options.cdnURL + '/avatars/sm/' + ava + '.png';

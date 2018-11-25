@@ -272,11 +272,17 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
 
     context_menu: {
       new_file: 'New File',
+      new_scss: 'New SCSS File',
+      new_pug: 'New Pug File',
       edit: 'Edit',
       rename_file: 'Rename',
       delete_file: 'Delete',
       delete_root: 'Delete',
-      delete_entity: 'Delete'
+      delete_entity: 'Delete',
+      copy_file: 'Copy To...',
+      copy_entity: 'Copy To...',
+      regenerate_cache: 'Update Cache',
+      new_generator: 'New Generator'
     },
 
     select_template_label: 'Skeleton:',
@@ -562,7 +568,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       rename_file: 'Переименовать',
       delete_file: 'Удалить',
       delete_root: 'Удалить',
-      delete_entity: 'Удалить'
+      delete_entity: 'Удалить',
+      copy_file: 'Скопировать',
+      copy_entity: 'Скопировать',
+      regenerate_cache: 'Обновить кеш',
+      new_generator: 'Новый герератор'
     },
     select_template_label: 'Каркас:',
 

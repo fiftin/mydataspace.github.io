@@ -31,9 +31,6 @@ $admin-view-vertical-gap: 15px;
     background: white !important;
     color: #666666 !important;
   }
-  .webix_list_item {
-
-  }
   .webix_list_item:hover {
     
   }
@@ -1052,6 +1049,10 @@ input {
     a {
       color: $text-color !important;
     }
+  }
+
+  .webix_list_item {
+    padding-left: 30px;
   }
 }
 
