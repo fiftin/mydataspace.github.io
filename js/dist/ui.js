@@ -1374,13 +1374,13 @@ EntityForm.prototype.emitLoaded = function(data) {
  * Switch Entity Form to edit/view mode.
  */
 EntityForm.prototype.setEditing = function(editing) {
-  if (this.selectedId == null) {
+  if (this.currentId == null) {
       return;
   }
 
   this.editing = editing;
   UI.entityForm.hideScriptEditWindow();
-  var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(this.selectedId).path);
+  var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(this.currentId).path);
 
   UIHelper.setVisible('entity_form__toolbar', editing);
   UIHelper.setVisible(['SAVE_ENTITY_LABEL', 'CANCEL_ENTITY_LABEL', 'ADD_FIELD_LABEL'], editing);
@@ -1408,18 +1408,18 @@ EntityForm.prototype.listen = function() {
 };
 
 EntityForm.prototype.isProto = function() {
-  return UIHelper.isProto(this.selectedId);
+  return UIHelper.isProto(this.currentId);
 };
 
-EntityForm.prototype.getSelectedId = function () {
-  return this.selectedId;
+EntityForm.prototype.getCurrentId = function () {
+  return this.currentId;
 };
 
-EntityForm.prototype.setSelectedId = function(id) {
-  if (this.selectedId === id) {
+EntityForm.prototype.setCurrentId = function(id) {
+  if (this.currentId === id) {
     return;
   }
-  this.selectedId = id;
+  this.currentId = id;
   UI.entityForm.hideScriptEditWindow();
   this.refresh();
 };
@@ -1548,7 +1548,7 @@ EntityForm.prototype.startAddingField = function() {
 
 EntityForm.prototype.startEditing = function () {
   var self = this;
-  //var url = UIHelper.getWizardUrlById(self.getSelectedId());
+  //var url = UIHelper.getWizardUrlById(self.getCurrentId());
   //$.ajax({
   //  url: url,
   //  type: 'HEAD'
@@ -1788,11 +1788,11 @@ EntityForm.prototype.setTaskView = function(data) {
 EntityForm.prototype.setEntityView = function(data) {
   var self = this;
 
-  if (self.selectedId == null) {
+  if (self.currentId == null) {
       return;
   }
 
-  var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.selectedId).path);
+  var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.currentId).path);
   var language = (getCurrentLanguage() || 'en').toLowerCase();
   var languagePrefix = language === 'en' ? '' : '/' + language;
 
@@ -1953,15 +1953,15 @@ EntityForm.prototype.setData = function(data) {
 EntityForm.prototype.refresh = function() {
   var self = this;
 
-  if (this.selectedId == null) {
+  if (this.currentId == null) {
       return;
   }
 
-  var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.selectedId).path);
+  var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.currentId).path);
   var isWithMeta = self.isEditing();
   $$('entity_form').disable();
   var req = !isWithMeta ? 'entities.get' : 'entities.getWithMeta';
-  Mydataspace.request(req, MDSCommon.extend(Identity.dataFromId(self.selectedId), { children: true }), function(data) {
+  Mydataspace.request(req, MDSCommon.extend(Identity.dataFromId(self.currentId), { children: true }), function(data) {
     if (!isWithMeta || entityType === 'resource') {
       self.setView(data);
     } else {
@@ -1996,7 +1996,7 @@ EntityForm.prototype.refresh = function() {
  * @param formData data received from form by method getValues.
  */
 //EntityForm.prototype.createByFormData = function(formData) {
-//  var newEntityId = Identity.childId(this.selectedId, formData.name);
+//  var newEntityId = Identity.childId(this.currentId, formData.name);
 //  var data = Identity.dataFromId(newEntityId);
 //  data.fields = [];
 //  data.type = formData.type;
@@ -2004,7 +2004,7 @@ EntityForm.prototype.refresh = function() {
 //};
 
 EntityForm.prototype.export = function () {
-  Mydataspace.request('entities.export', Identity.dataFromId(this.selectedId));
+  Mydataspace.request('entities.export', Identity.dataFromId(this.currentId));
 };
 
 EntityForm.prototype.clone = function() {
@@ -2026,13 +2026,13 @@ EntityForm.prototype.askDelete = function() {
 };
 
 EntityForm.prototype.delete = function() {
-  if (this.selectedId == null) {
+  if (this.currentId == null) {
     return;
   }
 
   $$('entity_form').disable();
-  UI.deleteEntity(this.selectedId);
-  Mydataspace.request('entities.delete', Identity.dataFromId(this.selectedId), function(data) {
+  UI.deleteEntity(this.currentId);
+  Mydataspace.request('entities.delete', Identity.dataFromId(this.currentId), function(data) {
     // do nothing because selected item already deleted.
     this.selectedId = null;
   }, function(err) {
@@ -2070,7 +2070,7 @@ EntityForm.prototype.setDirty = function() {
 EntityForm.prototype.save = function() {
 	var self = this;
 
-  if (self.selectedId == null) {
+  if (self.currentId == null) {
       return;
   }
 
@@ -2082,7 +2082,7 @@ EntityForm.prototype.save = function() {
         return ret;
       }, {}));
   var oldData = webix.CodeParser.expandNames($$('entity_form')._values);
-  MDSCommon.extendOf(dirtyData, Identity.dataFromId(self.selectedId));
+  MDSCommon.extendOf(dirtyData, Identity.dataFromId(self.currentId));
 
   dirtyData.fields =
     Fields.expandFields(
@@ -2095,7 +2095,7 @@ EntityForm.prototype.save = function() {
   }
   Mydataspace.request('entities.change', dirtyData, function(res) {
     if (dirtyData.name != null) {
-    	if (Identity.isRootId(self.selectedId)) {
+    	if (Identity.isRootId(self.currentId)) {
 				self.selectedId = Identity.idFromData(MDSCommon.extend(res, { root: dirtyData.name }));
 			} else {
 				self.selectedId = Identity.idFromData(MDSCommon.extend(res, {
@@ -2208,7 +2208,7 @@ EntityForm.prototype.addRootFields = function(options) {
 EntityForm.prototype.onUploadAvatar = function(event) {
   UI.uploadResource(
     event.target.files[0],
-    Identity.dataFromId(this.selectedId).root,
+    Identity.dataFromId(this.currentId).root,
     'avatar',
     function(res) {
       var entityName = res.resources[0];
@@ -2525,12 +2525,7 @@ EntityList.prototype.setReadOnly = function(isReadOnly) {
   $$('entity_tree__new_root_version_list').clearAll();
   $$('entity_tree__new_root_version_list').parse(UIControls.getChangeVersionPopupData(isReadOnly));
   UIHelper.setVisible('ADD_ENTITY_LABEL', !isReadOnly);
-  UIHelper.setVisible('NEW_VERSION_LABEL', !isReadOnly && Identity.isWebsiteId(this.getRootId()));
-
-  this.isReadOnly = isReadOnly;
-};
-
-EntityList.prototype.updateBlankRootButtonsVisibility = function() {
+  UIHelper.setVisible('NEW_VERSION_LABEL', !isReadOnly && Identity.isWebsiteId(this.getCurrentId()));
 };
 
 /**
@@ -2546,7 +2541,7 @@ EntityList.prototype.listen = function() {
       var entityId = Identity.idFromData(data);
 
       if ($$('entity_list').getFirstId() === entityId) { // Parent item "."
-        self.setRootId(null);
+        self.setCurrentId(null);
         return;
       }
 
@@ -2555,19 +2550,17 @@ EntityList.prototype.listen = function() {
       }
 
       // ignore event if root item deleted
-      if (entityId === self.getRootId()) {
-        this.setRootId(null);
+      if (entityId === self.getCurrentId()) {
+        this.setCurrentId(null);
         return;
       }
 
-      if (entityId === self.getCurrentId()) { // Select other item if selected item is deleted.
+      if (entityId === self.getSelectedId()) { // Select other item if selected item is deleted.
         var nextId = $$('entity_list').getPrevId(entityId) || $$('entity_list').getNextId(entityId);
         $$('entity_list').select(nextId);
       }
 
       $$('entity_list').remove(entityId);
-
-      self.updateBlankRootButtonsVisibility();
     }
   });
 
@@ -2577,7 +2570,7 @@ EntityList.prototype.listen = function() {
       var data = dataArray[i];
       var parentId = Identity.parentId(Identity.idFromData(data));
       var entity = Identity.entityFromData(data);
-      if (self.getRootId() === parentId) {
+      if (self.getCurrentId() === parentId) {
         if ($$('entity_list').getItem(entity.id)) {
           continue;
         }
@@ -2585,7 +2578,6 @@ EntityList.prototype.listen = function() {
         $$('entity_list').select(entity.id);
       }
     }
-    self.updateBlankRootButtonsVisibility();
   });
 
   Mydataspace.on('entities.rename.res', function(data) {
@@ -2614,16 +2606,16 @@ EntityList.prototype.listen = function() {
 /**
  * Set Id of entity witch items displayed in list. This method reloading data.
  */
-EntityList.prototype.setRootIdWithoutRefresh = function(id) {
-  this.rootId = id;
+EntityList.prototype.setCurrentIdWithoutRefresh = function(id) {
+  this.currentId = id;
 };
 
 
 /**
  * Set Id of entity witch items displayed in list. This method reloading data.
  */
-EntityList.prototype.setRootId = function(id) {
-  this.setRootIdWithoutRefresh(id);
+EntityList.prototype.setCurrentId = function(id) {
+  this.setCurrentIdWithoutRefresh(id);
   this.refresh();
 };
 
@@ -2631,24 +2623,24 @@ EntityList.prototype.setRootId = function(id) {
 /**
  * Id of entity witch items displayed in list.
  */
-EntityList.prototype.getRootId = function() {
-  return this.rootId;
+EntityList.prototype.getCurrentId = function() {
+  return this.currentId;
 };
 
 
 /**
  * Set item selected in list.
  */
-EntityList.prototype.setCurrentId = function(id) {
-  this.currentId = id;
+EntityList.prototype.setSelectedId = function(id) {
+  this.selectedId = id;
 };
 
 
 /**
  * Get item selected in list.
  */
-EntityList.prototype.getCurrentId = function() {
-  return this.currentId;
+EntityList.prototype.getSelectedId = function() {
+  return this.selectedId;
 };
 
 
@@ -2661,17 +2653,17 @@ EntityList.prototype.refresh = function(newRootId) {
   var self = this;
 
   if (newRootId != null) {
-    self.setRootIdWithoutRefresh(newRootId);
+    self.setCurrentIdWithoutRefresh(newRootId);
   }
 
-  if (self.getRootId() == null) {
+  if (self.getCurrentId() == null) {
     return;
   }
 
   $$('entity_tree__new_entity_list').clearAll();
-  $$('entity_tree__new_entity_list').parse(UIControls.getNewEntityPopupData(self.getRootId()));
+  $$('entity_tree__new_entity_list').parse(UIControls.getNewEntityPopupData(self.getCurrentId()));
 
-  var req = Identity.dataFromId(self.getRootId());
+  var req = Identity.dataFromId(self.getCurrentId());
   var search = $$('entity_list__search').getValue();
 
   if (MDSCommon.isPresent(search)) {
@@ -2686,12 +2678,12 @@ EntityList.prototype.refresh = function(newRootId) {
 
   $$('entity_list').disable();
   Mydataspace.request('entities.get', req, function(data) {
-    if (!self.getRootId()) {
+    if (!self.getCurrentId()) {
       $$('entity_list').enable();
       return;
     }
     var showMoreChildId =
-      Identity.childId(self.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
+      Identity.childId(self.getCurrentId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
 
 
     var entityId = Identity.idFromData(data);
@@ -2700,7 +2692,7 @@ EntityList.prototype.refresh = function(newRootId) {
         UIConstants.IGNORED_PATHS.indexOf(x.path) < 0 &&
         (UIConstants.IGNORED_WHEN_EMPTY_PATHS.indexOf(x.path) < 0);
     }).map(Identity.entityFromData);
-    if (self.getRootId() === entityId) {
+    if (self.getCurrentId() === entityId) {
       if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
         children[children.length - 1] = {
           id: Identity.childId(entityId, UIHelper.ENTITY_LIST_SHOW_MORE_ID),
@@ -2717,7 +2709,6 @@ EntityList.prototype.refresh = function(newRootId) {
     versionLabelText += '<span class="version_btn__version">' + (MDSCommon.findValueByName(data.fields, '$version') || 0) + '</span>';
     versionLabel.define('label', versionLabelText);
     versionLabel.refresh();
-    self.updateBlankRootButtonsVisibility();
 
     $$('entity_list').enable();
   }, function(err) {
@@ -2747,7 +2738,7 @@ EntityList.prototype.fill = function(parentEntityId, children, data) {
 
 EntityList.prototype.addChildren = function(children) {
   var showMoreChildId =
-    Identity.childId(this.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
+    Identity.childId(this.getCurrentId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
 
   var startIndex;
   if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
@@ -2768,7 +2759,7 @@ EntityList.prototype.addChildren = function(children) {
 
 EntityList.prototype.showMore = function() {
   var self = this;
-  var req = Identity.dataFromId(this.getRootId());
+  var req = Identity.dataFromId(this.getCurrentId());
   var search = $$('entity_list__search').getValue();
   if (MDSCommon.isPresent(search)) {
     req['search'] = search;
@@ -2909,7 +2900,7 @@ EntityTree.prototype.createNewEmptyVersion = function(description) {
  * @param {int} version Version you want to have.
  */
 EntityTree.prototype.changeCurrentRootVersion = function(rootId, version) {
-  var rootData = Identity.dataFromId(UI.entityList.getRootId());
+  var rootData = Identity.dataFromId(UI.entityList.getCurrentId());
   var self = this;
   Mydataspace.entities.change({
     root: rootData.root,
@@ -3548,7 +3539,7 @@ var UILayout = {
 };
 
 UILayout.windows.addApp = {
-    view: 'window',
+    view: 'ModalDialog',
     id: 'add_app_window',
     width: 400,
     position: 'center',
@@ -3592,7 +3583,7 @@ UILayout.windows.addApp = {
 };
 
 UILayout.windows.addRoot = {
-    view: 'window',
+    view: 'ModalDialog',
     id: 'add_root_window',
     width: 350,
     position: 'center',
@@ -3704,7 +3695,7 @@ UILayout.windows.addRoot = {
 };
 
 UILayout.windows.addEntity = {
-    view: 'window',
+    view: 'ModalDialog',
     id: 'add_entity_window',
     width: 350,
     position: 'center',
@@ -3719,7 +3710,8 @@ UILayout.windows.addEntity = {
         onSubmit: function() {
           if ($$('add_entity_form').validate()) {
             var formData = $$('add_entity_form').getValues();
-            var newEntityId = Identity.childId(UI.entityList.getRootId(), formData.name);
+            var destFolderId = this.showData ? this.showData.destFolderId : UI.entityList.getCurrentId();
+            var newEntityId = Identity.childId(destFolderId, formData.name);
             var data = Identity.dataFromId(newEntityId);
             data.fields = [];
             data.othersCan = formData.othersCan;
@@ -3747,7 +3739,7 @@ UILayout.windows.addEntity = {
 };
 
 UILayout.windows.cloneEntity = {
-    view: 'window',
+    view: 'ModalDialog',
     id: 'clone_entity_window',
     width: 350,
     position: 'center',
@@ -3762,7 +3754,7 @@ UILayout.windows.cloneEntity = {
         onSubmit: function() {
           if ($$('clone_entity_form').validate()) {
             var formData = $$('clone_entity_form').getValues();
-            var selectedData = Identity.dataFromId(UI.entityForm.selectedId);
+            var selectedData = Identity.dataFromId(UI.entityForm.getCurrentId());
             var data = MDSCommon.extend(formData, {
               root: selectedData.root,
               fields: [],
@@ -3800,7 +3792,7 @@ UILayout.windows.cloneEntity = {
 };
 
 UILayout.windows.addTask = {
-    view: 'window',
+    view: 'ModalDialog',
     id: 'add_task_window',
     width: 350,
     position: 'center',
@@ -3815,7 +3807,7 @@ UILayout.windows.addTask = {
         onSubmit: function() {
           if ($$('add_task_form').validate()) {
             var formData = $$('add_task_form').getValues();
-            var newEntityId = Identity.childId(Identity.rootId(UI.entityList.getRootId()), 'tasks/' + formData.name);
+            var newEntityId = Identity.childId(Identity.rootId(UI.entityList.getCurrentId()), 'tasks/' + formData.name);
             var data = Identity.dataFromId(newEntityId);
             data.fields = [];
             data.othersCan = formData.othersCan;
@@ -3843,7 +3835,7 @@ UILayout.windows.addTask = {
 };
 
 UILayout.windows.addProto = {
-    view: 'window',
+    view: 'ModalDialog',
     id: 'add_proto_window',
     width: 350,
     position: 'center',
@@ -3858,7 +3850,7 @@ UILayout.windows.addProto = {
         onSubmit: function() {
           if ($$('add_proto_form').validate()) {
             var formData = $$('add_proto_form').getValues();
-            var newEntityId = Identity.childId(Identity.rootId(UI.entityList.getRootId()), 'protos/' + formData.name);
+            var newEntityId = Identity.childId(Identity.rootId(UI.entityList.getCurrentId()), 'protos/' + formData.name);
             var data = Identity.dataFromId(newEntityId);
             data.fields = [];
             data.othersCan = formData.othersCan;
@@ -3886,7 +3878,7 @@ UILayout.windows.addProto = {
 };
 
 UILayout.windows.addResource = {
-    view: 'window',
+    view: 'ModalDialog',
     id: 'add_resource_window',
     width: 350,
     position: 'center',
@@ -3901,7 +3893,7 @@ UILayout.windows.addResource = {
         onSubmit: function() {
           if ($$('add_resource_form').validate()) {
             var formData = $$('add_resource_form').getValues();
-            var newEntityId = Identity.childId(UI.entityList.getRootId(), 'test');
+            var newEntityId = Identity.childId(UI.entityList.getCurrentId(), 'test');
             var data = Identity.dataFromId(newEntityId);
             UI.uploadResource(
               document.getElementById('add_resource_form__file').files[0],
@@ -3967,7 +3959,7 @@ UILayout.windows.addResource = {
 };
 
 UILayout.windows.addField = {
-  view: 'window',
+  view: 'ModalDialog',
   id: 'add_field_window',
   width: 300,
   position: 'center',
@@ -4044,7 +4036,7 @@ UILayout.windows.addField = {
 };
 
 UILayout.windows.addFile = {
-  view: 'window',
+  view: 'ModalDialog',
   id: 'add_file_window',
   width: 300,
   position: 'center',
@@ -4062,7 +4054,7 @@ UILayout.windows.addFile = {
         }
         var formData = $$('add_file_form').getValues();
 
-        var req = MDSCommon.extend(Identity.dataFromId(UI.entityList.getRootId()), {
+        var req = MDSCommon.extend(Identity.dataFromId(UI.entityList.getCurrentId()), {
           fields: [{
             name: formData.name,
             value: '',
@@ -4096,7 +4088,7 @@ UILayout.windows.addFile = {
 };
 
 UILayout.windows.showMedia = {
-  view: 'window',
+  view: 'ModalDialog',
   id: 'show_media_window',
   css: 'show_media_window',
   width: 900,
@@ -4150,7 +4142,7 @@ UILayout.windows.showMedia = {
 };
 
 UILayout.windows.renameFile = {
-  view: 'window',
+  view: 'ModalDialog',
   id: 'rename_file_window',
   width: 300,
   position: 'center',
@@ -4178,7 +4170,7 @@ UILayout.windows.renameFile = {
 
         var currentFileId = $$('entity_tree').getSelectedId();
         Mydataspace.request('entities.get', Identity.dataFromId(currentFileId)).then(function (data) {
-          var req = MDSCommon.extend(Identity.dataFromId(UI.entityList.getRootId()), {
+          var req = MDSCommon.extend(Identity.dataFromId(UI.entityList.getCurrentId()), {
             fields: [{
               name: formData.name,
               value: data.fields[0].value,
@@ -4264,7 +4256,7 @@ UILayout.editScriptTabs = {
 };
 
 UILayout.windows.editScript = {
-  view: 'window',
+  view: 'ModalDialog',
   id: 'edit_script_window',
   css: 'edit_script_window',
   head: false,
@@ -4371,7 +4363,7 @@ UILayout.windows.editScript = {
 };
 
 UILayout.windows.addWebsite = {
-  view: 'window',
+  view: 'ModalDialog',
   id: 'add_website_window',
   width: 350,
   position: 'center',
@@ -4386,7 +4378,7 @@ UILayout.windows.addWebsite = {
       onSubmit: function() {
         if ($$('add_website_form').validate()) {
           var formData = $$('add_website_form').getValues();
-          var newEntityId = Identity.childId(UI.entityList.getRootId(), formData.name);
+          var newEntityId = Identity.childId(UI.entityList.getCurrentId(), formData.name);
           var data = Identity.dataFromId(newEntityId);
           data.path = 'website';
           data.fields = [];
@@ -4414,7 +4406,7 @@ UILayout.windows.addWebsite = {
 };
 
 UILayout.windows.changeVersion = {
-  view: 'window',
+  view: 'ModalDialog',
   id: 'change_version_window',
   width: 700,
   position: 'center',
@@ -4437,7 +4429,7 @@ UILayout.windows.changeVersion = {
 
       // Load and display data
       Mydataspace.request('entities.getRootVersions', {
-        root: Identity.dataFromId(UI.entityList.getRootId()).root
+        root: Identity.dataFromId(UI.entityList.getCurrentId()).root
       }).then(function(data) {
         $$('change_version_window__table').clearAll();
         $$('change_version_window__table').parse(data.versions.map(function(version) {
@@ -4471,10 +4463,10 @@ UILayout.windows.changeVersion = {
               var version = $$('change_version_window__table').getSelectedItem().version;
               switch ($$('change_version_window').mode) {
                 case 'switch':
-                  UI.entityTree.changeCurrentRootVersion(UI.entityList.getRootId(), version);
+                  UI.entityTree.changeCurrentRootVersion(UI.entityList.getCurrentId(), version);
                   break;
                 case 'view':
-                  UI.entityTree.viewRootVersion(UI.entityList.getRootId(), version);
+                  UI.entityTree.viewRootVersion(UI.entityList.getCurrentId(), version);
                   break;
               }
               $$('change_version_window').hide();
@@ -4495,7 +4487,7 @@ UILayout.windows.changeVersion = {
 };
 
 UILayout.windows.addVersion = {
-    view: 'window',
+    view: 'ModalDialog',
     id: 'add_version_window',
     width: 450,
     position: 'center',
@@ -5191,12 +5183,12 @@ UILayout.entityTree = {
             $$('script_editor_' + id).show();
             var fileParentId = Identity.getEntityIdFromFileId(id);
             UI.entityTree.setCurrentId(fileParentId);
-            UI.entityList.setRootId(fileParentId);
-            UI.entityForm.setSelectedId(fileParentId);
+            UI.entityList.setCurrentId(fileParentId);
+            UI.entityForm.setCurrentId(fileParentId);
           } else {
             UI.entityTree.setCurrentId(id);
-            UI.entityList.setRootId(id);
-            UI.entityForm.setSelectedId(id);
+            UI.entityList.setCurrentId(id);
+            UI.entityForm.setCurrentId(id);
           }
         },
         onBeforeSelect: function (id, selection) {
@@ -5219,7 +5211,7 @@ UILayout.entityTreeMenu = {
     onShow: function () {
       this.data.clearAll();
 
-      var id = this._area && this._area.id ? this._area.id : UI.entityForm.getSelectedId();
+      var id = this._area && this._area.id ? this._area.id : UI.entityForm.getCurrentId();
       var itemData = Identity.dataFromId(id);
       // this.data.add({
       //   id: 'edit',
@@ -5390,6 +5382,16 @@ UILayout.entityTreeMenu = {
     },
 
     onItemClick: function (id) {
+      var entityId;
+      switch (this.config.id) {
+        case 'entity_list_menu':
+          entityId = UI.entityForm.getCurrentId();
+          break;
+        default:
+          entityId = UI.entityList.getCurrentId();
+          break;
+      }
+
       switch (id) {
         case 'edit':
           UI.entityForm.startEditing();
@@ -5409,7 +5411,8 @@ UILayout.entityTreeMenu = {
           });
           break;
         case 'new_entity':
-          $$('add_entity_window').show();
+          var window = $$('add_entity_window');
+          window.showWithData({ destFolderId: id });
           break;
         case 'new_resource':
           $$('add_resource_window').show();
@@ -5526,15 +5529,15 @@ UILayout.entityList =
           if (UIHelper.isListShowMore(id)) {
             UI.entityList.showMore();
           } else {
-            UI.entityList.setCurrentId(id);
+            UI.entityList.setSelectedId(id);
           }
         },
         onSelectChange: function (ids) {
           var id = ids[0];
           if (UIHelper.isListShowMore(id)) {
-            $$('entity_list').select(UI.entityList.getCurrentId());
+            $$('entity_list').select(UI.entityList.getSelectedId());
           } else {
-            UI.entityForm.setSelectedId(id);
+            UI.entityForm.setCurrentId(id);
           }
         },
         onItemDblClick: function(id) {
@@ -6223,7 +6226,6 @@ UI = {
 
     //
     // Communication with popup window of script runner.
-    //
     window.addEventListener('message', function(e) {
       if (e.data.message === 'getScripts') {
 
@@ -6244,9 +6246,9 @@ UI = {
             return 0;
           });
 
-          e.source.postMessage(MDSCommon.extend(Identity.dataFromId(UI.entityForm.selectedId), { message: 'fields', fields: data.fields }), '*');
+          e.source.postMessage(MDSCommon.extend(Identity.dataFromId(UI.entityForm.getCurrentId()), { message: 'fields', fields: data.fields }), '*');
         }, function (err) {
-          e.source.postMessage(MDSCommon.extend(Identity.dataFromId(UI.entityForm.selectedId), { message: 'error', error: err.message }), '*');
+          e.source.postMessage(MDSCommon.extend(Identity.dataFromId(UI.entityForm.getCurrentId()), { message: 'error', error: err.message }), '*');
         });
       }
     });
@@ -6255,6 +6257,14 @@ UI = {
     //
     //
     //
+
+    webix.protoUI({
+      name: 'ModalDialog',
+      showWithData: function (data) {
+        this.showData = data;
+        this.show();
+      }
+    }, webix.ui.window);
 
     webix.ui(UILayout.popups.fieldIndexed);
     webix.ui(UILayout.popups.fieldType);
@@ -6290,8 +6300,9 @@ UI = {
     }
     webix.ui(UILayout.sideMenu);
 
+
     //
-    // Admin panel
+    // Dashboard
     //
     var rows = [];
     if (withHeader) {

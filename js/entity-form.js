@@ -17,13 +17,13 @@ EntityForm.prototype.emitLoaded = function(data) {
  * Switch Entity Form to edit/view mode.
  */
 EntityForm.prototype.setEditing = function(editing) {
-  if (this.selectedId == null) {
+  if (this.currentId == null) {
       return;
   }
 
   this.editing = editing;
   UI.entityForm.hideScriptEditWindow();
-  var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(this.selectedId).path);
+  var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(this.currentId).path);
 
   UIHelper.setVisible('entity_form__toolbar', editing);
   UIHelper.setVisible(['SAVE_ENTITY_LABEL', 'CANCEL_ENTITY_LABEL', 'ADD_FIELD_LABEL'], editing);
@@ -51,18 +51,18 @@ EntityForm.prototype.listen = function() {
 };
 
 EntityForm.prototype.isProto = function() {
-  return UIHelper.isProto(this.selectedId);
+  return UIHelper.isProto(this.currentId);
 };
 
-EntityForm.prototype.getSelectedId = function () {
-  return this.selectedId;
+EntityForm.prototype.getCurrentId = function () {
+  return this.currentId;
 };
 
-EntityForm.prototype.setSelectedId = function(id) {
-  if (this.selectedId === id) {
+EntityForm.prototype.setCurrentId = function(id) {
+  if (this.currentId === id) {
     return;
   }
-  this.selectedId = id;
+  this.currentId = id;
   UI.entityForm.hideScriptEditWindow();
   this.refresh();
 };
@@ -191,7 +191,7 @@ EntityForm.prototype.startAddingField = function() {
 
 EntityForm.prototype.startEditing = function () {
   var self = this;
-  //var url = UIHelper.getWizardUrlById(self.getSelectedId());
+  //var url = UIHelper.getWizardUrlById(self.getCurrentId());
   //$.ajax({
   //  url: url,
   //  type: 'HEAD'
@@ -431,11 +431,11 @@ EntityForm.prototype.setTaskView = function(data) {
 EntityForm.prototype.setEntityView = function(data) {
   var self = this;
 
-  if (self.selectedId == null) {
+  if (self.currentId == null) {
       return;
   }
 
-  var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.selectedId).path);
+  var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.currentId).path);
   var language = (getCurrentLanguage() || 'en').toLowerCase();
   var languagePrefix = language === 'en' ? '' : '/' + language;
 
@@ -596,15 +596,15 @@ EntityForm.prototype.setData = function(data) {
 EntityForm.prototype.refresh = function() {
   var self = this;
 
-  if (this.selectedId == null) {
+  if (this.currentId == null) {
       return;
   }
 
-  var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.selectedId).path);
+  var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.currentId).path);
   var isWithMeta = self.isEditing();
   $$('entity_form').disable();
   var req = !isWithMeta ? 'entities.get' : 'entities.getWithMeta';
-  Mydataspace.request(req, MDSCommon.extend(Identity.dataFromId(self.selectedId), { children: true }), function(data) {
+  Mydataspace.request(req, MDSCommon.extend(Identity.dataFromId(self.currentId), { children: true }), function(data) {
     if (!isWithMeta || entityType === 'resource') {
       self.setView(data);
     } else {
@@ -639,7 +639,7 @@ EntityForm.prototype.refresh = function() {
  * @param formData data received from form by method getValues.
  */
 //EntityForm.prototype.createByFormData = function(formData) {
-//  var newEntityId = Identity.childId(this.selectedId, formData.name);
+//  var newEntityId = Identity.childId(this.currentId, formData.name);
 //  var data = Identity.dataFromId(newEntityId);
 //  data.fields = [];
 //  data.type = formData.type;
@@ -647,7 +647,7 @@ EntityForm.prototype.refresh = function() {
 //};
 
 EntityForm.prototype.export = function () {
-  Mydataspace.request('entities.export', Identity.dataFromId(this.selectedId));
+  Mydataspace.request('entities.export', Identity.dataFromId(this.currentId));
 };
 
 EntityForm.prototype.clone = function() {
@@ -669,13 +669,13 @@ EntityForm.prototype.askDelete = function() {
 };
 
 EntityForm.prototype.delete = function() {
-  if (this.selectedId == null) {
+  if (this.currentId == null) {
     return;
   }
 
   $$('entity_form').disable();
-  UI.deleteEntity(this.selectedId);
-  Mydataspace.request('entities.delete', Identity.dataFromId(this.selectedId), function(data) {
+  UI.deleteEntity(this.currentId);
+  Mydataspace.request('entities.delete', Identity.dataFromId(this.currentId), function(data) {
     // do nothing because selected item already deleted.
     this.selectedId = null;
   }, function(err) {
@@ -713,7 +713,7 @@ EntityForm.prototype.setDirty = function() {
 EntityForm.prototype.save = function() {
 	var self = this;
 
-  if (self.selectedId == null) {
+  if (self.currentId == null) {
       return;
   }
 
@@ -725,7 +725,7 @@ EntityForm.prototype.save = function() {
         return ret;
       }, {}));
   var oldData = webix.CodeParser.expandNames($$('entity_form')._values);
-  MDSCommon.extendOf(dirtyData, Identity.dataFromId(self.selectedId));
+  MDSCommon.extendOf(dirtyData, Identity.dataFromId(self.currentId));
 
   dirtyData.fields =
     Fields.expandFields(
@@ -738,7 +738,7 @@ EntityForm.prototype.save = function() {
   }
   Mydataspace.request('entities.change', dirtyData, function(res) {
     if (dirtyData.name != null) {
-    	if (Identity.isRootId(self.selectedId)) {
+    	if (Identity.isRootId(self.currentId)) {
 				self.selectedId = Identity.idFromData(MDSCommon.extend(res, { root: dirtyData.name }));
 			} else {
 				self.selectedId = Identity.idFromData(MDSCommon.extend(res, {
@@ -851,7 +851,7 @@ EntityForm.prototype.addRootFields = function(options) {
 EntityForm.prototype.onUploadAvatar = function(event) {
   UI.uploadResource(
     event.target.files[0],
-    Identity.dataFromId(this.selectedId).root,
+    Identity.dataFromId(this.currentId).root,
     'avatar',
     function(res) {
       var entityName = res.resources[0];

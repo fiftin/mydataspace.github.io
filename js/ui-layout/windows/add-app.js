@@ -1,5 +1,5 @@
 UILayout.windows.addApp = {
-    view: 'window',
+    view: 'ModalDialog',
     id: 'add_app_window',
     width: 400,
     position: 'center',

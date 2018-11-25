@@ -1,5 +1,5 @@
 UILayout.windows.cloneEntity = {
-    view: 'window',
+    view: 'ModalDialog',
     id: 'clone_entity_window',
     width: 350,
     position: 'center',
@@ -14,7 +14,7 @@ UILayout.windows.cloneEntity = {
         onSubmit: function() {
           if ($$('clone_entity_form').validate()) {
             var formData = $$('clone_entity_form').getValues();
-            var selectedData = Identity.dataFromId(UI.entityForm.selectedId);
+            var selectedData = Identity.dataFromId(UI.entityForm.getCurrentId());
             var data = MDSCommon.extend(formData, {
               root: selectedData.root,
               fields: [],

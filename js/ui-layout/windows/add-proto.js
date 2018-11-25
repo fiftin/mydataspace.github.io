@@ -1,5 +1,5 @@
 UILayout.windows.addProto = {
-    view: 'window',
+    view: 'ModalDialog',
     id: 'add_proto_window',
     width: 350,
     position: 'center',
@@ -14,7 +14,7 @@ UILayout.windows.addProto = {
         onSubmit: function() {
           if ($$('add_proto_form').validate()) {
             var formData = $$('add_proto_form').getValues();
-            var newEntityId = Identity.childId(Identity.rootId(UI.entityList.getRootId()), 'protos/' + formData.name);
+            var newEntityId = Identity.childId(Identity.rootId(UI.entityList.getCurrentId()), 'protos/' + formData.name);
             var data = Identity.dataFromId(newEntityId);
             data.fields = [];
             data.othersCan = formData.othersCan;

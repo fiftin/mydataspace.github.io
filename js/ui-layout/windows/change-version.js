@@ -1,5 +1,5 @@
 UILayout.windows.changeVersion = {
-  view: 'window',
+  view: 'ModalDialog',
   id: 'change_version_window',
   width: 700,
   position: 'center',
@@ -22,7 +22,7 @@ UILayout.windows.changeVersion = {
 
       // Load and display data
       Mydataspace.request('entities.getRootVersions', {
-        root: Identity.dataFromId(UI.entityList.getRootId()).root
+        root: Identity.dataFromId(UI.entityList.getCurrentId()).root
       }).then(function(data) {
         $$('change_version_window__table').clearAll();
         $$('change_version_window__table').parse(data.versions.map(function(version) {
@@ -56,10 +56,10 @@ UILayout.windows.changeVersion = {
               var version = $$('change_version_window__table').getSelectedItem().version;
               switch ($$('change_version_window').mode) {
                 case 'switch':
-                  UI.entityTree.changeCurrentRootVersion(UI.entityList.getRootId(), version);
+                  UI.entityTree.changeCurrentRootVersion(UI.entityList.getCurrentId(), version);
                   break;
                 case 'view':
-                  UI.entityTree.viewRootVersion(UI.entityList.getRootId(), version);
+                  UI.entityTree.viewRootVersion(UI.entityList.getCurrentId(), version);
                   break;
               }
               $$('change_version_window').hide();

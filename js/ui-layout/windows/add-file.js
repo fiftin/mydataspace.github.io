@@ -1,5 +1,5 @@
 UILayout.windows.addFile = {
-  view: 'window',
+  view: 'ModalDialog',
   id: 'add_file_window',
   width: 300,
   position: 'center',
@@ -17,7 +17,7 @@ UILayout.windows.addFile = {
         }
         var formData = $$('add_file_form').getValues();
 
-        var req = MDSCommon.extend(Identity.dataFromId(UI.entityList.getRootId()), {
+        var req = MDSCommon.extend(Identity.dataFromId(UI.entityList.getCurrentId()), {
           fields: [{
             name: formData.name,
             value: '',

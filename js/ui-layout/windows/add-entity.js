@@ -1,5 +1,5 @@
 UILayout.windows.addEntity = {
-    view: 'window',
+    view: 'ModalDialog',
     id: 'add_entity_window',
     width: 350,
     position: 'center',
@@ -14,7 +14,8 @@ UILayout.windows.addEntity = {
         onSubmit: function() {
           if ($$('add_entity_form').validate()) {
             var formData = $$('add_entity_form').getValues();
-            var newEntityId = Identity.childId(UI.entityList.getRootId(), formData.name);
+            var destFolderId = this.showData ? this.showData.destFolderId : UI.entityList.getCurrentId();
+            var newEntityId = Identity.childId(destFolderId, formData.name);
             var data = Identity.dataFromId(newEntityId);
             data.fields = [];
             data.othersCan = formData.othersCan;

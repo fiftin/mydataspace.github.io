@@ -1,5 +1,5 @@
 UILayout.windows.addResource = {
-    view: 'window',
+    view: 'ModalDialog',
     id: 'add_resource_window',
     width: 350,
     position: 'center',
@@ -14,7 +14,7 @@ UILayout.windows.addResource = {
         onSubmit: function() {
           if ($$('add_resource_form').validate()) {
             var formData = $$('add_resource_form').getValues();
-            var newEntityId = Identity.childId(UI.entityList.getRootId(), 'test');
+            var newEntityId = Identity.childId(UI.entityList.getCurrentId(), 'test');
             var data = Identity.dataFromId(newEntityId);
             UI.uploadResource(
               document.getElementById('add_resource_form__file').files[0],

@@ -398,7 +398,6 @@ UI = {
 
     //
     // Communication with popup window of script runner.
-    //
     window.addEventListener('message', function(e) {
       if (e.data.message === 'getScripts') {
 
@@ -419,9 +418,9 @@ UI = {
             return 0;
           });
 
-          e.source.postMessage(MDSCommon.extend(Identity.dataFromId(UI.entityForm.selectedId), { message: 'fields', fields: data.fields }), '*');
+          e.source.postMessage(MDSCommon.extend(Identity.dataFromId(UI.entityForm.getCurrentId()), { message: 'fields', fields: data.fields }), '*');
         }, function (err) {
-          e.source.postMessage(MDSCommon.extend(Identity.dataFromId(UI.entityForm.selectedId), { message: 'error', error: err.message }), '*');
+          e.source.postMessage(MDSCommon.extend(Identity.dataFromId(UI.entityForm.getCurrentId()), { message: 'error', error: err.message }), '*');
         });
       }
     });
@@ -430,6 +429,14 @@ UI = {
     //
     //
     //
+
+    webix.protoUI({
+      name: 'ModalDialog',
+      showWithData: function (data) {
+        this.showData = data;
+        this.show();
+      }
+    }, webix.ui.window);
 
     webix.ui(UILayout.popups.fieldIndexed);
     webix.ui(UILayout.popups.fieldType);
@@ -465,8 +472,9 @@ UI = {
     }
     webix.ui(UILayout.sideMenu);
 
+
     //
-    // Admin panel
+    // Dashboard
     //
     var rows = [];
     if (withHeader) {

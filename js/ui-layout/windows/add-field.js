@@ -1,5 +1,5 @@
 UILayout.windows.addField = {
-  view: 'window',
+  view: 'ModalDialog',
   id: 'add_field_window',
   width: 300,
   position: 'center',

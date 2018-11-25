@@ -1,5 +1,5 @@
 UILayout.windows.showMedia = {
-  view: 'window',
+  view: 'ModalDialog',
   id: 'show_media_window',
   css: 'show_media_window',
   width: 900,

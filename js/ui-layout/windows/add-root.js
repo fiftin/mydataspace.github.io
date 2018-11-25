@@ -1,5 +1,5 @@
 UILayout.windows.addRoot = {
-    view: 'window',
+    view: 'ModalDialog',
     id: 'add_root_window',
     width: 350,
     position: 'center',

@@ -71,15 +71,15 @@ UILayout.entityList =
           if (UIHelper.isListShowMore(id)) {
             UI.entityList.showMore();
           } else {
-            UI.entityList.setCurrentId(id);
+            UI.entityList.setSelectedId(id);
           }
         },
         onSelectChange: function (ids) {
           var id = ids[0];
           if (UIHelper.isListShowMore(id)) {
-            $$('entity_list').select(UI.entityList.getCurrentId());
+            $$('entity_list').select(UI.entityList.getSelectedId());
           } else {
-            UI.entityForm.setSelectedId(id);
+            UI.entityForm.setCurrentId(id);
           }
         },
         onItemDblClick: function(id) {

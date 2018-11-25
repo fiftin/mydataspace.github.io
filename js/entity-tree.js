@@ -108,7 +108,7 @@ EntityTree.prototype.createNewEmptyVersion = function(description) {
  * @param {int} version Version you want to have.
  */
 EntityTree.prototype.changeCurrentRootVersion = function(rootId, version) {
-  var rootData = Identity.dataFromId(UI.entityList.getRootId());
+  var rootData = Identity.dataFromId(UI.entityList.getCurrentId());
   var self = this;
   Mydataspace.entities.change({
     root: rootData.root,

@@ -16,12 +16,7 @@ EntityList.prototype.setReadOnly = function(isReadOnly) {
   $$('entity_tree__new_root_version_list').clearAll();
   $$('entity_tree__new_root_version_list').parse(UIControls.getChangeVersionPopupData(isReadOnly));
   UIHelper.setVisible('ADD_ENTITY_LABEL', !isReadOnly);
-  UIHelper.setVisible('NEW_VERSION_LABEL', !isReadOnly && Identity.isWebsiteId(this.getRootId()));
-
-  this.isReadOnly = isReadOnly;
-};
-
-EntityList.prototype.updateBlankRootButtonsVisibility = function() {
+  UIHelper.setVisible('NEW_VERSION_LABEL', !isReadOnly && Identity.isWebsiteId(this.getCurrentId()));
 };
 
 /**
@@ -37,7 +32,7 @@ EntityList.prototype.listen = function() {
       var entityId = Identity.idFromData(data);
 
       if ($$('entity_list').getFirstId() === entityId) { // Parent item "."
-        self.setRootId(null);
+        self.setCurrentId(null);
         return;
       }
 
@@ -46,19 +41,17 @@ EntityList.prototype.listen = function() {
       }
 
       // ignore event if root item deleted
-      if (entityId === self.getRootId()) {
-        this.setRootId(null);
+      if (entityId === self.getCurrentId()) {
+        this.setCurrentId(null);
         return;
       }
 
-      if (entityId === self.getCurrentId()) { // Select other item if selected item is deleted.
+      if (entityId === self.getSelectedId()) { // Select other item if selected item is deleted.
         var nextId = $$('entity_list').getPrevId(entityId) || $$('entity_list').getNextId(entityId);
         $$('entity_list').select(nextId);
       }
 
       $$('entity_list').remove(entityId);
-
-      self.updateBlankRootButtonsVisibility();
     }
   });
 
@@ -68,7 +61,7 @@ EntityList.prototype.listen = function() {
       var data = dataArray[i];
       var parentId = Identity.parentId(Identity.idFromData(data));
       var entity = Identity.entityFromData(data);
-      if (self.getRootId() === parentId) {
+      if (self.getCurrentId() === parentId) {
         if ($$('entity_list').getItem(entity.id)) {
           continue;
         }
@@ -76,7 +69,6 @@ EntityList.prototype.listen = function() {
         $$('entity_list').select(entity.id);
       }
     }
-    self.updateBlankRootButtonsVisibility();
   });
 
   Mydataspace.on('entities.rename.res', function(data) {
@@ -105,16 +97,16 @@ EntityList.prototype.listen = function() {
 /**
  * Set Id of entity witch items displayed in list. This method reloading data.
  */
-EntityList.prototype.setRootIdWithoutRefresh = function(id) {
-  this.rootId = id;
+EntityList.prototype.setCurrentIdWithoutRefresh = function(id) {
+  this.currentId = id;
 };
 
 
 /**
  * Set Id of entity witch items displayed in list. This method reloading data.
  */
-EntityList.prototype.setRootId = function(id) {
-  this.setRootIdWithoutRefresh(id);
+EntityList.prototype.setCurrentId = function(id) {
+  this.setCurrentIdWithoutRefresh(id);
   this.refresh();
 };
 
@@ -122,24 +114,24 @@ EntityList.prototype.setRootId = function(id) {
 /**
  * Id of entity witch items displayed in list.
  */
-EntityList.prototype.getRootId = function() {
-  return this.rootId;
+EntityList.prototype.getCurrentId = function() {
+  return this.currentId;
 };
 
 
 /**
  * Set item selected in list.
  */
-EntityList.prototype.setCurrentId = function(id) {
-  this.currentId = id;
+EntityList.prototype.setSelectedId = function(id) {
+  this.selectedId = id;
 };
 
 
 /**
  * Get item selected in list.
  */
-EntityList.prototype.getCurrentId = function() {
-  return this.currentId;
+EntityList.prototype.getSelectedId = function() {
+  return this.selectedId;
 };
 
 
@@ -152,17 +144,17 @@ EntityList.prototype.refresh = function(newRootId) {
   var self = this;
 
   if (newRootId != null) {
-    self.setRootIdWithoutRefresh(newRootId);
+    self.setCurrentIdWithoutRefresh(newRootId);
   }
 
-  if (self.getRootId() == null) {
+  if (self.getCurrentId() == null) {
     return;
   }
 
   $$('entity_tree__new_entity_list').clearAll();
-  $$('entity_tree__new_entity_list').parse(UIControls.getNewEntityPopupData(self.getRootId()));
+  $$('entity_tree__new_entity_list').parse(UIControls.getNewEntityPopupData(self.getCurrentId()));
 
-  var req = Identity.dataFromId(self.getRootId());
+  var req = Identity.dataFromId(self.getCurrentId());
   var search = $$('entity_list__search').getValue();
 
   if (MDSCommon.isPresent(search)) {
@@ -177,12 +169,12 @@ EntityList.prototype.refresh = function(newRootId) {
 
   $$('entity_list').disable();
   Mydataspace.request('entities.get', req, function(data) {
-    if (!self.getRootId()) {
+    if (!self.getCurrentId()) {
       $$('entity_list').enable();
       return;
     }
     var showMoreChildId =
-      Identity.childId(self.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
+      Identity.childId(self.getCurrentId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
 
 
     var entityId = Identity.idFromData(data);
@@ -191,7 +183,7 @@ EntityList.prototype.refresh = function(newRootId) {
         UIConstants.IGNORED_PATHS.indexOf(x.path) < 0 &&
         (UIConstants.IGNORED_WHEN_EMPTY_PATHS.indexOf(x.path) < 0);
     }).map(Identity.entityFromData);
-    if (self.getRootId() === entityId) {
+    if (self.getCurrentId() === entityId) {
       if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
         children[children.length - 1] = {
           id: Identity.childId(entityId, UIHelper.ENTITY_LIST_SHOW_MORE_ID),
@@ -208,7 +200,6 @@ EntityList.prototype.refresh = function(newRootId) {
     versionLabelText += '<span class="version_btn__version">' + (MDSCommon.findValueByName(data.fields, '$version') || 0) + '</span>';
     versionLabel.define('label', versionLabelText);
     versionLabel.refresh();
-    self.updateBlankRootButtonsVisibility();
 
     $$('entity_list').enable();
   }, function(err) {
@@ -238,7 +229,7 @@ EntityList.prototype.fill = function(parentEntityId, children, data) {
 
 EntityList.prototype.addChildren = function(children) {
   var showMoreChildId =
-    Identity.childId(this.getRootId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
+    Identity.childId(this.getCurrentId(), UIHelper.ENTITY_LIST_SHOW_MORE_ID);
 
   var startIndex;
   if (children.length === UIHelper.NUMBER_OF_ENTITIES_LOADED_AT_TIME) {
@@ -259,7 +250,7 @@ EntityList.prototype.addChildren = function(children) {
 
 EntityList.prototype.showMore = function() {
   var self = this;
-  var req = Identity.dataFromId(this.getRootId());
+  var req = Identity.dataFromId(this.getCurrentId());
   var search = $$('entity_list__search').getValue();
   if (MDSCommon.isPresent(search)) {
     req['search'] = search;

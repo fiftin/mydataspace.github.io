@@ -50,7 +50,7 @@ UILayout.editScriptTabs = {
 };
 
 UILayout.windows.editScript = {
-  view: 'window',
+  view: 'ModalDialog',
   id: 'edit_script_window',
   css: 'edit_script_window',
   head: false,

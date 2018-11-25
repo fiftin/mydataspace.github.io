@@ -238,12 +238,12 @@ UILayout.entityTree = {
             $$('script_editor_' + id).show();
             var fileParentId = Identity.getEntityIdFromFileId(id);
             UI.entityTree.setCurrentId(fileParentId);
-            UI.entityList.setRootId(fileParentId);
-            UI.entityForm.setSelectedId(fileParentId);
+            UI.entityList.setCurrentId(fileParentId);
+            UI.entityForm.setCurrentId(fileParentId);
           } else {
             UI.entityTree.setCurrentId(id);
-            UI.entityList.setRootId(id);
-            UI.entityForm.setSelectedId(id);
+            UI.entityList.setCurrentId(id);
+            UI.entityForm.setCurrentId(id);
           }
         },
         onBeforeSelect: function (id, selection) {
@@ -266,7 +266,7 @@ UILayout.entityTreeMenu = {
     onShow: function () {
       this.data.clearAll();
 
-      var id = this._area && this._area.id ? this._area.id : UI.entityForm.getSelectedId();
+      var id = this._area && this._area.id ? this._area.id : UI.entityForm.getCurrentId();
       var itemData = Identity.dataFromId(id);
       // this.data.add({
       //   id: 'edit',
@@ -437,6 +437,16 @@ UILayout.entityTreeMenu = {
     },
 
     onItemClick: function (id) {
+      var entityId;
+      switch (this.config.id) {
+        case 'entity_list_menu':
+          entityId = UI.entityForm.getCurrentId();
+          break;
+        default:
+          entityId = UI.entityList.getCurrentId();
+          break;
+      }
+
       switch (id) {
         case 'edit':
           UI.entityForm.startEditing();
@@ -456,7 +466,8 @@ UILayout.entityTreeMenu = {
           });
           break;
         case 'new_entity':
-          $$('add_entity_window').show();
+          var window = $$('add_entity_window');
+          window.showWithData({ destFolderId: id });
           break;
         case 'new_resource':
           $$('add_resource_window').show();

@@ -1,5 +1,5 @@
 UILayout.windows.addWebsite = {
-  view: 'window',
+  view: 'ModalDialog',
   id: 'add_website_window',
   width: 350,
   position: 'center',
@@ -14,7 +14,7 @@ UILayout.windows.addWebsite = {
       onSubmit: function() {
         if ($$('add_website_form').validate()) {
           var formData = $$('add_website_form').getValues();
-          var newEntityId = Identity.childId(UI.entityList.getRootId(), formData.name);
+          var newEntityId = Identity.childId(UI.entityList.getCurrentId(), formData.name);
           var data = Identity.dataFromId(newEntityId);
           data.path = 'website';
           data.fields = [];

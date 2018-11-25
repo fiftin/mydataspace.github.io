@@ -1,5 +1,5 @@
 UILayout.windows.addTask = {
-    view: 'window',
+    view: 'ModalDialog',
     id: 'add_task_window',
     width: 350,
     position: 'center',
@@ -14,7 +14,7 @@ UILayout.windows.addTask = {
         onSubmit: function() {
           if ($$('add_task_form').validate()) {
             var formData = $$('add_task_form').getValues();
-            var newEntityId = Identity.childId(Identity.rootId(UI.entityList.getRootId()), 'tasks/' + formData.name);
+            var newEntityId = Identity.childId(Identity.rootId(UI.entityList.getCurrentId()), 'tasks/' + formData.name);
             var data = Identity.dataFromId(newEntityId);
             data.fields = [];
             data.othersCan = formData.othersCan;

@@ -1,5 +1,5 @@
 UILayout.windows.addVersion = {
-    view: 'window',
+    view: 'ModalDialog',
     id: 'add_version_window',
     width: 450,
     position: 'center',

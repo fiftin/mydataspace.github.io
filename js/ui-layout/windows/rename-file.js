@@ -1,5 +1,5 @@
 UILayout.windows.renameFile = {
-  view: 'window',
+  view: 'ModalDialog',
   id: 'rename_file_window',
   width: 300,
   position: 'center',
@@ -27,7 +27,7 @@ UILayout.windows.renameFile = {
 
         var currentFileId = $$('entity_tree').getSelectedId();
         Mydataspace.request('entities.get', Identity.dataFromId(currentFileId)).then(function (data) {
-          var req = MDSCommon.extend(Identity.dataFromId(UI.entityList.getRootId()), {
+          var req = MDSCommon.extend(Identity.dataFromId(UI.entityList.getCurrentId()), {
             fields: [{
               name: formData.name,
               value: data.fields[0].value,
