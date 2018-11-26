@@ -48,8 +48,10 @@ UILayout.windows.addFile = {
     on: {
       onSubmit: function() {
         var form = this;
+        var window = $$('add_file_window');
 
-        if (!form.validate()) {
+        if (!form.validate({ disabled: true })) {
+          UIControls.removeSpinnerFromWindow('add_file_window');
           return;
         }
 
@@ -57,7 +59,7 @@ UILayout.windows.addFile = {
 
         var filenameParts = formData.name.trim().split('.');
 
-        var req = MDSCommon.extend(Identity.dataFromId(UI.entityList.getCurrentId()), {
+        var req = MDSCommon.extend(Identity.dataFromId(window.getShowData().entityId || UI.entityList.getCurrentId()), {
           fields: [{
             name: filenameParts[0] + '.' + formData.type,
             value: '',
@@ -114,7 +116,7 @@ UILayout.windows.addFile = {
 
     rules: {
       name: function(value) {
-        return /^[\w_-]+(\.[\w_-]+)?$/.test(value);
+        return /^[\w-]+(\.[\w-]+)?$/.test(value);
       }
     }
   }

@@ -12,14 +12,14 @@ UILayout.windows.addField = {
     borderless: true,
     on: {
       onSubmit: function() {
-        if (!$$('add_field_form').validate()) {
+        if (!$$('add_field_form').validate({ disabled: true })) {
           return;
         }
 
         UI.entityForm.addField(
           MDSCommon.extend($$('add_field_form').getValues(), { indexed: 'off' }),
           true,
-          UIHelper.isProto(UI.entityForm.getSelectedId()));
+          UIHelper.isProto(UI.entityForm.getCurrentId()));
 
         setTimeout(function() {
           $$('add_field_window').hide();
@@ -65,7 +65,9 @@ UILayout.windows.addField = {
     ],
 
     rules: {
-      name: function(value) { return typeof $$('entity_form__' + value) === 'undefined' },
+      name: function(value) {
+        return /^[\w-]+$/.test(value) && typeof $$('entity_form__' + value) === 'undefined'
+      },
       value: function(value) {
         var values = $$('add_field_form').getValues();
         var typeInfo = Fields.FIELD_TYPES[values.type];

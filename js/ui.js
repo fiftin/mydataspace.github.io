@@ -401,7 +401,7 @@ UI = {
     window.addEventListener('message', function(e) {
       if (e.data.message === 'getScripts') {
 
-        Mydataspace.request('entities.getWithMeta', Identity.dataFromId(UI.entityForm.getSelectedId())).then(function (data) {
+        Mydataspace.request('entities.getWithMeta', Identity.dataFromId(UI.entityForm.getCurrentId())).then(function (data) {
           data.fields.sort(function(a, b) {
             if (a.type === 'j' && b.type !== 'j') {
               return 1;
@@ -486,6 +486,7 @@ UI = {
     webix.ui(UILayout.windows.addVersion);
     webix.ui(UILayout.windows.addWebsite);
     webix.ui(UILayout.windows.showMedia);
+    webix.ui(UILayout.windows.addGenerator);
 
     webix.ui(MDSCommon.extend(UILayout.entityContextMenu, { id: 'entity_list_menu' }));
     webix.ui(MDSCommon.extend(UILayout.entityContextMenu, { id: 'entity_tree_menu' }));

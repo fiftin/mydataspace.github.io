@@ -43,7 +43,7 @@ UILayout.entityTree = {
         if (obj.id.indexOf('#') >= 0) {
 
           return common.icon(obj, common) +
-            '<div class="webix_tree_folder_open fa fa-file-o webix_tree_folder_open--file"></div>' +
+            '<div class="webix_tree_folder_open fa fa-file-code-o webix_tree_folder_open--file"></div>' +
             '<span class="webix_tree_item__name webix_tree_item__name--file">' + obj.value + '</span>';
 
         } else if (path === '') { // root

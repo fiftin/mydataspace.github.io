@@ -12,25 +12,28 @@ UILayout.windows.addProto = {
       borderless: true,
       on: {
         onSubmit: function() {
-          if ($$('add_proto_form').validate()) {
-            var formData = $$('add_proto_form').getValues();
-            var newEntityId = Identity.childId(Identity.rootId(UI.entityList.getCurrentId()), 'protos/' + formData.name);
-            var data = Identity.dataFromId(newEntityId);
-            data.fields = [];
-            data.othersCan = formData.othersCan;
-            Mydataspace.request('entities.create', data, function() {
-              $$('add_proto_window').hide();
-              UIControls.removeSpinnerFromWindow('add_proto_window');
-            }, function(err) {
-              UIControls.removeSpinnerFromWindow('add_proto_window');
-              if (err.name === 'SequelizeUniqueConstraintError') {
-                $$('add_proto_form').elements.name.define('invalidMessage', 'Name already exists');
-                $$('add_proto_form').markInvalid('name', true);
-              } else {
-                UI.error(err);
-              }
-            });
+          var window = $$('add_proto_window');
+          if (!$$('add_proto_form').validate()) {
+            UIControls.removeSpinnerFromWindow('add_proto_window');
+            return;
           }
+          var formData = $$('add_proto_form').getValues();
+          var newEntityId = Identity.childId(Identity.rootId(window.getShowData().entityId || UI.entityList.getCurrentId()), 'protos/' + formData.name);
+          var data = Identity.dataFromId(newEntityId);
+          data.fields = [];
+          data.othersCan = formData.othersCan;
+          Mydataspace.request('entities.create', data, function() {
+            $$('add_proto_window').hide();
+            UIControls.removeSpinnerFromWindow('add_proto_window');
+          }, function(err) {
+            UIControls.removeSpinnerFromWindow('add_proto_window');
+            if (err.name === 'SequelizeUniqueConstraintError') {
+              $$('add_proto_form').elements.name.define('invalidMessage', 'Name already exists');
+              $$('add_proto_form').markInvalid('name', true);
+            } else {
+              UI.error(err);
+            }
+          });
         }
       },
       elements: [

@@ -5,6 +5,9 @@
 .admin-breadcrumbs {
   font-size: 14px;
   color: #666666;
+  white-space: nowrap;
+  float: right;
+  min-width: 100%;
 }
 
 .admin-breadcrumbs__link {

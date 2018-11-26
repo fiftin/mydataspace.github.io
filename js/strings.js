@@ -16,9 +16,9 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     // SAVE_ENTITY: 'Save Entity',
     RUN_SCRIPT: 'Debug',
     ONLY_READ: 'Only Read',
-    ADD_ENTITY: 'New...',
+    ADD_ENTITY: 'New Folder',
     SEARCH: 'Filter...',
-    DELETE_ENTITY: 'Delete Entity',
+    DELETE_ENTITY: 'Delete Folder',
     DELETE_FILE: 'Delete File',
     DELETE_ENTITY_SHORT: 'Delete',
     CREATE_CHILDREN: 'Create Children',
@@ -86,11 +86,15 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     PROTO_IS_FIXED: 'Is Fixed',
     MAX_NUMBER_OF_CHILDREN: 'Children limit',
     EDIT_ENTITY: 'Edit',
-    CLONE_ENTITY: 'Clone',
+    CLONE_ENTITY: 'Copy To...',
+
+    ADD_GENERATOR_SRC: 'Data Folder',
+    ADD_GENERATOR_DEST: 'Cache Folder',
 
     CLONE_ROOT_NAME: 'Root',
     CLONE_ENTITY_PATH: 'Path',
-
+    CLONE_ENTITY_PATH_PLACEHOLDER: 'New folder path/name',
+    CLONE_ENTITY_LOCATION: 'Where',
     SAVE_ENTITY: 'Save',
     REFRESH_ENTITY: '', // 'Ref.',
     CANCEL_ENTITY: 'Cancel',
@@ -170,6 +174,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     import_root: 'Import Data',
     open_license_page: 'Open License Page',
 
+    new_generator: 'New Generator',
     new_entity: 'New Folder',
     import_entity: 'Import Entity',
     new_resource: 'New Resource',
@@ -385,9 +390,14 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     EDIT_ENTITY: 'Ред.',
     CLONE_ENTITY: 'Копир.',
 
+    ADD_GENERATOR_SRC: 'Папка с данными',
+    ADD_GENERATOR_DEST: 'Папка в кеше',
+
 
     CLONE_ROOT_NAME: 'Корень',
     CLONE_ENTITY_PATH: 'Путь',
+    CLONE_ENTITY_PATH_PLACEHOLDER: 'Пусть и имя новой папки',
+    CLONE_ENTITY_LOCATION: 'Тип',
 
 
     SAVE_ENTITY: 'Сохр.',
@@ -471,6 +481,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     new_empty_root: 'Пусктой ' + PROJECT_ROOT_NAME_RU,
     import_root: 'Импорт данных',
 
+    new_generator: 'Новый генератор',
     new_entity: 'Новая папка',
     import_entity: 'Импортировать данные',
     new_resource: 'Новый ресурс',

@@ -12,29 +12,31 @@ UILayout.windows.addResource = {
       borderless: true,
       on: {
         onSubmit: function() {
-          if ($$('add_resource_form').validate()) {
-            var formData = $$('add_resource_form').getValues();
-            var newEntityId = Identity.childId(UI.entityList.getCurrentId(), 'test');
-            var data = Identity.dataFromId(newEntityId);
-            UI.uploadResource(
-              document.getElementById('add_resource_form__file').files[0],
-              data.root,
-              formData.type,
-              function(res) {
-                $$('add_resource_window').hide();
-                UIControls.removeSpinnerFromWindow('add_resource_window');
-                UI.entityList.refresh();
-              },
-              function(err) {
-                UIControls.removeSpinnerFromWindow('add_resource_window');
-                if (err.name === 'SequelizeUniqueConstraintError') {
-                  $$('add_resource_form').elements.name.define('invalidMessage', 'Name already exists');
-                  $$('add_resource_form').markInvalid('name', true);
-                } else {
-                  UI.error(err);
-                }
-              });
+          if (!$$('add_resource_form').validate({ disabled: true })) {
+            UIControls.removeSpinnerFromWindow('add_resource_window');
+            return;
           }
+          var formData = $$('add_resource_form').getValues();
+          var newEntityId = Identity.childId(UI.entityList.getCurrentId(), 'test');
+          var data = Identity.dataFromId(newEntityId);
+          UI.uploadResource(
+            document.getElementById('add_resource_form__file').files[0],
+            data.root,
+            formData.type,
+            function(res) {
+              $$('add_resource_window').hide();
+              UIControls.removeSpinnerFromWindow('add_resource_window');
+              UI.entityList.refresh();
+            },
+            function(err) {
+              UIControls.removeSpinnerFromWindow('add_resource_window');
+              if (err.name === 'SequelizeUniqueConstraintError') {
+                $$('add_resource_form').elements.name.define('invalidMessage', 'Name already exists');
+                $$('add_resource_form').markInvalid('name', true);
+              } else {
+                UI.error(err);
+              }
+            });
         }
       },
 

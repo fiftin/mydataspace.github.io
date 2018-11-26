@@ -8,7 +8,24 @@ UILayout.entityContextMenu = {
     onShow: function () {
       this.data.clearAll();
 
-      var id = this._area && this._area.id ? this._area.id : UI.entityForm.getCurrentId();
+      var id;
+      switch (this.config.id) {
+        case 'entity_list_menu':
+          id = UI.entityList.getSelectedId();
+          break;
+        case 'entity_tree_menu':
+          id = this._area && this._area.id ? this._area.id : UI.entityTree.getCurrentId();
+          break;
+        case 'entity_list_new_menu':
+          id = UI.entityList.getCurrentId();
+          break;
+        case 'entity_form_menu':
+          id = UI.entityForm.getCurrentId();
+          break;
+        default:
+          throw new Error();
+      }
+
       var itemData = Identity.dataFromId(id);
       var menuItems = [];
 
@@ -206,21 +223,6 @@ UILayout.entityContextMenu = {
 
       var i;
 
-      switch (this.config.id) {
-        case 'entity_list_new_menu':
-          for (i = menuItems.length - 1; i >= 0; i--) {
-            switch (menuItems[i].id) {
-              case 'delete_entity':
-              case 'copy_entity':
-              case 'delete_file':
-              case 'edit':
-                menuItems.splice(i, 1);
-                break;
-            }
-          }
-          break;
-      }
-
       for (i in menuItems) {
         var item = menuItems[i];
         switch (item.id) {
@@ -266,19 +268,29 @@ UILayout.entityContextMenu = {
       var entityId;
       switch (this.config.id) {
         case 'entity_list_menu':
+          entityId = UI.entityList.getSelectedId();
+          break;
+        case 'entity_tree_menu':
+          entityId = UI.entityTree.getCurrentId();
+          break;
+        case 'entity_list_new_menu':
+          entityId = UI.entityList.getCurrentId();
+          break;
+        case 'entity_form_menu':
           entityId = UI.entityForm.getCurrentId();
           break;
         default:
-          entityId = UI.entityList.getSelectedId();
-          break;
+          throw new Error();
       }
 
       switch (id) {
+        case 'copy_file':
         case 'copy_entity':
           EntityForm.prototype.clone(entityId);
           break;
         case 'edit':
-          UI.entityForm.startEditing(entityId);
+          $$('entity_list').select(entityId);
+          UI.entityForm.startEditing();
           break;
         case 'delete_root':
         case 'delete_entity':
@@ -340,6 +352,9 @@ UILayout.entityContextMenu = {
           break;
         case 'rename_file':
           $$('rename_file_window').show();
+          break;
+        case 'new_generator':
+          $$('add_generator_window').showWithData({entityId: entityId});
           break;
       }
     }

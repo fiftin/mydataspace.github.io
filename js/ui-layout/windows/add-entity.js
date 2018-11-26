@@ -15,7 +15,8 @@ UILayout.windows.addEntity = {
           var window = $$('add_entity_window');
           var form = this;
 
-          if (!form.validate()) {
+          if (!form.validate({ disabled: true })) {
+            UIControls.removeSpinnerFromWindow('add_entity_window');
             return;
           }
 
@@ -41,9 +42,21 @@ UILayout.windows.addEntity = {
         }
       },
       elements: [
-        { view: 'text', required: true, id: 'NAME_LABEL_1', label: STRINGS.NAME, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
+        { view: 'text',
+          required: true,
+          id: 'NAME_LABEL_1',
+          label: STRINGS.NAME,
+          name: 'name',
+          labelWidth: UIHelper.LABEL_WIDTH
+        },
         UIControls.getEntityTypeSelectTemplate(),
         UIControls.getSubmitCancelForFormWindow('add_entity')
-      ]
+      ],
+
+      rules: {
+        name: function(value) {
+          return /^[\w-]+$/.test(value);
+        }
+      }
     }
 };

@@ -12,26 +12,29 @@ UILayout.windows.addWebsite = {
     borderless: true,
     on: {
       onSubmit: function() {
-        if ($$('add_website_form').validate()) {
-          var formData = $$('add_website_form').getValues();
-          var newEntityId = Identity.childId(UI.entityList.getCurrentId(), formData.name);
-          var data = Identity.dataFromId(newEntityId);
-          data.path = 'website';
-          data.fields = [];
-          data.othersCan = formData.othersCan;
-          Mydataspace.request('entities.create', data, function() {
-            $$('add_website_window').hide();
-            UIControls.removeSpinnerFromWindow('add_website_window');
-          }, function(err) {
-            UIControls.removeSpinnerFromWindow('add_website_window');
-            if (err.name === 'SequelizeUniqueConstraintError') {
-              $$('add_website_form').elements.name.define('invalidMessage', 'Name already exists');
-              $$('add_website_form').markInvalid('name', true);
-            } else {
-              UI.error(err);
-            }
-          });
+        if (!$$('add_website_form').validate()) {
+          UIControls.removeSpinnerFromWindow('add_website_window');
+          return;
         }
+
+        var formData = $$('add_website_form').getValues();
+        var newEntityId = Identity.childId(UI.entityList.getCurrentId(), formData.name);
+        var data = Identity.dataFromId(newEntityId);
+        data.path = 'website';
+        data.fields = [];
+        data.othersCan = formData.othersCan;
+        Mydataspace.request('entities.create', data, function() {
+          $$('add_website_window').hide();
+          UIControls.removeSpinnerFromWindow('add_website_window');
+        }, function(err) {
+          UIControls.removeSpinnerFromWindow('add_website_window');
+          if (err.name === 'SequelizeUniqueConstraintError') {
+            $$('add_website_form').elements.name.define('invalidMessage', 'Name already exists');
+            $$('add_website_form').markInvalid('name', true);
+          } else {
+            UI.error(err);
+          }
+        });
       }
     },
     elements: [

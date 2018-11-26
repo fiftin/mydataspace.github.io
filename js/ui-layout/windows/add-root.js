@@ -18,7 +18,8 @@ UILayout.windows.addRoot = {
       borderless: true,
       on: {
         onSubmit: function() {
-          if (!$$('add_root_form').validate()) {
+          if (!$$('add_root_form').validate({ disabled: true })) {
+            UIControls.removeSpinnerFromWindow('add_root_window');
             return;
           }
 

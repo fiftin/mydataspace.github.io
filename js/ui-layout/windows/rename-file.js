@@ -20,11 +20,14 @@ UILayout.windows.renameFile = {
     on: {
 
       onSubmit: function() {
-        if (!$$('rename_file_form').validate()) {
+        var form = $$('rename_file_form');
+        if (!form.validate({ disabled: true })) {
+          UIControls.removeSpinnerFromWindow('rename_file_window');
+          form.focus('name');
           return;
         }
-        var formData = $$('rename_file_form').getValues();
 
+        var formData = $$('rename_file_form').getValues();
         var currentFileId = $$('entity_tree').getSelectedId();
         Mydataspace.request('entities.get', Identity.dataFromId(currentFileId)).then(function (data) {
           var req = MDSCommon.extend(Identity.dataFromId(UI.entityList.getCurrentId()), {

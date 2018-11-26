@@ -30,7 +30,7 @@ EntityList.prototype.updateBreadcrumbs = function () {
       id += '/' + item;
     }
 
-    var action = i === items.length - 1 ? '$$(\'entity_form_menu\').show(this);' : '$$(\'entity_tree\').select(\'' + id + '\'); return false;';
+    var action = i === items.length - 1 ? '$$(\'entity_list_new_menu\').show(this);' : '$$(\'entity_tree\').select(\'' + id + '\'); return false;';
 
     html += (i === 0 ? '' : '<span class="admin-breadcrumbs__separator"><i class="fa fa-angle-right"></i></span>') +
       '<a href="javascript: void(0);" class="admin-breadcrumbs__link" onclick="' + action + '">' +

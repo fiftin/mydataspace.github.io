@@ -2546,7 +2546,7 @@ EntityList.prototype.updateBreadcrumbs = function () {
       id += '/' + item;
     }
 
-    var action = i === items.length - 1 ? '$$(\'entity_form_menu\').show(this);' : '$$(\'entity_tree\').select(\'' + id + '\'); return false;';
+    var action = i === items.length - 1 ? '$$(\'entity_list_new_menu\').show(this);' : '$$(\'entity_tree\').select(\'' + id + '\'); return false;';
 
     html += (i === 0 ? '' : '<span class="admin-breadcrumbs__separator"><i class="fa fa-angle-right"></i></span>') +
       '<a href="javascript: void(0);" class="admin-breadcrumbs__link" onclick="' + action + '">' +
@@ -3641,7 +3641,8 @@ UILayout.windows.addRoot = {
       borderless: true,
       on: {
         onSubmit: function() {
-          if (!$$('add_root_form').validate()) {
+          if (!$$('add_root_form').validate({ disabled: true })) {
+            UIControls.removeSpinnerFromWindow('add_root_window');
             return;
           }
 
@@ -3750,7 +3751,8 @@ UILayout.windows.addEntity = {
           var window = $$('add_entity_window');
           var form = this;
 
-          if (!form.validate()) {
+          if (!form.validate({ disabled: true })) {
+            UIControls.removeSpinnerFromWindow('add_entity_window');
             return;
           }
 
@@ -3776,10 +3778,22 @@ UILayout.windows.addEntity = {
         }
       },
       elements: [
-        { view: 'text', required: true, id: 'NAME_LABEL_1', label: STRINGS.NAME, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
+        { view: 'text',
+          required: true,
+          id: 'NAME_LABEL_1',
+          label: STRINGS.NAME,
+          name: 'name',
+          labelWidth: UIHelper.LABEL_WIDTH
+        },
         UIControls.getEntityTypeSelectTemplate(),
         UIControls.getSubmitCancelForFormWindow('add_entity')
-      ]
+      ],
+
+      rules: {
+        name: function(value) {
+          return /^[\w-]+$/.test(value);
+        }
+      }
     }
 };
 
@@ -3797,39 +3811,60 @@ UILayout.windows.cloneEntity = {
       borderless: true,
       on: {
         onSubmit: function() {
-          if ($$('clone_entity_form').validate()) {
-            var formData = $$('clone_entity_form').getValues();
-            var selectedData = Identity.dataFromId(UI.entityForm.getCurrentId());
-            var data = MDSCommon.extend(formData, {
-              root: selectedData.root,
-              fields: [],
-              sourceRoot: selectedData.root,
-              sourcePath: selectedData.path,
-              sourceVersion: selectedData.version
-            });
-
-            Mydataspace.request('entities.create', data, function() {
-              $$('clone_entity_window').hide();
-              UIControls.removeSpinnerFromWindow('clone_entity_window');
-            }, function(err) {
-              UIControls.removeSpinnerFromWindow('clone_entity_window');
-              for (var i in err.errors) {
-                var e = err.errors[i];
-                switch (e.type) {
-                  case 'unique violation':
-                    if (e.path === 'entities_root_path') {
-                      $$('clone_entity_form').elements.name.define('invalidMessage', 'Name already exists');
-                      $$('clone_entity_form').markInvalid('name', true);
-                    }
-                    break;
-                }
-              }
-            });
+          var window = $$('clone_entity_window');
+          if (!$$('clone_entity_form').validate({ disabled: true })) {
+            UIControls.removeSpinnerFromWindow('clone_entity_window');
+            return;
           }
+          var formData = $$('clone_entity_form').getValues();
+          var selectedData = Identity.dataFromId(window.getShowData().entityId || UI.entityList.getCurrentId());
+          var data = MDSCommon.extend(formData, {
+            root: selectedData.root,
+            fields: [],
+            sourceRoot: selectedData.root,
+            sourcePath: selectedData.path,
+            sourceVersion: selectedData.version
+          });
+
+          Mydataspace.request('entities.create', data, function() {
+            $$('clone_entity_window').hide();
+            UIControls.removeSpinnerFromWindow('clone_entity_window');
+          }, function(err) {
+            UIControls.removeSpinnerFromWindow('clone_entity_window');
+            for (var i in err.errors) {
+              var e = err.errors[i];
+              switch (e.type) {
+                case 'unique violation':
+                  if (e.path === 'entities_root_path') {
+                    $$('clone_entity_form').elements.name.define('invalidMessage', 'Name already exists');
+                    $$('clone_entity_form').markInvalid('name', true);
+                  }
+                  break;
+              }
+            }
+          });
         }
       },
       elements: [
-        { view: 'text', required: true, id: 'CLONE_ENTITY_PATH_LABEL', label: STRINGS.CLONE_ENTITY_PATH, name: 'path', labelWidth: UIHelper.LABEL_WIDTH },
+        { view: 'text',
+          required: true,
+          id: 'CLONE_ENTITY_PATH_LABEL',
+          label: STRINGS.CLONE_ENTITY_PATH,
+          name: 'path',
+          labelWidth: UIHelper.LABEL_WIDTH,
+          placeholder: 'New folder path/name'
+        },
+        { view: 'richselect',
+          required: true, id: 'CLONE_ENTITY_LOCATION_LABEL',
+          label: STRINGS.CLONE_ENTITY_LOCATION,
+          name: 'location',
+          labelWidth: UIHelper.LABEL_WIDTH,
+          value: 'public_html',
+          options: [
+            { id: 'public_html', value: 'public_html', icon: UIConstants.ENTITY_ICONS['public_html'] },
+            { id: 'includes', value: 'includes', icon: UIConstants.ENTITY_ICONS['includes'] },
+          ]
+        },
         UIControls.getEntityTypeSelectTemplate(),
         UIControls.getSubmitCancelForFormWindow('clone_entity')
       ]
@@ -3850,32 +3885,44 @@ UILayout.windows.addTask = {
       borderless: true,
       on: {
         onSubmit: function() {
-          if ($$('add_task_form').validate()) {
-            var formData = $$('add_task_form').getValues();
-            var newEntityId = Identity.childId(Identity.rootId(UI.entityList.getCurrentId()), 'tasks/' + formData.name);
-            var data = Identity.dataFromId(newEntityId);
-            data.fields = [];
-            data.othersCan = formData.othersCan;
-            Mydataspace.request('entities.create', data, function() {
-              $$('add_task_window').hide();
-              UIControls.removeSpinnerFromWindow('add_task_window');
-            }, function(err) {
-              UIControls.removeSpinnerFromWindow('add_task_window');
-              if (err.name === 'SequelizeUniqueConstraintError') {
-                $$('add_task_form').elements.name.define('invalidMessage', 'Name already exists');
-                $$('add_task_form').markInvalid('name', true);
-              } else {
-                UI.error(err);
-              }
-            });
+          var window = $$('add_task_window');
+          if (!$$('add_task_form').validate({ disabled: true })) {
+
+            UIControls.removeSpinnerFromWindow('add_task_window');
+            return;
           }
+
+          var formData = $$('add_task_form').getValues();
+
+          var newEntityId = Identity.childId(Identity.rootId(window.getShowData().entityId || UI.entityList.getCurrentId()), 'tasks/' + formData.name);
+          var data = Identity.dataFromId(newEntityId);
+          data.fields = [];
+          data.othersCan = formData.othersCan;
+          Mydataspace.request('entities.create', data, function() {
+            $$('add_task_window').hide();
+            UIControls.removeSpinnerFromWindow('add_task_window');
+          }, function(err) {
+            UIControls.removeSpinnerFromWindow('add_task_window');
+            if (err.name === 'SequelizeUniqueConstraintError') {
+              $$('add_task_form').elements.name.define('invalidMessage', 'Name already exists');
+              $$('add_task_form').markInvalid('name', true);
+            } else {
+              UI.error(err);
+            }
+          });
         }
       },
       elements: [
         { view: 'text', required: true, id: 'NAME_LABEL_7', label: STRINGS.NAME, name: 'name', labelWidth: UIHelper.LABEL_WIDTH },
         // UIControls.getEntityTypeSelectTemplate(),
         UIControls.getSubmitCancelForFormWindow('add_task')
-      ]
+      ],
+
+      rules: {
+        name: function(value) {
+          return /^[\w-]+$/.test(value);
+        }
+      }
     }
 };
 
@@ -3893,25 +3940,28 @@ UILayout.windows.addProto = {
       borderless: true,
       on: {
         onSubmit: function() {
-          if ($$('add_proto_form').validate()) {
-            var formData = $$('add_proto_form').getValues();
-            var newEntityId = Identity.childId(Identity.rootId(UI.entityList.getCurrentId()), 'protos/' + formData.name);
-            var data = Identity.dataFromId(newEntityId);
-            data.fields = [];
-            data.othersCan = formData.othersCan;
-            Mydataspace.request('entities.create', data, function() {
-              $$('add_proto_window').hide();
-              UIControls.removeSpinnerFromWindow('add_proto_window');
-            }, function(err) {
-              UIControls.removeSpinnerFromWindow('add_proto_window');
-              if (err.name === 'SequelizeUniqueConstraintError') {
-                $$('add_proto_form').elements.name.define('invalidMessage', 'Name already exists');
-                $$('add_proto_form').markInvalid('name', true);
-              } else {
-                UI.error(err);
-              }
-            });
+          var window = $$('add_proto_window');
+          if (!$$('add_proto_form').validate()) {
+            UIControls.removeSpinnerFromWindow('add_proto_window');
+            return;
           }
+          var formData = $$('add_proto_form').getValues();
+          var newEntityId = Identity.childId(Identity.rootId(window.getShowData().entityId || UI.entityList.getCurrentId()), 'protos/' + formData.name);
+          var data = Identity.dataFromId(newEntityId);
+          data.fields = [];
+          data.othersCan = formData.othersCan;
+          Mydataspace.request('entities.create', data, function() {
+            $$('add_proto_window').hide();
+            UIControls.removeSpinnerFromWindow('add_proto_window');
+          }, function(err) {
+            UIControls.removeSpinnerFromWindow('add_proto_window');
+            if (err.name === 'SequelizeUniqueConstraintError') {
+              $$('add_proto_form').elements.name.define('invalidMessage', 'Name already exists');
+              $$('add_proto_form').markInvalid('name', true);
+            } else {
+              UI.error(err);
+            }
+          });
         }
       },
       elements: [
@@ -3936,29 +3986,31 @@ UILayout.windows.addResource = {
       borderless: true,
       on: {
         onSubmit: function() {
-          if ($$('add_resource_form').validate()) {
-            var formData = $$('add_resource_form').getValues();
-            var newEntityId = Identity.childId(UI.entityList.getCurrentId(), 'test');
-            var data = Identity.dataFromId(newEntityId);
-            UI.uploadResource(
-              document.getElementById('add_resource_form__file').files[0],
-              data.root,
-              formData.type,
-              function(res) {
-                $$('add_resource_window').hide();
-                UIControls.removeSpinnerFromWindow('add_resource_window');
-                UI.entityList.refresh();
-              },
-              function(err) {
-                UIControls.removeSpinnerFromWindow('add_resource_window');
-                if (err.name === 'SequelizeUniqueConstraintError') {
-                  $$('add_resource_form').elements.name.define('invalidMessage', 'Name already exists');
-                  $$('add_resource_form').markInvalid('name', true);
-                } else {
-                  UI.error(err);
-                }
-              });
+          if (!$$('add_resource_form').validate({ disabled: true })) {
+            UIControls.removeSpinnerFromWindow('add_resource_window');
+            return;
           }
+          var formData = $$('add_resource_form').getValues();
+          var newEntityId = Identity.childId(UI.entityList.getCurrentId(), 'test');
+          var data = Identity.dataFromId(newEntityId);
+          UI.uploadResource(
+            document.getElementById('add_resource_form__file').files[0],
+            data.root,
+            formData.type,
+            function(res) {
+              $$('add_resource_window').hide();
+              UIControls.removeSpinnerFromWindow('add_resource_window');
+              UI.entityList.refresh();
+            },
+            function(err) {
+              UIControls.removeSpinnerFromWindow('add_resource_window');
+              if (err.name === 'SequelizeUniqueConstraintError') {
+                $$('add_resource_form').elements.name.define('invalidMessage', 'Name already exists');
+                $$('add_resource_form').markInvalid('name', true);
+              } else {
+                UI.error(err);
+              }
+            });
         }
       },
 
@@ -4017,14 +4069,14 @@ UILayout.windows.addField = {
     borderless: true,
     on: {
       onSubmit: function() {
-        if (!$$('add_field_form').validate()) {
+        if (!$$('add_field_form').validate({ disabled: true })) {
           return;
         }
 
         UI.entityForm.addField(
           MDSCommon.extend($$('add_field_form').getValues(), { indexed: 'off' }),
           true,
-          UIHelper.isProto(UI.entityForm.getSelectedId()));
+          UIHelper.isProto(UI.entityForm.getCurrentId()));
 
         setTimeout(function() {
           $$('add_field_window').hide();
@@ -4070,7 +4122,9 @@ UILayout.windows.addField = {
     ],
 
     rules: {
-      name: function(value) { return typeof $$('entity_form__' + value) === 'undefined' },
+      name: function(value) {
+        return /^[\w-]+$/.test(value) && typeof $$('entity_form__' + value) === 'undefined'
+      },
       value: function(value) {
         var values = $$('add_field_form').getValues();
         var typeInfo = Fields.FIELD_TYPES[values.type];
@@ -4130,8 +4184,10 @@ UILayout.windows.addFile = {
     on: {
       onSubmit: function() {
         var form = this;
+        var window = $$('add_file_window');
 
-        if (!form.validate()) {
+        if (!form.validate({ disabled: true })) {
+          UIControls.removeSpinnerFromWindow('add_file_window');
           return;
         }
 
@@ -4139,7 +4195,7 @@ UILayout.windows.addFile = {
 
         var filenameParts = formData.name.trim().split('.');
 
-        var req = MDSCommon.extend(Identity.dataFromId(UI.entityList.getCurrentId()), {
+        var req = MDSCommon.extend(Identity.dataFromId(window.getShowData().entityId || UI.entityList.getCurrentId()), {
           fields: [{
             name: filenameParts[0] + '.' + formData.type,
             value: '',
@@ -4196,7 +4252,7 @@ UILayout.windows.addFile = {
 
     rules: {
       name: function(value) {
-        return /^[\w_-]+(\.[\w_-]+)?$/.test(value);
+        return /^[\w-]+(\.[\w-]+)?$/.test(value);
       }
     }
   }
@@ -4278,11 +4334,14 @@ UILayout.windows.renameFile = {
     on: {
 
       onSubmit: function() {
-        if (!$$('rename_file_form').validate()) {
+        var form = $$('rename_file_form');
+        if (!form.validate({ disabled: true })) {
+          UIControls.removeSpinnerFromWindow('rename_file_window');
+          form.focus('name');
           return;
         }
-        var formData = $$('rename_file_form').getValues();
 
+        var formData = $$('rename_file_form').getValues();
         var currentFileId = $$('entity_tree').getSelectedId();
         Mydataspace.request('entities.get', Identity.dataFromId(currentFileId)).then(function (data) {
           var req = MDSCommon.extend(Identity.dataFromId(UI.entityList.getCurrentId()), {
@@ -4491,26 +4550,29 @@ UILayout.windows.addWebsite = {
     borderless: true,
     on: {
       onSubmit: function() {
-        if ($$('add_website_form').validate()) {
-          var formData = $$('add_website_form').getValues();
-          var newEntityId = Identity.childId(UI.entityList.getCurrentId(), formData.name);
-          var data = Identity.dataFromId(newEntityId);
-          data.path = 'website';
-          data.fields = [];
-          data.othersCan = formData.othersCan;
-          Mydataspace.request('entities.create', data, function() {
-            $$('add_website_window').hide();
-            UIControls.removeSpinnerFromWindow('add_website_window');
-          }, function(err) {
-            UIControls.removeSpinnerFromWindow('add_website_window');
-            if (err.name === 'SequelizeUniqueConstraintError') {
-              $$('add_website_form').elements.name.define('invalidMessage', 'Name already exists');
-              $$('add_website_form').markInvalid('name', true);
-            } else {
-              UI.error(err);
-            }
-          });
+        if (!$$('add_website_form').validate()) {
+          UIControls.removeSpinnerFromWindow('add_website_window');
+          return;
         }
+
+        var formData = $$('add_website_form').getValues();
+        var newEntityId = Identity.childId(UI.entityList.getCurrentId(), formData.name);
+        var data = Identity.dataFromId(newEntityId);
+        data.path = 'website';
+        data.fields = [];
+        data.othersCan = formData.othersCan;
+        Mydataspace.request('entities.create', data, function() {
+          $$('add_website_window').hide();
+          UIControls.removeSpinnerFromWindow('add_website_window');
+        }, function(err) {
+          UIControls.removeSpinnerFromWindow('add_website_window');
+          if (err.name === 'SequelizeUniqueConstraintError') {
+            $$('add_website_form').elements.name.define('invalidMessage', 'Name already exists');
+            $$('add_website_form').markInvalid('name', true);
+          } else {
+            UI.error(err);
+          }
+        });
       }
     },
     elements: [
@@ -4632,6 +4694,74 @@ UILayout.windows.addVersion = {
         UIControls.getSubmitCancelForFormWindow('add_version')
       ]
     }
+};
+
+UILayout.windows.addGenerator = {
+  view: 'ModalDialog',
+  id: 'add_generator_window',
+  width: 350,
+  position: 'center',
+  modal: true,
+  head: STRINGS.new_generator,
+  on: UIControls.getOnForFormWindow('add_generator', null, 'name'),
+  body: {
+    view: 'form',
+    id: 'add_generator_form',
+    borderless: true,
+    on: {
+      onSubmit: function() {
+        var window = $$('add_generator_window');
+        var form = this;
+
+        if (!form.validate()) {
+          UIControls.removeSpinnerFromWindow('add_generator_window');
+          return;
+        }
+
+        var formData = form.getValues();
+        var data = Identity.dataFromId(window.getShowData().entityId || UI.entityList.getCurrentId());
+        data.path += '/' + formData.name;
+        data.fields = [];
+        data.othersCan = 'view_children';
+        Mydataspace.request('entities.create', data, function() {
+          window.hide();
+          UIControls.removeSpinnerFromWindow('add_generator_window');
+        }, function(err) {
+          UIControls.removeSpinnerFromWindow('add_generator_window');
+          if (err.name === 'SequelizeUniqueConstraintError') {
+            form.elements.name.define('invalidMessage', 'Name already exists');
+            form.markInvalid('name', true);
+          } else {
+            UI.error(err);
+          }
+        });
+      }
+    },
+    elements: [
+      { view: 'text',
+        required: true,
+        id: 'NAME_LABEL_10',
+        label: STRINGS.NAME,
+        name: 'name',
+        labelWidth: UIHelper.LABEL_WIDTH
+      },
+      { view: 'text',
+        required: true,
+        id: 'ADD_GENERATOR_SRC_LABEL',
+        name: 'dataFolder',
+        label: STRINGS.ADD_GENERATOR_SRC,
+        labelWidth: UIHelper.LABEL_WIDTH
+      },
+      { view: 'text',
+        required: true,
+        id: 'ADD_GENERATOR_DEST_LABEL',
+        name: 'cacheFolder',
+        label: STRINGS.ADD_GENERATOR_DEST,
+        labelWidth: UIHelper.LABEL_WIDTH
+      },
+      UIControls.getSubmitCancelForFormWindow('add_generator')
+    ]
+  }
 };
 
 UILayout.popups.fieldIndexed = {
@@ -4925,7 +5055,24 @@ UILayout.entityContextMenu = {
     onShow: function () {
       this.data.clearAll();
 
-      var id = this._area && this._area.id ? this._area.id : UI.entityForm.getCurrentId();
+      var id;
+      switch (this.config.id) {
+        case 'entity_list_menu':
+          id = UI.entityList.getSelectedId();
+          break;
+        case 'entity_tree_menu':
+          id = this._area && this._area.id ? this._area.id : UI.entityTree.getCurrentId();
+          break;
+        case 'entity_list_new_menu':
+          id = UI.entityList.getCurrentId();
+          break;
+        case 'entity_form_menu':
+          id = UI.entityForm.getCurrentId();
+          break;
+        default:
+          throw new Error();
+      }
+
       var itemData = Identity.dataFromId(id);
       var menuItems = [];
 
@@ -5123,21 +5270,6 @@ UILayout.entityContextMenu = {
 
       var i;
 
-      switch (this.config.id) {
-        case 'entity_list_new_menu':
-          for (i = menuItems.length - 1; i >= 0; i--) {
-            switch (menuItems[i].id) {
-              case 'delete_entity':
-              case 'copy_entity':
-              case 'delete_file':
-              case 'edit':
-                menuItems.splice(i, 1);
-                break;
-            }
-          }
-          break;
-      }
-
       for (i in menuItems) {
         var item = menuItems[i];
         switch (item.id) {
@@ -5183,19 +5315,29 @@ UILayout.entityContextMenu = {
       var entityId;
       switch (this.config.id) {
         case 'entity_list_menu':
+          entityId = UI.entityList.getSelectedId();
+          break;
+        case 'entity_tree_menu':
+          entityId = UI.entityTree.getCurrentId();
+          break;
+        case 'entity_list_new_menu':
+          entityId = UI.entityList.getCurrentId();
+          break;
+        case 'entity_form_menu':
           entityId = UI.entityForm.getCurrentId();
           break;
         default:
-          entityId = UI.entityList.getSelectedId();
-          break;
+          throw new Error();
       }
 
       switch (id) {
+        case 'copy_file':
         case 'copy_entity':
           EntityForm.prototype.clone(entityId);
           break;
         case 'edit':
-          UI.entityForm.startEditing(entityId);
+          $$('entity_list').select(entityId);
+          UI.entityForm.startEditing();
           break;
         case 'delete_root':
         case 'delete_entity':
@@ -5257,6 +5399,9 @@ UILayout.entityContextMenu = {
           break;
         case 'rename_file':
           $$('rename_file_window').show();
+          break;
+        case 'new_generator':
+          $$('add_generator_window').showWithData({entityId: entityId});
           break;
       }
     }
@@ -5450,7 +5595,7 @@ UILayout.entityTree = {
         if (obj.id.indexOf('#') >= 0) {
 
           return common.icon(obj, common) +
-            '<div class="webix_tree_folder_open fa fa-file-o webix_tree_folder_open--file"></div>' +
+            '<div class="webix_tree_folder_open fa fa-file-code-o webix_tree_folder_open--file"></div>' +
             '<span class="webix_tree_item__name webix_tree_item__name--file">' + obj.value + '</span>';
 
         } else if (path === '') { // root
@@ -6439,7 +6584,7 @@ UI = {
     window.addEventListener('message', function(e) {
       if (e.data.message === 'getScripts') {
 
-        Mydataspace.request('entities.getWithMeta', Identity.dataFromId(UI.entityForm.getSelectedId())).then(function (data) {
+        Mydataspace.request('entities.getWithMeta', Identity.dataFromId(UI.entityForm.getCurrentId())).then(function (data) {
           data.fields.sort(function(a, b) {
             if (a.type === 'j' && b.type !== 'j') {
               return 1;
@@ -6524,6 +6669,7 @@ UI = {
     webix.ui(UILayout.windows.addVersion);
     webix.ui(UILayout.windows.addWebsite);
     webix.ui(UILayout.windows.showMedia);
+    webix.ui(UILayout.windows.addGenerator);
 
     webix.ui(MDSCommon.extend(UILayout.entityContextMenu, { id: 'entity_list_menu' }));
     webix.ui(MDSCommon.extend(UILayout.entityContextMenu, { id: 'entity_tree_menu' }));
