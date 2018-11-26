@@ -1112,13 +1112,17 @@ UIControls = {
 			'<div class="entity_form__field_label_ellipse"></div>';
 	},
 
-  getRootFieldSelectTemplate: function(name, value, values, fixed) {
+  getRootFieldSelectTemplate: function(name, value, values, isFixed, icons) {
+    if (!icons) {
+      icons = {};
+    }
+
 		var options = [];
 		for (var id in values) {
-			options.push({ id: id, value: values[id] });
+			options.push({ id: id, value: values[id], icon: icons[id] });
 		}
 		return {
-			view: fixed ? 'richselect' : 'combo',
+			view: isFixed ? 'richselect' : 'combo',
 			label: STRINGS.ROOT_FIELDS[name],
 			labelWidth: UIHelper.LABEL_WIDTH,
 			name: 'fields.' + name + '.value',
@@ -1174,14 +1178,22 @@ UIControls = {
     };
   },
 
-	getRootFieldView: function(type, data, values) {
+  /**
+   *
+   * @param type Type of field: text, textarea, select, etc
+   * @param data Current field data
+   * @param [values] Available field values. Required for select and list fields.
+   * @param [icons] Icons of available field values. Required for select and list fields.
+   * @returns {{id: string, css: string, cols: *[]}}
+   */
+	getRootFieldView: function(type, data, values, icons) {
   	var valueView;
   	switch (type) {
       case 'list':
-        valueView = UIControls.getRootFieldSelectTemplate(data.name, data.value, values, true);
+        valueView = UIControls.getRootFieldSelectTemplate(data.name, data.value, values, true, icons);
         break;
 			case 'select':
-        valueView = UIControls.getRootFieldSelectTemplate(data.name, data.value, values);
+        valueView = UIControls.getRootFieldSelectTemplate(data.name, data.value, values, false, icons);
 				break;
 			case 'text':
 				valueView = UIControls.getRootFieldTextTemplate(data.name, data.value);
@@ -2311,19 +2323,19 @@ EntityForm.prototype.addRootField = function(data) {
 				]
 			});
 			break;
-    case 'datasource':
-      var datasourceInitialOptions = {};
-      if (MDSCommon.isPresent(data.value)) {
-        datasourceInitialOptions[data.value] = data.value;
-      }
-      $$('entity_form').addView(UIControls.getRootFieldView('select', data, datasourceInitialOptions));
-      UIHelper.loadDatasourcesToCombo('entity_form__' + data.name + '_value');
-      break;
+    // case 'datasource':
+    //   var datasourceInitialOptions = {};
+    //   if (MDSCommon.isPresent(data.value)) {
+    //     datasourceInitialOptions[data.value] = data.value;
+    //   }
+    //   $$('entity_form').addView(UIControls.getRootFieldView('select', data, datasourceInitialOptions));
+    //   UIHelper.loadDatasourcesToCombo('entity_form__' + data.name + '_value');
+    //   break;
     case 'license':
       $$('entity_form').addView(UIControls.getRootFieldView('list', data, STRINGS.licenses));
       break;
 		case 'category':
-			$$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.categories));
+			$$('entity_form').addView(UIControls.getRootFieldView('list', data, STRINGS.categories, CATEGORY_ICONS));
 			break;
 		case 'language':
 			$$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.languages));
@@ -4721,9 +4733,12 @@ UILayout.windows.addGenerator = {
         var formData = form.getValues();
         var data = Identity.dataFromId(window.getShowData().entityId || UI.entityList.getCurrentId());
         data.path += '/' + formData.name;
-        data.fields = [];
-        data.othersCan = 'view_children';
-        Mydataspace.request('entities.create', data, function() {
+        data.fields = [
+          { name: 'dataFolder', value: formData.dataFolder },
+          { name: 'cacheFolder', value: formData.cacheFolder }
+        ];
+
+        Mydataspace.entities.create(data).then(function() {
           window.hide();
           UIControls.removeSpinnerFromWindow('add_generator_window');
         }, function(err) {
@@ -4760,7 +4775,13 @@ UILayout.windows.addGenerator = {
         labelWidth: UIHelper.LABEL_WIDTH
       },
       UIControls.getSubmitCancelForFormWindow('add_generator')
-    ]
+    ],
+
+    rules: {
+      name: function(value) {
+        return /^[\w-]+$/.test(value);
+      }
+    }
   }
 };
 

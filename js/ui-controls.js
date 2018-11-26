@@ -63,13 +63,17 @@ UIControls = {
 			'<div class="entity_form__field_label_ellipse"></div>';
 	},
 
-  getRootFieldSelectTemplate: function(name, value, values, fixed) {
+  getRootFieldSelectTemplate: function(name, value, values, isFixed, icons) {
+    if (!icons) {
+      icons = {};
+    }
+
 		var options = [];
 		for (var id in values) {
-			options.push({ id: id, value: values[id] });
+			options.push({ id: id, value: values[id], icon: icons[id] });
 		}
 		return {
-			view: fixed ? 'richselect' : 'combo',
+			view: isFixed ? 'richselect' : 'combo',
 			label: STRINGS.ROOT_FIELDS[name],
 			labelWidth: UIHelper.LABEL_WIDTH,
 			name: 'fields.' + name + '.value',
@@ -125,14 +129,22 @@ UIControls = {
     };
   },
 
-	getRootFieldView: function(type, data, values) {
+  /**
+   *
+   * @param type Type of field: text, textarea, select, etc
+   * @param data Current field data
+   * @param [values] Available field values. Required for select and list fields.
+   * @param [icons] Icons of available field values. Required for select and list fields.
+   * @returns {{id: string, css: string, cols: *[]}}
+   */
+	getRootFieldView: function(type, data, values, icons) {
   	var valueView;
   	switch (type) {
       case 'list':
-        valueView = UIControls.getRootFieldSelectTemplate(data.name, data.value, values, true);
+        valueView = UIControls.getRootFieldSelectTemplate(data.name, data.value, values, true, icons);
         break;
 			case 'select':
-        valueView = UIControls.getRootFieldSelectTemplate(data.name, data.value, values);
+        valueView = UIControls.getRootFieldSelectTemplate(data.name, data.value, values, false, icons);
 				break;
 			case 'text':
 				valueView = UIControls.getRootFieldTextTemplate(data.name, data.value);

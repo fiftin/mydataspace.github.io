@@ -952,19 +952,19 @@ EntityForm.prototype.addRootField = function(data) {
 				]
 			});
 			break;
-    case 'datasource':
-      var datasourceInitialOptions = {};
-      if (MDSCommon.isPresent(data.value)) {
-        datasourceInitialOptions[data.value] = data.value;
-      }
-      $$('entity_form').addView(UIControls.getRootFieldView('select', data, datasourceInitialOptions));
-      UIHelper.loadDatasourcesToCombo('entity_form__' + data.name + '_value');
-      break;
+    // case 'datasource':
+    //   var datasourceInitialOptions = {};
+    //   if (MDSCommon.isPresent(data.value)) {
+    //     datasourceInitialOptions[data.value] = data.value;
+    //   }
+    //   $$('entity_form').addView(UIControls.getRootFieldView('select', data, datasourceInitialOptions));
+    //   UIHelper.loadDatasourcesToCombo('entity_form__' + data.name + '_value');
+    //   break;
     case 'license':
       $$('entity_form').addView(UIControls.getRootFieldView('list', data, STRINGS.licenses));
       break;
 		case 'category':
-			$$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.categories));
+			$$('entity_form').addView(UIControls.getRootFieldView('list', data, STRINGS.categories, CATEGORY_ICONS));
 			break;
 		case 'language':
 			$$('entity_form').addView(UIControls.getRootFieldView('select', data, STRINGS.languages));

@@ -23,9 +23,12 @@ UILayout.windows.addGenerator = {
         var formData = form.getValues();
         var data = Identity.dataFromId(window.getShowData().entityId || UI.entityList.getCurrentId());
         data.path += '/' + formData.name;
-        data.fields = [];
-        data.othersCan = 'view_children';
-        Mydataspace.request('entities.create', data, function() {
+        data.fields = [
+          { name: 'dataFolder', value: formData.dataFolder },
+          { name: 'cacheFolder', value: formData.cacheFolder }
+        ];
+
+        Mydataspace.entities.create(data).then(function() {
           window.hide();
           UIControls.removeSpinnerFromWindow('add_generator_window');
         }, function(err) {
@@ -62,6 +65,12 @@ UILayout.windows.addGenerator = {
         labelWidth: UIHelper.LABEL_WIDTH
       },
       UIControls.getSubmitCancelForFormWindow('add_generator')
-    ]
+    ],
+
+    rules: {
+      name: function(value) {
+        return /^[\w-]+$/.test(value);
+      }
+    }
   }
 };
