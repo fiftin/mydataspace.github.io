@@ -239,7 +239,7 @@ EntityForm.prototype.setRootView = function(data) {
     }
     document.getElementById('view__overview_image').src = ava || '/images/icons/root.svg';
 
-    this.setViewTitle(MDSCommon.findValueByName(data.fields, 'name') || MDSCommon.getEntityName(data.root));
+    self.setViewTitle(MDSCommon.findValueByName(data.fields, 'name') || MDSCommon.getEntityName(data.root));
 
     UIHelper.setInnerContentOrRemove('view__tags', tags, 'html');
 
@@ -324,6 +324,7 @@ EntityForm.prototype.setScriptEditValue = function (value) {
 };
 
 EntityForm.prototype.setTaskView = function(data) {
+  var self = this;
   var language = (getCurrentLanguage() || 'en').toLowerCase();
   var languagePrefix = language === 'en' ? '' : '/' + language;
 
@@ -336,7 +337,7 @@ EntityForm.prototype.setTaskView = function(data) {
                              data.numberOfChildren === 0,
                              false);
 
-    this.setViewTitle(MDSCommon.getEntityName(data.path));
+    self.setViewTitle(MDSCommon.getEntityName(data.path));
 
     var viewFields =
         this.setViewFields(data,
@@ -459,7 +460,7 @@ EntityForm.prototype.setEntityView = function(data) {
                                false);
     }
 
-    this.setViewTitle(MDSCommon.getEntityName(data.path));
+    self.setViewTitle(MDSCommon.getEntityName(data.path));
 
     var viewFields = self.setViewFields(data);
     $(viewFields).on('click', '.view__field', function() {
