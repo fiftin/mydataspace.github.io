@@ -20,7 +20,7 @@ UILayout.windows.addEntity = {
           }
 
           var formData = form.getValues();
-          var destFolderId = window.getShowData().destFolderId || UI.entityList.getCurrentId();
+          var destFolderId = window.getShowData().entityId || UI.entityList.getCurrentId();
           var newEntityId = Identity.childId(destFolderId, formData.name);
           var data = Identity.dataFromId(newEntityId);
 

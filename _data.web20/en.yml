@@ -135,6 +135,7 @@ sections:
           <div><img class="feature__details-icon" src="/images/icons/websocket-white.svg" /> Websocket</div>
           <div><img class="feature__details-icon" src="/images/icons/elasticsearch-white.svg" /> ElasticSearch</div>
           <div><img class="feature__details-icon" src="/images/icons/rabbitmq-white.svg" /> RabbitMQ</div>
+          <div><img class="feature__details-icon" src="/images/icons/redis-white.svg" /> Redis.js</div>
       - id: scalability
         icon:  arrows-alt
         title: Scalable Architecture

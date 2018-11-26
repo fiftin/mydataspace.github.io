@@ -485,8 +485,11 @@ UILayout.entityTreeMenu = {
       }
 
       switch (id) {
+        case 'copy_entity':
+          EntityForm.prototype.clone(entityId);
+          break;
         case 'edit':
-          UI.entityForm.startEditing();
+          UI.entityForm.startEditing(entityId);
           break;
         case 'delete_root':
         case 'delete_entity':
@@ -497,32 +500,31 @@ UILayout.entityTreeMenu = {
             cancel: STRINGS.NO,
             callback: function(result) {
               if (result) {
-                UI.entityForm.delete();
+                UI.entityForm.delete(entityId);
               }
             }
           });
           break;
         case 'new_entity':
-          var window = $$('add_entity_window');
-          window.showWithData({ destFolderId: entityId });
+          $$('add_entity_window').showWithData({ entityId: entityId });
           break;
         case 'new_resource':
-          $$('add_resource_window').show();
+          $$('add_resource_window').showWithData({ entityId: entityId });
           break;
         case 'new_task':
-          $$('add_task_window').show();
+          $$('add_task_window').showWithData({ entityId: entityId });
           break;
         case 'new_proto':
-          $$('add_proto_window').show();
+          $$('add_proto_window').showWithData({ entityId: entityId });
           break;
         case 'new_pug':
-          $$('add_file_window').showWithData({ fileType: 'pug' });
+          $$('add_file_window').showWithData({ entityId: entityId, fileType: 'pug' });
           break;
         case 'new_scss':
-          $$('add_file_window').showWithData({ fileType: 'scss' });
+          $$('add_file_window').showWithData({ entityId: entityId, fileType: 'scss' });
           break;
         case 'new_file':
-          $$('add_file_window').show();
+          $$('add_file_window').showWithData({ entityId: entityId });
           break;
         case 'delete_file':
           webix.confirm({

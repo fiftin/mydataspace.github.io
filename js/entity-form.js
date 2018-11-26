@@ -652,11 +652,11 @@ EntityForm.prototype.export = function () {
   Mydataspace.request('entities.export', Identity.dataFromId(this.currentId));
 };
 
-EntityForm.prototype.clone = function() {
-  $$('clone_entity_window').show();
+EntityForm.prototype.clone = function(entityId) {
+  $$('clone_entity_window').showWithData({ entityId: entityId });
 };
 
-EntityForm.prototype.askDelete = function() {
+EntityForm.prototype.askDelete = function(entityId) {
   webix.confirm({
     title: STRINGS.DELETE_ENTITY,
     text: STRINGS.REALLY_DELETE,
@@ -664,22 +664,25 @@ EntityForm.prototype.askDelete = function() {
     cancel: STRINGS.NO,
     callback: function(result) {
       if (result) {
-        UI.entityForm.delete();
+        UI.entityForm.delete(entityId);
       }
     }
   });
 };
 
-EntityForm.prototype.delete = function() {
+EntityForm.prototype.delete = function(entityId) {
+  if (entityId == null) {
+    entityId = this.currentId;
+  }
   if (this.currentId == null) {
     return;
   }
 
   $$('entity_form').disable();
-  UI.deleteEntity(this.currentId);
-  Mydataspace.request('entities.delete', Identity.dataFromId(this.currentId), function(data) {
+  UI.deleteEntity(entityId);
+  Mydataspace.request('entities.delete', Identity.dataFromId(entityId), function(data) {
     // do nothing because selected item already deleted.
-    this.selectedId = null;
+    // this.selectedId = null;
   }, function(err) {
     UI.error(err);
     $$('entity_form').enable();

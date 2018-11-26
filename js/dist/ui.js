@@ -2011,11 +2011,11 @@ EntityForm.prototype.export = function () {
   Mydataspace.request('entities.export', Identity.dataFromId(this.currentId));
 };
 
-EntityForm.prototype.clone = function() {
-  $$('clone_entity_window').show();
+EntityForm.prototype.clone = function(entityId) {
+  $$('clone_entity_window').showWithData({ entityId: entityId });
 };
 
-EntityForm.prototype.askDelete = function() {
+EntityForm.prototype.askDelete = function(entityId) {
   webix.confirm({
     title: STRINGS.DELETE_ENTITY,
     text: STRINGS.REALLY_DELETE,
@@ -2023,22 +2023,25 @@ EntityForm.prototype.askDelete = function() {
     cancel: STRINGS.NO,
     callback: function(result) {
       if (result) {
-        UI.entityForm.delete();
+        UI.entityForm.delete(entityId);
       }
     }
   });
 };
 
-EntityForm.prototype.delete = function() {
+EntityForm.prototype.delete = function(entityId) {
+  if (entityId == null) {
+    entityId = this.currentId;
+  }
   if (this.currentId == null) {
     return;
   }
 
   $$('entity_form').disable();
-  UI.deleteEntity(this.currentId);
-  Mydataspace.request('entities.delete', Identity.dataFromId(this.currentId), function(data) {
+  UI.deleteEntity(entityId);
+  Mydataspace.request('entities.delete', Identity.dataFromId(entityId), function(data) {
     // do nothing because selected item already deleted.
-    this.selectedId = null;
+    // this.selectedId = null;
   }, function(err) {
     UI.error(err);
     $$('entity_form').enable();
@@ -3752,7 +3755,7 @@ UILayout.windows.addEntity = {
           }
 
           var formData = form.getValues();
-          var destFolderId = window.getShowData().destFolderId || UI.entityList.getCurrentId();
+          var destFolderId = window.getShowData().entityId || UI.entityList.getCurrentId();
           var newEntityId = Identity.childId(destFolderId, formData.name);
           var data = Identity.dataFromId(newEntityId);
 
@@ -5542,8 +5545,11 @@ UILayout.entityTreeMenu = {
       }
 
       switch (id) {
+        case 'copy_entity':
+          EntityForm.prototype.clone(entityId);
+          break;
         case 'edit':
-          UI.entityForm.startEditing();
+          UI.entityForm.startEditing(entityId);
           break;
         case 'delete_root':
         case 'delete_entity':
@@ -5554,32 +5560,31 @@ UILayout.entityTreeMenu = {
             cancel: STRINGS.NO,
             callback: function(result) {
               if (result) {
-                UI.entityForm.delete();
+                UI.entityForm.delete(entityId);
               }
             }
           });
           break;
         case 'new_entity':
-          var window = $$('add_entity_window');
-          window.showWithData({ destFolderId: entityId });
+          $$('add_entity_window').showWithData({ entityId: entityId });
           break;
         case 'new_resource':
-          $$('add_resource_window').show();
+          $$('add_resource_window').showWithData({ entityId: entityId });
           break;
         case 'new_task':
-          $$('add_task_window').show();
+          $$('add_task_window').showWithData({ entityId: entityId });
           break;
         case 'new_proto':
-          $$('add_proto_window').show();
+          $$('add_proto_window').showWithData({ entityId: entityId });
           break;
         case 'new_pug':
-          $$('add_file_window').showWithData({ fileType: 'pug' });
+          $$('add_file_window').showWithData({ entityId: entityId, fileType: 'pug' });
           break;
         case 'new_scss':
-          $$('add_file_window').showWithData({ fileType: 'scss' });
+          $$('add_file_window').showWithData({ entityId: entityId, fileType: 'scss' });
           break;
         case 'new_file':
-          $$('add_file_window').show();
+          $$('add_file_window').showWithData({ entityId: entityId });
           break;
         case 'delete_file':
           webix.confirm({
@@ -5634,7 +5639,7 @@ UILayout.entityList =
           css: 'entity_list__search',
           align: 'center',
           icon: 'search',
-          width: 200,
+          width: 300,
           placeholder: STRINGS.SEARCH_BY_ENTITIES,
           on: {
             onTimedKeyPress: function(code, e) {
@@ -5646,13 +5651,13 @@ UILayout.entityList =
             }
           }
         },
-        { view: 'button',
-          type: 'icon',
-          icon: 'refresh',
-          id: 'REFRESH_ENTITY_LABEL_1', label: STRINGS.REFRESH_ENTITY,
-          width: 30,
-          click: function() { UI.entityList.refresh(); }
-        },
+        // { view: 'button',
+        //   type: 'icon',
+        //   icon: 'refresh',
+        //   id: 'REFRESH_ENTITY_LABEL_1', label: STRINGS.REFRESH_ENTITY,
+        //   width: 30,
+        //   click: function() { UI.entityList.refresh(); }
+        // },
       ]
     },
     { view: 'template',

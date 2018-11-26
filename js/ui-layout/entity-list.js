@@ -21,7 +21,7 @@ UILayout.entityList =
           css: 'entity_list__search',
           align: 'center',
           icon: 'search',
-          width: 200,
+          width: 300,
           placeholder: STRINGS.SEARCH_BY_ENTITIES,
           on: {
             onTimedKeyPress: function(code, e) {
@@ -33,13 +33,13 @@ UILayout.entityList =
             }
           }
         },
-        { view: 'button',
-          type: 'icon',
-          icon: 'refresh',
-          id: 'REFRESH_ENTITY_LABEL_1', label: STRINGS.REFRESH_ENTITY,
-          width: 30,
-          click: function() { UI.entityList.refresh(); }
-        },
+        // { view: 'button',
+        //   type: 'icon',
+        //   icon: 'refresh',
+        //   id: 'REFRESH_ENTITY_LABEL_1', label: STRINGS.REFRESH_ENTITY,
+        //   width: 30,
+        //   click: function() { UI.entityList.refresh(); }
+        // },
       ]
     },
     { view: 'template',
