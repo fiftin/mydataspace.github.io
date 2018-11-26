@@ -15,7 +15,7 @@ UILayout.windows.addGenerator = {
         var window = $$('add_generator_window');
         var form = this;
 
-        if (!form.validate()) {
+        if (!form.validate({ disabled: true })) {
           UIControls.removeSpinnerFromWindow('add_generator_window');
           return;
         }
@@ -51,14 +51,12 @@ UILayout.windows.addGenerator = {
         labelWidth: UIHelper.LABEL_WIDTH
       },
       { view: 'text',
-        required: true,
         id: 'ADD_GENERATOR_SRC_LABEL',
         name: 'dataFolder',
         label: STRINGS.ADD_GENERATOR_SRC,
         labelWidth: UIHelper.LABEL_WIDTH
       },
       { view: 'text',
-        required: true,
         id: 'ADD_GENERATOR_DEST_LABEL',
         name: 'cacheFolder',
         label: STRINGS.ADD_GENERATOR_DEST,
@@ -70,6 +68,14 @@ UILayout.windows.addGenerator = {
     rules: {
       name: function(value) {
         return /^[\w-]+$/.test(value);
+      },
+
+      dataFolder: function(value) {
+        return /^(([\w-]+)(\/[\w-]+)*)?$/.test(value);
+      },
+
+      cacheFolder: function(value) {
+        return /^(([\w-]+)(\/[\w-]+)*)?$/.test(value);
       }
     }
   }

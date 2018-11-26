@@ -1575,6 +1575,13 @@ EntityForm.prototype.startEditing = function () {
   //});
 };
 
+EntityForm.prototype.setViewTitle = function (title) {
+  var viewTitle = document.getElementById('view__title');
+  viewTitle.innerText = title;
+  viewTitle.innerHTML += '<i style="margin-left: 5px;" class="fa fa-caret-down"></i>';
+  viewTitle.addEventListener('click', function () { $$('entity_form_menu').show(this) });
+};
+
 EntityForm.prototype.setRootView = function(data) {
   var self = this;
   var language = (getCurrentLanguage() || 'en').toLowerCase();
@@ -1597,23 +1604,13 @@ EntityForm.prototype.setRootView = function(data) {
 
     view.innerHTML = html;
 
-
-    // document.getElementById('view_overview').addEventListener('contextmenu', function(e) {
-    //   var pos = $(this).offset();
-    //   $$('entity_form_menu').show(this, { x: e.pageX - pos.left, y: pos.top - e.pageY });
-    //   e.preventDefault();
-    // }, false);
-
-
     var ava = MDSCommon.findValueByName(data.fields, 'avatar');
     if (MDSCommon.isPresent(ava)) {
       ava = Mydataspace.options.cdnURL + '/avatars/sm/' + ava + '.png';
     }
     document.getElementById('view__overview_image').src = ava || '/images/icons/root.svg';
-    var viewTitle = document.getElementById('view__title');
-    viewTitle.innerText = MDSCommon.findValueByName(data.fields, 'name') || MDSCommon.getEntityName(data.root);
-    viewTitle.innerHTML += '<i style="margin-left: 5px;" class="fa fa-caret-down"></i>';
-    viewTitle.addEventListener('click', function () { $$('entity_form_menu').show(this) });
+
+    this.setViewTitle(MDSCommon.findValueByName(data.fields, 'name') || MDSCommon.getEntityName(data.root));
 
     UIHelper.setInnerContentOrRemove('view__tags', tags, 'html');
 
@@ -1709,18 +1706,12 @@ EntityForm.prototype.setTaskView = function(data) {
       UIHelper.getIconByPath(data.path,
                              data.numberOfChildren === 0,
                              false);
-    document.getElementById('view__title').innerText =
-      MDSCommon.getPathName(data.path);
 
-    var description = data.fields.filter(function(x) { return x.name === 'description'; })[0];
-    if (description != null) {
-      $('#view__description').text(description.value);
-    } else {
-      $('#view__description').remove();
-    }
+    this.setViewTitle(MDSCommon.getEntityName(data.path));
+
     var viewFields =
         this.setViewFields(data,
-                           ['status', 'statusText', 'interval', 'description'],
+                           ['status', 'statusText', 'interval'],
                            description == null,
                            function(x, y) {
                              if (x.name === 'main.js') {
@@ -1838,22 +1829,10 @@ EntityForm.prototype.setEntityView = function(data) {
                                data.numberOfChildren === 0,
                                false);
     }
-    document.getElementById('view__title').innerText = MDSCommon.getPathName(data.path);
 
-    var viewFields;
-    if (entityType === 'proto') {
-      $('#view__description').remove();
-      viewFields = self.setViewFields(data);
-    } else {
-      var description = data.fields.filter(function(x) { return x.name === 'description'; })[0];
-      if (description != null) {
-        $('#view__description').text(description.value);
-      } else {
-        $('#view__description').remove();
-      }
-      viewFields = self.setViewFields(data, ['description'], description == null);
-    }
+    this.setViewTitle(MDSCommon.getEntityName(data.path));
 
+    var viewFields = self.setViewFields(data);
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
       var value = $(self).data('value');
@@ -4725,7 +4704,7 @@ UILayout.windows.addGenerator = {
         var window = $$('add_generator_window');
         var form = this;
 
-        if (!form.validate()) {
+        if (!form.validate({ disabled: true })) {
           UIControls.removeSpinnerFromWindow('add_generator_window');
           return;
         }
@@ -4761,14 +4740,12 @@ UILayout.windows.addGenerator = {
         labelWidth: UIHelper.LABEL_WIDTH
       },
       { view: 'text',
-        required: true,
         id: 'ADD_GENERATOR_SRC_LABEL',
         name: 'dataFolder',
         label: STRINGS.ADD_GENERATOR_SRC,
         labelWidth: UIHelper.LABEL_WIDTH
       },
       { view: 'text',
-        required: true,
         id: 'ADD_GENERATOR_DEST_LABEL',
         name: 'cacheFolder',
         label: STRINGS.ADD_GENERATOR_DEST,
@@ -4780,6 +4757,14 @@ UILayout.windows.addGenerator = {
     rules: {
       name: function(value) {
         return /^[\w-]+$/.test(value);
+      },
+
+      dataFolder: function(value) {
+        return /^(([\w-]+)(\/[\w-]+)*)?$/.test(value);
+      },
+
+      cacheFolder: function(value) {
+        return /^(([\w-]+)(\/[\w-]+)*)?$/.test(value);
       }
     }
   }
