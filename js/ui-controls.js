@@ -38,12 +38,13 @@ UIControls = {
     };
   },
 
-  getEntityTypeSelectTemplate: function() {
+  getEntityTypeSelectTemplate: function(id) {
     return {
       view: 'richselect',
       label: STRINGS.OTHERS_CAN,
       name: 'othersCan',
       value: 'view_children',
+      id: id,
       options: [
         // { id: 'nothing', value: STRINGS.NOTHING },
         { id: 'view_children', value: STRINGS.ONLY_READ },
@@ -205,13 +206,16 @@ UIControls = {
     head.appendChild(spinner);
   },
 
-  removeSpinnerFromWindow: function(windowId) {
-    var head = $$(windowId).getNode().querySelector('.webix_win_head > .webix_view > .webix_template');
+  removeSpinnerFromWindow: function(window) {
+    if (typeof window === 'string') {
+      window = $$(window);
+    }
+    var head = window.getNode().querySelector('.webix_win_head > .webix_view > .webix_template');
     var spinners = head.getElementsByClassName('webix_win_head_spinner');
     if (spinners.length !== 0) {
       head.removeChild(spinners[0]);
     }
-    $$(windowId.replace(/_window$/, '_form')).enable();
+    $$(window.config.id.replace(/_window$/, '_form')).enable();
   },
 
   getSubmitCancelForFormWindow: function(id, isLongExecutable) {
@@ -223,6 +227,9 @@ UIControls = {
     var createButtonTitle;
 
     switch (id) {
+      case 'clone_entity':
+        createButtonTitle = STRINGS.COPY;
+        break;
       case 'rename_file':
         createButtonTitle = STRINGS.RENAME;
         break;

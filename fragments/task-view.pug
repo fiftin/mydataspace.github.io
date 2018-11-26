@@ -1,0 +1,23 @@
+.view__overview
+	.view__overview_image_wrap
+		.view__overview_icon#view__overview_icon
+	.view__info
+		.view__title#view__title
+		.view__overview-actions#view_overview_actions
+			button.view__overview-button(onclick="UI.entityForm.askDelete();")
+				i.fa.fa-times
+			button.view__overview-button(onclick="UI.entityForm.startEditing();")
+				i.fa.fa-edit
+.view__status#view__status Never runned
+.view__checks
+	.view__check-wrap
+		.view__check#view__interval_minutely Minutely
+	.view__check-wrap
+		.view__check#view__interval_hourly Hourly
+	.view__check-wrap
+		.view__check#view__interval_daily Daily
+	.view__check-wrap
+		.view__check#view__interval_weekly Weekly
+	.view__check-wrap
+		.view__check.view__check--fail#view__interval_paused Paused
+.view__fields#view__fields

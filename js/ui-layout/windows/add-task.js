@@ -13,26 +13,25 @@ UILayout.windows.addTask = {
       on: {
         onSubmit: function() {
           var window = $$('add_task_window');
+          var form = this;
           if (!$$('add_task_form').validate({ disabled: true })) {
-
             UIControls.removeSpinnerFromWindow('add_task_window');
             return;
           }
 
-          var formData = $$('add_task_form').getValues();
-
-          var newEntityId = Identity.childId(Identity.rootId(window.getShowData().entityId || UI.entityList.getCurrentId()), 'tasks/' + formData.name);
+          var formData = form.getValues();
+          var newEntityId = Identity.childId(Identity.rootId(window.getShowData().entityId || UI.entityList.getCurrentId()), 'website/tasks/' + formData.name);
           var data = Identity.dataFromId(newEntityId);
           data.fields = [];
           data.othersCan = formData.othersCan;
-          Mydataspace.request('entities.create', data, function() {
-            $$('add_task_window').hide();
+          Mydataspace.entities.create(data).then(function() {
+            window.hide();
             UIControls.removeSpinnerFromWindow('add_task_window');
           }, function(err) {
             UIControls.removeSpinnerFromWindow('add_task_window');
             if (err.name === 'SequelizeUniqueConstraintError') {
-              $$('add_task_form').elements.name.define('invalidMessage', 'Name already exists');
-              $$('add_task_form').markInvalid('name', true);
+              form.elements.name.define('invalidMessage', 'Name already exists');
+              form.markInvalid('name', true);
             } else {
               UI.error(err);
             }

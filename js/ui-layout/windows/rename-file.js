@@ -20,7 +20,7 @@ UILayout.windows.renameFile = {
     on: {
 
       onSubmit: function() {
-        var form = $$('rename_file_form');
+        var form = this;
         if (!form.validate({ disabled: true })) {
           UIControls.removeSpinnerFromWindow('rename_file_window');
           form.focus('name');

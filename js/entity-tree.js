@@ -32,6 +32,10 @@ EntityTree.prototype.getCurrentId = function() {
   return this.currentId;
 };
 
+EntityTree.prototype.getSelectedId = function() {
+  return $$('entity_tree').getSelectedId();
+};
+
 
 EntityTree.prototype.setCurrentId = function(id) {
   if (this.currentId != null) {

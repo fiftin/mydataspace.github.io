@@ -342,7 +342,7 @@ EntityForm.prototype.setTaskView = function(data) {
     var viewFields =
         this.setViewFields(data,
                            ['status', 'statusText', 'interval'],
-                           description == null,
+                           false,
                            function(x, y) {
                              if (x.name === 'main.js') {
                                  return 1;

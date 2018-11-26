@@ -1087,12 +1087,13 @@ UIControls = {
     };
   },
 
-  getEntityTypeSelectTemplate: function() {
+  getEntityTypeSelectTemplate: function(id) {
     return {
       view: 'richselect',
       label: STRINGS.OTHERS_CAN,
       name: 'othersCan',
       value: 'view_children',
+      id: id,
       options: [
         // { id: 'nothing', value: STRINGS.NOTHING },
         { id: 'view_children', value: STRINGS.ONLY_READ },
@@ -1254,13 +1255,16 @@ UIControls = {
     head.appendChild(spinner);
   },
 
-  removeSpinnerFromWindow: function(windowId) {
-    var head = $$(windowId).getNode().querySelector('.webix_win_head > .webix_view > .webix_template');
+  removeSpinnerFromWindow: function(window) {
+    if (typeof window === 'string') {
+      window = $$(window);
+    }
+    var head = window.getNode().querySelector('.webix_win_head > .webix_view > .webix_template');
     var spinners = head.getElementsByClassName('webix_win_head_spinner');
     if (spinners.length !== 0) {
       head.removeChild(spinners[0]);
     }
-    $$(windowId.replace(/_window$/, '_form')).enable();
+    $$(window.config.id.replace(/_window$/, '_form')).enable();
   },
 
   getSubmitCancelForFormWindow: function(id, isLongExecutable) {
@@ -1272,6 +1276,9 @@ UIControls = {
     var createButtonTitle;
 
     switch (id) {
+      case 'clone_entity':
+        createButtonTitle = STRINGS.COPY;
+        break;
       case 'rename_file':
         createButtonTitle = STRINGS.RENAME;
         break;
@@ -1713,7 +1720,7 @@ EntityForm.prototype.setTaskView = function(data) {
     var viewFields =
         this.setViewFields(data,
                            ['status', 'statusText', 'interval'],
-                           description == null,
+                           false,
                            function(x, y) {
                              if (x.name === 'main.js') {
                                  return 1;
@@ -2659,19 +2666,12 @@ EntityList.prototype.getCurrentId = function() {
 };
 
 
-/**
- * Set item selected in list.
- */
-EntityList.prototype.setSelectedId = function(id) {
-  this.selectedId = id;
-};
-
 
 /**
  * Get item selected in list.
  */
 EntityList.prototype.getSelectedId = function() {
-  return this.selectedId;
+  return $$('entity_list').getSelectedId();
 };
 
 
@@ -2855,6 +2855,10 @@ EntityTree.prototype.setReadOnly = function(isReadOnly) {
 
 EntityTree.prototype.getCurrentId = function() {
   return this.currentId;
+};
+
+EntityTree.prototype.getSelectedId = function() {
+  return $$('entity_tree').getSelectedId();
 };
 
 
@@ -3796,7 +3800,66 @@ UILayout.windows.cloneEntity = {
     position: 'center',
     modal: true,
     head: STRINGS.CLONE_ENTITY,
-    on: UIControls.getOnForFormWindow('add_entity'),
+    on: UIControls.getOnForFormWindow('clone_entity', {
+      onShow: function () {
+        var entityId = this.getShowData().entityId;
+        var data = Identity.dataFromId(entityId);
+        if (Identity.isFileId(entityId)) {
+          $$('NAME_LABEL_11').setValue(Identity.getFileNameFromId(entityId));
+          $$('clone_entity_others_can').hide();
+          $$('NAME_LABEL_11').show();
+        } else {
+          $$('clone_entity_others_can').show();
+          $$('NAME_LABEL_11').hide();
+        }
+
+        var path = data.path.match(/^((website\/[\w-]+)|([\w-]+))/);
+        if (!path) {
+          return;
+        }
+        path = path[1];
+        var options;
+        switch (path) {
+          case 'website/tasks':
+            options = [
+              { id: 'website/tasks', value: 'tasks', icon: UIConstants.ENTITY_ICONS['tasks'] }
+            ];
+            break;
+          case 'website/scss':
+            options = [
+              { id: 'website/scss', value: 'scss', icon: UIConstants.ENTITY_ICONS['scss'] },
+              { id: 'website/public_html', value: 'public_html', icon: UIConstants.ENTITY_ICONS['public_html'] },
+              { id: 'website/includes', value: 'includes', icon: UIConstants.ENTITY_ICONS['includes'] },
+              { id: 'website/generators', value: 'generators', icon: UIConstants.ENTITY_ICONS['generators'] }
+            ];
+            break;
+          case 'website/generators':
+          case 'website/includes':
+          case 'website/public_html':
+            options = [
+              { id: 'website/public_html', value: 'public_html', icon: UIConstants.ENTITY_ICONS['public_html'] },
+              { id: 'website/includes', value: 'includes', icon: UIConstants.ENTITY_ICONS['includes'] },
+              { id: 'website/generators', value: 'generators', icon: UIConstants.ENTITY_ICONS['generators'] }
+            ];
+            break;
+          case 'protos':
+          case 'data':
+            options = [
+              { id: 'data', value: 'data', icon: UIConstants.ENTITY_ICONS['data'] },
+              { id: 'protos', value: 'protos', icon: UIConstants.ENTITY_ICONS['protos'] }
+            ];
+            break;
+          default:
+            options = [
+            ];
+            break;
+        }
+
+        $$('CLONE_ENTITY_LOCATION_LABEL').setValue(path);
+        $$('CLONE_ENTITY_LOCATION_LABEL').define('options', options);
+        $$('CLONE_ENTITY_LOCATION_LABEL').refresh();
+      }
+    }, 'path'),
     body: {
       view: 'form',
       id: 'clone_entity_form',
@@ -3804,35 +3867,76 @@ UILayout.windows.cloneEntity = {
       on: {
         onSubmit: function() {
           var window = $$('clone_entity_window');
-          if (!$$('clone_entity_form').validate({ disabled: true })) {
-            UIControls.removeSpinnerFromWindow('clone_entity_window');
+          var form = this;
+          if (!form.validate({ disabled: true })) {
+            UIControls.removeSpinnerFromWindow(window);
             return;
           }
-          var formData = $$('clone_entity_form').getValues();
-          var selectedData = Identity.dataFromId(window.getShowData().entityId || UI.entityList.getCurrentId());
-          var data = MDSCommon.extend(formData, {
-            root: selectedData.root,
-            fields: [],
-            sourceRoot: selectedData.root,
-            sourcePath: selectedData.path,
-            sourceVersion: selectedData.version
-          });
 
-          Mydataspace.request('entities.create', data, function() {
-            $$('clone_entity_window').hide();
-            UIControls.removeSpinnerFromWindow('clone_entity_window');
-          }, function(err) {
-            UIControls.removeSpinnerFromWindow('clone_entity_window');
-            for (var i in err.errors) {
-              var e = err.errors[i];
-              switch (e.type) {
-                case 'unique violation':
-                  if (e.path === 'entities_root_path') {
-                    $$('clone_entity_form').elements.name.define('invalidMessage', 'Name already exists');
-                    $$('clone_entity_form').markInvalid('name', true);
-                  }
-                  break;
+          var formData = form.getValues();
+          var entityId = window.getShowData().entityId;
+          var entityData = Identity.dataFromId(entityId);
+          var path = MDSCommon.getChildPath(formData.location, formData.path);
+          var req;
+
+          if (Identity.isFileId(entityId)) {
+            var filename = Identity.getFileNameFromId(entityId);
+            req = Mydataspace.entities.get({
+              root: entityData.root,
+              path: entityData.path
+            }).then(function (sourceData) {
+              return Mydataspace.entities.change({
+                root: entityData.root,
+                path: path,
+                fields: [{
+                  name: formData.name,
+                  value: MDSCommon.findValueByName(sourceData.fields, filename),
+                  type: 's'
+                }]
+              });
+            });
+          } else {
+            var data = {
+              root: entityData.root,
+              path: path,
+              othersCan: formData.othersCan,
+              fields: [],
+              sourceRoot: entityData.root,
+              sourcePath: entityData.path,
+              sourceVersion: entityData.version
+            };
+            req = Mydataspace.entities.create(data).catch(function (err) {
+              if (err.name === 'SequelizeUniqueConstraintError') {
+                data.path += '/' + MDSCommon.getEntityName(entityData.path);
+                return Mydataspace.entities.create(data);
+              } else {
+                return Promise.reject(err);
               }
+            });
+          }
+
+          req.then(function() {
+            window.hide();
+            UIControls.removeSpinnerFromWindow(window);
+          }, function(err) {
+            UIControls.removeSpinnerFromWindow(window);
+
+            switch (err.name) {
+              case 'EntityDoesNotExist':
+                form.markInvalid('path', 'Path does not exists');
+                break;
+              default:
+                for (var i in err.errors) {
+                  var e = err.errors[i];
+                  switch (e.type) {
+                    case 'unique violation':
+                      if (e.path === 'entities_root_path') {
+                        form.elements.name.define('invalidMessage', 'Name already exists');
+                        form.markInvalid('name', true);
+                      }
+                      break;
+                  }
+                }
             }
           });
         }
@@ -3840,26 +3944,35 @@ UILayout.windows.cloneEntity = {
       elements: [
         { view: 'text',
           required: true,
+          id: 'NAME_LABEL_11',
+          label: STRINGS.NAME,
+          name: 'name',
+          labelWidth: UIHelper.LABEL_WIDTH
+        },
+        { view: 'text',
+          // required: true,
           id: 'CLONE_ENTITY_PATH_LABEL',
           label: STRINGS.CLONE_ENTITY_PATH,
           name: 'path',
           labelWidth: UIHelper.LABEL_WIDTH,
-          placeholder: 'New folder path/name'
+          placeholder: STRINGS.CLONE_ENTITY_PATH_PLACEHOLDER
         },
         { view: 'richselect',
           required: true, id: 'CLONE_ENTITY_LOCATION_LABEL',
           label: STRINGS.CLONE_ENTITY_LOCATION,
           name: 'location',
           labelWidth: UIHelper.LABEL_WIDTH,
-          value: 'public_html',
-          options: [
-            { id: 'public_html', value: 'public_html', icon: UIConstants.ENTITY_ICONS['public_html'] },
-            { id: 'includes', value: 'includes', icon: UIConstants.ENTITY_ICONS['includes'] },
-          ]
+          value: 'public_html'
         },
-        UIControls.getEntityTypeSelectTemplate(),
+        UIControls.getEntityTypeSelectTemplate('clone_entity_others_can'),
         UIControls.getSubmitCancelForFormWindow('clone_entity')
-      ]
+      ],
+
+      rules: {
+        path: function(value) {
+          return /^(([\w-]+)(\/[\w-]+)*)?$/.test(value);
+        }
+      }
     }
 };
 
@@ -3878,26 +3991,25 @@ UILayout.windows.addTask = {
       on: {
         onSubmit: function() {
           var window = $$('add_task_window');
+          var form = this;
           if (!$$('add_task_form').validate({ disabled: true })) {
-
             UIControls.removeSpinnerFromWindow('add_task_window');
             return;
           }
 
-          var formData = $$('add_task_form').getValues();
-
-          var newEntityId = Identity.childId(Identity.rootId(window.getShowData().entityId || UI.entityList.getCurrentId()), 'tasks/' + formData.name);
+          var formData = form.getValues();
+          var newEntityId = Identity.childId(Identity.rootId(window.getShowData().entityId || UI.entityList.getCurrentId()), 'website/tasks/' + formData.name);
           var data = Identity.dataFromId(newEntityId);
           data.fields = [];
           data.othersCan = formData.othersCan;
-          Mydataspace.request('entities.create', data, function() {
-            $$('add_task_window').hide();
+          Mydataspace.entities.create(data).then(function() {
+            window.hide();
             UIControls.removeSpinnerFromWindow('add_task_window');
           }, function(err) {
             UIControls.removeSpinnerFromWindow('add_task_window');
             if (err.name === 'SequelizeUniqueConstraintError') {
-              $$('add_task_form').elements.name.define('invalidMessage', 'Name already exists');
-              $$('add_task_form').markInvalid('name', true);
+              form.elements.name.define('invalidMessage', 'Name already exists');
+              form.markInvalid('name', true);
             } else {
               UI.error(err);
             }
@@ -4326,7 +4438,7 @@ UILayout.windows.renameFile = {
     on: {
 
       onSubmit: function() {
-        var form = $$('rename_file_form');
+        var form = this;
         if (!form.validate({ disabled: true })) {
           UIControls.removeSpinnerFromWindow('rename_file_window');
           form.focus('name');
@@ -5196,10 +5308,20 @@ UILayout.entityContextMenu = {
         });
       } else if (itemData.path.indexOf('website/tasks/') === 0) {
         menuItems.push({
+          id: 'copy_entity',
+          value: STRINGS.context_menu.copy_entity
+        });
+        menuItems.push({ $template: 'Separator' });
+        menuItems.push({
           id: 'delete_entity',
           value: STRINGS.context_menu.delete_entity
         });
       } else if (itemData.path.indexOf('website/generators/') === 0) {
+        menuItems.push({
+          id: 'copy_entity',
+          value: STRINGS.context_menu.copy_entity
+        });
+        menuItems.push({ $template: 'Separator' });
         menuItems.push({
           id: 'delete_entity',
           value: STRINGS.context_menu.delete_entity
@@ -5213,6 +5335,10 @@ UILayout.entityContextMenu = {
           id: 'new_entity',
           value: STRINGS.context_menu.new_entity
         });
+        menuItems.push({
+          id: 'copy_entity',
+          value: STRINGS.context_menu.copy_entity
+        });
 
         menuItems.push({ $template: 'Separator' });
         menuItems.push({
@@ -5221,16 +5347,16 @@ UILayout.entityContextMenu = {
         });
       } else if (itemData.path.indexOf('website/public_html/') === 0) {
         menuItems.push({
-          id: 'copy_entity',
-          value: STRINGS.context_menu.copy_entity
-        });
-        menuItems.push({
           id: 'new_file',
           value: STRINGS.context_menu.new_file
         });
         menuItems.push({
           id: 'new_entity',
           value: STRINGS.context_menu.new_entity
+        });
+        menuItems.push({
+          id: 'copy_entity',
+          value: STRINGS.context_menu.copy_entity
         });
 
         menuItems.push({ $template: 'Separator' });
@@ -5251,6 +5377,10 @@ UILayout.entityContextMenu = {
         menuItems.push({
           id: 'new_entity',
           value: STRINGS.context_menu.new_entity
+        });
+        menuItems.push({
+          id: 'copy_entity',
+          value: STRINGS.context_menu.copy_entity
         });
 
         menuItems.push({ $template: 'Separator' });
@@ -5313,6 +5443,9 @@ UILayout.entityContextMenu = {
           case 'new_task':
             item.icon = 'code';
             break;
+          case 'rename_file':
+            item.icon = 'pencil';
+            break;
         }
         this.data.add(item);
       }
@@ -5325,7 +5458,7 @@ UILayout.entityContextMenu = {
           entityId = UI.entityList.getSelectedId();
           break;
         case 'entity_tree_menu':
-          entityId = UI.entityTree.getCurrentId();
+          entityId = UI.entityTree.getSelectedId();
           break;
         case 'entity_list_new_menu':
           entityId = UI.entityList.getCurrentId();
@@ -5890,8 +6023,6 @@ UILayout.entityList =
         onBeforeSelect: function(id, selection) {
           if (UIHelper.isListShowMore(id)) {
             UI.entityList.showMore();
-          } else {
-            UI.entityList.setSelectedId(id);
           }
         },
         onSelectChange: function (ids) {

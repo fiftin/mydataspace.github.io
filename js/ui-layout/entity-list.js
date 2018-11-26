@@ -70,8 +70,6 @@ UILayout.entityList =
         onBeforeSelect: function(id, selection) {
           if (UIHelper.isListShowMore(id)) {
             UI.entityList.showMore();
-          } else {
-            UI.entityList.setSelectedId(id);
           }
         },
         onSelectChange: function (ids) {

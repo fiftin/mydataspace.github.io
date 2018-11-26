@@ -151,19 +151,12 @@ EntityList.prototype.getCurrentId = function() {
 };
 
 
-/**
- * Set item selected in list.
- */
-EntityList.prototype.setSelectedId = function(id) {
-  this.selectedId = id;
-};
-
 
 /**
  * Get item selected in list.
  */
 EntityList.prototype.getSelectedId = function() {
-  return this.selectedId;
+  return $$('entity_list').getSelectedId();
 };
 
 

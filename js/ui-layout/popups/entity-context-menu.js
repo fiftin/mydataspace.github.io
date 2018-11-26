@@ -142,10 +142,20 @@ UILayout.entityContextMenu = {
         });
       } else if (itemData.path.indexOf('website/tasks/') === 0) {
         menuItems.push({
+          id: 'copy_entity',
+          value: STRINGS.context_menu.copy_entity
+        });
+        menuItems.push({ $template: 'Separator' });
+        menuItems.push({
           id: 'delete_entity',
           value: STRINGS.context_menu.delete_entity
         });
       } else if (itemData.path.indexOf('website/generators/') === 0) {
+        menuItems.push({
+          id: 'copy_entity',
+          value: STRINGS.context_menu.copy_entity
+        });
+        menuItems.push({ $template: 'Separator' });
         menuItems.push({
           id: 'delete_entity',
           value: STRINGS.context_menu.delete_entity
@@ -159,6 +169,10 @@ UILayout.entityContextMenu = {
           id: 'new_entity',
           value: STRINGS.context_menu.new_entity
         });
+        menuItems.push({
+          id: 'copy_entity',
+          value: STRINGS.context_menu.copy_entity
+        });
 
         menuItems.push({ $template: 'Separator' });
         menuItems.push({
@@ -167,16 +181,16 @@ UILayout.entityContextMenu = {
         });
       } else if (itemData.path.indexOf('website/public_html/') === 0) {
         menuItems.push({
-          id: 'copy_entity',
-          value: STRINGS.context_menu.copy_entity
-        });
-        menuItems.push({
           id: 'new_file',
           value: STRINGS.context_menu.new_file
         });
         menuItems.push({
           id: 'new_entity',
           value: STRINGS.context_menu.new_entity
+        });
+        menuItems.push({
+          id: 'copy_entity',
+          value: STRINGS.context_menu.copy_entity
         });
 
         menuItems.push({ $template: 'Separator' });
@@ -197,6 +211,10 @@ UILayout.entityContextMenu = {
         menuItems.push({
           id: 'new_entity',
           value: STRINGS.context_menu.new_entity
+        });
+        menuItems.push({
+          id: 'copy_entity',
+          value: STRINGS.context_menu.copy_entity
         });
 
         menuItems.push({ $template: 'Separator' });
@@ -259,6 +277,9 @@ UILayout.entityContextMenu = {
           case 'new_task':
             item.icon = 'code';
             break;
+          case 'rename_file':
+            item.icon = 'pencil';
+            break;
         }
         this.data.add(item);
       }
@@ -271,7 +292,7 @@ UILayout.entityContextMenu = {
           entityId = UI.entityList.getSelectedId();
           break;
         case 'entity_tree_menu':
-          entityId = UI.entityTree.getCurrentId();
+          entityId = UI.entityTree.getSelectedId();
           break;
         case 'entity_list_new_menu':
           entityId = UI.entityList.getCurrentId();
