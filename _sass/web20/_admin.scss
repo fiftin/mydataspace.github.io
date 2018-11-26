@@ -1042,17 +1042,13 @@ input {
   display: none;
 }
 
-.entity_tree__menu {
+.entity-context-menu {
   height: auto !important;
   .webix_win_content {
     padding: 0 !important;
     a {
       color: $text-color !important;
     }
-  }
-
-  .webix_list_item {
-    padding-left: 30px;
   }
 }
 

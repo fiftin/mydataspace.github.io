@@ -95,6 +95,7 @@ gulp.task('ui', function() {
       './js/ui-layout/popups/new-entity.js',
       './js/ui-layout/popups/new-root-version.js',
       './js/ui-layout/popups/new-root.js',
+      './js/ui-layout/popups/entity-context-menu.js',
       './js/ui-layout/side-menu.js',
       './js/ui-layout/header.js',
       './js/ui-layout/entity-tree.js',

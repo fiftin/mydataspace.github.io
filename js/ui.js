@@ -487,10 +487,10 @@ UI = {
     webix.ui(UILayout.windows.addWebsite);
     webix.ui(UILayout.windows.showMedia);
 
-    webix.ui(MDSCommon.extend(UILayout.entityTreeMenu, { id: 'entity_list_menu' }));
-    webix.ui(MDSCommon.extend(UILayout.entityTreeMenu, { id: 'entity_tree_menu' }));
-    webix.ui(MDSCommon.extend(UILayout.entityTreeMenu, { id: 'entity_form_menu' }));
-    webix.ui(MDSCommon.extend(UILayout.entityTreeMenu, { id: 'entity_list_new_menu' }));
+    webix.ui(MDSCommon.extend(UILayout.entityContextMenu, { id: 'entity_list_menu' }));
+    webix.ui(MDSCommon.extend(UILayout.entityContextMenu, { id: 'entity_tree_menu' }));
+    webix.ui(MDSCommon.extend(UILayout.entityContextMenu, { id: 'entity_form_menu' }));
+    webix.ui(MDSCommon.extend(UILayout.entityContextMenu, { id: 'entity_list_new_menu' }));
 
     if (!withHeader) {
       UILayout.sideMenu.hidden = true;
