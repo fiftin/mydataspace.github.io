@@ -1,4 +1,5 @@
 /**
+ * @class
  * Created with JetBrains PhpStorm.
  * User: fifti
  * Date: 15.08.16

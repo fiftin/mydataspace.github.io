@@ -1,3 +1,6 @@
+/**
+ * @class
+ */
 function EntityForm() {
   this.editing = false;
   this.loadedListeners = [];
@@ -211,25 +214,83 @@ EntityForm.prototype.setViewTitle = function (title) {
   viewTitle.addEventListener('click', function () { $$('entity_form_menu').show(this) });
 };
 
+EntityForm.prototype.clearTimeouts = function () {
+  if (this.viewWebsiteLinkDisabledTimeout) {
+    clearTimeout(this.viewWebsiteLinkDisabledTimeout);
+    delete this.viewWebsiteLinkDisabledTimeout;
+  }
+  if (this.viewWebsiteLinkDisabledCountdown) {
+    clearTimeout(this.viewWebsiteLinkDisabledCountdown);
+    delete this.viewWebsiteLinkDisabledCountdown;
+  }
+};
+
+
 EntityForm.prototype.setRootView = function(data) {
   var self = this;
   var language = (getCurrentLanguage() || 'en').toLowerCase();
   var languagePrefix = language === 'en' ? '' : '/' + language;
 
-  if (self.viewWebsiteLinkDisabledTimeout) {
-    clearTimeout(self.viewWebsiteLinkDisabledTimeout);
-    delete self.viewWebsiteLinkDisabledTimeout;
-  }
+  self.clearTimeouts();
 
   $.ajax({ url: languagePrefix + '/fragments/root-view.html', method: 'get' }).then(function(html) {
     var view = document.getElementById('view');
     var description = MDSCommon.findValueByName(data.fields, 'description');
     var readme = MDSCommon.findValueByName(data.fields, 'readme');
+
+
     var tags = (MDSCommon.findValueByName(data.fields, 'tags') || '').split(' ').filter(function(tag) {
       return tag != null && tag !== '';
     }).map(function(tag) {
       return '<a class="view__tag" href="search?q=%23' + tag + '" target="_blank">' + tag + '</a>';
     }).join(' ');
+
+
+    var languageAbbr = MDSCommon.findValueByName(data.fields, 'language');
+    var countryAbbr = MDSCommon.findValueByName(data.fields, 'country');
+    var category = MDSCommon.findValueByName(data.fields, 'category');
+    var country = COUNTRIES[countryAbbr];
+    var language = COUNTRIES[languageAbbr];
+
+    if (category) {
+      tags = '<span class="view__tag"><i class="view__tag_icon fa fa-' + CATEGORY_ICONS[category] + '"></i><span>' + tr$('categories.' + category) + '</span></span> ' + tags;
+    }
+
+    if (country && (languageAbbr === countryAbbr || (language.same || []).indexOf(countryAbbr) != -1)) {
+      tags = '<span class="view__tag view__tag--flag view__tag--multi_link">' +
+        '<img class="view__tag_icon view__tag_icon--flag" src="/images/square_flags/' + country.name + '.svg" />' +
+        '<span class="view__tag_link">' +
+        tr$('languagesShort.' + languageAbbr) + '</span> / ' +
+        '<span class="view__tag_link">' +
+        tr$('countries.' + countryAbbr) + '</span></span> ' + tags;
+    } else {
+      if (country) {
+        tags = '<span class="view__tag view__tag--flag">' +
+          '<img class="view__tag_icon view__tag_icon--flag" src="/images/square_flags/' + country.name + '.svg" />' +
+          tr$('countries.' + countryAbbr) + '</span> ' + tags;
+      }
+      if (language) {
+        tags = '<span class="view__tag view__tag--flag">' +
+          '<img class="view__tag_icon view__tag_icon--flag" src="/images/square_flags/' + language.name + '.svg" />' +
+          tr$('languagesShort.' + languageAbbr) + '</span> ' + tags;
+      }
+    }
+
+    var license = MDSCommon.findValueByName(data.fields, 'license');
+    if (MDSCommon.isPresent(license)) {
+      var licenseOrig = license;
+      license = getLicenseWithoutVersion(license);
+
+      if (license !== 'none') {
+        tags = '<span class="view__tag view__tag--license' +
+          ' view__tag--license--' + license +
+          ' view__tag--license--' + license + '--' + (getCurrentLanguage() || 'en').toLowerCase() +
+          ' data-license="' + licenseOrig + '"' +
+          ' data-root="' + data.root + '"' +
+          '>&nbsp;</span> ' + tags;
+      }
+    }
+
 
     view.innerHTML = html;
 
@@ -250,8 +311,10 @@ EntityForm.prototype.setRootView = function(data) {
       websiteLink.setAttribute('data-root', data.root);
       var rootTime = new Date().getTime() - new Date(data.createdAt).getTime();
 
-
       if (rootTime < 60000) {
+        document.getElementById('view__website_link__countdown_wrap').style.display = 'initial';
+
+
         websiteLink.setAttribute('disabled', 'disabled');
 
         document.getElementById('view__website_link__icon').classList.remove('fa-globe');
@@ -265,6 +328,18 @@ EntityForm.prototype.setRootView = function(data) {
           trigger: 'hover'
         });
 
+        var countdown = Math.round((60000 - rootTime) / 1000);
+
+        document.getElementById('view__website_link__countdown').innerText = ' ' + countdown + ' ';
+
+        self.viewWebsiteLinkDisabledCountdown = setInterval(function () {
+          countdown -= 1;
+          if (countdown < 1) {
+            countdown = 1;
+          }
+          document.getElementById('view__website_link__countdown').innerText = ' ' + countdown + ' ';
+        }, 1000);
+
         self.viewWebsiteLinkDisabledTimeout = setTimeout(function () {
           var websiteLink2 = document.getElementById('view__website_link');
           if (websiteLink2 && websiteLink2.getAttribute('data-root') === data.root) {
@@ -275,6 +350,7 @@ EntityForm.prototype.setRootView = function(data) {
             document.getElementById('view__website_link__icon').classList.remove('fa-spin');
           }
           $(websiteLink).tooltip('destroy');
+          document.getElementById('view__website_link__countdown_wrap').style.display = 'none';
         }, 60000 - rootTime);
       }
     }
@@ -327,6 +403,8 @@ EntityForm.prototype.setTaskView = function(data) {
   var self = this;
   var language = (getCurrentLanguage() || 'en').toLowerCase();
   var languagePrefix = language === 'en' ? '' : '/' + language;
+
+  self.clearTimeouts();
 
   $.ajax({ url: languagePrefix + '/fragments/task-view.html', method: 'get' }).then(function(html) {
     var view = document.getElementById('view');
@@ -429,6 +507,8 @@ EntityForm.prototype.setEntityView = function(data) {
       return;
   }
 
+  self.clearTimeouts();
+
   var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(self.currentId).path);
   var language = (getCurrentLanguage() || 'en').toLowerCase();
   var languagePrefix = language === 'en' ? '' : '/' + language;
@@ -485,8 +565,11 @@ EntityForm.prototype.setEntityView = function(data) {
 };
 
 EntityForm.prototype.setLogView = function(data) {
+  var self = this;
   var language = (getCurrentLanguage() || 'en').toLowerCase();
   var languagePrefix = language === 'en' ? '' : '/' + language;
+
+  self.clearTimeouts();
 
   $.ajax({ url: languagePrefix + '/fragments/log-view.html', method: 'get' }).then(function(html) {
     var view = document.getElementById('view');
@@ -498,7 +581,7 @@ EntityForm.prototype.setLogView = function(data) {
                              false);
     document.getElementById('view__title').innerText =
       MDSCommon.getPathName(data.path);
-    var viewFields = this.setLogRecords(data.fields);
+    var viewFields = self.setLogRecords(data.fields);
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
       var value = $(this).data('value');
@@ -512,19 +595,23 @@ EntityForm.prototype.setLogView = function(data) {
       }
       $(this).addClass('view__field--active');
     });
-  }.bind(this));
+  });
 };
 
 EntityForm.prototype.setView = function(data) {
+  var self = this;
+
+  self.clearTimeouts();
+
   $('#view').append('<div class="view__loading"></div>');
   if (MDSCommon.isBlank(data.path)) {
-    this.setRootView(data);
+    self.setRootView(data);
   } else if (UIHelper.getEntityTypeByPath(data.path) === 'task') {
-    this.setTaskView(data);
+    self.setTaskView(data);
   } else if (UIHelper.getEntityTypeByPath(data.path) === 'log') {
-    this.setLogView(data);
+    self.setLogView(data);
   } else {
-    this.setEntityView(data);
+    self.setEntityView(data);
   }
   $$('entity_form').hide();
   $$('entity_view').show();
