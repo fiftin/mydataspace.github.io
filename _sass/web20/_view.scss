@@ -72,6 +72,9 @@ $view-tag-flag-size: 16px;
   width: $root-icon-size-sm - 10px;
   height: $root-icon-size-sm - 10px;
   font-size: 18px;
+  &:hover {
+    background: #e4e9ed;
+  }
 }
 
 

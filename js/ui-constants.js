@@ -106,7 +106,8 @@ UIConstants = {
     'views',
     'likes',
     'comments',
-    'processes'
+    'processes',
+    'statistics'
   ],
 
   IGNORED_WHEN_EMPTY_PATHS: [],

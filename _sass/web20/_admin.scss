@@ -988,6 +988,30 @@ input {
     line-height: 1.1;
   }
 
+  .view__website_link {
+
+  }
+
+  .view__website_link__countdown_wrap {
+    font-size: 13px;
+    line-height: 27px;
+    white-space: nowrap;
+  }
+
+  .view__info {
+    padding-left: 0;
+  }
+
+  .view__title {
+    margin-left: 10px;
+    padding: 0 5px;
+    float: left;
+    cursor: pointer;
+    &:hover {
+      background: #e4e9ed;
+    }
+  }
+
 }
 
 .admin_panel--fullscreen {
@@ -1110,14 +1134,4 @@ input {
   .webix_template {
     padding: 0 !important;
   }
-}
-
-.view__website_link {
-
-}
-
-.view__website_link__countdown_wrap {
-  font-size: 13px;
-  line-height: 27px;
-  white-space: nowrap;
 }

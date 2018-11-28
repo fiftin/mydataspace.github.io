@@ -392,6 +392,17 @@ EntityForm.prototype.setRootView = function(data) {
       }
       $(this).addClass('view__field--active');
     });
+
+    data.children.forEach(function (child) {
+      switch (child.path) {
+        case 'statistics':
+          document.getElementById('view_stat_website_visits_month').innerText = MDSCommon.findValueByName('websiteVisitsPastMonth') || 0;
+          document.getElementById('view_stat_website_visitors_month').innerText = MDSCommon.findValueByName('websiteVisitsPastMonth') || 0;
+          document.getElementById('view_stat_api_calls_month').innerText = MDSCommon.findValueByName('apiCallsPastMonth') || 0;
+          document.getElementById('view_stat_users_month').innerText = MDSCommon.findValueByName('userRegsPastMonth') || 0;
+          break;
+      }
+    });
   });
 };
 
@@ -557,10 +568,10 @@ EntityForm.prototype.setEntityView = function(data) {
       $(self).addClass('view__field--active');
     });
 
-    if (UIConstants.SYSTEM_PATHS.indexOf(data.path) >= 0) {
-      document.getElementById('view_overview_delete_action').style.display = 'none';
-      document.getElementById('view_overview_clone_action').style.display = 'none';
-    }
+    // if (UIConstants.SYSTEM_PATHS.indexOf(data.path) >= 0) {
+    //   document.getElementById('view_overview_delete_action').style.display = 'none';
+    //   document.getElementById('view_overview_clone_action').style.display = 'none';
+    // }
   });
 };
 

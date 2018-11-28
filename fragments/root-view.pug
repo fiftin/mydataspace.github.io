@@ -5,8 +5,8 @@
 	.view__info
 		h1.view__title#view__title
 		.view__overview-actions#view_overview_actions
-			button.view__overview-button(onclick="UI.entityForm.askDelete();")
-				i.fa.fa-times
+			// button.view__overview-button(onclick="UI.entityForm.askDelete();")
+			// 	i.fa.fa-times
 			button.view__overview-button(onclick="UI.entityForm.startEditing();")
 				i.fa.fa-edit
 
@@ -18,19 +18,19 @@
 		ul.stats
 			li.stats__stat-wrap
 				.stats__stat
-					.stats__stat-number 0
+					.stats__stat-number#view_stat_website_visits_month 0
 					.stats__stat-title views
 			li.stats__stat-wrap
 				.stats__stat
-					.stats__stat-number 2
+					.stats__stat-number#view_stat_website_visitors_month 0
 					.stats__stat-title visitors
 			li.stats__stat-wrap
 				.stats__stat
-					.stats__stat-number 0
+					.stats__stat-number#view_stat_api_calls_month 0
 					.stats__stat-title API calls
 			li.stats__stat-wrap
 				.stats__stat
-					.stats__stat-number 0
+					.stats__stat-number#view_stat_users_month 0
 					.stats__stat-title users
 
 	.view__buttons

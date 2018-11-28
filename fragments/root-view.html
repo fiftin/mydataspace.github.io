@@ -4,7 +4,8 @@
   <div class="view__info">
     <h1 class="view__title" id="view__title"></h1>
     <div class="view__overview-actions" id="view_overview_actions">
-      <button class="view__overview-button" onclick="UI.entityForm.askDelete();"><i class="fa fa-times"></i></button>
+      <!-- button.view__overview-button(onclick="UI.entityForm.askDelete();")-->
+      <!-- 	i.fa.fa-times-->
       <button class="view__overview-button" onclick="UI.entityForm.startEditing();"><i class="fa fa-edit"></i></button>
     </div>
   </div>
@@ -16,25 +17,25 @@
     <ul class="stats">
       <li class="stats__stat-wrap">
         <div class="stats__stat">
-          <div class="stats__stat-number">0</div>
+          <div class="stats__stat-number" id="view_stat_website_visits_month">0</div>
           <div class="stats__stat-title">views</div>
         </div>
       </li>
       <li class="stats__stat-wrap">
         <div class="stats__stat">
-          <div class="stats__stat-number">2</div>
+          <div class="stats__stat-number" id="view_stat_website_visitors_month">0</div>
           <div class="stats__stat-title">visitors</div>
         </div>
       </li>
       <li class="stats__stat-wrap">
         <div class="stats__stat">
-          <div class="stats__stat-number">0</div>
+          <div class="stats__stat-number" id="view_stat_api_calls_month">0</div>
           <div class="stats__stat-title">API calls</div>
         </div>
       </li>
       <li class="stats__stat-wrap">
         <div class="stats__stat">
-          <div class="stats__stat-number">0</div>
+          <div class="stats__stat-number" id="view_stat_users_month">0</div>
           <div class="stats__stat-title">users</div>
         </div>
       </li>
