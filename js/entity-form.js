@@ -396,10 +396,10 @@ EntityForm.prototype.setRootView = function(data) {
     data.children.forEach(function (child) {
       switch (child.path) {
         case 'statistics':
-          document.getElementById('view_stat_website_visits_month').innerText = MDSCommon.findValueByName(child.fields, 'websiteVisitsPastMonth') || 0;
-          document.getElementById('view_stat_website_visitors_month').innerText = MDSCommon.findValueByName(child.fields, 'websiteVisitorsPastMonth') || 0;
-          document.getElementById('view_stat_api_calls_month').innerText = MDSCommon.findValueByName(child.fields, 'apiCallsPastMonth') || 0;
-          document.getElementById('view_stat_users_month').innerText = MDSCommon.findValueByName(child.fields, 'userRegsPastMonth') || 0;
+          document.getElementById('view_stat_website_visits_month').innerText = MDSCommon.findValueByName(child.fields, 'websiteVisitsTotal') || 0;
+          document.getElementById('view_stat_website_visitors_month').innerText = MDSCommon.findValueByName(child.fields, 'websiteVisitorsTotal') || 0;
+          document.getElementById('view_stat_api_calls_month').innerText = MDSCommon.findValueByName(child.fields, 'apiCallsTotal') || 0;
+          document.getElementById('view_stat_users_month').innerText = MDSCommon.findValueByName(child.fields, 'userRegsTotal') || 0;
           break;
       }
     });
