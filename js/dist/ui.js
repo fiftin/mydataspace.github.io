@@ -3766,12 +3766,13 @@ UILayout.windows.addRoot = {
               description: 'Automatically created application for website ' + data.root + SITE_SUPER_DOMAIN + '. Please do not change it'
             });
           }).then(function (app) {
-            if (!app) {
+            if (!app || !sourceRoot) {
               return;
             }
+
             return Mydataspace.request('entities.change', {
               root: data.root,
-              path: 'website/js',
+              path: 'website/public_html/js',
               fields: [{
                 name: 'client.js',
                 value: '//\n' +

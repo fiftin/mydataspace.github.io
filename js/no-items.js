@@ -194,9 +194,12 @@ function no_items__createNewWebsite() {
       description: 'Automatically created application for website ' + root + SITE_SUPER_DOMAIN + '. Please do not change it'
     });
   }).then(function (app) {
+    if (!sourceRoot) {
+      return;
+    }
     return Mydataspace.request('entities.change', {
       root: root,
-      path: 'website/js',
+      path: 'website/public_html/js',
       fields: [{
         name: 'client.js',
         value: '//\n' +
@@ -211,7 +214,7 @@ function no_items__createNewWebsite() {
         type: 'j'
       }]
     });
-  }).then(function (data) {
+  }).then(function () {
     $createButton.attr('disabled', false);
     $createButton.find('.fa-cog').removeClass('fa-spin').addClass('hidden');
   }, function (err) {
