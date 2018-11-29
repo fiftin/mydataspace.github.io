@@ -3757,16 +3757,13 @@ UILayout.windows.addRoot = {
           }
 
           Mydataspace.request('entities.create', data).then(function () {
-            if (!sourceRoot) {
-              return;
-            }
             return Mydataspace.request('apps.create', {
               name: data.root,
               url: 'https://' + data.root + SITE_SUPER_DOMAIN,
               description: 'Automatically created application for website ' + data.root + SITE_SUPER_DOMAIN + '. Please do not change it'
             });
           }).then(function (app) {
-            if (!app || !sourceRoot) {
+            if (!app || !sourceRoot || sourceRoot === 'root') {
               return;
             }
 
