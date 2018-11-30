@@ -20,26 +20,12 @@ function no_items__selectTemplate(root, suffix) {
     var avatar = MDSCommon.findValueByName(data.fields, 'avatar');
     var description = MDSCommon.findValueByName(data.fields, 'description');
 
-    var tags = (MDSCommon.findValueByName(data.fields, 'tags') || '').split(' ').filter(function (tag) {
-      return tag != null && tag !== '';
-    }).map(function (tag) {
-      return '<span class="view__tag view__tag--no-interactive">' + tag + '</span>';
-    }).join(' ');
-
     var imgElem = document.getElementById('no_items__template_img' + suffix);
     var titleElem = document.getElementById('no_items__template_title' + suffix);
-    // var tagsElem = document.getElementById('no_items__template_tags' + suffix);
     var descriptionElem = document.getElementById('no_items__template_description' + suffix);
 
     imgElem.src = avatar ? 'https://cdn.web20site.com/avatars/sm/' + avatar + '.png' : '/images/icons/root.svg';
     titleElem.innerText = MDSCommon.findValueByName(data.fields, 'name') || data.root;
-
-    // if (tags) {
-    //   tagsElem.innerHTML = tags;
-    //   tagsElem.style.display = 'block';
-    // } else {
-    //   tagsElem.style.display = 'none';
-    // }
 
     if (description) {
       descriptionElem.innerHTML = description;

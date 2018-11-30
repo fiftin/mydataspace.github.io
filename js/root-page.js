@@ -312,7 +312,13 @@ function initRootPage(options) {
         return '<a class="view__tag" href="/search?q=%23' + tag + '">' + tag + '</a>';
       }).join(' ');
 
-      document.getElementById('root__websiteURL').href = 'https://' + data.root + '.web20.site';
+      document.getElementById('root__websiteURL').href = '/#new_root=' + data.root;
+      document.getElementById('root__websiteURL').addEventListener('click', function (e) {
+        if (!Mydataspace.isLoggedIn()) {
+          $('#signin_modal').modal('show');
+          e.preventDefault();
+        }
+      });
 
       var languageAbbr = MDSCommon.findValueByName(data.fields, 'language');
       var countryAbbr = MDSCommon.findValueByName(data.fields, 'country');

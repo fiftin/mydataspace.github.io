@@ -192,6 +192,17 @@ var Router = {
     }
     var parts = Router.getCommonSearchParts();
     return parts == null || parts != null && parts.user === 'me';
+  },
+
+  getNewRootSkeleton: function () {
+    var m = (Router.window.location.hash || '').match(/new_root=([\w-]+)/);
+    if (m) {
+      return m[1];
+    }
+  },
+
+  clear() {
+    history.replaceState({}, document.title, '.');
   }
 };
 
@@ -3396,13 +3407,15 @@ EntityTree.prototype.loadFormattedData = function(formattedData) {
 EntityTree.prototype.requestRoots = function(onlyMine, reqData, selectedId) {
   var req = onlyMine ? 'entities.getMyRoots' : 'entities.getRoots';
   var self = this;
-  Mydataspace.request(req, reqData, function(data) {
+
+  return Mydataspace.request(req, reqData).then(function(data) {
     // convert received data to TreeView format and load its to entity_tree.
     self.loadFormattedData(data['roots'].map(Identity.entityFromData));
     if (selectedId) {
       self.setCurrentId(selectedId);
     }
     UI.pages.updatePageState('data');
+    return data;
   }, function(err) {
     UI.error(err);
     $$('entity_tree').enable();
@@ -3414,7 +3427,24 @@ EntityTree.prototype.refresh = function(root) {
   var self = this;
   $$('entity_tree').disable();
 
-  if (MDSCommon.isBlank(root) && Router.isEmpty()) {
+  var newRootSkeleton = Router.getNewRootSkeleton();
+  if (newRootSkeleton) {
+    if (Mydataspace.isLoggedIn()) {
+      Router.clear();
+      self.requestRoots(true, {}).then(function (data) {
+        if (!data) {
+          return;
+        }
+        var prefix = '';
+        if (MDSCommon.isPresent(data.roots)) {
+          $$('add_root_window').show();
+          prefix = '2';
+        }
+        no_items__selectTemplate(newRootSkeleton, prefix);
+      });
+    }
+  }
+  else if (MDSCommon.isBlank(root) && Router.isEmpty()) {
     if (Mydataspace.isLoggedIn()) {
       self.requestRoots(true, {});
     }
@@ -3422,11 +3452,12 @@ EntityTree.prototype.refresh = function(root) {
     self.requestRoots(Router.isMe(), {
       search: Router.getSearch()
     });
-  } else if (MDSCommon.isBlank(root)  && Router.isFilterByName()) {
+  } else if (MDSCommon.isBlank(root) && Router.isFilterByName()) {
     self.requestRoots(Router.isMe(), {
       filterByName: Router.getSearch()
     });
-  } else if (MDSCommon.isPresent(root)  || Router.isRoot()) {
+
+  } else if (MDSCommon.isPresent(root) || Router.isRoot()) {
     var search = Router.getSearch();
     if (Array.isArray(search)) {
       search = search[0];
@@ -3617,18 +3648,15 @@ Pages.prototype.updatePageState = function(page) {
       }
       break;
     case 'data':
-
-      if ($$('entity_tree').getFirstId() == null) { // && Router.isMe() && !Router.isSearch()) {
+      if ($$('entity_tree').getFirstId() == null) {
         document.getElementById('no_items__no_apps').style.display = 'none';
         document.getElementById('no_items__no_data').style.display = 'block';
         document.getElementById('no_items').style.display = 'block';
-
         [1,2,3].forEach(function (value) {
           setTimeout(function () {
             document.getElementById('no_items__new_root_input').focus();
           }, value * 1000);
         });
-
         $$('my_data_panel__right_panel').hide();
         $$('my_data_panel__resizer_2').hide();
         $$('my_data_panel__central_panel').hide();
@@ -3639,13 +3667,6 @@ Pages.prototype.updatePageState = function(page) {
         $$('my_data_panel__resizer_2').show();
         $$('my_data_panel__central_panel').show();
         if (window.parent === window && !webix.without_header) $$('my_data_panel__resizer_1').show();
-        if ($$('entity_tree').getFirstId() == null) {
-          if (Router.isRoot()) { // root not found
-            UI.entityTree.refresh('notfound');
-          } else { // nothing found
-            UI.entityTree.refresh('nothing');
-          }
-        }
       }
       break;
     default:

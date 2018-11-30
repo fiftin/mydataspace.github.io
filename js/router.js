@@ -121,5 +121,16 @@ var Router = {
     }
     var parts = Router.getCommonSearchParts();
     return parts == null || parts != null && parts.user === 'me';
+  },
+
+  getNewRootSkeleton: function () {
+    var m = (Router.window.location.hash || '').match(/new_root=([\w-]+)/);
+    if (m) {
+      return m[1];
+    }
+  },
+
+  clear() {
+    history.replaceState({}, document.title, '.');
   }
 };

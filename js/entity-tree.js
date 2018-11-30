@@ -467,13 +467,15 @@ EntityTree.prototype.loadFormattedData = function(formattedData) {
 EntityTree.prototype.requestRoots = function(onlyMine, reqData, selectedId) {
   var req = onlyMine ? 'entities.getMyRoots' : 'entities.getRoots';
   var self = this;
-  Mydataspace.request(req, reqData, function(data) {
+
+  return Mydataspace.request(req, reqData).then(function(data) {
     // convert received data to TreeView format and load its to entity_tree.
     self.loadFormattedData(data['roots'].map(Identity.entityFromData));
     if (selectedId) {
       self.setCurrentId(selectedId);
     }
     UI.pages.updatePageState('data');
+    return data;
   }, function(err) {
     UI.error(err);
     $$('entity_tree').enable();
@@ -485,7 +487,23 @@ EntityTree.prototype.refresh = function(root) {
   var self = this;
   $$('entity_tree').disable();
 
-  if (MDSCommon.isBlank(root) && Router.isEmpty()) {
+  var newRootSkeleton = Router.getNewRootSkeleton();
+  if (newRootSkeleton) {
+    if (Mydataspace.isLoggedIn()) {
+      Router.clear();
+      self.requestRoots(true, {}).then(function (data) {
+        if (!data) {
+          return;
+        }
+        var prefix = '';
+        if (MDSCommon.isPresent(data.roots)) {
+          $$('add_root_window').show();
+          prefix = '2';
+        }
+        no_items__selectTemplate(newRootSkeleton, prefix);
+      });
+    }
+  } else if (MDSCommon.isBlank(root) && Router.isEmpty()) {
     if (Mydataspace.isLoggedIn()) {
       self.requestRoots(true, {});
     }
@@ -493,11 +511,12 @@ EntityTree.prototype.refresh = function(root) {
     self.requestRoots(Router.isMe(), {
       search: Router.getSearch()
     });
-  } else if (MDSCommon.isBlank(root)  && Router.isFilterByName()) {
+  } else if (MDSCommon.isBlank(root) && Router.isFilterByName()) {
     self.requestRoots(Router.isMe(), {
       filterByName: Router.getSearch()
     });
-  } else if (MDSCommon.isPresent(root)  || Router.isRoot()) {
+
+  } else if (MDSCommon.isPresent(root) || Router.isRoot()) {
     var search = Router.getSearch();
     if (Array.isArray(search)) {
       search = search[0];
