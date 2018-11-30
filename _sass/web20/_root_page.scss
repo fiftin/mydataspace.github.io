@@ -144,10 +144,6 @@ $side-panel-width: $side-width - $padding;
     padding-bottom: 0;
   }
 
-  .view__tabs {
-    padding-top: 6px;
-  }
-
   .view__tab, .view__tab--active {
     transform: translate(0, 0);
     border: 0;
