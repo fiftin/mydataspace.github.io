@@ -25,7 +25,7 @@ UILayout.entityForm =
         icon: 'plus',
         id: 'ADD_FIELD_LABEL', label: STRINGS.ADD_FIELD,
         hidden: true,
-        width: 100,
+        width: 120,
         click: function() {
           $$('add_field_window').show();
         }

@@ -3814,18 +3814,18 @@ UILayout.windows.addRoot = {
       elements: [
         { view: 'template',
           borderless: true,
-          height: 220,
+          height: 160,
           hidden: PROJECT_NAME !== 'web20',
           template: '<div style="margin-bottom: 5px; margin-top: -5px;">' + STRINGS.select_template_label + '</div>' +
           '<div id="no_items__template_wrap2" class="no_items__template_wrap" onclick="no_items__initTemplates(2)">\n' +
           '  <div id="no_items__template2" class="snippet__overview snippet__overview--no-margin">\n' +
           '    <img id="no_items__template_img2" class="snippet__image"  />\n' +
-          '    <div class="snippet__info">\n' +
+          '    <div class="snippet__info" style="padding-bottom: 0">\n' +
           '      <div id="no_items__template_title2" class="snippet__title"></div>\n' +
-          '      <div id="no_items__template_tags2" class="snippet__tags"></div>\n' +
+          '      <div id="no_items__template_description2" class="snippet__description snippet__description--full"></div>\n' +
+          // '      <div id="no_items__template_tags2" class="snippet__tags"></div>\n' +
           '    </div>\n' +
           '  </div>\n' +
-          '  <div id="no_items__template_description2" class="snippet__description snippet__description--full"></div>\n' +
           '</div>'
         },
         { view: 'text', id: 'NAME_LABEL', label: STRINGS.NAME, required: true, name: 'root', labelWidth: UIHelper.LABEL_WIDTH },
@@ -6185,7 +6185,7 @@ UILayout.entityForm =
         icon: 'plus',
         id: 'ADD_FIELD_LABEL', label: STRINGS.ADD_FIELD,
         hidden: true,
-        width: 100,
+        width: 120,
         click: function() {
           $$('add_field_window').show();
         }

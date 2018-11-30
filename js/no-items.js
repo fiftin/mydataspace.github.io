@@ -18,7 +18,6 @@ function no_items__selectTemplate(root, suffix) {
     path: ''
   })).then(function (data) {
     var avatar = MDSCommon.findValueByName(data.fields, 'avatar');
-    var name = MDSCommon.findValueByName(data.fields, 'name');
     var description = MDSCommon.findValueByName(data.fields, 'description');
 
     var tags = (MDSCommon.findValueByName(data.fields, 'tags') || '').split(' ').filter(function (tag) {
@@ -27,15 +26,28 @@ function no_items__selectTemplate(root, suffix) {
       return '<span class="view__tag view__tag--no-interactive">' + tag + '</span>';
     }).join(' ');
 
-    $('#no_items__template_img' + suffix).attr('src', avatar ? 'https://cdn.web20site.com/avatars/sm/' + avatar + '.png' : '/images/icons/root.svg');
-    $('#no_items__template_title' + suffix).text(name);
-    $('#no_items__template_tags' + suffix).html(tags);
-    if (!description) {
-      $('#no_items__template_description' + suffix).hide();
+    var imgElem = document.getElementById('no_items__template_img' + suffix);
+    var titleElem = document.getElementById('no_items__template_title' + suffix);
+    // var tagsElem = document.getElementById('no_items__template_tags' + suffix);
+    var descriptionElem = document.getElementById('no_items__template_description' + suffix);
+
+    imgElem.src = avatar ? 'https://cdn.web20site.com/avatars/sm/' + avatar + '.png' : '/images/icons/root.svg';
+    titleElem.innerText = MDSCommon.findValueByName(data.fields, 'name') || data.root;
+
+    // if (tags) {
+    //   tagsElem.innerHTML = tags;
+    //   tagsElem.style.display = 'block';
+    // } else {
+    //   tagsElem.style.display = 'none';
+    // }
+
+    if (description) {
+      descriptionElem.innerHTML = description;
+      descriptionElem.style.display = 'block';
     } else {
-      $('#no_items__template_description' + suffix).show();
+      descriptionElem.style.display = 'none';
     }
-    $('#no_items__template_description' + suffix).text(description);
+
     $('#no_items__template_wrap' + suffix).data('root', data.root);
     $('#no_items_select_template_modal').modal('hide');
 
@@ -88,14 +100,14 @@ function no_items__initTemplates(suffix) {
 
       return '<div onclick="no_items__selectTemplate(\'' + root.root + '\', \'' + suffix + '\')" class="block snippet snippet--line snippet--line--no-padding-bottom clearfix">' +
         '<div class="snippet__overview snippet__overview--no-margin">' +
-        '  <img class="snippet__image" src="' + avatar + '" />' +
-        '  <div class="snippet__info">' +
-        '    <div class="snippet__title">' + MDSCommon.findValueByName(root.fields, 'name') + '</div>' +
-        '    <div class="snippet__tags">' + tags + '</div>' +
-        '  </div>' +
+          '<img class="snippet__image" src="' + avatar + '" />' +
+            '<div class="snippet__info" style="padding-bottom: 0">' +
+            '<div class="snippet__title">' + (MDSCommon.findValueByName(root.fields, 'name') || root.root) + '</div>' +
+            (description ? '<div class="snippet__description">' + description + '</div>' : '') +
+            (tags ? '<div class="snippet__tags">' + tags + '</div>' : '') +
+          '</div>' +
         '</div>' +
-        (description ? '<div class="snippet__description">' + description + '</div>' : '') +
-        '</div>';
+      '</div>';
     });
     $('#no_items_select_template_modal_templates').html(rootsHtml.join('\n'));
     $('#no_items_select_template_modal').modal('show');
