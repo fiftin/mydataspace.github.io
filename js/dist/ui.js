@@ -585,9 +585,9 @@ UIHelper = {
     var data = Identity.dataFromId(id);
     if (MDSCommon.isPresent(data.path)) {
       var path = MDSCommon.getParentPath(data.path);
-      return 'https://wizard.myda.space/' + data.root + (MDSCommon.isPresent(path) ? '/' + path : '') + '/' + 'item.html'
+      return 'https://wizard.web20.site/' + data.root + (MDSCommon.isPresent(path) ? '/' + path : '') + '/' + 'item.html'
     } else {
-      return 'https://wizard.myda.space/' + data.root + '/' + 'root.html'
+      return 'https://wizard.web20.site/' + data.root + '/' + 'root.html'
     }
   },
 
@@ -1775,10 +1775,14 @@ EntityForm.prototype.setRootView = function(data) {
     data.children.forEach(function (child) {
       switch (child.path) {
         case 'statistics':
-          document.getElementById('view_stat_website_visits_month').innerText = MDSCommon.findValueByName(child.fields, 'websiteVisitsTotal') || 0;
-          document.getElementById('view_stat_website_visitors_month').innerText = MDSCommon.findValueByName(child.fields, 'websiteVisitorsTotal') || 0;
-          document.getElementById('view_stat_api_calls_month').innerText = MDSCommon.findValueByName(child.fields, 'apiCallsTotal') || 0;
-          document.getElementById('view_stat_users_month').innerText = MDSCommon.findValueByName(child.fields, 'userRegsTotal') || 0;
+          document.getElementById('view_stat_website_visits_month').innerText =
+            MDSCommon.humanizeNumber(MDSCommon.findValueByName(child.fields, 'websiteVisitsTotal') || 0);
+          document.getElementById('view_stat_website_visitors_month').innerText =
+            MDSCommon.humanizeNumber(MDSCommon.findValueByName(child.fields, 'websiteVisitorsTotal') || 0);
+          document.getElementById('view_stat_api_calls_month').innerText =
+            MDSCommon.humanizeNumber(MDSCommon.findValueByName(child.fields, 'apiCallsTotal') || 0);
+          document.getElementById('view_stat_users_month').innerText =
+            MDSCommon.humanizeNumber(MDSCommon.findValueByName(child.fields, 'userRegsTotal') || 0);
           break;
       }
     });

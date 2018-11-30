@@ -464,6 +464,34 @@ var MDSCommon = {
     return 'less than a second'; //'just now' //or other string you like;
   },
 
+  /**
+   * @param {number|string} number
+   * @returns {string}
+   */
+  humanizeNumber: function (number) {
+    if (!MDSCommon.isNumber(number)) {
+      throw new Error('Must be number');
+    }
+
+    if (typeof number === 'string') {
+      number = parseInt(number);
+    }
+
+    if (number < 1000) {
+      return Math.round(number) + '';
+    }
+
+    if (number < 1000000) {
+      return Math.round(number / 1000) + 'K';
+    }
+
+    if (number < 1000000000) {
+      return Math.round(number / 1000000) + 'M';
+    }
+
+    return Math.round(number / 1000000000) + 'G';
+  },
+
   humanizeDate: function (date, language) {
     if (typeof date === 'string') {
       date = new Date(date);
