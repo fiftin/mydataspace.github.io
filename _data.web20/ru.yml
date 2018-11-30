@@ -87,6 +87,7 @@ strings:
   template: Каркас
   press_to_select_other_template: Нажмите чтобы выбрать другой каркас
   security: Безопасность
+  see_all_skeletons: Смотреть все каркасы
 
 
 header:

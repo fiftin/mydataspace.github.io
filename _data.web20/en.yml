@@ -85,6 +85,7 @@ strings:
   template: Skeleton
   press_to_select_other_template: Click to select other skeleton
   security: Security
+  see_all_skeletons: See All Seketons
 
 header:
   input_search: Search by skeletons...
