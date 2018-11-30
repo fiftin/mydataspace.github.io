@@ -3,8 +3,8 @@ function no_items__getRootData() {
     root: 'root',
     path: '',
     fields: [
-      { name: 'name', value: 'Empty' },
-      { name: 'description', value: '' }
+      { name: 'name', value: 'Empty Website' },
+      { name: 'description', value: 'Creating website from scratch' }
     ]
   }
 }

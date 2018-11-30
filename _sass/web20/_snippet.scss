@@ -121,6 +121,7 @@ $snippet-image-size-lg: 100px;
 
 .snippet__overview--no-margin {
   margin-bottom: 0;
+  min-height: 52px !important;
 }
 
 $snippet-medal-size: 50px;
