@@ -247,28 +247,23 @@ function fillResults_header__search(data, searchOptions, isPreload) {
 
     var footer;
 
-    if (root.profile && data.profiles[root.profile]) {
-      var ds = MDSCommon.findValueByName(root.fields, 'datasource');
+    footer =
+      '<div class="snippet__date view__comment__date view__date_wrap">' +
+      '  ' + tr$('created') + ' <span class="view__date" id="view__date">' + MDSCommon.humanizeDate(root.createdAt) + '</span> ' + tr$('ago') +
+      '</div>';
 
-      var authorAvatar;
-      if (isPreload) {
-        authorAvatar = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-      } else {
-        authorAvatar = 'https://cdn.web20site.com/avatars/md/' + (data.profiles[root.profile].avatar || 'HJYrGU87W') + '.png';
+    root.profile = 'denis';
+    data.profiles = {
+      denis: {
+        name: 'Denis Gukov'
       }
-      footer =
+    };
+
+    if (root.profile && data.profiles[root.profile]) {
+      footer +=
         '<div class="snippet__author">' +
-        '  <img class="snippet__author_avatar" src="' + authorAvatar + '" />' +
-        '  <span class="snippet__author_name">'
-        + data.profiles[root.profile].name +
-        (ds ? ' / <span class="link" onclick="openSearch_header__search(\'#src:' + ds + '\'); return false;">' + ds + '</span>' : '') +
-        '  </span>' +
-        (data.profiles[root.profile].verified ? '<i class="fa fa-check snippet__author_verified" aria-hidden="true"></i>' : '') +
-        '</div>';
-    } else {
-      footer =
-        '<div class="snippet__date view__comment__date view__date_wrap">' +
-        '  ' + tr$('created') + ' <span class="view__date" id="view__date">' + MDSCommon.humanizeDate(root.createdAt) + '</span> ' + tr$('ago') +
+        '  <span class="snippet__author_name">' + data.profiles[root.profile].name + '</span>' +
+          (data.profiles[root.profile].verified ? '<i class="fa fa-check snippet__author_verified" aria-hidden="true"></i>' : '') +
         '</div>';
     }
 

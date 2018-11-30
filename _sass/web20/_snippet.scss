@@ -177,6 +177,7 @@ $snippet-medal-size: 50px;
 
 .snippet__info--large-icon {
   margin-left: $snippet-image-size-lg + $small-padding;
+  min-height: $snippet-image-size-lg;
 }
 
 
@@ -214,20 +215,24 @@ $snippet-medal-size: 50px;
 
 .snippet__author {
   height: $snippet-footer-height;
+  float: left;
 }
 
 .snippet__author_name {
   font-size: 14px;
   color: #b9b9b9;
+  &:before {
+    content: "\2022";
+    padding: 0 7px;
+  }
   display: block;
-  float: left;
-  line-height: $snippet-footer-height;
-  max-width: calc(100% - #{$snippet-footer-height * 2 + $small-padding + 100});
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  margin-right: $small-padding / 2;
-  font-weight: bold;
+  // line-height: $snippet-footer-height;
+  // max-width: calc(100% - #{$snippet-footer-height * 2 + $small-padding + 100});
+  // overflow: hidden;
+  // white-space: nowrap;
+  // text-overflow: ellipsis;
+  // margin-right: $small-padding / 2;
+  // font-weight: bold;
 }
 
 .snippet__author_verified {
