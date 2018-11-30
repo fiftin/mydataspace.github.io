@@ -34,7 +34,7 @@ UILayout.windows.addFile = {
           break;
       }
 
-      $$('NAME_LABEL_8').define('placeholder', 'Example: test, test.' + (this.getShowData().fileType || 'html'));
+      $$('NAME_LABEL_8').define('placeholder', STRINGS.ADD_FILE_NAME_PLACEHOLDER + (this.getShowData().fileType || 'html'));
       $$('NAME_LABEL_8').refresh();
 
       $$('FILE_TYPE_LABEL').define('options', options);
@@ -107,7 +107,7 @@ UILayout.windows.addFile = {
         id: 'FILE_TYPE_LABEL',
         label: STRINGS.FILE_TYPE,
         name: 'type',
-        placeholder: 'from extension...',
+        placeholder: STRINGS.FILE_TYPE_FROM_EX,
         options: [
         ]
       },
