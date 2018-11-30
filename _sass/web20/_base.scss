@@ -308,6 +308,12 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
   border: 1px solid $brand-success;
   border-radius: 6px;
   box-shadow: 0 1px 2px 0 $brand-success;
+
+  .snippet__description {
+    max-height: 80px;
+    overflow: hidden;
+    line-height: 1.2;
+  }
 }
 
 
