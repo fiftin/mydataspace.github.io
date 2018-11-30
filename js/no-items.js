@@ -251,7 +251,7 @@ function no_items__createNewRoot() {
     fields: []
   }, function() {
     document.getElementById('no_items__new_root_input').value = '';
-    var url = 'https://wizard.myda.space/' + root + '/root.html';
+    var url = 'https://wizard.web20.site/' + root + '/root.html';
     $.ajax({
       url: url,
       type: 'HEAD'

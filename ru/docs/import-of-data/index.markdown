@@ -36,7 +36,7 @@ OpenRefine позволяет импортировать файлы XLS, XLSX, C
             </div>
           </div>
           <div class="safari__address_bar">
-            <div class="safari__url"><span class='safari__url__https'>https://</span>myda.space</div>
+            <div class="safari__url"><span class='safari__url__https'>https://</span>web20.site</div>
           </div>
         </div>
         <div style="margin-right: -2px; margin-bottom: -2px">

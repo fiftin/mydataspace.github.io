@@ -1,0 +1,47 @@
+.view__overview.view__overview--root#view_overview
+	.view__overview_image_wrap
+		img.view__overview_image#view__overview_image
+
+	.view__info
+		h1.view__title#view__title
+		.view__overview-actions#view_overview_actions
+			// button.view__overview-button(onclick="UI.entityForm.askDelete();")
+			// 	i.fa.fa-times
+			button.view__overview-button(onclick="UI.entityForm.startEditing();")
+				i.fa.fa-edit
+
+.container.view__container
+	#view__about
+		.view__description#view__description
+		.view__tags#view__tags
+
+		ul.stats
+			li.stats__stat-wrap
+				.stats__stat
+					.stats__stat-number#view_stat_website_visits_month 0
+					.stats__stat-title views
+			li.stats__stat-wrap
+				.stats__stat
+					.stats__stat-number#view_stat_website_visitors_month 0
+					.stats__stat-title visitors
+			li.stats__stat-wrap
+				.stats__stat
+					.stats__stat-number#view_stat_api_calls_month 0
+					.stats__stat-title API calls
+			li.stats__stat-wrap
+				.stats__stat
+					.stats__stat-number#view_stat_users_month 0
+					.stats__stat-title users
+
+	.view__buttons
+		a.btn.btn-success.btn-xs#view__website_link(target="_blank" style="margin-right: 10px;")
+			i.fa.fa-globe#view__website_link__icon(style="margin-right: 8px")
+			| Открыть сайт
+		span.view__website_link__countdown_wrap#view__website_link__countdown_wrap(style="display: none;")
+			| Будет доступен через
+			span.view__website_link__countdown#view__website_link__countdown
+			| секунд(ы)
+
+	.view__readme#view__readme
+
+.view__fields#view__fields

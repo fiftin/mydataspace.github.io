@@ -206,9 +206,9 @@ UIHelper = {
     var data = Identity.dataFromId(id);
     if (MDSCommon.isPresent(data.path)) {
       var path = MDSCommon.getParentPath(data.path);
-      return 'https://wizard.myda.space/' + data.root + (MDSCommon.isPresent(path) ? '/' + path : '') + '/' + 'item.html'
+      return 'https://wizard.web20.site/' + data.root + (MDSCommon.isPresent(path) ? '/' + path : '') + '/' + 'item.html'
     } else {
-      return 'https://wizard.myda.space/' + data.root + '/' + 'root.html'
+      return 'https://wizard.web20.site/' + data.root + '/' + 'root.html'
     }
   },
 
