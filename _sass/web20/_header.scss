@@ -639,6 +639,13 @@ $search-content-margin-top: 20px;
     border-radius: 2px;
     width: 100px;
   }
+
+  .view__comment__date {
+    color: transparent;
+    background: #efefef;
+    border-radius: 2px;
+    width: 200px;
+  }
 }
 
 $search-filter-panel-gap: 40px;

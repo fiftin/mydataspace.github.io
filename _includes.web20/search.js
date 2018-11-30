@@ -252,13 +252,6 @@ function fillResults_header__search(data, searchOptions, isPreload) {
       '  ' + tr$('created') + ' <span class="view__date" id="view__date">' + MDSCommon.humanizeDate(root.createdAt) + '</span> ' + tr$('ago') +
       '</div>';
 
-    root.profile = 'denis';
-    data.profiles = {
-      denis: {
-        name: 'Denis Gukov'
-      }
-    };
-
     if (root.profile && data.profiles[root.profile]) {
       footer +=
         '<div class="snippet__author">' +
