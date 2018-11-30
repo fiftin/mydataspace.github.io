@@ -1007,6 +1007,10 @@ input {
     padding: 0 5px;
     float: left;
     cursor: pointer;
+    white-space: nowrap;
+    max-width: calc(100% - 50px);
+    text-overflow: ellipsis;
+    overflow: hidden;
     &:hover {
       background: #e4e9ed;
     }
