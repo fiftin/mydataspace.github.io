@@ -2617,11 +2617,11 @@ EntityForm.prototype.showScriptEditWindow = function () {
     this.selectEditScriptTab(ext[1], true);
   }
   $$('edit_script_window').show();
-  if (webix.without_header) {
-    $('.edit_script_window').css('top', '137px');
-  } else {
-    $('.edit_script_window').css('top', '50px');
-  }
+  // if (webix.without_header) {
+  //   $('.edit_script_window').css('top', '137px');
+  // } else {
+  //   $('.edit_script_window').css('top', '50px');
+  // }
 };
 
 EntityForm.prototype.hideScriptEditWindow = function() {
@@ -3443,8 +3443,7 @@ EntityTree.prototype.refresh = function(root) {
         no_items__selectTemplate(newRootSkeleton, prefix);
       });
     }
-  }
-  else if (MDSCommon.isBlank(root) && Router.isEmpty()) {
+  } else if (MDSCommon.isBlank(root) && Router.isEmpty()) {
     if (Mydataspace.isLoggedIn()) {
       self.requestRoots(true, {});
     }
@@ -4370,6 +4369,8 @@ UILayout.windows.addFile = {
   width: 300,
   position: 'center',
   modal: true,
+  move:true,
+  resize: true,
   head: STRINGS.ADD_FILE,
   on: UIControls.getOnForFormWindow('add_file', {
     onShow: function (id) {
@@ -4662,28 +4663,28 @@ UILayout.editScriptTabs = {
 UILayout.windows.editScript = {
   view: 'ModalDialog',
   id: 'edit_script_window',
-  css: 'edit_script_window',
-  head: false,
-  left: 0,
-  top: UILayout.HEADER_HEIGHT - 2,
+  position: 'center',
+  modal: true,
+  head: STRINGS.ADD_FILE,
+  // css: 'edit_script_window',
+  // left: 0,
+  // top: UILayout.HEADER_HEIGHT - 2,
   animate: { type: 'flip', subtype: 'vertical' },
   on: {
     onShow: function() {
-      $$('edit_script_window').$view.classList.add('animated');
-      $$('edit_script_window').$view.classList.add('fadeInUp');
+      // $$('edit_script_window').$view.classList.add('animated');
+      // $$('edit_script_window').$view.classList.add('fadeInUp');
 
-      $$('CLOSE_LABEL').define('hotkey', 'escape');
-      var windowWidth =
-        $$('admin_panel').$width -
-        $$('my_data_panel__right_panel').$width -
-        $$('my_data_panel__resizer_2').$width - 2;
-
-      var windowHeight = $$('my_data_panel').$height - 2;
-
-      $$('edit_script_window').define('width', windowWidth);
-      $$('edit_script_window').define('height', windowHeight);
-      $$('edit_script_window').resize();
-      $$('my_data_panel__resizer_2').disable();
+      // $$('CLOSE_LABEL').define('hotkey', 'escape');
+      // var windowWidth =
+      //   $$('admin_panel').$width -
+      //   $$('my_data_panel__right_panel').$width -
+      //   $$('my_data_panel__resizer_2').$width - 2;
+      // var windowHeight = $$('my_data_panel').$height - 2;
+      // $$('edit_script_window').define('width', windowWidth);
+      // $$('edit_script_window').define('height', windowHeight);
+      // $$('edit_script_window').resize();
+      // $$('my_data_panel__resizer_2').disable();
     },
 
     onBlur: function() {
@@ -4697,9 +4698,9 @@ UILayout.windows.editScript = {
     },
 
     onHide: function() {
-      $$('edit_script_window').$view.classList.remove('animated');
-      $$('edit_script_window').$view.classList.remove('fadeInUp');
-      $$('my_data_panel__resizer_2').enable();
+      // $$('edit_script_window').$view.classList.remove('animated');
+      // $$('edit_script_window').$view.classList.remove('fadeInUp');
+      // $$('my_data_panel__resizer_2').enable();
     }
   },
 
@@ -4737,6 +4738,7 @@ UILayout.windows.editScript = {
       { view: 'ace-editor',
         id: 'edit_script_window__editor',
         mode: 'javascript',
+        height: 600,
         show_hidden: true,
         on: {
           onReady: function(editor) {
@@ -7058,33 +7060,33 @@ UI = {
   },
 
   updateSizes: function() {
-    var height = webix.without_header ? window.innerHeight - (50 + 85) : window.innerHeight;
-
-    var editScriptWindowWidth =
-      $$('admin_panel').$width -
-      $$('my_data_panel__right_panel').$width -
-      $$('my_data_panel__resizer_2').$width - 2;
-
-    $$('edit_script_window').define({
-      height: height,
-      width: editScriptWindowWidth
-    });
-
-    $$('admin_panel').define({
-      width: window.innerWidth,
-      height: height
-    });
-
-    $$('my_data_panel').define({
-      height: webix.without_header ? window.innerHeight - (50 + 85) : window.innerHeight - UILayout.HEADER_HEIGHT + 2
-    });
-
-    $$('edit_script_window').define({
-      height: $$('my_data_panel__resizer_2').$height
-    });
-    $$('admin_panel').resize();
-    $$('admin_panel').resize();
-    $$('edit_script_window').resize();
+    // var height = webix.without_header ? window.innerHeight - (50 + 85) : window.innerHeight;
+    //
+    // var editScriptWindowWidth =
+    //   $$('admin_panel').$width -
+    //   $$('my_data_panel__right_panel').$width -
+    //   $$('my_data_panel__resizer_2').$width - 2;
+    //
+    // $$('edit_script_window').define({
+    //   height: height,
+    //   width: editScriptWindowWidth
+    // });
+    //
+    // $$('admin_panel').define({
+    //   width: window.innerWidth,
+    //   height: height
+    // });
+    //
+    // $$('my_data_panel').define({
+    //   height: webix.without_header ? window.innerHeight - (50 + 85) : window.innerHeight - UILayout.HEADER_HEIGHT + 2
+    // });
+    //
+    // $$('edit_script_window').define({
+    //   height: $$('my_data_panel__resizer_2').$height
+    // });
+    // $$('admin_panel').resize();
+    // $$('admin_panel').resize();
+    // $$('edit_script_window').resize();
   },
 
   hideAccessToken: function () {

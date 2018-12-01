@@ -4,6 +4,8 @@ UILayout.windows.addFile = {
   width: 300,
   position: 'center',
   modal: true,
+  move:true,
+  resize: true,
   head: STRINGS.ADD_FILE,
   on: UIControls.getOnForFormWindow('add_file', {
     onShow: function (id) {

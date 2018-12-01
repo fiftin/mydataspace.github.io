@@ -1227,11 +1227,11 @@ EntityForm.prototype.showScriptEditWindow = function () {
     this.selectEditScriptTab(ext[1], true);
   }
   $$('edit_script_window').show();
-  if (webix.without_header) {
-    $('.edit_script_window').css('top', '137px');
-  } else {
-    $('.edit_script_window').css('top', '50px');
-  }
+  // if (webix.without_header) {
+  //   $('.edit_script_window').css('top', '137px');
+  // } else {
+  //   $('.edit_script_window').css('top', '50px');
+  // }
 };
 
 EntityForm.prototype.hideScriptEditWindow = function() {

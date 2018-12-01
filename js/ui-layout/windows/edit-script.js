@@ -52,28 +52,28 @@ UILayout.editScriptTabs = {
 UILayout.windows.editScript = {
   view: 'ModalDialog',
   id: 'edit_script_window',
-  css: 'edit_script_window',
-  head: false,
-  left: 0,
-  top: UILayout.HEADER_HEIGHT - 2,
+  position: 'center',
+  modal: true,
+  head: STRINGS.ADD_FILE,
+  // css: 'edit_script_window',
+  // left: 0,
+  // top: UILayout.HEADER_HEIGHT - 2,
   animate: { type: 'flip', subtype: 'vertical' },
   on: {
     onShow: function() {
-      $$('edit_script_window').$view.classList.add('animated');
-      $$('edit_script_window').$view.classList.add('fadeInUp');
+      // $$('edit_script_window').$view.classList.add('animated');
+      // $$('edit_script_window').$view.classList.add('fadeInUp');
 
-      $$('CLOSE_LABEL').define('hotkey', 'escape');
-      var windowWidth =
-        $$('admin_panel').$width -
-        $$('my_data_panel__right_panel').$width -
-        $$('my_data_panel__resizer_2').$width - 2;
-
-      var windowHeight = $$('my_data_panel').$height - 2;
-
-      $$('edit_script_window').define('width', windowWidth);
-      $$('edit_script_window').define('height', windowHeight);
-      $$('edit_script_window').resize();
-      $$('my_data_panel__resizer_2').disable();
+      // $$('CLOSE_LABEL').define('hotkey', 'escape');
+      // var windowWidth =
+      //   $$('admin_panel').$width -
+      //   $$('my_data_panel__right_panel').$width -
+      //   $$('my_data_panel__resizer_2').$width - 2;
+      // var windowHeight = $$('my_data_panel').$height - 2;
+      // $$('edit_script_window').define('width', windowWidth);
+      // $$('edit_script_window').define('height', windowHeight);
+      // $$('edit_script_window').resize();
+      // $$('my_data_panel__resizer_2').disable();
     },
 
     onBlur: function() {
@@ -87,9 +87,9 @@ UILayout.windows.editScript = {
     },
 
     onHide: function() {
-      $$('edit_script_window').$view.classList.remove('animated');
-      $$('edit_script_window').$view.classList.remove('fadeInUp');
-      $$('my_data_panel__resizer_2').enable();
+      // $$('edit_script_window').$view.classList.remove('animated');
+      // $$('edit_script_window').$view.classList.remove('fadeInUp');
+      // $$('my_data_panel__resizer_2').enable();
     }
   },
 
@@ -127,6 +127,7 @@ UILayout.windows.editScript = {
       { view: 'ace-editor',
         id: 'edit_script_window__editor',
         mode: 'javascript',
+        height: 600,
         show_hidden: true,
         on: {
           onReady: function(editor) {
