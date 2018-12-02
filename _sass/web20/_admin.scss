@@ -1014,13 +1014,19 @@ input {
 
   .view__title {
     margin-left: 10px;
-    padding: 0 5px;
     float: left;
     cursor: pointer;
     white-space: nowrap;
     max-width: calc(100% - 50px);
     text-overflow: ellipsis;
     overflow: hidden;
+    position: relative;
+    padding: 0 15px 0 5px;
+    .fa {
+      position: absolute;
+      right: 0;
+      top: 6px;
+    }
     &:hover {
       background: #e4e9ed;
     }
