@@ -15,9 +15,12 @@ EntityList.prototype.updateBreadcrumbs = function () {
   if (!breadcrumbs) {
     return;
   }
-
-  var data = Identity.dataFromId(this.getCurrentId());
+  var entityId = UI.entityTree.getSelectedId();
+  var data = Identity.dataFromId(entityId);
   var items = [data.root].concat(data.path === '' ? [] : data.path.split('/'));
+  if (MDSCommon.isPresent(data.fields)) {
+    items.push(data.fields[0]);
+  }
   var html = '';
   var id = '';
   for (var i = 0; i < items.length; i++) {
@@ -40,6 +43,7 @@ EntityList.prototype.updateBreadcrumbs = function () {
       '</a>';
   }
   breadcrumbs.innerHTML = html;
+  breadcrumbs.setAttribute('data-entity-id', entityId);
 };
 
 /**

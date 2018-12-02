@@ -24,7 +24,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     CREATE_CHILDREN: 'Create Children',
     CREATE_ONE_CHILD: 'Create One Child',
     OTHERS_CAN: 'Others Can',
-    RENAME: 'Upload',
+    RENAME: 'Rename',
     COPY: 'Copy',
     UPLOAD: 'Upload',
     CREATE: 'Create',

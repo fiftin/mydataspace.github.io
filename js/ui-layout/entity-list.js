@@ -5,7 +5,7 @@ UILayout.entityList =
       cols: [
         { view: 'template',
           borderless: true,
-          id: 'entity_list_breadcrumbs',
+          // id: 'entity_list_breadcrumbs',
           css: 'entity_list__breadcrumbs',
           template: '<div class="admin-breadcrumbs" id="entity_list_breadcrumbs"></div>'
         },

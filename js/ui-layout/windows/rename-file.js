@@ -7,8 +7,9 @@ UILayout.windows.renameFile = {
   head: STRINGS.RENAME_FILE,
   on: UIControls.getOnForFormWindow('rename_file', {
     onShow: function () {
+      var currentFileId = this.getShowData().entityId;
       $$('rename_file_form').setValues({
-        name: Identity.getFileNameFromId($$('entity_tree').getSelectedId())
+        name: Identity.getFileNameFromId(currentFileId)
       });
       webix.UIManager.setFocus($$('NAME_LABEL_9'));
     }
@@ -18,8 +19,8 @@ UILayout.windows.renameFile = {
     id: 'rename_file_form',
     borderless: true,
     on: {
-
       onSubmit: function() {
+        var window = $$('rename_file_window');
         var form = this;
         if (!form.validate({ disabled: true })) {
           UIControls.removeSpinnerFromWindow('rename_file_window');
@@ -28,9 +29,11 @@ UILayout.windows.renameFile = {
         }
 
         var formData = $$('rename_file_form').getValues();
-        var currentFileId = $$('entity_tree').getSelectedId();
+        var currentFileId = window.getShowData().entityId;
         Mydataspace.request('entities.get', Identity.dataFromId(currentFileId)).then(function (data) {
-          var req = MDSCommon.extend(Identity.dataFromId(UI.entityList.getCurrentId()), {
+          var entityData = Identity.dataFromId(currentFileId);
+          delete entityData.fields;
+          var req = MDSCommon.extend(entityData, {
             fields: [{
               name: formData.name,
               value: data.fields[0].value,

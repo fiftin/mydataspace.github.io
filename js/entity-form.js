@@ -541,8 +541,8 @@ EntityForm.prototype.setEntityView = function(data) {
     var viewFields = self.setViewFields(data);
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
-      $(self).addClass('view__field--active');
-      var value = $(self).data('value');
+      $(this).addClass('view__field--active');
+      var value = $(this).data('value');
       UI.entityForm.showScriptViewWindow(value);
     });
   });

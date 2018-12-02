@@ -1920,8 +1920,8 @@ EntityForm.prototype.setEntityView = function(data) {
     var viewFields = self.setViewFields(data);
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
-      $(self).addClass('view__field--active');
-      var value = $(self).data('value');
+      $(this).addClass('view__field--active');
+      var value = $(this).data('value');
       UI.entityForm.showScriptViewWindow(value);
     });
   });
@@ -2576,9 +2576,12 @@ EntityList.prototype.updateBreadcrumbs = function () {
   if (!breadcrumbs) {
     return;
   }
-
-  var data = Identity.dataFromId(this.getCurrentId());
+  var entityId = UI.entityTree.getSelectedId();
+  var data = Identity.dataFromId(entityId);
   var items = [data.root].concat(data.path === '' ? [] : data.path.split('/'));
+  if (MDSCommon.isPresent(data.fields)) {
+    items.push(data.fields[0]);
+  }
   var html = '';
   var id = '';
   for (var i = 0; i < items.length; i++) {
@@ -2601,6 +2604,7 @@ EntityList.prototype.updateBreadcrumbs = function () {
       '</a>';
   }
   breadcrumbs.innerHTML = html;
+  breadcrumbs.setAttribute('data-entity-id', entityId);
 };
 
 /**
@@ -3514,6 +3518,148 @@ EntityTree.prototype.getFileIds = function (id) {
     childId = $$('entity_tree').getNextSiblingId(childId);
   }
   return ret;
+};
+
+
+EntityTree.prototype.editFile = function (id) {
+  var fileName = Identity.getFileNameFromId(id);
+  var fileExtInfo = UIHelper.getExtensionInfoForFile(fileName);
+  var editorId = 'script_editor_' + id;
+
+  if (!$$(editorId)) {
+    $$('$multiline-tabbar1').show();
+    $$('script_editor').addView({
+      header: fileName,
+      close: true,
+      css: 'script_editor__tab',
+      body: {
+        id: editorId,
+        rows: [{ view: 'toolbar',
+          css: 'script_editor__toolbar',
+          elements: [
+            { view: 'template',
+              borderless: true,
+              // id: 'entity_list_breadcrumbs',
+              css: 'entity_list__breadcrumbs',
+              template: '<div class="admin-breadcrumbs" id="entity_list_breadcrumbs"></div>'
+            },
+            { view: 'button',
+              type: 'icon',
+              icon: 'save',
+              // id: 'SAVE_ENTITY_LABEL_2',
+              label: STRINGS.SAVE_ENTITY,
+              autowidth: true,
+              tooltip: 'Ctrl + S',
+              on: {
+                onItemClick: function () {
+                  var editor = $$(editorId + '_ace').editor;
+                  var request = MDSCommon.extend(Identity.dataFromId(id, {ignoreField: true}), {
+                    fields: [{
+                      name: Identity.getFileNameFromId(id),
+                      type: 'j',
+                      value: editor.getValue()
+                    }]
+                  });
+                  Mydataspace.request('entities.change', request).then(function (data) {
+                    $('div[button_id="' + editorId + '"]').removeClass('script_editor__tab--dirty');
+                    // TODO: unlock editor
+                  }, function (err) {
+                    // TODO: handle sating error
+                  });
+                }
+              }
+            },
+            { view: 'button',
+              type: 'icon',
+              icon: 'search',
+              // id: 'SCRIPT_EDITOR_FIND_LABEL_1',
+              label: STRINGS.SCRIPT_EDITOR_FIND,
+              autowidth: true,
+              tooltip: 'Ctrl + F',
+              on: {
+                onItemClick: function () {
+                  var editor = $$(editorId + '_ace').editor;
+                  editor.execCommand('find');
+                }
+              }
+            },
+            { view: 'button',
+              type: 'icon',
+              icon: 'sort-alpha-asc',
+              // id: 'SCRIPT_EDITOR_REPLACE_LABEL_1',
+              label: STRINGS.SCRIPT_EDITOR_REPLACE,
+              autowidth: true,
+              tooltip: 'Ctrl + H',
+              on: {
+                onItemClick: function () {
+                  var editor = $$(editorId + '_ace').editor;
+                  editor.execCommand('replace');
+                }
+              }
+            } //, {}
+          ]
+        }, {
+          view: 'ace-editor',
+          mode: fileExtInfo.mode,
+          id: editorId + '_ace',
+          show_hidden: true,
+          on: {
+            onReady: function (editor) {
+              editor.getSession().setTabSize(2);
+              editor.getSession().setUseSoftTabs(true);
+              editor.getSession().setUseWorker(false);
+              editor.commands.addCommand({
+                name: 'save',
+                bindKey: {win: 'Ctrl-S'},
+                exec: function (editor) {
+                  var request = MDSCommon.extend(Identity.dataFromId(id, {ignoreField: true}), {
+                    fields: [{
+                      name: Identity.getFileNameFromId(id),
+                      type: 'j',
+                      value: editor.getValue()
+                    }]
+                  });
+
+                  Mydataspace.request('entities.change', request).then(function (data) {
+                    var $tab = $('div[button_id="' + editorId + '"]');
+                    $tab.removeClass('script_editor__tab--dirty');
+                    $tab.removeClass('script_editor__tab--error');
+                    editor.getSession().clearAnnotations();
+                  }, function (err) {
+                    if (err.name === 'CodeError') {
+                      $('div[button_id="' + editorId + '"]').addClass('script_editor__tab--error');
+                      editor.getSession().setAnnotations([{
+                        row: err.line - 1,
+                        column: err.column,
+                        text: err.message,
+                        type: 'error'
+                      }]);
+                    } else {
+                      $('div[button_id="script_editor_' + id + '"]').addClass('script_editor__tab--error');
+                      UI.error(err);
+                    }
+                  });
+                }
+              });
+            }
+          }
+        }]
+      }
+    });
+
+    Mydataspace.request('entities.get', Identity.dataFromId(id)).then(function (data) {
+      $$(editorId + '_ace').setValue(data.fields[0].value);
+      $$(editorId + '_ace').editor.on('change', function () {
+        $('div[button_id="' + editorId + '"]').addClass('script_editor__tab--dirty');
+      });
+    });
+  }
+  $$('script_editor').show();
+  $$('script_editor').setValue(editorId);
+
+  var fileParentId = Identity.getEntityIdFromFileId(id);
+  UI.setCurrentId(fileParentId);
+  UI.entityList.updateBreadcrumbs();
 };
 function Pages() {
   this.currentPage = 'data';
@@ -4601,8 +4747,9 @@ UILayout.windows.renameFile = {
   head: STRINGS.RENAME_FILE,
   on: UIControls.getOnForFormWindow('rename_file', {
     onShow: function () {
+      var currentFileId = this.getShowData().entityId;
       $$('rename_file_form').setValues({
-        name: Identity.getFileNameFromId($$('entity_tree').getSelectedId())
+        name: Identity.getFileNameFromId(currentFileId)
       });
       webix.UIManager.setFocus($$('NAME_LABEL_9'));
     }
@@ -4612,8 +4759,8 @@ UILayout.windows.renameFile = {
     id: 'rename_file_form',
     borderless: true,
     on: {
-
       onSubmit: function() {
+        var window = $$('rename_file_window');
         var form = this;
         if (!form.validate({ disabled: true })) {
           UIControls.removeSpinnerFromWindow('rename_file_window');
@@ -4622,9 +4769,11 @@ UILayout.windows.renameFile = {
         }
 
         var formData = $$('rename_file_form').getValues();
-        var currentFileId = $$('entity_tree').getSelectedId();
+        var currentFileId = window.getShowData().entityId;
         Mydataspace.request('entities.get', Identity.dataFromId(currentFileId)).then(function (data) {
-          var req = MDSCommon.extend(Identity.dataFromId(UI.entityList.getCurrentId()), {
+          var entityData = Identity.dataFromId(currentFileId);
+          delete entityData.fields;
+          var req = MDSCommon.extend(entityData, {
             fields: [{
               name: formData.name,
               value: data.fields[0].value,
@@ -5384,7 +5533,7 @@ UILayout.entityContextMenu = {
           id = this._area && this._area.id ? this._area.id : UI.entityTree.getCurrentId();
           break;
         case 'entity_list_new_menu':
-          id = UI.entityList.getCurrentId();
+          id = document.getElementById('entity_list_breadcrumbs').getAttribute('data-entity-id');
           break;
         case 'entity_form_menu':
           id = UI.entityForm.getCurrentId();
@@ -5662,7 +5811,7 @@ UILayout.entityContextMenu = {
           entityId = UI.entityTree.getSelectedId();
           break;
         case 'entity_list_new_menu':
-          entityId = UI.entityList.getCurrentId();
+          entityId = document.getElementById('entity_list_breadcrumbs').getAttribute('data-entity-id');
           break;
         case 'entity_form_menu':
           entityId = UI.entityForm.getCurrentId();
@@ -5677,8 +5826,12 @@ UILayout.entityContextMenu = {
           EntityForm.prototype.clone(entityId);
           break;
         case 'edit':
-          $$('entity_list').select(entityId);
-          UI.entityForm.startEditing();
+          if (Identity.isFileId(entityId)) {
+            UI.entityTree.editFile(entityId);
+          } else {
+            $$('entity_list').select(entityId);
+            UI.entityForm.startEditing();
+          }
           break;
         case 'delete_root':
         case 'delete_entity':
@@ -5726,10 +5879,9 @@ UILayout.entityContextMenu = {
                 return;
               }
 
-              var fileId = $$('entity_tree').getSelectedId();
-              var req = MDSCommon.extend(Identity.dataFromId(fileId, {ignoreField: true}), {
+              var req = MDSCommon.extend(Identity.dataFromId(entityId, {ignoreField: true}), {
                 fields: [{
-                  name: Identity.getFileNameFromId(fileId),
+                  name: Identity.getFileNameFromId(entityId),
                   value: null
                 }]
               });
@@ -5739,7 +5891,7 @@ UILayout.entityContextMenu = {
           });
           break;
         case 'rename_file':
-          $$('rename_file_window').show();
+          $$('rename_file_window').showWithData({ entityId: entityId });
           break;
         case 'new_generator':
           $$('add_generator_window').showWithData({entityId: entityId});
@@ -5996,140 +6148,11 @@ UILayout.entityTree = {
           if (UIHelper.isTreeShowMore(id)) {
             $$('entity_tree').select(UI.entityTree.getCurrentId());
           } else if (Identity.isFileId(id)) {
-
-            var fileName = Identity.getFileNameFromId(id);
-            var fileExtInfo = UIHelper.getExtensionInfoForFile(fileName);
-            var editorId = 'script_editor_' + id;
-
-            if (!$$(editorId)) {
-              $$('$multiline-tabbar1').show();
-              $$('script_editor').addView({
-                header: fileName,
-                close: true,
-                css: 'script_editor__tab',
-                body: {
-                  id: editorId,
-                  rows: [{ view: 'toolbar',
-                    css: 'script_editor__toolbar',
-                    elements: [
-                      { view: 'button',
-                        type: 'icon',
-                        icon: 'save',
-                        // id: 'SAVE_ENTITY_LABEL_2',
-                        label: STRINGS.SAVE_ENTITY,
-                        autowidth: true,
-                        tooltip: 'Ctrl + S',
-                        on: {
-                          onItemClick: function () {
-                            var editor = $$(editorId + '_ace').editor;
-                            var request = MDSCommon.extend(Identity.dataFromId(id, {ignoreField: true}), {
-                              fields: [{
-                                name: Identity.getFileNameFromId(id),
-                                type: 'j',
-                                value: editor.getValue()
-                              }]
-                            });
-                            Mydataspace.request('entities.change', request).then(function (data) {
-                              $('div[button_id="' + editorId + '"]').removeClass('script_editor__tab--dirty');
-                              // TODO: unlock editor
-                            }, function (err) {
-                              // TODO: handle sating error
-                            });
-                          }
-                        }
-                      },
-                      { view: 'button',
-                        type: 'icon',
-                        icon: 'search',
-                        // id: 'SCRIPT_EDITOR_FIND_LABEL_1',
-                        label: STRINGS.SCRIPT_EDITOR_FIND,
-                        autowidth: true,
-                        tooltip: 'Ctrl + F',
-                        on: {
-                          onItemClick: function () {
-                            var editor = $$(editorId + '_ace').editor;
-                            editor.execCommand('find');
-                          }
-                        }
-                      },
-                      { view: 'button',
-                        type: 'icon',
-                        icon: 'sort-alpha-asc',
-                        // id: 'SCRIPT_EDITOR_REPLACE_LABEL_1',
-                        label: STRINGS.SCRIPT_EDITOR_REPLACE,
-                        autowidth: true,
-                        tooltip: 'Ctrl + H',
-                        on: {
-                          onItemClick: function () {
-                            var editor = $$(editorId + '_ace').editor;
-                            editor.execCommand('replace');
-                          }
-                        }
-                      }, {}
-                    ]
-                  }, {
-                    view: 'ace-editor',
-                    mode: fileExtInfo.mode,
-                    id: editorId + '_ace',
-                    show_hidden: true,
-                    on: {
-                      onReady: function (editor) {
-                        editor.getSession().setTabSize(2);
-                        editor.getSession().setUseSoftTabs(true);
-                        editor.getSession().setUseWorker(false);
-                        editor.commands.addCommand({
-                          name: 'save',
-                          bindKey: {win: 'Ctrl-S'},
-                          exec: function (editor) {
-                            var request = MDSCommon.extend(Identity.dataFromId(id, {ignoreField: true}), {
-                              fields: [{
-                                name: Identity.getFileNameFromId(id),
-                                type: 'j',
-                                value: editor.getValue()
-                              }]
-                            });
-
-                            Mydataspace.request('entities.change', request).then(function (data) {
-                              var $tab = $('div[button_id="' + editorId + '"]');
-                              $tab.removeClass('script_editor__tab--dirty');
-                              $tab.removeClass('script_editor__tab--error');
-                              editor.getSession().clearAnnotations();
-                            }, function (err) {
-                              if (err.name === 'CodeError') {
-                                $('div[button_id="' + editorId + '"]').addClass('script_editor__tab--error');
-                                editor.getSession().setAnnotations([{
-                                  row: err.line - 1,
-                                  column: err.column,
-                                  text: err.message,
-                                  type: 'error'
-                                }]);
-                              } else {
-                                $('div[button_id="script_editor_' + id + '"]').addClass('script_editor__tab--error');
-                                UI.error(err);
-                              }
-                            });
-                          }
-                        });
-                      }
-                    }
-                  }]
-                }
-              });
-
-              Mydataspace.request('entities.get', Identity.dataFromId(id)).then(function (data) {
-                $$(editorId + '_ace').setValue(data.fields[0].value);
-                $$(editorId + '_ace').editor.on('change', function () {
-                  $('div[button_id="' + editorId + '"]').addClass('script_editor__tab--dirty');
-                });
-              });
-            }
-            $$('script_editor').show();
-            $$('script_editor').setValue(editorId);
-
-            var fileParentId = Identity.getEntityIdFromFileId(id);
-            UI.setCurrentId(fileParentId);
+            UI.entityTree.editFile(id);
           } else {
+            $$('script_editor').setValue('my_data_panel__central_panel');
             UI.setCurrentId(id);
+            UI.entityList.updateBreadcrumbs();
           }
         },
 
@@ -6152,7 +6175,7 @@ UILayout.entityList =
       cols: [
         { view: 'template',
           borderless: true,
-          id: 'entity_list_breadcrumbs',
+          // id: 'entity_list_breadcrumbs',
           css: 'entity_list__breadcrumbs',
           template: '<div class="admin-breadcrumbs" id="entity_list_breadcrumbs"></div>'
         },

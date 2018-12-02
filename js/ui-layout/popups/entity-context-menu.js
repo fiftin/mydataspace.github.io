@@ -17,7 +17,7 @@ UILayout.entityContextMenu = {
           id = this._area && this._area.id ? this._area.id : UI.entityTree.getCurrentId();
           break;
         case 'entity_list_new_menu':
-          id = UI.entityList.getCurrentId();
+          id = document.getElementById('entity_list_breadcrumbs').getAttribute('data-entity-id');
           break;
         case 'entity_form_menu':
           id = UI.entityForm.getCurrentId();
@@ -295,7 +295,7 @@ UILayout.entityContextMenu = {
           entityId = UI.entityTree.getSelectedId();
           break;
         case 'entity_list_new_menu':
-          entityId = UI.entityList.getCurrentId();
+          entityId = document.getElementById('entity_list_breadcrumbs').getAttribute('data-entity-id');
           break;
         case 'entity_form_menu':
           entityId = UI.entityForm.getCurrentId();
@@ -310,8 +310,12 @@ UILayout.entityContextMenu = {
           EntityForm.prototype.clone(entityId);
           break;
         case 'edit':
-          $$('entity_list').select(entityId);
-          UI.entityForm.startEditing();
+          if (Identity.isFileId(entityId)) {
+            UI.entityTree.editFile(entityId);
+          } else {
+            $$('entity_list').select(entityId);
+            UI.entityForm.startEditing();
+          }
           break;
         case 'delete_root':
         case 'delete_entity':
@@ -359,10 +363,9 @@ UILayout.entityContextMenu = {
                 return;
               }
 
-              var fileId = $$('entity_tree').getSelectedId();
-              var req = MDSCommon.extend(Identity.dataFromId(fileId, {ignoreField: true}), {
+              var req = MDSCommon.extend(Identity.dataFromId(entityId, {ignoreField: true}), {
                 fields: [{
-                  name: Identity.getFileNameFromId(fileId),
+                  name: Identity.getFileNameFromId(entityId),
                   value: null
                 }]
               });
@@ -372,7 +375,7 @@ UILayout.entityContextMenu = {
           });
           break;
         case 'rename_file':
-          $$('rename_file_window').show();
+          $$('rename_file_window').showWithData({ entityId: entityId });
           break;
         case 'new_generator':
           $$('add_generator_window').showWithData({entityId: entityId});
