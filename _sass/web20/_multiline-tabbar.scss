@@ -1,0 +1,57 @@
+.webix_el_multiline-tabbar {
+  height: auto !important;
+  background: #c8d1d8ad;
+  margin-bottom: -1px;
+}
+
+.script_editor__toolbar {
+  border-top-width: 0 !important;
+}
+
+.multiline-tabbar__tab {
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  float: left;
+  padding: 5px 6px;
+  cursor: pointer;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  &:hover {
+    background: $toolbar-bg;
+  }
+}
+
+.multiline-tabbar__tab-close {
+  font-size: inherit !important;
+  transform: translate(5px, 3px);
+  opacity: 0.5;
+  transition: opacity 0.15s;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.script_editor__tab--dirty {
+  background: rgba(#0d8bf2, 0.1);
+}
+
+.script_editor__tab--error {
+  background: rgba($brand-danger, 0.1);
+}
+
+
+.multiline-tabbar__tab.webix_selected {
+  border-left-color: $selected-bg;
+  background: $toolbar-bg;
+  color: $text-color;
+}
+
+.multiline-tabbar__tab.webix_selected.script_editor__tab--dirty {
+  border-left-color: #0d8bf2;
+}
+
+.multiline-tabbar__tab.webix_selected.script_editor__tab--error {
+  border-left-color: $brand-danger;
+}

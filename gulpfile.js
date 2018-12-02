@@ -74,6 +74,7 @@ gulp.task('ui', function() {
     './js/entity-tree.js',
     './js/pages.js',
     './js/ui-layout/index.js',
+    './js/ui-layout/multiline-tabview.js',
     './js/ui-layout/windows/add-app.js',
     './js/ui-layout/windows/add-root.js',
     './js/ui-layout/windows/add-entity.js',

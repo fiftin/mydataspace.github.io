@@ -98,85 +98,6 @@ UILayout.entityTree = {
           UI.entityTree.resolveChildren(id);
         },
 
-        onItemClick: function (id) {
-
-          if (!Identity.isFileId(id)) {
-            return;
-          }
-
-          if ($$('script_editor_' + id)) {
-            return;
-          }
-          var fileName = Identity.getFileNameFromId(id);
-          var fileExtInfo = UIHelper.getExtensionInfoForFile(fileName);
-
-          $$('$tabbar1').show();
-          $$('script_editor').addView({
-            header: fileName,
-            close: true,
-            css: 'script_editor__tab',
-            body: {
-              id: 'script_editor_' + id,
-              view: 'ace-editor',
-              mode: fileExtInfo.mode,
-              show_hidden: true,
-              on: {
-                onReady: function (editor) {
-                  editor.getSession().setTabSize(2);
-                  editor.getSession().setUseSoftTabs(true);
-                  editor.getSession().setUseWorker(false);
-                  editor.commands.addCommand({
-                    name: 'save',
-                    bindKey: {win: 'Ctrl-S'},
-                    exec: function (editor) {
-                      var request = MDSCommon.extend(Identity.dataFromId(id, {ignoreField: true}), {
-                        fields: [{
-                          name: Identity.getFileNameFromId(id),
-                          type: 'j',
-                          value: editor.getValue()
-                        }]
-                      });
-
-                      Mydataspace.request('entities.change', request).then(function (data) {
-                        var $tab = $('div[button_id="script_editor_' + id + '"]');
-                        $tab.removeClass('script_editor__tab--dirty');
-                        $tab.removeClass('script_editor__tab--error');
-                        editor.getSession().clearAnnotations();
-                      }, function (err) {
-                        if (err.name === 'CodeError') {
-                          $('div[button_id="script_editor_' + id + '"]').addClass('script_editor__tab--error');
-                          editor.getSession().setAnnotations([{
-                            row: err.line - 1,
-                            column: err.column,
-                            text: err.message,
-                            type: 'error'
-                          }]);
-                        } else {
-                          $('div[button_id="script_editor_' + id + '"]').addClass('script_editor__tab--error');
-                          UI.error(err);
-                        }
-                      });
-                    }
-                  });
-                }
-              }
-            }
-          });
-
-          Mydataspace.request('entities.get', Identity.dataFromId(id)).then(function (data) {
-            $$('script_editor_' + id).setValue(data.fields[0].value);
-
-            $$('script_editor_' + id).editor.on('change', function () {
-              $('div[button_id="script_editor_' + id + '"]').addClass('script_editor__tab--dirty');
-            });
-          });
-
-          $$('script_editor').show();
-          $$('script_editor_' + id).show();
-
-
-        },
-
         onSelectChange: function (ids) {
           var id = ids[0];
           if (UIHelper.isTreeShowMore(id)) {
@@ -185,68 +106,140 @@ UILayout.entityTree = {
 
             var fileName = Identity.getFileNameFromId(id);
             var fileExtInfo = UIHelper.getExtensionInfoForFile(fileName);
+            var editorId = 'script_editor_' + id;
 
-            if (!$$('script_editor_' + id)) {
-              $$('$tabbar1').show();
+            if (!$$(editorId)) {
+              $$('$multiline-tabbar1').show();
               $$('script_editor').addView({
                 header: fileName,
                 close: true,
                 css: 'script_editor__tab',
                 body: {
-                  id: 'script_editor_' + id,
-                  view: 'ace-editor',
-                  mode: fileExtInfo.mode,
-                  show_hidden: true,
-                  on: {
-                    onReady: function (editor) {
-                      editor.getSession().setTabSize(2);
-                      editor.getSession().setUseSoftTabs(true);
-                      editor.getSession().setUseWorker(false);
-                      editor.commands.addCommand({
-                        name: 'save',
-                        bindKey: {win: 'Ctrl-S'},
-                        exec: function (editor) {
-                          var request = MDSCommon.extend(Identity.dataFromId(id, {ignoreField: true}), {
-                            fields: [{
-                              name: Identity.getFileNameFromId(id),
-                              type: 'j',
-                              value: editor.getValue()
-                            }]
-                          });
-
-                          Mydataspace.request('entities.change', request).then(function (data) {
-                            $('div[button_id="script_editor_' + id + '"]').removeClass('script_editor__tab--dirty');
-                            // TODO: unlock editor
-                          }, function (err) {
-                            // TODO: handle sating error
-                          });
+                  id: editorId,
+                  rows: [{ view: 'toolbar',
+                    css: 'script_editor__toolbar',
+                    elements: [
+                      { view: 'button',
+                        type: 'icon',
+                        icon: 'save',
+                        // id: 'SAVE_ENTITY_LABEL_2',
+                        label: STRINGS.SAVE_ENTITY,
+                        autowidth: true,
+                        tooltip: 'Ctrl + S',
+                        on: {
+                          onItemClick: function () {
+                            var editor = $$(editorId + '_ace').editor;
+                            var request = MDSCommon.extend(Identity.dataFromId(id, {ignoreField: true}), {
+                              fields: [{
+                                name: Identity.getFileNameFromId(id),
+                                type: 'j',
+                                value: editor.getValue()
+                              }]
+                            });
+                            Mydataspace.request('entities.change', request).then(function (data) {
+                              $('div[button_id="' + editorId + '"]').removeClass('script_editor__tab--dirty');
+                              // TODO: unlock editor
+                            }, function (err) {
+                              // TODO: handle sating error
+                            });
+                          }
                         }
-                      });
+                      },
+                      { view: 'button',
+                        type: 'icon',
+                        icon: 'search',
+                        // id: 'SCRIPT_EDITOR_FIND_LABEL_1',
+                        label: STRINGS.SCRIPT_EDITOR_FIND,
+                        autowidth: true,
+                        tooltip: 'Ctrl + F',
+                        on: {
+                          onItemClick: function () {
+                            var editor = $$(editorId + '_ace').editor;
+                            editor.execCommand('find');
+                          }
+                        }
+                      },
+                      { view: 'button',
+                        type: 'icon',
+                        icon: 'sort-alpha-asc',
+                        // id: 'SCRIPT_EDITOR_REPLACE_LABEL_1',
+                        label: STRINGS.SCRIPT_EDITOR_REPLACE,
+                        autowidth: true,
+                        tooltip: 'Ctrl + H',
+                        on: {
+                          onItemClick: function () {
+                            var editor = $$(editorId + '_ace').editor;
+                            editor.execCommand('replace');
+                          }
+                        }
+                      }, {}
+                    ]
+                  }, {
+                    view: 'ace-editor',
+                    mode: fileExtInfo.mode,
+                    id: editorId + '_ace',
+                    show_hidden: true,
+                    on: {
+                      onReady: function (editor) {
+                        editor.getSession().setTabSize(2);
+                        editor.getSession().setUseSoftTabs(true);
+                        editor.getSession().setUseWorker(false);
+                        editor.commands.addCommand({
+                          name: 'save',
+                          bindKey: {win: 'Ctrl-S'},
+                          exec: function (editor) {
+                            var request = MDSCommon.extend(Identity.dataFromId(id, {ignoreField: true}), {
+                              fields: [{
+                                name: Identity.getFileNameFromId(id),
+                                type: 'j',
+                                value: editor.getValue()
+                              }]
+                            });
+
+                            Mydataspace.request('entities.change', request).then(function (data) {
+                              var $tab = $('div[button_id="' + editorId + '"]');
+                              $tab.removeClass('script_editor__tab--dirty');
+                              $tab.removeClass('script_editor__tab--error');
+                              editor.getSession().clearAnnotations();
+                            }, function (err) {
+                              if (err.name === 'CodeError') {
+                                $('div[button_id="' + editorId + '"]').addClass('script_editor__tab--error');
+                                editor.getSession().setAnnotations([{
+                                  row: err.line - 1,
+                                  column: err.column,
+                                  text: err.message,
+                                  type: 'error'
+                                }]);
+                              } else {
+                                $('div[button_id="script_editor_' + id + '"]').addClass('script_editor__tab--error');
+                                UI.error(err);
+                              }
+                            });
+                          }
+                        });
+                      }
                     }
-                  }
+                  }]
                 }
               });
 
               Mydataspace.request('entities.get', Identity.dataFromId(id)).then(function (data) {
-                $$('script_editor_' + id).setValue(data.fields[0].value);
-
-                $$('script_editor_' + id).editor.on('change', function () {
-                  $('div[button_id="script_editor_' + id + '"]').addClass('script_editor__tab--dirty');
+                $$(editorId + '_ace').setValue(data.fields[0].value);
+                $$(editorId + '_ace').editor.on('change', function () {
+                  $('div[button_id="' + editorId + '"]').addClass('script_editor__tab--dirty');
                 });
               });
             }
             $$('script_editor').show();
-            $$('script_editor_' + id).show();
+            $$('script_editor').setValue(editorId);
+
             var fileParentId = Identity.getEntityIdFromFileId(id);
-            UI.entityTree.setCurrentId(fileParentId);
-            UI.entityList.setCurrentId(fileParentId);
-            UI.entityForm.setCurrentId(fileParentId);
+            UI.setCurrentId(fileParentId);
           } else {
-            UI.entityTree.setCurrentId(id);
-            UI.entityList.setCurrentId(id);
-            UI.entityForm.setCurrentId(id);
+            UI.setCurrentId(id);
           }
         },
+
         onBeforeSelect: function (id, selection) {
           // Request and add more items if "Show More" clicked
           if (UIHelper.isTreeShowMore(id)) {

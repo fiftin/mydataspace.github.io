@@ -1,5 +1,11 @@
 UI = {
 
+  setCurrentId: function (id) {
+    UI.entityTree.setCurrentId(id);
+    UI.entityList.setCurrentId(id);
+    UI.entityForm.setCurrentId(id);
+  },
+
   /**
    * @type {EntityForm}
    */
@@ -521,8 +527,9 @@ UI = {
     }
 
     dataPanels.push({
-      view: 'tabview',
+      view: 'multiline-tabview',
       css: 'script_editor',
+      id: 'script_editor',
       gravity: 0.6,
       tabbar: {
         height: 30,
@@ -530,15 +537,15 @@ UI = {
         on: {
           onOptionRemove: function () {
             var tabbar  = $$('script_editor').getTabbar();
-            if ($(tabbar.$view).find('.webix_all_tabs > *').length === 3) {
+            if ($(tabbar.$view).find('.webix_all_tabs > *').length === 2) {
               tabbar.hide();
             }
           }
         }
       },
-      id: 'script_editor',
       cells: [{
-        header: STRINGS.entities_and_files,
+        header: '<i class="fa fa-folder" style="margin-right: 5px;"></i> ' + STRINGS.entities_and_files,
+        css: 'script_editor__tab',
         body: UILayout.entityList
       }]
     });
@@ -611,33 +618,6 @@ UI = {
   },
 
   updateSizes: function() {
-    // var height = webix.without_header ? window.innerHeight - (50 + 85) : window.innerHeight;
-    //
-    // var editScriptWindowWidth =
-    //   $$('admin_panel').$width -
-    //   $$('my_data_panel__right_panel').$width -
-    //   $$('my_data_panel__resizer_2').$width - 2;
-    //
-    // $$('edit_script_window').define({
-    //   height: height,
-    //   width: editScriptWindowWidth
-    // });
-    //
-    // $$('admin_panel').define({
-    //   width: window.innerWidth,
-    //   height: height
-    // });
-    //
-    // $$('my_data_panel').define({
-    //   height: webix.without_header ? window.innerHeight - (50 + 85) : window.innerHeight - UILayout.HEADER_HEIGHT + 2
-    // });
-    //
-    // $$('edit_script_window').define({
-    //   height: $$('my_data_panel__resizer_2').$height
-    // });
-    // $$('admin_panel').resize();
-    // $$('admin_panel').resize();
-    // $$('edit_script_window').resize();
   },
 
   hideAccessToken: function () {

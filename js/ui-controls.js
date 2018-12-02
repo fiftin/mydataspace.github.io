@@ -109,22 +109,11 @@ UIControls = {
       value: value,
       height: 52,
       readonly: true,
-      css: 'entity_form__text_label',
+      css: 'entity_form__text_label entity_form__text_label--root',
       placeholder: STRINGS.ROOT_FIELD_PLACEHOLDERS[name],
       on: {
-        onBlur: function() {
-          // if (UI.entityForm.editScriptFieldId == 'entity_form__' + name + '_value') {
-          //   UI.entityForm.editScriptFieldId = null;
-          // }
-        },
-
         onFocus: function() {
-          UI.entityForm.editScriptFieldId = 'entity_form__' + name + '_value';
-          UI.entityForm.setScriptEditValue($$(UI.entityForm.editScriptFieldId).getValue());
-          $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
-          if (!$$('edit_script_window').isVisible()) {
-            UI.entityForm.showScriptEditWindow();
-          }
+          UI.entityForm.showScriptEditWindow(name);
         }
       }
     };

@@ -380,17 +380,9 @@ EntityForm.prototype.setRootView = function(data) {
 
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
-      var value = $(this).data('value');
-      if (value != null) {
-        UI.entityForm.setScriptEditValue(value);
-
-        if (!$$('edit_script_window').isVisible()) {
-          UI.entityForm.showScriptEditWindow();
-        }
-      } else {
-        UI.entityForm.hideScriptEditWindow();
-      }
       $(this).addClass('view__field--active');
+      var value = $(this).data('value');
+      UI.entityForm.showScriptViewWindow(value);
     });
 
     data.children.forEach(function (child) {
@@ -408,10 +400,6 @@ EntityForm.prototype.setRootView = function(data) {
       }
     });
   });
-};
-
-EntityForm.prototype.setScriptEditValue = function (value) {
-  $$('edit_script_window__editor').setValue(value);
 };
 
 EntityForm.prototype.setTaskView = function(data) {
@@ -501,16 +489,9 @@ EntityForm.prototype.setTaskView = function(data) {
 
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
-      var value = $(this).data('value');
-      if (value != null) {
-        UI.entityForm.setScriptEditValue(value);
-        if (!$$('edit_script_window').isVisible()) {
-          UI.entityForm.showScriptEditWindow();
-        }
-      } else {
-        UI.entityForm.hideScriptEditWindow();
-      }
       $(this).addClass('view__field--active');
+      var value = $(this).data('value');
+      UI.entityForm.showScriptViewWindow(value);
     });
   }.bind(this));
 };
@@ -560,22 +541,10 @@ EntityForm.prototype.setEntityView = function(data) {
     var viewFields = self.setViewFields(data);
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
-      var value = $(self).data('value');
-      if (value != null) {
-        UI.entityForm.setScriptEditValue(value);
-        if (!$$('edit_script_window').isVisible()) {
-          UI.entityForm.showScriptEditWindow();
-        }
-      } else {
-        UI.entityForm.hideScriptEditWindow();
-      }
       $(self).addClass('view__field--active');
+      var value = $(self).data('value');
+      UI.entityForm.showScriptViewWindow(value);
     });
-
-    // if (UIConstants.SYSTEM_PATHS.indexOf(data.path) >= 0) {
-    //   document.getElementById('view_overview_delete_action').style.display = 'none';
-    //   document.getElementById('view_overview_clone_action').style.display = 'none';
-    // }
   });
 };
 
@@ -599,16 +568,9 @@ EntityForm.prototype.setLogView = function(data) {
     var viewFields = self.setLogRecords(data.fields);
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
-      var value = $(this).data('value');
-      if (value != null) {
-        UI.entityForm.setScriptEditValue(value);
-        if (!$$('edit_script_window').isVisible()) {
-          UI.entityForm.showScriptEditWindow();
-        }
-      } else {
-        UI.entityForm.hideScriptEditWindow();
-      }
       $(this).addClass('view__field--active');
+      var value = $(this).data('value');
+      UI.entityForm.showScriptViewWindow(value);
     });
   });
 };
@@ -703,15 +665,6 @@ EntityForm.prototype.refresh = function() {
       $$('entity_form').enable();
     }
     self.emitLoaded(data);
-    if ($$('edit_script_window').isVisible() && self.editScriptFieldId != null) {
-      var editedField = $$(self.editScriptFieldId);
-      if (editedField != null) {
-        UI.entityForm.setScriptEditValue(editedField.getValue());
-        $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
-      } else {
-        self.editScriptFieldId = null;
-      }
-    }
   }, function(err) {
     UI.error(err);
     $$('entity_form').enable();
@@ -1129,12 +1082,7 @@ EntityForm.prototype.addField = function(data, setDirty, isProto) {
 
           onFocus: function() {
             if (data.type === 'j') {
-              self.editScriptFieldId = 'entity_form__' + data.name + '_value';
-              UI.entityForm.setScriptEditValue($$(UI.entityForm.editScriptFieldId).getValue());
-              $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
-              if (!$$('edit_script_window').isVisible()) {
-                UI.entityForm.showScriptEditWindow();
-              }
+              UI.entityForm.showScriptEditWindow(data.name);
             } else {
               UI.entityForm.hideScriptEditWindow();
             }
@@ -1221,17 +1169,12 @@ EntityForm.prototype.selectEditScriptTab = function (id, hideOthers) {
   editor.getValue();
 };
 
-EntityForm.prototype.showScriptEditWindow = function () {
-  var ext = UI.entityForm.editScriptFieldId && $$(UI.entityForm.editScriptFieldId) && UI.entityForm.editScriptFieldId.match(/\.([\w]+)_value$/);
-  if (ext) {
-    this.selectEditScriptTab(ext[1], true);
-  }
-  $$('edit_script_window').show();
-  // if (webix.without_header) {
-  //   $('.edit_script_window').css('top', '137px');
-  // } else {
-  //   $('.edit_script_window').css('top', '50px');
-  // }
+EntityForm.prototype.showScriptViewWindow = function (text) {
+  $$('edit_script_window').showWithData({ text: text });
+};
+
+EntityForm.prototype.showScriptEditWindow = function (fieldName) {
+  $$('edit_script_window').showWithData({ fieldName: fieldName });
 };
 
 EntityForm.prototype.hideScriptEditWindow = function() {

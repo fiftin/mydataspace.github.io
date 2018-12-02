@@ -151,6 +151,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     FEEDBACK: 'Give Feedback',
 
     PRICING: 'Pricing',
+    SCRIPT_EDITOR_FIND: 'Find...',
+    SCRIPT_EDITOR_REPLACE: 'Replace...',
 
     ROOT_TYPE: 'Type',
     root_types: {
@@ -278,7 +280,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       'apache': 'Apache'
     },
     site_dns_in_progress: 'Updating DNS records takes a minute',
-    entities_and_files: 'Entities',
+    entities_and_files: 'Folder',
 
     context_menu: {
       new_file: 'New File...',
@@ -463,6 +465,9 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     FEEDBACK: 'Оставить отзыв',
 
     PRICING: 'Тарифы',
+
+    SCRIPT_EDITOR_FIND: 'Найти...',
+    SCRIPT_EDITOR_REPLACE: 'Заменить...',
 
     ROOT_TYPE: 'Тип',
     root_types: {

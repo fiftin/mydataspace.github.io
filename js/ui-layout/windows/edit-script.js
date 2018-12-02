@@ -2,50 +2,22 @@ UILayout.editScriptTabs = {
   text: {
     aceMode: 'text',
     icon: 'align-justify',
-    width: 60,
     label: 'Text'
   },
   md: {
     aceMode: 'markdown',
     icon: 'bookmark',
-    width: 110,
     label: 'Markdown'
-  },
-  pug: {
-    aceMode: 'jade',
-    icon: 'code',
-    width: 60,
-    label: 'Pug'
-  },
-  html: {
-    aceMode: 'html',
-    icon: 'code',
-    width: 70,
-    label: 'HTML'
   },
   json: {
     aceMode: 'json',
-    icon: 'cog',
-    width: 110,
+    icon: 'ellipsis-h',
     label: 'JSON'
   },
-  js: {
-    aceMode: 'javascript',
-    icon: 'cog',
-    width: 110,
-    label: 'JavaScript'
-  },
-  css: {
-    aceMode: 'css',
-    icon: 'css3',
-    width: 60,
-    label: 'CSS'
-  },
-  scss: {
-    aceMode: 'scss',
-    icon: 'css3',
-    width: 70,
-    label: 'SCSS'
+  xml: {
+    aceMode: 'xml',
+    icon: 'code',
+    label: 'XML'
   }
 };
 
@@ -54,42 +26,49 @@ UILayout.windows.editScript = {
   id: 'edit_script_window',
   position: 'center',
   modal: true,
-  head: STRINGS.ADD_FILE,
-  // css: 'edit_script_window',
-  // left: 0,
-  // top: UILayout.HEADER_HEIGHT - 2,
+  head: {
+    cols:[
+      { width: 15 },
+      { view: 'label',
+        id: 'edit_script_window_title',
+        label: 'Edit Field'
+      },
+      { view: 'button',
+        type: 'icon',
+        icon: 'times',
+        css: 'webix_el_button--right',
+        id: 'CLOSE_LABEL', label: STRINGS.CLOSE,
+        width: 70,
+        click: function() {
+          UI.entityForm.hideScriptEditWindow();
+        }
+      }
+    ]
+  },
+  width: 900,
+  height: 600,
   animate: { type: 'flip', subtype: 'vertical' },
   on: {
     onShow: function() {
-      // $$('edit_script_window').$view.classList.add('animated');
-      // $$('edit_script_window').$view.classList.add('fadeInUp');
-
-      // $$('CLOSE_LABEL').define('hotkey', 'escape');
-      // var windowWidth =
-      //   $$('admin_panel').$width -
-      //   $$('my_data_panel__right_panel').$width -
-      //   $$('my_data_panel__resizer_2').$width - 2;
-      // var windowHeight = $$('my_data_panel').$height - 2;
-      // $$('edit_script_window').define('width', windowWidth);
-      // $$('edit_script_window').define('height', windowHeight);
-      // $$('edit_script_window').resize();
-      // $$('my_data_panel__resizer_2').disable();
+      var editScriptFieldId = 'entity_form__' + this.getShowData().fieldName + '_value';
+      var value = $$(editScriptFieldId).getValue();
+      $$('edit_script_window__editor').setValue(value);
+      $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
+      var ext = editScriptFieldId && $$(editScriptFieldId) && editScriptFieldId.match(/\.([\w]+)_value$/);
+      if (ext) {
+        this.selectEditScriptTab(ext[1], true);
+      }
     },
 
     onBlur: function() {
-      if (UI.entityForm.editScriptFieldId == null) {
-        return;
-      }
-      var field = $$(UI.entityForm.editScriptFieldId);
+      var editScriptFieldId = 'entity_form__' + this.getShowData().fieldName + '_value';
+      var field = $$(editScriptFieldId);
       if (field) {
         field.setValue($$('edit_script_window__editor').getValue());
       }
     },
 
     onHide: function() {
-      // $$('edit_script_window').$view.classList.remove('animated');
-      // $$('edit_script_window').$view.classList.remove('fadeInUp');
-      // $$('my_data_panel__resizer_2').enable();
     }
   },
 
@@ -97,40 +76,51 @@ UILayout.windows.editScript = {
     rows: [
       { view: 'toolbar',
         id: 'edit_script_window__toolbar',
-        elements: Object.keys(UILayout.editScriptTabs).map(function (id) {
-          var tab = UILayout.editScriptTabs[id];
-          return {
-            view: 'button',
-            type: 'icon',
-            icon: tab.icon,
-            width: tab.width,
-            label: tab.label,
-            css:   'webix_el_button',
-            id: 'edit_script_window__toolbar_' + id + '_button',
-            click: function() {
-              UI.entityForm.selectEditScriptTab(id);
-            }
-          };
-        }).concat(
-          {},
+        elements: [
+          { view: 'richselect',
+            width: 150,
+            value: 'text',
+            options: Object.keys(UILayout.editScriptTabs).map(function (id) {
+              var tab = UILayout.editScriptTabs[id];
+              return {
+                icon: tab.icon,
+                value: tab.label,
+                id: tab.aceMode
+              };
+            })
+          },
+          { width: 20
+          },
           { view: 'button',
             type: 'icon',
-            icon: 'times',
-            css: 'webix_el_button--right',
-            id: 'CLOSE_LABEL', label: STRINGS.CLOSE,
-            width: 70,
-            click: function() {
-              UI.entityForm.hideScriptEditWindow();
-            }
-          })
+            icon: 'save',
+            id: 'SAVE_ENTITY_LABEL_1',
+            label: STRINGS.SAVE_ENTITY,
+            autowidth: true
+          },
+          { view: 'button',
+            type: 'icon',
+            icon: 'search',
+            id: 'SCRIPT_EDITOR_FIND_LABEL',
+            label: STRINGS.SCRIPT_EDITOR_FIND,
+            autowidth: true
+          },
+          { view: 'button',
+            type: 'icon',
+            icon: 'sort-alpha-asc',
+            id: 'SCRIPT_EDITOR_REPLACE_LABEL',
+            label: STRINGS.SCRIPT_EDITOR_REPLACE,
+            autowidth: true
+          }, {}
+        ]
       },
       { view: 'ace-editor',
         id: 'edit_script_window__editor',
         mode: 'javascript',
-        height: 600,
         show_hidden: true,
         on: {
           onReady: function(editor) {
+            var window = $$('edit_script_window');
             editor.getSession().setTabSize(2);
             editor.getSession().setUseSoftTabs(true);
             editor.setReadOnly(true);
@@ -139,15 +129,17 @@ UILayout.windows.editScript = {
               name: 'save',
               bindKey: { win: 'Ctrl-S' },
               exec: function(editor) {
-                if (UI.entityForm.editScriptFieldId && $$(UI.entityForm.editScriptFieldId)) {
-                  $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
+                var fieldId = 'entity_form__' + window.getShowData().fieldName + '_value';
+                if (fieldId && $$(fieldId)) {
+                  $$(fieldId).setValue(editor.getValue());
                 }
                 UI.entityForm.save();
               }
             });
             editor.on('change', function() {
-              if (UI.entityForm.editScriptFieldId && $$(UI.entityForm.editScriptFieldId)) {
-                $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
+              var fieldId = 'entity_form__' + window.getShowData().fieldName + '_value';
+              if (fieldId && $$(fieldId)) {
+                $$(fieldId).setValue(editor.getValue());
               }
             });
           }

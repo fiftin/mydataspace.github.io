@@ -1170,22 +1170,11 @@ UIControls = {
       value: value,
       height: 52,
       readonly: true,
-      css: 'entity_form__text_label',
+      css: 'entity_form__text_label entity_form__text_label--root',
       placeholder: STRINGS.ROOT_FIELD_PLACEHOLDERS[name],
       on: {
-        onBlur: function() {
-          // if (UI.entityForm.editScriptFieldId == 'entity_form__' + name + '_value') {
-          //   UI.entityForm.editScriptFieldId = null;
-          // }
-        },
-
         onFocus: function() {
-          UI.entityForm.editScriptFieldId = 'entity_form__' + name + '_value';
-          UI.entityForm.setScriptEditValue($$(UI.entityForm.editScriptFieldId).getValue());
-          $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
-          if (!$$('edit_script_window').isVisible()) {
-            UI.entityForm.showScriptEditWindow();
-          }
+          UI.entityForm.showScriptEditWindow(name);
         }
       }
     };
@@ -1770,17 +1759,9 @@ EntityForm.prototype.setRootView = function(data) {
 
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
-      var value = $(this).data('value');
-      if (value != null) {
-        UI.entityForm.setScriptEditValue(value);
-
-        if (!$$('edit_script_window').isVisible()) {
-          UI.entityForm.showScriptEditWindow();
-        }
-      } else {
-        UI.entityForm.hideScriptEditWindow();
-      }
       $(this).addClass('view__field--active');
+      var value = $(this).data('value');
+      UI.entityForm.showScriptViewWindow(value);
     });
 
     data.children.forEach(function (child) {
@@ -1798,10 +1779,6 @@ EntityForm.prototype.setRootView = function(data) {
       }
     });
   });
-};
-
-EntityForm.prototype.setScriptEditValue = function (value) {
-  $$('edit_script_window__editor').setValue(value);
 };
 
 EntityForm.prototype.setTaskView = function(data) {
@@ -1891,16 +1868,9 @@ EntityForm.prototype.setTaskView = function(data) {
 
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
-      var value = $(this).data('value');
-      if (value != null) {
-        UI.entityForm.setScriptEditValue(value);
-        if (!$$('edit_script_window').isVisible()) {
-          UI.entityForm.showScriptEditWindow();
-        }
-      } else {
-        UI.entityForm.hideScriptEditWindow();
-      }
       $(this).addClass('view__field--active');
+      var value = $(this).data('value');
+      UI.entityForm.showScriptViewWindow(value);
     });
   }.bind(this));
 };
@@ -1950,22 +1920,10 @@ EntityForm.prototype.setEntityView = function(data) {
     var viewFields = self.setViewFields(data);
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
-      var value = $(self).data('value');
-      if (value != null) {
-        UI.entityForm.setScriptEditValue(value);
-        if (!$$('edit_script_window').isVisible()) {
-          UI.entityForm.showScriptEditWindow();
-        }
-      } else {
-        UI.entityForm.hideScriptEditWindow();
-      }
       $(self).addClass('view__field--active');
+      var value = $(self).data('value');
+      UI.entityForm.showScriptViewWindow(value);
     });
-
-    // if (UIConstants.SYSTEM_PATHS.indexOf(data.path) >= 0) {
-    //   document.getElementById('view_overview_delete_action').style.display = 'none';
-    //   document.getElementById('view_overview_clone_action').style.display = 'none';
-    // }
   });
 };
 
@@ -1989,16 +1947,9 @@ EntityForm.prototype.setLogView = function(data) {
     var viewFields = self.setLogRecords(data.fields);
     $(viewFields).on('click', '.view__field', function() {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
-      var value = $(this).data('value');
-      if (value != null) {
-        UI.entityForm.setScriptEditValue(value);
-        if (!$$('edit_script_window').isVisible()) {
-          UI.entityForm.showScriptEditWindow();
-        }
-      } else {
-        UI.entityForm.hideScriptEditWindow();
-      }
       $(this).addClass('view__field--active');
+      var value = $(this).data('value');
+      UI.entityForm.showScriptViewWindow(value);
     });
   });
 };
@@ -2093,15 +2044,6 @@ EntityForm.prototype.refresh = function() {
       $$('entity_form').enable();
     }
     self.emitLoaded(data);
-    if ($$('edit_script_window').isVisible() && self.editScriptFieldId != null) {
-      var editedField = $$(self.editScriptFieldId);
-      if (editedField != null) {
-        UI.entityForm.setScriptEditValue(editedField.getValue());
-        $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
-      } else {
-        self.editScriptFieldId = null;
-      }
-    }
   }, function(err) {
     UI.error(err);
     $$('entity_form').enable();
@@ -2519,12 +2461,7 @@ EntityForm.prototype.addField = function(data, setDirty, isProto) {
 
           onFocus: function() {
             if (data.type === 'j') {
-              self.editScriptFieldId = 'entity_form__' + data.name + '_value';
-              UI.entityForm.setScriptEditValue($$(UI.entityForm.editScriptFieldId).getValue());
-              $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
-              if (!$$('edit_script_window').isVisible()) {
-                UI.entityForm.showScriptEditWindow();
-              }
+              UI.entityForm.showScriptEditWindow(data.name);
             } else {
               UI.entityForm.hideScriptEditWindow();
             }
@@ -2611,17 +2548,12 @@ EntityForm.prototype.selectEditScriptTab = function (id, hideOthers) {
   editor.getValue();
 };
 
-EntityForm.prototype.showScriptEditWindow = function () {
-  var ext = UI.entityForm.editScriptFieldId && $$(UI.entityForm.editScriptFieldId) && UI.entityForm.editScriptFieldId.match(/\.([\w]+)_value$/);
-  if (ext) {
-    this.selectEditScriptTab(ext[1], true);
-  }
-  $$('edit_script_window').show();
-  // if (webix.without_header) {
-  //   $('.edit_script_window').css('top', '137px');
-  // } else {
-  //   $('.edit_script_window').css('top', '50px');
-  // }
+EntityForm.prototype.showScriptViewWindow = function (text) {
+  $$('edit_script_window').showWithData({ text: text });
+};
+
+EntityForm.prototype.showScriptEditWindow = function (fieldName) {
+  $$('edit_script_window').showWithData({ fieldName: fieldName });
 };
 
 EntityForm.prototype.hideScriptEditWindow = function() {
@@ -2994,6 +2926,7 @@ EntityTree.prototype.setCurrentId = function(id) {
   this.currentId = id;
 
   if (id != null) {
+    $$('entity_tree').select(id);
     var subscribeData = MDSCommon.extend(Identity.dataFromId(id));
     Mydataspace.entities.subscribe(subscribeData);
     if (subscribeData.path !== '') {
@@ -3700,6 +3633,133 @@ var UILayout = {
   popups: {}
 };
 
+webix.protoUI({
+  name:"multiline-tabbar",
+  $init:function(){
+    //this.attachEvent("onKeyPress", this._onKeyPress);
+  },
+  defaults:{
+    template:function(obj,common) {
+      var contentWidth, html, i, leafWidth, resultHTML, style, sum, tabs, verticalOffset, width;
+
+      common._tabs = tabs = common._filterOptions(obj.options);
+
+      html = '<div class="webix_all_tabs">';
+      for(i = 0; i<tabs.length; i++) {
+        // tab innerHTML
+        html += common._getTabHTML(tabs[i]);
+      }
+
+      html += '</div>';
+
+      return html;
+    }
+  },
+  _getInputNode:function(){
+    return this.$view.getElementsByClassName("multiline-tabbar__tab");
+  },
+  _getTabHTML: function(tab){
+    var	html,
+      className = 'multiline-tabbar__tab',
+      config = this.config;
+
+    if(tab.id== config.value)
+      className+=" webix_selected";
+
+    html = '<div class="' + className + '" button_id="'+tab.id+'" role="tab" aria-selected="'+(tab.id== config.value?"true":"false")+'" tabindex="'+(tab.id== config.value?"0":"-1")+'">';
+
+    var icon = tab.icon?("<span class='webix_icon fa-"+tab.icon+"'></span> "):"";
+    html+=icon + tab.value;
+
+    if (tab.close || config.close)
+      html+="<span role='button' tabindex='0' aria-label='"+webix.i18n.aria.closeTab+"' class='multiline-tabbar__tab-close webix_tab_close webix_icon fa-times'></span>";
+
+    html += '</div>';
+    return html;
+  }
+}, webix.ui.segmented);
+
+webix.protoUI({
+  name:"multiline-tabview",
+  defaults:{
+    type:"clean"
+  },
+  setValue:function(val){
+    this._cells[0].setValue(val);
+  },
+  getValue:function(){
+    return this._cells[0].getValue();
+  },
+  getTabbar:function(){
+    return this._cells[0];
+  },
+  getMultiview:function(){
+    return this._cells[1];
+  },
+  addView:function(obj){
+    var id = obj.body.id = obj.body.id || webix.uid();
+
+    this.getMultiview().addView(obj.body);
+
+    obj.id = obj.body.id;
+    obj.value = obj.header;
+    delete obj.body;
+    delete obj.header;
+
+    var t = this.getTabbar();
+    t.addOption(obj);
+    t.refresh();
+
+    return id;
+  },
+  removeView:function(id){
+    var t = this.getTabbar();
+    t.removeOption(id);
+    t.refresh();
+  },
+  $init:function(config){
+    this.$ready.push(this._init_tabview_handlers);
+
+    var cells = config.cells;
+    var tabs = [];
+
+    webix.assert(cells && cells.length, "tabview must have cells collection");
+
+    for (var i = cells.length - 1; i >= 0; i--){
+      var view = cells[i].body||cells[i];
+      if (!view.id) view.id = "view"+webix.uid();
+      tabs[i] = { value:cells[i].header, id:view.id, close:cells[i].close, width:cells[i].width, hidden:  !!cells[i].hidden};
+      cells[i] = view;
+    }
+
+    var tabbar = { view:"multiline-tabbar", multiview:true };
+    var mview = { view:"multiview", cells:cells, animate:(!!config.animate) };
+
+    if (config.value)
+      tabbar.value = config.value;
+
+    if (config.tabbar)
+      webix.extend(tabbar, config.tabbar, true);
+    if (config.multiview)
+      webix.extend(mview, config.multiview, true);
+
+    tabbar.options = tabbar.options || tabs;
+
+    config.rows = [
+      tabbar, mview
+    ];
+
+    delete config.cells;
+    delete config.tabs;
+  },
+  _init_tabview_handlers:function(){
+    this.getTabbar().attachEvent("onOptionRemove", function(id){
+      var view = webix.$$(id);
+      if (view)
+        view.destructor();
+    });
+  }
+}, webix.ui.layout);
 UILayout.windows.addApp = {
     view: 'ModalDialog',
     id: 'add_app_window',
@@ -4613,50 +4673,22 @@ UILayout.editScriptTabs = {
   text: {
     aceMode: 'text',
     icon: 'align-justify',
-    width: 60,
     label: 'Text'
   },
   md: {
     aceMode: 'markdown',
     icon: 'bookmark',
-    width: 110,
     label: 'Markdown'
-  },
-  pug: {
-    aceMode: 'jade',
-    icon: 'code',
-    width: 60,
-    label: 'Pug'
-  },
-  html: {
-    aceMode: 'html',
-    icon: 'code',
-    width: 70,
-    label: 'HTML'
   },
   json: {
     aceMode: 'json',
-    icon: 'cog',
-    width: 110,
+    icon: 'ellipsis-h',
     label: 'JSON'
   },
-  js: {
-    aceMode: 'javascript',
-    icon: 'cog',
-    width: 110,
-    label: 'JavaScript'
-  },
-  css: {
-    aceMode: 'css',
-    icon: 'css3',
-    width: 60,
-    label: 'CSS'
-  },
-  scss: {
-    aceMode: 'scss',
-    icon: 'css3',
-    width: 70,
-    label: 'SCSS'
+  xml: {
+    aceMode: 'xml',
+    icon: 'code',
+    label: 'XML'
   }
 };
 
@@ -4665,42 +4697,49 @@ UILayout.windows.editScript = {
   id: 'edit_script_window',
   position: 'center',
   modal: true,
-  head: STRINGS.ADD_FILE,
-  // css: 'edit_script_window',
-  // left: 0,
-  // top: UILayout.HEADER_HEIGHT - 2,
+  head: {
+    cols:[
+      { width: 15 },
+      { view: 'label',
+        id: 'edit_script_window_title',
+        label: 'Edit Field'
+      },
+      { view: 'button',
+        type: 'icon',
+        icon: 'times',
+        css: 'webix_el_button--right',
+        id: 'CLOSE_LABEL', label: STRINGS.CLOSE,
+        width: 70,
+        click: function() {
+          UI.entityForm.hideScriptEditWindow();
+        }
+      }
+    ]
+  },
+  width: 900,
+  height: 600,
   animate: { type: 'flip', subtype: 'vertical' },
   on: {
     onShow: function() {
-      // $$('edit_script_window').$view.classList.add('animated');
-      // $$('edit_script_window').$view.classList.add('fadeInUp');
-
-      // $$('CLOSE_LABEL').define('hotkey', 'escape');
-      // var windowWidth =
-      //   $$('admin_panel').$width -
-      //   $$('my_data_panel__right_panel').$width -
-      //   $$('my_data_panel__resizer_2').$width - 2;
-      // var windowHeight = $$('my_data_panel').$height - 2;
-      // $$('edit_script_window').define('width', windowWidth);
-      // $$('edit_script_window').define('height', windowHeight);
-      // $$('edit_script_window').resize();
-      // $$('my_data_panel__resizer_2').disable();
+      var editScriptFieldId = 'entity_form__' + this.getShowData().fieldName + '_value';
+      var value = $$(editScriptFieldId).getValue();
+      $$('edit_script_window__editor').setValue(value);
+      $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
+      var ext = editScriptFieldId && $$(editScriptFieldId) && editScriptFieldId.match(/\.([\w]+)_value$/);
+      if (ext) {
+        this.selectEditScriptTab(ext[1], true);
+      }
     },
 
     onBlur: function() {
-      if (UI.entityForm.editScriptFieldId == null) {
-        return;
-      }
-      var field = $$(UI.entityForm.editScriptFieldId);
+      var editScriptFieldId = 'entity_form__' + this.getShowData().fieldName + '_value';
+      var field = $$(editScriptFieldId);
       if (field) {
         field.setValue($$('edit_script_window__editor').getValue());
       }
     },
 
     onHide: function() {
-      // $$('edit_script_window').$view.classList.remove('animated');
-      // $$('edit_script_window').$view.classList.remove('fadeInUp');
-      // $$('my_data_panel__resizer_2').enable();
     }
   },
 
@@ -4708,40 +4747,51 @@ UILayout.windows.editScript = {
     rows: [
       { view: 'toolbar',
         id: 'edit_script_window__toolbar',
-        elements: Object.keys(UILayout.editScriptTabs).map(function (id) {
-          var tab = UILayout.editScriptTabs[id];
-          return {
-            view: 'button',
-            type: 'icon',
-            icon: tab.icon,
-            width: tab.width,
-            label: tab.label,
-            css:   'webix_el_button',
-            id: 'edit_script_window__toolbar_' + id + '_button',
-            click: function() {
-              UI.entityForm.selectEditScriptTab(id);
-            }
-          };
-        }).concat(
-          {},
+        elements: [
+          { view: 'richselect',
+            width: 150,
+            value: 'text',
+            options: Object.keys(UILayout.editScriptTabs).map(function (id) {
+              var tab = UILayout.editScriptTabs[id];
+              return {
+                icon: tab.icon,
+                value: tab.label,
+                id: tab.aceMode
+              };
+            })
+          },
+          { width: 20
+          },
           { view: 'button',
             type: 'icon',
-            icon: 'times',
-            css: 'webix_el_button--right',
-            id: 'CLOSE_LABEL', label: STRINGS.CLOSE,
-            width: 70,
-            click: function() {
-              UI.entityForm.hideScriptEditWindow();
-            }
-          })
+            icon: 'save',
+            id: 'SAVE_ENTITY_LABEL_1',
+            label: STRINGS.SAVE_ENTITY,
+            autowidth: true
+          },
+          { view: 'button',
+            type: 'icon',
+            icon: 'search',
+            id: 'SCRIPT_EDITOR_FIND_LABEL',
+            label: STRINGS.SCRIPT_EDITOR_FIND,
+            autowidth: true
+          },
+          { view: 'button',
+            type: 'icon',
+            icon: 'sort-alpha-asc',
+            id: 'SCRIPT_EDITOR_REPLACE_LABEL',
+            label: STRINGS.SCRIPT_EDITOR_REPLACE,
+            autowidth: true
+          }, {}
+        ]
       },
       { view: 'ace-editor',
         id: 'edit_script_window__editor',
         mode: 'javascript',
-        height: 600,
         show_hidden: true,
         on: {
           onReady: function(editor) {
+            var window = $$('edit_script_window');
             editor.getSession().setTabSize(2);
             editor.getSession().setUseSoftTabs(true);
             editor.setReadOnly(true);
@@ -4750,15 +4800,17 @@ UILayout.windows.editScript = {
               name: 'save',
               bindKey: { win: 'Ctrl-S' },
               exec: function(editor) {
-                if (UI.entityForm.editScriptFieldId && $$(UI.entityForm.editScriptFieldId)) {
-                  $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
+                var fieldId = 'entity_form__' + window.getShowData().fieldName + '_value';
+                if (fieldId && $$(fieldId)) {
+                  $$(fieldId).setValue(editor.getValue());
                 }
                 UI.entityForm.save();
               }
             });
             editor.on('change', function() {
-              if (UI.entityForm.editScriptFieldId && $$(UI.entityForm.editScriptFieldId)) {
-                $$(UI.entityForm.editScriptFieldId).setValue($$('edit_script_window__editor').getValue());
+              var fieldId = 'entity_form__' + window.getShowData().fieldName + '_value';
+              if (fieldId && $$(fieldId)) {
+                $$(fieldId).setValue(editor.getValue());
               }
             });
           }
@@ -5085,8 +5137,8 @@ UILayout.popups.fieldType = {
                   on: {
                     onFocus: function() {
                       if (newv === 'j') {
-                        UI.entityForm.editScriptFieldId = 'entity_form__' + fieldName + '_value';
-                        UI.entityForm.showScriptEditWindow();
+                        // UI.entityForm.editScriptFieldId = 'entity_form__' + fieldName + '_value';
+                        UI.entityForm.showScriptEditWindow('entity_form__' + fieldName + '_value');
                       }
                     }
                   }
@@ -5918,85 +5970,6 @@ UILayout.entityTree = {
           UI.entityTree.resolveChildren(id);
         },
 
-        onItemClick: function (id) {
-
-          if (!Identity.isFileId(id)) {
-            return;
-          }
-
-          if ($$('script_editor_' + id)) {
-            return;
-          }
-          var fileName = Identity.getFileNameFromId(id);
-          var fileExtInfo = UIHelper.getExtensionInfoForFile(fileName);
-
-          $$('$tabbar1').show();
-          $$('script_editor').addView({
-            header: fileName,
-            close: true,
-            css: 'script_editor__tab',
-            body: {
-              id: 'script_editor_' + id,
-              view: 'ace-editor',
-              mode: fileExtInfo.mode,
-              show_hidden: true,
-              on: {
-                onReady: function (editor) {
-                  editor.getSession().setTabSize(2);
-                  editor.getSession().setUseSoftTabs(true);
-                  editor.getSession().setUseWorker(false);
-                  editor.commands.addCommand({
-                    name: 'save',
-                    bindKey: {win: 'Ctrl-S'},
-                    exec: function (editor) {
-                      var request = MDSCommon.extend(Identity.dataFromId(id, {ignoreField: true}), {
-                        fields: [{
-                          name: Identity.getFileNameFromId(id),
-                          type: 'j',
-                          value: editor.getValue()
-                        }]
-                      });
-
-                      Mydataspace.request('entities.change', request).then(function (data) {
-                        var $tab = $('div[button_id="script_editor_' + id + '"]');
-                        $tab.removeClass('script_editor__tab--dirty');
-                        $tab.removeClass('script_editor__tab--error');
-                        editor.getSession().clearAnnotations();
-                      }, function (err) {
-                        if (err.name === 'CodeError') {
-                          $('div[button_id="script_editor_' + id + '"]').addClass('script_editor__tab--error');
-                          editor.getSession().setAnnotations([{
-                            row: err.line - 1,
-                            column: err.column,
-                            text: err.message,
-                            type: 'error'
-                          }]);
-                        } else {
-                          $('div[button_id="script_editor_' + id + '"]').addClass('script_editor__tab--error');
-                          UI.error(err);
-                        }
-                      });
-                    }
-                  });
-                }
-              }
-            }
-          });
-
-          Mydataspace.request('entities.get', Identity.dataFromId(id)).then(function (data) {
-            $$('script_editor_' + id).setValue(data.fields[0].value);
-
-            $$('script_editor_' + id).editor.on('change', function () {
-              $('div[button_id="script_editor_' + id + '"]').addClass('script_editor__tab--dirty');
-            });
-          });
-
-          $$('script_editor').show();
-          $$('script_editor_' + id).show();
-
-
-        },
-
         onSelectChange: function (ids) {
           var id = ids[0];
           if (UIHelper.isTreeShowMore(id)) {
@@ -6005,68 +5978,140 @@ UILayout.entityTree = {
 
             var fileName = Identity.getFileNameFromId(id);
             var fileExtInfo = UIHelper.getExtensionInfoForFile(fileName);
+            var editorId = 'script_editor_' + id;
 
-            if (!$$('script_editor_' + id)) {
-              $$('$tabbar1').show();
+            if (!$$(editorId)) {
+              $$('$multiline-tabbar1').show();
               $$('script_editor').addView({
                 header: fileName,
                 close: true,
                 css: 'script_editor__tab',
                 body: {
-                  id: 'script_editor_' + id,
-                  view: 'ace-editor',
-                  mode: fileExtInfo.mode,
-                  show_hidden: true,
-                  on: {
-                    onReady: function (editor) {
-                      editor.getSession().setTabSize(2);
-                      editor.getSession().setUseSoftTabs(true);
-                      editor.getSession().setUseWorker(false);
-                      editor.commands.addCommand({
-                        name: 'save',
-                        bindKey: {win: 'Ctrl-S'},
-                        exec: function (editor) {
-                          var request = MDSCommon.extend(Identity.dataFromId(id, {ignoreField: true}), {
-                            fields: [{
-                              name: Identity.getFileNameFromId(id),
-                              type: 'j',
-                              value: editor.getValue()
-                            }]
-                          });
-
-                          Mydataspace.request('entities.change', request).then(function (data) {
-                            $('div[button_id="script_editor_' + id + '"]').removeClass('script_editor__tab--dirty');
-                            // TODO: unlock editor
-                          }, function (err) {
-                            // TODO: handle sating error
-                          });
+                  id: editorId,
+                  rows: [{ view: 'toolbar',
+                    css: 'script_editor__toolbar',
+                    elements: [
+                      { view: 'button',
+                        type: 'icon',
+                        icon: 'save',
+                        // id: 'SAVE_ENTITY_LABEL_2',
+                        label: STRINGS.SAVE_ENTITY,
+                        autowidth: true,
+                        tooltip: 'Ctrl + S',
+                        on: {
+                          onItemClick: function () {
+                            var editor = $$(editorId + '_ace').editor;
+                            var request = MDSCommon.extend(Identity.dataFromId(id, {ignoreField: true}), {
+                              fields: [{
+                                name: Identity.getFileNameFromId(id),
+                                type: 'j',
+                                value: editor.getValue()
+                              }]
+                            });
+                            Mydataspace.request('entities.change', request).then(function (data) {
+                              $('div[button_id="' + editorId + '"]').removeClass('script_editor__tab--dirty');
+                              // TODO: unlock editor
+                            }, function (err) {
+                              // TODO: handle sating error
+                            });
+                          }
                         }
-                      });
+                      },
+                      { view: 'button',
+                        type: 'icon',
+                        icon: 'search',
+                        // id: 'SCRIPT_EDITOR_FIND_LABEL_1',
+                        label: STRINGS.SCRIPT_EDITOR_FIND,
+                        autowidth: true,
+                        tooltip: 'Ctrl + F',
+                        on: {
+                          onItemClick: function () {
+                            var editor = $$(editorId + '_ace').editor;
+                            editor.execCommand('find');
+                          }
+                        }
+                      },
+                      { view: 'button',
+                        type: 'icon',
+                        icon: 'sort-alpha-asc',
+                        // id: 'SCRIPT_EDITOR_REPLACE_LABEL_1',
+                        label: STRINGS.SCRIPT_EDITOR_REPLACE,
+                        autowidth: true,
+                        tooltip: 'Ctrl + H',
+                        on: {
+                          onItemClick: function () {
+                            var editor = $$(editorId + '_ace').editor;
+                            editor.execCommand('replace');
+                          }
+                        }
+                      }, {}
+                    ]
+                  }, {
+                    view: 'ace-editor',
+                    mode: fileExtInfo.mode,
+                    id: editorId + '_ace',
+                    show_hidden: true,
+                    on: {
+                      onReady: function (editor) {
+                        editor.getSession().setTabSize(2);
+                        editor.getSession().setUseSoftTabs(true);
+                        editor.getSession().setUseWorker(false);
+                        editor.commands.addCommand({
+                          name: 'save',
+                          bindKey: {win: 'Ctrl-S'},
+                          exec: function (editor) {
+                            var request = MDSCommon.extend(Identity.dataFromId(id, {ignoreField: true}), {
+                              fields: [{
+                                name: Identity.getFileNameFromId(id),
+                                type: 'j',
+                                value: editor.getValue()
+                              }]
+                            });
+
+                            Mydataspace.request('entities.change', request).then(function (data) {
+                              var $tab = $('div[button_id="' + editorId + '"]');
+                              $tab.removeClass('script_editor__tab--dirty');
+                              $tab.removeClass('script_editor__tab--error');
+                              editor.getSession().clearAnnotations();
+                            }, function (err) {
+                              if (err.name === 'CodeError') {
+                                $('div[button_id="' + editorId + '"]').addClass('script_editor__tab--error');
+                                editor.getSession().setAnnotations([{
+                                  row: err.line - 1,
+                                  column: err.column,
+                                  text: err.message,
+                                  type: 'error'
+                                }]);
+                              } else {
+                                $('div[button_id="script_editor_' + id + '"]').addClass('script_editor__tab--error');
+                                UI.error(err);
+                              }
+                            });
+                          }
+                        });
+                      }
                     }
-                  }
+                  }]
                 }
               });
 
               Mydataspace.request('entities.get', Identity.dataFromId(id)).then(function (data) {
-                $$('script_editor_' + id).setValue(data.fields[0].value);
-
-                $$('script_editor_' + id).editor.on('change', function () {
-                  $('div[button_id="script_editor_' + id + '"]').addClass('script_editor__tab--dirty');
+                $$(editorId + '_ace').setValue(data.fields[0].value);
+                $$(editorId + '_ace').editor.on('change', function () {
+                  $('div[button_id="' + editorId + '"]').addClass('script_editor__tab--dirty');
                 });
               });
             }
             $$('script_editor').show();
-            $$('script_editor_' + id).show();
+            $$('script_editor').setValue(editorId);
+
             var fileParentId = Identity.getEntityIdFromFileId(id);
-            UI.entityTree.setCurrentId(fileParentId);
-            UI.entityList.setCurrentId(fileParentId);
-            UI.entityForm.setCurrentId(fileParentId);
+            UI.setCurrentId(fileParentId);
           } else {
-            UI.entityTree.setCurrentId(id);
-            UI.entityList.setCurrentId(id);
-            UI.entityForm.setCurrentId(id);
+            UI.setCurrentId(id);
           }
         },
+
         onBeforeSelect: function (id, selection) {
           // Request and add more items if "Show More" clicked
           if (UIHelper.isTreeShowMore(id)) {
@@ -6448,6 +6493,12 @@ UILayout.apps =
 };
 
 UI = {
+
+  setCurrentId: function (id) {
+    UI.entityTree.setCurrentId(id);
+    UI.entityList.setCurrentId(id);
+    UI.entityForm.setCurrentId(id);
+  },
 
   /**
    * @type {EntityForm}
@@ -6970,8 +7021,9 @@ UI = {
     }
 
     dataPanels.push({
-      view: 'tabview',
+      view: 'multiline-tabview',
       css: 'script_editor',
+      id: 'script_editor',
       gravity: 0.6,
       tabbar: {
         height: 30,
@@ -6979,15 +7031,15 @@ UI = {
         on: {
           onOptionRemove: function () {
             var tabbar  = $$('script_editor').getTabbar();
-            if ($(tabbar.$view).find('.webix_all_tabs > *').length === 3) {
+            if ($(tabbar.$view).find('.webix_all_tabs > *').length === 2) {
               tabbar.hide();
             }
           }
         }
       },
-      id: 'script_editor',
       cells: [{
-        header: STRINGS.entities_and_files,
+        header: '<i class="fa fa-folder" style="margin-right: 5px;"></i> ' + STRINGS.entities_and_files,
+        css: 'script_editor__tab',
         body: UILayout.entityList
       }]
     });
@@ -7060,33 +7112,6 @@ UI = {
   },
 
   updateSizes: function() {
-    // var height = webix.without_header ? window.innerHeight - (50 + 85) : window.innerHeight;
-    //
-    // var editScriptWindowWidth =
-    //   $$('admin_panel').$width -
-    //   $$('my_data_panel__right_panel').$width -
-    //   $$('my_data_panel__resizer_2').$width - 2;
-    //
-    // $$('edit_script_window').define({
-    //   height: height,
-    //   width: editScriptWindowWidth
-    // });
-    //
-    // $$('admin_panel').define({
-    //   width: window.innerWidth,
-    //   height: height
-    // });
-    //
-    // $$('my_data_panel').define({
-    //   height: webix.without_header ? window.innerHeight - (50 + 85) : window.innerHeight - UILayout.HEADER_HEIGHT + 2
-    // });
-    //
-    // $$('edit_script_window').define({
-    //   height: $$('my_data_panel__resizer_2').$height
-    // });
-    // $$('admin_panel').resize();
-    // $$('admin_panel').resize();
-    // $$('edit_script_window').resize();
   },
 
   hideAccessToken: function () {

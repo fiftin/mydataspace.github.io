@@ -453,6 +453,12 @@ input:read-only {
   color: transparent;
 }
 
+.entity_form__text_label--root .webix_inp_textarea {
+  background: $input-bg;
+  color: initial;
+}
+
+
 .entity_form__text_label label {
   position: relative !important;
 }
@@ -730,6 +736,7 @@ $entity-form-field-type-button-width: 29px;
   border-top-right-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
 }
+
 
 
 .webix_win_head_spinner {
@@ -1098,37 +1105,12 @@ input {
 }
 
 .webix_item_tab.webix_selected {
-  //padding-bottom: 4px;
 }
 
 .webix_multiview {
   background: $toolbar-bg !important;
   .ace_editor {
-    margin-top: 2px;
   }
-}
-
-
-.script_editor__tab {
-  position: relative;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  padding-right: 20px;
-  border-left: 1px solid gray !important;
-  .webix_tab_close {
-    position: absolute;
-    right: 0;
-  }
-}
-
-.script_editor__tab--dirty {
-  color: #0d8bf2 !important;
-  font-weight: bold;
-}
-
-.script_editor__tab--error {
-  color: $brand-danger !important;
 }
 
 .show_media_window {
