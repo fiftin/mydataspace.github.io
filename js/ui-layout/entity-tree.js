@@ -107,7 +107,7 @@ UILayout.entityTree = {
           } else {
             $$('script_editor').setValue('my_data_panel__central_panel');
             UI.setCurrentId(id);
-            UI.entityList.updateBreadcrumbs();
+            UI.entityList.updateBreadcrumbs(id);
           }
         },
 

@@ -2571,12 +2571,12 @@ function EntityList() {
 
 }
 
-EntityList.prototype.updateBreadcrumbs = function () {
+EntityList.prototype.updateBreadcrumbs = function (id) {
   var breadcrumbs = document.getElementById('entity_list_breadcrumbs');
   if (!breadcrumbs) {
     return;
   }
-  var entityId = UI.entityTree.getSelectedId();
+  var entityId = id || UI.entityTree.getSelectedId();
   var data = Identity.dataFromId(entityId);
   var items = [data.root].concat(data.path === '' ? [] : data.path.split('/'));
   if (MDSCommon.isPresent(data.fields)) {
@@ -3658,8 +3658,8 @@ EntityTree.prototype.editFile = function (id) {
   $$('script_editor').setValue(editorId);
 
   var fileParentId = Identity.getEntityIdFromFileId(id);
+  UI.entityList.updateBreadcrumbs(id);
   UI.setCurrentId(fileParentId);
-  UI.entityList.updateBreadcrumbs();
 };
 function Pages() {
   this.currentPage = 'data';
@@ -6152,7 +6152,7 @@ UILayout.entityTree = {
           } else {
             $$('script_editor').setValue('my_data_panel__central_panel');
             UI.setCurrentId(id);
-            UI.entityList.updateBreadcrumbs();
+            UI.entityList.updateBreadcrumbs(id);
           }
         },
 

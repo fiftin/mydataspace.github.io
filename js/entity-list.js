@@ -10,12 +10,12 @@ function EntityList() {
 
 }
 
-EntityList.prototype.updateBreadcrumbs = function () {
+EntityList.prototype.updateBreadcrumbs = function (id) {
   var breadcrumbs = document.getElementById('entity_list_breadcrumbs');
   if (!breadcrumbs) {
     return;
   }
-  var entityId = UI.entityTree.getSelectedId();
+  var entityId = id || UI.entityTree.getSelectedId();
   var data = Identity.dataFromId(entityId);
   var items = [data.root].concat(data.path === '' ? [] : data.path.split('/'));
   if (MDSCommon.isPresent(data.fields)) {

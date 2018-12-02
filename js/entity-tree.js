@@ -782,6 +782,6 @@ EntityTree.prototype.editFile = function (id) {
   $$('script_editor').setValue(editorId);
 
   var fileParentId = Identity.getEntityIdFromFileId(id);
+  UI.entityList.updateBreadcrumbs(id);
   UI.setCurrentId(fileParentId);
-  UI.entityList.updateBreadcrumbs();
 };
