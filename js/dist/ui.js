@@ -3261,16 +3261,6 @@ EntityTree.prototype.listen = function() {
     }
 
     $$('entity_tree').remove(id);
-
-    //var subscribeData = MDSCommon.permit(data, ['root', 'path']);
-    //Mydataspace.entities.unsubscribe(subscribeData);
-    //Mydataspace.entities.subscribe(MDSCommon.extend(subscribeData, { path: MDSCommon.getChildPath(MDSCommon.getParentPath(data.path), data.name) }));
-    //if (subscribeData.path != '') {
-    //  subscribeData.path += '/';
-    //}
-    //subscribeData.path += '*';
-    //Mydataspace.entities.unsubscribe(subscribeData);
-    //Mydataspace.entities.subscribe(MDSCommon.extend(subscribeData, { path: MDSCommon.getChildPath(MDSCommon.getParentPath(data.path), data.name) }));
   });
 };
 
@@ -4757,7 +4747,13 @@ UILayout.windows.editScript = {
                 value: tab.label,
                 id: tab.aceMode
               };
-            })
+            }),
+            on: {
+              onChange: function (newv, oldv) {
+                var editor = $$('edit_script_window__editor').editor;
+                editor.getSession().setMode('ace/mode/' + newv);
+              }
+            }
           },
           { width: 20
           },
@@ -4766,21 +4762,46 @@ UILayout.windows.editScript = {
             icon: 'save',
             id: 'SAVE_ENTITY_LABEL_1',
             label: STRINGS.SAVE_ENTITY,
-            autowidth: true
+            autowidth: true,
+            on: {
+              onItemClick: function () {
+                var window = $$('edit_script_window');
+                var editor = $$('edit_script_window__editor').editor;
+                var fieldId = 'entity_form__' + window.getShowData().fieldName + '_value';
+                if (fieldId && $$(fieldId)) {
+                  $$(fieldId).setValue(editor.getValue());
+                }
+                UI.entityForm.save();
+              }
+            }
           },
           { view: 'button',
             type: 'icon',
             icon: 'search',
             id: 'SCRIPT_EDITOR_FIND_LABEL',
             label: STRINGS.SCRIPT_EDITOR_FIND,
-            autowidth: true
+            autowidth: true,
+            tooltip: 'Ctrl + F',
+            on: {
+              onItemClick: function () {
+                var editor = $$('edit_script_window__editor').editor;
+                editor.execCommand('find');
+              }
+            }
           },
           { view: 'button',
             type: 'icon',
             icon: 'sort-alpha-asc',
             id: 'SCRIPT_EDITOR_REPLACE_LABEL',
             label: STRINGS.SCRIPT_EDITOR_REPLACE,
-            autowidth: true
+            autowidth: true,
+            tooltip: 'Ctrl + H',
+            on: {
+              onItemClick: function () {
+                var editor = $$('edit_script_window__editor').editor;
+                editor.execCommand('replace');
+              }
+            }
           }, {}
         ]
       },
@@ -4795,6 +4816,7 @@ UILayout.windows.editScript = {
             editor.getSession().setUseSoftTabs(true);
             editor.setReadOnly(true);
             editor.getSession().setUseWorker(false);
+            editor.getSession().setMode('ace/mode/text');
             editor.commands.addCommand({
               name: 'save',
               bindKey: { win: 'Ctrl-S' },
