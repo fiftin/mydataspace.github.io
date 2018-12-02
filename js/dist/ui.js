@@ -2926,7 +2926,6 @@ EntityTree.prototype.setCurrentId = function(id) {
   this.currentId = id;
 
   if (id != null) {
-    $$('entity_tree').select(id);
     var subscribeData = MDSCommon.extend(Identity.dataFromId(id));
     Mydataspace.entities.subscribe(subscribeData);
     if (subscribeData.path !== '') {
