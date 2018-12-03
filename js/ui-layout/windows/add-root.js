@@ -56,7 +56,7 @@ UILayout.windows.addRoot = {
                 '\n' +
                 'var MDSWebsite = new MDSClient({\n' +
                 '  clientId: \'' + app.clientId + '\',\n' +
-                '  // You can add your own options here.\n' +
+                '  permission: \'' + root + '\'\n' +
                 '}).getRoot(\'' + data.root + '\');',
                 type: 'j'
               }]

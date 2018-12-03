@@ -353,8 +353,11 @@ MDSClient.prototype.login = function(providerName) {
   var authCheckInterval = setInterval(function() {
     authWindow.postMessage({ message: 'requestAuthResult' }, '*');
   }, 1000);
-  return new Promise(function(resolve, reject) {
-    self.on('login', function(args) { resolve(args); });
+
+  return self.connect().then(function () {
+    new Promise(function(resolve, reject) {
+      self.on('login', function(args) { resolve(args); });
+    })
   });
 };
 

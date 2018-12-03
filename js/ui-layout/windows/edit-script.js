@@ -24,6 +24,7 @@ UILayout.editScriptTabs = {
 UILayout.windows.editScript = {
   view: 'ModalDialog',
   id: 'edit_script_window',
+  resize: true,
   position: 'center',
   modal: true,
   head: {
@@ -50,23 +51,28 @@ UILayout.windows.editScript = {
   animate: { type: 'flip', subtype: 'vertical' },
   on: {
     onShow: function() {
-      var editScriptFieldId = 'entity_form__' + this.getShowData().fieldName + '_value';
-      var value = $$(editScriptFieldId).getValue();
-      $$('edit_script_window__editor').setValue(value);
-      $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
-      var ext = editScriptFieldId && $$(editScriptFieldId) && editScriptFieldId.match(/\.([\w]+)_value$/);
-      if (ext) {
-        this.selectEditScriptTab(ext[1], true);
+      if (this.getShowData().fieldName) {
+        var editScriptFieldId = 'entity_form__' + this.getShowData().fieldName + '_value';
+        var value = $$(editScriptFieldId).getValue();
+        $$('edit_script_window__editor').setValue(value);
+        $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
+        var ext = editScriptFieldId && $$(editScriptFieldId) && editScriptFieldId.match(/\.([\w]+)_value$/);
+        if (ext) {
+          this.selectEditScriptTab(ext[1], true);
+        }
+      } else if (this.getShowData().text) {
+        $$('edit_script_window__editor').setValue(this.getShowData().text);
+        $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
       }
     },
 
-    onBlur: function() {
-      var editScriptFieldId = 'entity_form__' + this.getShowData().fieldName + '_value';
-      var field = $$(editScriptFieldId);
-      if (field) {
-        field.setValue($$('edit_script_window__editor').getValue());
-      }
-    },
+    // onBlur: function() {
+    //   var editScriptFieldId = 'entity_form__' + this.getShowData().fieldName + '_value';
+    //   var field = $$(editScriptFieldId);
+    //   if (field) {
+    //     field.setValue($$('edit_script_window__editor').getValue());
+    //   }
+    // },
 
     onHide: function() {
     }
@@ -95,8 +101,7 @@ UILayout.windows.editScript = {
               }
             }
           },
-          { width: 20
-          },
+          { },
           { view: 'button',
             type: 'icon',
             icon: 'save',
@@ -142,7 +147,7 @@ UILayout.windows.editScript = {
                 editor.execCommand('replace');
               }
             }
-          }, {}
+          }
         ]
       },
       { view: 'ace-editor',

@@ -206,8 +206,7 @@ function no_items__createNewWebsite() {
         '\n' +
         'var MDSWebsite = new MDSClient({\n' +
         '  clientId: \'' + app.clientId + '\'\n' +
-        //'  clientId: \'' + app.clientId + '\',\n' +
-        //'  // You can add your own options here.\n' +
+        '  permission: \''  + root +  '\'\n' +
         '}).getRoot(\'' + root + '\');',
         type: 'j'
       }]
