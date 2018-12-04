@@ -8,8 +8,8 @@
  *                                   If this option is true:
  *                                   - Subscribers will not receive messages
  *                                   - More requests per second can be send
- * @param {string} [options.clientId]
- * @param {string} [options.permission]
+ * @param {string} options.clientId
+ * @param {string} options.permission
  * @constructor
  */
 function MDSClient(options) {

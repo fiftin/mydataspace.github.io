@@ -111,7 +111,7 @@ curl -XPOST https://api.web20site.com/v1/entities/get?client_id=adaa7639-7f7d-60
 
 {% highlight javascript %}
 var demo = new MDSClient({
-  client_id: 'ключ_api_вашего_приложения',
+  clientId: 'ключ_api_вашего_приложения',
   useLocalStorage: false // не хранить authToken в кеше браузреза
 });
 

@@ -7158,9 +7158,11 @@ UI = {
     if (withHeader) {
       UI.updateLanguage();
     }
+
   },
 
   updateSizes: function() {
+    $$('admin_panel').resize();
   },
 
   hideAccessToken: function () {
