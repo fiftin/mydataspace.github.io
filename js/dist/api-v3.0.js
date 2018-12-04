@@ -7751,7 +7751,10 @@ var MDSCommon = {
     return MDSCommon.millisecondsToStr(deltaMillis);
   },
 
-  escapeHtml: function (string) {
+  escapeHtml: function (string, escapeSpaces) {
+    if (typeof escapeSpaces === 'undefined') {
+      escapeSpaces = true;
+    }
     var str = '' + string;
     var match = /["'&<> ]/.exec(str);
 
@@ -7766,9 +7769,11 @@ var MDSCommon = {
 
     for (index = match.index; index < str.length; index++) {
       switch (str.charCodeAt(index)) {
-        // case 32: // space
-        //   escape = '&nbsp;';
-        //   break;
+        case 32: // space
+          if(escapeSpaces) {
+            escape = '&nbsp;';
+          }
+          break;
         case 34: // "
           escape = '&quot;';
           break;
