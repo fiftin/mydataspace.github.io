@@ -534,9 +534,9 @@ var MDSCommon = {
 
     for (index = match.index; index < str.length; index++) {
       switch (str.charCodeAt(index)) {
-        case 32: // space
-          escape = '&nbsp;';
-          break;
+        // case 32: // space
+        //   escape = '&nbsp;';
+        //   break;
         case 34: // "
           escape = '&quot;';
           break;
@@ -1612,8 +1612,8 @@ Entities.prototype.isConnected = function () {
  *                                   If this option is true:
  *                                   - Subscribers will not receive messages
  *                                   - More requests per second can be send
- * @param {string} [options.clientId]
- * @param {string} [options.permission]
+ * @param {string} options.clientId
+ * @param {string} options.permission
  * @constructor
  */
 function MDSClient(options) {

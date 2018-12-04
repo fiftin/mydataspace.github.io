@@ -4000,7 +4000,8 @@ UILayout.windows.addRoot = {
                 'var MDSWebsite = new MDSClient({\n' +
                 '  clientId: \'' + app.clientId + '\',\n' +
                 '  permission: \'' + data.root + '\'\n' +
-                '}).getRoot(\'' + data.root + '\');',
+                '}).getRoot(\'' + data.root + '\');\n' +
+                'MDSWebsite.connect();',
                 type: 'j'
               }]
             })

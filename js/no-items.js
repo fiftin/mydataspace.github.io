@@ -207,7 +207,8 @@ function no_items__createNewWebsite() {
         'var MDSWebsite = new MDSClient({\n' +
         '  clientId: \'' + app.clientId + '\',\n' +
         '  permission: \''  + root +  '\'\n' +
-        '}).getRoot(\'' + root + '\');',
+        '}).getRoot(\'' + root + '\');\n' +
+        'MDSWebsite.connect();',
         type: 'j'
       }]
     });
