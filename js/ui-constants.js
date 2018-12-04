@@ -107,7 +107,9 @@ UIConstants = {
     'likes',
     'comments',
     'processes',
-    'statistics'
+    'statistics',
+    'cache',
+    'website/generators'
   ],
 
   IGNORED_WHEN_EMPTY_PATHS: [],
