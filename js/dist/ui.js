@@ -3997,7 +3997,7 @@ UILayout.windows.addRoot = {
                 '\n' +
                 'var MDSWebsite = new MDSClient({\n' +
                 '  clientId: \'' + app.clientId + '\',\n' +
-                '  permission: \'' + root + '\'\n' +
+                '  permission: \'' + data.root + '\'\n' +
                 '}).getRoot(\'' + data.root + '\');',
                 type: 'j'
               }]
