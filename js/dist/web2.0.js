@@ -7771,7 +7771,7 @@ var MDSCommon = {
       switch (str.charCodeAt(index)) {
         case 32: // space
           if(escapeSpaces) {
-            escape = '&nbsp;';
+            escape = str[index];
           }
           break;
         case 34: // "
