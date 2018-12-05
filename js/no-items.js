@@ -60,17 +60,6 @@ function no_items__initTemplates(suffix) {
     return {
       roots: [no_items__getRootData()].concat(nonLangRoots.roots)
     };
-    // return Mydataspace.request('entities.getRoots', {
-    //   type: 't',
-    //   filter: {
-    //     language: (getCurrentLanguage() || 'EN').toLowerCase(),
-    //     datasource: 'official'
-    //   }
-    // }).then(function (roots) {
-    //   return {
-    //     roots: [no_items__getRootData()].concat(nonLangRoots.roots).concat(roots.roots)
-    //   };
-    // });
   }).then(function (data) {
     var rootsHtml = data.roots.map(function (root) {
 
