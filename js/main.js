@@ -22,9 +22,9 @@ var CATEGORY_ICONS = {
   social: 'group'
 };
 
-var TAGS_TO_TYPE = {
-  template: 't',
-  dataset: 'd'
+var DATASOURCE_ICONS = {
+  official: 'check',
+  community: 'users'
 };
 
 var SITE_SUPER_DOMAIN = '.{{ site.enforce_ssl }}';

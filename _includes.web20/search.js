@@ -252,11 +252,16 @@ function fillResults_header__search(data, searchOptions, isPreload) {
       '  ' + tr$('created') + ' <span class="view__date" id="view__date">' + MDSCommon.humanizeDate(root.createdAt) + '</span> ' + tr$('ago') +
       '</div>';
 
-    if (root.profile && data.profiles[root.profile]) {
+    var rootDatasource = MDSCommon.findValueByName(root.fields, '$datasource');
+
+    if (root.profile && data.profiles[root.profile] || rootDatasource === 'official') {
       footer +=
         '<div class="snippet__author">' +
+        (rootDatasource === 'official' ?
+        '<span class="snippet__author_name snippet__author_name--official"><i class="fa fa-check"></i>Official</span>' :
         '  <span class="snippet__author_name">' + data.profiles[root.profile].name + '</span>' +
-          (data.profiles[root.profile].verified ? '<i class="fa fa-check snippet__author_verified" aria-hidden="true"></i>' : '') +
+          (data.profiles[root.profile].verified ? '<i class="fa fa-check snippet__author_verified" aria-hidden="true"></i>' : '')
+        ) +
         '</div>';
     }
 
@@ -277,50 +282,21 @@ function fillResults_header__search(data, searchOptions, isPreload) {
     '</a>';
   });
 
-  var datasourceInfoHTML = '';
-
-  var xxx;
-  var other_src;
-  if (MDSCommon.isPresent(searchOptions.filters.datasource)) {
-    datasourceInfoHTML = '<div class="search__datasource datasource" id="search_header__search__datasource"></div>';
-    Mydataspace.request('entities.get', { root: 'datasources', path: 'data/' + searchOptions.filters.datasource }).then(function(datasourceData) {
-      document.getElementById('search_header__search__datasource').innerHTML =
-        '<img class="datasource__img" src="{{ cdn_url }}/avatars/md/' + MDSCommon.findValueByName(datasourceData.fields, 'avatar') + '.png" />' +
-        '<div class="datasource__title">' + MDSCommon.findValueByName(datasourceData.fields, 'name') + '</div>' +
-        '<div class="datasource__name"><a href="http://' + MDSCommon.getPathName(datasourceData.path) + '">' +
-        MDSCommon.getPathName(datasourceData.path) + '</a></div>';
-    });
-    other_src = '';
-    xxx = '{{ site.data[page.language].search.search_by_roots }}';
-  } else {
-    other_src = 'community';
-    xxx = '{{ site.data[page.language].search.search_by_datasources }}';
-  }
-
-  var found_suffix;
-  switch (MDSCommon.getPathName(search_header__search_pathname)) {
-    case 'search':
-      found_suffix = ' {{ site.data[page.language].search.found_suffix }} ';
-      break;
-    case 'datasources':
-      found_suffix = ' {{ site.data[page.language].search.found_in_datasource_suffix }} ';
-      break;
-  }
-
-  var foundInDatasourceSuffix = searchOptions.filters.datasource ? '{{ site.data[page.language].search.found_in_datasource }}' : '';
   document.getElementById('{{include.resultContainer}}').innerHTML =
     rootsHtml.length > 0 ?
       '<div class="container search__content ' + (isPreload ? 'search__content--preload' : '') + '">' +
       '<div class="search__results">' +
-      '<div class="search__header ' + (searchOptions.filters.datasource ? 'search__header--found-in-datasource' : '') + ' clearfix">' +
-      '<div class="search__found_count">{{ site.data[page.language].search.found_prefix }} ' + items.length + found_suffix + foundInDatasourceSuffix + '</div>' +
-      '<div class="search__right_link"><a style="font-weight: bold;" href="{{ lang_prefix }}/search?tags=src:' + other_src + '" onclick="setSearchPart_header__search(\'#src:'+ other_src + '\'); return false;">' + xxx + '</a></div>' +
+      '<div class="search__header clearfix">' +
+      '<div class="search__found_count">{{ site.data[page.language].search.found_prefix }} {{ site.data[page.language].search.found_suffix }} </div>' +
       '</div>' +
-      datasourceInfoHTML +
       rootsHtml.join('\n') +
       '</div>' +
       '<div class="search__filter_panel_wrap">' +
       '<div class="search__filter_panel">' +
+      getFilterHTML(data.facets && data.facets.datasource, 'datasources', 'src', searchOptions.filters, {
+        facetIconClass: 'search_filter__icon fa fa-',
+        facetIconMap: DATASOURCE_ICONS
+      }) +
       getFilterHTML(data.facets && data.facets.language, 'languages', 'lang', searchOptions.filters, { facetIconClass: 'search_filter__icon flag-icon flag-icon-' }) +
       getFilterHTML(data.facets && data.facets.country, 'countries', 'ctry', searchOptions.filters, { facetIconClass: 'search_filter__icon flag-icon flag-icon-' }) +
       getFilterHTML(data.facets && data.facets.category, 'categories', 'cat', searchOptions.filters, {
@@ -356,9 +332,7 @@ function startSearch_header__search(search) {
     q = {
       search: searchOptions.search,
       profiles: true,
-      filter: MDSCommon.extend(searchOptions.filters, MDSCommon.isBlank(searchOptions.filters.datasource) ? {
-        datasource: 'official'
-      } : {}),
+      filter: searchOptions.filters,
       type: searchOptions.type
     };
     m = 'entities.getRoots';

@@ -226,13 +226,22 @@ $snippet-medal-size: 50px;
     padding: 0 7px;
   }
   display: block;
-  // line-height: $snippet-footer-height;
-  // max-width: calc(100% - #{$snippet-footer-height * 2 + $small-padding + 100});
-  // overflow: hidden;
-  // white-space: nowrap;
-  // text-overflow: ellipsis;
-  // margin-right: $small-padding / 2;
-  // font-weight: bold;
+}
+
+.snippet__author_name--official {
+  background: #b9b9b9;
+  font-weight: bold;
+  color: white;
+  border-radius: 50px;
+  padding: 0 12px 0 5px;
+  margin-left: 10px;
+  &:before {
+    display: none;
+  }
+
+  .fa {
+    margin-right: 5px;
+  }
 }
 
 .snippet__author_verified {

@@ -53,13 +53,15 @@ function no_items__initTemplates(suffix) {
   Mydataspace.request('entities.getRoots', {
     type: 't',
     filter: {
-      language: ''
+      language: '',
+      datasource: 'official'
     }
   }).then(function (nonLangRoots) {
     return Mydataspace.request('entities.getRoots', {
       type: 't',
       filter: {
-        language: (getCurrentLanguage() || 'EN').toLowerCase()
+        language: (getCurrentLanguage() || 'EN').toLowerCase(),
+        datasource: 'official'
       }
     }).then(function (roots) {
       return {

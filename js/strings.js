@@ -232,6 +232,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       in: 'India'
     },
 
+    datasources: {
+      official: 'Official',
+      community: 'Community'
+    },
+
     categories: {
       blog: 'Blog',
       ecommerce: 'E-commerce',
@@ -547,6 +552,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       kz: 'Казахстан',
       by: 'Беларусь',
       in: 'Индия'
+    },
+
+    datasources: {
+      official: 'Официальные',
+      community: 'От сообщества'
     },
 
     categories: {
