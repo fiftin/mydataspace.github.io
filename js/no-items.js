@@ -84,7 +84,7 @@ function no_items__initTemplates(suffix) {
             '<div class="snippet__info" style="padding-bottom: 0">' +
             '<div class="snippet__title">' + (MDSCommon.findValueByName(root.fields, 'name') || root.root) + '</div>' +
             (description ? '<div class="snippet__description">' + description + '</div>' : '') +
-            (tags ? '<div class="snippet__tags">' + tags + '</div>' : '') +
+            // (tags ? '<div class="snippet__tags">' + tags + '</div>' : '') +
           '</div>' +
         '</div>' +
       '</div>';
