@@ -48,31 +48,6 @@ $side-panel-width: $side-width - $padding;
   color: white !important;
 }
 
-
-.look_preview--table {
-  background: linear-gradient(135deg, rgba(30,87,153,1) 0%,rgba(41,137,216,1) 50%,rgba(32,124,202,1) 51%,rgba(125,185,232,1) 100%);
-  color: white;
-}
-
-.look_preview__overview--codepen {
-  background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%,rgba(0,0,0,0) 100%);
-  color: white;
-  text-shadow: 1px 1px 1px black;
-}
-
-.snippet:hover .look_preview__overview {
-  background: transparent;
-}
-
-
-.webix_dtable .webix_ss_filter input {
-  border-color: #b0cee3;
-  border-radius: 6px !important;
-  padding-left: 12px;
-  padding-right: 12px;
-}
-
-
 .change_root_version_modal_table__number {
   width: 50px;
 }
@@ -112,6 +87,12 @@ $side-panel-width: $side-width - $padding;
 }
 
 .root_page {
+  .view__readme {
+    &:empty {
+      display: none;
+    }
+  }
+
   .view__version {
     color: $selected-bg;
     opacity: 0;

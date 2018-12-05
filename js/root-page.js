@@ -286,7 +286,7 @@ function initRootPage(options) {
       method: 'get'
     }) : Promise.resolve(view.innerHTML)).then(function (html) {
 
-      var description = MDSCommon.findValueByName(data.fields, 'description') || '';
+      var description = MDSCommon.findValueByName(data.fields, 'description') || '<i>' + STRINGS.NO_README + '</i>';
       var readme = MDSCommon.findValueByName(data.fields, 'readme');
       var ava = MDSCommon.findValueByName(data.fields, 'avatar');
 

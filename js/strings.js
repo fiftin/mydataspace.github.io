@@ -173,7 +173,6 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     save_view: 'Save View',
     new_view: 'New View',
     create_view: 'Create View',
-    no_description_provided: 'No description provided',
     switch_default_version_window_title: 'Switch Default Version',
     view_other_version_window_title: 'View Other Version',
     new_empty_root: 'New Empty ' + PROJECT_ROOT_NAME_EN,
@@ -486,7 +485,6 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     new_view: 'Новое представление',
     create_view: 'Создать представление',
 
-    no_description_provided: 'Нет описания',
     switch_default_version_window_title: 'Уст. версию по умолчанию',
     view_other_version_window_title: 'Смотреть другую версию',
     new_empty_root: 'Пусктой ' + PROJECT_ROOT_NAME_RU,
