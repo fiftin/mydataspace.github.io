@@ -290,7 +290,7 @@ function initRootPage(options) {
       method: 'get'
     }) : Promise.resolve(view.innerHTML)).then(function (html) {
 
-      var description = MDSCommon.findValueByName(data.fields, 'description') || '<i>' + STRINGS.NO_README + '</i>';
+      var description = MDSCommon.findValueByName(data.fields, 'description');
       var readme = MDSCommon.findValueByName(data.fields, 'readme') || '';
       var ava = MDSCommon.findValueByName(data.fields, 'avatar');
 
@@ -371,7 +371,11 @@ function initRootPage(options) {
 
       document.getElementById('root__tags').innerHTML = tags;
       createLicenseDrop({ selector: '#root__tags .view__tag--license' });
-      document.getElementById('root__description').innerText = description;
+      if (MDSCommon.isPresent(description)) {
+        document.getElementById('root__description').innerText = description;
+      } else {
+        document.getElementById('root__description').innerHTML = '<i>' + STRINGS.NO_README + '</i>';
+      }
       document.getElementById('root__readme').innerHTML = md.render(readme);
       document.getElementById('root__counters_likes_count').innerText = MDSCommon.findValueByName(data.fields, '$likes');
       document.getElementById('root__counters_comments_count').innerText = MDSCommon.findValueByName(data.fields, '$comments');
