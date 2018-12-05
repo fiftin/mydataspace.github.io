@@ -259,7 +259,7 @@ function fillResults_header__search(data, searchOptions, isPreload) {
         '<div class="snippet__author">' +
         (rootDatasource === 'official' ?
         '<div class="snippet__author_name snippet__author_name--official"><i class="fa fa-check"></i>Official</div>' :
-          (data.profiles[root.profile].verified ? '<i class="fa fa-check snippet__author_verified" aria-hidden="true"></i>' : '') +
+          (data.profiles[root.profile].verified ? '<i class="fa fa-check-circle snippet__author_verified" aria-hidden="true"></i>' : '') +
           '<div class="snippet__author_name">' + data.profiles[root.profile].name + '</div>'
         ) +
         '</div>';
