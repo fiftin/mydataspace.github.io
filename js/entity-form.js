@@ -283,11 +283,9 @@ EntityForm.prototype.setRootView = function(data) {
 
       if (license !== 'none') {
         tags = '<span class="view__tag view__tag--license' +
-          ' view__tag--license--' + license +
-          ' view__tag--license--' + license + '--' + (getCurrentLanguage() || 'en').toLowerCase() +
           ' data-license="' + licenseOrig + '"' +
           ' data-root="' + data.root + '"' +
-          '>&nbsp;</span> ' + tags;
+          '><i class="view__tag_icon fa fa-balance-scale"></i>' + tr$('licenses.' + licenseOrig) + '</span> ' + tags;
       }
     }
 
