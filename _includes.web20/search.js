@@ -246,13 +246,12 @@ function fillResults_header__search(data, searchOptions, isPreload) {
     var lang = languageMatch ? languageMatch[1] + '/' : '';
 
     var footer;
+    var rootDatasource = MDSCommon.findValueByName(root.fields, '$datasource');
 
-    footer =
+    footer = rootDatasource === 'official' ? '' :
       '<div class="snippet__date view__comment__date view__date_wrap">' +
       '  ' + tr$('created') + ' <span class="view__date" id="view__date">' + MDSCommon.humanizeDate(root.createdAt) + '</span> ' + tr$('ago') +
       '</div>';
-
-    var rootDatasource = MDSCommon.findValueByName(root.fields, '$datasource');
 
     if (root.profile && data.profiles[root.profile] || rootDatasource === 'official') {
       footer +=
