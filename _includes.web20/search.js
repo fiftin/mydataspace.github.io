@@ -286,7 +286,7 @@ function fillResults_header__search(data, searchOptions, isPreload) {
       '<div class="container search__content ' + (isPreload ? 'search__content--preload' : '') + '">' +
       '<div class="search__results">' +
       '<div class="search__header clearfix">' +
-      '<div class="search__found_count">{{ site.data[page.language].search.found_prefix }} {{ site.data[page.language].search.found_suffix }} </div>' +
+      '<div class="search__found_count">{{ site.data[page.language].search.found_prefix }} ' + items.length + ' {{ site.data[page.language].search.found_suffix }} </div>' +
       '</div>' +
       rootsHtml.join('\n') +
       '</div>' +
@@ -421,11 +421,6 @@ function showSearch_header__search() {
 
   startSearch_header__search(document.getElementById('header__search_input').value);
 }
-
-
-
-
-
 
 
 //
