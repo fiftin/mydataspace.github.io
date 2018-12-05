@@ -521,9 +521,10 @@ var MDSCommon = {
     for (index = match.index; index < str.length; index++) {
       switch (str.charCodeAt(index)) {
         case 32: // space
-          if(escapeSpaces) {
-            escape = str[index];
+          if(!escapeSpaces) {
+            continue;
           }
+          escape = '&nbsp;';
           break;
         case 34: // "
           escape = '&quot;';
