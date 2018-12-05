@@ -362,11 +362,9 @@ function initRootPage(options) {
         tags = '<a href="/search?q=%23license:' + license + '" class="view__tag view__tag--license-none">' + tr$('licenses.none') + '</a> ' + tags;
       } else {
         tags = '<a href="/search?q=%23license:' + license + '" class="view__tag view__tag--license' +
-          ' view__tag--license--' + license +
-          ' view__tag--license--' + license + '--' + (getCurrentLanguage() || 'en').toLowerCase() + '"' +
           ' data-license="' + licenseOrig + '"' +
           ' data-root="' + data.root + '"' +
-          '>&nbsp;</a> ' + tags;
+          '><i class="view__tag_icon fa fa-balance-scale"></i>' + tr$('licenses.' + licenseOrig) + '</a> ' + tags;
       }
 
       document.getElementById('root__tags').innerHTML = tags;

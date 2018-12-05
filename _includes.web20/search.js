@@ -231,12 +231,10 @@ function fillResults_header__search(data, searchOptions, isPreload) {
         tags = '<span class="view__tag view__tag--license-none" onclick="openSearch_header__search(\'#license:none\'); return false;">' + tr$('licenses.none') + '</span> ' + tags;
       } else {
         tags = '<span class="view__tag view__tag--license' +
-          ' view__tag--license--' + license +
-          ' view__tag--license--' + license + '--' + (getCurrentLanguage() || 'en').toLowerCase() +
           '" onclick="openSearch_header__search(\'#license:' + license + '\'); return false;"' +
           ' data-license="' + licenseOrig + '"' +
           ' data-root="' + root.root + '"' +
-          '>&nbsp;</span> ' + tags;
+          '><i class="view__tag_icon fa fa-balance-scale"></i>' + tr$('licenses.' + licenseOrig) + '</span> ' + tags;
       }
     }
 
