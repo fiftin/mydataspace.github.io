@@ -23,29 +23,7 @@ $custom-license-width: 35px;
 $custom-license-height: 12px;
 
 .view__tag--license {
-  background-repeat: no-repeat;
-  background-size: cover;
-  text-decoration: none !important;
-  &:hover {
-    text-decoration: none !important;
-    background-image: none !important;
-    &:after {
-      opacity: 1;
-    }
-  }
-  position: relative;
-  &:after {
-    background-repeat: no-repeat;
-    background-size: cover;
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    opacity: 0;
-    border-radius: 2px;
-  }
+
 }
 
 .view__tag--license-none {
