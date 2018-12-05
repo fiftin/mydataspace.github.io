@@ -225,11 +225,11 @@ $snippet-medal-size: 50px;
     content: "\2022";
     padding: 0 7px;
   }
-  display: block;
+  float: left;
 }
 
 .snippet__author_name--official {
-  background: #b9b9b9;
+  background: lightgray;
   font-weight: bold;
   color: white;
   border-radius: 50px;
