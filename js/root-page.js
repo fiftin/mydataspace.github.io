@@ -361,7 +361,7 @@ function initRootPage(options) {
       if (license === 'none') {
         tags = '<a href="/search?q=%23license:' + license + '" class="view__tag view__tag--license-none">' + tr$('licenses.none') + '</a> ' + tags;
       } else {
-        tags = '<a href="/search?q=%23license:' + license + '" class="view__tag view__tag--license' +
+        tags = '<a href="/search?q=%23license:' + license + '" class="view__tag view__tag--license"' +
           ' data-license="' + licenseOrig + '"' +
           ' data-root="' + data.root + '"' +
           '><i class="view__tag_icon fa fa-balance-scale"></i>' + tr$('licenses.' + licenseOrig) + '</a> ' + tags;
