@@ -1,12 +1,17 @@
 /**
+ * Loads content from server over AJAX.
+ * Dynamically update content on root page.
+ * @param {object} options
+ * @param {string} options.api_url
+ * @param {string} options.cdn_url
+ * @param {string} options.language
  *
- * @param options
  */
 function initRootPage(options) {
-
   var API_URL = options.api_url;
   var CDN_URL = options.cdn_url;
   var language = options.language;
+
   var lang = getURLLanguagePrefix(language);
   var DATA = getRequestFromLocation(window.location);
   var URL_TABS = {
@@ -18,11 +23,10 @@ function initRootPage(options) {
     VIEW_TAB_COMMENTS_LABEL: 'root__comments'
   };
 
-
-  if (['search', 'datasources'].indexOf(DATA.root) >= 0) {
-    openSearch_header__search(null, true);
-    return;
-  }
+  // if (['search', 'datasources'].indexOf(DATA.root) >= 0) {
+  //   openSearch_header__search(null, true);
+  //   return;
+  // }
 
   var md = new Remarkable({
     html: true,
@@ -287,7 +291,7 @@ function initRootPage(options) {
     }) : Promise.resolve(view.innerHTML)).then(function (html) {
 
       var description = MDSCommon.findValueByName(data.fields, 'description') || '<i>' + STRINGS.NO_README + '</i>';
-      var readme = MDSCommon.findValueByName(data.fields, 'readme');
+      var readme = MDSCommon.findValueByName(data.fields, 'readme') || '';
       var ava = MDSCommon.findValueByName(data.fields, 'avatar');
 
       if (view.innerHTML === '') {
@@ -364,28 +368,14 @@ function initRootPage(options) {
           ' data-root="' + data.root + '"' +
           '>&nbsp;</a> ' + tags;
       }
+
       document.getElementById('root__tags').innerHTML = tags;
-      createLicenseDrop({
-        selector: '#root__tags .view__tag--license'
-      });
-
+      createLicenseDrop({ selector: '#root__tags .view__tag--license' });
       document.getElementById('root__description').innerText = description;
-
-      if (MDSCommon.isBlank(readme)) {
-        document.getElementById('root__readme').style.display = 'none';
-      } else {
-        document.getElementById('root__readme').style.display = 'block';
-      }
       document.getElementById('root__readme').innerHTML = md.render(readme);
       document.getElementById('root__counters_likes_count').innerText = MDSCommon.findValueByName(data.fields, '$likes');
       document.getElementById('root__counters_comments_count').innerText = MDSCommon.findValueByName(data.fields, '$comments');
       document.getElementById('root__tabs_comments_count').innerText = MDSCommon.findValueByName(data.fields, '$comments');
-
-      //data.profile = {
-      //  name: 'Denis',
-      //  username: 'denis',
-      //  about: 'Hello, World!',
-      //};
 
       if (MDSCommon.isBlank(data.profile)) {
         document.getElementById('root__side_panel').style.display = 'none';
