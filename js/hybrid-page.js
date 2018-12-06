@@ -81,9 +81,11 @@ function initHybridPage(webix_with_header, refine_url) {
   Mydataspace.authProviders.google.title = STRINGS.CONNECT_TO_GOOGLE;
   UI.render(webix_with_header);
   Mydataspace.connect().then(function() {
-    UI.initConnection(webix_with_header);
-    if (!isValidJWT(localStorage.getItem('authToken'))) {
-      UI.pages.refreshPage('data', true);
-    }
+    Mydataspace.on('login', function() {
+      UI.initConnection(webix_with_header);
+      if (!isValidJWT(localStorage.getItem('authToken'))) {
+        UI.pages.refreshPage('data', true);
+      }
+    });
   });
 }
