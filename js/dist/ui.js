@@ -6818,36 +6818,41 @@ UI = {
     UI.appForm_setClean();
   },
 
-  initConnection: function(withHeader) {
-    Mydataspace.on('login', function() {
-      if (isEmptyPathnameIgnoreLanguage(window.location.pathname)) {
-        document.getElementById('bootstrap').style.display = 'none';
-        document.getElementById('webix').style.display = 'block';
-      }
-      adminPanel_startWaiting(2000);
-      UI.updateSizes();
-      UI.refresh();
-      if (withHeader) {
-        $$('SIGN_IN_LABEL').hide();
-        $$('menu_button').show();
-      }
-      $('#signin_modal').modal('hide');
-      UI.entityTree.setReadOnly(false);
-    });
+  onLogin: function (withHeader) {
+    if (isEmptyPathnameIgnoreLanguage(window.location.pathname)) {
+      document.getElementById('bootstrap').style.display = 'none';
+      document.getElementById('webix').style.display = 'block';
+    }
+    adminPanel_startWaiting(2000);
+    UI.updateSizes();
+    UI.refresh();
+    if (withHeader) {
+      $$('SIGN_IN_LABEL').hide();
+      $$('menu_button').show();
+    }
+    $('#signin_modal').modal('hide');
+    UI.entityTree.setReadOnly(false);
+  },
 
-    Mydataspace.on('logout', function() {
-      if (!UIHelper.isViewOnly()) {
-        document.getElementById('bootstrap').style.display = 'block';
-        document.getElementById('webix').style.display = 'none';
-      }
-      document.getElementById('no_items').style.display = 'none';
-      if (withHeader) {
-        $$('menu').hide();
-        $$('SIGN_IN_LABEL').show();
-        $$('menu_button').hide();
-      }
-      UI.entityTree.setReadOnly(true);
-    });
+  onLogout: function (withHeader) {
+    if (!UIHelper.isViewOnly()) {
+      document.getElementById('bootstrap').style.display = 'block';
+      document.getElementById('webix').style.display = 'none';
+    }
+    document.getElementById('no_items').style.display = 'none';
+    if (withHeader) {
+      $$('menu').hide();
+      $$('SIGN_IN_LABEL').show();
+      $$('menu_button').hide();
+    }
+    UI.entityTree.setReadOnly(true);
+  },
+
+  initConnection: function(withHeader) {
+    UI.onLogin(withHeader);
+
+    Mydataspace.on('login', UI.onLogin.bind(null, withHeader));
+    Mydataspace.on('logout', UI.onLogout.bind(null, withHeader));
 
     UI.entityForm.listen();
     UI.entityList.listen();
