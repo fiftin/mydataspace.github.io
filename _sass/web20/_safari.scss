@@ -90,3 +90,9 @@
 .safari__button--orange {
   background: #F1AA2A;
 }
+
+@media (max-width: $screen-md) {
+  .safari__video--windows {
+    min-height: 280px;
+  }
+}
