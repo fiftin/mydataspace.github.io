@@ -309,7 +309,9 @@ EntityForm.prototype.setRootView = function(data) {
       websiteLink.setAttribute('data-root', data.root);
       var rootTime = new Date().getTime() - new Date(data.createdAt).getTime();
 
-      if (rootTime < 60000) {
+      var TIMEOUT = 30000;
+
+      if (rootTime < TIMEOUT) {
         document.getElementById('view__website_link__countdown_wrap').style.display = 'initial';
 
 
@@ -326,7 +328,7 @@ EntityForm.prototype.setRootView = function(data) {
           trigger: 'hover'
         });
 
-        var countdown = Math.round((60000 - rootTime) / 1000);
+        var countdown = Math.round((TIMEOUT - rootTime) / 1000);
 
         document.getElementById('view__website_link__countdown').innerText = ' ' + countdown + ' ';
 
@@ -349,7 +351,7 @@ EntityForm.prototype.setRootView = function(data) {
           }
           $(websiteLink).tooltip('destroy');
           document.getElementById('view__website_link__countdown_wrap').style.display = 'none';
-        }, 60000 - rootTime);
+        }, TIMEOUT - rootTime);
       }
     }
 
