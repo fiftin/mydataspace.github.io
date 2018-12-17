@@ -51,6 +51,7 @@ layout: hybrid
   {% include feature_sections.html %}
 
   <section class="section relative section--examples">
+    {% comment %}
     <div class="container relative">
       <h2 class="section__title section__title--{{ section.id }}">{{ site.data[page.language].landing_examples.title }}</h2>
       <div class="row">
@@ -76,6 +77,8 @@ layout: hybrid
         {% endfor %}
       </div>
     </div>
+    {% endcomment %}
+
     {% include sub_footer.html %}
   </section>
 

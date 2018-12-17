@@ -654,9 +654,10 @@ function initFeedbackModal() {
 
 
 function adminPanel_startWaiting(duration) {
-  if (adminPanel_waiting) {
+  if (typeof adminPanel_waiting !== 'undefined' && adminPanel_waiting) {
     return;
   }
+  // noinspection JSUndeclaredVariable Global variable
   adminPanel_waiting = true;
   $('#admin_panel__loading').show();
   $('#webix_preloaded_header').addClass('invisible');
@@ -665,7 +666,7 @@ function adminPanel_startWaiting(duration) {
   $('#admin_panel').addClass('invisible');
 
   setTimeout(function() {
-    adminPanel_waiting = false;
+    delete adminPanel_waiting;
     $('#admin_panel__loading').hide();
     $('#webix_preloaded_header').removeClass('invisible');
     $('#logo_link').removeClass('invisible');

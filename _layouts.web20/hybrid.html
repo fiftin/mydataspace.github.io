@@ -19,14 +19,6 @@
 <div id="webix">
   {% include webix.html with_header=page.webix_with_header %}
 </div>
-
-<script>
-  if (!isEmptyPathnameIgnoreLanguage(window.location.pathname)) {
-    document.getElementById('webix').style.display = 'none';
-  }
-  adminPanel_waiting  = false;
-  adminPanel_startWaiting(3000);
-</script>
 <script src="/vendor/webix/webix_debug.js"></script>
 <script src="/skins/flat/skin.js"></script>
 <script src="/js/dist/ui.js"></script>

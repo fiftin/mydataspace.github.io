@@ -305,8 +305,6 @@ UI = {
   },
 
   initConnection: function(withHeader) {
-    UI.onLogin(withHeader);
-
     Mydataspace.on('login', UI.onLogin.bind(null, withHeader));
     Mydataspace.on('logout', UI.onLogout.bind(null, withHeader));
 
