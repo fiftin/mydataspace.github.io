@@ -3997,7 +3997,7 @@ UILayout.windows.addRoot = {
             return Promise.all([Mydataspace.request('entities.change', {
               root: data.root,
               path: '',
-              fields: [{name: 'name', value: null, type: 's'}]
+              fields: [{name: 'name', value: '', type: 's'}]
             }), Mydataspace.request('entities.change', {
               root: data.root,
               path: 'website/public_html/js',

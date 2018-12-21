@@ -192,7 +192,7 @@ function no_items__createNewWebsite() {
     return Promise.all([Mydataspace.request('entities.change', {
       root: root,
       path: '',
-      fields: [{name: 'name', value: null, type: 's'}]
+      fields: [{name: 'name', value: '', type: 's'}]
     }), Mydataspace.request('entities.change', {
       root: root,
       path: 'website/public_html/js',
