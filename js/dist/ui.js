@@ -3988,7 +3988,11 @@ UILayout.windows.addRoot = {
               return;
             }
 
-            return Mydataspace.request('entities.change', {
+            return Promise.all([Mydataspace.request('entities.change', {
+              root: data.root,
+              path: '',
+              fields: [{name: 'name', value: null, type: 's'}]
+            }), Mydataspace.request('entities.change', {
               root: data.root,
               path: 'website/public_html/js',
               fields: [{
@@ -4004,7 +4008,7 @@ UILayout.windows.addRoot = {
                 'MDSWebsite.connect();',
                 type: 'j'
               }]
-            })
+            })]);
           }).then(function () {
             $$('add_root_window').hide();
             UIControls.removeSpinnerFromWindow('add_root_window');

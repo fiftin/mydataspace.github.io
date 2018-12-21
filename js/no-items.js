@@ -189,23 +189,27 @@ function no_items__createNewWebsite() {
     if (!sourceRoot) {
       return;
     }
-    return Mydataspace.request('entities.change', {
+    return Promise.all([Mydataspace.request('entities.change', {
+      root: root,
+      path: '',
+      fields: [{name: 'name', value: null, type: 's'}]
+    }), Mydataspace.request('entities.change', {
       root: root,
       path: 'website/public_html/js',
       fields: [{
         name: 'client.js',
         value: '//\n' +
-        '// This file generated automatically. Please do not edit it.\n' +
-        '//\n' +
-        '\n' +
-        'var MDSWebsite = new MDSClient({\n' +
-        '  clientId: \'' + app.clientId + '\',\n' +
-        '  permission: \''  + root +  '\'\n' +
-        '}).getRoot(\'' + root + '\');\n' +
-        'MDSWebsite.connect();',
+          '// This file generated automatically. Please do not edit it.\n' +
+          '//\n' +
+          '\n' +
+          'var MDSWebsite = new MDSClient({\n' +
+          '  clientId: \'' + app.clientId + '\',\n' +
+          '  permission: \'' + root + '\'\n' +
+          '}).getRoot(\'' + root + '\');\n' +
+          'MDSWebsite.connect();',
         type: 'j'
       }]
-    });
+    })]);
   }).then(function () {
     $createButton.attr('disabled', false);
     $createButton.find('.fa-cog').removeClass('fa-spin').addClass('hidden');
