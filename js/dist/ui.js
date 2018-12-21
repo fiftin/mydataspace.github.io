@@ -1711,14 +1711,20 @@ EntityForm.prototype.setRootView = function(data) {
 
         var countdown = Math.round((TIMEOUT - rootTime) / 1000);
 
-        document.getElementById('view__website_link__countdown').innerText = ' ' + countdown + ' ';
+        var countdownElem = document.getElementById('view__website_link__countdown');
+
+        if (countdownElem) {
+          countdownElem.innerText = ' ' + countdown + ' ';
+        }
 
         self.viewWebsiteLinkDisabledCountdown = setInterval(function () {
           countdown -= 1;
           if (countdown < 1) {
             countdown = 1;
           }
-          document.getElementById('view__website_link__countdown').innerText = ' ' + countdown + ' ';
+          if (countdownElem) {
+            countdownElem.innerText = ' ' + countdown + ' ';
+          }
         }, 1000);
 
         self.viewWebsiteLinkDisabledTimeout = setTimeout(function () {
