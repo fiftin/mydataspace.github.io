@@ -1432,13 +1432,12 @@ EntityForm.prototype.listen = function() {
   Mydataspace.on('entities.delete.res', function() {
     $$('entity_form').disable();
   });
-  Mydataspace.on('entities.change.res', function(data) {
-    if (self.isEditing()) {
-      return;
-    }
-
-    self.setView(data);
-  });
+  // Mydataspace.on('entities.change.res', function(data) {
+  //   if (self.isEditing()) {
+  //     return;
+  //   }
+  //   self.setView(data);
+  // });
 };
 
 EntityForm.prototype.isProto = function() {
@@ -1690,7 +1689,7 @@ EntityForm.prototype.setRootView = function(data) {
 
     UIHelper.setInnerContentOrRemove('view__tags', tags, 'html');
 
-    if (data.children.filter(function (child) { return child.path === 'website' }).length > 0) {
+    if ((data.children || []).filter(function (child) { return child.path === 'website' }).length > 0) {
       var websiteLink = document.getElementById('view__website_link');
       websiteLink.href = 'https://' + data.root + SITE_SUPER_DOMAIN;
       websiteLink.classList.remove('hidden');
