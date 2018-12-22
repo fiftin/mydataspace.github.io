@@ -1436,6 +1436,9 @@ EntityForm.prototype.listen = function() {
     if (self.isEditing()) {
       return;
     }
+    if (Identity.idFromData(data) !== self.getCurrentId()) {
+      return;
+    }
     self.setView(data);
   });
 };
