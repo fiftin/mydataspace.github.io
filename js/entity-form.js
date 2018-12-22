@@ -51,6 +51,13 @@ EntityForm.prototype.listen = function() {
   Mydataspace.on('entities.delete.res', function() {
     $$('entity_form').disable();
   });
+  Mydataspace.on('entities.change.res', function(data) {
+    if (self.isEditing()) {
+      return;
+    }
+
+    self.setView(data);
+  });
 };
 
 EntityForm.prototype.isProto = function() {
