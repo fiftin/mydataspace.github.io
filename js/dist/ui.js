@@ -1439,7 +1439,9 @@ EntityForm.prototype.listen = function() {
     if (Identity.idFromData(data) !== self.getCurrentId()) {
       return;
     }
-    self.setView(data);
+    if (MDSCommon.isBlank(data.path)) {
+      self.setViewTitle(MDSCommon.findValueByName(data.fields, 'name') || MDSCommon.getEntityName(data.root));
+    }
   });
 };
 
