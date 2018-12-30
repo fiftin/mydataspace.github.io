@@ -1701,7 +1701,7 @@ EntityForm.prototype.setRootView = function(data) {
       websiteLink.setAttribute('data-root', data.root);
       var rootTime = new Date().getTime() - new Date(data.createdAt).getTime();
 
-      var TIMEOUT = 30000;
+      var TIMEOUT = 0;
 
       if (rootTime < TIMEOUT) {
         document.getElementById('view__website_link__countdown_wrap').style.display = 'initial';
