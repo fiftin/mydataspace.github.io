@@ -30,7 +30,10 @@ UILayout.windows.addFile = {
             { id: 'scss', value: 'SCSS File (*.scss)' },
             { id: 'css', value: 'CSS File (*.css)' },
             { id: 'xml', value: 'XML File (*.xml)' },
+            { id: 'js', value: 'JavaScript File (*.js)' },
+            { id: 'jsx', value: 'ReactJS File (*.jsx)' },
             { id: 'json', value: 'JSON File (*.json)' },
+            { id: 'yml', value: 'YAML File (*.yml)' },
             { id: 'txt', value: 'Text File (*.txt)' }
           ];
           break;
