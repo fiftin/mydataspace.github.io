@@ -383,6 +383,9 @@ UIConstants = {
     },
     'txt': {
       mode: 'text'
+    },
+    'jsx': {
+      mode: 'jsx'
     }
   }
 
