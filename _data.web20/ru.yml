@@ -51,7 +51,7 @@ example_descriptions:
 - id: skeletons
   title: Каркасы
 - id: live-pug-scss
-  title: Поддержка Pug и SCSS
+  title: Поддержка Pug, SCSS и JSX
 - id: tree-data-structure
   title: Иерархическая структура
 - id: websocket-api

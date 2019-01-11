@@ -48,7 +48,7 @@ example_descriptions:
   - id: skeletons
     title: Skeletons
   - id: live-pug-scss
-    title: Live Pug &amp; SCSS
+    title: Live Pug, SCSS &amp; JSX
   - id: tree-data-structure
     title: Tree Data Structure
   - id: websocket-api
