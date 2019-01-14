@@ -202,7 +202,7 @@ EntityTree.prototype.resolveChildren = function(id, selectIndexFile) {
       });
 
       var children = data.children.filter(function(x) {
-        return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS[UI.mode].indexOf(x.path) < 0;
+        return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS[UI.getMode()].indexOf(x.path) < 0;
       }).map(Identity.entityFromData);
 
       UI.entityTree.setChildren(id, files.concat(children));
@@ -598,7 +598,7 @@ EntityTree.prototype.showMore = function(id) {
   Mydataspace.request('entities.get', req, function(data) {
     var entityId = Identity.idFromData(data);
     var children = data.children.filter(function(child) {
-      return UIConstants.IGNORED_PATHS[UI.mode].indexOf(child.path) < 0;
+      return UIConstants.IGNORED_PATHS[UI.getMode()].indexOf(child.path) < 0;
     }).map(Identity.entityFromData);
     self.addChildren(entityId, children);
   });

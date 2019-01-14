@@ -513,6 +513,31 @@ EntityForm.prototype.setTaskView = function(data) {
   }.bind(this));
 };
 
+
+EntityForm.prototype.setEntityCmsView = function (data) {
+  var self = this;
+
+  if (data.path !== 'data' && data.path.indexOf('data/') !== 0) {
+    self.setEntityView(data);
+    return;
+  }
+
+  var host = data.root + '.wiz.web20.site';
+  var path = data.path.substr('data'.length);
+  var wizardsPath = 'website/wizards' + path;
+
+  Mydataspace.entities.get({ root: data.root, path: wizardsPath }).then(function (res) {
+    return res;
+  }).catch(function () {
+    return Mydataspace.entities.get({ root: data.root, path: MDSCommon.getParentPath(wizardsPath) });
+  }).then(function (res) {
+    var url = 'https://' + host + (res.path === wizardsPath ? path + '/view.html' : MDSCommon.getParentPath(path) + '/view-item.html');
+    document.getElementById('view').innerHTML = '<iframe class="view__iframe" src="' + url + '"></iframe>';
+  }).catch(function () {
+    self.setEntityView(data);
+  });
+};
+
 EntityForm.prototype.setEntityView = function(data) {
   var self = this;
 
@@ -605,7 +630,14 @@ EntityForm.prototype.setView = function(data) {
   } else if (UIHelper.getEntityTypeByPath(data.path) === 'log') {
     self.setLogView(data);
   } else {
-    self.setEntityView(data);
+    switch (UI.getMode()) {
+      case 'dev':
+        self.setEntityView(data);
+        break;
+      case 'cms':
+        self.setEntityCmsView(data);
+        break;
+    }
   }
   $$('entity_form').hide();
   $$('entity_view').show();

@@ -17,14 +17,19 @@ UI = {
 
   pages: new Pages(),
 
-  mode: 'dev',
-
   setMode: function (mode) {
     if (['dev', 'cms'].indexOf(mode) === -1) {
       throw new Error('Illegal mode: ' + mode);
     }
-    UI.mode = mode;
+    if (UI.getMode() === mode) {
+      return;
+    }
+    window.localStorage.setItem('uiMode', mode);
     UI.refresh();
+  },
+
+  getMode: function () {
+    return window.localStorage.getItem('uiMode') || 'dev';
   },
 
   VISIBLE_ON_SMALL_SCREENS: [

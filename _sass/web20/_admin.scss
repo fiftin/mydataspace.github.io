@@ -754,6 +754,10 @@ $entity-form-field-type-button-width: 29px;
   color: $brand-bg;
 }
 
+.entity_view {
+  overflow-y: auto !important;
+}
+
 .entity_view > .webix_template {
   padding: 0;
 }

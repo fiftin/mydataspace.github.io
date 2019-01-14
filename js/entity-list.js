@@ -212,7 +212,7 @@ EntityList.prototype.refresh = function(newRootId) {
     var entityId = Identity.idFromData(data);
     var children = data.children.filter(function(x) {
       return (x.root !== 'root' || x.path !== '') &&
-        UIConstants.IGNORED_PATHS[UI.mode].indexOf(x.path) < 0 &&
+        UIConstants.IGNORED_PATHS[UI.getMode()].indexOf(x.path) < 0 &&
         (UIConstants.IGNORED_WHEN_EMPTY_PATHS.indexOf(x.path) < 0);
     }).map(Identity.entityFromData);
     if (self.getCurrentId() === entityId) {
@@ -292,7 +292,7 @@ EntityList.prototype.showMore = function() {
   $$('entity_list').disable();
   Mydataspace.request('entities.get', req, function(data) {
     var children = data.children.filter(function(child) {
-      return UIConstants.IGNORED_PATHS[UI.mode].indexOf(child.path) < 0;
+      return UIConstants.IGNORED_PATHS[UI.getMode()].indexOf(child.path) < 0;
     }).map(Identity.entityFromData);
     self.addChildren(children);
     $$('entity_list').enable();

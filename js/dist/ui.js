@@ -877,7 +877,7 @@ var Identity = {
     if (!MDSCommon.isBlank(data.numberOfChildren) && data.numberOfChildren > 0 || UIHelper.isDataHasFiles(data)) {
       if (MDSCommon.isPresent(data.children)) {
         children = data.children.filter(function(x) {
-          return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS[UI.mode].indexOf(x.path) < 0;
+          return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS[UI.getMode()].indexOf(x.path) < 0;
         }).map(Identity.entityFromData);
       } else {
         children = [{
@@ -1905,6 +1905,31 @@ EntityForm.prototype.setTaskView = function(data) {
   }.bind(this));
 };
 
+
+EntityForm.prototype.setEntityCmsView = function (data) {
+  var self = this;
+
+  if (data.path !== 'data' && data.path.indexOf('data/') !== 0) {
+    self.setEntityView(data);
+    return;
+  }
+
+  var host = data.root + '.wiz.web20.site';
+  var path = data.path.substr('data'.length);
+  var wizardsPath = 'website/wizards' + path;
+
+  Mydataspace.entities.get({ root: data.root, path: wizardsPath }).then(function (res) {
+    return res;
+  }).catch(function () {
+    return Mydataspace.entities.get({ root: data.root, path: MDSCommon.getParentPath(wizardsPath) });
+  }).then(function (res) {
+    var url = 'https://' + host + (res.path === wizardsPath ? path + '/view.html' : MDSCommon.getParentPath(path) + '/view-item.html');
+    document.getElementById('view').innerHTML = '<iframe class="view__iframe" src="' + url + '"></iframe>';
+  }).catch(function () {
+    self.setEntityView(data);
+  });
+};
+
 EntityForm.prototype.setEntityView = function(data) {
   var self = this;
 
@@ -1997,7 +2022,14 @@ EntityForm.prototype.setView = function(data) {
   } else if (UIHelper.getEntityTypeByPath(data.path) === 'log') {
     self.setLogView(data);
   } else {
-    self.setEntityView(data);
+    switch (UI.getMode()) {
+      case 'dev':
+        self.setEntityView(data);
+        break;
+      case 'cms':
+        self.setEntityCmsView(data);
+        break;
+    }
   }
   $$('entity_form').hide();
   $$('entity_view').show();
@@ -2803,7 +2835,7 @@ EntityList.prototype.refresh = function(newRootId) {
     var entityId = Identity.idFromData(data);
     var children = data.children.filter(function(x) {
       return (x.root !== 'root' || x.path !== '') &&
-        UIConstants.IGNORED_PATHS[UI.mode].indexOf(x.path) < 0 &&
+        UIConstants.IGNORED_PATHS[UI.getMode()].indexOf(x.path) < 0 &&
         (UIConstants.IGNORED_WHEN_EMPTY_PATHS.indexOf(x.path) < 0);
     }).map(Identity.entityFromData);
     if (self.getCurrentId() === entityId) {
@@ -2883,7 +2915,7 @@ EntityList.prototype.showMore = function() {
   $$('entity_list').disable();
   Mydataspace.request('entities.get', req, function(data) {
     var children = data.children.filter(function(child) {
-      return UIConstants.IGNORED_PATHS[UI.mode].indexOf(child.path) < 0;
+      return UIConstants.IGNORED_PATHS[UI.getMode()].indexOf(child.path) < 0;
     }).map(Identity.entityFromData);
     self.addChildren(children);
     $$('entity_list').enable();
@@ -3108,7 +3140,7 @@ EntityTree.prototype.resolveChildren = function(id, selectIndexFile) {
       });
 
       var children = data.children.filter(function(x) {
-        return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS[UI.mode].indexOf(x.path) < 0;
+        return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS[UI.getMode()].indexOf(x.path) < 0;
       }).map(Identity.entityFromData);
 
       UI.entityTree.setChildren(id, files.concat(children));
@@ -3504,7 +3536,7 @@ EntityTree.prototype.showMore = function(id) {
   Mydataspace.request('entities.get', req, function(data) {
     var entityId = Identity.idFromData(data);
     var children = data.children.filter(function(child) {
-      return UIConstants.IGNORED_PATHS[UI.mode].indexOf(child.path) < 0;
+      return UIConstants.IGNORED_PATHS[UI.getMode()].indexOf(child.path) < 0;
     }).map(Identity.entityFromData);
     self.addChildren(entityId, children);
   });
@@ -6028,7 +6060,7 @@ UILayout.header =
         css: 'menu__mode_switch',
         onLabel: 'CMS',
         offLabel: 'Dev',
-        value: 0,
+        value: window.localStorage.getItem('uiMode') === 'cms' ? 1 : 0,
         on: {
           onChange: function(newv, oldv) {
             UI.setMode(newv ? 'cms' : 'dev');
@@ -6611,14 +6643,19 @@ UI = {
 
   pages: new Pages(),
 
-  mode: 'dev',
-
   setMode: function (mode) {
     if (['dev', 'cms'].indexOf(mode) === -1) {
       throw new Error('Illegal mode: ' + mode);
     }
-    UI.mode = mode;
+    if (UI.getMode() === mode) {
+      return;
+    }
+    window.localStorage.setItem('uiMode', mode);
     UI.refresh();
+  },
+
+  getMode: function () {
+    return window.localStorage.getItem('uiMode') || 'dev';
   },
 
   VISIBLE_ON_SMALL_SCREENS: [

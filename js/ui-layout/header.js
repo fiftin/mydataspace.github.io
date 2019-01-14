@@ -7,7 +7,7 @@ UILayout.header =
         css: 'menu__mode_switch',
         onLabel: 'CMS',
         offLabel: 'Dev',
-        value: 0,
+        value: window.localStorage.getItem('uiMode') === 'cms' ? 1 : 0,
         on: {
           onChange: function(newv, oldv) {
             UI.setMode(newv ? 'cms' : 'dev');
