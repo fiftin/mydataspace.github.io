@@ -102,9 +102,6 @@ UIHelper = {
         if (/^website\/generators\/[^\/]+$/.test(path)) {
           return 'generator';
         }
-        if (/^(website\/)?wizards\/[^\/]+$/.test(path) || /^website\/wizards\/[^\/]+$/.test(path)) {
-          return 'wizard';
-        }
         if (/^(website\/)?tasks\/[^\/]+$/.test(path) || /^website\/tasks\/[^\/]+$/.test(path)) {
           return 'task';
         }

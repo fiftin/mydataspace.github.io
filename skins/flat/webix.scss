@@ -7897,8 +7897,78 @@ a:active .webix_custom_radio {
 .webix_inp_label,
 .webix_inp_top_label,
 .webix_label_right {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
+
 .webix_view table {
   border-collapse: initial;
+}
+
+
+
+
+.webix_el_box .webix_switch_box{
+  margin-top: 11px
+}
+
+.webix_switch_toggle {
+  position: absolute;
+  visibility: hidden
+}
+
+.webix_switch_box {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  height: 24px;
+  width: 60px;
+  background-color: #f1f1f1;
+  border: 0;
+  border-radius: 60px;
+  box-sizing: border-box;
+  transition: background-color .4s ease;
+  color: #666;
+  text-align: center;
+  float: left
+}
+
+.webix_el_switch .webix_label_right {
+  display: inline-block;
+  padding-top: 3px;
+  margin-top: 4px
+}
+
+.webix_switch_handle {
+  height: 23px;
+  width: 23px;
+  border-radius: 100%;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, .3);
+  border: 0;
+  position: absolute;
+  top: 0;
+  background-color: #fff;
+  transition: left .3s ease;
+  cursor: pointer;
+  box-sizing: border-box
+}
+
+.webix_switch_text {
+  font-weight: bold;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: 2px 0 0 18px;
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.webix_switch_on .webix_switch_text {
+  padding: 2px 18px 0 0
+}
+
+.webix_switch_box.webix_switch_on {
+  background-color: #3498db;
+  color: #fff
 }

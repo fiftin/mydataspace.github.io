@@ -72,7 +72,8 @@ UIConstants = {
     'websiteURL'
   ],
 
-  INVISIBLE_ROOT_FIELDS: ['name',
+  INVISIBLE_ROOT_FIELDS: [
+    'name',
     'avatar',
     'description',
     'websiteURL',
@@ -102,15 +103,27 @@ UIConstants = {
   /**
    * This paths not displayed in tree.
    */
-	IGNORED_PATHS: [
-    'views',
-    'likes',
-    'comments',
-    'processes',
-    'statistics',
-    'cache',
-    'website/generators'
-  ],
+	IGNORED_PATHS: {
+	  dev: [
+      'views',
+      'likes',
+      'comments',
+      'processes',
+      'statistics',
+      'cache',
+      'website/generators'
+    ],
+    cms: [
+      'views',
+      'likes',
+      'comments',
+      'processes',
+      'statistics',
+      'cache',
+      'website',
+      'protos'
+    ]
+  },
 
   IGNORED_WHEN_EMPTY_PATHS: [],
 

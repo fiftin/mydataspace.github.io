@@ -40,6 +40,7 @@ UILayout.windows.cloneEntity = {
             break;
           case 'website/generators':
           case 'website/includes':
+          case 'website/wizards':
           case 'website/public_html':
             options = [
               { id: 'website/public_html', value: 'public_html', icon: UIConstants.ENTITY_ICONS['public_html'] },

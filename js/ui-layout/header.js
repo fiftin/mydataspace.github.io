@@ -2,6 +2,18 @@ UILayout.header =
   { css: 'admin_panel__header',
     cols: [
       { type: 'header' },
+      { view: 'switch',
+        width: 100,
+        css: 'menu__mode_switch',
+        onLabel: 'CMS',
+        offLabel: 'Dev',
+        value: 0,
+        on: {
+          onChange: function(newv, oldv) {
+            UI.setMode(newv ? 'cms' : 'dev');
+          }
+        }
+      },
       { view: 'button',
         width: 85,
         css: 'menu__language_button ' + (PROJECT_NAME === 'web20' ? ' menu__language_button--get_started' : ''),

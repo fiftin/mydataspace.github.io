@@ -9,7 +9,7 @@ var Identity = {
     if (!MDSCommon.isBlank(data.numberOfChildren) && data.numberOfChildren > 0 || UIHelper.isDataHasFiles(data)) {
       if (MDSCommon.isPresent(data.children)) {
         children = data.children.filter(function(x) {
-          return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS.indexOf(x.path) < 0;
+          return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS[UI.mode].indexOf(x.path) < 0;
         }).map(Identity.entityFromData);
       } else {
         children = [{

@@ -159,13 +159,11 @@ var Router = {
       switch (parts.length) {
         case 0:
           throw new Error('Unknown error');
-          break;
         case 1:
           if (parts[0].length <= 2) {
             throw new Error('Unknown error');
           }
           return parts[0];
-          break;
         case 2:
           if (parts[0].length <= 2) {
             return parts[1];
@@ -178,11 +176,11 @@ var Router = {
           return parts;
       }
     } else {
-      var parts = Router.getCommonSearchParts();
-      if (parts == null) {
+      var partsObj = Router.getCommonSearchParts();
+      if (partsObj == null) {
         return '';
       }
-      return parts.search.replace(/\*/g, '');
+      return partsObj.search.replace(/\*/g, '');
     }
   },
 
@@ -191,7 +189,7 @@ var Router = {
       return false;
     }
     var parts = Router.getCommonSearchParts();
-    return parts == null || parts != null && parts.user === 'me';
+    return parts == null || parts.user === 'me';
   },
 
   getNewRootSkeleton: function () {
@@ -201,7 +199,7 @@ var Router = {
     }
   },
 
-  clear() {
+  clear: function() {
     history.replaceState({}, document.title, '.');
   }
 };
@@ -280,7 +278,8 @@ UIConstants = {
     'websiteURL'
   ],
 
-  INVISIBLE_ROOT_FIELDS: ['name',
+  INVISIBLE_ROOT_FIELDS: [
+    'name',
     'avatar',
     'description',
     'websiteURL',
@@ -310,15 +309,27 @@ UIConstants = {
   /**
    * This paths not displayed in tree.
    */
-	IGNORED_PATHS: [
-    'views',
-    'likes',
-    'comments',
-    'processes',
-    'statistics',
-    'cache',
-    'website/generators'
-  ],
+	IGNORED_PATHS: {
+	  dev: [
+      'views',
+      'likes',
+      'comments',
+      'processes',
+      'statistics',
+      'cache',
+      'website/generators'
+    ],
+    cms: [
+      'views',
+      'likes',
+      'comments',
+      'processes',
+      'statistics',
+      'cache',
+      'website',
+      'protos'
+    ]
+  },
 
   IGNORED_WHEN_EMPTY_PATHS: [],
 
@@ -496,9 +507,6 @@ UIHelper = {
       default:
         if (/^website\/generators\/[^\/]+$/.test(path)) {
           return 'generator';
-        }
-        if (/^(website\/)?wizards\/[^\/]+$/.test(path) || /^website\/wizards\/[^\/]+$/.test(path)) {
-          return 'wizard';
         }
         if (/^(website\/)?tasks\/[^\/]+$/.test(path) || /^website\/tasks\/[^\/]+$/.test(path)) {
           return 'task';
@@ -869,7 +877,7 @@ var Identity = {
     if (!MDSCommon.isBlank(data.numberOfChildren) && data.numberOfChildren > 0 || UIHelper.isDataHasFiles(data)) {
       if (MDSCommon.isPresent(data.children)) {
         children = data.children.filter(function(x) {
-          return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS.indexOf(x.path) < 0;
+          return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS[UI.mode].indexOf(x.path) < 0;
         }).map(Identity.entityFromData);
       } else {
         children = [{
@@ -2795,7 +2803,7 @@ EntityList.prototype.refresh = function(newRootId) {
     var entityId = Identity.idFromData(data);
     var children = data.children.filter(function(x) {
       return (x.root !== 'root' || x.path !== '') &&
-        UIConstants.IGNORED_PATHS.indexOf(x.path) < 0 &&
+        UIConstants.IGNORED_PATHS[UI.mode].indexOf(x.path) < 0 &&
         (UIConstants.IGNORED_WHEN_EMPTY_PATHS.indexOf(x.path) < 0);
     }).map(Identity.entityFromData);
     if (self.getCurrentId() === entityId) {
@@ -2875,7 +2883,7 @@ EntityList.prototype.showMore = function() {
   $$('entity_list').disable();
   Mydataspace.request('entities.get', req, function(data) {
     var children = data.children.filter(function(child) {
-      return UIConstants.IGNORED_PATHS.indexOf(child.path) < 0;
+      return UIConstants.IGNORED_PATHS[UI.mode].indexOf(child.path) < 0;
     }).map(Identity.entityFromData);
     self.addChildren(children);
     $$('entity_list').enable();
@@ -3100,7 +3108,7 @@ EntityTree.prototype.resolveChildren = function(id, selectIndexFile) {
       });
 
       var children = data.children.filter(function(x) {
-        return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS.indexOf(x.path) < 0;
+        return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS[UI.mode].indexOf(x.path) < 0;
       }).map(Identity.entityFromData);
 
       UI.entityTree.setChildren(id, files.concat(children));
@@ -3496,7 +3504,7 @@ EntityTree.prototype.showMore = function(id) {
   Mydataspace.request('entities.get', req, function(data) {
     var entityId = Identity.idFromData(data);
     var children = data.children.filter(function(child) {
-      return UIConstants.IGNORED_PATHS.indexOf(child.path) < 0;
+      return UIConstants.IGNORED_PATHS[UI.mode].indexOf(child.path) < 0;
     }).map(Identity.entityFromData);
     self.addChildren(entityId, children);
   });
@@ -4182,6 +4190,7 @@ UILayout.windows.cloneEntity = {
             break;
           case 'website/generators':
           case 'website/includes':
+          case 'website/wizards':
           case 'website/public_html':
             options = [
               { id: 'website/public_html', value: 'public_html', icon: UIConstants.ENTITY_ICONS['public_html'] },
@@ -5677,7 +5686,7 @@ UILayout.entityContextMenu = {
           id: 'new_entity',
           value: STRINGS.context_menu.new_entity
         });
-      } else if (itemData.path === 'website/public_html') {
+      } else if (itemData.path === 'website/public_html' || itemData.path === 'website/wizards') {
         menuItems.push({
           id: 'new_file',
           value: STRINGS.context_menu.new_file
@@ -5730,7 +5739,7 @@ UILayout.entityContextMenu = {
           id: 'delete_entity',
           value: STRINGS.context_menu.delete_entity
         });
-      } else if (itemData.path.indexOf('website/public_html/') === 0) {
+      } else if (itemData.path.indexOf('website/public_html/') === 0 || itemData.path.indexOf('website/wizards/') === 0) {
         menuItems.push({
           id: 'new_file',
           value: STRINGS.context_menu.new_file
@@ -6014,6 +6023,18 @@ UILayout.header =
   { css: 'admin_panel__header',
     cols: [
       { type: 'header' },
+      { view: 'switch',
+        width: 100,
+        css: 'menu__mode_switch',
+        onLabel: 'CMS',
+        offLabel: 'Dev',
+        value: 0,
+        on: {
+          onChange: function(newv, oldv) {
+            UI.setMode(newv ? 'cms' : 'dev');
+          }
+        }
+      },
       { view: 'button',
         width: 85,
         css: 'menu__language_button ' + (PROJECT_NAME === 'web20' ? ' menu__language_button--get_started' : ''),
@@ -6589,6 +6610,16 @@ UI = {
   entityTree: new EntityTree(),
 
   pages: new Pages(),
+
+  mode: 'dev',
+
+  setMode: function (mode) {
+    if (['dev', 'cms'].indexOf(mode) === -1) {
+      throw new Error('Illegal mode: ' + mode);
+    }
+    UI.mode = mode;
+    UI.refresh();
+  },
 
   VISIBLE_ON_SMALL_SCREENS: [
     'SIGN_OUT_LABEL'

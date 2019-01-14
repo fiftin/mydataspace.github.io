@@ -88,13 +88,11 @@ var Router = {
       switch (parts.length) {
         case 0:
           throw new Error('Unknown error');
-          break;
         case 1:
           if (parts[0].length <= 2) {
             throw new Error('Unknown error');
           }
           return parts[0];
-          break;
         case 2:
           if (parts[0].length <= 2) {
             return parts[1];
@@ -107,11 +105,11 @@ var Router = {
           return parts;
       }
     } else {
-      var parts = Router.getCommonSearchParts();
-      if (parts == null) {
+      var partsObj = Router.getCommonSearchParts();
+      if (partsObj == null) {
         return '';
       }
-      return parts.search.replace(/\*/g, '');
+      return partsObj.search.replace(/\*/g, '');
     }
   },
 
@@ -120,7 +118,7 @@ var Router = {
       return false;
     }
     var parts = Router.getCommonSearchParts();
-    return parts == null || parts != null && parts.user === 'me';
+    return parts == null || parts.user === 'me';
   },
 
   getNewRootSkeleton: function () {
@@ -130,7 +128,7 @@ var Router = {
     }
   },
 
-  clear() {
+  clear: function() {
     history.replaceState({}, document.title, '.');
   }
 };

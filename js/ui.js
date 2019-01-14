@@ -17,6 +17,16 @@ UI = {
 
   pages: new Pages(),
 
+  mode: 'dev',
+
+  setMode: function (mode) {
+    if (['dev', 'cms'].indexOf(mode) === -1) {
+      throw new Error('Illegal mode: ' + mode);
+    }
+    UI.mode = mode;
+    UI.refresh();
+  },
+
   VISIBLE_ON_SMALL_SCREENS: [
     'SIGN_OUT_LABEL'
   ],

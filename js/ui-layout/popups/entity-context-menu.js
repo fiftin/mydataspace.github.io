@@ -126,7 +126,7 @@ UILayout.entityContextMenu = {
           id: 'new_entity',
           value: STRINGS.context_menu.new_entity
         });
-      } else if (itemData.path === 'website/public_html') {
+      } else if (itemData.path === 'website/public_html' || itemData.path === 'website/wizards') {
         menuItems.push({
           id: 'new_file',
           value: STRINGS.context_menu.new_file
@@ -179,7 +179,7 @@ UILayout.entityContextMenu = {
           id: 'delete_entity',
           value: STRINGS.context_menu.delete_entity
         });
-      } else if (itemData.path.indexOf('website/public_html/') === 0) {
+      } else if (itemData.path.indexOf('website/public_html/') === 0 || itemData.path.indexOf('website/wizards/') === 0) {
         menuItems.push({
           id: 'new_file',
           value: STRINGS.context_menu.new_file

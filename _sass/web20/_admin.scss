@@ -2,6 +2,13 @@
 
 $admin-view-vertical-gap: 15px;
 
+.menu__mode_switch {
+  opacity: 0.8;
+  transition: opacity 0.2s;
+  &:hover {
+    opacity: 1;
+  }
+}
 
 .view__description {
   padding-top: $admin-view-vertical-gap;
@@ -801,6 +808,7 @@ input {
   border-bottom: 1px solid red;
 }
 .entity_form {
+  position: relative;
   .webix_el_box {
     position: relative;
   }
