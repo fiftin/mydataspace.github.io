@@ -205,17 +205,8 @@ EntityForm.prototype.startAddingField = function() {
 
 EntityForm.prototype.startEditing = function () {
   var self = this;
-  //var url = UIHelper.getWizardUrlById(self.getCurrentId());
-  //$.ajax({
-  //  url: url,
-  //  type: 'HEAD'
-  //}).then(function() {
-  //  $('#wizard_modal__frame').attr('src', url);
-  //  $('#wizard_modal').modal('show');
-  //}).catch(function() {
   self.setEditing(true);
   self.refresh();
-  //});
 };
 
 EntityForm.prototype.setViewTitle = function (title) {
@@ -526,19 +517,23 @@ EntityForm.prototype.setEntityCmsView = function (data) {
   var path = data.path.substr('data'.length);
   var wizardsPath = 'website/wizards' + path;
 
+
+
   Mydataspace.entities.get({ root: data.root, path: wizardsPath }).then(function (res) {
     return res;
   }).catch(function () {
     return Mydataspace.entities.get({ root: data.root, path: MDSCommon.getParentPath(wizardsPath) });
   }).then(function (res) {
     var url = 'https://' + host + (res.path === wizardsPath ? path + '/view.html' : MDSCommon.getParentPath(path) + '/view-item.html');
-    document.getElementById('view').innerHTML = '<iframe class="view__iframe" src="' + url + '"></iframe>';
+    self.setEntityView(data, false).then(function () {
+      document.getElementById('view__fields').innerHTML = '<iframe class="view__iframe" src="' + url + '"></iframe>';
+    });
   }).catch(function () {
     self.setEntityView(data);
   });
 };
 
-EntityForm.prototype.setEntityView = function(data) {
+EntityForm.prototype.setEntityView = function(data, ignoreFields) {
   var self = this;
 
   if (self.currentId == null) {
@@ -551,7 +546,7 @@ EntityForm.prototype.setEntityView = function(data) {
   var language = (getCurrentLanguage() || 'en').toLowerCase();
   var languagePrefix = language === 'en' ? '' : '/' + language;
 
-  $.ajax({ url: languagePrefix + '/fragments/entity-view.html', method: 'get' }).then(function(html) {
+  return $.ajax({ url: languagePrefix + '/fragments/entity-view.html', method: 'get' }).then(function(html) {
     var view = document.getElementById('view');
     view.innerHTML = html;
     if (entityType === 'resource') {
@@ -579,6 +574,10 @@ EntityForm.prototype.setEntityView = function(data) {
     }
 
     self.setViewTitle(MDSCommon.getEntityName(data.path));
+
+    if (ignoreFields) {
+      return;
+    }
 
     var viewFields = self.setViewFields(data);
     $(viewFields).on('click', '.view__field', function() {
@@ -655,11 +654,19 @@ EntityForm.prototype.setNoFieldLabelVisible = function(visible) {
   }
 };
 
+EntityForm.prototype.setCmsData = function(data) {
+  this.clear();
+  document.getElementById('view').innerHTML = '<i>No editor defined for this item</i>';
+  this.setClean();
+  $$('entity_form').hide();
+  $$('entity_view').show();
+};
+
+
 EntityForm.prototype.setData = function(data) {
   var formData = {
     name: Identity.nameFromData(data),
     othersCan: data.othersCan,
-    description: data.description,
     maxNumberOfChildren: data.maxNumberOfChildren,
     isFixed: data.isFixed,
     childPrototype: Identity.idFromChildProtoData(data.childPrototype)
@@ -702,6 +709,9 @@ EntityForm.prototype.refresh = function() {
   Mydataspace.request(req, MDSCommon.extend(Identity.dataFromId(self.currentId), { children: true }), function(data) {
     if (!isWithMeta || entityType === 'resource') {
       self.setView(data);
+    } else if (UI.getMode() === 'cms') {
+      self.setCmsData(data);
+      $$('entity_form').enable();
     } else {
       self.setData(data);
       if (self.isProto()) {
@@ -720,10 +730,10 @@ EntityForm.prototype.refresh = function() {
   });
 };
 
-/**
- * Creates new entity by data received from the 'New Entity' form.
- * @param formData data received from form by method getValues.
- */
+///**
+// * Creates new entity by data received from the 'New Entity' form.
+// * @param formData data received from form by method getValues.
+// */
 //EntityForm.prototype.createByFormData = function(formData) {
 //  var newEntityId = Identity.childId(this.currentId, formData.name);
 //  var data = Identity.dataFromId(newEntityId);

@@ -110,8 +110,7 @@ UIConstants = {
       'comments',
       'processes',
       'statistics',
-      'cache',
-      'website/generators'
+      'cache'
     ],
     cms: [
       'views',

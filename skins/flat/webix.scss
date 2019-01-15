@@ -7922,7 +7922,7 @@ a:active .webix_custom_radio {
   cursor: pointer;
   height: 24px;
   width: 60px;
-  background-color: #f1f1f1;
+  background-color: $brand-success;
   border: 0;
   border-radius: 60px;
   box-sizing: border-box;
@@ -7962,6 +7962,7 @@ a:active .webix_custom_radio {
   display: inline-block;
   box-sizing: border-box;
   width: 100%;
+  color: white;
 }
 
 .webix_switch_on .webix_switch_text {
