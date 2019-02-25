@@ -2,8 +2,52 @@
  * @class
  */
 function EntityForm() {
-  this.editing = false;
-  this.loadedListeners = [];
+  var self = this;
+  self.editing = false;
+  self.loadedListeners = [];
+
+
+  window.addEventListener('message', function (e) {
+    if ([
+      'MDSWizard.getFields',
+      'MDSWizard.save'
+    ].indexOf(e.data.message) == -1) {
+      return;
+    }
+
+    var formData = Identity.dataFromId(self.getCurrentId());
+    var iframeWindow = (document.getElementById('entity_form_iframe') || {}).contentWindow;
+    switch (e.data.message) {
+      case 'MDSWizard.getFields':
+        Mydataspace.entities.get(formData).then(function (data) {
+          iframeWindow.postMessage({ message: 'MDSWizard.getFields.res', fields: data.fields }, '*');
+        }).catch(function (err) {
+          iframeWindow.postMessage({ message: 'MDSWizard.getFields.err', error: err }, '*');
+        });
+
+        break;
+
+      case 'MDSWizard.save':
+        if (!e.data.token || e.data.token !== self.saveToken) {
+          throw new Error('Invalid save token');
+        }
+        delete self.saveToken;
+
+        var iframeLock = document.getElementById('entity_form_iframe_lock');
+        iframeLock.style.display = 'block';
+        Mydataspace.request('entities.change', {
+          root: formData.root,
+          path: formData.path,
+          fields: e.data.fields
+        }).then(function () {
+          iframeLock.style.display = 'none';
+        }).catch(function (err) {
+          iframeLock.style.display = 'none';
+          iframeWindow.postMessage({ message: 'MDSWizard.save.err', token: e.data.token, error: err }, '*');
+        });
+        break;
+    }
+  });
 }
 
 EntityForm.prototype.onLoaded = function(listener) {
@@ -25,6 +69,8 @@ EntityForm.prototype.setEditing = function(editing) {
   }
 
   this.editing = editing;
+  delete self.saveToken;
+
   UI.entityForm.hideScriptEditWindow();
   var entityType = UIHelper.getEntityTypeByPath(Identity.dataFromId(this.currentId).path);
 
@@ -517,16 +563,14 @@ EntityForm.prototype.setEntityCmsView = function (data) {
   var path = data.path.substr('data'.length);
   var wizardsPath = 'website/wizards' + path;
 
-
-
   Mydataspace.entities.get({ root: data.root, path: wizardsPath }).then(function (res) {
     return res;
   }).catch(function () {
     return Mydataspace.entities.get({ root: data.root, path: MDSCommon.getParentPath(wizardsPath) });
   }).then(function (res) {
-    var url = 'https://' + host + (res.path === wizardsPath ? path + '/view.html' : MDSCommon.getParentPath(path) + '/view-item.html');
+    var url = 'https://' + host + (res.path === wizardsPath ? path + '/view.html' : MDSCommon.getParentPath(path) + '/view-item.html') + '?' + MDSCommon.guid();
     self.setEntityView(data, false).then(function () {
-      document.getElementById('view__fields').innerHTML = '<iframe class="view__iframe" src="' + url + '"></iframe>';
+      document.getElementById('view__fields').innerHTML = '<iframe id="entity_form_iframe" class="view__iframe" src="' + url + '"></iframe><div id="entity_form_iframe_lock" class="view__iframe_lock"></div>';
     });
   }).catch(function () {
     self.setEntityView(data);
@@ -655,9 +699,31 @@ EntityForm.prototype.setNoFieldLabelVisible = function(visible) {
 };
 
 EntityForm.prototype.setCmsData = function(data) {
-  this.clear();
-  document.getElementById('view').innerHTML = '<i>No editor defined for this item</i>';
-  this.setClean();
+  var self = this;
+  self.clear();
+
+  if (data.path !== 'data' && data.path.indexOf('data/') !== 0) {
+    self.setData(data);
+    return;
+  }
+
+  var host = data.root + '.wiz.web20.site';
+  var path = data.path.substr('data'.length);
+  var wizardsPath = 'website/wizards' + path;
+
+  Mydataspace.entities.get({ root: data.root, path: wizardsPath }).then(function (res) {
+    return res;
+  }).catch(function () {
+    return Mydataspace.entities.get({ root: data.root, path: MDSCommon.getParentPath(wizardsPath) });
+  }).then(function (res) {
+    var url = 'https://' + host + (res.path === wizardsPath ? path + '/edit.html' : MDSCommon.getParentPath(path) + '/edit-item.html') + '?' + MDSCommon.guid();
+    var view = document.getElementById('view');
+    view.innerHTML = '</div><iframe id="entity_form_iframe" class="view__iframe" src="' + url + '"></iframe><div id="entity_form_iframe_lock" class="view__iframe_lock">';
+  }).catch(function (err) {
+    document.getElementById('view').innerHTML = '<i>No editor defined for this item</i>';
+  });
+
+  self.setClean();
   $$('entity_form').hide();
   $$('entity_view').show();
 };
@@ -814,6 +880,13 @@ EntityForm.prototype.save = function() {
 
   if (self.currentId == null) {
       return;
+  }
+
+  if (UI.getMode() === 'cms') {
+    var saveToken = MDSCommon.guid();
+    document.getElementById('entity_form_iframe').contentWindow.postMessage({ message: 'MDSWizard.saveRequest', token: saveToken }, '*');
+    self.saveToken = saveToken;
+    return;
   }
 
   var dirtyData = webix.CodeParser.expandNames($$('entity_form').getDirtyValues());

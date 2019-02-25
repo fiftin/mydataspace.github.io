@@ -44,8 +44,6 @@ gulp.task('web20', function() {
 });
 
 
-
-
 gulp.task('mds', function() {
   return gulp.src([
       './js/common.js',
@@ -110,6 +108,16 @@ gulp.task('ui', function() {
   .pipe(gulp.dest('./js/dist'))
   .pipe(gulp.dest('./_site/js/dist'))
   .pipe(gulp.dest('./_site.web20/js/dist'));
+});
+
+gulp.task('wizard', function() {
+  return gulp.src([
+    './js/wizard.js'
+  ])
+    .pipe(concat('wizard-1.0.js'))
+    .pipe(gulp.dest('./js/dist'))
+    .pipe(gulp.dest('./_site/js/dist'))
+    .pipe(gulp.dest('./_site.web20/js/dist'));
 });
 
 gulp.task('test', function (done) {

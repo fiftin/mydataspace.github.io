@@ -192,7 +192,5 @@ UIConstants = {
       mode: 'jsx'
     }
   }
-
-
 };
 
