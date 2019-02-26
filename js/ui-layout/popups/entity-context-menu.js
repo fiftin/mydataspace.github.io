@@ -40,6 +40,10 @@ UILayout.entityContextMenu = {
         value: STRINGS.context_menu.copy_entity
       });
 
+      menuItems.push({
+        id: 'delete_entity',
+        value: STRINGS.context_menu.delete_root
+      });
 
       this.data.add({ $template: 'Separator' });
 
