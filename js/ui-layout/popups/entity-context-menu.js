@@ -34,6 +34,13 @@ UILayout.entityContextMenu = {
         value: STRINGS.context_menu.edit,
         icon: 'edit'
       });
+
+      menuItems.push({
+        id: 'copy_entity',
+        value: STRINGS.context_menu.copy_entity
+      });
+
+
       this.data.add({ $template: 'Separator' });
 
       if (Identity.isFileId(id)) {

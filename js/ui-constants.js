@@ -15,8 +15,6 @@ UIConstants = {
 		'like': 'heart-o',
 		'comments': 'comments',
 		'comment': 'comment',
-		// 'views': 'photo',
-		// 'view': 'file-image-o',
     'website': 'globe',
     'wizards': 'magic',
     'wizard': 'magic',
@@ -29,7 +27,8 @@ UIConstants = {
     'includes': 'puzzle-piece',
     'scss': 'paint-brush',
     'public_html': 'code',
-    'data': 'database'
+    'data': 'database',
+    'statistics': 'bar-chart'
 	},
 
 	ROOT_FIELDS: [
@@ -108,9 +107,9 @@ UIConstants = {
       'views',
       'likes',
       'comments',
-      'processes',
-      'statistics',
-      'cache'
+      // 'processes',
+      // 'statistics',
+      // 'cache'
     ],
     cms: [
       'views',
@@ -157,7 +156,8 @@ UIConstants = {
     'website/scss',
     'website/wizards',
     'website/generators',
-    'website/tasks'
+    'website/tasks',
+    'statistics'
 	],
 
   EDITOR_SUPPORTED_EXTENSIONS: {

@@ -221,8 +221,6 @@ UIConstants = {
 		'like': 'heart-o',
 		'comments': 'comments',
 		'comment': 'comment',
-		// 'views': 'photo',
-		// 'view': 'file-image-o',
     'website': 'globe',
     'wizards': 'magic',
     'wizard': 'magic',
@@ -235,7 +233,8 @@ UIConstants = {
     'includes': 'puzzle-piece',
     'scss': 'paint-brush',
     'public_html': 'code',
-    'data': 'database'
+    'data': 'database',
+    'statistics': 'bar-chart'
 	},
 
 	ROOT_FIELDS: [
@@ -314,9 +313,9 @@ UIConstants = {
       'views',
       'likes',
       'comments',
-      'processes',
-      'statistics',
-      'cache'
+      // 'processes',
+      // 'statistics',
+      // 'cache'
     ],
     cms: [
       'views',
@@ -363,7 +362,8 @@ UIConstants = {
     'website/scss',
     'website/wizards',
     'website/generators',
-    'website/tasks'
+    'website/tasks',
+    'statistics'
 	],
 
   EDITOR_SUPPORTED_EXTENSIONS: {
@@ -472,6 +472,7 @@ UIHelper = {
     switch (path) {
       case '':
         return 'root';
+      case 'statistics':
       case 'protos':
       case 'resources':
       case 'tasks':
@@ -4319,6 +4320,8 @@ UILayout.windows.cloneEntity = {
             break;
           default:
             options = [
+              { id: 'data', value: 'data', icon: UIConstants.ENTITY_ICONS['data'] },
+              { id: 'website/public_html', value: 'public_html', icon: UIConstants.ENTITY_ICONS['public_html'] },
             ];
             break;
         }
@@ -5706,6 +5709,13 @@ UILayout.entityContextMenu = {
         value: STRINGS.context_menu.edit,
         icon: 'edit'
       });
+
+      menuItems.push({
+        id: 'copy_entity',
+        value: STRINGS.context_menu.copy_entity
+      });
+
+
       this.data.add({ $template: 'Separator' });
 
       if (Identity.isFileId(id)) {

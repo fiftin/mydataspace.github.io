@@ -69,6 +69,7 @@ UIHelper = {
     switch (path) {
       case '':
         return 'root';
+      case 'statistics':
       case 'protos':
       case 'resources':
       case 'tasks':

@@ -57,6 +57,8 @@ UILayout.windows.cloneEntity = {
             break;
           default:
             options = [
+              { id: 'data', value: 'data', icon: UIConstants.ENTITY_ICONS['data'] },
+              { id: 'website/public_html', value: 'public_html', icon: UIConstants.ENTITY_ICONS['public_html'] },
             ];
             break;
         }
