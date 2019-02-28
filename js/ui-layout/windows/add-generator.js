@@ -24,8 +24,8 @@ UILayout.windows.addGenerator = {
         var data = Identity.dataFromId(window.getShowData().entityId || UI.entityList.getCurrentId());
         data.path += '/' + formData.name;
         data.fields = [
-          { name: 'dataFolder', value: formData.dataFolder },
-          { name: 'cacheFolder', value: formData.cacheFolder }
+          { name: 'dataFolder', value: formData.dataFolder, type: 's' },
+          { name: 'cacheFolder', value: formData.cacheFolder, type: 's' }
         ];
 
         Mydataspace.entities.create(data).then(function() {
