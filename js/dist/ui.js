@@ -5710,16 +5710,6 @@ UILayout.entityContextMenu = {
         icon: 'edit'
       });
 
-      // menuItems.push({
-      //   id: 'copy_entity',
-      //   value: STRINGS.context_menu.copy_entity
-      // });
-      //
-      // menuItems.push({
-      //   id: 'delete_entity',
-      //   value: STRINGS.context_menu.delete_root
-      // });
-
       this.data.add({ $template: 'Separator' });
 
       if (Identity.isFileId(id)) {
@@ -5841,6 +5831,12 @@ UILayout.entityContextMenu = {
           id: 'copy_entity',
           value: STRINGS.context_menu.copy_entity
         });
+
+        menuItems.push({
+          id: 'new_file',
+          value: STRINGS.context_menu.new_file
+        });
+        
         menuItems.push({ $template: 'Separator' });
         menuItems.push({
           id: 'delete_entity',
