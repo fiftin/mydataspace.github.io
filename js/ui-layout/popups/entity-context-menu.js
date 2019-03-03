@@ -359,6 +359,28 @@ UILayout.entityContextMenu = {
         case 'new_file':
           $$('add_file_window').showWithData({ entityId: entityId });
           break;
+        case 'regenerate_cache':
+          webix.confirm({
+            title: STRINGS.DELETE_FILE,
+            text: STRINGS.REALLY_DELETE,
+            ok: STRINGS.YES,
+            cancel: STRINGS.NO,
+            callback: function(result) {
+              if (!result) {
+                return;
+              }
+
+              var req = MDSCommon.extend(Identity.dataFromId(entityId, {ignoreField: true}), {
+                fields: [{
+                  name: Identity.getFileNameFromId(entityId),
+                  value: null
+                }]
+              });
+
+              Mydataspace.emit('entities.create', req);
+            }
+          });
+          break;
         case 'delete_file':
           webix.confirm({
             title: STRINGS.DELETE_FILE,
