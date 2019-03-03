@@ -35,7 +35,7 @@ MDSConsole.run = function(optionsOrAction, action) {
         });
       });
     }).then(function () {
-      return action(Mydataspace.getRoot(MDSConsole.root));
+      return action(Mydataspace.getRoot(MDSConsole.root), MDSConsole.event);
     }).then(function (res) {
       MDSConsole.success(res);
     }, function (err) {

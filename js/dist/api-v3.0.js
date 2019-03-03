@@ -8975,7 +8975,7 @@ function MDSClient(options) {
 }
 
 MDSClient.DEFAULT_URLS = {
-  cdnURL:  'https://cdn.mydataspace.net',
+  cdnURL:  'https://d74vncfm6779v.cloudfront.net',
   apiURL:  'https://api.mydataspace.net',
   importURL: 'https://import.mydataspace.net'
 };
