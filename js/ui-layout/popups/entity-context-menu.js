@@ -141,6 +141,16 @@ UILayout.entityContextMenu = {
           id: 'new_generator',
           value: STRINGS.context_menu.new_generator
         });
+      } else if (itemData.path === 'processes') {
+        menuItems.push({
+          id: 'new_entity',
+          value: STRINGS.context_menu.new_entity
+        });
+      } else if (itemData.path.indexOf('processes/') === 0) {
+        menuItems.push({
+          id: 'delete_entity',
+          value: STRINGS.context_menu.delete_entity
+        });
       } else if (itemData.path.indexOf('website/tasks/') === 0) {
         menuItems.push({
           id: 'copy_entity',

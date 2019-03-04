@@ -5816,6 +5816,16 @@ UILayout.entityContextMenu = {
           id: 'new_generator',
           value: STRINGS.context_menu.new_generator
         });
+      } else if (itemData.path === 'processes') {
+        menuItems.push({
+          id: 'new_entity',
+          value: STRINGS.context_menu.new_entity
+        });
+      } else if (itemData.path.indexOf('processes/') === 0) {
+        menuItems.push({
+          id: 'delete_entity',
+          value: STRINGS.context_menu.delete_entity
+        });
       } else if (itemData.path.indexOf('website/tasks/') === 0) {
         menuItems.push({
           id: 'copy_entity',
@@ -5836,7 +5846,7 @@ UILayout.entityContextMenu = {
           id: 'new_file',
           value: STRINGS.context_menu.new_file
         });
-        
+
         menuItems.push({ $template: 'Separator' });
         menuItems.push({
           id: 'delete_entity',
@@ -6033,6 +6043,28 @@ UILayout.entityContextMenu = {
           break;
         case 'new_file':
           $$('add_file_window').showWithData({ entityId: entityId });
+          break;
+        case 'regenerate_cache':
+          webix.confirm({
+            title: STRINGS.DELETE_FILE,
+            text: STRINGS.REALLY_DELETE,
+            ok: STRINGS.YES,
+            cancel: STRINGS.NO,
+            callback: function(result) {
+              if (!result) {
+                return;
+              }
+
+              var req = MDSCommon.extend(Identity.dataFromId(entityId, {ignoreField: true}), {
+                fields: [{
+                  name: Identity.getFileNameFromId(entityId),
+                  value: null
+                }]
+              });
+
+              Mydataspace.emit('entities.create', req);
+            }
+          });
           break;
         case 'delete_file':
           webix.confirm({
