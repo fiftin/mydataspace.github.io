@@ -314,7 +314,7 @@ UIConstants = {
       'likes',
       'comments',
       // 'processes',
-      // 'statistics',
+      'statistics',
       // 'cache'
     ],
     cms: [
@@ -5845,6 +5845,11 @@ UILayout.entityContextMenu = {
         menuItems.push({
           id: 'new_file',
           value: STRINGS.context_menu.new_file
+        });
+
+        menuItems.push({
+          id: 'regenerate_cache',
+          value: STRINGS.context_menu.regenerate_cache
         });
 
         menuItems.push({ $template: 'Separator' });

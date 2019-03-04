@@ -172,6 +172,11 @@ UILayout.entityContextMenu = {
           value: STRINGS.context_menu.new_file
         });
 
+        menuItems.push({
+          id: 'regenerate_cache',
+          value: STRINGS.context_menu.regenerate_cache
+        });
+
         menuItems.push({ $template: 'Separator' });
         menuItems.push({
           id: 'delete_entity',

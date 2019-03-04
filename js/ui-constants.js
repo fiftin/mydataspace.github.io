@@ -108,7 +108,7 @@ UIConstants = {
       'likes',
       'comments',
       // 'processes',
-      // 'statistics',
+      'statistics',
       // 'cache'
     ],
     cms: [
