@@ -418,7 +418,7 @@ UILayout.entityContextMenu = {
               pathPromise.then(function (path) {
                 Mydataspace.emit('entities.create', {
                   root: cacheFolderData.root,
-                  path: 'processes',
+                  path: 'processes/' + MDSCommon.guid(),
                   fields: [{
                     name: 'type',
                     value: 'refreshCache',
