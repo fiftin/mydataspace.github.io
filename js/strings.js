@@ -20,6 +20,8 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     SEARCH: 'Filter...',
     DELETE_ENTITY: 'Delete Folder',
     DELETE_FILE: 'Delete File',
+    REGEN_CACHE: 'Update Cache',
+    REALLY_REGEN_CACHE: 'Are you really want to update cache?',
     DELETE_ENTITY_SHORT: 'Delete',
     CREATE_CHILDREN: 'Create Children',
     CREATE_ONE_CHILD: 'Create One Child',

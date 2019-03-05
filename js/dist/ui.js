@@ -5783,6 +5783,11 @@ UILayout.entityContextMenu = {
           id: 'regenerate_cache',
           value: STRINGS.context_menu.regenerate_cache
         });
+      } else if (itemData.path.startsWith('cache')) {
+        menuItems.push({
+          id: 'regenerate_cache',
+          value: STRINGS.context_menu.regenerate_cache
+        });
       } else if (itemData.path === 'website/includes') {
         menuItems.push({
           id: 'new_pug',
@@ -6051,23 +6056,55 @@ UILayout.entityContextMenu = {
           break;
         case 'regenerate_cache':
           webix.confirm({
-            title: STRINGS.DELETE_FILE,
-            text: STRINGS.REALLY_DELETE,
+            title: STRINGS.REGEN_CACHE,
+            text: STRINGS.REALLY_REGEN_CACHE,
             ok: STRINGS.YES,
             cancel: STRINGS.NO,
             callback: function(result) {
               if (!result) {
                 return;
               }
+              var cacheFolderData = Identity.dataFromId(entityId, {ignoreField: true});
 
-              var req = MDSCommon.extend(Identity.dataFromId(entityId, {ignoreField: true}), {
-                fields: [{
-                  name: Identity.getFileNameFromId(entityId),
-                  value: null
-                }]
+              var pathPromise;
+              switch (cacheFolderData.path) {
+                case '':
+                case 'generators':
+                case 'cache':
+                  pathPromise = Promise.resolve('cache');
+                  break;
+                default:
+                  if (cacheFolderData.path.startsWith('cache/')) {
+                    pathPromise = Promise.resolve(cacheFolderData.path);
+                  } else if (cacheFolderData.path.startsWith('website/generators/')) {
+                    pathPromise = new Promise(function (resolve, reject) {
+                      Mydataspace.entities.get(cacheFolderData).then(function (data) {
+                        resolve('cache/' + MDSCommon.findValueByName(data.fields, 'cacheFolder'));
+                      }).catch(function (err) {
+                        reject(err);
+                      });
+                    });
+                  } else {
+                    throw new Error('Incorrect path for cache updating: ' + cacheFolderData.path);
+                  }
+                  break;
+              }
+
+              pathPromise.then(function (path) {
+                Mydataspace.emit('entities.create', {
+                  root: cacheFolderData.root,
+                  path: 'processes',
+                  fields: [{
+                    name: 'type',
+                    value: 'refreshCache',
+                    type: 's'
+                  }, {
+                    name: 'cachePath',
+                    value: path,
+                    type: 's'
+                  }]
+                });
               });
-
-              Mydataspace.emit('entities.create', req);
             }
           });
           break;
