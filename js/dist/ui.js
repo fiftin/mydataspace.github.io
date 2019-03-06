@@ -1410,7 +1410,12 @@ function EntityForm() {
     switch (e.data.message) {
       case 'MDSWizard.getFields':
         Mydataspace.entities.get(formData).then(function (data) {
-          iframeWindow.postMessage({ message: 'MDSWizard.getFields.res', fields: data.fields }, '*');
+          iframeWindow.postMessage({
+            message: 'MDSWizard.getFields.res',
+            fields: data.fields,
+            path: data.path,
+            root: data.root
+          }, '*');
         }).catch(function (err) {
           iframeWindow.postMessage({ message: 'MDSWizard.getFields.err', error: err }, '*');
         });
