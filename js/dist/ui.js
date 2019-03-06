@@ -1948,6 +1948,7 @@ EntityForm.prototype.setTaskView = function(data) {
  * @param options.pageName
  * @param options.host
  * @param options.path
+ * @param [options.target]
  */
 EntityForm.prototype.setCmsIframe = function (options) {
   var self = this;
@@ -1963,7 +1964,7 @@ EntityForm.prototype.setCmsIframe = function (options) {
   }
   var url = 'https://' + options.host + options.path + '/' + options.pageName + '.html?' + MDSCommon.guid();
   self.setEntityView(options.data, true).then(function () {
-    document.getElementById('view__fields').innerHTML = '<iframe id="entity_form_iframe" class="view__iframe" src="' + url + '"></iframe><div id="entity_form_iframe_lock" class="view__iframe_lock"></div>';
+    document.getElementById(options.target ? options.target : 'view__fields').innerHTML = '<iframe id="entity_form_iframe" class="view__iframe" src="' + url + '"></iframe><div id="entity_form_iframe_lock" class="view__iframe_lock"></div>';
   });
 };
 
@@ -2155,7 +2156,8 @@ EntityForm.prototype.setCmsData = function(data) {
         res: res,
         host: host,
         path: MDSCommon.getParentPath(path),
-        pageName: 'edit-item'
+        pageName: 'edit-item',
+        target: 'view'
       });
     }
   }).catch(function (err) {
