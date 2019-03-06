@@ -600,7 +600,8 @@ pre {
 .view__iframe {
   width: 100%;
   border: 0;
-  height: 100%;
+  height: calc(100vh - 105px);
+  margin-bottom: -20px;
 }
 
 .view__iframe_lock {
