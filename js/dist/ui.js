@@ -1940,6 +1940,32 @@ EntityForm.prototype.setTaskView = function(data) {
   }.bind(this));
 };
 
+/**
+ *
+ * @param options
+ * @param options.res
+ * @param options.data
+ * @param options.pageName
+ * @param options.host
+ * @param options.path
+ */
+EntityForm.prototype.setCmsIframe = function (options) {
+  var self = this;
+  var ok = false;
+  for (var i in options.res.fields) {
+    if ([options.pageName + '.html', options.pageName + '.pug'].indexOf(options.res.fields[i].name) >= 0) {
+      ok = true;
+      break;
+    }
+  }
+  if (!ok) {
+    throw new Error(options.pageName + '.html not found');
+  }
+  var url = 'https://' + options.host + options.path + '/' + options.pageName + '.html?' + MDSCommon.guid();
+  self.setEntityView(options.data, true).then(function () {
+    document.getElementById('view__fields').innerHTML = '<iframe id="entity_form_iframe" class="view__iframe" src="' + url + '"></iframe><div id="entity_form_iframe_lock" class="view__iframe_lock"></div>';
+  });
+};
 
 EntityForm.prototype.setEntityCmsView = function (data) {
   var self = this;
@@ -1954,14 +1980,25 @@ EntityForm.prototype.setEntityCmsView = function (data) {
   var wizardsPath = 'website/wizards' + path;
 
   Mydataspace.entities.get({ root: data.root, path: wizardsPath }).then(function (res) {
-    return res;
+    self.setCmsIframe({
+      data: data,
+      res: res,
+      host: host,
+      path: path,
+      pageName: 'view'
+    });
   }).catch(function () {
     return Mydataspace.entities.get({ root: data.root, path: MDSCommon.getParentPath(wizardsPath) });
   }).then(function (res) {
-    var url = 'https://' + host + (res.path === wizardsPath ? path + '/view.html' : MDSCommon.getParentPath(path) + '/view-item.html') + '?' + MDSCommon.guid();
-    self.setEntityView(data, false).then(function () {
-      document.getElementById('view__fields').innerHTML = '<iframe id="entity_form_iframe" class="view__iframe" src="' + url + '"></iframe><div id="entity_form_iframe_lock" class="view__iframe_lock"></div>';
-    });
+    if (res) {
+      self.setCmsIframe({
+        data: data,
+        res: res,
+        host: host,
+        path: MDSCommon.getParentPath(path),
+        pageName: 'view-item'
+      });
+    }
   }).catch(function () {
     self.setEntityView(data);
   });
@@ -2102,15 +2139,27 @@ EntityForm.prototype.setCmsData = function(data) {
   var wizardsPath = 'website/wizards' + path;
 
   Mydataspace.entities.get({ root: data.root, path: wizardsPath }).then(function (res) {
-    return res;
+    self.setCmsIframe({
+      data: data,
+      res: res,
+      host: host,
+      path: path,
+      pageName: 'edit'
+    });
   }).catch(function () {
     return Mydataspace.entities.get({ root: data.root, path: MDSCommon.getParentPath(wizardsPath) });
   }).then(function (res) {
-    var url = 'https://' + host + (res.path === wizardsPath ? path + '/edit.html' : MDSCommon.getParentPath(path) + '/edit-item.html') + '?' + MDSCommon.guid();
-    var view = document.getElementById('view');
-    view.innerHTML = '</div><iframe id="entity_form_iframe" class="view__iframe" src="' + url + '"></iframe><div id="entity_form_iframe_lock" class="view__iframe_lock">';
+    if (res) {
+      self.setCmsIframe({
+        data: data,
+        res: res,
+        host: host,
+        path: MDSCommon.getParentPath(path),
+        pageName: 'edit-item'
+      });
+    }
   }).catch(function (err) {
-    document.getElementById('view').innerHTML = '<i>No editor defined for this item</i>';
+    document.getElementById('view').innerHTML = '<div class="view__fields view__fields--empty"><div class="view__no_fields_exists">No editor defined for this item</div></div>';
   });
 
   self.setClean();
