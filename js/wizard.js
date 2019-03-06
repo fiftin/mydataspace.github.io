@@ -37,6 +37,7 @@ MDSWizardClass.prototype.getFields = function () {
     window.addEventListener('message', function(e) {
       switch (e.data.message) {
         case 'MDSWizard.getFields.res':
+          e.data.fields.$path = e.data.path;
           resolve(e.data.fields);
           break;
         case 'MDSWizard.getFields.err':
