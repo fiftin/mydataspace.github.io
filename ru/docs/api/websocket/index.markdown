@@ -14,7 +14,7 @@ language: ru
 Подклюяение SDK:
 
 {% highlight html %}
-<script src="https://web20.site/js/dist/web2.0.js"></script>
+<script src="https://web20.site/js/dist/sdk-2.1.js"></script>
 {% endhighlight %}
 
 <br />
