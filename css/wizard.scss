@@ -2,26 +2,41 @@
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
 
-@import "https://web20site.com/fonts/1.0.0/fonts.css";
+@import "https://cdn.web20site.com/fonts/1.0.0/fonts.css";
 
-$font-size-md:  14px;
-$edit-bg:       #fafafa;
-$edit-border:   #ddd;
-$edit-padding:  10px;
+$wiz-font-size:     14px;
+$wiz-edit-bg:       #fafafa;
+$wiz-edit-border:   #ddd;
+$wiz-edit-padding:  10px;
+$wiz-body-margin:   15px;
+
+$wiz-success-color: #27ae60;
+
 
 body {
   font-family: Raleway, Arial, sans-serif;
-  font-size: $font-size-md;
-  margin: 15px;
+  font-size: $wiz-font-size;
+  margin: $wiz-body-margin;
 }
 
 input, textarea {
   font-family: Raleway, Arial, sans-serif;
-  font-size: $font-size-md;
+  font-size: $wiz-font-size;
 }
 
-.input-text {
-  background: $edit-bg;
-  border: 1px solid $edit-border;
-  padding: $edit-padding * 0.75 $edit-padding;
+.wiz-edit {
+  background: $wiz-edit-bg;
+  border: 1px solid $wiz-edit-border;
+  padding: $wiz-edit-padding * 0.75 $wiz-edit-padding;
+}
+
+.wiz-button {
+  border: 0;
+  border-radius: 4px;
+  padding: 3px 10px;
+}
+
+.wiz-button--success {
+  background: $wiz-success-color;
+  color: white;
 }
