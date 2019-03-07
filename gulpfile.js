@@ -120,6 +120,29 @@ gulp.task('wizard', function() {
     .pipe(gulp.dest('./_site.web20/js/dist'));
 });
 
+gulp.task('wizard', ['wizard:js', 'wizard:css']);
+
+gulp.task('wizard:js', function() {
+  return gulp.src([
+    './js/wizard.js'
+  ])
+    .pipe(concat('wiz-1.4.js'))
+    .pipe(gulp.dest('./js/dist'))
+    .pipe(gulp.dest('./_site/js/dist'))
+    .pipe(gulp.dest('./_site.web20/js/dist'));
+});
+
+gulp.task('wizard:css', function() {
+  return gulp.src(
+    '_site.web20/css/wizard.css'
+  )
+    .pipe(concat('wiz-1.4.css'))
+    .pipe(gulp.dest('./js/dist'))
+    .pipe(gulp.dest('./_site/js/dist'))
+    .pipe(gulp.dest('./_site.web20/js/dist'));
+});
+
+
 gulp.task('test', function (done) {
   new Server({
     configFile: __dirname + '/karma.conf.js',

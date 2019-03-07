@@ -1,0 +1,14 @@
+@import "https://web20site.com/fonts/1.0.0/fonts.css";
+body {
+  font-family: Raleway, Arial, sans-serif;
+  font-size: 14px;
+  margin: 15px; }
+
+input, textarea {
+  font-family: Raleway, Arial, sans-serif;
+  font-size: 14px; }
+
+.input-text {
+  background: #fafafa;
+  border: 1px solid #ddd;
+  padding: 7.5px 10px; }
