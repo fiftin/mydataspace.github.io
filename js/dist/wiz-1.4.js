@@ -56,12 +56,12 @@ MDSWizardClass.prototype.upload = function(type) {
     }, '*');
 
     window.addEventListener('message', function(e) {
-      switch (e.message) {
+      switch (e.data.message) {
         case 'MDSWizard.upload.res':
-          resolve(e.name);
+          resolve(e.data.name);
           break;
         case 'MDSWizard.upload.err':
-          reject(e.error);
+          reject(e.data.error);
           break;
       }
     });
