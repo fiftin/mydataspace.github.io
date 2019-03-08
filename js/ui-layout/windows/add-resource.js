@@ -16,6 +16,7 @@ UILayout.windows.addResource = {
             UIControls.removeSpinnerFromWindow('add_resource_window');
             return;
           }
+          var window = $$('add_resource_window');
           var formData = $$('add_resource_form').getValues();
           var newEntityId = Identity.childId(UI.entityList.getCurrentId(), 'test');
           var data = Identity.dataFromId(newEntityId);
@@ -24,9 +25,11 @@ UILayout.windows.addResource = {
             data.root,
             formData.type,
             function(res) {
+              var callback = window.getShowData().callback;
               $$('add_resource_window').hide();
               UIControls.removeSpinnerFromWindow('add_resource_window');
               UI.entityList.refresh();
+              callback && callback(res);
             },
             function(err) {
               UIControls.removeSpinnerFromWindow('add_resource_window');

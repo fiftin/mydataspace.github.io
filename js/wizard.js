@@ -48,19 +48,19 @@ MDSWizardClass.prototype.getFields = function () {
   });
 };
 
-MDSWizardClass.prototype.uploadDialog = function(type) {
+MDSWizardClass.prototype.upload = function(type) {
   return new Promise(function(resolve, reject) {
     window.parent.postMessage({
-      message: 'MDSWizard.uploadDialog',
+      message: 'MDSWizard.upload',
       type: type
     }, '*');
 
     window.addEventListener('message', function(e) {
       switch (e.message) {
-        case 'MDSWizard.uploadDialog.res':
+        case 'MDSWizard.upload.res':
           resolve(e.name);
           break;
-        case 'MDSWizard.uploadDialog.err':
+        case 'MDSWizard.upload.err':
           reject(e.error);
           break;
       }

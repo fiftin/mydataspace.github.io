@@ -1399,7 +1399,9 @@ function EntityForm() {
 
   window.addEventListener('message', function (e) {
     if ([
+      'MDSWizard.upload',
       'MDSWizard.getFields',
+      'MDSWizard.getData',
       'MDSWizard.save'
     ].indexOf(e.data.message) == -1) {
       return;
@@ -1408,6 +1410,26 @@ function EntityForm() {
     var formData = Identity.dataFromId(self.getCurrentId());
     var iframeWindow = (document.getElementById('entity_form_iframe') || {}).contentWindow;
     switch (e.data.message) {
+      case 'MDSWizard.upload':
+        $$('add_resource_window').showWithData({
+          callback: function (res, err) {
+            if (err) {
+              iframeWindow.postMessage({
+                message: 'MDSWizard.upload.err',
+                error: err
+              }, '*');
+              return;
+            }
+
+            iframeWindow.postMessage({
+              message: 'MDSWizard.upload.res',
+              name: res.resources[0]
+            }, '*');
+          }
+        });
+        break;
+      case 'MDSWizard.getData':
+        break;
       case 'MDSWizard.getFields':
         Mydataspace.entities.get(formData).then(function (data) {
           iframeWindow.postMessage({
@@ -4621,6 +4643,7 @@ UILayout.windows.addResource = {
             UIControls.removeSpinnerFromWindow('add_resource_window');
             return;
           }
+          var window = $$('add_resource_window');
           var formData = $$('add_resource_form').getValues();
           var newEntityId = Identity.childId(UI.entityList.getCurrentId(), 'test');
           var data = Identity.dataFromId(newEntityId);
@@ -4629,9 +4652,11 @@ UILayout.windows.addResource = {
             data.root,
             formData.type,
             function(res) {
+              var callback = window.getShowData().callback;
               $$('add_resource_window').hide();
               UIControls.removeSpinnerFromWindow('add_resource_window');
               UI.entityList.refresh();
+              callback && callback(res);
             },
             function(err) {
               UIControls.removeSpinnerFromWindow('add_resource_window');

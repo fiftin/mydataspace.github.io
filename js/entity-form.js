@@ -9,7 +9,9 @@ function EntityForm() {
 
   window.addEventListener('message', function (e) {
     if ([
+      'MDSWizard.upload',
       'MDSWizard.getFields',
+      'MDSWizard.getData',
       'MDSWizard.save'
     ].indexOf(e.data.message) == -1) {
       return;
@@ -18,6 +20,26 @@ function EntityForm() {
     var formData = Identity.dataFromId(self.getCurrentId());
     var iframeWindow = (document.getElementById('entity_form_iframe') || {}).contentWindow;
     switch (e.data.message) {
+      case 'MDSWizard.upload':
+        $$('add_resource_window').showWithData({
+          callback: function (res, err) {
+            if (err) {
+              iframeWindow.postMessage({
+                message: 'MDSWizard.upload.err',
+                error: err
+              }, '*');
+              return;
+            }
+
+            iframeWindow.postMessage({
+              message: 'MDSWizard.upload.res',
+              name: res.resources[0]
+            }, '*');
+          }
+        });
+        break;
+      case 'MDSWizard.getData':
+        break;
       case 'MDSWizard.getFields':
         Mydataspace.entities.get(formData).then(function (data) {
           iframeWindow.postMessage({

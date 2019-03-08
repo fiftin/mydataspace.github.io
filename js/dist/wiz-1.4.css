@@ -1,4 +1,4 @@
-@import "https://web20site.com/fonts/1.0.0/fonts.css";
+@import "https://cdn.web20site.com/fonts/1.0.0/fonts.css";
 body {
   font-family: Raleway, Arial, sans-serif;
   font-size: 14px;
@@ -8,7 +8,20 @@ input, textarea {
   font-family: Raleway, Arial, sans-serif;
   font-size: 14px; }
 
-.input-text {
+.wiz-edit {
   background: #fafafa;
   border: 1px solid #ddd;
   padding: 7.5px 10px; }
+
+.wiz-button {
+  border: 0;
+  border-radius: 4px;
+  padding: 5px 12px;
+  cursor: pointer; }
+
+a.wiz-button, a.wiz-button:hover, a.wiz-button:active, a.wiz-button:visited, a.wiz-button:link {
+  text-decoration: none; }
+
+.wiz-button--success {
+  background: #27ae60;
+  color: white; }
