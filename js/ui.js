@@ -215,6 +215,12 @@ UI = {
     Mydataspace.emit('users.getMyProfile', {});
     UI.pages.refreshPage('apps', true);
     UI.pages.refreshPage('data', true);
+
+    if (UI.getMode() === 'cms') {
+      document.getElementById('admin_panel').classList.add('admin_panel--cms');
+    } else {
+      document.getElementById('admin_panel').classList.remove('admin_panel--cms');
+    }
   },
 
   /**

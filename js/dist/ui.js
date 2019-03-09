@@ -6471,6 +6471,20 @@ UILayout.entityTree = {
           $$('entity_tree').open(UI.entityTree.getCurrentId());
         },
 
+        onAfterOpen: function (id) {
+          if (!Identity.isRootId(id) || UI.getMode() !== 'cms') {
+            return;
+          }
+
+          var dataEntityId = Identity.idFromData(MDSCommon.extend(Identity.dataFromId(id), {path: 'data' }));
+
+          UI.entityTree.resolveChildren(dataEntityId).then(function () {
+            if ($$('entity_tree').getFirstChildId(dataEntityId) != null) {
+              $$('entity_tree').open(dataEntityId);
+            }
+          })
+        },
+
         onBeforeOpen: function (id) {
           UI.entityTree.resolveChildren(id);
         },
@@ -7085,6 +7099,12 @@ UI = {
     Mydataspace.emit('users.getMyProfile', {});
     UI.pages.refreshPage('apps', true);
     UI.pages.refreshPage('data', true);
+
+    if (UI.getMode() === 'cms') {
+      document.getElementById('admin_panel').classList.add('admin_panel--cms');
+    } else {
+      document.getElementById('admin_panel').classList.remove('admin_panel--cms');
+    }
   },
 
   /**

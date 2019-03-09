@@ -63,6 +63,17 @@ $admin-view-vertical-gap: 15px;
   top: 137px !important;
 }
 
+.admin_panel--cms {
+  .webix_tree_branch_2 {
+    & > .webix_tree_item {
+      display: none;
+    }
+    & > .webix_tree_leaves {
+      margin-left: 0;
+    }
+  }
+}
+
 .invisible {
   visibility: hidden;
 }
@@ -108,6 +119,8 @@ $admin-view-vertical-gap: 15px;
 .entity_tree {
   background: $toolbar-bg;
 }
+
+
 
 .entity_tree__search {
   input {
