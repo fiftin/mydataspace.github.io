@@ -768,7 +768,7 @@ EntityForm.prototype.setCmsData = function(data) {
   self.clear();
 
   if (data.path !== 'data' && data.path.indexOf('data/') !== 0) {
-    self.setData(data);
+    document.getElementById('view').innerHTML = '<div class="view__fields view__fields--empty"><div class="view__no_fields_exists">You can\'t edit this item in CMS mode</div></div>';
     return;
   }
 
@@ -798,7 +798,7 @@ EntityForm.prototype.setCmsData = function(data) {
       });
     }
   }).catch(function (err) {
-    document.getElementById('view').innerHTML = '<div class="view__fields view__fields--empty"><div class="view__no_fields_exists">No editor defined for this item</div></div>';
+    document.getElementById('view').innerHTML = '<div class="view__fields view__fields--empty"><div class="view__no_fields_exists">You can\'t edit this item in CMS mode</div></div>';
   });
 
   self.setClean();
