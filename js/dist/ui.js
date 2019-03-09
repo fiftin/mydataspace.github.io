@@ -6471,22 +6471,24 @@ UILayout.entityTree = {
           $$('entity_tree').open(UI.entityTree.getCurrentId());
         },
 
-        onAfterOpen: function (id) {
-          if (!Identity.isRootId(id) || UI.getMode() !== 'cms') {
-            return;
-          }
-
-          var dataEntityId = Identity.idFromData(MDSCommon.extend(Identity.dataFromId(id), {path: 'data' }));
-
-          UI.entityTree.resolveChildren(dataEntityId).then(function () {
-            if ($$('entity_tree').getFirstChildId(dataEntityId) != null) {
-              $$('entity_tree').open(dataEntityId);
-            }
-          })
-        },
+        // onAfterOpen: function (id) {
+        //
+        // },
 
         onBeforeOpen: function (id) {
-          UI.entityTree.resolveChildren(id);
+          UI.entityTree.resolveChildren(id).then(function () {
+            if (!Identity.isRootId(id) || UI.getMode() !== 'cms') {
+              return;
+            }
+
+            var dataEntityId = Identity.idFromData(MDSCommon.extend(Identity.dataFromId(id), {path: 'data' }));
+
+            UI.entityTree.resolveChildren(dataEntityId).then(function () {
+              if ($$('entity_tree').getFirstChildId(dataEntityId) != null) {
+                $$('entity_tree').open(dataEntityId);
+              }
+            });
+          });
         },
 
         onSelectChange: function (ids) {
