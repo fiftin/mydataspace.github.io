@@ -167,6 +167,9 @@ function no_items__createNewWebsite() {
     fields: []
   }).then(function (data) {
     setTimeout(function () {
+      if (UI.getMode() === 'cms') {
+        return;
+      }
       var entityId = Identity.idFromData(MDSCommon.extend(data, {
         path: 'website'
       }));
@@ -210,7 +213,7 @@ function no_items__createNewWebsite() {
         type: 'j'
       }]
     }), Mydataspace.request('entities.create', {
-      root: data.root,
+      root: root,
       path: 'processes/' + MDSCommon.guid(),
       fields: [{
         name: 'type',
@@ -222,7 +225,7 @@ function no_items__createNewWebsite() {
         type: 's'
       }]
     })]);
-  }).then(function () {
+  }).then(function (res) {
     $createButton.attr('disabled', false);
     $createButton.find('.fa-cog').removeClass('fa-spin').addClass('hidden');
   }, function (err) {
