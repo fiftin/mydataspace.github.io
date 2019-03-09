@@ -209,6 +209,18 @@ function no_items__createNewWebsite() {
           'MDSWebsite.connect();',
         type: 'j'
       }]
+    }), Mydataspace.request('entities.create', {
+      root: data.root,
+      path: 'processes/' + MDSCommon.guid(),
+      fields: [{
+        name: 'type',
+        value: 'refreshCache',
+        type: 's'
+      }, {
+        name: 'cachePath',
+        value: 'cache',
+        type: 's'
+      }]
     })]);
   }).then(function () {
     $createButton.attr('disabled', false);
