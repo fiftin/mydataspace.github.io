@@ -313,7 +313,7 @@ UIConstants = {
       'views',
       'likes',
       'comments',
-      'processes',
+      // 'processes',
       'statistics',
       // 'cache'
     ],
@@ -4230,6 +4230,18 @@ UILayout.windows.addRoot = {
                 '}).getRoot(\'' + data.root + '\');\n' +
                 'MDSWebsite.connect();',
                 type: 'j'
+              }]
+            }), Mydataspace.request('entities.create', {
+              root: data.root,
+              path: 'processes/' + MDSCommon.guid(),
+              fields: [{
+                name: 'type',
+                value: 'refreshCache',
+                type: 's'
+              }, {
+                name: 'cachePath',
+                value: 'cache',
+                type: 's'
               }]
             })]);
           }).then(function () {

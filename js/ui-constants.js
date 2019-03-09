@@ -107,7 +107,7 @@ UIConstants = {
       'views',
       'likes',
       'comments',
-      'processes',
+      // 'processes',
       'statistics',
       // 'cache'
     ],
