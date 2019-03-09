@@ -78,7 +78,7 @@ UILayout.windows.addRoot = {
                 type: 's'
               }]
             })]);
-          }).then(function () {
+          }).then(function (res) {
             $$('add_root_window').hide();
             UIControls.removeSpinnerFromWindow('add_root_window');
           }).catch(function (err) {
