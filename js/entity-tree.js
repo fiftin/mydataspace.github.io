@@ -562,6 +562,11 @@ EntityTree.prototype.setChildren = function(entityId, children) {
 
 
 EntityTree.prototype.addChildren = function(entityId, children) {
+  if ($$('entity_tree').getItem(entityId) == null) {
+    // return if parent not exists
+    return;
+  }
+
   var self = this;
   var showMoreChildId = Identity.childId(entityId, UIHelper.ENTITY_TREE_SHOW_MORE_ID);
   if (!$$('entity_tree').exists(showMoreChildId)) {
