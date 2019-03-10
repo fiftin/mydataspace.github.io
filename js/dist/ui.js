@@ -205,6 +205,25 @@ var Router = {
 };
 
 UIConstants = {
+  ROOT_ENTITIES_ORDER: [
+    'website',
+    'data',
+    'protos',
+    'resources',
+    'processes',
+    'statistics',
+    'cache'
+  ],
+
+  WEBSITE_ENTITIES_ORDER: [
+    'public_html',
+    'includes',
+    'scss',
+    'tasks',
+    'generators',
+    'wizards'
+  ],
+
 	ENTITY_ICONS: {
 		'root': 'database',
 		'protos': 'cubes',
