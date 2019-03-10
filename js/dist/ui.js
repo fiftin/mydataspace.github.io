@@ -4079,6 +4079,7 @@ webix.protoUI({
     return this._cells[1];
   },
   addView:function(obj){
+
     var id = obj.body.id = obj.body.id || webix.uid();
 
     this.getMultiview().addView(obj.body);
@@ -4092,15 +4093,30 @@ webix.protoUI({
     t.addOption(obj);
     t.refresh();
 
+    this.tabIds.push(id);
+
     return id;
+  },
+  _removeTab: function (id) {
+    for (var i in this.tabIds) {
+      if (this.tabIds[i] === id) {
+        this.tabIds.splice(i, 1);
+        break;
+      }
+    }
   },
   removeView:function(id){
     var t = this.getTabbar();
     t.removeOption(id);
     t.refresh();
+    this._removeTab(id);
+  },
+  getTabIds: function () {
+    return this.tabIds;
   },
   $init:function(config){
     this.$ready.push(this._init_tabview_handlers);
+    this.tabIds = [];
 
     var cells = config.cells;
     var tabs = [];
@@ -4135,7 +4151,9 @@ webix.protoUI({
     delete config.tabs;
   },
   _init_tabview_handlers:function(){
+    var self = this;
     this.getTabbar().attachEvent("onOptionRemove", function(id){
+      self._removeTab(id);
       var view = webix.$$(id);
       if (view)
         view.destructor();
@@ -6946,10 +6964,20 @@ UI = {
     if (['dev', 'cms'].indexOf(mode) === -1) {
       throw new Error('Illegal mode: ' + mode);
     }
+
     if (UI.getMode() === mode) {
       return;
     }
+
+    var scriptEditor = $$('script_editor');
+    var tabIds = scriptEditor.getTabIds();
+    for (var i = tabIds.length - 1; i >= 0; i--) {
+      scriptEditor.removeView(tabIds[i]);
+    }
+
     window.localStorage.setItem('uiMode', mode);
+    UI.entityForm.setEditing(false);
+    UI.entityForm.refresh();
     UI.refresh();
   },
 
@@ -7489,7 +7517,7 @@ UI = {
         on: {
           onOptionRemove: function () {
             var tabbar  = $$('script_editor').getTabbar();
-            if ($(tabbar.$view).find('.webix_all_tabs > *').length === 2) {
+            if ($(tabbar.$view).find('.webix_all_tabs > *').length === 1) {
               tabbar.hide();
             }
           }

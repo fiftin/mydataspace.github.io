@@ -21,10 +21,20 @@ UI = {
     if (['dev', 'cms'].indexOf(mode) === -1) {
       throw new Error('Illegal mode: ' + mode);
     }
+
     if (UI.getMode() === mode) {
       return;
     }
+
+    var scriptEditor = $$('script_editor');
+    var tabIds = scriptEditor.getTabIds();
+    for (var i = tabIds.length - 1; i >= 0; i--) {
+      scriptEditor.removeView(tabIds[i]);
+    }
+
     window.localStorage.setItem('uiMode', mode);
+    UI.entityForm.setEditing(false);
+    UI.entityForm.refresh();
     UI.refresh();
   },
 
@@ -564,7 +574,7 @@ UI = {
         on: {
           onOptionRemove: function () {
             var tabbar  = $$('script_editor').getTabbar();
-            if ($(tabbar.$view).find('.webix_all_tabs > *').length === 2) {
+            if ($(tabbar.$view).find('.webix_all_tabs > *').length === 1) {
               tabbar.hide();
             }
           }

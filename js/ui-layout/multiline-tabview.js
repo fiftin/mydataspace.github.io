@@ -62,6 +62,7 @@ webix.protoUI({
     return this._cells[1];
   },
   addView:function(obj){
+
     var id = obj.body.id = obj.body.id || webix.uid();
 
     this.getMultiview().addView(obj.body);
@@ -75,15 +76,30 @@ webix.protoUI({
     t.addOption(obj);
     t.refresh();
 
+    this.tabIds.push(id);
+
     return id;
+  },
+  _removeTab: function (id) {
+    for (var i in this.tabIds) {
+      if (this.tabIds[i] === id) {
+        this.tabIds.splice(i, 1);
+        break;
+      }
+    }
   },
   removeView:function(id){
     var t = this.getTabbar();
     t.removeOption(id);
     t.refresh();
+    this._removeTab(id);
+  },
+  getTabIds: function () {
+    return this.tabIds;
   },
   $init:function(config){
     this.$ready.push(this._init_tabview_handlers);
+    this.tabIds = [];
 
     var cells = config.cells;
     var tabs = [];
@@ -118,7 +134,9 @@ webix.protoUI({
     delete config.tabs;
   },
   _init_tabview_handlers:function(){
+    var self = this;
     this.getTabbar().attachEvent("onOptionRemove", function(id){
+      self._removeTab(id);
       var view = webix.$$(id);
       if (view)
         view.destructor();
