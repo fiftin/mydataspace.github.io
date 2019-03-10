@@ -33,7 +33,7 @@ input, textarea {
 .wiz-button {
   border: 0;
   border-radius: 4px;
-  padding: 5px 12px;
+  padding: 6px 12px;
   cursor: pointer;
 }
 
@@ -46,4 +46,10 @@ a.wiz-button {
 .wiz-button--success {
   background: $wiz-success-color;
   color: white;
+  &:hover {
+    background: darken($wiz-success-color, 10%);
+  }
+  &:active {
+    background: darken($wiz-success-color, 20%);
+  }
 }
