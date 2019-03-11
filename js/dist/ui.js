@@ -7211,9 +7211,9 @@ UI = {
   //
   refreshApps: function() {
     $$('app_list').disable();
-    Mydataspace.request('apps.getAll', {}, function() {
+    Mydataspace.request('apps.getAll', {}).then(function() {
       $$('app_list').enable();
-    }, function(err) {
+    }).catch(function(err) {
       $$('app_list').enable();
       UI.error(err);
     });
@@ -7349,7 +7349,7 @@ UI = {
     });
 
     Mydataspace.on('apps.getAll.res', function(data) {
-      var items = data.map(function(x) {
+      var items = data.apps.map(function(x) {
         return {
           id: x.clientId,
           value: x.name
