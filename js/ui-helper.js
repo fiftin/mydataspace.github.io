@@ -25,8 +25,11 @@ UIHelper = {
   },
 
   orderDataChildren: function (children, pathsOrder) {
+    if (!pathsOrder) {
+      pathsOrder = [];
+    }
     var nextIndex = 0;
-    for (var i = 0; i < children.length; i++) {
+    for (var i = 0; i < pathsOrder.length; i++) {
       var k = UIHelper.findIndexByPath(children, pathsOrder[i], nextIndex);
       if (k === -1) {
         continue;

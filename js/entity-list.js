@@ -210,6 +210,9 @@ EntityList.prototype.refresh = function(newRootId) {
 
 
     var entityId = Identity.idFromData(data);
+
+    UIHelper.orderDataChildren(data.children, UIConstants.PATH_ORDERS[data.path]);
+
     var children = data.children.filter(function(x) {
       return (x.root !== 'root' || x.path !== '') &&
         UIConstants.IGNORED_PATHS[UI.getMode()].indexOf(x.path) < 0 &&

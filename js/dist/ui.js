@@ -205,24 +205,25 @@ var Router = {
 };
 
 UIConstants = {
-  ROOT_ENTITIES_ORDER: [
-    'website',
-    'data',
-    'protos',
-    'resources',
-    'processes',
-    'statistics',
-    'cache'
-  ],
-
-  WEBSITE_ENTITIES_ORDER: [
-    'public_html',
-    'includes',
-    'scss',
-    'tasks',
-    'generators',
-    'wizards'
-  ],
+  PATH_ORDERS: {
+    '': [
+      'website',
+      'data',
+      'protos',
+      'resources',
+      'processes',
+      'statistics',
+      'cache'
+    ],
+    'website': [
+      'website/public_html',
+      'website/includes',
+      'website/scss',
+      'website/tasks',
+      'website/generators',
+      'website/wizards'
+    ]
+  },
 
 	ENTITY_ICONS: {
 		'root': 'database',
@@ -437,6 +438,31 @@ UIHelper = {
   ENTITY_TREE_SHOW_MORE_ID: 'show_more_23478_3832ee',
   ENTITY_TREE_DUMMY_ID: 'dummy_483__4734_47e4',
   ENTITY_LIST_SHOW_MORE_ID: 'show_more_47384_3338222',
+
+  findIndexByPath: function (children, path) {
+    for (var i = 0; i < children.length; i++) {
+      if (children[i].path === path) {
+        return i;
+      }
+    }
+    return -1;
+  },
+
+  orderDataChildren: function (children, pathsOrder) {
+    if (!pathsOrder) {
+      pathsOrder = [];
+    }
+    var nextIndex = 0;
+    for (var i = 0; i < pathsOrder.length; i++) {
+      var k = UIHelper.findIndexByPath(children, pathsOrder[i], nextIndex);
+      if (k === -1) {
+        continue;
+      }
+      var child = children.splice(k, 1)[0];
+      children.splice(nextIndex, 0, child);
+      nextIndex++;
+    }
+  },
 
   escapeHTML: function (value) {
     var escape = document.getElementById('script_edit_value_escape_textarea');
@@ -3010,6 +3036,9 @@ EntityList.prototype.refresh = function(newRootId) {
 
 
     var entityId = Identity.idFromData(data);
+
+    UIHelper.orderDataChildren(data.children, UIConstants.PATH_ORDERS[data.path]);
+
     var children = data.children.filter(function(x) {
       return (x.root !== 'root' || x.path !== '') &&
         UIConstants.IGNORED_PATHS[UI.getMode()].indexOf(x.path) < 0 &&
@@ -3318,6 +3347,8 @@ EntityTree.prototype.resolveChildren = function(id, selectIndexFile) {
           data: {}
         };
       });
+
+      UIHelper.orderDataChildren(data.children, UIConstants.PATH_ORDERS[data.path]);
 
       var children = data.children.filter(function(x) {
         return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS[UI.getMode()].indexOf(x.path) < 0;
@@ -6813,7 +6844,7 @@ UILayout.apps =
               type: 'icon',
               icon: 'refresh',
               id: 'REFRESH_LABEL_1', label: STRINGS.REFRESH,
-              width: 100,
+              width: 120,
               click: function() {
                 UI.pages.refreshPage('apps');
               }

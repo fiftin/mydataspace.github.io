@@ -29,6 +29,9 @@ describe('UIHelper', function() {
   describe('#orderDataChildren', function () {
     var children = [{
       root: 'test',
+      path: 'website/unknown'
+    }, {
+      root: 'test',
       path: 'website/hello',
     }, {
       root: 'test',
@@ -57,6 +60,9 @@ describe('UIHelper', function() {
       }, {
         root: 'test',
         path: 'website/last'
+      }, {
+        root: 'test',
+        path: 'website/unknown'
       }]);
     });
   });
