@@ -15,6 +15,28 @@ UIHelper = {
   ENTITY_TREE_DUMMY_ID: 'dummy_483__4734_47e4',
   ENTITY_LIST_SHOW_MORE_ID: 'show_more_47384_3338222',
 
+  findIndexByPath: function (children, path) {
+    for (var i = 0; i < children.length; i++) {
+      if (children[i].path === path) {
+        return i;
+      }
+    }
+    return -1;
+  },
+
+  orderDataChildren: function (children, pathsOrder) {
+    var nextIndex = 0;
+    for (var i = 0; i < children.length; i++) {
+      var k = UIHelper.findIndexByPath(children, pathsOrder[i], nextIndex);
+      if (k === -1) {
+        continue;
+      }
+      var child = children.splice(k, 1)[0];
+      children.splice(nextIndex, 0, child);
+      nextIndex++;
+    }
+  },
+
   escapeHTML: function (value) {
     var escape = document.getElementById('script_edit_value_escape_textarea');
     if (!escape) {

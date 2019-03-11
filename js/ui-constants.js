@@ -1,22 +1,23 @@
 UIConstants = {
-  ROOT_ENTITIES_ORDER: [
-    'website',
-    'data',
-    'protos',
-    'resources',
-    'processes',
-    'statistics',
-    'cache'
-  ],
-
-  WEBSITE_ENTITIES_ORDER: [
-    'public_html',
-    'includes',
-    'scss',
-    'tasks',
-    'generators',
-    'wizards'
-  ],
+  PATH_ORDERS: {
+    '': [
+      'website',
+      'data',
+      'protos',
+      'resources',
+      'processes',
+      'statistics',
+      'cache'
+    ],
+    'website': [
+      'website/public_html',
+      'website/includes',
+      'website/scss',
+      'website/tasks',
+      'website/generators',
+      'website/wizards'
+    ]
+  },
 
 	ENTITY_ICONS: {
 		'root': 'database',

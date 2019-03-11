@@ -1,11 +1,4 @@
 describe('main', function() {
-  describe('#search_parseSearchString', function() {
-    it('Should return template', function() {
-      var res = search_parseSearchString('#type:template');
-      expect(res.type).to.eql('t');
-    });
-  });
-
   describe('#getHtmlFromTemplate', function() {
     it('Should return valid HTML', function() {
       var res = getHtmlFromTemplate('<div>{{name }}</div>\n' +

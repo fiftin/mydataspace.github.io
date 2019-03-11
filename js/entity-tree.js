@@ -192,7 +192,8 @@ EntityTree.prototype.resolveChildren = function(id, selectIndexFile) {
       return;
     }
     // Load children to first time opened node.
-    Mydataspace.request('entities.get', MDSCommon.extend(Identity.dataFromId(id), { children: true }), function(data) {
+    var ident = Identity.dataFromId(id);
+    Mydataspace.request('entities.get', MDSCommon.extend(ident, { children: true }), function(data) {
       var entityId = Identity.idFromData(data);
 
       var files = data.fields.filter(function (field) { return field.name.indexOf('.') >= 0; }).map(function (field) {
@@ -203,6 +204,10 @@ EntityTree.prototype.resolveChildren = function(id, selectIndexFile) {
           data: {}
         };
       });
+
+      if (UIConstants.PATH_ORDERS[ident.path]) {
+        UIHelper.orderDataChildren(data.children, UIConstants.PATH_ORDERS[ident.path]);
+      }
 
       var children = data.children.filter(function(x) {
         return (x.root !== 'root' || x.path !== '') && UIConstants.IGNORED_PATHS[UI.getMode()].indexOf(x.path) < 0;

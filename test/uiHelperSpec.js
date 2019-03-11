@@ -1,7 +1,69 @@
 describe('UIHelper', function() {
+
+  describe('#findIndexByPath', function () {
+    var children = [{
+      root: 'test',
+      path: 'website/hello',
+    }, {
+      root: 'test',
+      path: 'website/world'
+    }, {
+      root: 'test',
+      path: 'website/test'
+    }, {
+      root: 'test',
+      path: 'website/last'
+    }];
+
+    it('returns correct index of found item', function () {
+      var i = UIHelper.findIndexByPath(children, 'website/test');
+      expect(i).to.eq(2);
+    });
+
+    it('returns -1 for non-existing item', function () {
+      i = UIHelper.findIndexByPath(children, 'website/none');
+      expect(i).to.eq(-1);
+    });
+  });
+
+  describe('#orderDataChildren', function () {
+    var children = [{
+      root: 'test',
+      path: 'website/hello',
+    }, {
+      root: 'test',
+      path: 'website/world'
+    }, {
+      root: 'test',
+      path: 'website/test'
+    }, {
+      root: 'test',
+      path: 'website/last'
+    }];
+
+    it('', function () {
+      var pathsOrder = ['website/test', 'website/world', 'website/hello', 'website/last'];
+      UIHelper.orderDataChildren(children, pathsOrder);
+
+      expect(children).to.eql([{
+        root: 'test',
+        path: 'website/test'
+      }, {
+        root: 'test',
+        path: 'website/world'
+      }, {
+        root: 'test',
+        path: 'website/hello',
+      }, {
+        root: 'test',
+        path: 'website/last'
+      }]);
+    });
+  });
+
   describe('#getIconByPath', function() {
       it('returns valid icons of paths', function() {
-          expect(UIHelper.getIconByPath('tasks')).to.eq('code');
+          expect(UIHelper.getIconByPath('tasks')).to.eq('tasks');
           expect(UIHelper.getIconByPath('tasks/test')).to.eq('file-code-o');
           expect(UIHelper.getIconByPath('test/hello-world', true)).to.eq('folder-o');
       });

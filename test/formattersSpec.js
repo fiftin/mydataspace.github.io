@@ -13,7 +13,7 @@ describe('formatters', function() {
       formatter.format(data);
       expect(data.fields).to.eql([
         { name: 'address', value: 'Lenin st', type: 's' },
-        { name: 'zip', value: 455000, type: 's' },
+        { name: 'zip', value: 455000, type: 'i' },
       ]);
     });
   });
@@ -30,7 +30,7 @@ describe('formatters', function() {
       formatter.format(data);
       expect(data.fields).to.eql([
         { name: 'address', value: 'Lenin st', type: 's' },
-        { name: 'zip', value: 455000, type: 's' },
+        { name: 'zip', value: 455000, type: 'i' },
       ]);
     });
   });
