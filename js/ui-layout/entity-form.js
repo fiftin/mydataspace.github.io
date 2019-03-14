@@ -3,7 +3,6 @@ UILayout.entityForm =
   gravity: 0.3,
   on: {
     onResize: function () {
-      console.log('Resize.........');
     }
   },
   rows: [
@@ -71,6 +70,7 @@ UILayout.entityForm =
       { view: 'text',
         id: 'NAME_LABEL_5',
         label: STRINGS.NAME,
+        disabled: true,
         name: 'name',
         labelWidth: UIHelper.LABEL_WIDTH,
         css: 'entity_form__first_input'

@@ -91,6 +91,10 @@ $admin-view-vertical-gap: 15px;
   box-shadow: none !important;
 }
 
+.entity_form__field {
+  position: static;
+}
+
 .entity_form__arrow {
   width: 20px;
   height: 20px;

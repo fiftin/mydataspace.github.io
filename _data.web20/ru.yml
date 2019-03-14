@@ -52,12 +52,14 @@ example_descriptions:
   title: Каркасы
 - id: live-pug-scss
   title: Поддержка Pug, SCSS и JSX
-- id: tree-data-structure
-  title: Иерархическая структура
-- id: websocket-api
-  title: Websocket API
-- id: file-storage
-  title: Файлове хранилище с CDN
+- id: cms
+  title: CMS
+#- id: tree-data-structure
+#  title: Иерархическая структура
+#- id: websocket-api
+#  title: Websocket API
+#- id: file-storage
+#  title: Файлове хранилище с CDN
 
 
 special_offer: Бесплатно <b>навсегда</b> для зарегистрированных пользователей
@@ -94,14 +96,14 @@ header:
   input_search: Поиск по каркасам...
   input_search_fixed: Поиск...
 buttons:
-  - id: vk
-    title: ВКонтакте
-  - id: facebook
-    title: Facebook
-  - id: google
-    title: Google
-  - id: github
-    title: GitHub
+- id: facebook
+  title: Facebook
+- id: google
+  title: Google
+- id: github
+  title: GitHub
+- id: vk
+  title: ВКонтакте
 
 
 sections:

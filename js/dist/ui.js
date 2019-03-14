@@ -6711,7 +6711,6 @@ UILayout.entityForm =
   gravity: 0.3,
   on: {
     onResize: function () {
-      console.log('Resize.........');
     }
   },
   rows: [
@@ -6779,6 +6778,7 @@ UILayout.entityForm =
       { view: 'text',
         id: 'NAME_LABEL_5',
         label: STRINGS.NAME,
+        disabled: true,
         name: 'name',
         labelWidth: UIHelper.LABEL_WIDTH,
         css: 'entity_form__first_input'
@@ -6844,7 +6844,7 @@ UILayout.apps =
               type: 'icon',
               icon: 'refresh',
               id: 'REFRESH_LABEL_1', label: STRINGS.REFRESH,
-              width: 120,
+              width: 100,
               click: function() {
                 UI.pages.refreshPage('apps');
               }

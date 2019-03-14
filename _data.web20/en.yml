@@ -49,12 +49,14 @@ example_descriptions:
     title: Skeletons
   - id: live-pug-scss
     title: Live Pug, SCSS &amp; JSX
-  - id: tree-data-structure
-    title: Tree Data Structure
-  - id: websocket-api
-    title: Websocket API
-  - id: file-storage
-    title: File Storage + CDN
+  - id: cms
+    title: CMS
+#  - id: tree-data-structure
+#    title: Tree Data Structure
+#  - id: websocket-api
+#    title: Websocket API
+#  - id: file-storage
+#    title: File Storage
 
 
 
@@ -91,12 +93,14 @@ header:
   input_search: Search by skeletons...
   input_search_fixed: Search...
 buttons:
-  - id: facebook
-    title: Facebook
-  - id: google
-    title: Google
-  - id: github
-    title: GitHub
+- id: facebook
+  title: Facebook
+- id: google
+  title: Google
+- id: github
+  title: GitHub
+- id: vk
+  title: VK
 
 sections:
   - id: ease
