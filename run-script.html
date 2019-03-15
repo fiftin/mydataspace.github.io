@@ -91,7 +91,10 @@ title: Run Script
         document.getElementById('run_script__run_button_icon').classList.add('fa-refresh');
         document.getElementById('run_script__state').classList.add('fa-spin');
         document.getElementById('run_script__state').classList.add('run_script__state--run');
-        window.opener.postMessage({ message: 'getScripts' }, '*');
+
+        var q = MDSCommon.parseQuery(window.location.search);
+
+        window.opener.postMessage({ message: 'getScripts', id: q.id }, '*');
       });
     </script>
   </div>

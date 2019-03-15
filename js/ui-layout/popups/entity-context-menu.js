@@ -74,7 +74,7 @@ UILayout.entityContextMenu = {
           id: 'delete_entity',
           value: STRINGS.context_menu.delete_root
         });
-      } else if (itemData.path === 'tasks' || itemData.path === 'website/tasks') {
+      } else if (itemData.path === 'website/tasks') {
         menuItems.push({
           id: 'new_task',
           value: STRINGS.context_menu.new_task
@@ -157,6 +157,10 @@ UILayout.entityContextMenu = {
           value: STRINGS.context_menu.delete_entity
         });
       } else if (itemData.path.indexOf('website/tasks/') === 0) {
+        menuItems.push({
+          id: 'debug_task',
+          value: STRINGS.context_menu.debug_task
+        });
         menuItems.push({
           id: 'copy_entity',
           value: STRINGS.context_menu.copy_entity
@@ -307,6 +311,9 @@ UILayout.entityContextMenu = {
           case 'rename_file':
             item.icon = 'pencil';
             break;
+          case 'debug_task':
+            item.icon = 'bug';
+            break;
         }
         this.data.add(item);
       }
@@ -332,6 +339,11 @@ UILayout.entityContextMenu = {
       }
 
       switch (id) {
+        case 'debug_task':
+          UIHelper.popupCenter('/run-script.html?id=' + entityId, 'Run Script', 600, 400);
+          // UI.entityForm.setEditing(false);
+          // UI.entityForm.refresh();
+          break;
         case 'copy_file':
         case 'copy_entity':
           EntityForm.prototype.clone(entityId);

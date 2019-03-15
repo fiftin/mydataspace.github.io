@@ -443,8 +443,8 @@ UI = {
     // Communication with popup window of script runner.
     window.addEventListener('message', function(e) {
       if (e.data.message === 'getScripts') {
-
-        Mydataspace.request('entities.getWithMeta', Identity.dataFromId(UI.entityForm.getCurrentId())).then(function (data) {
+        var entityId = e.data.id ? e.data.id : UI.entityForm.getCurrentId();
+        Mydataspace.request('entities.getWithMeta', Identity.dataFromId(entityId)).then(function (data) {
           data.fields.sort(function(a, b) {
             if (a.type === 'j' && b.type !== 'j') {
               return 1;

@@ -5917,7 +5917,7 @@ UILayout.entityContextMenu = {
           id: 'delete_entity',
           value: STRINGS.context_menu.delete_root
         });
-      } else if (itemData.path === 'tasks' || itemData.path === 'website/tasks') {
+      } else if (itemData.path === 'website/tasks') {
         menuItems.push({
           id: 'new_task',
           value: STRINGS.context_menu.new_task
@@ -6000,6 +6000,10 @@ UILayout.entityContextMenu = {
           value: STRINGS.context_menu.delete_entity
         });
       } else if (itemData.path.indexOf('website/tasks/') === 0) {
+        menuItems.push({
+          id: 'debug_task',
+          value: STRINGS.context_menu.debug_task
+        });
         menuItems.push({
           id: 'copy_entity',
           value: STRINGS.context_menu.copy_entity
@@ -6150,6 +6154,9 @@ UILayout.entityContextMenu = {
           case 'rename_file':
             item.icon = 'pencil';
             break;
+          case 'debug_task':
+            item.icon = 'bug';
+            break;
         }
         this.data.add(item);
       }
@@ -6175,6 +6182,11 @@ UILayout.entityContextMenu = {
       }
 
       switch (id) {
+        case 'debug_task':
+          UIHelper.popupCenter('/run-script.html?id=' + entityId, 'Run Script', 600, 400);
+          // UI.entityForm.setEditing(false);
+          // UI.entityForm.refresh();
+          break;
         case 'copy_file':
         case 'copy_entity':
           EntityForm.prototype.clone(entityId);
@@ -6732,11 +6744,23 @@ UILayout.entityForm =
         icon: 'plus',
         id: 'ADD_FIELD_LABEL', label: STRINGS.ADD_FIELD,
         hidden: true,
-        width: 120,
+        width: 80,
         click: function() {
           $$('add_field_window').show();
         }
       },
+      // { view: 'button',
+      //   type: 'icon',
+      //   icon: 'bug',
+      //   id: 'RUN_SCRIPT_LABEL', label: STRINGS.RUN_SCRIPT,
+      //   hidden: true,
+      //   width: 80,
+      //   click: function() {
+      //     UIHelper.popupCenter('/run-script.html', 'Run Script', 600, 400);
+      //     UI.entityForm.setEditing(false);
+      //     UI.entityForm.refresh();
+      //   }
+      // },
       {},
       { view: 'button',
         type: 'icon',
@@ -7417,8 +7441,8 @@ UI = {
     // Communication with popup window of script runner.
     window.addEventListener('message', function(e) {
       if (e.data.message === 'getScripts') {
-
-        Mydataspace.request('entities.getWithMeta', Identity.dataFromId(UI.entityForm.getCurrentId())).then(function (data) {
+        var entityId = e.data.id ? e.data.id : UI.entityForm.getCurrentId();
+        Mydataspace.request('entities.getWithMeta', Identity.dataFromId(entityId)).then(function (data) {
           data.fields.sort(function(a, b) {
             if (a.type === 'j' && b.type !== 'j') {
               return 1;

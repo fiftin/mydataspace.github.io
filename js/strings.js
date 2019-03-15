@@ -45,7 +45,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     DESCRIPTION: 'Description',
     NO_ENTITY: 'No field exists',
     ADD_ROOT: 'New Website',
-    ADD_FIELD: 'New Field',
+    ADD_FIELD: 'Field',
     FILE_TYPE_FROM_EX: 'from extension...',
     ADD_FILE_NAME_PLACEHOLDER: 'Example: test, test.',
     ADD_FILE: 'New File',
@@ -305,6 +305,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       new_proto: 'New Prototype...',
       new_task: 'New Task...',
       new_entity: 'New Folder...',
+      debug_task: 'Debug...'
     },
 
     select_template_label: 'Skeleton:',
@@ -353,7 +354,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     DESCRIPTION: 'Описание',
     NO_ENTITY: 'Нет полей',
     ADD_ROOT: 'Новый сайт',
-    ADD_FIELD: 'Новое поле',
+    ADD_FIELD: 'Поле',
     FILE_TYPE_FROM_EX: 'опред. по расширению',
     ADD_FILE_NAME_PLACEHOLDER: 'Пример: test, test.',
     ADD_FILE: 'Новый файл',
@@ -616,6 +617,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       new_proto: 'Новый прототип...',
       new_task: 'Новая задача...',
       new_entity: 'Новая папка...',
+      debug_task: 'Отладка...'
     },
     select_template_label: 'Каркас:',
 
