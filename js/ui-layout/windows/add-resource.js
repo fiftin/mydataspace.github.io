@@ -64,7 +64,7 @@ UILayout.windows.addResource = {
           view: 'richselect',
           label: STRINGS.ADD_RESOURCE_TYPE,
           name: 'type',
-          value: 'file',
+          value: 'all',
           labelWidth: UIHelper.LABEL_WIDTH,
           suggest: {
             template: '<span class="webix_icon fa-#icon#"></span> #value#',
