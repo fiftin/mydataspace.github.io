@@ -6778,7 +6778,7 @@ UILayout.entityForm =
       { view: 'text',
         id: 'NAME_LABEL_5',
         label: STRINGS.NAME,
-        disabled: true,
+        // disabled: true,
         name: 'name',
         labelWidth: UIHelper.LABEL_WIDTH,
         css: 'entity_form__first_input'
