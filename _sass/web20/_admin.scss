@@ -842,6 +842,7 @@ input {
   height: 30px !important;
 }
 .entity_form__first_input {
+  position: static;
   &::before {
     content: "";
     position: absolute;
