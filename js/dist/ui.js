@@ -4778,15 +4778,14 @@ UILayout.windows.addResource = {
           view: 'richselect',
           label: STRINGS.ADD_RESOURCE_TYPE,
           name: 'type',
-          value: 'all',
+          value: 'image',
           labelWidth: UIHelper.LABEL_WIDTH,
           suggest: {
             template: '<span class="webix_icon fa-#icon#"></span> #value#',
             body: {
               data: [
                 // { id: 'avatar', value: STRINGS.AVATAR, icon: 'user' },
-                // { id: 'image', value: STRINGS.IMAGE, icon: 'image' },
-                { id: 'all', value: STRINGS.IMAGE, icon: 'image' },
+                { id: 'image', value: STRINGS.IMAGE, icon: 'image' },
                 { id: 'file', value: STRINGS.FILE, icon: 'file' }
               ],
               template: '<span class="webix_icon fa-#icon#"></span> #value#'
