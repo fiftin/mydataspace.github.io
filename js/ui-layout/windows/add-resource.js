@@ -70,7 +70,6 @@ UILayout.windows.addResource = {
             template: '<span class="webix_icon fa-#icon#"></span> #value#',
             body: {
               data: [
-                // { id: 'avatar', value: STRINGS.AVATAR, icon: 'user' },
                 { id: 'image', value: STRINGS.IMAGE, icon: 'image' },
                 { id: 'file', value: STRINGS.FILE, icon: 'file' }
               ],

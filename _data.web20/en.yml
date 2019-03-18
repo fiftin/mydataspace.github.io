@@ -17,7 +17,7 @@ menu:
   give_feedback_send_mail: or email directly to
   give_feedback_view_all: See all
   blog: Blog
-  skeletons: Skeletons
+  skeletons: Marketplace
 
 title: Website builder for developers
 slogan: Website builder for developers
@@ -46,7 +46,7 @@ mission: Instead of them, we offer simple, fast and reliable website builder for
 
 example_descriptions:
   - id: skeletons
-    title: Skeletons
+    title: Marketplace
   - id: live-pug-scss
     title: Live Pug, SCSS &amp; JSX
   - id: cms
