@@ -3,7 +3,7 @@ layout: post
 title: GDPR
 language: en
 ---
-Web 2.0 Site is committed to helping users understand the General Data Protection Regulation (GDPR), and to comply with 
+Fastlix is committed to helping users understand the General Data Protection Regulation (GDPR), and to comply with 
 its requirements. We’ve partnered with legal experts in Europe and the US to ensure that our products and contractual 
 commitments are in line with GDPR regulations.
 
@@ -22,7 +22,7 @@ such data is collected, stored, and used.
 - Login information
 - Customer contact information (company name, email, phone, physical business address)
 
-Your obligations around data about your customers which you collect via Web 2.0 Site
+Your obligations around data about your customers which you collect via Fastlix
 
 If you use our service to collect Personally Identifiable Information from your visitors, via form submission or other 
 methods, you are solely responsible for its disposition.

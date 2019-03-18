@@ -10,35 +10,35 @@ By accessing this Website, you are agreeing to be bound by these Website Terms a
 
 ### 2. Use License
 
-Permission is granted to temporarily download one copy of the materials on Web 2.0 Site‘s Website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
+Permission is granted to temporarily download one copy of the materials on Fastlix‘s Website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
 
 modify or copy the materials;
 use the materials for any commercial purpose or for any public display;
-attempt to reverse engineer any software contained on Web 2.0 Site‘s Website;
+attempt to reverse engineer any software contained on Fastlix‘s Website;
 remove any copyright or other proprietary notations from the materials; or
 transferring the materials to another person or “mirror” the materials on any other server.
-This will let Web 2.0 Site to terminate upon violations of any of these restrictions. Upon termination, your viewing right will also be terminated and you should destroy any downloaded materials in your possession whether it is printed or electronic format.
+This will let Fastlix to terminate upon violations of any of these restrictions. Upon termination, your viewing right will also be terminated and you should destroy any downloaded materials in your possession whether it is printed or electronic format.
 
 ### 3. Disclaimer
 
-All the materials on Web 2.0 Site’s Website are provided “as is”. Web 2.0 Site makes no warranties, may it be expressed or implied, therefore negates all other warranties. Furthermore, Web 2.0 Site does not make any representations concerning the accuracy or reliability of the use of the materials on its Website or otherwise relating to such materials or any sites linked to this Website.
+All the materials on Fastlix’s Website are provided “as is”. Fastlix makes no warranties, may it be expressed or implied, therefore negates all other warranties. Furthermore, Fastlix does not make any representations concerning the accuracy or reliability of the use of the materials on its Website or otherwise relating to such materials or any sites linked to this Website.
 
 ### 4. Limitations
 
-Web 2.0 Site or its suppliers will not be hold accountable for any damages that will arise with the use or inability to use the materials on Web 2.0 Site’s Website, even if Web 2.0 Site or an authorize representative of this Website has been notified, orally or written, of the possibility of such damage. Some jurisdiction does not allow limitations on implied warranties or limitations of liability for incidental damages, these limitations may not apply to you.
+Fastlix or its suppliers will not be hold accountable for any damages that will arise with the use or inability to use the materials on Fastlix’s Website, even if Fastlix or an authorize representative of this Website has been notified, orally or written, of the possibility of such damage. Some jurisdiction does not allow limitations on implied warranties or limitations of liability for incidental damages, these limitations may not apply to you.
 
 ### 5. Revisions and Errata
 
-The materials appearing on Web 2.0 Site’s Website may include technical, typographical, or photographic errors. Web 2.0 Site will not promise that any of the materials in this Website are accurate, complete, or current. Web 2.0 Site may change the materials contained on its Website at any time without notice. Web 2.0 Site does not make any commitment to update the materials.
+The materials appearing on Fastlix’s Website may include technical, typographical, or photographic errors. Fastlix will not promise that any of the materials in this Website are accurate, complete, or current. Fastlix may change the materials contained on its Website at any time without notice. Fastlix does not make any commitment to update the materials.
 
 ### 6. Links
 
-Web 2.0 Site has not reviewed all of the sites linked to its Website and is not responsible for the contents of any such linked site. The presence of any link does not imply endorsement by Web 2.0 Site of the site. The use of any linked website is at the user’s own risk.
+Fastlix has not reviewed all of the sites linked to its Website and is not responsible for the contents of any such linked site. The presence of any link does not imply endorsement by Fastlix of the site. The use of any linked website is at the user’s own risk.
 
 ### 7. Site Terms of Use Modifications
 
-Web 2.0 Site may revise these Terms of Use for its Website at any time without prior notice. By using this Website, you are agreeing to be bound by the current version of these Terms and Conditions of Use.
+Fastlix may revise these Terms of Use for its Website at any time without prior notice. By using this Website, you are agreeing to be bound by the current version of these Terms and Conditions of Use.
 
 ### 8. Governing Law
 
-Any claim related to Web 2.0 Site‘s Website shall be governed by the laws of USA without regards to its conflict of law provisions.
+Any claim related to Fastlix‘s Website shall be governed by the laws of USA without regards to its conflict of law provisions.

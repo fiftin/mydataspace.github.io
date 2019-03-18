@@ -19,8 +19,8 @@ menu:
   blog: Blog
   skeletons: Marketplace
 
-title: Website builder for developers
-slogan: Website builder for developers
+title: Create killer websites much faster
+slogan: Create killer websites much faster
 slogan_description: Focus on development, not administration and infrastructure
 
 
@@ -47,14 +47,19 @@ mission: Instead of them, we offer simple, fast and reliable website builder for
 example_descriptions:
   - id: skeletons
     title: Marketplace
-  - id: live-pug-scss
-    title: Live Pug, SCSS &amp; JSX
+
   - id: cms
     title: CMS
+
+  - id: live-pug-scss
+    title: Live Pug, SCSS &amp; JSX
+
 #  - id: tree-data-structure
 #    title: Tree Data Structure
-#  - id: websocket-api
-#    title: Websocket API
+
+  - id: api
+    title: Powerful API
+
 #  - id: file-storage
 #    title: File Storage
 
