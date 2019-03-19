@@ -1102,7 +1102,7 @@ EntityForm.prototype.onUploadAvatar = function(event) {
   UI.uploadResource(
     event.target.files[0],
     Identity.dataFromId(this.currentId).root,
-    'avatar',
+    'image',
     function(res) {
       var entityName = res.resources[0];
       $$('entity_form__root_avatar_value').setValue(entityName);
