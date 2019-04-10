@@ -28,7 +28,7 @@ zen_url: "https://zen.yandex.ru/media/id/5936e2b37ddde8524b45d05f"
 
 
 url: "https://fastlix.com"
-enforce_ssl: fastlixsite.com
+websites_super_domain: fastlixsite.com
 
 local_api_url: "https://localhost:8443"
 local_cdn_url: "https://d10ztdrlkjcw7n.cloudfront.net"

@@ -27,7 +27,7 @@ var DATASOURCE_ICONS = {
   community: 'users'
 };
 
-var SITE_SUPER_DOMAIN = '.{{ site.enforce_ssl }}';
+var SITE_SUPER_DOMAIN = '.{{ site.websites_super_domain }}';
 
 
 //
