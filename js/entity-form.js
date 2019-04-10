@@ -613,7 +613,7 @@ EntityForm.prototype.setEntityCmsView = function (data) {
     return;
   }
 
-  var host = data.root + '.wiz.web20.site';
+  var host = data.root + '.wiz.fastlix.com';
   var path = data.path.substr('data'.length);
   var wizardsPath = 'website/wizards' + path;
 
@@ -772,7 +772,7 @@ EntityForm.prototype.setCmsData = function(data) {
     return;
   }
 
-  var host = data.root + '.wiz.web20.site';
+  var host = data.root + '.wiz.fastlix.com';
   var path = data.path.substr('data'.length);
   var wizardsPath = 'website/wizards' + path;
 

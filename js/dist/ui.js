@@ -653,9 +653,9 @@ UIHelper = {
     var data = Identity.dataFromId(id);
     if (MDSCommon.isPresent(data.path)) {
       var path = MDSCommon.getParentPath(data.path);
-      return 'https://wizard.web20.site/' + data.root + (MDSCommon.isPresent(path) ? '/' + path : '') + '/' + 'item.html'
+      return 'https://wizard.fastlix.com/' + data.root + (MDSCommon.isPresent(path) ? '/' + path : '') + '/' + 'item.html'
     } else {
-      return 'https://wizard.web20.site/' + data.root + '/' + 'root.html'
+      return 'https://wizard.fastlix.com/' + data.root + '/' + 'root.html'
     }
   },
 
@@ -2047,7 +2047,7 @@ EntityForm.prototype.setEntityCmsView = function (data) {
     return;
   }
 
-  var host = data.root + '.wiz.web20.site';
+  var host = data.root + '.wiz.fastlix.com';
   var path = data.path.substr('data'.length);
   var wizardsPath = 'website/wizards' + path;
 
@@ -2206,7 +2206,7 @@ EntityForm.prototype.setCmsData = function(data) {
     return;
   }
 
-  var host = data.root + '.wiz.web20.site';
+  var host = data.root + '.wiz.fastlix.com';
   var path = data.path.substr('data'.length);
   var wizardsPath = 'website/wizards' + path;
 
@@ -4824,18 +4824,18 @@ UILayout.windows.addField = {
           $$('add_field_window').hide();
         }, 100);
 
-        setTimeout(function() {
-          var n = window.localStorage.getItem('dont_forgot_to_save');
-          if (MDSCommon.isPresent(n) && parseInt(n) > 3) {
-            return;
-          } else if (MDSCommon.isInt(n)) {
-            n = parseInt(n) + 1;
-          } else {
-            n = 1;
-          }
-          window.localStorage.setItem('dont_forgot_to_save', n.toString());
-          UI.info(STRINGS.dont_forgot_to_save);
-        }, 600);
+        // setTimeout(function() {
+        //   var n = window.localStorage.getItem('dont_forgot_to_save');
+        //   if (MDSCommon.isPresent(n) && parseInt(n) > 3) {
+        //     return;
+        //   } else if (MDSCommon.isInt(n)) {
+        //     n = parseInt(n) + 1;
+        //   } else {
+        //     n = 1;
+        //   }
+        //   window.localStorage.setItem('dont_forgot_to_save', n.toString());
+        //   UI.info(STRINGS.dont_forgot_to_save);
+        // }, 600);
       }
     },
 

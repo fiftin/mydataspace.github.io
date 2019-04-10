@@ -2,7 +2,7 @@ menu:
   #features: Features
   get_started: Get Started
   pricing: Pricing
-  docs: Documentation
+  docs: Docs
   console: My Websites
   login: Sign In
   logout: Sign out
@@ -444,7 +444,4 @@ landing_examples:
   examples:
     - title: Cloud servers benchmarking service
       image: cloudbench.png
-      url: cloudbench.web20.site
-#    - title: Blog
-#      image: blog.web20.png
-#      url: blog.web20.site
+      url: cloudbench.fastlixsite.com

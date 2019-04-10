@@ -2,7 +2,7 @@ menu:
   #features: Возможности
   get_started: Для начала
   pricing: Тарифы
-  docs: Документация
+  docs: Docs
   console: Мои сайты
   login: Войти
   logout: Выйти
@@ -17,7 +17,7 @@ menu:
   give_feedback_send_mail: или отправьте сообщение на
   give_feedback_view_all: Смотреть все
   blog: Блог
-  skeletons: Каркасы
+  skeletons: Маркетплейс
 
 title: Программа для создания сайтов | Fastlix
 slogan: Конструктор сайтов для программистов
@@ -459,7 +459,7 @@ landing_examples:
   examples:
     - title: Сервис тестирования облачных серверов
       image: cloudbench.png
-      url: cloudbench.web20.site
+      url: cloudbench.fastlixsite.com
     - title: Блог
       image: blog.web20.png
-      url: blog.web20.site
+      url: blog.fastlixsite.com

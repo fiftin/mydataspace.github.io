@@ -25,18 +25,18 @@ UILayout.windows.addField = {
           $$('add_field_window').hide();
         }, 100);
 
-        setTimeout(function() {
-          var n = window.localStorage.getItem('dont_forgot_to_save');
-          if (MDSCommon.isPresent(n) && parseInt(n) > 3) {
-            return;
-          } else if (MDSCommon.isInt(n)) {
-            n = parseInt(n) + 1;
-          } else {
-            n = 1;
-          }
-          window.localStorage.setItem('dont_forgot_to_save', n.toString());
-          UI.info(STRINGS.dont_forgot_to_save);
-        }, 600);
+        // setTimeout(function() {
+        //   var n = window.localStorage.getItem('dont_forgot_to_save');
+        //   if (MDSCommon.isPresent(n) && parseInt(n) > 3) {
+        //     return;
+        //   } else if (MDSCommon.isInt(n)) {
+        //     n = parseInt(n) + 1;
+        //   } else {
+        //     n = 1;
+        //   }
+        //   window.localStorage.setItem('dont_forgot_to_save', n.toString());
+        //   UI.info(STRINGS.dont_forgot_to_save);
+        // }, 600);
       }
     },
 
