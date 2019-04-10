@@ -8,16 +8,16 @@
 # Site settings
 project_name: web20
 
-title: Web 2.0 site — Website builder made for developers
+title: Fastlix — Website builder made for developers
 email: webmaster@web20.site
 baseurl: ""
 
-destination:     ./_site.web20
+destination:     ./_site
 #collections_dir: .
-plugins_dir:     _plugins.web20
-layouts_dir:     _layouts.web20
-data_dir:        _data.web20
-includes_dir:    _includes.web20
+plugins_dir:     _plugins
+layouts_dir:     _layouts
+data_dir:        _data
+includes_dir:    _includes
 
 
 facebook_url: https://www.facebook.com/web20site
