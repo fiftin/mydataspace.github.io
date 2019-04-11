@@ -12,7 +12,7 @@ describe('formatters', function() {
       var formatter = new EntityUnsimplifier();
       formatter.format(data);
       expect(data.fields).to.eql([
-        { name: 'address', value: 'Lenin st', type: 's' },
+        { name: 'address', value: 'Lenin st' },
         { name: 'zip', value: 455000, type: 'i' },
       ]);
     });
@@ -29,7 +29,7 @@ describe('formatters', function() {
       var formatter = new EntityFieldsUnsimplifier();
       formatter.format(data);
       expect(data.fields).to.eql([
-        { name: 'address', value: 'Lenin st', type: 's' },
+        { name: 'address', value: 'Lenin st' },
         { name: 'zip', value: 455000, type: 'i' },
       ]);
     });
@@ -39,7 +39,7 @@ describe('formatters', function() {
     it('should returns short form of fields', function() {
       var data = {
         fields: [
-          { name: 'address', value: 'Lenin st. 101', type: 's' },
+          { name: 'address', value: 'Lenin st. 101' },
           { name: 'zip', value: 455000, type: 'i' },
         ]
       };

@@ -111,6 +111,7 @@ function MDSClient(options) {
     this.registerFormatter('entities.create.res', new EntitySimplifier());
     this.registerFormatter('entities.getRoots.res', new EntitySimplifier());
     this.registerFormatter('entities.getMyRoots.res', new EntitySimplifier());
+    this.registerFormatter('entities.getMyChildren.res', new EntitySimplifier());
   }
 
   this.entities = new Entities(this);

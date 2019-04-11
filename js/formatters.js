@@ -77,20 +77,18 @@ EntityFieldsUnsimplifier.prototype.format = function(data) {
       }
     } else {
       for (var key in data.fields) {
-        var type = 's';
         if (typeof data.fields[key] === 'number') {
-          if (MDSCommon.isInt(data.fields[key])) {
-            type = 'i';
-          } else {
-            type = 'r';
-          }
+          res.push({
+            name: key,
+            value: data.fields[key],
+            type: MDSCommon.isInt(data.fields[key]) ? 'i' : 'r'
+          });
+        } else {
+          res.push({
+            name: key,
+            value: data.fields[key]
+          });
         }
-
-        res.push({
-          name: key,
-          value: data.fields[key],
-          type: type
-        });
       }
     }
   }
