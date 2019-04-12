@@ -6423,7 +6423,7 @@ UILayout.header =
         }
       },
       { view: 'button',
-        width: 140,
+        width: 80,
         css: 'menu__language_button',
         id: 'DOCS_LABEL',
         label: STRINGS.DOCS,
