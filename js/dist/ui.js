@@ -6419,7 +6419,8 @@ UILayout.header =
         click: function() {
           var currentLang = getCurrentLanguage().toLowerCase();
           currentLang = currentLang === 'en' ? '' : '/' + currentLang;
-          window.open(currentLang + '/pricing', '_blank');
+          window.location.href = currentLang + '/pricing';
+          // window.open(currentLang + '/pricing', '_blank');
         }
       },
       { view: 'button',
@@ -6430,7 +6431,8 @@ UILayout.header =
         click: function() {
           var currentLang = getCurrentLanguage().toLowerCase();
           currentLang = currentLang === 'en' ? '' : '/' + currentLang;
-          window.open(currentLang + '/docs', '_blank');
+          window.location.href = currentLang + '/docs';
+          // window.open(currentLang + '/docs', '_blank');
         }
       },
       { view: 'button',
@@ -6442,7 +6444,8 @@ UILayout.header =
         click: function() {
           var currentLang = getCurrentLanguage().toLowerCase();
           currentLang = currentLang === 'en' ? '' : '/' + currentLang;
-          window.open(currentLang + '/search', '_blank');
+          window.location.href = currentLang + '/search';
+          // window.open(currentLang + '/search', '_blank');
         }
       },
 
