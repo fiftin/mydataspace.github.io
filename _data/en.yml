@@ -78,7 +78,7 @@ strings:
   view_doc: View Docs
   top_roots: Popular Websites
   explore_roots: Explore Websites
-  new_root_name: website-name
+  new_root_name: Website Subdomain
   click_to_select_version: Click to select other version
   cancel: Cancel
   privacy: Privacy

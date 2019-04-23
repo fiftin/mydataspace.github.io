@@ -15,11 +15,10 @@ UILayout.header =
         }
       },
       { view: 'button',
-        width: 85,
-        css: 'menu__language_button ' + (PROJECT_NAME === 'web20' ? ' menu__language_button--get_started' : ''),
+        width: 70,
+        css: 'menu__language_button menu__language_button--get_started',
         id: 'PRICING_LABEL',
         label: STRINGS.PRICING,
-        hidden: PROJECT_NAME !== 'web20',
         click: function() {
           var currentLang = getCurrentLanguage().toLowerCase();
           currentLang = currentLang === 'en' ? '' : '/' + currentLang;
@@ -28,7 +27,7 @@ UILayout.header =
         }
       },
       { view: 'button',
-        width: 80,
+        width: 65,
         css: 'menu__language_button',
         id: 'DOCS_LABEL',
         label: STRINGS.DOCS,
@@ -40,11 +39,10 @@ UILayout.header =
         }
       },
       { view: 'button',
-        width: 100,
+        width: 110,
         css: 'menu__language_button',
         id: 'SKELETONS_LABEL',
         label: STRINGS.SKELETONS,
-        hidden: PROJECT_NAME !== 'web20',
         click: function() {
           var currentLang = getCurrentLanguage().toLowerCase();
           currentLang = currentLang === 'en' ? '' : '/' + currentLang;

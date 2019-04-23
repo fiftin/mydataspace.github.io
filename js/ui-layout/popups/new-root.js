@@ -2,7 +2,7 @@ UILayout.popups.newRoot = {
 	view: 'popup',
 	id: 'entity_tree__new_root_popup',
   css: 'admin_context_menu entity_tree__new_root_popup',
-	width: PROJECT_NAME === 'web20' ? 200 : 150,
+	width: 200,
 	body: {
 		view: 'list',
     id: 'entity_tree__new_root_list',

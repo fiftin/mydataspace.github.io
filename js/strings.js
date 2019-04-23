@@ -1,10 +1,3 @@
----
----
-
-var PROJECT_NAME = '{{ site.project_name }}';
-var PROJECT_ROOT_NAME_EN = (PROJECT_NAME === 'web20' ? 'Website' : 'Root');
-var PROJECT_ROOT_NAME_RU = (PROJECT_NAME === 'web20' ? 'сайт' : 'кор.');
-
 var STRINGS_ON_DIFFERENT_LANGUAGES = {
   EN: {
     YES: 'Yes',
@@ -71,7 +64,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     NO_FIELDS: 'No fields exists',
     NO_README: 'No description provided',
     MY_APPS: 'My Apps',
-    MY_DATA: PROJECT_NAME === 'web20' ? 'My Websites' : 'My Data',
+    MY_DATA: 'My Websites',
     SIGN_OUT: 'Sign out',
     CONNECT_TO_FACEBOOK: 'Connect through Facebook',
     CONNECT_TO_GOOGLE: 'Connect through Google',
@@ -177,7 +170,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     create_view: 'Create View',
     switch_default_version_window_title: 'Switch Default Version',
     view_other_version_window_title: 'View Other Version',
-    new_empty_root: 'New Empty ' + PROJECT_ROOT_NAME_EN,
+    new_empty_root: 'New Empty Website',
     import_root: 'Import Data',
     open_license_page: 'Open License Page',
 
@@ -195,7 +188,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     dont_forgot_to_save: 'Do not forgot to save element after adding/changing field',
 
     no_items: {
-      no_items__title: PROJECT_NAME === 'web20' ? 'You have no any website yet' : 'You have ho any data yet',
+      no_items__title: 'Create your first website on Fastlix!',
       no_items__explore__desc: 'Find data you need among a huge amount of existing data',
       no_items__explore__button: 'Explore',
       no_items__import__desc: 'Import data from XLS, XML, CSV, JSON and many other formats',
@@ -203,11 +196,11 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       no_items__import__button: 'Import',
       no_items__create__desc: 'Start from scratch &mdash; create an empty root',
       no_items__notice: [
-        PROJECT_ROOT_NAME_EN + ' name should be 3..50 characters',
-        PROJECT_ROOT_NAME_EN + ' name contains illegal characters',
-        PROJECT_ROOT_NAME_EN + ' name must be unique among all existing roots'
+        'Mast have 3..50 characters',
+        'Must contain only latin letters, digits, dashes and underscores',
+        'Must be unique among all existing subdomains'
       ],
-      no_items__create__button: PROJECT_NAME === 'web20' ? '<i class="fa fa-cog hidden"></i> Create Website' : 'Create'
+      no_items__create__button: '<i class="fa fa-cog hidden"></i> Create Website'
     },
 
     language: 'Language',
@@ -380,7 +373,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     NO_FIELDS: 'Нет ни одного поля',
     NO_README: 'Нет ни описания ни README.',
     MY_APPS: 'Мои приложения',
-    MY_DATA: PROJECT_NAME === 'web20' ? 'Мои сайты' : 'Мои данные',
+    MY_DATA: 'Мои сайты',
     SIGN_OUT: 'Выход',
     CONNECT_TO_FACEBOOK: 'Войти через Facebook',
     CONNECT_TO_GOOGLE: 'Войти через Google',
@@ -393,7 +386,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
                          'можете настроить права доступа к данным.',
     NO_APPS_CREATE: 'Создать приложение!',
     REALLY_DELETE_APP: 'Вы действительно хотите удалить это приложение?',
-    DOCS: 'Docs',
+    DOCS: 'Док.',
     DEMOS: 'Примеры',
     GET_STARTED: 'Для начала',
     FEATURES: 'Возможности',
@@ -495,7 +488,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
 
     switch_default_version_window_title: 'Уст. версию по умолчанию',
     view_other_version_window_title: 'Смотреть другую версию',
-    new_empty_root: 'Пусктой ' + PROJECT_ROOT_NAME_RU,
+    new_empty_root: 'Пусктой сайт',
     import_root: 'Импорт данных',
 
     new_generator: 'Новый генератор',
@@ -514,23 +507,19 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     open_license_page: 'Открыть страницу лицензии',
 
     no_items: {
-      no_items__title: PROJECT_NAME === 'web20' ? 'Создайте свой первый сайт!' : 'У вас еще нет никаких данных',
+      no_items__title: 'Создайте свой первый сайт!',
       no_items__explore__desc: 'Найдите нужные данные среди огромного количества уже загруженных данных',
       no_items__explore__button: 'Смотреть',
       no_items__import__desc: 'Импортируйте данные из файлов XLS, XML, CSV, JSON и файлов множества других форматов',
       no_items__import__refine_desc: 'OpenRefine &mdash; свободный инструмент для работы с наборами данных',
       no_items__import__button: 'Импортировать',
       no_items__create__desc: 'Или начните с чистого листа',
-      no_items__notice: PROJECT_NAME === 'web20' ? [
+      no_items__notice: [
         'Поддомен должно быть длинной от 4 до 50 символов',
         'В поддомене допускаются только <b>латинские буквы</b>, цифры, знак тере и подчеркивания',
         'Поддомен должно быть уникальным среди всех существующих поддоменов'
-      ] : [
-        'Имя должно быть длинной от 4 до 50 символов',
-        'В имени допускаются только латинские бувы, цифры, знак тере и подчеркивания',
-        'Имя корня должно быть уникальным среди всех существующих корней'
       ],
-      no_items__create__button: PROJECT_NAME === 'web20' ? '<i class="fa fa-cog hidden"></i> Создать сайт' : 'Создать'
+      no_items__create__button: '<i class="fa fa-cog hidden"></i> Создать сайт'
     },
 
     language: 'Язык',

@@ -7,9 +7,7 @@ UILayout.windows.addRoot = {
     head: STRINGS.ADD_ROOT,
     on: UIControls.getOnForFormWindow('add_root', {
       onShow: function (id) {
-        if (PROJECT_NAME === 'web20') {
-          no_items__selectTemplate(STRINGS.default_template, 2);
-        }
+        no_items__selectTemplate(STRINGS.default_template, 2);
       }
     }),
     body: {
@@ -106,7 +104,6 @@ UILayout.windows.addRoot = {
         { view: 'template',
           borderless: true,
           height: 160,
-          hidden: PROJECT_NAME !== 'web20',
           template: '<div style="margin-bottom: 5px; margin-top: -5px;">' + STRINGS.select_template_label + '</div>' +
           '<div id="no_items__template_wrap2" class="no_items__template_wrap" onclick="no_items__initTemplates(2)">\n' +
           '  <div id="no_items__template2" class="snippet__overview snippet__overview--no-margin">\n' +

@@ -223,7 +223,7 @@ layout: page
             <textarea id="request_unlimited_modal__text" rows="5" class="form-control" placeholder="{{ site.data[page.language].pricing_page.unlim.request_placeholder }}"></textarea>
           </div>
           <div id="request_unlimited_modal__error" class="give_feedback_modal__error"></div>
-          <div class="give_feedback_modal__send_mail">{{ site.data[page.language].menu.give_feedback_send_mail }} <a href="mailto:support@web20.site">support@web20.site</a></div>
+          <div class="give_feedback_modal__send_mail">{{ site.data[page.language].menu.give_feedback_send_mail }} <a href="mailto:{{ site.email }}">{{ site.email }}</a></div>
         </div>
         <div class="modal-footer look_modal__footer">
           <button class="btn btn-primary give_feedback_modal__send" id="request_unlimited_modal__button">{{ site.data[page.language].strings.send }}</button>

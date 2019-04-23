@@ -4244,9 +4244,7 @@ UILayout.windows.addRoot = {
     head: STRINGS.ADD_ROOT,
     on: UIControls.getOnForFormWindow('add_root', {
       onShow: function (id) {
-        if (PROJECT_NAME === 'web20') {
-          no_items__selectTemplate(STRINGS.default_template, 2);
-        }
+        no_items__selectTemplate(STRINGS.default_template, 2);
       }
     }),
     body: {
@@ -4343,7 +4341,6 @@ UILayout.windows.addRoot = {
         { view: 'template',
           borderless: true,
           height: 160,
-          hidden: PROJECT_NAME !== 'web20',
           template: '<div style="margin-bottom: 5px; margin-top: -5px;">' + STRINGS.select_template_label + '</div>' +
           '<div id="no_items__template_wrap2" class="no_items__template_wrap" onclick="no_items__initTemplates(2)">\n' +
           '  <div id="no_items__template2" class="snippet__overview snippet__overview--no-margin">\n' +
@@ -5807,7 +5804,7 @@ UILayout.popups.newRoot = {
 	view: 'popup',
 	id: 'entity_tree__new_root_popup',
   css: 'admin_context_menu entity_tree__new_root_popup',
-	width: PROJECT_NAME === 'web20' ? 200 : 150,
+	width: 200,
 	body: {
 		view: 'list',
     id: 'entity_tree__new_root_list',
@@ -6411,11 +6408,10 @@ UILayout.header =
         }
       },
       { view: 'button',
-        width: 85,
-        css: 'menu__language_button ' + (PROJECT_NAME === 'web20' ? ' menu__language_button--get_started' : ''),
+        width: 70,
+        css: 'menu__language_button menu__language_button--get_started',
         id: 'PRICING_LABEL',
         label: STRINGS.PRICING,
-        hidden: PROJECT_NAME !== 'web20',
         click: function() {
           var currentLang = getCurrentLanguage().toLowerCase();
           currentLang = currentLang === 'en' ? '' : '/' + currentLang;
@@ -6424,7 +6420,7 @@ UILayout.header =
         }
       },
       { view: 'button',
-        width: 80,
+        width: 65,
         css: 'menu__language_button',
         id: 'DOCS_LABEL',
         label: STRINGS.DOCS,
@@ -6436,11 +6432,10 @@ UILayout.header =
         }
       },
       { view: 'button',
-        width: 100,
+        width: 110,
         css: 'menu__language_button',
         id: 'SKELETONS_LABEL',
         label: STRINGS.SKELETONS,
-        hidden: PROJECT_NAME !== 'web20',
         click: function() {
           var currentLang = getCurrentLanguage().toLowerCase();
           currentLang = currentLang === 'en' ? '' : '/' + currentLang;

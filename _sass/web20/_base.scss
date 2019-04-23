@@ -285,12 +285,11 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
   border-bottom: 2px solid gray;
   padding: 0;
   text-align: center;
-  width: 220px;
   float: left;
   color: black;
-  font-weight: bold;
+  //font-weight: bold;
   &:focus {
-    border-color: #434343;
+    border-color: #27ae60;
   }
 }
 

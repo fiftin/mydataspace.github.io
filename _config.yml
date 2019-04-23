@@ -9,7 +9,7 @@
 project_name: web20
 
 title: Fastlix — Website builder made for developers
-email: webmaster@web20.site
+email: support@fastlix.com
 baseurl: ""
 
 destination:     ./_site
