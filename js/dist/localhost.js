@@ -2002,7 +2002,12 @@ MDSClient.prototype.once = function(eventName, callback, ignoreRequestErrors) {
   this.socket.once(eventName, wrappedCallback);
 };
 
-
+/**
+ * Listen event.
+ * @param {string} eventName Event name to listen.
+ * @param {function} callback Function witch will be handle event.
+ * @param {boolean} [ignoreRequestErrors]
+ */
 MDSClient.prototype.on = function(eventName, callback, ignoreRequestErrors) {
   var wrappedCallback = this.formatAndCallIgnoreRequestErrors.bind(this, eventName, callback, ignoreRequestErrors);
   wrappedCallback.orig = callback;
@@ -2097,6 +2102,13 @@ MDSClient.prototype.request = function(eventName, data, successCallback, failCal
   }
 };
 
+/**
+ * This method applies formatters to event data.
+ * @param eventName
+ * @param callback
+ * @param ignoreRequestErrors
+ * @param data
+ */
 MDSClient.prototype.formatAndCallIgnoreRequestErrors = function(eventName, callback, ignoreRequestErrors, data) {
   if (ignoreRequestErrors == null) {
     ignoreRequestErrors = true;
@@ -2107,20 +2119,29 @@ MDSClient.prototype.formatAndCallIgnoreRequestErrors = function(eventName, callb
   this.formatAndCall(eventName, callback, data);
 };
 
+/**
+ * Applies formatters for data. Also this method extracts "datas" field.
+ * @param eventName
+ * @param callback
+ * @param data
+ */
 MDSClient.prototype.formatAndCall = function(eventName, callback, data) {
   var formatterArr = this.formatters[eventName];
+
   if (data != null && data.datas != null) {
     var requestId = data.requestId;
     data = data.datas;
-    // if (requestId != null) {
-    //   data.requestId = requestId;
-    // }
+    for (var i = 0; i < data.length; i++) {
+      data[i].requestId = requestId;
+    }
   }
+
   if (formatterArr != null) {
     for (var i in formatterArr) {
       formatterArr[i].format(data);
     }
   }
+
   callback(data);
 };
 
@@ -2135,15 +2156,31 @@ MDSClient.prototype.getRoot = function (root) {
   return new Entities(this, root);
 };
 
+/**
+ * Founds handler for data if request ID specified.
+ * @param data Data for which handler must be found.
+ * @param callbackName
+ */
 MDSClient.prototype.handleResponse = function(data, callbackName) {
-  if (typeof data.requestId === 'undefined') {
+  var requestId;
+
+  if (Array.isArray(data)) {
+    if (data.length > 0) {
+      requestId = data[0].requestId;
+    }
+  } else {
+    requestId = data.requestId;
+  }
+
+  if (requestId == null) {
     return;
   }
-  var req = this.requests[data.requestId];
+
+  var req = this.requests[requestId];
   if (typeof req === 'undefined') {
     return;
   }
-  delete this.requests[data.requestId];
+  delete this.requests[requestId];
   if (typeof req.options !== 'undefined' && callbackName in req.options) {
     var callback = req.options[callbackName];
     this.formatAndCall(req.eventName, callback, data);
