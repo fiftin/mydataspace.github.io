@@ -719,7 +719,7 @@ function getLicenseDropContent(data, language, isCustomLicense) {
     '<div class="license-drop__text">' + text + '</div>' +
     '<div class="license-drop__footer">' +
     //'  <a class="btn btn-success license-drop__link" href="javascript: void(0);" onclick="openLicense();">See More</a>' +
-    '  <a class="btn btn-primary license-drop__link" target="_blank" href="' + url + '">' + tr$('open_license_page') + '</a>' +
+    '  <a class="btn btn-sm btn-primary license-drop__link" target="_blank" href="' + url + '">' + tr$('open_license_page') + '</a>' +
     '</div>' +
     '</div>';
 }
