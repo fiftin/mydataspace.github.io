@@ -347,10 +347,10 @@ docs:
   #  title: Data Import
   - id: api
     title: Client API
-  - id: file-storage
-    title: File Storage
-  - id: how-to-run-code
-    title: Running code on server
+#  - id: file-storage
+#    title: File Storage
+#  - id: how-to-run-code
+#    title: Running code on server
   #- id: backend
   #  title: Backend Architecture
   #- id: auth
