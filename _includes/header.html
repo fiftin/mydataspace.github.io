@@ -21,23 +21,29 @@
 
         <div class="col-md-8">
           <div class="safari intro__example_window">
-            <video id="intro__example_video" class="safari__video safari__video--windows" src="/images/landing/file-storage.mp4" muted loop></video>
+            <video id="intro__example_video" class="safari__video safari__video--windows" src="{{ site.cdn_url }}/content/videos/landing/1.0/file-storage.mp4" muted loop></video>
+            <div class="safari__video-description" id="intro__example_video_description"></div>
           </div>
         </div>
 
         <div class="col-md-4 intro__example_description">
           <div id="intro__example_description_list" class="example-description-list">
             {% for desc in site.data[page.language].example_descriptions %}
-              <div id="intro__example_description_{{ desc.id }}" class="example-description" onclick="intro_showDescription('{{ desc.id }}');">{{ desc.title }}</div>
+              <div id="intro__example_description_{{ desc.id }}"
+                   class="example-description"
+                   onclick="intro_showDescription('{{ desc.id }}', '{{ desc.text }}');"
+              >{{ desc.title }}</div>
             {% endfor %}
           </div>
         </div>
         <script>
-          function intro_showDescription(id) {
+          function intro_showDescription(id, text) {
             var video = document.getElementById('intro__example_video');
-            //video.style.backgroundImage = 'url(/images/landing/' + id + '.jpg)';
-            video.poster = '/images/landing/' + id + '.jpg';
-            video.src = '/images/landing/' + id + '.mp4';
+            var videoDescription = document.getElementById('intro__example_video_description');
+
+            video.poster = '{{ site.cdn_url }}/content/videos/landing/1.0/' + id + '.jpg';
+            video.src = '{{ site.cdn_url }}/content/videos/landing/1.0/' + id + '.mp4';
+            videoDescription.innerHTML = text;
 
             var items = document.querySelectorAll('#intro__example_description_list > .example-description');
 
@@ -49,7 +55,8 @@
 
             video.play();
           }
-          intro_showDescription('skeletons');
+
+          document.getElementById('intro__example_description_skeletons').click();
         </script>
       </div>
     </div>

@@ -571,8 +571,8 @@ $slogan-animation-offset-mobile: 400px;
   background-size: cover;
   background-position: left 22%;
   .navbar {
-    background: transparent;
-    border: transparent;
+    background-color: transparent;
+    border-color: transparent;
   }
 
 
@@ -770,7 +770,7 @@ $search-filter-panel-gap: 40px;
   color: white !important;
 
   .safari {
-    opacity: 0.85;
+    opacity: 0.6;
     transition: opacity 0.3s;
   }
 

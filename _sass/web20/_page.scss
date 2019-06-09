@@ -13,6 +13,10 @@
   background: $toolbar-bg;
 }
 
+.default_main--gradient {
+  background: url(https://cdn.web20site.com/content/images/noice.png), linear-gradient(45deg, rgba(255, 176, 176, 0.81), #0f72ff);
+}
+
 .search--fullscreen {
   background: transparent;
 }

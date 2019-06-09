@@ -22,7 +22,7 @@ menu:
 title: Программа для создания сайтов | Fastlix
 slogan: Запусти свой стартап прямо сейчас
 #slogan_description: Сфокусируйтесь на разработке, не отвлекайтесь на администрирование и инфраструктуру
-slogan_description: Сфокусируйся на идее, не отвлекайся на администрирование и инфраструктуру
+slogan_description: Сфокусируйся на решении главных задач, не отвлекайся на администрирование и инфраструктуру
   # Не отвлекайтесь на администрирование и инфраструктуру, сфокусируйтесь на разработке
 #Надежный доступ к данных из любой точки мира со скоростью близкой к реальному времени
 slogan_2: Загрузите данные и используйте их через API на свойм сайте
@@ -50,11 +50,17 @@ mission: "Мы создали конструктор сайтов который
 
 example_descriptions:
 - id: skeletons
-  title: Каркасы
+  title: 1. Готовые сайты
 - id: live-pug-scss
-  title: Поддержка Pug, SCSS и JSX
+  title: 2. Полная настраиваемость
 - id: cms
-  title: CMS
+  title: 3. Встроенная CMS
+- id: statistics
+  title: 4. Детальная статистика
+- id: api
+  title: 5. Мощный API
+
+
 #- id: tree-data-structure
 #  title: Иерархическая структура
 #- id: websocket-api
@@ -147,11 +153,11 @@ sections:
         title: Быстрые программные решения
         description: То что делает доступ реактивным
         details: |
-          <div><img class="feature__details-icon" src="/images/icons/nodejs-white.svg" /> Node.js</div>
-          <div><img class="feature__details-icon" src="/images/icons/websocket-white.svg" /> Websocket</div>
-          <div><img class="feature__details-icon" src="/images/icons/elasticsearch-white.svg" /> ElasticSearch</div>
+          <div><img class="feature__details-icon" src="/images/icons/nodejs-white.svg" /> Node.js &mdash; fast webserver</div>
+          <div><img class="feature__details-icon" src="/images/icons/websocket-white.svg" /> Websocket &mdash; </div>
+          <div><img class="feature__details-icon" src="/images/icons/elasticsearch-white.svg" /> ElasticSearch &mdash; realtime-like search engine</div>
           <div><img class="feature__details-icon" src="/images/icons/rabbitmq-white.svg" /> RabbitMQ</div>
-          <div><img class="feature__details-icon" src="/images/icons/redis-white.svg" /> Redis.js</div>
+          <div><img class="feature__details-icon" src="/images/icons/redis-white.svg" /> Redis &mdash; fast in-memory database</div>
       - id: scalability
         icon:  arrows-alt
         title: Масштабируе<wbr>мая архитектура
@@ -442,7 +448,7 @@ pricing_page:
     title: Стартап
     sites: 3 сайта
     disk: 5 Гб диск
-    price: 300 руб.
+    price: 3000 руб.
   pro:
     plan_unavailable: План Профессиональный на данный момент недоступен.
     title: Профессиональный

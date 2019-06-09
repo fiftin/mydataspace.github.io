@@ -36,7 +36,7 @@ $section-icon-color: #6b6ba9;
   background-size: cover;
   color: white;
   background-repeat: no-repeat;
-  background-image: linear-gradient(45deg, rgba(49, 21, 91, 0.81), rgba(49, 21, 91, 0.56)), url(https://cdn.web20site.com/content/images/landing/3.1/speed.jpg);
+  background-image: linear-gradient(45deg, rgba(49, 21, 91, 1), rgba(49, 21, 91, 0.8)), url(https://cdn.web20site.com/content/images/landing/3.1/speed.jpg);
   background-position: left bottom;
   .fa {
     color: white !important;
@@ -48,7 +48,7 @@ $section-icon-color: #6b6ba9;
 
 .section--ease {
   color: white;
-  background: #3b3e43 url(https://cdn.web20site.com/content/images/transparent.png);
+  background: #3b3e43 url(https://cdn.web20site.com/content/images/noice.png);
   .fa {
     color: $section-icon-color !important;
   }
@@ -61,7 +61,7 @@ $section-icon-color: #6b6ba9;
 .section--reliability {
   padding-bottom: 50px;
   color: white;
-  background: #3b3e43 url(https://cdn.web20site.com/content/images/transparent.png);
+  background: #3b3e43 url(https://cdn.web20site.com/content/images/noice.png);
   .fa {
     color: $section-icon-color !important;
   }
@@ -75,7 +75,7 @@ $section-icon-color: #6b6ba9;
   .example__title {
     color: white;
   }
-  background: url(https://cdn.web20site.com/content/images/transparent.png),linear-gradient(45deg, rgb(35, 21, 91), rgb(55, 25, 165));
+  background: url(https://cdn.web20site.com/content/images/noice.png),linear-gradient(45deg, rgb(35, 21, 91), rgb(55, 25, 165));
 }
 
 .smoke--speed {
@@ -231,7 +231,7 @@ a.feature {
 }
 
 .feature__description {
-  font-size: 20px;
+  font-size: 17px;
   margin-top: 10px;
   color: white;
 }

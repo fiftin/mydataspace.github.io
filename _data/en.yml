@@ -48,13 +48,22 @@ mission: Instead of them, we offer all-in-one solution for creating online servi
 example_descriptions:
   - id: skeletons
     title: 1. Ready-to-use Websites
+    text: >-
+      Marketplace contains many ready-made website skeletons. They are categorized for easy search.<br>
+      Find a suitable website skeleton in Marketplace, click <span style=\'margin-left: 3px; margin-right: 3px; font-weight: normal; background: #5cb85c; border: 1px solid #4cae4c; padding: 1px 5px; border-radius: 2px;\'>Create Website</span> and new website is ready.
+
 
   - id: cms
     title: 2. Built-in CMS
+    text: >-
+      After creation, the source code of the website at your disposal, you can edit it at your discretion.<br>
+      If you are not going to do this, simply switch to <span style=\'background: #3498db; font-weight: bold; padding: 1px 7px; border-radius: 100px;\'>CMS</span> mode and edit content of the website in user friendly interface.
 
   - id: live-pug-scss
     title: 3. Full Customization
-#    title: Live Pug, SCSS &amp; JSX
+    text: >-
+      Source code of the website at your disposal, you can edit it at your discretion. You can use <a href=\'https://pugjs.org\'>Pug</a>, SCSS and JSX to create
+      dynamic, easy maintainable website.
 
 
   - id: statistics
@@ -119,40 +128,44 @@ sections:
     title: Ease to Start
     subtitle: You can use Bootstrap, React, Angular, jQuery and hundreds of others technologies of web development.
     features:
-      - id: serverless
-        title: Serverless
-        description: All you need to know to create a site of any complexity
-        details: |
-          <p>No webservers. No databases. Only JavaScript, HTML and CSS.
-          <p>All modern technologies for front-end web development are available to you.
+
       - id: console
-        title: Convenient Dashboard
+        title: Marketplace
         description: A single data and code management tool
         details: |
           <p>Convenient data and code management dashborad for solving creative tasks.
           <p>Create website, write code, import data, add content, upload images. All you need is here.
+
+      - id: serverless
+        title: Serverless
+        description: All you need to know to create a site of any complexity
+        details: |
+          <p>No servers. No databases. Only code and data.
+          <p>All modern technologies for front-end web development are available to you.
+
       - id: api
         icon: cogs
-        title: Simple API
+        title: Statistics
         description: A powerful API that surprises you with its simplicity
         details: |
           <p>Simple and intuitive, but at the same time an incredibly powerful API.
           <p>With it, you can perform full-text search for your data, filter, sort, grab data including geo-coordinates,
           and authorize users through social networks.
+
   - id: speed
     title: Realtime Performance
     features:
       - id: websocket
         icon: cubes
-        title: Fast Solutions
+        title: Fast Backend
         description: What makes a website reactive
         details: |
           Our tech stack includes:
-          <div><img class="feature__details-icon" src="/images/icons/nodejs-white.svg" /> Node.js</div>
-          <div><img class="feature__details-icon" src="/images/icons/websocket-white.svg" /> Websocket</div>
-          <div><img class="feature__details-icon" src="/images/icons/elasticsearch-white.svg" /> ElasticSearch</div>
+          <div><img class="feature__details-icon" src="/images/icons/nodejs-white.svg" /> Node.js &mdash; fast webserver</div>
+          <div><img class="feature__details-icon" src="/images/icons/websocket-white.svg" /> Websocket &mdash; </div>
+          <div><img class="feature__details-icon" src="/images/icons/elasticsearch-white.svg" /> ElasticSearch &mdash; realtime-like search engine</div>
           <div><img class="feature__details-icon" src="/images/icons/rabbitmq-white.svg" /> RabbitMQ</div>
-          <div><img class="feature__details-icon" src="/images/icons/redis-white.svg" /> Redis.js</div>
+          <div><img class="feature__details-icon" src="/images/icons/redis-white.svg" /> Redis &mdash; fast in-memory database</div>
       - id: scalability
         icon:  arrows-alt
         title: Scalable Architecture
@@ -273,7 +286,6 @@ features:
     super_title: Админ панель
     super_description: Удобная панель управления данными и кодом
     type: demo
-#    preview_url: /images/docs/import-of-data/create-root.gif
     image_url: /images/docs/import-of-data/create-root.gif
     website: https://mydataspace.org
 
@@ -283,7 +295,6 @@ features:
     doc_url: /docs/import-of-data
     type: demo
     image_url: /images/docs/import-of-data/openrefine.gif
-#    preview_url: /images/docs/import-of-data/openrefine.jpg
     website: https://mydataspace.org
 
   - id: user-code
@@ -291,7 +302,6 @@ features:
     super_description: Выполнение пользовательского JavaScript на сервере по расписанию
     doc_url: /docs/backend#docs__tasks
     type: demo
-#    preview_url: /images/docs/backend/tasks-debug-ru.png
     image_url: /images/docs/backend/tasks-debug-ru.png
     website: https://mydataspace.org
     height: 750
@@ -301,7 +311,6 @@ features:
     super_description: Хранение пользовательский файлов на сервере
     doc_url: /docs/backend#docs__resources
     type: demo
-#    preview_url: /images/docs/backend/resources-ru.png
     image_url: /images/docs/backend/resources-ru.png
     website: https://mydataspace.org
     height: 750
@@ -423,18 +432,18 @@ pricing_page:
   free:
     title: Free
     sites: 1 Website
-    disk: 1 Gb Storage
+    disk: 1 Gb for files
     price: $0
   personal:
     title: Startup
     sites: 3 Websites
-    disk: 5 Gb Storage
+    disk: 5 Gb for files
     price: $50
   pro:
     plan_unavailable: Plan Professional currently unavailable. Subscribe to updated and we contact with you
     title: Pro
     sites: 10 Websites
-    disk: 15 Gb Storage
+    disk: 15 Gb for files
     price: $350
   unlim:
     request_placeholder: Please, specify how many website you need and how we can contact with you
