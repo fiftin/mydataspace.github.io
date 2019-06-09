@@ -431,25 +431,25 @@ pricing_page:
   disk_add: $5 for each additional gigabyte
   free:
     title: Free
-    sites: 1 Website
+    sites: 1 website
     disk: 1 Gb for files
     price: $0
   personal:
     title: Startup
-    sites: 3 Websites
+    sites: 3 websites
     disk: 5 Gb for files
-    price: $50
+    price: $50<span>/mo</span>
   pro:
     plan_unavailable: Plan Professional currently unavailable. Subscribe to updated and we contact with you
     title: Pro
-    sites: 10 Websites
+    sites: 10 websites
     disk: 15 Gb for files
-    price: $350
+    price: $350<span>/mo</span>
   unlim:
     request_placeholder: Please, specify how many website you need and how we can contact with you
     title: Self-hosting
-    sites: Unlimited Websites
-    disk: Unlimited Storage
+    sites: Unlimited websites
+    disk: Unlimited space for files
     price: $4500
 
 
