@@ -3,14 +3,14 @@
     <div class="intro">
       <div class="row">
         <div class="col-md-8 intro__slogans">
-          <a href="{{ baseurl }}/pricing" class="intro__slogans_link">
+          <div class="intro__slogans_link">
             <div class="intro__slogan_wrap">
               <div class="intro__slogan_offset">
                 <h1 class="intro__slogan">{{ site.data[page.language].slogan }}<span class="intro__slogan_caret">_</span></h1>
                 <div class="intro__description">{{ site.data[page.language].slogan_description }}</div>
               </div>
             </div>
-          </a>
+          </div>
         </div>
         <div class="col-md-4 intro__login">
           {% include auth_prompt.html hide_prompt_on_xs=true %}

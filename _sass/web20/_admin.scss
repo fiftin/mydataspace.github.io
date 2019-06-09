@@ -306,7 +306,7 @@ input:read-only {
  */
 
  .webix_preloaded_header {
-   background: linear-gradient(180deg, rgba(24, 21, 91, 0.8), rgba(24, 21, 91, 0.8)), url("/images/landing/top.jpeg") no-repeat top;
+   background: $navbar-inverse-bg;
    position: absolute;
    left: 0;
    right: 0;
@@ -435,7 +435,7 @@ input:read-only {
 
 .login_panel__providers {
   background-color: black;
-  background-image: url("/images/background.jpg");
+  background-image: url("https://cdn.web20site.com/content/images/landing/3.1/speed.jpg");
 }
 
 .login_panel__facebook_button button,

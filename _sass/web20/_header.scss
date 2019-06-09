@@ -402,7 +402,7 @@ $slogan-animation-offset-mobile: 400px;
 
 .landing--en {
   .intro__slogan {
-    font-size: 70px;
+    font-size: 67px;
   }
 }
 
@@ -414,7 +414,7 @@ $slogan-animation-offset-mobile: 400px;
 
 .intro__description {
   margin-top: 20px;
-  font-size: 30px;
+  font-size: 26px;
   font-weight: bold;
   line-height: 1.2;
   opacity: 0.6;
@@ -439,13 +439,6 @@ $slogan-animation-offset-mobile: 400px;
   font-size: $font-size-large * 0.8;
 }
 
-.page_top {
-  background: url('/images/background.jpg') no-repeat bottom;
-  background-size: cover;
-  //background-attachment: fixed;
-  //overflow: hidden;
-}
-
 @media (max-width: $screen-md-max) {
   .intro__slogan {
     font-size: 60px;
@@ -459,11 +452,6 @@ $slogan-animation-offset-mobile: 400px;
   .intro__login {
     margin: 20px;
   }
-
-  .page_top {
-    background: url('/images/background.jpg') no-repeat bottom;
-    background-size: cover;
-  }
 }
 
 @media (max-width: $screen-xs-max) {
@@ -475,7 +463,7 @@ $slogan-animation-offset-mobile: 400px;
   }
   .paege_top {
     background-size: 1200px 1200px;
-    background: url('/images/background.jpg') right top;
+    background: url('https://cdn.web20site.com/content/images/landing/3.1/speed.jpg') right top;
   }
   .login_button {
     margin-left: 15px;
@@ -507,10 +495,6 @@ $slogan-animation-offset-mobile: 400px;
 @media (min-width: $screen-md-min) {
   .login_button {
     margin-left: 25px;
-  }
-  .page_top {
-    background: url('/images/landing/top.jpeg') no-repeat top;
-    background-size: cover;
   }
 
   .header {
@@ -576,7 +560,20 @@ $slogan-animation-offset-mobile: 400px;
   height: calc(100% - #{$header-height});
 }
 
+.page_top {
+  background: #04041c;
+}
+
 .page_top--landing-page {
+  background: url(https://cdn.web20site.com/content/images/landing/3.1/top.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: left 22%;
+  .navbar {
+    background: transparent;
+    border: transparent;
+  }
+
 
   .smoke--fullscreen {
     @extend .smoke--fullscreen--opaque;
@@ -588,8 +585,6 @@ $slogan-animation-offset-mobile: 400px;
 .navbar--fixed {
   transform: translate3d(0, 0, 0);
   position: fixed;
-  background: linear-gradient(180deg, rgba(24, 21, 91, 0.8), rgba(24, 21, 91, 0.8)),url('/images/landing/top.jpeg') no-repeat top;
-  background-size: cover;
   z-index: 10;
   width: calc(100% - 17px);
 }

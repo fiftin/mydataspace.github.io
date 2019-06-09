@@ -19,9 +19,10 @@ menu:
   blog: Blog
   skeletons: Marketplace
 
-title: Create killer websites much faster
-slogan: Create killer websites much faster
-slogan_description: Focus on development, not administration and infrastructure
+title: Launch your startup right now
+slogan: Launch your startup right now
+#slogan: Create killer websites much faster
+slogan_description: Focus on idea, not administration and infrastructure
 
 
 slogan_2: Incredibly fast backend of your website
@@ -32,7 +33,7 @@ solutions:
   title: Shared Hosting
   description: Slow and unreliable
 - id: vps
-  title: Virtual Servers
+  title: Cloud Servers
   description: Administration skills required
 - id: builder
   title: Website Builder
@@ -41,24 +42,30 @@ solutions:
 mission_title: "The modern market offers the following solutions for placing dynamic website on the internet:"
 
 # mission: "We created website builder without those disadvantages. It simple, fast and reliable. "
-mission: Instead of them, we offer simple, fast and reliable website builder for developers.
+mission: Instead of them, we offer all-in-one solution for creating online services.
 
 
 example_descriptions:
   - id: skeletons
-    title: Marketplace
+    title: 1. Ready-to-use Websites
 
   - id: cms
-    title: CMS
+    title: 2. Built-in CMS
 
   - id: live-pug-scss
-    title: Live Pug, SCSS &amp; JSX
+    title: 3. Full Customization
+#    title: Live Pug, SCSS &amp; JSX
+
+
+  - id: statistics
+    title: 4. Detailed Statistics
+  #    title: Live Pug, SCSS &amp; JSX
 
 #  - id: tree-data-structure
 #    title: Tree Data Structure
 
   - id: api
-    title: Powerful API
+    title: 5. Powerful API
 
 #  - id: file-storage
 #    title: File Storage
@@ -411,31 +418,30 @@ pricing_page:
   trial: 3 month free
   trial_active: 6 month free
   super_offer:
-  sites_add: $6 for each additional website
-  disk_add: $1 for each additional gigabyte
+  sites_add: $20 for each additional website
+  disk_add: $5 for each additional gigabyte
   free:
     title: Free
     sites: 1 Website
     disk: 1 Gb Storage
     price: $0
-    skeletons: 3 Skeletons
   personal:
-    title: Personal
+    title: Startup
     sites: 3 Websites
     disk: 5 Gb Storage
-    price: $8
-    skeletons: 5 Skeletons
+    price: $50
   pro:
     plan_unavailable: Plan Professional currently unavailable. Subscribe to updated and we contact with you
-    title: Professional
+    title: Pro
     sites: 10 Websites
     disk: 15 Gb Storage
-    price: $28
-    skeletons: 15 Skeletons
+    price: $350
   unlim:
     request_placeholder: Please, specify how many website you need and how we can contact with you
-    title: Unlimited
-    sites: 10+ Websites
+    title: Self-hosting
+    sites: Unlimited Websites
+    disk: Unlimited Storage
+    price: $4500
 
 
 

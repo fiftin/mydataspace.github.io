@@ -32,12 +32,12 @@ body {
 
 .landing {
   min-height: 3000px;
-  background: #3b3e43 url(https://d74vncfm6779v.cloudfront.net/files/ryCHu9MlQ.png);
+  background: #3b3e43 url(https://cdn.web20site.com/content/images/transparent.png);
 }
 
 
 .smoke {
-  background: rgba(24, 21, 91, 0.8);
+  background: rgba(24, 21, 91, 0.66);
 }
 
 .smoke--light {
@@ -120,7 +120,7 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
   padding-top: 70px;
   padding-bottom: 70px;
   color: white;
-  background: url(https://d74vncfm6779v.cloudfront.net/files/ryCHu9MlQ.png),linear-gradient(45deg, rgb(35, 21, 91), rgb(55, 25, 165));
+  background: url(https://cdn.web20site.com/content/images/transparent.png),linear-gradient(45deg, rgb(35, 21, 91), rgb(55, 25, 165));
   @media (min-width: $screen-md) {
     margin-top: 420px;
   }
@@ -131,11 +131,16 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
 
 .mission__title {
   font-size: 30px;
-  margin-bottom: 15px;
+  //margin-bottom: 15px;
+}
+
+.mission__alternatives {
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .mission__text {
-  font-size: 35px;
+  font-size: 30px;
 }
 
 .feature__title--mission {
@@ -144,7 +149,7 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
 }
 
 .feature__description--mission {
-  font-size: 22px;
+  margin-top: 0;
 }
 
 .mission__con {
@@ -161,6 +166,12 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
   z-index: $fullscreen-zindex + 1;
   .modal-body  {
     padding: 20px 25px 15px 25px !important;
+  }
+
+  .modal-content {
+    border: 0;
+    box-shadow: none;
+    border-radius: 20px;
   }
 }
 

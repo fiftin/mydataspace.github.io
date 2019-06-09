@@ -40,12 +40,14 @@ layout: page
           {{ site.data[page.language].pricing_page.personal.disk }}
           <div class="pricing_block__property_addition">{{ site.data[page.language].pricing_page.disk_add }}</div>
         </div>
+        {% comment %}
         <div class="pricing_block__property">
           <div class="pricing_block__trial">{{ site.data[page.language].pricing_page.trial }}</div>
           <div class="pricing_block__trial pricing_block__trial--active">{{ site.data[page.language].pricing_page.trial_active }}</div>
           <div id="pricing_block__super_offer" class="pricing_block__super_offer hidden">{{ site.data[page.language].pricing_page.super_offer }}</div>
           <div id="pricing_block__trial_left" class="pricing_block__trial_left"></div>
         </div>
+        {% endcomment %}
       </div>
       <div class="pricing_block__pricing">{{ site.data[page.language].pricing_page.personal.price }}</div>
       <div class="pricing_block__footer">
@@ -56,6 +58,7 @@ layout: page
     </div>
   </div>
 
+  {% comment %}
   <div class="col-md-4">
     <div id="pricing_block__professional" class="pricing_block">
       <div class="pricing_block__header">{{ site.data[page.language].pricing_page.pro.title }}</div>
@@ -76,15 +79,17 @@ layout: page
       </div>
     </div>
   </div>
+  {% endcomment %}
 
-  {% comment %}
   <div id="pricing_block__unlimited" class="col-md-4">
     <div class="pricing_block">
       <div class="pricing_block__header">{{ site.data[page.language].pricing_page.unlim.title }}</div>
       <div class="pricing_block__main">
         <div class="pricing_block__property">{{ site.data[page.language].pricing_page.unlim.sites }}</div>
       </div>
-      <div class="pricing_block__pricing">&nbsp;</div>
+
+      <div class="pricing_block__pricing">{{ site.data[page.language].pricing_page.unlim.price }}</div>
+
       <div class="pricing_block__footer">
         <button type="button" onclick="PricingPage.instance().contactUs.showModal(true)" class="btn btn-lg btn-success pricing_block__button">
           {{ site.data[page.language].pricing_page.contact_us }}
@@ -92,7 +97,6 @@ layout: page
       </div>
     </div>
   </div>
-  {% endcomment %}
 
 
   <div id="pricing_page_changed_plan"

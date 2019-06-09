@@ -14,8 +14,10 @@ $popover-max-width: 350px;
 
 $navbar-margin-bottom: 0;
 $navbar-border-radius: 0;
-$navbar-inverse-bg: transparent;
-$navbar-inverse-border: transparent;
+
+$navbar-inverse-bg: #655495; //#374f98; // #111744;
+$navbar-inverse-border: $navbar-inverse-bg;
+
 $navbar-inverse-toggle-border-color: transparent;
 $navbar-inverse-toggle-hover-bg: transparent;
 $navbar-inverse-toggle-icon-bar-bg: transparent;

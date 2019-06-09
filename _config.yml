@@ -30,10 +30,10 @@ zen_url: "https://zen.yandex.ru/media/id/5936e2b37ddde8524b45d05f"
 url: "https://fastlix.com"
 websites_super_domain: fastlixsite.com
 
-local_api_url: "https://localhost:8443"
+local_api_url: "https://fastlix.example.com"
 local_cdn_url: "https://d10ztdrlkjcw7n.cloudfront.net"
-local_api_websocket_url: "https://localhost:8443"
-local_refine_url: "http://localhost:3333/"
+local_api_websocket_url: "https://fastlix.example.com"
+local_refine_url: "http://192.168.198.10:3333/"
 
 api_url: "https://api.web20site.com"
 cdn_url: "https://cdn.web20site.com"
