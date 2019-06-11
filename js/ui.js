@@ -656,7 +656,11 @@ UI = {
   },
 
   updateSizes: function() {
+    var windowHeight = $(window).height();
+    $$('admin_panel').define('height', windowHeight);
     $$('admin_panel').resize();
+    $$('my_data_panel').define('height', windowHeight - 50);
+    $$('my_data_panel').resize();
   },
 
   hideAccessToken: function () {

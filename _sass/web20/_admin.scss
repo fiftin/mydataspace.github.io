@@ -1,6 +1,7 @@
 @import "./vars";
 
 $admin-view-vertical-gap: 15px;
+$admin-min-width: 800px;
 
 .menu__mode_switch {
   opacity: 0.8;
@@ -50,6 +51,7 @@ $admin-view-vertical-gap: 15px;
 }
 
 .admin_panel {
+  min-width: $admin-min-width;
   top: -1px;
   bottom: 0;
   right: 0;
@@ -313,6 +315,7 @@ input:read-only {
    top: 0;
    height: $header-height;
    background-size: cover;
+   min-width: $admin-min-width;
  }
 
 .webix_preloaded_header--top {
