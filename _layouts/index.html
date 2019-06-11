@@ -24,7 +24,7 @@ layout: hybrid
       <div class="mission__title">{{ site.data[page.language].mission_title }}</div>
       <div class="row mission__alternatives">
         {% for feature in site.data[page.language].solutions %}
-        <div class="col-md-4 feature_column">
+        <div class="col-sm-4 feature_column">
           <div class="feature {% if feature.details %}feature--with-details{% endif %}">
             {% if feature.details %}
             <div class="feature__details">{{ feature.details }}</div>

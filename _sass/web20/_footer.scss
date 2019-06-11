@@ -76,6 +76,10 @@ span.footer__link--section {
 }
 
 @media (max-width: $screen-sm-max) {
+  .footer__about {
+    text-align: center;
+  }
+
   .footer__link--section {
     margin-top: 20px;
     text-align: center;
@@ -90,10 +94,8 @@ span.footer__link--section {
   }
 
   .footer__socials {
-    width: 220px;
-    margin-top: 20px;
-    margin-right: 50%;
-    transform: translateX(50%);
+    width: 120px;
+    margin: auto;
   }
 
   .footer {

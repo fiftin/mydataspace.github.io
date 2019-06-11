@@ -1,8 +1,10 @@
 @import "./vars";
 
-$header-logo-size: $header-height;
+$header-logo-size: $header-height - 15px;
 $header-toggle-btn-width: $header-height;
 $profile-button-size: 35px;
+$slogan-animation-offset: 350px;
+
 
 .header__menu_item {
     font-weight: bold;
@@ -11,6 +13,7 @@ $profile-button-size: 35px;
 
 .header__menu_item--active {
   position: relative;
+
   &:before {
     content: "";
     margin: 0 13px;
@@ -21,6 +24,7 @@ $profile-button-size: 35px;
     height: 4px;
     position: absolute;
   }
+
 }
 
 @media (min-width: $screen-md-min) {
@@ -252,8 +256,6 @@ $profile-button-size: 35px;
   background-size: 25px 25px;
 }
 
-$slogan-animation-offset: 350px;
-
 @keyframes slogan1Animation {
   0% {
     //transform: translate3d(0, 0, 0) scale(1);
@@ -396,15 +398,9 @@ $slogan-animation-offset-mobile: 400px;
 
 .intro__slogan {
   font-weight: bold;
-  font-size: 60px;
+  font-size: 71px;
   line-height: 1.01;
   margin-top: 0;
-}
-
-.landing--en {
-  .intro__slogan {
-    font-size: 71px;
-  }
 }
 
 .intro__slogan_wrap--2 {
@@ -456,6 +452,12 @@ $slogan-animation-offset-mobile: 400px;
 }
 
 @media (max-width: $screen-xs-max) {
+  .header__menu_item--active {
+    &:before {
+      display: none;
+    }
+  }
+
   .intro__slogan {
     font-size: 40px;
   }
@@ -507,9 +509,13 @@ $slogan-animation-offset-mobile: 400px;
   }
 }
 
-@media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+@media (min-width: $screen-sm-min) and (max-width: $screen-md-max) {
   .header__search_input {
     width: 220px !important;
+  }
+  .header__search_wrap {
+    width: initial !important;
+    margin-left: 0;
   }
 }
 
@@ -721,7 +727,7 @@ $search-filter-panel-gap: 40px;
 
 }
 
-@media (max-width: $screen-xs-min) {
+@media (max-width: $screen-xs-max) {
   .search__results {
     float: none;
     width: initial;
@@ -787,8 +793,6 @@ $search-filter-panel-gap: 40px;
   margin-top: 20px;
 }
 
-
-
 .intro__example {
   position: relative;
   color: black;
@@ -806,7 +810,6 @@ $search-filter-panel-gap: 40px;
 }
 
 .intro__example_window {
-  // margin-left: -100px;
   transform: translateY(-60px);
   width: 700px;
   @media (max-width: 1400px) {
@@ -821,7 +824,6 @@ $search-filter-panel-gap: 40px;
 }
 
 .intro__example_image {
-
   @media (min-width: $screen-md-min) {
     height: 319px;
   }
