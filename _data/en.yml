@@ -29,20 +29,20 @@ slogan_2: Incredibly fast backend of your website
 slogan_description_2: You will be surprised how fast and responsive website can be
 
 solutions:
-- id: hosting
-  title: Shared Hosting
-  description: Slow and unreliable
 - id: vps
   title: Cloud Servers
   description: Administration skills required
+- id: hosting
+  title: Shared Hosting
+  description: Slow and unreliable
 - id: builder
   title: Website Builder
   description: Template sites
 
-mission_title: "The modern market offers the following solutions for placing dynamic website on the internet:"
+mission_title: "The modern market offers the following solutions for publishing website on the internet:"
 
-# mission: "We created website builder without those disadvantages. It simple, fast and reliable. "
-mission: Instead of them, we offer all-in-one solution for creating online services.
+# mission: "We created website builder without those disadvantages. It simple, fast and reliable."
+mission: Instead of them, we offer all-in-one solution for creating online services. It simple, fast and reliable.
 
 
 example_descriptions:
@@ -145,7 +145,7 @@ sections:
 
       - id: api
         icon: cogs
-        title: Statistics
+        title: Out-of-box Statistics
         description: A powerful API that surprises you with its simplicity
         details: |
           <p>Simple and intuitive, but at the same time an incredibly powerful API.
@@ -160,12 +160,10 @@ sections:
         title: Fast Backend
         description: What makes a website reactive
         details: |
-          Our tech stack includes:
-          <div><img class="feature__details-icon" src="/images/icons/nodejs-white.svg" /> Node.js &mdash; fast webserver</div>
-          <div><img class="feature__details-icon" src="/images/icons/websocket-white.svg" /> Websocket &mdash; </div>
-          <div><img class="feature__details-icon" src="/images/icons/elasticsearch-white.svg" /> ElasticSearch &mdash; realtime-like search engine</div>
-          <div><img class="feature__details-icon" src="/images/icons/rabbitmq-white.svg" /> RabbitMQ</div>
-          <div><img class="feature__details-icon" src="/images/icons/redis-white.svg" /> Redis &mdash; fast in-memory database</div>
+          <div class="feature__list-item"><img class="feature__list-item-icon" src="/images/icons/nodejs-white.svg" /> Node.js &mdash; fast webserver</div>
+          <div class="feature__list-item"><img class="feature__list-item-icon" src="/images/icons/elasticsearch-white.svg" /> ElasticSearch &mdash; realtime-like search engine</div>
+          <div class="feature__list-item"><img class="feature__list-item-icon" src="/images/icons/rabbitmq-white.svg" /> RabbitMQ &mdash; asynchronous messaging server</div>
+          <div class="feature__list-item"><img class="feature__list-item-icon" src="/images/icons/redis-white.svg" /> Redis &mdash; fast in-memory database</div>
       - id: scalability
         icon:  arrows-alt
         title: Scalable Architecture
@@ -192,11 +190,11 @@ sections:
         icon: certificate
         title: Reliable Cloud Providers
         details: |
-          We use the services of reliable providers of cloud services that guarantee SLA at the level of 99.95%.
+          We use the services of reliable providers of cloud services that guarantee SLA at the level of 99.98%.
           <div style="margin-top: 15px;">
-          <img class="features__provider-icon" style="height: 25px;" src="/images/icons/aws-white.svg" />
-          <img class="features__provider-icon" style="height: 35px;" src="/images/icons/ovh-white.svg" />
-          <img class="features__provider-icon" style="height: 20px;" src="/images/icons/hetzner-white.svg" />
+          <img class="features__provider-icon" style="height: 35px;" src="/images/icons/aws-white.svg" />
+          <img class="features__provider-icon" style="height: 40px;" src="/images/icons/ovh-white.svg" />
+          <img class="features__provider-icon" style="height: 25px;" src="/images/icons/hetzner-white.svg" />
           </div>
       - id: security
         icon: users
@@ -427,31 +425,38 @@ pricing_page:
   trial: 3 month free
   trial_active: 6 month free
   super_offer:
-  sites_add: $20 for each additional website
-  disk_add: $5 for each additional gigabyte
   free:
     title: Free
-    sites: 1 website
-    disk: 1 Gb for files
+    sites: "<span style=\"font-size: 28px\">1</span> website"
+    disk: "<span style=\"font-size: 28px\">1</span> Gb for files"
     price: $0
+    price_add: "&nbsp;"
+    sites_add: "<span style=\"font-size: 18px\"></span>No additional websites available"
+    disk_add: "<span style=\"font-size: 18px\"></span>No additional space available"
   personal:
     title: Startup
-    sites: 3 websites
-    disk: 5 Gb for files
+    sites: "<span style=\"font-size: 28px\">3</span> websites"
+    disk: "<span style=\"font-size: 28px\">5</span> Gb for files"
     price: $50<span>/mo</span>
+    price_add: "&nbsp;"
+    sites_add: "$<span style=\"font-size: 18px\">20</span> for each additional website"
+    disk_add: "$<span style=\"font-size: 18px\">3</span> for each additional gigabyte"
   pro:
     plan_unavailable: Plan Professional currently unavailable. Subscribe to updated and we contact with you
     title: Pro
     sites: 10 websites
     disk: 15 Gb for files
     price: $350<span>/mo</span>
+    price_add: "&nbsp;"
   unlim:
     request_placeholder: Please, specify how many website you need and how we can contact with you
     title: Self-hosting
-    sites: Unlimited websites
-    disk: Unlimited space for files
+    sites: "<span style=\"font-size: 28px\"></span> Unlimited websites"
+    disk: "<span style=\"font-size: 28px\"></span> Unlimited space for files"
     price: $4500
-
+    price_add: Includes 2 month support
+    sites_add: "<span style=\"font-size: 18px\"></span>On your servers"
+    disk_add: "<span style=\"font-size: 18px\"></span>In your S3 compatible storage"
 
 
 landing_examples:

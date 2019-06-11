@@ -34,8 +34,8 @@
 }
 
 .pricing_block--active {
-  border-color: opacify($brand-success, 0.7); // #76b876
-  box-shadow: 0 1px 2px 0 opacify($brand-success, 0.3);
+  border-color: transparent; //opacify($brand-success, 0.7); // #76b876
+  box-shadow: 0 1px 46px 0 opacify($brand-success, 0.3);
   .pricing_block__button--create {
     display: none;
   }
@@ -49,7 +49,7 @@
 
 .pricing_block__main {
   height: 190px;
-  padding: 0 20px 20px;
+  padding: 10px 20px 20px 20px;
   text-align: center;
 }
 
@@ -70,13 +70,22 @@
 }
 
 .pricing_block__pricing {
-  padding: 20px;
+  padding: 20px 20px 0 20px;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   text-align: center;
   font-weight: bold;
   font-size: 40px;
   // padding-top: 0;
+}
+
+.pricing_block__pricing_addition {
+  font-size: 14px;
+  font-weight: bold;
+  opacity: 0.5;
+  text-align: center;
+  margin-top: -5px;
+  margin-bottom: 5px;
 }
 
 .pricing_block__super_offer {
@@ -108,16 +117,17 @@
 
 .pricing_block__property {
   margin: 20px 0;
-  font-size: 25px;
+  font-size: 22px;
   line-height: 1.1;
   font-weight: bold;
 }
 
 .pricing_block__property_addition {
-  font-size: 16px;
+  font-size: 14px;
   max-width: 250px;
-  margin: 10px auto auto;
-  font-weight: normal;
+  margin: 2px auto auto;
+  font-weight: bold;
+  opacity: 0.5;
 }
 
 .pricing_block__button {

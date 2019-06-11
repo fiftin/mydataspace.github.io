@@ -212,6 +212,19 @@ a.feature {
   font-style: italic;
 }
 
+.feature__list-item {
+  position: relative;
+  padding-left: 30px;
+  margin-top: 10px;
+}
+
+.feature__list-item-icon {
+  position: absolute;
+  left: 0;
+  width: 20px;
+  top: 2px;
+}
+
 .feature__details-icon {
   width: 19px;
   margin-top: -4px;

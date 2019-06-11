@@ -198,7 +198,7 @@ sections:
         details: |
           Мы пользуемся услугами только надежных провайдеров
           облачных услуг (Amazon, OVH), которые гарантируют
-          SLA на уровне 99.95%.
+          SLA на уровне 99.98%.
           <div style="margin-top: 15px;">
           <img class="features__provider-icon" style="height: 25px;" src="/images/icons/aws-white.svg" />
           <img class="features__provider-icon" style="height: 35px;" src="/images/icons/ovh-white.svg" />

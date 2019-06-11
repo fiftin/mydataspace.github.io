@@ -12,14 +12,15 @@ layout: page
       <div class="pricing_block__main">
         <div class="pricing_block__property">
           {{ site.data[page.language].pricing_page.free.sites }}
-          <div class="pricing_block__property_addition" style="visibility: hidden">{{ site.data[page.language].pricing_page.sites_add }}</div>
+          <div class="pricing_block__property_addition">{{ site.data[page.language].pricing_page.free.sites_add }}</div>
         </div>
         <div class="pricing_block__property">
           {{ site.data[page.language].pricing_page.free.disk }}
-          <div class="pricing_block__property_addition" style="visibility: hidden">{{ site.data[page.language].pricing_page.disk_add }}</div>
+          <div class="pricing_block__property_addition">{{ site.data[page.language].pricing_page.free.disk_add }}</div>
         </div>
       </div>
       <div class="pricing_block__pricing">{{ site.data[page.language].pricing_page.free.price }}</div>
+      <div class="pricing_block__pricing_addition">{{ site.data[page.language].pricing_page.free.price_add }}</div>
       <div class="pricing_block__footer">
         <button type="button" onclick="PricingPage.instance().createWebsite()" class="btn btn-lg btn-success pricing_block__button pricing_block__button--create">{{ site.data[page.language].pricing_page.create_site }}</button>
         <button type="button" onclick="PricingPage.instance().downgradeToFree.showModal(true)" class="btn btn-lg btn-success pricing_block__button pricing_block__button--upgrade">{{ site.data[page.language].pricing_page.upgrade }}</button>
@@ -35,12 +36,12 @@ layout: page
 
         <div class="pricing_block__property">
           {{ site.data[page.language].pricing_page.personal.sites }}
-          <div class="pricing_block__property_addition">{{ site.data[page.language].pricing_page.sites_add }}</div>
+          <div class="pricing_block__property_addition">{{ site.data[page.language].pricing_page.personal.sites_add }}</div>
         </div>
 
         <div class="pricing_block__property">
           {{ site.data[page.language].pricing_page.personal.disk }}
-          <div class="pricing_block__property_addition">{{ site.data[page.language].pricing_page.disk_add }}</div>
+          <div class="pricing_block__property_addition">{{ site.data[page.language].pricing_page.personal.disk_add }}</div>
         </div>
 
 <!--        {% comment %}-->
@@ -53,6 +54,7 @@ layout: page
 <!--        {% endcomment %}-->
       </div>
       <div class="pricing_block__pricing">{{ site.data[page.language].pricing_page.personal.price }}</div>
+      <div class="pricing_block__pricing_addition">{{ site.data[page.language].pricing_page.personal.price_add }}</div>
       <div class="pricing_block__footer">
         <button type="button" onclick="PricingPage.instance().createWebsite()" class="btn btn-lg btn-success pricing_block__button pricing_block__button--create">{{ site.data[page.language].pricing_page.create_site }}</button>
         <button type="button" onclick="PricingPage.instance().upgradeToPersonal.showModal(true)" class="btn btn-lg btn-success pricing_block__button pricing_block__button--upgrade">{{ site.data[page.language].pricing_page.upgrade }}</button>
@@ -61,48 +63,22 @@ layout: page
     </div>
   </div>
 
-<!--  {% comment %}-->
-<!--  <div class="col-md-4">-->
-<!--    <div id="pricing_block__professional" class="pricing_block">-->
-<!--      <div class="pricing_block__header">{{ site.data[page.language].pricing_page.pro.title }}</div>-->
-<!--      <div class="pricing_block__main">-->
-<!--        <div class="pricing_block__property">-->
-<!--          {{ site.data[page.language].pricing_page.pro.sites }}-->
-<!--          <div class="pricing_block__property_addition">{{ site.data[page.language].pricing_page.sites_add }}</div>-->
-<!--        </div>-->
-<!--        <div class="pricing_block__property">-->
-<!--          {{ site.data[page.language].pricing_page.pro.disk }}-->
-<!--          <div class="pricing_block__property_addition">{{ site.data[page.language].pricing_page.disk_add }}</div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="pricing_block__pricing">{{ site.data[page.language].pricing_page.pro.price }}</div>-->
-<!--      <div class="pricing_block__footer">-->
-<!--        <button type="button" onclick="PricingPage.instance().createWebsite()" class="btn btn-lg btn-success pricing_block__button pricing_block__button&#45;&#45;create">{{ site.data[page.language].pricing_page.create_site }}</button>-->
-<!--        <button type="button" onclick="PricingPage.instance().upgradeToPro.showModal(true)" class="btn btn-lg btn-success pricing_block__button pricing_block__button&#45;&#45;upgrade">{{ site.data[page.language].pricing_page.upgrade }}</button>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  {% endcomment %}-->
 
   <div id="pricing_block__unlimited" class="col-md-4">
     <div class="pricing_block">
       <div class="pricing_block__header">{{ site.data[page.language].pricing_page.unlim.title }}</div>
       <div class="pricing_block__main">
-
         <div class="pricing_block__property">
           {{ site.data[page.language].pricing_page.unlim.sites }}
-          <div class="pricing_block__property_addition" style="visibility: hidden">{{ site.data[page.language].pricing_page.sites_add }}</div>
+          <div class="pricing_block__property_addition">{{ site.data[page.language].pricing_page.unlim.sites_add }}</div>
         </div>
         <div class="pricing_block__property">
           {{ site.data[page.language].pricing_page.unlim.disk }}
-          <div class="pricing_block__property_addition" style="visibility: hidden">{{ site.data[page.language].pricing_page.disk_add }}</div>
+          <div class="pricing_block__property_addition">{{ site.data[page.language].pricing_page.unlim.disk_add }}</div>
         </div>
-
       </div>
-
-
       <div class="pricing_block__pricing">{{ site.data[page.language].pricing_page.unlim.price }}</div>
-
+      <div class="pricing_block__pricing_addition">{{ site.data[page.language].pricing_page.unlim.price_add }}</div>
       <div class="pricing_block__footer">
         <button type="button" onclick="PricingPage.instance().contactUs.showModal(true)" class="btn btn-lg btn-success pricing_block__button">
           {{ site.data[page.language].pricing_page.contact_us }}

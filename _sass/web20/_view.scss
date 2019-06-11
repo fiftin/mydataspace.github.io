@@ -267,6 +267,11 @@ pre {
 
 .view__tabs {
   margin-bottom: 0;
+
+  .btn-sm {
+    border-radius: 50px;
+    padding: 2px 15px !important;
+  }
 }
 
 .view__tab--active {

@@ -107,7 +107,7 @@ gulp.task('ui', function() {
   .pipe(concat('ui.js'))
   .pipe(gulp.dest('./js/dist'))
   .pipe(gulp.dest('./_site/js/dist'))
-  .pipe(gulp.dest('./_site.web20/js/dist'));
+  .pipe(gulp.dest('./_site/js/dist'));
 });
 
 gulp.task('wizard', function() {
@@ -117,7 +117,7 @@ gulp.task('wizard', function() {
     .pipe(concat('wiz-1.4.js'))
     .pipe(gulp.dest('./js/dist'))
     .pipe(gulp.dest('./_site/js/dist'))
-    .pipe(gulp.dest('./_site.web20/js/dist'));
+    .pipe(gulp.dest('./_site/js/dist'));
 });
 
 gulp.task('wizard', ['wizard:js', 'wizard:css']);
@@ -129,17 +129,17 @@ gulp.task('wizard:js', function() {
     .pipe(concat('wiz-1.4.js'))
     .pipe(gulp.dest('./js/dist'))
     .pipe(gulp.dest('./_site/js/dist'))
-    .pipe(gulp.dest('./_site.web20/js/dist'));
+    .pipe(gulp.dest('./_site/js/dist'));
 });
 
 gulp.task('wizard:css', function() {
   return gulp.src(
-    '_site.web20/css/wizard.css'
+    '_site/css/wizard.css'
   )
     .pipe(concat('wiz-1.4.css'))
     .pipe(gulp.dest('./js/dist'))
     .pipe(gulp.dest('./_site/js/dist'))
-    .pipe(gulp.dest('./_site.web20/js/dist'));
+    .pipe(gulp.dest('./_site/js/dist'));
 });
 
 
