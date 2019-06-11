@@ -3,6 +3,22 @@
 $admin-view-vertical-gap: 15px;
 $admin-min-width: 800px;
 
+
+html {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  height: 100%;
+  padding: 0;
+  overflow: auto;
+  margin: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+
 .menu__mode_switch {
   opacity: 0.8;
   transition: opacity 0.2s;
