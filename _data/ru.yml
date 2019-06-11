@@ -149,7 +149,7 @@ sections:
     subtitle: Современные решения позволяют обеспечить невероятно высокую скорость доступа к данным
     features:
       - id: websocket
-        icon: cubes
+        icon: flash
         title: Быстрые программные решения
         description: То что делает доступ реактивным
         details: |
@@ -192,7 +192,7 @@ sections:
           Облачная инфраструктура обеспечивает надежное
           хранение данных и бесперебойный доступ к ним.
       - id: availability
-        icon: certificate
+        icon: thumbs-up
         title: Надежные облачные сервисы
         description: Ваш сайт будет доступен всегда
         details: |

@@ -47,38 +47,41 @@ mission: Instead of them, we offer all-in-one solution for creating online servi
 
 example_descriptions:
   - id: skeletons
+    type: video
     title: 1. Ready-to-use Websites
     text: >-
-      Marketplace contains many ready-made website skeletons. They are categorized for easy search.<br>
-      Find a suitable website skeleton in Marketplace, click <span style=\'margin-left: 3px; margin-right: 3px; font-weight: normal; background: #5cb85c; border: 1px solid #4cae4c; padding: 1px 5px; border-radius: 2px;\'>Create Website</span> and new website is ready.
+      Our Marketplace contains many ready-made website skeletons. They are categorized for easy search.<br>
+      Find a suitable website skeleton, click <span style=\'margin-left: 3px; margin-right: 3px; font-weight: normal; background: #5cb85c; border: 1px solid #4cae4c; padding: 1px 5px; border-radius: 2px;\'>Create Website</span> and new website is ready.
 
 
   - id: cms
+    type: video
     title: 2. Built-in CMS
     text: >-
       After creation, the source code of the website at your disposal, you can edit it at your discretion.<br>
       If you are not going to do this, simply switch to <span style=\'background: #3498db; font-weight: bold; padding: 1px 7px; border-radius: 100px;\'>CMS</span> mode and edit content of the website in user friendly interface.
 
   - id: live-pug-scss
+    type: video
     title: 3. Full Customization
     text: >-
-      Source code of the website at your disposal, you can edit it at your discretion. You can use <a href=\'https://pugjs.org\'>Pug</a>, SCSS and JSX to create
-      dynamic, easy maintainable website.
+      Source code of the website at your disposal, you can edit it at your discretion. Use <a href=\'https://pugjs.org\'>Pug</a>, <a href=\'https://sass-lang.com/\'>SCSS</a> and <a href=\'https://reactjs.org/docs/introducing-jsx.html\'>JSX</a> for creating
+      fast, dynamic and easy maintainable websites.<!-- <br>
+      We continuously add support for new languages and template engines. -->
 
+#  - id: api
+#    type: image
+#    title: 4. Powerful API
 
   - id: statistics
+    type: image
     title: 4. Detailed Statistics
-  #    title: Live Pug, SCSS &amp; JSX
+    text: >-
+      Full statistic by visits, users, and other available without Google Analytics.
 
-#  - id: tree-data-structure
-#    title: Tree Data Structure
-
-  - id: api
-    title: 5. Powerful API
-
-#  - id: file-storage
-#    title: File Storage
-
+#  - id: backend
+#    type: image
+#    title: 5. Fast Backend
 
 
 special_offer: Free now and <b>forever</b> for registered users
@@ -94,7 +97,7 @@ strings:
   view_doc: View Docs
   top_roots: Popular Websites
   explore_roots: Explore Websites
-  new_root_name: Website Subdomain
+  new_root_name: Enter your website subdomain
   click_to_select_version: Click to select other version
   cancel: Cancel
   privacy: Privacy
@@ -145,7 +148,7 @@ sections:
 
       - id: api
         icon: cogs
-        title: Out-of-box Statistics
+        title: Powerful API
         description: A powerful API that surprises you with its simplicity
         details: |
           <p>Simple and intuitive, but at the same time an incredibly powerful API.
@@ -156,7 +159,7 @@ sections:
     title: Realtime Performance
     features:
       - id: websocket
-        icon: cubes
+        icon: flash
         title: Fast Backend
         description: What makes a website reactive
         details: |
@@ -187,7 +190,7 @@ sections:
           <p>So we reducing reliance on any single vendor, increasing flexibility through choice, and mitigating against disasters.
 
       - id: availability
-        icon: certificate
+        icon: thumbs-up
         title: Reliable Cloud Providers
         details: |
           We use the services of reliable providers of cloud services that guarantee SLA at the level of 99.98%.
@@ -421,6 +424,7 @@ pricing_page:
   create_site: Create Website
   current_plan: Current Plan
   upgrade: Upgrade
+  downgrade: Downgrade
   contact_us: Contact Us
   trial: 3 month free
   trial_active: 6 month free

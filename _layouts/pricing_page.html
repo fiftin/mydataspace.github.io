@@ -23,7 +23,7 @@ layout: page
       <div class="pricing_block__pricing_addition">{{ site.data[page.language].pricing_page.free.price_add }}</div>
       <div class="pricing_block__footer">
         <button type="button" onclick="PricingPage.instance().createWebsite()" class="btn btn-lg btn-success pricing_block__button pricing_block__button--create">{{ site.data[page.language].pricing_page.create_site }}</button>
-        <button type="button" onclick="PricingPage.instance().downgradeToFree.showModal(true)" class="btn btn-lg btn-success pricing_block__button pricing_block__button--upgrade">{{ site.data[page.language].pricing_page.upgrade }}</button>
+        <button type="button" onclick="PricingPage.instance().downgradeToFree.showModal(true)" class="btn btn-lg btn-success pricing_block__button pricing_block__button--upgrade">{{ site.data[page.language].pricing_page.downgrade }}</button>
         <button type="button" class="btn btn-lg btn-success pricing_block__button pricing_block__button--current" disabled>{{ site.data[page.language].pricing_page.current_plan }}</button>
       </div>
     </div>
@@ -172,7 +172,7 @@ layout: page
           <div id="free_plan_downgrade_modal__error" class="give_feedback_modal__error"></div>
         </div>
         <div class="modal-footer look_modal__footer">
-          <button class="btn btn-success give_feedback_modal__send" id="free_plan_downgrade_modal__send">{{ site.data[page.language].pricing_page.upgrade }}</button>
+          <button class="btn btn-success give_feedback_modal__send" id="free_plan_downgrade_modal__send">{{ site.data[page.language].pricing_page.downgrade }}</button>
         </div>
       </div>
     </div>

@@ -87,7 +87,7 @@ function PricingPage() {
   this.trialMonths = document.getElementById('pricing_block__trial');
 
   this.contactUs = new ContactModal({
-    errorLabel: 'give_feedback_modal__error',
+    errorLabel: 'request_unlimited_modal__error',
     modal: 'request_unlimited_modal',
     sendButton: 'request_unlimited_modal__button',
     sentModal: 'request_unlimited_sent_modal',

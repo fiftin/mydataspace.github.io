@@ -49,6 +49,9 @@
   display: block;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .safari__video-description {
@@ -61,14 +64,16 @@
   padding: 15px 20px;
   font-size: 13px;
   //font-weight: bold;
+  a {
+    color: lightskyblue;
+  }
 }
 
 .safari__video--windows {
   margin-top: -1px;
   width: calc(100% + 2px);
   min-height: 453px;
-  background: white;
-  background-size: cover;
+  background-color: white;
 }
 
 .safari__url {
