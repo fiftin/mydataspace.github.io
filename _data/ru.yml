@@ -38,7 +38,7 @@ solutions:
     title: Хостинг
     description: Медленный и ненадежный
   - id: vps
-    title: Облачный сервер
+    title: Облачные сервера
     description: Hеобходимы навыки администрирования
   - id: builder
     title: Конструктор сайтов
@@ -46,19 +46,42 @@ solutions:
 
 mission_title: "Современный рынок предлагает следующие решения для размещения сайта в интернете:"
 
-mission: "Мы создали конструктор сайтов который лишён этих недостатков: простой, быстрый и надежный. "
+mission: "Мы предлагаем решение которое лишено всех этих недостатков и включает всё необходимое для быстрого запуска онлайн сервиса"
 
 example_descriptions:
 - id: skeletons
+  type: video
   title: 1. Готовые сайты
-- id: live-pug-scss
-  title: 2. Полная настраиваемость
+  text: >-
+    На нашем маркетплейсе есть много готовых к использованию макетов сайтов.<br>
+    Найдите подходящий макет, нажмите <span style=\'margin-left: 3px; margin-right: 3px; font-weight: normal; background: #5cb85c; border: 1px solid #4cae4c; padding: 1px 5px; border-radius: 2px;\'>Create Website</span> и новый сайт готов.
+
 - id: cms
+  type: video
   title: 3. Встроенная CMS
+  text: >-
+    После создания сайта, его исходный код полностью в вашем распоряжении, вы можете вносить изменения для
+    адаптации сайта под себя.<br>
+    Но если вам это не нужно, то просто переключитесь в режим <span style=\'background: #3498db; font-weight: bold; padding: 1px 7px; border-radius: 100px;\'>CMS</span> и
+    управляйте контентом сайта через удобный интерфейс.
+
+- id: live-pug-scss
+  type: video
+  title: 2. Настраиваемость
+  text: >-
+    Source code of the website at your disposal, you can edit it at your discretion. Use <a href=\'https://pugjs.org\'>Pug</a>, <a href=\'https://sass-lang.com/\'>SCSS</a> and <a href=\'https://reactjs.org/docs/introducing-jsx.html\'>JSX</a> for creating
+    fast, dynamic and easy maintainable websites.<!-- <br>
+    We continuously add support for new languages and template engines. -->
+
+#
+#- id: api
+#  title: 5. Мощный API
+
 - id: statistics
+  type: image
   title: 4. Детальная статистика
-- id: api
-  title: 5. Мощный API
+  text: >-
+    Full statistic by visits, users, and other available without Google Analytics.
 
 
 #- id: tree-data-structure
@@ -469,6 +492,6 @@ landing_examples:
     - title: Сервис тестирования облачных серверов
       image: cloudbench.png
       url: cloud.fastlixsite.com
-    - title: Блог
-      image: blog.web20.png
-      url: blog.fastlixsite.com
+#    - title: Блог
+#      image: blog.web20.png
+#      url: blog.fastlixsite.com
