@@ -6,11 +6,13 @@ language: ru
 
 <ul>
   {% for post in site.posts %}
+  {% if post.language == "ru" %}
   <a class="blog-post-preview" href="{{ post.url| remove: '.html' }}">
     <h2>{{ post.title }}</h2>
     <div>
       {{ post.excerpt }}
     </div>
   </a>
+  {% endif %}
   {% endfor %}
 </ul>

@@ -43,14 +43,14 @@
 
             switch (type) {
               case 'video':
-                video.poster = '{{ site.cdn_url }}/content/videos/landing/1.1/' + id + '.jpg';
-                video.src = '{{ site.cdn_url }}/content/videos/landing/1.1/' + id + '.mp4';
+                video.poster = '{{ site.cdn_url }}/content/videos/landing/1.3/' + id + '.jpg';
+                video.src = '{{ site.cdn_url }}/content/videos/landing/1.3/' + id + '.mp4';
                 video.style.backgroundImage = '';
                 break;
               case 'image':
                 video.poster = '';
                 video.src = '';
-                video.style.backgroundImage = 'url({{ site.cdn_url }}/content/videos/landing/1.1/' + id + '.jpg)';
+                video.style.backgroundImage = 'url({{ site.cdn_url }}/content/videos/landing/1.3/' + id + '.jpg)';
                 break
             }
             videoDescription.innerHTML = text;
