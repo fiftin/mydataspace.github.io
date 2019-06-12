@@ -620,6 +620,10 @@ UI = {
 
     UI.updateSizes();
 
+    setTimeout(function () {
+      UI.updateSizes();
+    }, 3000);
+
     webix.event(window, 'resize', function(e) {
       UI.updateSizes();
     });

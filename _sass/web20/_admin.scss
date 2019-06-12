@@ -4,6 +4,9 @@ $admin-view-vertical-gap: 15px;
 $admin-min-width: 800px;
 
 
+body {
+  overscroll-behavior: none;
+}
 
 
 .menu__mode_switch {

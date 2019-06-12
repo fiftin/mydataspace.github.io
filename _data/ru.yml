@@ -358,10 +358,10 @@ docs:
   #  title: Загрузка данных
   - id: api
     title: Описание API
-  - id: file-storage
-    title: Хранение файлов
-  - id: how-to-run-code
-    title: Выполнение кода на сервере
+#  - id: file-storage
+#    title: Хранение файлов
+#  - id: how-to-run-code
+#    title: Выполнение кода на сервере
   #- id: backend
   #  title: Как устроен бекенд
   #- id: auth
@@ -448,7 +448,7 @@ pricing_page:
     title: Стартап
     sites: 3 сайта
     disk: 5 Гб диск
-    price: 3000 руб.
+    price: 3000 р. в мес.
   pro:
     plan_unavailable: План Профессиональный на данный момент недоступен.
     title: Профессиональный
