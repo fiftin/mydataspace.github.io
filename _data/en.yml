@@ -129,7 +129,7 @@ buttons:
 sections:
   - id: ease
     title: Ease to Start
-    subtitle: You can start with using one of the ready-to-use websites from the Marketplace
+    subtitle: You can start with one of ready-to-use website skeleton from the Marketplace
     features:
 
       - id: console
@@ -467,12 +467,12 @@ pricing_page:
   unlim:
     request_placeholder: Please, specify how many website you need and how we can contact with you
     title: Self-hosting
-    sites: "<span style=\"font-size: 28px\"></span> Unlimited websites"
-    disk: "<span style=\"font-size: 28px\"></span> Unlimited space for files"
+    sites: "<span style=\"font-size: 28px\"></span> Unlimited websites*"
+    disk: "<span style=\"font-size: 28px\"></span> Unlimited space for files**"
     price: $4500
     price_add: Includes 2 month support
-    sites_add: "<span style=\"font-size: 18px\"></span>* on your servers"
-    disk_add: "<span style=\"font-size: 18px\"></span>* in your S3 compatible storage"
+    sites_add: "<span style=\"font-size: 18px\"></span>* On your servers"
+    disk_add: "<span style=\"font-size: 18px\"></span>** In your S3 compatible storage"
 
 
 landing_examples:
