@@ -364,6 +364,7 @@ input:read-only {
   background: $header-bg;
   height: $header-height - 1px !important;
   border: 1px solid $header-bg !important;
+  margin-top: -1px !important;
 }
 
 .menu__language_button button,
@@ -414,6 +415,7 @@ input:read-only {
 
 .menu_button .webix_icon {
   color: white;
+  margin-top: 2px;
 }
 
 .menu_button:hover .webix_icon {

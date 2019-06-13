@@ -6431,6 +6431,7 @@ UILayout.header =
           // window.open(currentLang + '/docs', '_blank');
         }
       },
+
       { view: 'button',
         width: 110,
         css: 'menu__language_button',
@@ -6444,7 +6445,20 @@ UILayout.header =
         }
       },
 
-      { width: 20, css: 'menu__spacer' },
+
+      { view: 'button',
+        width: 65,
+        css: 'menu__language_button',
+        id: 'BLOG_LABEL',
+        label: STRINGS.BLOG,
+        click: function() {
+          var currentLang = getCurrentLanguage().toLowerCase();
+          currentLang = currentLang === 'en' ? '' : '/' + currentLang;
+          window.location.href = currentLang + '/blog';
+        }
+      },
+
+      { width: 12, css: 'menu__spacer' },
       { view: 'button',
         width: 90,
         id: 'SIGN_IN_LABEL',
