@@ -13,63 +13,60 @@ tags:
 ---
 ![](https://cdn.web20site.com/images/lg/TOUvPoatc.jpg)
 
-После регистрации домена возникает вопрос как его привязать к вашему серверу. 
-Для этого домен должен быть зарегистрирован на DNS-серверах. Хостер может 
-предоставлять такую услуги бесплатно или за дополнительные деньги, но лучше 
-воспользоваться DNS-серверами от Cloudflare. И вот почему<!--more-->:
+After registering a domain, the question arises how to bind it to your server.
+To do this you must register your domain on DNS-server.  A hoster can provide such services for free or for extra money, 
+but it is better to use the Cloudflare DNS servers. And that's why<!--more-->:
 
-* Бесплатно
-* Простой интерфейс панели упраления
-* Защита от DDoS
-* Бесплатный CDN
-* Бесплатный SSL-сертификат
+* Free
+* Simple dashboard interface
+* DDoS protection
+* Free CDN
+* Free SSL-certificate
 
-Компания Cloudflare специализируется на защите от DDoS-атак. Она является лидером 
-в этой области, многие крупные компании пользуются её услугами (Cisco, 
+Cloudflare specializes in DDoS protection. Many large companies use its services (Cisco, 
 DigitalOcean, CrunchBase и др.).
 
-Защита от DDoS начинается с защиты DNS и работает следующим образом:
+DDoS protection starts with DNS protection and works as follows:
 
-* Запросы к вашему доменному имени приходят не на ваш сервер, а на промежуточные сервера Cloudflare
-* Cloudflare проверяет источник запроса и в случае обнаружения атаки, запрос не проходит дальше
-* Если запрос является безопасным, то он передаётся на обработку вашему серверу
+* Requests to your domain name do not come to your server, but to intermediate Cloudflare servers
+* Cloudflare checks the source of the request and, if an attack is detected, the request blocked
+* If the request is secure, it is passed to your server for processing.
 
-Cloudflare имеет огромное количество серверов, распределённых по всему миру. Они берут 
-на себя удар DDoS атака, оставляя ваш сервер в безопасности. В добавок к этому:
+Cloudflare has a lot of servers distributed throughout the world. They take the brunt of DDoS attacks, leaving your 
+server safe. In addition to that:
 
-* Скрывают реальный адрес вашего сервера
-* Кешируют статический контент (картинки) вашего сайта на своих серверах для обеспечения быстрого доступа к нему (CDN)
+* Hide the real IP of your server
+* Cache static content (pictures) of your website on their servers to provide quick access to it (CDN).
 
-### Настройка домена
+### Domain Setting
 
-Регистрируемся на cloudflare.com и жмём кнопку Add a Site:
+Register on cloudflare.com and click the Add a Site button:
 ![](https://cdn.web20site.com/images/lg/TWJ8tardX.jpg)
 
-Далее, вводим имя нашего домена и жмём Add Site:
+Next, enter the name of our domain and click Add Site:
 ![](https://cdn.web20site.com/images/lg/ePYwTazYK.jpg)
 
-Далее, жмём Next, выбираем бесплатный тариф и жмем Confirm Plan:
+Click Next, select a free plan and click Confirm Plan:
 ![](https://cdn.web20site.com/images/lg/30OBKF6ca.jpg)
 
 ![](https://cdn.web20site.com/images/lg/oPNpSrQhj.jpg)
 
-После этого мы может сразу указать IP-адрес нашего сервера, но может сделать это и позже. Жмём Continue:
+After that, we can immediately specify the IP address or host of our server. Click Continue:
 ![](https://cdn.web20site.com/images/lg/-uckNmJ4D.jpg)
 
-Теперь самое сложное 🙂 — нам нужно указать DNS-сервера Cloudflare в настройках нашего домена на станице регистратора 
-(там где вы купили домен). У меня GoDaddy и выглядит это таким образом:
+Now the most difficult 🙂 — we need to specify the Cloudflare DNS server in the settings of our domain registrar page
+(where you bought the domain). I have GoDaddy and it looks like this:
 ![](https://cdn.web20site.com/images/lg/RHUOF17Tt.jpg)
 
-После того как вы обновили настройки DNS-серверов на сранице регистатора, жмем Continue на странице Cloudflare:
+After you have updated the DNS server settings on the registrar page, click Continue on the Cloudflare page:
 ![](https://cdn.web20site.com/images/lg/CCTixzFJO.jpg)
 
-Обновление настроек DNS может занять от 10 минут до 1 часа. После чего вы увидите такой экран:
+Updating DNS settings can take from 10 minutes to 1 hour. Then you will see this screen:
 ![](https://cdn.web20site.com/images/lg/B9duEDx1K.jpg)
 
-Это значит что теперь Cloudflare взял на себя управление вашим доменом. Вы можете:
+This means that now Cloudflare manage your domain. You can:
 
-* Указать IP-адрес вашего сервера
-* Создать поддомены, например blog.fastlixsite.com
-* Добавить SSL-сертификат для вашего сайта
-* Смотреть статистику по вашему сайту
-* Натсроить дополнительные дейсвия, выполняемые при обращении пользователя к вашему сайту. Например перенаправить его на другой сайт. Это делается на странце Page Rules.
+* Enter IP address of your server
+* Create subdomains
+* Add SSL certificate for your site
+* View statistics for your site
