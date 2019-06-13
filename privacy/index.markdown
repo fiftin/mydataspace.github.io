@@ -13,7 +13,7 @@ The Personal Information that we collect are used for providing and improving th
 your information with anyone except as described in this Privacy Policy.
 
 The terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, which is accessible at 
-https://web20.site, unless otherwise defined in this Privacy Policy.
+https://fastlix.com, unless otherwise defined in this Privacy Policy.
 
 ### Information Collection and Use
 

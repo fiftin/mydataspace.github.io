@@ -13,7 +13,7 @@ page_content_class: page__content--800
             <div class="safari__button safari__button--green"></div>
         </div>
         <div class="safari__address_bar">
-            <div class="safari__url">{{ 'https://web20.site' | replace: "https://","<span class='safari__url__https'>https://</span>" }}</div>
+            <div class="safari__url">{{ 'https://fastlix.com' | replace: "https://","<span class='safari__url__https'>https://</span>" }}</div>
         </div>
     </div>
     <img class="safari__img" src="/images/docs/dashboard/intro.png" />
@@ -42,7 +42,7 @@ Dashboard allows you to:
             <div class="safari__button safari__button--green"></div>
         </div>
         <div class="safari__address_bar">
-            <div class="safari__url">{{ 'https://web20.site/ru' | replace: "https://","<span class='safari__url__https'>https://</span>" }}</div>
+            <div class="safari__url">{{ 'https://fastlix.com/ru' | replace: "https://","<span class='safari__url__https'>https://</span>" }}</div>
         </div>
     </div>
     <img class="safari__img" src="/images/docs/dashboard/data.png" />
@@ -74,7 +74,7 @@ For more information about using the API to access data, see [Client API](/docs/
             <div class="safari__button safari__button--green"></div>
         </div>
         <div class="safari__address_bar">
-            <div class="safari__url">{{ 'https://web20.site/ru' | replace: "https://","<span class='safari__url__https'>https://</span>" }}</div>
+            <div class="safari__url">{{ 'https://fastlix.com/ru' | replace: "https://","<span class='safari__url__https'>https://</span>" }}</div>
         </div>
     </div>
     <img class="safari__img" src="/images/docs/dashboard/website.png" />

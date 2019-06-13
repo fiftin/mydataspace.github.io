@@ -14,7 +14,7 @@ page_content_class: page__content--800
         <div class="safari__button safari__button--green"></div>
       </div>
       <div class="safari__address_bar">
-        <div class="safari__url">{{ 'https://web20.site/ru' | replace: "https://","<span class='safari__url__https'>https://</span>" }}</div>
+        <div class="safari__url">{{ 'https://fastlix.com/ru' | replace: "https://","<span class='safari__url__https'>https://</span>" }}</div>
       </div>
     </div>
     <div style="overflow: hidden; margin-bottom: -10px;">

@@ -20,7 +20,7 @@ https://api.web20site.com/v1
 
 ### Получение данных
 
-Получнение данных с сервера осуществляется с помощью ```GET``` запросов.
+Получение данных с сервера осуществляется с помощью ```GET``` запросов.
 
 ```GET``` запрос в общем виде выглядит так:
 
@@ -106,7 +106,7 @@ curl -XPOST https://api.web20site.com/v1/entities/get?client_id=adaa7639-7f7d-60
 После этого вы можете использовать SDK для авторизации:
 
 {% highlight html %}
-<script src="https://web20.site/js/dist/sdk-2.1.js"></script>
+<script src="https://fastlix.com/js/dist/sdk-2.1.js"></script>
 {% endhighlight %}
 
 {% highlight javascript %}

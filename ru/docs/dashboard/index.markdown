@@ -14,7 +14,7 @@ page_content_class: page__content--800
             <div class="safari__button safari__button--green"></div>
         </div>
         <div class="safari__address_bar">
-            <div class="safari__url">{{ 'https://web20.site/ru' | replace: "https://","<span class='safari__url__https'>https://</span>" }}</div>
+            <div class="safari__url">{{ 'https://fastlix.com/ru' | replace: "https://","<span class='safari__url__https'>https://</span>" }}</div>
         </div>
     </div>
     <img class="safari__img" src="/images/docs/dashboard/intro-ru.png" />
@@ -45,7 +45,7 @@ page_content_class: page__content--800
             <div class="safari__button safari__button--green"></div>
         </div>
         <div class="safari__address_bar">
-            <div class="safari__url">{{ 'https://web20.site/ru' | replace: "https://","<span class='safari__url__https'>https://</span>" }}</div>
+            <div class="safari__url">{{ 'https://fastlix.com/ru' | replace: "https://","<span class='safari__url__https'>https://</span>" }}</div>
         </div>
     </div>
     <img class="safari__img" src="/images/docs/dashboard/data-ru.png" />
@@ -107,7 +107,7 @@ page_content_class: page__content--800
             <div class="safari__button safari__button--green"></div>
         </div>
         <div class="safari__address_bar">
-            <div class="safari__url">{{ 'https://web20.site/ru' | replace: "https://","<span class='safari__url__https'>https://</span>" }}</div>
+            <div class="safari__url">{{ 'https://fastlix.com/ru' | replace: "https://","<span class='safari__url__https'>https://</span>" }}</div>
         </div>
     </div>
     <img class="safari__img" src="/images/docs/dashboard/website-ru.png" />
