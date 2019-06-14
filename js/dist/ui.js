@@ -1816,58 +1816,6 @@ EntityForm.prototype.setRootView = function(data) {
       websiteLink.href = 'https://' + data.root + SITE_SUPER_DOMAIN;
       websiteLink.classList.remove('hidden');
       websiteLink.setAttribute('data-root', data.root);
-      var rootTime = new Date().getTime() - new Date(data.createdAt).getTime();
-
-      var TIMEOUT = 0;
-
-      if (rootTime < TIMEOUT) {
-        document.getElementById('view__website_link__countdown_wrap').style.display = 'initial';
-
-
-        websiteLink.setAttribute('disabled', 'disabled');
-
-        document.getElementById('view__website_link__icon').classList.remove('fa-globe');
-        document.getElementById('view__website_link__icon').classList.add('fa-cog');
-        document.getElementById('view__website_link__icon').classList.add('fa-spin');
-
-        $(websiteLink).tooltip({
-          placement: 'bottom',
-          title: STRINGS.site_dns_in_progress,
-          container: 'body',
-          trigger: 'hover'
-        });
-
-        var countdown = Math.round((TIMEOUT - rootTime) / 1000);
-
-        var countdownElem = document.getElementById('view__website_link__countdown');
-
-        if (countdownElem) {
-          countdownElem.innerText = ' ' + countdown + ' ';
-        }
-
-        self.viewWebsiteLinkDisabledCountdown = setInterval(function () {
-          countdown -= 1;
-          if (countdown < 1) {
-            countdown = 1;
-          }
-          if (countdownElem) {
-            countdownElem.innerText = ' ' + countdown + ' ';
-          }
-        }, 1000);
-
-        self.viewWebsiteLinkDisabledTimeout = setTimeout(function () {
-          var websiteLink2 = document.getElementById('view__website_link');
-          if (websiteLink2 && websiteLink2.getAttribute('data-root') === data.root) {
-            websiteLink.removeAttribute('disabled');
-
-            document.getElementById('view__website_link__icon').classList.add('fa-globe');
-            document.getElementById('view__website_link__icon').classList.remove('fa-cog');
-            document.getElementById('view__website_link__icon').classList.remove('fa-spin');
-          }
-          $(websiteLink).tooltip('destroy');
-          document.getElementById('view__website_link__countdown_wrap').style.display = 'none';
-        }, TIMEOUT - rootTime);
-      }
     }
 
     if (MDSCommon.isBlank(description) && MDSCommon.isBlank(tags)) {
