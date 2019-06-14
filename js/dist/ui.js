@@ -1705,11 +1705,6 @@ EntityForm.prototype.setViewFields = function(data,
   return viewFields;
 };
 
-EntityForm.prototype.startAddingField = function() {
-  this.startEditing();
-  $$('add_field_window').show();
-};
-
 EntityForm.prototype.startEditing = function () {
   var self = this;
   self.setEditing(true);
@@ -2075,7 +2070,9 @@ EntityForm.prototype.setEntityView = function(data, ignoreFields) {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
       $(this).addClass('view__field--active');
       var value = $(this).data('value');
-      UI.entityForm.showScriptViewWindow(value);
+      if (value) {
+        UI.entityForm.showScriptViewWindow(value);
+      }
     });
   });
 };
