@@ -3995,7 +3995,7 @@ var UILayout = {
 };
 
 webix.protoUI({
-  name:"multiline-tabbar",
+  name: 'multiline-tabbar',
   $init:function(){
     //this.attachEvent("onKeyPress", this._onKeyPress);
   },
@@ -4017,7 +4017,7 @@ webix.protoUI({
     }
   },
   _getInputNode:function(){
-    return this.$view.getElementsByClassName("multiline-tabbar__tab");
+    return this.$view.getElementsByClassName('multiline-tabbar__tab');
   },
   _getTabHTML: function(tab){
     var	html,
@@ -4072,6 +4072,10 @@ webix.protoUI({
     t.addOption(obj);
     t.refresh();
 
+    var h = this.$height - $(t.$view).height();
+    this.getMultiview().define('height', h);
+    this.getMultiview().resize();
+
     this.tabIds.push(id);
 
     return id;
@@ -4083,6 +4087,11 @@ webix.protoUI({
         break;
       }
     }
+
+    var t = this.getTabbar();
+    var h = this.$height - $(t.$view).height();
+    this.getMultiview().define('height', h);
+    this.getMultiview().resize();
   },
   removeView:function(id){
     var t = this.getTabbar();
