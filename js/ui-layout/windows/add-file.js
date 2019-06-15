@@ -52,6 +52,8 @@ UILayout.windows.addFile = {
     borderless: true,
     on: {
       onSubmit: function() {
+        UIControls.addSpinnerToWindow('add_file_window');
+
         var form = this;
         var window = $$('add_file_window');
 
@@ -72,7 +74,6 @@ UILayout.windows.addFile = {
           }]
         });
 
-        // TODO: add file
         Mydataspace.request('entities.change', req).then(function (data) {
           $$('add_file_window').hide();
           UIControls.removeSpinnerFromWindow('add_file_window');
@@ -116,7 +117,7 @@ UILayout.windows.addFile = {
         options: [
         ]
       },
-      UIControls.getSubmitCancelForFormWindow('add_file', false)
+      UIControls.getSubmitCancelForFormWindow('add_file', true)
     ],
 
     rules: {

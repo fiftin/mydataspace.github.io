@@ -2070,8 +2070,9 @@ EntityForm.prototype.setEntityView = function(data, ignoreFields) {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
       $(this).addClass('view__field--active');
       var value = $(this).data('value');
+      var field = $(this).find('.view__field_name').text().trim();
       if (value) {
-        UI.entityForm.showScriptViewWindow(value);
+        UI.entityForm.showScriptViewWindow(value, field);
       }
     });
   });
@@ -2758,8 +2759,12 @@ EntityForm.prototype.selectEditScriptTab = function (id, hideOthers) {
   editor.getValue();
 };
 
-EntityForm.prototype.showScriptViewWindow = function (text) {
-  $$('edit_script_window').showWithData({ text: text });
+EntityForm.prototype.showScriptViewWindow = function (text, fieldName) {
+  $$('edit_script_window').showWithData({
+    text: text,
+    readonly: true,
+    fieldName: fieldName
+  });
 };
 
 EntityForm.prototype.showScriptEditWindow = function (fieldName) {
@@ -4881,6 +4886,8 @@ UILayout.windows.addFile = {
     borderless: true,
     on: {
       onSubmit: function() {
+        UIControls.addSpinnerToWindow('add_file_window');
+
         var form = this;
         var window = $$('add_file_window');
 
@@ -4901,7 +4908,6 @@ UILayout.windows.addFile = {
           }]
         });
 
-        // TODO: add file
         Mydataspace.request('entities.change', req).then(function (data) {
           $$('add_file_window').hide();
           UIControls.removeSpinnerFromWindow('add_file_window');
@@ -4945,7 +4951,7 @@ UILayout.windows.addFile = {
         options: [
         ]
       },
-      UIControls.getSubmitCancelForFormWindow('add_file', false)
+      UIControls.getSubmitCancelForFormWindow('add_file', true)
     ],
 
     rules: {
@@ -5032,6 +5038,8 @@ UILayout.windows.renameFile = {
     borderless: true,
     on: {
       onSubmit: function() {
+        UIControls.addSpinnerToWindow('rename_file_window');
+
         var window = $$('rename_file_window');
         var form = this;
         if (!form.validate({ disabled: true })) {
@@ -5068,7 +5076,7 @@ UILayout.windows.renameFile = {
 
     elements: [
       { view: 'text', required: true, id: 'NAME_LABEL_9', label: STRINGS.NAME, name: 'name' },
-      UIControls.getSubmitCancelForFormWindow('rename_file', false)
+      UIControls.getSubmitCancelForFormWindow('rename_file', true)
     ],
 
     rules: {
@@ -5113,7 +5121,7 @@ UILayout.windows.editScript = {
       { width: 15 },
       { view: 'label',
         id: 'edit_script_window_title',
-        label: 'Edit Field'
+        label: ''
       },
       { view: 'button',
         type: 'icon',
@@ -5132,7 +5140,14 @@ UILayout.windows.editScript = {
   animate: { type: 'flip', subtype: 'vertical' },
   on: {
     onShow: function() {
-      if (this.getShowData().fieldName) {
+      UIHelper.setVisible('SAVE_ENTITY_LABEL_1', !this.getShowData().readonly);
+      $$('edit_script_window_title').define('label', STRINGS.field + ': ' + this.getShowData().fieldName);
+      $$('edit_script_window_title').refresh();
+
+      if (this.getShowData().text != null) {
+        $$('edit_script_window__editor').setValue(this.getShowData().text);
+        $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
+      } else if (this.getShowData().fieldName) {
         var editScriptFieldId = 'entity_form__' + this.getShowData().fieldName + '_value';
         var value = $$(editScriptFieldId).getValue();
         $$('edit_script_window__editor').setValue(value);
@@ -5141,20 +5156,8 @@ UILayout.windows.editScript = {
         if (ext) {
           this.selectEditScriptTab(ext[1], true);
         }
-      } else if (this.getShowData().text) {
-        $$('edit_script_window__editor').setValue(this.getShowData().text);
-        $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
       }
     },
-
-    // onBlur: function() {
-    //   var editScriptFieldId = 'entity_form__' + this.getShowData().fieldName + '_value';
-    //   var field = $$(editScriptFieldId);
-    //   if (field) {
-    //     field.setValue($$('edit_script_window__editor').getValue());
-    //   }
-    // },
-
     onHide: function() {
     }
   },

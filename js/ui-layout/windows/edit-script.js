@@ -32,7 +32,7 @@ UILayout.windows.editScript = {
       { width: 15 },
       { view: 'label',
         id: 'edit_script_window_title',
-        label: 'Edit Field'
+        label: ''
       },
       { view: 'button',
         type: 'icon',
@@ -51,7 +51,14 @@ UILayout.windows.editScript = {
   animate: { type: 'flip', subtype: 'vertical' },
   on: {
     onShow: function() {
-      if (this.getShowData().fieldName) {
+      UIHelper.setVisible('SAVE_ENTITY_LABEL_1', !this.getShowData().readonly);
+      $$('edit_script_window_title').define('label', STRINGS.field + ': ' + this.getShowData().fieldName);
+      $$('edit_script_window_title').refresh();
+
+      if (this.getShowData().text != null) {
+        $$('edit_script_window__editor').setValue(this.getShowData().text);
+        $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
+      } else if (this.getShowData().fieldName) {
         var editScriptFieldId = 'entity_form__' + this.getShowData().fieldName + '_value';
         var value = $$(editScriptFieldId).getValue();
         $$('edit_script_window__editor').setValue(value);
@@ -60,20 +67,8 @@ UILayout.windows.editScript = {
         if (ext) {
           this.selectEditScriptTab(ext[1], true);
         }
-      } else if (this.getShowData().text) {
-        $$('edit_script_window__editor').setValue(this.getShowData().text);
-        $$('edit_script_window__editor').getEditor().getSession().setUndoManager(new ace.UndoManager());
       }
     },
-
-    // onBlur: function() {
-    //   var editScriptFieldId = 'entity_form__' + this.getShowData().fieldName + '_value';
-    //   var field = $$(editScriptFieldId);
-    //   if (field) {
-    //     field.setValue($$('edit_script_window__editor').getValue());
-    //   }
-    // },
-
     onHide: function() {
     }
   },

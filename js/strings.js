@@ -309,7 +309,9 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
 
     path_descriptions: {
       'production/cache': 'There are dynamically generated pages here.',
-    }
+    },
+
+    field: 'Field'
   },
 
   RU: {
@@ -617,7 +619,9 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
 
     path_descriptions: {
       'production/cache': 'Здесь хранятся динамически сгенерированные страницы.',
-    }
+    },
+
+    field: 'Поле'
   }
 };
 

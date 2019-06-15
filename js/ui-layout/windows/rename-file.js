@@ -20,6 +20,8 @@ UILayout.windows.renameFile = {
     borderless: true,
     on: {
       onSubmit: function() {
+        UIControls.addSpinnerToWindow('rename_file_window');
+
         var window = $$('rename_file_window');
         var form = this;
         if (!form.validate({ disabled: true })) {
@@ -56,7 +58,7 @@ UILayout.windows.renameFile = {
 
     elements: [
       { view: 'text', required: true, id: 'NAME_LABEL_9', label: STRINGS.NAME, name: 'name' },
-      UIControls.getSubmitCancelForFormWindow('rename_file', false)
+      UIControls.getSubmitCancelForFormWindow('rename_file', true)
     ],
 
     rules: {

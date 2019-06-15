@@ -636,8 +636,9 @@ EntityForm.prototype.setEntityView = function(data, ignoreFields) {
       $(viewFields).find('.view__field--active').removeClass('view__field--active');
       $(this).addClass('view__field--active');
       var value = $(this).data('value');
+      var field = $(this).find('.view__field_name').text().trim();
       if (value) {
-        UI.entityForm.showScriptViewWindow(value);
+        UI.entityForm.showScriptViewWindow(value, field);
       }
     });
   });
@@ -1324,8 +1325,12 @@ EntityForm.prototype.selectEditScriptTab = function (id, hideOthers) {
   editor.getValue();
 };
 
-EntityForm.prototype.showScriptViewWindow = function (text) {
-  $$('edit_script_window').showWithData({ text: text });
+EntityForm.prototype.showScriptViewWindow = function (text, fieldName) {
+  $$('edit_script_window').showWithData({
+    text: text,
+    readonly: true,
+    fieldName: fieldName
+  });
 };
 
 EntityForm.prototype.showScriptEditWindow = function (fieldName) {
