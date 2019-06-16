@@ -486,7 +486,7 @@ EntityTree.prototype.refresh = function(root) {
   if (newRootSkeleton) {
     if (Mydataspace.isLoggedIn()) {
       Router.clear();
-      self.requestRoots(true, {}).then(function (data) {
+      return self.requestRoots(true, {}).then(function (data) {
         if (!data) {
           return;
         }
@@ -500,28 +500,27 @@ EntityTree.prototype.refresh = function(root) {
     }
   } else if (MDSCommon.isBlank(root) && Router.isEmpty()) {
     if (Mydataspace.isLoggedIn()) {
-      self.requestRoots(true, {});
+      return self.requestRoots(true, {});
     }
   } else if (MDSCommon.isBlank(root) && Router.isSearch()) {
-    self.requestRoots(Router.isMe(), {
+    return self.requestRoots(Router.isMe(), {
       search: Router.getSearch()
     });
   } else if (MDSCommon.isBlank(root) && Router.isFilterByName()) {
-    self.requestRoots(Router.isMe(), {
+    return self.requestRoots(Router.isMe(), {
       filterByName: Router.getSearch()
     });
-
   } else if (MDSCommon.isPresent(root) || Router.isRoot()) {
     var search = Router.getSearch();
     if (Array.isArray(search)) {
       search = search[0];
     }
     var requiredRoot = root || search;
-    Mydataspace.request('entities.get', {
+    return Mydataspace.request('entities.get', {
       root: requiredRoot,
       path: '',
       version: Router.getVersion()
-    }, function(data) {
+    }).then(function(data) {
       self.loadFormattedData([Identity.entityFromData(data)]);
       UI.pages.updatePageState('data');
     }, function(err) {

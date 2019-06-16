@@ -1,3 +1,8 @@
+//
+// Screen "Create your first website on Fastlix!"
+// It not screen, it only div over Webix Dashboard.
+//
+
 function no_items__getRootData() {
   return {
     root: 'root',
@@ -166,25 +171,24 @@ function no_items__createNewWebsite() {
     sourcePath: sourceRoot ? '' : undefined,
     fields: []
   }).then(function (data) {
-    var checkCount = 0;
-    var intervalId = setInterval(function () {
-      checkCount++;
+    return Promise.all([data, UI.entityTree.refresh()]);
+  }).then(function (res) {
+    var data = res[0];
+    if (UI.getMode() === 'cms') {
+      clearInterval(intervalId);
+      return;
+    }
 
-      if (UI.getMode() === 'cms' || checkCount > 20) {
-        clearInterval(intervalId);
-        return;
-      }
+    var entityId = Identity.idFromData(MDSCommon.extend(data, {
+      path: 'website'
+    }));
+    var entity = $$('entity_tree').getItem(entityId);
+    if (!entity) {
+      return;
+    }
 
-      var entityId = Identity.idFromData(MDSCommon.extend(data, {
-        path: 'website'
-      }));
-      var entity = $$('entity_tree').getItem(entityId);
-      if (entity) {
-        clearInterval(intervalId);
-        UI.entityTree.resolveChildren(entityId);
-        $$('entity_tree').open(entityId);
-      }
-    }, 300);
+    UI.entityTree.resolveChildren(entityId);
+    $$('entity_tree').open(entityId);
   }).then(function () {
     return Mydataspace.request('apps.create', {
       name: root,
@@ -232,6 +236,7 @@ function no_items__createNewWebsite() {
     $('#no_items__creating_message').hide();
     $createButton.attr('disabled', false);
     $createButton.find('.fa-cog').removeClass('fa-spin').addClass('hidden');
+    document.getElementById('no_items__new_root_input').value = '';
     UI.pages.updatePageState('data');
   }, function (err) {
     $('#no_items__creating_message').hide();
