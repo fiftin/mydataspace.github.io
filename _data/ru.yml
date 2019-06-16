@@ -175,14 +175,13 @@ sections:
     features:
       - id: websocket
         icon: flash
-        title: Быстрые программные решения
+        title: Быстрый бекенд
         description: То что делает доступ реактивным
         details: |
-          <div><img class="feature__details-icon" src="/images/icons/nodejs-white.svg" /> Node.js &mdash; fast webserver</div>
-          <div><img class="feature__details-icon" src="/images/icons/websocket-white.svg" /> Websocket &mdash; </div>
-          <div><img class="feature__details-icon" src="/images/icons/elasticsearch-white.svg" /> ElasticSearch &mdash; realtime-like search engine</div>
-          <div><img class="feature__details-icon" src="/images/icons/rabbitmq-white.svg" /> RabbitMQ</div>
-          <div><img class="feature__details-icon" src="/images/icons/redis-white.svg" /> Redis &mdash; fast in-memory database</div>
+          <div><img class="feature__details-icon" src="/images/icons/nodejs-white.svg" /> Node.js &mdash; быстрый веб-сервер</div>
+          <div><img class="feature__details-icon" src="/images/icons/elasticsearch-white.svg" /> ElasticSearch &mdash; поисковый движок со скоростью близкой к реальном времени</div>
+          <div><img class="feature__details-icon" src="/images/icons/rabbitmq-white.svg" /> RabbitMQ &mdash; асинхронный брокер сообщений</div>
+          <div><img class="feature__details-icon" src="/images/icons/redis-white.svg" /> Redis &mdash; NoSQL база данных в памяти</div>
       - id: scalability
         icon:  arrows-alt
         title: Масштабируе<wbr>мая архитектура
