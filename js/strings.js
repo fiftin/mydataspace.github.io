@@ -201,7 +201,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
         'Must contain only latin letters, digits, dashes and underscores',
         'Must be unique among all existing subdomains'
       ],
-      no_items__create__button: '<i class="fa fa-cog hidden"></i> Create Website'
+      no_items__create__button: '<i class="fa fa-cog hidden"></i> Create Website!'
     },
 
     language: 'Language',
@@ -523,7 +523,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
         'В поддомене допускаются только <b>латинские буквы</b>, цифры, знак тере и подчеркивания',
         'Поддомен должно быть уникальным среди всех существующих поддоменов'
       ],
-      no_items__create__button: '<i class="fa fa-cog hidden"></i> Создать сайт'
+      no_items__create__button: '<i class="fa fa-cog hidden"></i> Создать сайт!'
     },
 
     language: 'Язык',

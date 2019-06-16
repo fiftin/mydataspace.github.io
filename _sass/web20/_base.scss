@@ -182,10 +182,11 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
   z-index: 9;
   left: 0;
   right: 0;
-  top: 53px;
-  min-height: calc(100% - 53px);
+  top: 50px;
+  min-height: calc(100% - 50px);
   display: none;
-  background: $toolbar-bg;
+  //background: $toolbar-bg;
+  background: url(https://cdn.web20site.com/content/images/noice.png), linear-gradient(45deg, rgb(255, 176, 176), #0f72ff)
 }
 
 .no_items__notice_list {
@@ -238,6 +239,7 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
 }
 
 .no_items__btn {
+  outline: none !important;
   padding-left: 30px;
   padding-right: 30px;
   bottom: $no-items-col-gap / 2;
@@ -245,6 +247,7 @@ $flag-icon-css-path: '../vendor/flag-icon-css/flags';
   left: $no-items-col-gap / 2;
   width: calc(100% - #{$no-items-col-gap});
   border-radius: 100px;
+  //font-weight: bold;
 }
 
 .no_items__btn--center {
