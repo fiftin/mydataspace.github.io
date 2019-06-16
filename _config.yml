@@ -20,8 +20,8 @@ data_dir:        _data
 includes_dir:    _includes
 
 
-facebook_url: https://www.facebook.com/web20site
-github_url: "https://github.com/web20site"
+facebook_url: https://www.facebook.com/fastlix
+github_url: "https://github.com/fastlix"
 vk_url: "https://vk.com/fastlix"
 twitter_url: "https://twitter.com/fastlix"
 zen_url: "https://zen.yandex.ru/media/id/5936e2b37ddde8524b45d05f"
