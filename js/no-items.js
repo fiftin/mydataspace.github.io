@@ -166,22 +166,25 @@ function no_items__createNewWebsite() {
     sourcePath: sourceRoot ? '' : undefined,
     fields: []
   }).then(function (data) {
-    setTimeout(function () {
-      if (UI.getMode() === 'cms') {
+    var checkCount = 0;
+    var intervalId = setInterval(function () {
+      checkCount++;
+
+      if (UI.getMode() === 'cms' || checkCount > 20) {
+        clearInterval(intervalId);
         return;
       }
+
       var entityId = Identity.idFromData(MDSCommon.extend(data, {
         path: 'website'
       }));
-      UI.entityTree.resolveChildren(entityId);
-      $$('entity_tree').open(entityId);
-
-      // UI.showMedia({
-      //   type: 'youtube',
-      //   value: STRINGS.youtube_intro_video
-      // });
-
-    }, 500);
+      var entity = $$('entity_tree').getItem(entityId);
+      if (entity) {
+        clearInterval(intervalId);
+        UI.entityTree.resolveChildren(entityId);
+        $$('entity_tree').open(entityId);
+      }
+    }, 300);
   }).then(function () {
     return Mydataspace.request('apps.create', {
       name: root,
