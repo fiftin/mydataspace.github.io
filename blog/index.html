@@ -1,21 +1,17 @@
 ---
-layout: page
+layout: post
 title: Blog
 language: en
 ---
-<div class="row">
-    <div class="col-md-offset-2 col-md-8">
-        <ul style="padding-left: 0;">
-            {% for post in site.posts %}
-            {% if post.language == "en" %}
-            <a class="blog-post-preview" href="{{ post.url| remove: '.html' }}">
-                <h2>{{ post.title }}</h2>
-                <div>
-                    {{ post.excerpt }}
-                </div>
-            </a>
-            {% endif %}
-            {% endfor %}
-        </ul>
-    </div>
-</div>
+<ul style="padding-left: 0;">
+    {% for post in site.posts %}
+    {% if post.language == "en" %}
+    <a class="blog-post-preview" href="{{ post.url| remove: '.html' }}">
+        <h2>{{ post.title }}</h2>
+        <div>
+            {{ post.excerpt }}
+        </div>
+    </a>
+    {% endif %}
+    {% endfor %}
+</ul>

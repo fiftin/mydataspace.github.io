@@ -100,6 +100,7 @@ view_docs_url: /ru/docs
 prompt: "Войти через:"
 waiting_cloak: "Загрузка..."
 strings:
+  coping_data: Копирование данных... Это может занять менуту или две
   view_source_code: См. код
   view_data: См. данные
   top_roots: Популярные сайты

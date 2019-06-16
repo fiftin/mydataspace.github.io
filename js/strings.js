@@ -197,7 +197,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
       no_items__import__button: 'Import',
       no_items__create__desc: 'Start from scratch &mdash; create an empty root',
       no_items__notice: [
-        'Mast have 3..50 characters',
+        'Must have 3..50 characters',
         'Must contain only latin letters, digits, dashes and underscores',
         'Must be unique among all existing subdomains'
       ],

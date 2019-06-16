@@ -141,7 +141,6 @@ function no_items__validateNewWebsiteDomain(ignoreLength, igoreUnique) {
 }
 
 function no_items__createNewWebsite() {
-
   var notices = document.getElementById('no_items__notice').childNodes[0].childNodes;
   var root = document.getElementById('no_items__new_root_input').value;
 
@@ -158,6 +157,7 @@ function no_items__createNewWebsite() {
   var $createButton = $('#no_items__create__button');
   $createButton.attr('disabled', true);
   $createButton.find('.fa-cog').removeClass('hidden').addClass('fa-spin');
+  $('#no_items__creating_message').show();
 
   Mydataspace.request('entities.create', {
     root: root,
@@ -226,9 +226,12 @@ function no_items__createNewWebsite() {
       }]
     })]);
   }).then(function (res) {
+    $('#no_items__creating_message').hide();
     $createButton.attr('disabled', false);
     $createButton.find('.fa-cog').removeClass('fa-spin').addClass('hidden');
+    UI.pages.updatePageState('data');
   }, function (err) {
+    $('#no_items__creating_message').hide();
     $createButton.attr('disabled', false);
     $createButton.find('.fa-cog').removeClass('fa-spin').addClass('hidden');
     switch (err.name) {

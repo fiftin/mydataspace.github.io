@@ -21,8 +21,9 @@ menu:
 
 title: Launch your startup right now
 slogan: Launch your startup right now
-#slogan: Create killer websites much faster
-slogan_description: We help our customer launch online services faster. Much faster
+# Create killer websites much faster
+# We help our customers launch online services faster
+slogan_description: By providing ready-to-use solutions, we help our customers launch online services much faster
 
 
 slogan_2: Incredibly fast backend of your website
@@ -92,6 +93,7 @@ view_docs_url: /docs
 prompt: "Sign in with:"
 waiting_cloak: "Loading..."
 strings:
+  coping_data: Coping data... It can take a minute or two
   view_source_code: View Code
   view_data: View Data
   view_doc: View Docs
@@ -129,7 +131,7 @@ buttons:
 sections:
   - id: ease
     title: Ease to Start
-    subtitle: You can start with one of ready-to-use website skeleton from the Marketplace
+    subtitle: You can start with one of ready-to-use website from the Marketplace
     features:
 
       - id: console
@@ -182,7 +184,7 @@ sections:
         title: Scalable Architecture
         description: It allows to handle any load
         details: |
-          <p>Our service designed to handle a workload that may change over time.
+          <p>Our platform scalable by design.
           <p>As the load increases, we automatically add servers to guarantee high speed access to the service.
       - id: distribution
         icon: sitemap

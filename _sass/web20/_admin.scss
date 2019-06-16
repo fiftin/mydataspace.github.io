@@ -1092,6 +1092,18 @@ input {
   top: 40px;
 }
 
+.no_items__creating_message {
+  position: absolute;
+  line-height: 30px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 14px;
+  color: #6b6b6b;
+  display: none;
+}
+
 #webix_search {
   position: absolute;
   left: 0;
