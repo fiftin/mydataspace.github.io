@@ -472,7 +472,7 @@ pricing_page:
     title: Стартап
     sites: 3 сайта
     disk: 5 Гб диск
-    price: 3000 р. в мес.
+    price: 1500 р. в мес.
   pro:
     plan_unavailable: План Профессиональный на данный момент недоступен.
     title: Профессиональный
