@@ -140,7 +140,7 @@ sections:
         title: Source Code
         details: |
           <p>Source code of the website belongs only to you. You can change it as you want.
-          <p>Bootstrap, React, Vue, Angular &mdash; all modern frameworks available to you.
+          <p>Bootstrap, React, Vue, Angular and other modern frameworks available to you.
 
       - id: tools
         title: Development Tools
