@@ -21,7 +21,7 @@ layout: hybrid
   {% if site.data[page.language].mission %}
   <div class="mission">
     <div class="container">
-      <div class="mission__title">{{ site.data[page.language].mission_title }}</div>
+      <h2 class="section__title section__title--mission">{{ site.data[page.language].mission_title }}</h2>
       <div class="row mission__alternatives">
         {% for feature in site.data[page.language].solutions %}
         <div class="col-sm-4 feature_column">
@@ -43,7 +43,22 @@ layout: hybrid
         </div>
         {% endfor %}
       </div>
-      <div class="mission__text">{{ site.data[page.language].mission }}</div>
+
+      <div class="section__title section__title--mission" style="margin-top: 60px;">{{ site.data[page.language].mission }}</div>
+      <div class="row mission__alternatives">
+        {% for feature in site.data[page.language].sections %}
+        <div class="col-sm-4 feature_column">
+          <div class="feature">
+            <h3 class="feature__title feature__title--mission">
+              {{ feature.title }}
+            </h3>
+            <div class="feature__description feature__description--mission">
+              {{ feature.description }}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
     </div>
   </div>
   {% endif %}
@@ -51,7 +66,6 @@ layout: hybrid
   {% include feature_sections.html %}
 
   <section class="section relative section--examples">
-
     <div class="container relative">
       <h2 class="section__title section__title--{{ section.id }}">{{ site.data[page.language].landing_examples.title }}</h2>
       <div class="row">

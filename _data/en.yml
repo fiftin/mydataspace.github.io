@@ -17,13 +17,23 @@ menu:
   give_feedback_send_mail: or email directly to
   give_feedback_view_all: See all
   blog: Blog
-  skeletons: Marketplace
+  skeletons: Templates
 
-title: Launch your startup right now
-slogan: Launch your startup right now
+title: Landing page creator for developers
+slogan: Landing page creator for developers
+
 # Create killer websites much faster
 # We help our customers launch online services faster
-slogan_description: By providing ready-to-use solutions, we help our customers launch online services much faster
+#slogan_description: By providing ready-to-use solutions, we help our customers launch online services much faster
+#slogan_description: Use your developer skills to create beautiful landing pages and websites match faster
+# slogan_description: We help developers to create beautiful landing pages match easy and faster
+# slogan_description: We help developers create landing pages without being distracted by infrastructure and administration
+
+slogan_description: |
+  <p>Advanced infrastructure for creating and hosting landing pages.
+  <p>Starting from $<span style="font-size: 35px;">0</span> for <span style="font-size: 35px;">1</span> website with <span style="font-size:40px; display:inline-block; transform:translateY(7px);">&infin;</span> pages.
+
+#  Fastlix is everything you need to build fast, modern websites: continuous deployment, serverless functions, and so much more.
 
 
 slogan_2: Incredibly fast backend of your website
@@ -31,63 +41,29 @@ slogan_description_2: You will be surprised how fast and responsive website can 
 
 solutions:
 - id: vps
-  title: Cloud Servers
-  description: Administration skills required
-- id: hosting
-  title: Shared Hosting
-  description: Slow and unreliable
-- id: builder
-  title: Website Builder
-  description: Template sites
+  title: Cloud server
+  description: |
+    You must be Linux expert to use it.
 
-mission_title: "The modern market offers the following solutions for publishing website on the internet:"
+- id: builder
+  title: Website builder
+  description: |
+    Designed for users, not for developers.
+
+- id: hosting
+  title: Shared hosting
+  description: |
+    Unreliable, slow and uncomfortable.
+
+mission_title: What developers has today
 
 # mission: "We created website builder without those disadvantages. It simple, fast and reliable."
-mission: Instead of them, we offer all-in-one solution for creating online services. It simple, fast and reliable.
-
-
-example_descriptions:
-  - id: skeletons
-    type: video
-    title: 1. Ready-to-use Websites
-    text: >-
-      Our Marketplace contains many ready-made website skeletons. They are categorized for easy search.<br>
-      Find a suitable website skeleton, click <span style=\'margin-left: 3px; margin-right: 3px; font-weight: normal; background: #5cb85c; border: 1px solid #4cae4c; padding: 1px 5px; border-radius: 2px;\'>Create Website</span> and new website is ready.
-
-
-  - id: cms
-    type: video
-    title: 2. Built-in CMS
-    text: >-
-      After creation, the source code of the website at your disposal, you can edit it at your discretion.<br>
-      If you are not going to do this, simply switch to <span style=\'background: #3498db; font-weight: bold; padding: 1px 7px; border-radius: 100px;\'>CMS</span> mode and edit content of the website in user friendly interface.
-
-  - id: live-pug-scss
-    type: video
-    title: 3. Full Customization
-    text: >-
-      Source code of the website at your disposal, you can edit it at your discretion. Use <a href=\'https://pugjs.org\'>Pug</a>, <a href=\'https://sass-lang.com/\'>SCSS</a> and <a href=\'https://reactjs.org/docs/introducing-jsx.html\'>JSX</a> for creating
-      fast, dynamic and easy maintainable websites.<!-- <br>
-      We continuously add support for new languages and template engines. -->
-
-#  - id: api
-#    type: image
-#    title: 4. Powerful API
-
-  - id: statistics
-    type: image
-    title: 4. Detailed Statistics
-    text: >-
-      Full statistic by visits, users, and other available without Google Analytics.
-
-#  - id: backend
-#    type: image
-#    title: 5. Fast Backend
-
+#Instead of them, we offer all-in-one solution for creating landing pages and websites. It simple, fast and reliable.
+mission: What we offer
 
 special_offer: Free now and <b>forever</b> for registered users
 final_prompt: ""
-get_started_now: Get Started!
+get_started_now: Get started for free
 view_docs: View Docs
 view_docs_url: /docs
 prompt: "Sign in with:"
@@ -113,10 +89,10 @@ strings:
   template: Skeleton
   press_to_select_other_template: Click to select other skeleton
   security: Security
-  see_all_skeletons: See All Skeletons
+  see_all_skeletons: See All Templates
 
 header:
-  input_search: Search by skeletons...
+  input_search: Search by templates...
   input_search_fixed: Search...
 buttons:
 - id: facebook
@@ -131,44 +107,68 @@ buttons:
 sections:
   - id: ease
     title: Ease to Start
-    subtitle: You can start with one of ready-to-use website from the Marketplace
+    description: |
+      Find suitable template, create website, add content and CSS &mdash; first version ready.
+
     features:
-
-      - id: console
-        title: Marketplace
-#        description: A single data and code management tool
+      - id: templates
+        title: Templates
         details: |
-          <p>Collection of ready-to-use websites, skeletons and datasets.
-          <p>Anyone can publish their solutions on the Marketplace.
+          <p>Collection of landing page templates and ready-to-use websites.
+          <p>Anyone can publish their template for others by money or free.
 
-#        details: |
-#          <p>Convenient data and code management dashborad for solving creative tasks.
-#          <p>Create website, write code, import data, add content, upload images. All you need is here.
 
       - id: serverless
         title: Serverless
-        description: All you need to know to create a site of any complexity
         details: |
-          <p>No servers. No databases. Only code and data.
-          <p>All modern technologies for frontend web development are available to you.
+          <p>No servers. No databases. Only your code and content.
+
+
+      - id: console
+        title: Dashboard
+        details: |
+          Dashboard is everything you need to build modern websites.
+
+  - id: speed
+    title: Designed for Developers
+    description: |
+      Source code of the website belongs only to you.
+
+    features:
+      - id: source-code
+        icon: code
+        title: Source Code
+        details: |
+          <p>Source code of the website belongs only to you. You can change it as you want.
+          <p>Bootstrap, React, Vue, Angular &mdash; all modern frameworks available to you.
+
+      - id: tools
+        title: Development Tools
+        details: |
+          <p>A lot of development tools are available for you out of the box.
+          <p>Pug, SCSS, JSX and much more.
 
       - id: api
         icon: cogs
         title: Powerful API
         description: A powerful API that surprises you with its simplicity
         details: |
-          <p>Simple and intuitive, but at the same time an incredibly powerful API.
-          <p>Available to you:
-            <ul style="padding-left: 16px;">
-              <li>CRUD</li>
-              <li>Full-text search</li>
-              <li>Data filtering, sorting and grouping</li>
-              <li>Users authorization</li>
-              <li>Data import from XML, XLS, CSV, etc.</li>
-            </ul>
+          <p>Simple and intuitive, but at the same time an incredibly powerful API:</p>
+          <ul style="padding-left: 16px;">
+            <li>Email delivery</li>
+            <li>CRUD</li>
+            <li>Full-text search</li>
+            <li>Users authorization, etc.</li>
+          </ul>
 
-  - id: speed
-    title: Realtime Performance
+
+        # We use CDN to distribute service spatially relative to end-users to provide high availability and high performance.
+  - id: reliability
+    title: Built for Business
+    description: |
+      AWS reliable cloud infrastructure.
+
+
     features:
       - id: websocket
         icon: flash
@@ -177,31 +177,15 @@ sections:
         details: |
           <div class="feature__list-item"><img class="feature__list-item-icon" src="/images/icons/nodejs-white.svg" /> Node.js &mdash; fast webserver</div>
           <div class="feature__list-item"><img class="feature__list-item-icon" src="/images/icons/elasticsearch-white.svg" /> ElasticSearch &mdash; realtime-like search engine</div>
-          <div class="feature__list-item"><img class="feature__list-item-icon" src="/images/icons/rabbitmq-white.svg" /> RabbitMQ &mdash; asynchronous messaging server</div>
           <div class="feature__list-item"><img class="feature__list-item-icon" src="/images/icons/redis-white.svg" /> Redis &mdash; fast in-memory database</div>
-      - id: scalability
-        icon:  arrows-alt
-        title: Scalable Architecture
-        description: It allows to handle any load
-        details: |
-          <p>Our platform scalable by design.
-          <p>As the load increases, we automatically add servers to guarantee high speed access to the service.
-      - id: distribution
-        icon: sitemap
-        title: Distributed Data Storage
-        details: |
-          <p>Distributed data storage and replication provides a high speed data access.
-          <p>All files accessible via CDN.
 
-        # We use CDN to distribute service spatially relative to end-users to provide high availability and high performance.
-  - id: reliability
-    title: High Reliability
-    features:
-      - id: cloud
-        title: Multicloud Infrastructure
-        details: |
-          <p>We use multiple cloud computing services.
-          <p>So we reduce reliance on a single vendor, increase flexibility, and mitigating against disasters.
+#
+#      - id: cloud
+#        title: Multicloud Infrastructure
+#        details: |
+#          <p>We use multiple cloud computing services.
+#          <p>So we reduce reliance on a single vendor, increase flexibility, and mitigating against disasters.
+#
 
       - id: availability
         icon: thumbs-up
@@ -213,12 +197,22 @@ sections:
           <img class="features__provider-icon" style="height: 40px;" src="/images/icons/ovh-white.svg" />
           <img class="features__provider-icon" style="height: 25px;" src="/images/icons/hetzner-white.svg" />
           </div>
+
+#      - id: statistics
+#        icon: bar-chart
+#        title: Detailed Statistics
+#        details: |
+#          <p>Our developers and DevOps engineers are highly qualified with years of professional experience in highload systems.
+#          <p>They reliably protect your data from any attacks and ensure uninterrupted access to your website.
+
       - id: security
         icon: users
         title: Professional Team
         details: |
           <p>Our developers and DevOps engineers are highly qualified with years of professional experience in highload systems.
           <p>They reliably protect your data from any attacks and ensure uninterrupted access to your website.
+
+
 how_it_works:
   title: How it works
   run_presentation: '<i class="fa fa-play-circle"></i> Start Animation'
@@ -418,8 +412,8 @@ search:
   found_items_suffix: "item(s)"
   found_in_datasource_suffix: "datasource(s)"
   found_in_datasource: "in datasource:"
-  search_by_roots: "Official Skeletons"
-  search_by_datasources: "Community Skeletons"
+  search_by_roots: "Official Templates"
+  search_by_datasources: "Community Templates"
   no_results: "No results found"
 
 
@@ -433,7 +427,7 @@ pricing_page:
   approve_upgrade_to_personal: Are you sure?
   approve_downgrade_to_free: Are you sure want to downgrade to Free?
   change_plan: Change Plan
-  free_skeletons: You can create <strong>unlimited number of skeletons</strong> on any plan
+  free_skeletons: You can create <strong>unlimited number of templates</strong> on any plan
   thanks: Thank you, we will contact you soon!
   create_site: Create Website
   current_plan: Current Plan
@@ -455,7 +449,7 @@ pricing_page:
     title: Startup
     sites: "<span style=\"font-size: 28px\">3</span> websites"
     disk: "<span style=\"font-size: 28px\">5</span> Gb for files"
-    price: $50<span>/mo</span>
+    price: $30<span>/mo</span>
     price_add: "&nbsp;"
     sites_add: "$<span style=\"font-size: 18px\">20</span> for each additional website"
     disk_add: "$<span style=\"font-size: 18px\">3</span> for each additional gigabyte"
@@ -480,6 +474,9 @@ pricing_page:
 landing_examples:
   title: Website Examples
   examples:
-    - title: Cloud servers benchmarking service
-      image: cloudbench.png
-      url: cloud.fastlixsite.com
+  - title: Cloud servers benchmarking service
+    image: cloudbench.png
+    url: cloud.fastlixsite.com
+  - title: VPN in Cloud
+    image: vpn-in-cloud.png
+    url: vpn-in-cloud.com

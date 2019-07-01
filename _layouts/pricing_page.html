@@ -6,7 +6,7 @@ layout: page
 
 <div id="pricing_list" class="row pricing_list">
 
-  <div class="col-md-4">
+  <div class="col-md-4 col-md-offset-2">
     <div id="pricing_block__free" class="pricing_block">
       <div class="pricing_block__header">{{ site.data[page.language].pricing_page.free.title }}</div>
       <div class="pricing_block__main">
@@ -81,28 +81,28 @@ layout: page
   </div>
 
 
-  <div id="pricing_block__unlimited" class="col-md-4">
-    <div class="pricing_block">
-      <div class="pricing_block__header">{{ site.data[page.language].pricing_page.unlim.title }}</div>
-      <div class="pricing_block__main">
-        <div class="pricing_block__property">
-          {{ site.data[page.language].pricing_page.unlim.sites }}
-          <div class="pricing_block__property_addition">{{ site.data[page.language].pricing_page.unlim.sites_add }}</div>
-        </div>
-        <div class="pricing_block__property">
-          {{ site.data[page.language].pricing_page.unlim.disk }}
-          <div class="pricing_block__property_addition">{{ site.data[page.language].pricing_page.unlim.disk_add }}</div>
-        </div>
-      </div>
-      <div class="pricing_block__pricing">{{ site.data[page.language].pricing_page.unlim.price }}</div>
-      <div class="pricing_block__pricing_addition">{{ site.data[page.language].pricing_page.unlim.price_add }}</div>
-      <div class="pricing_block__footer">
-        <button type="button" onclick="PricingPage.instance().contactUs.showModal(true)" class="btn btn-lg btn-success pricing_block__button">
-          {{ site.data[page.language].pricing_page.contact_us }}
-        </button>
-      </div>
-    </div>
-  </div>
+<!--  <div id="pricing_block__unlimited" class="col-md-4">-->
+<!--    <div class="pricing_block">-->
+<!--      <div class="pricing_block__header">{{ site.data[page.language].pricing_page.unlim.title }}</div>-->
+<!--      <div class="pricing_block__main">-->
+<!--        <div class="pricing_block__property">-->
+<!--          {{ site.data[page.language].pricing_page.unlim.sites }}-->
+<!--          <div class="pricing_block__property_addition">{{ site.data[page.language].pricing_page.unlim.sites_add }}</div>-->
+<!--        </div>-->
+<!--        <div class="pricing_block__property">-->
+<!--          {{ site.data[page.language].pricing_page.unlim.disk }}-->
+<!--          <div class="pricing_block__property_addition">{{ site.data[page.language].pricing_page.unlim.disk_add }}</div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="pricing_block__pricing">{{ site.data[page.language].pricing_page.unlim.price }}</div>-->
+<!--      <div class="pricing_block__pricing_addition">{{ site.data[page.language].pricing_page.unlim.price_add }}</div>-->
+<!--      <div class="pricing_block__footer">-->
+<!--        <button type="button" onclick="PricingPage.instance().contactUs.showModal(true)" class="btn btn-lg btn-success pricing_block__button">-->
+<!--          {{ site.data[page.language].pricing_page.contact_us }}-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
 
 
   <div id="pricing_page_changed_plan"

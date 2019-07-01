@@ -126,7 +126,7 @@ demo.login('google').then(function(args) {
 {% endhighlight %}
 
 По-умолчанию, каждый сайт имеет объект ```MDSWebsite``` который уже инициализирован нужным ключём API. Подробнее от
-этом вы можете узнать в разделе [SDK](/ru/docs/api/websocket).
+этом вы можете узнать в разделе [SDK](/_old/ru/docs/api/websocket).
 
 
 <br>

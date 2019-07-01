@@ -2,7 +2,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
   EN: {
     YES: 'Yes',
     NO: 'No',
-    SKELETONS: 'Marketplace',
+    SKELETONS: 'Templates',
     CLOSE: 'Close',
     SHOW_MORE: 'Show more...',
     EDIT_SCRIPT: 'Edit Script:',

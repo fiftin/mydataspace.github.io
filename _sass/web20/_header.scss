@@ -358,7 +358,7 @@ $slogan-animation-offset-mobile: 400px;
 
 .intro__slogans {
   margin-top: 30px;
-  min-height: 220px;
+  min-height: 260px;
 }
 
 .intro__slogans_link {
@@ -374,7 +374,7 @@ $slogan-animation-offset-mobile: 400px;
   animation-iteration-count: infinite;
   position: absolute;
   top: 50%;
-  padding-right: 20px;
+  //padding-right: 20px;
 }
 
 .intro__slogan_offset {
@@ -403,9 +403,12 @@ $slogan-animation-offset-mobile: 400px;
 }
 
 .intro__slogan {
+  //font-family: 'Josefin Sans', sans-serif;
+
+  font-family: 'Arvo', serif;
   font-weight: bold;
-  font-size: 71px;
-  line-height: 1.01;
+  font-size: 61px;
+  line-height: 1.1;
   margin-top: 0;
 }
 
@@ -416,11 +419,11 @@ $slogan-animation-offset-mobile: 400px;
 }
 
 .intro__description {
-  margin-top: 20px;
-  font-size: 22px;
-  font-weight: bold;
-  line-height: 1.2;
-  opacity: 0.6;
+  margin-top: 26px;
+  font-size: 24px;
+  //font-weight: bold;
+  line-height: 1.3;
+  //opacity: 0.6;
 }
 
 .intro__prompt {
@@ -474,7 +477,7 @@ $slogan-animation-offset-mobile: 400px;
   }
   .paege_top {
     background-size: 1200px 1200px;
-    background: url('https://cdn.web20site.com/content/images/landing/3.1/speed.jpg') right top;
+    background: url('https://cdn.web20site.com/content/images/landing/4.0/speed.jpg') right top;
   }
   .login_button {
     margin-left: 15px;
@@ -580,10 +583,11 @@ $slogan-animation-offset-mobile: 400px;
 }
 
 .page_top--landing-page {
-  background: url(https://cdn.web20site.com/content/images/landing/3.1/top.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: left 22%;
+  background: #3b3e43 url(https://cdn.web20site.com/content/images/noice.png);
+  //background: url(https://cdn.web20site.com/content/images/landing/4.0/top.jpg);
+  //background-repeat: no-repeat;
+  //background-size: cover;
+  //background-position: left 22%;
   .navbar {
     background-color: transparent;
     border-color: transparent;
@@ -594,8 +598,6 @@ $slogan-animation-offset-mobile: 400px;
     @extend .smoke--fullscreen--opaque;
   }
 }
-
-
 
 .navbar--fixed {
   transform: translate3d(0, 0, 0);
@@ -783,16 +785,16 @@ $search-filter-panel-gap: 40px;
   display: block;
   color: white !important;
 
-  .safari {
-    opacity: 0.6;
-    transition: opacity 0.3s;
-  }
+  //.safari {
+  //  opacity: 0.6;
+  //  transition: opacity 0.3s;
+  //}
 
-  &:hover {
-    .safari {
-      opacity: 1;
-    }
-  }
+  //&:hover {
+  //  .safari {
+  //    opacity: 1;
+  //  }
+  //}
 }
 
 .example__title {
@@ -842,5 +844,11 @@ $search-filter-panel-gap: 40px;
 
   @media (min-width: 1400px) {
     height: 435px;
+  }
+}
+
+@media (min-width: $screen-lg-min) {
+  .intro__slogan_wrap {
+    padding-right: 100px;
   }
 }

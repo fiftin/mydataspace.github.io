@@ -48,8 +48,8 @@ markdown: kramdown
 
 default_language: en
 
-languages:
-  - ru
+languages: []
+#  - ru
 
 exclude:
   #- js/search.js

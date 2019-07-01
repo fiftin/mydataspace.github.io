@@ -2,18 +2,18 @@ UILayout.header =
   { css: 'admin_panel__header',
     cols: [
       { type: 'header' },
-      { view: 'switch',
-        width: 100,
-        css: 'menu__mode_switch',
-        onLabel: 'CMS',
-        offLabel: 'Dev',
-        value: window.localStorage.getItem('uiMode') === 'cms' ? 1 : 0,
-        on: {
-          onChange: function(newv, oldv) {
-            UI.setMode(newv ? 'cms' : 'dev');
-          }
-        }
-      },
+      // { view: 'switch',
+      //   width: 100,
+      //   css: 'menu__mode_switch',
+      //   onLabel: 'CMS',
+      //   offLabel: 'Dev',
+      //   value: window.localStorage.getItem('uiMode') === 'cms' ? 1 : 0,
+      //   on: {
+      //     onChange: function(newv, oldv) {
+      //       UI.setMode(newv ? 'cms' : 'dev');
+      //     }
+      //   }
+      // },
       { view: 'button',
         width: 70,
         css: 'menu__language_button menu__language_button--get_started',
