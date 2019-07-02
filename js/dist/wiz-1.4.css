@@ -16,7 +16,7 @@ input, textarea {
 .wiz-button {
   border: 0;
   border-radius: 4px;
-  padding: 5px 12px;
+  padding: 6px 12px;
   cursor: pointer; }
 
 a.wiz-button, a.wiz-button:hover, a.wiz-button:active, a.wiz-button:visited, a.wiz-button:link {
@@ -25,3 +25,7 @@ a.wiz-button, a.wiz-button:hover, a.wiz-button:active, a.wiz-button:visited, a.w
 .wiz-button--success {
   background: #27ae60;
   color: white; }
+  .wiz-button--success:hover {
+    background: #1e8449; }
+  .wiz-button--success:active {
+    background: #145b32; }
