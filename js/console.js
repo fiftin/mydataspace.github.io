@@ -74,13 +74,15 @@ var MDSConsole = {
       Mydataspace.registerFormatter('entities.getMyRoots.res', new EntitySimplifier());
     }
 
+    var self = MDSConsole;
+
     if (options.connectAndLogin && !Mydataspace.isLoggedIn()) {
-      MDSConsole.log('Connecting...');
+      self.log('Connecting...');
       Mydataspace.connect().then(function () {
-        MDSConsole.log('Connected! Logging in...');
+        self.log('Connected! Logging in...');
         return new Promise(function (resolve, reject) {
           Mydataspace.on('login', function () {
-            MDSConsole.log('Logged In!');
+            self.log('Logged In!');
             resolve();
           });
           Mydataspace.on('unauthorized', function () {
@@ -88,11 +90,11 @@ var MDSConsole = {
           });
         });
       }).then(function () {
-        return action(Mydataspace.getRoot(MDSConsole.root));
+        return action(Mydataspace.getRoot(self.root), self.event || {});
       }).then(function (res) {
-        MDSConsole.success(res);
+        self.success(res);
       }, function (err) {
-        MDSConsole.fail(err.message);
+        self.fail(err.message);
       });
     }
   }

@@ -64,7 +64,6 @@ title: Run Script
           MDSConsole.fields =
             MDSCommon.convertNameValueArrayToMap(
               e.data.fields.filter(function(value) { return value.type !== 'j' && value.type !== 'u'; }));
-
           MDSConsole.root = e.data.root;
           MDSConsole.path = e.data.path;
           Mydataspace.entities.root = e.data.root;
