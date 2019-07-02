@@ -8,6 +8,9 @@ body {
   overscroll-behavior: none;
 }
 
+.webix_list_item {
+  white-space: nowrap;
+}
 
 .menu__mode_switch {
   opacity: 0.8;

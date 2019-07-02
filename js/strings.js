@@ -18,6 +18,7 @@ var STRINGS_ON_DIFFERENT_LANGUAGES = {
     DELETE_ENTITY_SHORT: 'Delete',
     CREATE_CHILDREN: 'Create Children',
     CREATE_ONE_CHILD: 'Create One Child',
+    CREATE_CHILDREN_ANONYMOUSLY: 'Create Children Anonymously',
     OTHERS_CAN: 'Others Can',
     RENAME: 'Rename',
     COPY: 'Copy',

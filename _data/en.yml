@@ -30,7 +30,7 @@ slogan: Landing page creator for developers
 # slogan_description: We help developers create landing pages without being distracted by infrastructure and administration
 
 slogan_description: |
-  <p>Advanced infrastructure for creating and hosting landing pages.
+  <p>Advanced infrastructure for creating and hosting interactive landing pages.
   <p>Starting from $<span style="font-size: 35px;">0</span> for <span style="font-size: 35px;">1</span> website with <span style="font-size:40px; display:inline-block; transform:translateY(7px);">&infin;</span> pages.
 
 #  Fastlix is everything you need to build fast, modern websites: continuous deployment, serverless functions, and so much more.

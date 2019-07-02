@@ -333,9 +333,10 @@ UIConstants = {
       'views',
       'likes',
       'comments',
-      // 'processes',
+      'processes',
       'statistics',
-      // 'cache'
+      'cache',
+      'website/wizards'
     ],
     cms: [
       'views',
@@ -1165,7 +1166,8 @@ UIControls = {
         { id: 'nothing', value: STRINGS.NOTHING },
         { id: 'view_children', value: STRINGS.ONLY_READ },
         { id: 'create_child', value: STRINGS.CREATE_ONE_CHILD },
-        { id: 'create_children', value: STRINGS.CREATE_CHILDREN }
+        { id: 'create_children', value: STRINGS.CREATE_CHILDREN },
+        { id: 'rwxrcxrcx', value: STRINGS.CREATE_CHILDREN_ANONYMOUSLY }
       ],
       labelWidth: UIHelper.LABEL_WIDTH
     };
