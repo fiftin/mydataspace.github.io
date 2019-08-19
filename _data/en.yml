@@ -476,7 +476,7 @@ landing_examples:
   examples:
   - title: Cloud servers benchmarking service
     image: cloudbench.png
-    url: cloud.fastlixsite.com
+    url: cloud.myfastlix.com
   - title: VPN in Cloud
     image: vpn-in-cloud.png
     url: vpn-in-cloud.com
