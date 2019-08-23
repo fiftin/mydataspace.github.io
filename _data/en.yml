@@ -145,7 +145,7 @@ sections:
       - id: tools
         title: Development Tools
         details: |
-          <p>A lot of development tools are available for you out of the box.
+          <p>A lot of development tools are available to you out of the box.
           <p>Pug, SCSS, JSX and much more.
 
       - id: api
@@ -167,7 +167,6 @@ sections:
     title: Built for Business
     description: |
       AWS reliable cloud infrastructure.
-
 
     features:
       - id: websocket
@@ -476,7 +475,7 @@ landing_examples:
   examples:
   - title: Cloud servers benchmarking service
     image: cloudbench.png
-    url: cloud.myfastlix.com
+    url: cloudbench.myfastlix.com
   - title: VPN in Cloud
     image: vpn-in-cloud.png
     url: vpn-in-cloud.com

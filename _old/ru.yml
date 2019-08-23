@@ -492,7 +492,7 @@ landing_examples:
   examples:
     - title: Сервис тестирования облачных серверов
       image: cloudbench.png
-      url: cloud.myfastlix.com
+      url: cloudbench.myfastlix.com
 #    - title: Блог
 #      image: blog.web20.png
 #      url: blog.myfastlix.com
