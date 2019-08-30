@@ -19,22 +19,11 @@ menu:
   blog: Blog
   skeletons: Templates
 
-title: Landing page creator for developers
-slogan: Landing page creator for developers
-
-# Create killer websites much faster
-# We help our customers launch online services faster
-#slogan_description: By providing ready-to-use solutions, we help our customers launch online services much faster
-#slogan_description: Use your developer skills to create beautiful landing pages and websites match faster
-# slogan_description: We help developers to create beautiful landing pages match easy and faster
-# slogan_description: We help developers create landing pages without being distracted by infrastructure and administration
+title: Online catalogs creator for developers
+slogan: Online catalogs creator for developers
 
 slogan_description: |
-  <p>Advanced infrastructure for creating and hosting interactive landing pages.
-  <p>Starting from $<span style="font-size: 35px;">0</span> for <span style="font-size: 35px;">1</span> website with <span style="font-size:40px; display:inline-block; transform:translateY(7px);">&infin;</span> pages.
-
-#  Fastlix is everything you need to build fast, modern websites: continuous deployment, serverless functions, and so much more.
-
+  <p>Advanced infrastructure for creating and hosting highly customized catalogs.
 
 slogan_2: Incredibly fast backend of your website
 slogan_description_2: You will be surprised how fast and responsive website can be
@@ -57,8 +46,6 @@ solutions:
 
 mission_title: What developers have today
 
-# mission: "We created website builder without those disadvantages. It simple, fast and reliable."
-#Instead of them, we offer all-in-one solution for creating landing pages and websites. It simple, fast and reliable.
 mission: What we offer
 
 special_offer: Free now and <b>forever</b> for registered users
@@ -108,13 +95,13 @@ sections:
   - id: ease
     title: Ease to Start
     description: |
-      Find suitable template, create website, add content and CSS &mdash; first version ready.
+      Find suitable template, create catalog, upload data, tune CSS.
 
     features:
       - id: templates
         title: Templates
         details: |
-          <p>Collection of landing page templates and ready-to-use websites.
+          <p>Collection of catalog templates.
           <p>Anyone can publish their template for others by money or free.
 
 
@@ -127,19 +114,19 @@ sections:
       - id: console
         title: Dashboard
         details: |
-          Dashboard is everything you need to build modern websites.
+          Dashboard is everything you need to build catalog of any complexity.
 
   - id: speed
     title: Designed for Developers
     description: |
-      Source code of the website belongs only to you.
+      Source code of the catalog belongs only to you.
 
     features:
       - id: source-code
         icon: code
         title: Source Code
         details: |
-          <p>Source code of the website belongs only to you. You can change it as you want.
+          <p>Source code of the catalog belongs only to you. You can change it as you want.
           <p>Bootstrap, React, Vue, Angular and other modern frameworks available to you.
 
       - id: tools
@@ -471,7 +458,7 @@ pricing_page:
 
 
 landing_examples:
-  title: Website Examples
+  title: Catalog Examples
   examples:
   - title: Cloud servers benchmarking service
     image: cloudbench.png
